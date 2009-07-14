@@ -1,0 +1,34 @@
+<div id="content_view_content" style="width: 500px; margin-left: 10px;">
+	<div id="content_view_content_created">
+		<span class="right">Viewed 1 times</span>
+		Added: <?php echo date("Y-m-d h:i:s", time()); ?>
+    </div>
+	<div id="content_view_content_info_container">
+        <div id="content_view_content_rating">
+            <span>Rating: 0</span>
+		</div>		
+        <div id="content_view_content_vote">
+            <img src="/images/icon_thumb_up.png" alt="Vote up" />
+			<img src="/images/icon_thumb_down.png" alt="Vote down" />
+		</div>
+    </div>				
+	<div id="content_view_content_type">
+	</div>	
+
+    <div id="content_view_content_container">
+        <div id="content_view_texttitle">
+            <h1><?php echo $this->data['content_header']; ?></h1>
+        </div>
+        <div id="content_view_textlead">
+            <h2><?php echo $this->data['content_textlead']; ?></h2>
+        </div>
+                        
+        <div id="content_view_textbody">
+            <?php echo $this->data['content_text']; ?>
+        </div>
+        <div id="content_view_tags">
+            <span class="content_view_bold">Tags: </span>
+            <?php echo $this->data['content_keywords']; ?>					
+        </div>
+    </div>
+</div>

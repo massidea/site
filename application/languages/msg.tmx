@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='msg-title'>
+		<tuv xml:lang="en"><seg>Message from the system</seg></tuv>
+		<tuv xml:lang="fi"><seg>Viesti järjestelmältä</seg></tuv>
+	</tu>
+	<tu tuid='content-not-found'>
+		<tuv xml:lang="en"><seg>Content not found</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä ei löytynyt</seg></tuv>
+	</tu>
+</body>

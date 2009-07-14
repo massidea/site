@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='content-remove-invalid-content-id'>
+		<tuv xml:lang="en"><seg>Content removal not successful, an invalid content id was found.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe - sisällöllä virheellinen tunnistenumero.</seg></tuv>
+	</tu>
+	<tu tuid='content-remove-not-successful'>
+		<tuv xml:lang="en"><seg>Content removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe.</seg></tuv>
+	</tu>
+    <tu tuid='content-remove-successful'>
+		<tuv xml:lang="en"><seg>Content removal successful.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö poistettiin onnistuneesti.</seg></tuv>
+	</tu>
+	<tu tuid='content-publish-not-authed'>
+		<tuv xml:lang="en"><seg>Only authenticated users may publish content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vain kirjautuneet käyttäjät voivat julkistaa sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-list-recent_all'>
+		<tuv xml:lang="en"><seg>%d Most recent content</seg></tuv>
+		<tuv xml:lang="fi"><seg>%d Viimeisintä sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='view-index-title'>
+		<tuv xml:lang="en"><seg>OIBS content page</seg></tuv>
+		<tuv xml:lang="fi"><seg>OIBS sisältösivu</seg></tuv>
+	</tu>
+	<tu tuid='content-list-recent_problem'>
+		<tuv xml:lang="en"><seg>%d Most recent problems</seg></tuv>
+		<tuv xml:lang="fi"><seg>%d Viimeisintä ongelmaa</seg></tuv>
+	</tu>
+	<tu tuid='content-list-recent_idea'>
+		<tuv xml:lang="en"><seg>%d Most recent ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>%d Viimeisintä ideaa</seg></tuv>
+	</tu>
+	<tu tuid='content-list-recent_finfo'>
+		<tuv xml:lang="en"><seg>%d Most recent future visions</seg></tuv>
+		<tuv xml:lang="fi"><seg>%d Viimeisintä tulevaisuuden näkymää</seg></tuv>
+	</tu>
+	<tu tuid='content-list-recent'>
+		<tuv xml:lang="en"><seg>Recent content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Viimeisintä sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-list-created'>
+		<tuv xml:lang="en"><seg>Created: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Luotu: </seg></tuv>
+	</tu>
+	<tu tuid='content-list-order-by'>
+		<tuv xml:lang="en"><seg>Order by:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Järjestä:</seg></tuv>
+	</tu>
+	<tu tuid='content-list-order-by-author'>
+		<tuv xml:lang="en"><seg>Author</seg></tuv>
+		<tuv xml:lang="fi"><seg>Julkaisija</seg></tuv>
+	</tu>
+	<tu tuid='content-list-order-by-date'>
+		<tuv xml:lang="en"><seg>Date</seg></tuv>
+		<tuv xml:lang="fi"><seg>Pvm</seg></tuv>
+	</tu>
+	<tu tuid='content-list-order-by-header'>
+		<tuv xml:lang="en"><seg>Header</seg></tuv>
+		<tuv xml:lang="fi"><seg>Otsikko</seg></tuv>
+	</tu>
+	<tu tuid='content-list-order-by-views'>
+		<tuv xml:lang="en"><seg>Views</seg></tuv>
+		<tuv xml:lang="fi"><seg>Katsottu</seg></tuv>
+	</tu>
+	<tu tuid='content-title'>
+		<tuv xml:lang="en"><seg>Content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
+	</tu>
+	<tu tuid='content-view-comments'>
+		<tuv xml:lang="en"><seg>%d Comments</seg></tuv>
+		<tuv xml:lang="fi"><seg>%d Kommenttia</seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment'>
+		<tuv xml:lang="en"><seg>%d Comment</seg></tuv>
+		<tuv xml:lang="fi"><seg>%d Kommentti</seg></tuv>
+	</tu>
+	<tu tuid='content-view-tags'>
+		<tuv xml:lang="en"><seg>Tags: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Avainsanat: </seg></tuv>
+	</tu>
+	<tu tuid='content-view-links'>
+		<tuv xml:lang="en"><seg>Links: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkit: </seg></tuv>
+	</tu>
+	<tu tuid='content-view-userheader'>
+		<tuv xml:lang="en"><seg>Submitted by</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisääjä</seg></tuv>
+	</tu>
+    <tu tuid='content-box-join-header'>
+		<tuv xml:lang="en"><seg>Join today</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liity jäseneksi</seg></tuv>
+	</tu>
+        <tu tuid='content-view-joined-longtime'>
+		<tuv xml:lang="en"><seg>a long time ago</seg></tuv>
+		<tuv xml:lang="fi"><seg>kauan sitten</seg></tuv>
+	</tu>
+    <tu tuid='content-box-join-message'>
+		<tuv xml:lang="en"><seg>Registered users can vote up/down, comment and add  content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröityneet käyttäjät voivat äänestää, kommentoida ja lisätä sisältöä!</seg></tuv>
+	</tu>
+	<tu tuid='content-view-user-related'>
+		<tuv xml:lang="en"><seg>More from user</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää käyttäjältä</seg></tuv>
+	</tu>
+	<tu tuid='content-view-user-related-views'>
+		<tuv xml:lang="en"><seg>Views: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Katsottu: </seg></tuv>
+	</tu>	
+	<tu tuid='content-view-related'>
+		<tuv xml:lang="en"><seg>Related content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liittyvää sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-view-author'>
+		<tuv xml:lang="en"><seg>Author:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tekijä:</seg></tuv>
+	</tu>
+	<tu tuid='content-view-joined'>
+		<tuv xml:lang="en"><seg>Joined:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liittynyt:</seg></tuv>
+	</tu>
+	<tu tuid='content-view-view_times'>
+		<tuv xml:lang="en"><seg>Viewed %d times</seg></tuv>
+		<tuv xml:lang="fi"><seg>Katsottu %d kertaa</seg></tuv>
+	</tu>
+	<tu tuid='content-view-added'>
+		<tuv xml:lang="en"><seg>Added: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisätty: </seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-form-subject'>
+		<tuv xml:lang="en"><seg>Subject: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Aihe: </seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-form-message'>
+		<tuv xml:lang="en"><seg>Message: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Viesti: </seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-add'>
+		<tuv xml:lang="en"><seg>Add Comment</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää kommentti</seg></tuv>
+	</tu>
+	<tu tuid='content-add-page_header'>
+		<tuv xml:lang="en"><seg>Add content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-add-not-logged'>
+		<tuv xml:lang="en"><seg>You must login in order to add content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu sisään lisätäksesi sisältöä!</seg></tuv>
+	</tu>
+    <tu tuid='content-add-innovation-type'>
+		<tuv xml:lang="en"><seg>Innovation type</seg></tuv>
+		<tuv xml:lang="fi"><seg>Innovaatiotyyppi</seg></tuv>
+	</tu>
+    <tu tuid='content-add-industry'>
+		<tuv xml:lang="en"><seg>Industry</seg></tuv>
+		<tuv xml:lang="fi"><seg>Toimiala</seg></tuv>
+	</tu>
+    <tu tuid='content-add-division'>
+		<tuv xml:lang="en"><seg>Division</seg></tuv>
+		<tuv xml:lang="fi"><seg>Osa-alue</seg></tuv>
+	</tu>
+    <tu tuid='content-add-group'>
+		<tuv xml:lang="en"><seg>Group</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ryhmä</seg></tuv>
+	</tu>
+    <tu tuid='content-add-class'>
+		<tuv xml:lang="en"><seg>Class</seg></tuv>
+		<tuv xml:lang="fi"><seg>Luokka</seg></tuv>
+	</tu>
+    <tu tuid='content-add-header'>
+		<tuv xml:lang="en"><seg>Header</seg></tuv>
+		<tuv xml:lang="fi"><seg>Otsikko</seg></tuv>
+	</tu>
+    <tu tuid='content-add-keywords'>
+		<tuv xml:lang="en"><seg>Keywords</seg></tuv>
+		<tuv xml:lang="fi"><seg>Avainsanat</seg></tuv>
+	</tu>
+    <tu tuid='content-add-textlead'>
+		<tuv xml:lang="en"><seg>Textlead</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ingressi</seg></tuv>
+	</tu>
+    <tu tuid='content-add-text'>
+		<tuv xml:lang="en"><seg>Text</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
+	</tu>
+	<tu tuid='content-add-contenttype-missing-or-invalid'>
+		<tuv xml:lang="en"><seg>Invalid content type or it was not set!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Virheellinen sisältötyyppi tai sitä ei ole asetettu!</seg></tuv>
+	</tu>
+	<tu tuid='content-add-relatesto-missing-or-invalid'>
+		<tuv xml:lang="en"><seg>Missing or invalid content type that the idea is related to!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideaan liittyvä sisältötyyppi puuttuu tai on virheellinen!</seg></tuv>
+	</tu>
+	<tu tuid='content-add-relatesto-id-missing'>
+		<tuv xml:lang="en"><seg>Missing id of related problem or future info!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisättävään ideaan liittyvän ongelman tai tulevaisuuden näkymän id puuttuu!</seg></tuv>
+	</tu>
+	<tu tuid='content-add-invalid-related-content'>
+		<tuv xml:lang="en"><seg>Idea must be related to a content that exists!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö, johon lisättävä idea liittyy, ei ole olemassa!</seg></tuv>
+	</tu>
+    <tu tuid='content-add-header-help-text'>
+		<tuv xml:lang="en"><seg>The header should be concise and it should describe the subject as well as possible (max. length 100 marks)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mahdollisimman hyvin aihetta kuvaava, tiivis otsikko (maksimipituus 100 merkkiä).</seg></tuv>
+	</tu>
+    <tu tuid='content-add-keywords-help-text'>
+		<tuv xml:lang="en"><seg>Keywords should be selected carefully, as they will determine the search results. If the keywords do not represent the text, the text will not be found by the people seeking information on the subject. (max. length 120 marks)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Avainsanat kannattaa valita huolellisesti, sillä hakutulokset tulevat näiden sanojen perusteella. Jos avainsanat eivät kuvaa tekstiä, jää teksti löytämättä jostain aihealueesta tietoa haluavilta. (maksimipituus 120 merkkiä)</seg></tuv>
+	</tu>
+    <tu tuid='content-add-textlead-help-text'>
+		<tuv xml:lang="en"><seg>The header should be concise and it should describe the subject as well as possible (max. length 100 marks)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mahdollisimman hyvin aihetta kuvaava, tiivis otsikko (maksimipituus 100 merkkiä).</seg></tuv>
+	</tu>
+    <tu tuid='content-publish-invalid-content-id'>
+		<tuv xml:lang="en"><seg>Content with given id doesn't exist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Annetulla id:llä ei löydy sisältöä!</seg></tuv>
+	</tu>
+	<tu tuid='problem'>
+		<tuv xml:lang="en"><seg>today's challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>tämän päivän haaste</seg></tuv>
+	</tu>
+	<tu tuid='finfo'>
+		<tuv xml:lang="en"><seg>vision of the future</seg></tuv>
+		<tuv xml:lang="fi"><seg>tulevaisuuden näkymä</seg></tuv>
+	</tu>
+	<tu tuid='idea'>
+		<tuv xml:lang="en"><seg>idea</seg></tuv>
+		<tuv xml:lang="fi"><seg>idea</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-innovation'>
+		<tuv xml:lang="en"><seg>Select an innovation type</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse innovaatiotyyppi</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-industry'>
+		<tuv xml:lang="en"><seg>Select an industry</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse toimiala</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-division-no-industry'>
+		<tuv xml:lang="en"><seg>Select an industry first</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse toimiala ensin</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-division'>
+		<tuv xml:lang="en"><seg>Select a division</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse osa-alue</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-group-no-division'>
+		<tuv xml:lang="en"><seg>Select a division first</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse osa-alue ensin</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-group'>
+		<tuv xml:lang="en"><seg>Select a group (optional)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse ryhmä (valinnainen)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-class-no-group'>
+		<tuv xml:lang="en"><seg>Select a group first</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse ryhmä ensin</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-class'>
+		<tuv xml:lang="en"><seg>Select a class (optional)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse luokka (valinnainen)</seg></tuv>
+	</tu>
+    <tu tuid='content-add-successful'>
+		<tuv xml:lang="en"><seg>Content added succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön lisäys onnistui!</seg></tuv>
+	</tu>
+    <tu tuid='content-add-not-successful'>
+		<tuv xml:lang="en"><seg>There was some problem with adding content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Jostain syystä sisällön lisäys ei onnistunut!</seg></tuv>
+	</tu>
+    <tu tuid='content-edit'>
+		<tuv xml:lang="en"><seg>Edit</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-not-logged'>
+		<tuv xml:lang="en"><seg>You must login in order to edit content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu sisään muokataksesi sisältöä!</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-not-owner'>
+		<tuv xml:lang="en"><seg>You must own the content in order to edit it!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä voi muokata vain sen omistaja!</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-no-id'>
+		<tuv xml:lang="en"><seg>Id of content to be edited is missing!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokattavan sisällön id ei ole asetettu!</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-successful'>
+		<tuv xml:lang="en"><seg>Content edited succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön muokkaus onnistui!</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-not-successful'>
+		<tuv xml:lang="en"><seg>There was some problem with editing content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Jostain syystä sisällön muokkaus ei onnistunut!</seg></tuv>
+	</tu>
+    <tu tuid='content-publish'>
+		<tuv xml:lang="en"><seg>Publish</seg></tuv>
+		<tuv xml:lang="fi"><seg>Julkaise</seg></tuv>
+	</tu>
+    <tu tuid='content-delete'>
+		<tuv xml:lang="en"><seg>Delete</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
+	</tu>
+    <tu tuid='content-publish-successful'>
+		<tuv xml:lang="en"><seg>Content published successfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön julkaisu onnistui!</seg></tuv>
+	</tu>
+    <tu tuid='content-publish-not-successful'>
+		<tuv xml:lang="en"><seg>Content is already published!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö on jo julkaistu!</seg></tuv>
+	</tu>
+    <tu tuid='content-view-solution-to'>
+		<tuv xml:lang="en"><seg>This is a solution to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä on ratkaisu sisältöön</seg></tuv>
+	</tu>
+        <tu tuid='content-view-solutions-for'>
+		<tuv xml:lang="en"><seg>Solution(s) for this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tähän sisältöön liittyvät ideat</seg></tuv>
+	</tu>
+    <tu tuid='content-rating'>
+		<tuv xml:lang="en"><seg>Rating</seg></tuv>
+		<tuv xml:lang="fi"><seg>Arvosana</seg></tuv>
+	</tu>    
+    <tu tuid='rating-succesful'>
+		<tuv xml:lang="en"><seg>Rating succesful! </seg></tuv>
+		<tuv xml:lang="fi"><seg>Arvosana tallennettu!</seg></tuv>
+	</tu>
+    <tu tuid='content-box-add-header'>
+		<tuv xml:lang="en"><seg>Add content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää sisältöä!</seg></tuv>
+	</tu>
+    <tu tuid='content-box-add-idea'>
+		<tuv xml:lang="en"><seg>Add a solution to this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tähän sisältöön idea</seg></tuv>
+	</tu>
+    <tu tuid='content-box-add-problem'>
+		<tuv xml:lang="en"><seg>Add a new problem</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää uusi ongelma</seg></tuv>
+	</tu>
+    <tu tuid='content-box-add-futureinfo'>
+		<tuv xml:lang="en"><seg>Add a new future information</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää uusi tulevaisuustieto</seg></tuv>
+	</tu>
+</body>

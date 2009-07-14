@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='index-futureinfo'>
+		<tuv xml:lang="en"><seg>Visions of the future</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymät</seg></tuv>
+	</tu>
+	<tu tuid='index-problems'>
+		<tuv xml:lang="en"><seg>Today's challenges</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämän päivän haasteet</seg></tuv>
+	</tu>
+		<tu tuid='index-ideas'>
+		<tuv xml:lang="en"><seg>View ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
+	</tu>
+	<tu tuid='index-home'>
+		<tuv xml:lang="en"><seg>OIBS Home</seg></tuv>
+		<tuv xml:lang="fi"><seg>Oibs Etusivu</seg></tuv>
+	</tu>
+	<tu tuid='index-search'>
+		<tuv xml:lang="en"><seg>Search</seg></tuv>
+		<tuv xml:lang="fi"><seg>Haku</seg></tuv>
+	</tu>
+	<tu tuid='index-login'>
+		<tuv xml:lang="en"><seg>Login</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu</seg></tuv>
+	</tu>
+	<tu tuid='index-or'>
+		<tuv xml:lang="en"><seg>or</seg></tuv>
+		<tuv xml:lang="fi"><seg>tai</seg></tuv>
+	</tu>
+	<tu tuid='index-signup'>
+		<tuv xml:lang="en"><seg>Sign up</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröidy</seg></tuv>
+	</tu>	
+	<tu tuid='index-add_content'>
+		<tuv xml:lang="en"><seg>Add content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='index-my_account'>
+		<tuv xml:lang="en"><seg>My account</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjätilini</seg></tuv>
+	</tu>
+	<tu tuid='index-logout'>
+		<tuv xml:lang="en"><seg>Logout</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu ulos</seg></tuv>
+	</tu>
+	<tu tuid='index-logged_in'>
+		<tuv xml:lang="en"><seg>Logged in</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjautuneena</seg></tuv>
+	</tu>
+	<tu tuid='index-users'>
+		<tuv xml:lang="en"><seg>Users</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät</seg></tuv>
+	</tu>
+	<tu tuid='index-help'>
+		<tuv xml:lang="en"><seg>Help</seg></tuv>
+		<tuv xml:lang="fi"><seg>Apua</seg></tuv>
+	</tu>
+	<tu tuid='index-involve'>
+		<tuv xml:lang="en"><seg>Get involved now!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liity joukkoon!</seg></tuv>
+	</tu>
+	<tu tuid='index-become-developer'>
+		<tuv xml:lang="en"><seg>Become an OIBS developer</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ryhdy OIBS-kehittäjäksi</seg></tuv>
+	</tu>
+	<tu tuid='index-name-missing'>
+		<tuv xml:lang="en"><seg>Name this site</seg></tuv>
+		<tuv xml:lang="fi"><seg>Nimeä tämä sivu</seg></tuv>
+	</tu>
+	<tu tuid='index-help-find-name'>
+		<tuv xml:lang="en"><seg>Help us find a good one</seg></tuv>
+		<tuv xml:lang="fi"><seg>Auta meitä keksimään nimi</seg></tuv>
+	</tu>
+	<tu tuid='index-terms-of-use'>
+		<tuv xml:lang="en"><seg>Terms of use</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttöehdot</seg></tuv>
+	</tu>
+	<tu tuid='index-privacy-policy'>
+		<tuv xml:lang="en"><seg>Privacy policy</seg></tuv>
+		<tuv xml:lang="fi"><seg>Yksityisyyden suoja</seg></tuv>
+	</tu>
+</body>

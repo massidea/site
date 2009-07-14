@@ -1,0 +1,57 @@
+<div class="content_list_recent">
+<h1><?php printf($this->translate('content-list-recent_'.$this->type), $this->count);//echo $this->translate('content-list-recent'); ?></h1>
+<?php if (!empty($this->contentPaginator)): ?>
+    <div id="content_list_content_left">
+        <div id="content_list_content_industries">	
+            <?php foreach($this->industries as $industry): ?>
+                <p><a href="#"><?php echo $industry['name_ind']; ?></a></p>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div id="content_list_content_right">
+        <h2><?php //printf($this->translate('content-list-recent_'.$this->type), $this->count); ?></h2>
+        <div id="content_list_content_pagination_top">
+            <?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
+        </div>
+        <div id="content_list_content_order">
+            <span><?php echo $this->translate('content-list-order-by'); ?></span>
+            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'author'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-author'); ?></a> | 
+            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'created'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-date'); ?></a> |
+            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'header'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-header'); ?></a> | 
+            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'views'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-views'); ?></a>
+        </div>
+        <?php foreach($this->contentPaginator as $entry): ?>	
+        <div id="<?php echo $this->type.'_'.$entry['id_cnt']; ?>" class="content_entry_container <?php echo $this->type;?>_container">
+            <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_right'; ?>" class="content_container_right">
+                    <div id="content_entry_owner_<?php echo $entry['id_cnt']; ?>" class="content_entry_owner <?php echo $this->type;?>_user_header">
+                        <a href="<?php echo $this->url(array('controller' => 'account', 'action' => 'view', 'user' => $entry['login_name_usr'], 'language' =>  $this->language), 'lang_default', true); ?>"><?php echo $entry['login_name_usr']?></a>
+                    </div>
+                    <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_created'; ?>" class="content_entry_created">
+                        <?php echo $this->translate('content-list-created').date('d M Y', strtotime($entry['created_cnt'])); ?>
+                    </div>
+            </div>
+            <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_left'; ?>" class="content_container_left <?php echo $this->type; ?>_container_left">
+                <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_header'; ?>" class="content_entry_header <?php echo $this->type; ?>_entry_header">
+
+                    <a href="<?php echo $this->url(array('content_id' => $entry['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>">
+                    <?php echo $entry['title_cnt']; ?>
+                    </a>
+
+                </div>
+                <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_lead'; ?>" class="content_entry_lead">
+                    <?php echo $entry['lead_cnt']; ?>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+            <div class="clear"></div>
+        <div id="content_list_content_pagination_bottom">
+            <?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
+        </div>
+    </div>
+<?php else: ?>
+    <div>
+        <?php echo $this->translate('Nothing found!!!'); ?>
+    </div>
+<?php endif; ?>
+</div>

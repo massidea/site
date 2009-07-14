@@ -1,0 +1,496 @@
+<?php
+if($this->language == "en") {
+        echo '<img src="/images/Oibs_frontpage_signature.png" id="frontpage_imagemap" usemap="#map1" alt="" style="cursor:pointer;" />';
+    } else {
+         echo '<img src="/images/Oibs_frontpage_finnish.png" id="frontpage_imagemap" usemap="#map1" alt="" style="cursor:pointer;" />';
+    }
+?>
+
+
+<map id="map1" name="map1">
+        <area shape="rect" 
+                coords="100,267,250,350" 
+                onclick="imageChanger('student', '<?php echo $this->language; ?>'); frontpageChanger('frontpage_student_text');" 
+                alt="OIBS for students" 
+        />
+        <area shape="rect" 
+                coords="250,267,380,350"  
+                onclick="imageChanger('teachers', '<?php echo $this->language; ?>'); frontpageChanger('frontpage_teacher_text');" 
+                alt="OIBS for teachers" 
+        />
+        <area shape="rect" 
+                coords="381,267,500,350" 
+                onclick="imageChanger('pensioners2', '<?php echo $this->language; ?>'); frontpageChanger('frontpage_pensioner_text',  '<?php echo $this->language; ?>');" 
+                alt="OIBS for pensioners" 
+        />
+        <area shape="rect" 
+                coords="501,267,640,350" 
+                onclick="imageChanger('companies3', '<?php echo $this->language; ?>'); frontpageChanger('frontpage_company_text',  '<?php echo $this->language; ?>');" 
+                alt="OIBS for companies" 
+        />
+        <area shape="rect" 
+                coords="641,267,780,350" 
+                onclick="imageChanger('public', '<?php echo $this->language; ?>'); frontpageChanger('frontpage_public_sector_text',  '<?php echo $this->language; ?>');" 
+                alt="OIBS for the public sector" 
+        />
+        <area shape="default" 
+                onclick="javascript:imageChanger('signature', '<?php echo $this->language; ?>'); frontpageChanger('frontpage_default_text',  '<?php echo $this->language; ?>')" 
+                alt="OIBS"
+        />
+</map> 
+
+
+<?php 
+if ($this->language == "en") 
+{
+?>
+<div id="placeholder">
+	<h1>Welcome to the innovation community!</h1>
+	<p>
+		The Open Innovation Banking System (OIBS) is a public, open and communal innovation service
+		available to anyone, anywhere. In the OIBS network, users can exchange and develop ideas, solutions and know-how.
+	</p>
+	<p>
+		The OIBS network produces new ideas and solutions for the present challenges and future scenarios.
+		Together the present challenges, visions of the future and the ideas form three separate "information
+		repositories". The main idea of OIBS is to form new interesting ideas and solutions by combining
+		the information in the three repositories.
+	</p>
+	<p style="text-align: center;">
+		<img src="/images/Triangle_with_repositories_eng_small.png" alt="Innovation triangle" />
+	</p>
+	<h2>Register for free and join the OIBS network. Registered users can:</h2>
+	<ul>
+		<li>
+		Add descriptions of the problems or visions into the database
+		</li>
+		<li>
+		Solve the current problems and visions of the future found in the database
+		</li>
+		<li>
+		Rate and comment the content added by other users
+		</li>
+		<li>
+		Further develop and challenge the ideas of other users
+		</li>
+		<li>
+		Create their own profile
+		</li>
+	</ul>
+</div>
+
+
+<div style="display:none;">
+
+	<div id="frontpage_default_text">
+		<h1>Welcome to the innovation community!</h1>
+
+		<p>
+			The Open Innovation Banking System (OIBS) is a public, open and communal innovation service 
+			available to anyone, anywhere. In the OIBS network, users can exchange and develop ideas, solutions and know-how.
+		</p>
+		<p>
+			The OIBS network produces new ideas and solutions for the present challenges and future scenarios. 
+			Together the present challenges, visions of the future and the ideas form three separate "information 
+			repositories". The main idea of OIBS is to form new interesting ideas and solutions by combining 
+			the information in the three repositories. 
+		</p>
+		<p style="text-align: center;">
+			<img src="/images/Triangle_with_repositories_eng_small.png" alt="Innovation triangle" />
+		</p>
+	
+		<h2>Register for free and join the OIBS network. Registered users can:</h2>
+	
+		<ul>
+			<li>
+				Add descriptions of the problems or visions into the database
+			</li>
+			<li>
+				Solve the current problems and visions of the future found in the database
+			</li>
+			<li>
+				Rate and comment the content added by other users
+			</li>
+			<li>
+				Further develop and challenge the ideas of other users
+			</li>
+			<li>
+				Create their own profile
+			</li>
+		</ul>
+	</div>
+	<div id="frontpage_student_text">
+		<h2>OIBS For the student</h2>
+	
+		<ul>
+			<li>
+				Students can present their new ideas while receiving feedback, finding new 
+				perspectives and getting tips for further improving their ideas
+			</li>
+			<li>
+				With the help of the unique OIBS network, a student may process his or her 
+				idea – perhaps all the way to a commercial innovation. Ideas are published internationally.
+			</li>
+			<li>
+				OIBS is a new kind of a learning tool. Course assignments and projects are being 
+				conducted via OIBS. Knowing how to use the service will further the studies.
+			</li>
+			<li>
+				By using the OIBS one can learn how new innovations are being created. Developing 
+				innovations is also an efficient way to learn.
+			</li>
+			<li>
+				OIBS opens doors to the working life
+			</li>
+			<li>
+				Students can do co-operation with companies and create new contacts to the work life
+			</li>
+			<li>
+				The OIBS user profile functions as a sort of a business card. The profile shows, 
+				what types of projects the user has been involved in and what ideas and content 
+				he or she has produced. The profile tells directly about your innovativeness. 
+			</li>
+		</ul>
+	</div>
+	<div id="frontpage_teacher_text">
+		<h2>OIBS For instructors</h2>
+		
+		<ul>
+			<li>
+				Instructors use OIBS as a teaching tool. Via OIBS the results and progression 
+				of the student groups are easy to follow
+			</li>
+			<li>
+				The teachers can participate in the OIBS service development and organizing 
+				the content production
+			</li>
+			<li>
+				The teachers can create contacts with companies, schools and innovation 
+				activities internationally
+			</li>
+		</ul>
+	</div>
+	<div id="frontpage_pensioner_text">
+		<h2>OIBS for active pensioners</h2>
+	
+		<ul>
+			<li>
+				The know-how and experience of the senior citizens is valuable. The OIBS 
+				offers a place, where this experience and knowledge can be shared with others
+			</li>
+			<li>
+				With the help of the OIBS, the pensioners can actively be involved in developing 
+				solutions and ideas, which for instance will help further their own well-being 
+				and develop different services and activities
+			</li>
+			<li>
+				Through OIBS, pensioners can stay in contact with their industry and their areas 
+				of specialization. Even after their career people can be involved in solving 
+				the challenges and problems related to their area of specialization
+			</li>
+		</ul>
+	</div>
+	<div id="frontpage_company_text">
+		<h2>OIBS for companies</h2>
+	
+		<ul>
+			<li>
+				Companies can utilize the innovations produced by OIBS network
+			</li>
+			<li>
+				In OIBS a company can find information on the problems (needs, desires) 
+				of the customer, on the current development of the markets as well as on the 
+				future outlooks
+			</li>
+			<li>
+				Companies can add descriptions of their problems to the OIBS and find new 
+				perspectives and solutions cost-efficiently 
+			</li>
+			<li>
+				The OIBS reduces the work in generating ideas inside the companies
+			</li>
+			<li>
+				Companies can find new, innovative employees via the OIBS
+			</li>
+			<li>
+				Experienced senior employees and their knowledge is a valuable asset for companies 
+				and organizations. With OIBS the creativity and know-how of the retired can be utilized
+			</li>
+			<li>
+				OIBS has an important technological and social role in commercializing new 
+				ideas and inventions
+			</li>
+		</ul>
+	</div>
+	<div id="frontpage_public_sector_text">
+		<h2>OIBS for the public sector</h2>
+	
+		<ul>
+			<li>
+				Cities or municipalities can develop their services with the help of the OIBS
+			</li>
+			<li>
+				For instance, public organizations can hold an idea contest to find new ideas 
+				for improving services
+			</li>
+			<li>
+				The citizens can participate in the development work of the municipality 
+				in a concrete way
+			</li>
+			<li>
+				The suggestions made by Laurea students of the benefits of the OIBS for the 
+				city of Espoo <a href="http://www.oibs.fi/wiki/index.php/Laureas_example_1_Ryhma_13">http://www.oibs.fi/wiki/index.php/Laureas_example_1_Ryhma_13</a>
+			</li>
+		</ul>
+	</div>
+	<div id="frontpage_other_text">
+		<h2>OIBS for other users</h2>
+	
+		<ul>
+			<li>
+				OIBS is an open service for anyone interested in creating innovations, solutions and ideas
+			</li>
+		</ul>
+
+		<p>
+			You can find out more about the OIBS in <a href="http://www.oibs.fi/wiki">OIBS wiki</a>.
+		</p>
+	</div>
+</div> <!-- end of display:none -->
+
+<?php
+}
+elseif ($this->language == "fi")
+{
+?>
+<div id="placeholder">
+                <h1>Tervetuloa innovointiyhteisöön!</h1>
+
+                <p>
+                        Avoin ideapankki – Open Innovation Banking System (OIBS) – on kaikille avoin yhteisöllinen
+                        innovaatiopalvelu. Yhteisössä vaihdetaan ja kehitetään uusia ideoita, ratkaisuja ja osaamista.
+                </p>
+                <p>
+                        OIBS-yhteisö tuottaa ideoita tämän päivän ongelmiin ja tulevaisuuden näkymiin. Yhdessä tämän
+                        päivän haasteet, tulevaisuuden näkymät ja niihin tarjotut ratkaisut muodostavat kolme "tietopankkia".
+                        OIBS-järjestelmän ajatuksena on pyrkiä pitämään ongelma, nykytieto ja tulevaisuustieto erillisissä
+                        tietopankeissa ja näiden osioiden tietoja yhdistelemällä saamaan aikaiseksi mahdollisimman kiinnostavia
+                        ja uusia ajatuksia.
+                </p>
+                <p style="text-align: center;">
+                        <img src="/images/Triangle_with_repositories_suom_pieni.png" alt="Innovaatiokolmio" />
+                </p>
+
+                <p>
+                        Kuka tahansa voi maksutta rekisteröityä OIBS:n käyttäjäksi ja liittyä yhteisöön. Rekisteröityneet
+                        käyttäjät voivat
+                </p>
+
+                <ul>
+                        <li>
+                                lisätä OIBS-tietokantaan kuvauksia tämän päivän ongelmista tai tulevaisuuden näkymistä
+                        </li>
+                        <li>
+                                esittää ideoita tietokannasta löytyviin ongelmiin ja tulevaisuuden visioihin
+                        </li>
+                        <li>
+                                arvostella ja kommentoida muiden käyttäjien tuotoksia
+                        </li>
+                        <li>
+                                kehittää tietokannasta jo löytyviä ideoita
+                        </li>
+                        <li>
+                                luoda kilpailevia ideoita
+                        </li>
+                        <li>
+                                luoda oman profiilin.
+                        </li>
+                </ul>
+</div>
+<div style="display:none;">
+        <div id="frontpage_default_text">
+		<h1>Tervetuloa innovointiyhteisöön!</h1>
+	
+		<p>	
+			Avoin ideapankki – Open Innovation Banking System (OIBS) – on kaikille avoin yhteisöllinen 
+			innovaatiopalvelu. Yhteisössä vaihdetaan ja kehitetään uusia ideoita, ratkaisuja ja osaamista. 
+		</p>
+		<p>
+			OIBS-yhteisö tuottaa ideoita tämän päivän ongelmiin ja tulevaisuuden näkymiin. Yhdessä tämän 
+			päivän haasteet, tulevaisuuden näkymät ja niihin tarjotut ratkaisut muodostavat kolme "tietopankkia". 
+			OIBS-järjestelmän ajatuksena on pyrkiä pitämään ongelma, nykytieto ja tulevaisuustieto erillisissä 
+			tietopankeissa ja näiden osioiden tietoja yhdistelemällä saamaan aikaiseksi mahdollisimman kiinnostavia 
+			ja uusia ajatuksia.
+		</p>
+		<p style="text-align: center;">
+			<img src="/images/Triangle_with_repositories_suom_pieni.png" alt="Innovaatiokolmio" />
+		</p>
+	
+		<p>
+			Kuka tahansa voi maksutta rekisteröityä OIBS:n käyttäjäksi ja liittyä yhteisöön. Rekisteröityneet 
+			käyttäjät voivat
+		</p>
+		
+		<ul>
+			<li>
+				lisätä OIBS-tietokantaan kuvauksia tämän päivän ongelmista tai tulevaisuuden näkymistä
+			</li>
+			<li>
+				esittää ideoita tietokannasta löytyviin ongelmiin ja tulevaisuuden visioihin
+			</li>
+			<li>
+				arvostella ja kommentoida muiden käyttäjien tuotoksia
+			</li>
+			<li>
+				kehittää tietokannasta jo löytyviä ideoita
+			</li>
+			<li>
+				luoda kilpailevia ideoita
+			</li>
+			<li>
+				luoda oman profiilin.
+			</li>
+		</ul>
+	</div>
+	<div id="frontpage_student_text">	
+		<h2>OIBS opiskelijoille</h2>
+	
+		<ul>
+			<li>
+				Paikka ideoiden julkaisulle, kehittämiselle ja kansainväliselle menestykselle
+				<ul style="list-style-type: disc;">
+					<li>
+						OIBS:ssa opiskelijat voivat esittää uusia ideoitaan, saada niihin palautetta, 
+						uusia näkökulmia ja paranteluehdotuksia. OIBS:n ainutlaatuisen verkoston 
+						kautta opiskelija voi jatkojalostaa ideaansa kenties kaupalliseksi innovaatioksi 
+						asti. Ideat julkaistaan kansainvälisesti.
+					</li>
+				</ul>
+			</li>
+			<li>
+				Korkeakoulujen opetus- ja oppimistyökalu
+				<ul style="list-style-type: disc;">
+					<li>
+						Kurssitehtäviä, kokonaisia opintojaksoja, hankkeita sekä projektitöitä tehdään 
+						OIBS:n välityksellä. Palvelun osaaminen edistää opintoja. OIBS:ia käyttämällä 
+						voi oppia, miten uusia innovaatioita luodaan. Innovaatioiden kehittäminen on 
+						myös tehokas oppimiskeino.
+					</li>
+				</ul>
+			</li>
+			<li>
+				Avaa ovia työmaailmaan
+				<ul style="list-style-type: disc;">
+					<li>
+						Opiskelijat voivat tehdä yhteistyötä yritysten kanssa ja luoda uusia kontakteja 
+						työmaailmaan.
+					</li>
+					<li>
+						OIBS-käyttäjän profiili toimii eräänlaisena käyntikorttina. Profiili kertoo, 
+						minkälaisissa hankkeissa käyttäjä on ollut mukana, mitä ideoita ja aineistoa 
+						hän on tuottanut.
+					</li>
+				</ul>
+				</li>
+		</ul>
+	</div>
+	<div id="frontpage_teacher_text">	
+		<h2>OIBS opettajille</h2>
+	
+		<ul>
+			<li>
+				Opettajat voivat käyttää OIBS:ia opetustyökaluna. OIBS:n kautta opiskelijaryhmien tuotoksien 
+				ja edistymisen seuraaminen on helppoa.
+			</li>
+			<li>
+				Opettajat voivat osallistua OIBS-verkkopalvelun kehittämiseen ja sisällöntuotannon organisointiin.
+			</li>
+			<li>
+				Opettajat voivat olla yhteydessä yritysmaailmaan sekä muiden maiden kouluihin ja niiden 
+				innovatiiviseen toimintaan.
+			</li>
+		</ul>
+        </div>
+        <div id="frontpage_pensioner_text">
+		<h2>OIBS aktiivisille eläkeläisille</h2>
+	
+		<ul>
+			<li>
+				Eläkeläisten osaaminen ja elämänkokemus on arvokasta. OIBS tarjoaa paikan, jossa kokemukset 
+				ja osaamisen voi jakaa muille. OIBS:n kautta vanhojen ja nuorten luovuus voi yhdistyä. 
+			</li>
+			<li>
+				OIBS:n kautta eläkeläiset voivat olla aktiivisesti mukana kehittämässä ratkaisuja ja ideoita, 
+				jotka auttavat edistämään heidän hyvinvointiaan ja kehittämään palveluja sekä toimintaa.
+			</li>
+			<li>
+				Eläkeläinen voi halutessaan säilyttää yhteyden toimialaansa työuran päätyttyä. Ihmiset 
+				voivat työuransa jälkeenkin olla halutessaan kehittämässä työmaailmaansa liittyviä haasteita 
+				ja ongelmia ja siten hyödyttää yritysmaailmaa omalla kokemuksellaan.
+			</li>
+		</ul>
+        </div>
+        <div id="frontpage_company_text">
+		<h2>OIBS yrityksille</h2>
+	
+		<ul>
+			<li>
+				Yritykset voivat hyödyntää OIBS:ssa tuotettuja innovaatioita omiin tarpeisiinsa
+			</li>
+			<li>
+				OIBS:ssa on saatavilla tietoa asiakkaan ongelmista (tarpeista, haluista), nykyisestä 
+				markkinoiden kehityksestä sekä tulevaisuuden näkymistä.
+			</li>
+			<li>
+				Yritykset voivat tallentaa OIBS:iin kuvauksia markkinoidensa ongelmista ja saada 
+				uusia näkökulmia ja ratkaisuja kustannustehokkaasti
+			</li>
+			<li>
+				OIBS vähentää yrityksen sisäistä ideointityön tarvetta
+			</li>
+			<li>
+				Yritykset voivat löytää uutta innovatiivista työvoimaa OIBS:n kautta
+			</li>
+			<li>
+				Vanhat, kokeneet työntekijät ja heidän osaamisensa ovat arvokasta pääomaa yrityksille 
+				ja organisaatioille. OIBS:n kautta eläkkeelle jääneiden työntekijöiden luovuutta ja 
+				osaamista voidaan edelleen hyödyntää
+			</li>
+			<li>
+				OIBS:lla on tärkeä teknologinen ja sosiaalinen rooli uusien ideoiden ja keksintöjen 
+					kaupallistamisessa.
+			</li>
+		</ul>
+        </div>
+        <div id="frontpage_public_sector_text">
+		<h2>OIBS julkisille toimijoille (kaupungit, kunnat)</h2>
+		
+		<ul>
+			<li>
+				Kaupungit/kunnat voivat kehittää palvelujaan OIBS:n kautta. Julkiset organisaatiot voivat 
+				järjestää ideointikilpailuja palvelujen parantamiseksi
+			</li>
+			<li>
+				OIBS:n kautta asukkaat pääsevät kuntien kehitystyöhön konkreettisesti mukaan
+			</li>
+			<li>
+				Laurean opiskelijoiden ehdotuksia OIBS:n hyödyistä Espoon kaupungille: 
+				<a href="http://www.oibs.fi/wiki/index.php/Laureas_example_1_Ryhma_13">http://www.oibs.fi/wiki/index.php/Laureas_example_1_Ryhma_13</a>
+			</li>
+		</ul>
+		
+		<h2>OIBS muille (muut käyttäjät)</h2>
+	
+		<ul>
+			<li>
+				OIBS on avoin palvelu kaikille innovaatioiden, ratkaisujen ja ideoiden luomisesta
+				kiinnostuneille.
+			</li>
+		</ul>
+	
+		<p>Lisätietoja OIBSista saat <a href="http://www.oibs.fi/wiki">OIBS-wikistä</a>.</p>
+	</div>
+</div><!-- end of display:none -->
+<?php
+}
+?>

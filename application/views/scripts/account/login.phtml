@@ -1,0 +1,34 @@
+<div id="login_form_container">
+	<h1><?php echo $this->translate('account-login-title'); ?></h1>
+	<p>
+		<?php //echo $this->translate('account-login-text'); ?>
+	</p>
+	<?php
+    
+    if(isset($this->errormsg))
+    {
+        echo "<h2>".$this->errormsg."</h2>";
+    }
+    
+	echo $this->form;
+	
+	/*
+	<form action="<?php $this->url(array('controller' => 'account', 'action' => 'login', 'language' => $this->language), 'lang_default', true); ?>" method="post">
+		<p>
+			<span class="login_text"><?php echo $this->translate('account-login-username'); ?>:</span>
+				<input name="username" type="text" class="login" /><br/>
+			<span class="login_text"><?php echo $this->translate('account-login-password'); ?>:</span>
+				<input name="password" type="password" class="login" /><br />
+			<span class="login_text">&nbsp;</span>
+				<input type="submit" value="<?php echo $this->translate('account-login-submit'); ?>" class="login_button" />
+		</p>
+	*/
+	?>
+		
+		<p>	
+			<a href="<?php echo $this->url(array('controller' => 'account', 'action' => 'fetchpassword', 'language' => $this->language), 'lang_default', true); ?>"><?php echo $this->translate('account-login-forgot_password'); ?></a><br/> 
+		</p>
+		<?php
+	// </form>
+	?>
+</div>

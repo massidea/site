@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='tag-view-header'>
+		<tuv xml:lang="en"><seg>Contents that have the tag: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällöt, joilla on tagi: </seg></tuv>
+	</tu>
+    <tu tuid='tag-cloud-header'>
+		<tuv xml:lang="en"><seg>All the tags used on the site, size equals popularity.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaikki sivustolla käytetyt tagit, suurempi on suositumpi. </seg></tuv>
+	</tu>
+	<tu tuid='tag-view-cloudmsg'>
+		<tuv xml:lang="en"><seg>Tag cloud</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tagipilvi</seg></tuv>
+	</tu>
+</body>
+
+

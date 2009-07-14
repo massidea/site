@@ -1,0 +1,6 @@
+<div id="tag_cloud_container">
+    <h1><?php echo $this->translate('tag-cloud-header'); ?></h1>
+	<?php foreach($this->tag_list as $tag): ?>
+		<a href="<?php echo $this->url(array('controller' => 'tag', 'action' => 'view', 'id' => $tag['id_tag'], 'language' => $this->language), 		'lang_default', true); ?>" style="font-size:<?php echo $tag['count']['tag_size'].'%'; ?>;"><?php echo stripslashes($tag['name_tag']); ?></a> 
+	<?php endforeach; ?>
+</div>

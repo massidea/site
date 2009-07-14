@@ -1,0 +1,13 @@
+<div id="left_1">
+	<p class="center">
+		<img src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/balloons/exclamation.gif" alt="Register complete!" />
+	</p>
+</div> <!-- end of "left_1"  -->
+<div id="right_1">
+	<?php 
+		echo '<p>'.$this->translate->_('Account-registercomplete-p1', $this->language).' <strong>'.$this->username.'</strong>.</p>';
+		echo '<p>'.$this->translate->_('Account-registercomplete-p2', $this->language).' <strong>'.$this->email.'</strong></p>';
+	?>
+</div> <!-- end of "right_1" -->
+<p style="clear: both"></p>
+</div><!-- end of "content"  -->

@@ -1,0 +1,150 @@
+<div id="form_registration_container">
+    <h1><?php echo $this->translate('account-register-page_header'); ?></h1>
+    
+	<?php
+	if($this->language == "en") {
+		echo '
+		<ul>
+			<li>
+				Registering with OIBS is <b>free of charge</b>, and takes only two minutes
+			</li>
+			<li>
+				Registered users can
+				<ul>
+					<li>
+						add visions of the future or todays challenges into the database
+					</li>
+					<li>
+						present new ideas (solutions) for the problems and visions found in the database
+					</li>
+					<li>
+						review and comment on the content created by other users
+					</li>
+					<li>
+						further develop the ideas and compete with your ideas with other users
+					</li>
+					<li>
+						create your own profile and network with other
+					</li>
+					<li>
+						create ideas, inventions and innovations which can change the world!
+					</li>
+				</ul>
+			</li>
+		</ul>
+		';
+	} elseif($this->language == "fi") {
+		echo '
+		<ul>
+			<li>
+				Rekisteröityminen on <b>maksutonta</b>, helppoa ja nopeaa
+			</li>
+			<li>
+				Rekisteröityneet käyttäjät voivat
+				<ul>
+					<li>
+						lisätä tietokantaan kuvauksia ongelmista tai tulevaisuuden näkymistä
+					</li>
+					<li>
+						esittää uusia ideoita (ratkaisuja) tietokannasta löytyviin ongelmiin ja tulevaisuuden visioihin
+					</li>
+					<li>
+						arvostella ja kommentoida muiden käyttäjien tuotoksia
+					</li>
+					<li>
+						kehittää tietokannasta löytyviä ideoita ja kilpailla ideoillaan toisten käyttäjien kanssa
+					</li>
+					<li>
+						luoda oman profiilin ja verkostoitua muiden käyttäjien kanssa
+					</li>
+					<li>
+						kehittää ideoita, keksintöjä ja innovaatioita, jotka voivat muuttaa maailman!
+					</li>
+				</ul>
+			</li>
+		</ul>
+		';
+	}
+    ?>
+    
+    <p><?php echo $this->translate('account-register-first_paragraph'); ?></p>
+	<p><?php echo $this->translate('account-register-second_paragraph'); ?></p>
+	<?php
+        //$errorsMessages = $this->form->getMessages();
+        //echo "<pre>"; print_r($errorsMessages); echo "</pre>"; die;
+        echo $this->form;
+    ?>
+</div>
+
+<div id="popup_terms_" class="popup" style="display:none;">
+	<div class="popup_text" style="color:#fff;">
+		<div class="popup_close" style="">
+			<div style="float:right;">
+				<a href="#" onclick="popup('popup_terms_')"><img src="/images/icon_close.png" alt="" /></a>
+			</div>
+		</div>
+		<div style="clear:both; padding-top: 10px; color: black; font-family: times new roman, arial;">
+			<?php if ($this->language == "en") : ?>
+			<p>
+				Terms..
+			</p>
+			<?php endif; ?>
+			<?php if ($this->language == "fi") : ?>
+			<p>
+				Ehdot..
+			</p>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+
+<div id="popup_privacy_" class="popup" style="display:none;">
+	<div class="popup_text" style="color:#fff;">
+		<div class="popup_close" style="">
+			<div style="float:right;">
+				<a href="#" onclick="popup('popup_privacy_')"><img src="/images/icon_close.png" alt="" /></a>
+			</div>
+		</div>
+		<div style="clear:both; padding-top: 10px; color: black; font-family: times new roman, arial;">
+			<?php if ($this->language == "en") : ?>
+			<p>
+				Privacy..
+			</p>
+			<?php endif; ?>
+			<?php if ($this->language == "fi") : ?>
+			<p>
+				Yksityisyys..
+			</p>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+
+<div id="popup_verification" class="popup" style="display:none;">
+        <div class="popup_text" style="color:#fff;">
+                <div class="popup_close" style="">
+                        <div style="float:right;">
+                                <a href="#" onclick="popup('popup_verification')"><img src="/images/icon_close.png" alt="" /></a>
+                        </div>
+                </div>
+                <div style="clear:both; padding-top: 10px; color: black; font-family: times new roman, arial;">
+                        <?php if ($this->language == "en") : ?>
+                        <p>
+                                The verification question and answer is needed when you forget your password.
+				When you forget the password, you must send e-mail directly to oibs@tamk.fi
+				containing your username. We will send you the corresponding secret question
+				and if you answer that correctly, we will reset your password.
+                        </p>
+                        <?php endif; ?>
+                        <?php if ($this->language == "fi") : ?>
+                        <p>
+                                Varmistuskysymystä ja -vastausta tarvitaan siinä tilanteessa, jos unohdat
+				salasanasi. Salasanan unohtaessasi lähetä sähköpostilla käyttäjänimesi
+				osoitteeseen oibs@tamk.fi. Kysymme sinulta lähettämällesi käyttäjänimelle
+				kuuluvan varmistuskysymyksen, ja jos vastaat siihen oikein, resetoimme
+				salasanasi ja lähetämme sinulle uuden. <br /><br />
+                        </p>
+                        <?php endif; ?>
+                </div>
+        </div>
+</div>

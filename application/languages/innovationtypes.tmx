@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='innovation_types'>
+		<tuv xml:lang="en"><seg>Innovation type</seg></tuv>
+		<tuv xml:lang="fi"><seg>Innovaatiotyyppi</seg></tuv>
+	</tu>
+	<tu tuid='Product innovation'>
+		<tuv xml:lang="en"><seg>Product innovation</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tuoteinnovaatio</seg></tuv>
+	</tu>
+	<tu tuid='Process innovation'>
+		<tuv xml:lang="en"><seg>Process innovation</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kehitysinnovaatio</seg></tuv>
+	</tu>
+	<tu tuid='Organisational innovation'>
+		<tuv xml:lang="en"><seg>Organisational innovation</seg></tuv>
+		<tuv xml:lang="fi"><seg>Järjestelyinnovaatio</seg></tuv>
+	</tu>
+	<tu tuid='Structural innovation'>
+		<tuv xml:lang="en"><seg>Structural innovation</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rakenneinnovaatio</seg></tuv>
+	</tu>
+	<tu tuid='Market innovation'>
+		<tuv xml:lang="en"><seg>Market innovation</seg></tuv>
+		<tuv xml:lang="fi"><seg>Markkinaininnovaatio</seg></tuv>
+	</tu>
+</body>

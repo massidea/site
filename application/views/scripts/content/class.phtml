@@ -1,0 +1,9 @@
+<select name="content_class" id="content_class">
+<option value="0"><?php echo $this->translate("content-add-select-class"); ?></option>
+<?php
+foreach($this->classes as $class)
+{
+	echo '<option value="'.$class['id_ind'].'">'.$class['name_ind'].'</option>';
+}
+?>
+</select>

@@ -1,0 +1,9 @@
+<select id="content_group" name="content_group" onChange="getItems('/en/content/class/group/'+this.value, 'classdd', this.value)">
+<option value="0"><?php echo $this->translate("content-add-select-group"); ?></option>
+<?php
+foreach($this->groups as $group)
+{
+	echo '<option value="'.$group['id_ind'].'">'.$group['name_ind'].'</option>';
+}
+?>
+</select>

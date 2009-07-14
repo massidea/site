@@ -1,0 +1,51 @@
+<div class="search_result">
+<h1><?php echo $this->translate('search-result-title'); ?></h1>
+<?php if (!empty($this->contentPaginator)): ?>
+	<div id="content_list_content_left">
+
+	</div>
+	<div id="content_list_content_right">
+		<h2><?php //printf($this->translate('content-list-recent_'.$this->type), $this->count); ?></h2>
+		<div id="search_result_content_pagination_top">
+			<?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
+		</div>
+		<div id="content_list_content_order">
+			<span><?php echo $this->translate('content-list-order-by'); ?></span>
+			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'author'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-author'); ?></a> | 
+			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'created'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-date'); ?></a> |
+			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'header'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-header'); ?></a> | 
+			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'views'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-views'); ?></a>
+		</div>
+		<?php foreach($this->contentPaginator as $entry): ?>	
+		<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt']; ?>" class="content_entry_container <?php echo $entry['key_cty'];?>_container">
+			<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_right'; ?>" class="content_container_right">
+					<div id="content_entry_owner_<?php echo $entry['id_cnt']; ?>" class="content_entry_owner <?php echo $entry['key_cty'];?>_user_header">
+						<a href="<?php echo $this->url(array('controller' => 'account', 'action' => 'view', 'user' => $entry['login_name_usr'], 'language' =>  $this->language), 'lang_default', true); ?>"><?php echo $entry['login_name_usr']?></a>
+					</div>
+					<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_created'; ?>" class="content_entry_created">
+						<?php echo $this->translate('Created: ').date('d M Y', strtotime($entry['created_cnt'])); ?>
+					</div>
+			</div>
+			<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_left'; ?>" class="content_container_left <?php echo $entry['key_cty']; ?>_container_left">
+				<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_header'; ?>" class="content_entry_header <?php echo $entry['key_cty']; ?>_entry_header">
+					<a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'view', 'id' => $entry['id_cnt'], 'language' => $this->language), 'lang_default', true); ?>">		
+					<?php echo stripslashes($entry['title_cnt']); ?>
+					</a>
+				</div>
+				<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_lead'; ?>" class="content_entry_lead">
+					<?php echo stripslashes($entry['lead_cnt']); ?>
+				</div>
+			</div>
+		</div>
+		<?php endforeach; ?>
+			<div class="clear"></div>
+		<div id="search_result_content_pagination_bottom">
+			<?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
+		</div>
+	</div>
+<?php else: ?>
+	<div>
+		<?php echo $this->translate('Nothing found!!!'); ?>
+	</div>
+<?php endif; ?>
+</div>

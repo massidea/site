@@ -1,0 +1,60 @@
+<?php
+if(!empty($this->comments))
+{
+?>
+<div id="content_view_comments">
+			<div id="content_view_comments_header">
+			<?php
+				if (count($this->comments) == 1)
+				{
+			?>
+				<h1><?php printf($this->translate('content-view-comment'), count($this->comments)); ?></h1>
+			<?php
+				}
+				else
+				{
+			?>
+				<h1><?php printf($this->translate('content-view-comments'), count($this->comments)); ?></h1>
+			<?php
+				}
+			?>
+			</div>
+			<?php
+				foreach($this->comments as $comment)
+				{
+					$userinfo = $comment['id_cmt_usr'];
+			?>		
+			<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>" class="content_view_comment_container">
+				<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_username" class="content_view_comment_user">
+					<?php
+					if (isset($userinfo['profile_image_thumb_usr']))
+					{
+					?>
+						<img src="<?php echo $this->url(array('controller' => 'account', 'action' => 'profilethumb', 'id' => $userinfo['id_usr']), 'lang_default', true); ?>" alt="User image" width="70" height="80"/>
+					<?php
+					}
+					?>
+					<br />
+					<span class="content_view_comment_username"><?php echo $userinfo['login_name_usr']; ?></span>
+					<br />
+					<span class="content_view_comment_posted"><?php echo date('d M Y', strtotime($comment['created_cmt'])); ?></span>
+				</div>
+				<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>" class="content_view_comment">
+					<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_title" class="content_view_comment_title">
+						<?php //echo $comment['title_cmt']; ?>
+					</div>
+					<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_textbody" class="content_view_comment_textbody">
+						<?php echo $comment['body_cmt']; ?>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			
+			<?php				
+				}
+			?>
+		</div>
+</div>
+<?php
+}
+?>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <production>
+        <routes>
+        	<!-- Language -->
+			<lang_default>
+				<route>:language/:controller/:action/*</route>
+				<defaults>
+					<language>en</language>
+					<controller>index</controller>
+					<action>index</action>
+				</defaults>
+			</lang_default>
+        </routes>
+    </production>
+ 
+    <!-- This section is required -->
+    <staging extends="production">
+    </staging>
+</config>

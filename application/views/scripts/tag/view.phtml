@@ -1,0 +1,16 @@
+<div id="tag_list_container">
+    <h1><?php echo $this->translate('tag-view-header') . " \"" . stripslashes($this->tagName) . "\""; ?></h1>
+    <hr />
+    <div class="tag_view_results">
+    <?php foreach($this->tags as $tag): ?>
+        <div class="tag_view_<?php echo $tag['type']; ?>">
+            <div class="tag_view_title"><a href="<?php echo $this->url(array('content_id' => $tag['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>"><?php echo stripslashes($tag['title_cnt']); ?></a></div>
+            <div class="tag_view_lead"><p><?php echo stripslashes($tag['lead_cnt']); ?></p></div>
+        </div>
+        
+        <hr />
+    <?php endforeach; ?>
+    </div>
+    
+    <h2><a href="/<?php echo $this->language; ?>/tag"><?php echo $this->translate('tag-view-cloudmsg'); ?></a></h2>
+</div>

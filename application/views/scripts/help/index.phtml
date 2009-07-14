@@ -1,0 +1,23 @@
+﻿<a href="<?php echo $this->url(array('controller' => 'help', 'action' => 'about', 'language' => $this->language), 'lang_default', true); ?>">
+                                    <?php echo "About"; ?></a>
+<table border="3">
+<th>Title</th>
+<th>Content</th>
+<?php
+		foreach ($this->help as $helpitem){
+		?>
+		<tr>
+			<td>
+				<?php echo $helpitem['title_hlp']; ?>
+			</td>
+			<td>
+				<?php echo $helpitem['content_hlp']; ?>
+			</td>
+		</tr>
+		<?php
+		}
+		
+	?>
+	</table>
+	<br>
+	

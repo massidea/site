@@ -1,0 +1,56 @@
+<div id="form_registration">
+	<h1><?php echo $this->translate('account-register-page_header'); ?></h1>
+			
+			<p><?php echo $this->translate('account-register-first_paragraph'); ?></p>
+			<p><?php echo $this->translate('account-register-second_paragraph'); ?></p>
+			<?php
+			
+			$errorsMessages = $this->form->getMessages();
+			//print_r($errorsMessages);
+			/*
+			if(isset($errorsMessages['username']['isEmpty']))
+			{
+			?>
+				<p><?php echo "Username is required."; ?></p>
+			<?php
+			}	
+			if(isset($errorsMessages['username']['stringLengthTooShort']))
+			{
+			?>
+				<p><?php	echo "Username is too short."; ?></p>
+			<?php
+			}
+			if(isset($errorsMessages['email']['isEmpty']))
+			{
+			?>
+				<p><?php	echo "E-mail is required field."; ?></p>
+			<?php
+			}
+			if(isset($errorsMessages['email']['stringLengthTooShort']))
+			{
+			?>
+				<p><?php	echo "E-mail is not valid."; ?></p>
+			<?php
+			}
+			if(isset($errorsMessages['confirm_email']['isEmpty']))
+			{
+			?>
+				<p><?php	echo "Confirm e-mail is required field."; ?></p>
+			<?php
+			}
+			if(isset($errorsMessages['confirm_email']['stringLengthTooShort']))
+			{
+			?>
+				<p><?php	echo "Confirm e-mail is not valid."; ?></p>
+			<?php
+			}		
+			if(isset($errorsMessages['verification']['badCaptcha']))
+			{
+			?>
+				<p><?php	echo "Please re-enter verification text."; ?></p>
+			<?php
+			}
+			*/
+			echo $this->form;
+			?>
+</div>

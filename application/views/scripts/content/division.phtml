@@ -1,0 +1,9 @@
+<select id="content_division" name="content_division" onchange="getItems('/en/content/group/division/'+this.value, 'groupdd', this.value); checkCF();">
+<option value="0"><?php echo $this->translate("content-add-select-division"); ?></option>
+<?php
+foreach($this->divisions as $division)
+{
+	echo '<option value="'.$division['id_ind'].'">'.$division['name_ind'].'</option>';
+}
+?>
+</select>

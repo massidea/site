@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='privmsg-add-successful'>
+		<tuv xml:lang="en"><seg>Private message sent</seg></tuv>
+		<tuv xml:lang="fi"><seg>Yksityisviesti lähetetty</seg></tuv>
+	</tu>
+	<tu tuid='privmsg-send-title'>
+		<tuv xml:lang="en"><seg>Send a private message</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lähetä yksityisviesti</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-message-to'>
+		<tuv xml:lang="en"><seg>To:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kenelle:</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-message-from'>
+		<tuv xml:lang="en"><seg>From:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Keneltä:</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-header'>
+		<tuv xml:lang="en"><seg>Header:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Otsikko:</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-message'>
+		<tuv xml:lang="en"><seg>Message:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Viesti:</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-email'>
+		<tuv xml:lang="en"><seg>Your email:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sähköpostisi:</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-send'>
+		<tuv xml:lang="en"><seg>Send</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lähetä</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-send-invalid-receiver'>
+		<tuv xml:lang="en"><seg>Given private message receiver doesn't exist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Yksityisviestin vastaanottajaa ei ole olemassa!</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-send-not-logged'>
+		<tuv xml:lang="en"><seg>You must login in order to send private messages!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sinun pitää olla kirjautuneena lähettääksesi yksityisviestejä!</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-view-not-logged'>
+		<tuv xml:lang="en"><seg>You must login in order to view private messages!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sinun pitää olla kirjautuneena nähdäksesi yksityisviestisi!</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-messages'>
+		<tuv xml:lang="en"><seg>Private messages</seg></tuv>
+		<tuv xml:lang="fi"><seg>Yksityisviestit</seg></tuv>
+	</tu>    
+     <tu tuid='minutes-ago'>
+		<tuv xml:lang="en"><seg>minutes ago</seg></tuv>
+		<tuv xml:lang="fi"><seg>minuuttia sitten</seg></tuv>
+	</tu>
+     <tu tuid='hours-ago'>
+		<tuv xml:lang="en"><seg>hours ago</seg></tuv>
+		<tuv xml:lang="fi"><seg>tuntia sitten</seg></tuv>
+	</tu>
+     <tu tuid='days-ago'>
+		<tuv xml:lang="en"><seg>days ago</seg></tuv>
+		<tuv xml:lang="fi"><seg>päivää sitten</seg></tuv>
+	</tu>
+     <tu tuid='weeks-ago'>
+		<tuv xml:lang="en"><seg>weeks ago</seg></tuv>
+		<tuv xml:lang="fi"><seg>viikkoa sitten</seg></tuv>
+	</tu>
+     <tu tuid='years-ago'>
+		<tuv xml:lang="en"><seg>years ago</seg></tuv>
+		<tuv xml:lang="fi"><seg>vuotta sitten</seg></tuv>
+	</tu>
+</body>

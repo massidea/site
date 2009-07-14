@@ -1,0 +1,19 @@
+
+<div class="box_login">
+	<p>
+		<?php echo $this->translate('account-login-text'); ?>
+	</p>
+	<form action="<?php $this->url(array('controller' => 'login', 'action' => 'login', 'language' => $this->language), 'lang_default', true); ?>" method="post">
+		<p>
+			<label class="login_label"><?php echo $this->translate('account-login-username'); ?>:</label>
+				<input name="username" type="text" class="login" /><br/>
+			<label class="login_label"><?php echo $this->translate('account-login-password'); ?>:</label>
+				<input name="password" type="password" class="login" /><br />
+			<label class="login_label">&nbsp;</label>
+				<input type="submit" value="<?php echo $this->translate('account-login-submit'); ?>" class="login_button" />
+		</p>
+		<p>
+			<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/login/fetchpassword"><?php echo $this->translate('account-login-forgot_password'); ?></a><br/> 
+		</p>
+	</form>	
+</div>

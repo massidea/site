@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='account-login-title'>
+		<tuv xml:lang="en"><seg>Login</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu</seg></tuv>
+	</tu>	
+	<tu tuid='account-login-username'>
+		<tuv xml:lang="en"><seg>Username</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tunnus</seg></tuv>
+	</tu>	
+	<tu tuid='account-login-password'>
+		<tuv xml:lang="en"><seg>Password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasana</seg></tuv>
+	</tu>
+	<tu tuid='account-login-text'>
+		<tuv xml:lang="en"><seg>Please log in using your OIBS username and password.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ole hyvä ja kirjaudu sisään käyttäen OIBS tunnustasi.</seg></tuv>
+	</tu>
+	<tu tuid='account-login-submit'>
+		<tuv xml:lang="en"><seg>Login</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu</seg></tuv>
+	</tu>
+    <tu tuid='account-login-field-empty'>
+		<tuv xml:lang="en"><seg>Field must not be empty!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kenttä ei voi olla tyhjä!</seg></tuv>
+	</tu>
+	<tu tuid='account-login-forgot_password'>
+		<tuv xml:lang="en"><seg>I Forgot my password.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Unohdin salasanani.</seg></tuv>
+	</tu>
+    <tu tuid='account-login-not-successful'>
+		<tuv xml:lang="en"><seg>Wrong username and/or password!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Väärä käyttäjätunnus ja/tai salasana!</seg></tuv>
+	</tu>
+	<tu tuid='account-register-page_header'>
+		<tuv xml:lang="en"><seg>Registration</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröityminen</seg></tuv>
+	</tu>
+    <tu tuid='username-exists'>
+		<tuv xml:lang="en"><seg>Username taken</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjänimi on jo rekisteröity.</seg></tuv>
+	</tu>
+    <tu tuid='field-empty'>
+		<tuv xml:lang="en"><seg>This is a required field</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä kenttä on pakollinen</seg></tuv>
+	</tu>
+    <tu tuid='email-invalid'>
+		<tuv xml:lang="en"><seg>Invalid e-mail address</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sähköpostiosoite ei läpäissyt tarkastusta</seg></tuv>
+	</tu>
+    <tu tuid='captcha-no-same'>
+		<tuv xml:lang="en"><seg>Captcha messages did not match</seg></tuv>
+		<tuv xml:lang="fi"><seg>Captcha-viestit eivät vastanneet</seg></tuv>
+	</tu>
+    <tu tuid='value-not-same'>
+		<tuv xml:lang="en"><seg>Values must match.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kenttien sisältö täytyy olla sama.</seg></tuv>
+	</tu>
+    <tu tuid='checkbox-not-checked'>
+		<tuv xml:lang="en"><seg>Mandatory</seg></tuv>
+		<tuv xml:lang="fi"><seg>Pakollinen</seg></tuv>
+	</tu>    
+    <tu tuid='email-invalid-hostname'>
+		<tuv xml:lang="en"><seg>E-mail hostname invalid</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sähköpostin hostname ei ole validi</seg></tuv>
+	</tu>    
+    <tu tuid='field-too-short'>
+		<tuv xml:lang="en"><seg>Field too short</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liian lyhyt</seg></tuv>
+	</tu>
+	<tu tuid='registration-successful'>
+		<tuv xml:lang="en"><seg>Registration succesful</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröityminen onnistui</seg></tuv>
+	</tu>
+	<tu tuid='account-register-first_paragraph'>
+		<tuv xml:lang="en"><seg>Please fill your personal information. Fields marked with an "*" are required. Your password will be mailed to your e-mail account.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ole hyvä ja syötä tarvittavat tiedot. Salasana lähetetään sinulle sähköpostissa. Pakolliset kentät ovat merkitty * merkillä.</seg></tuv>
+	</tu>
+	<tu tuid='account-register-second_paragraph'>
+		<tuv xml:lang="en"><seg>By default, no personal information is shown to other users.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Oletuksena mitään henkilötietoja ei näytetä muille käyttäjille.</seg></tuv>
+	</tu>
+	<tu tuid='account-register-username'>
+		<tuv xml:lang="en"><seg>Username</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjänimi</seg></tuv>
+	</tu>
+	<tu tuid='account-register-password'>
+		<tuv xml:lang="en"><seg>Password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasana</seg></tuv>
+	</tu>
+	<tu tuid='account-register-password_confirm'>
+		<tuv xml:lang="en"><seg>Confirm password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vahvista salasana</seg></tuv>
+	</tu>
+	<tu tuid='account-register-email'>
+		<tuv xml:lang="en"><seg>E-mail address</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sähköposti</seg></tuv>
+	</tu>
+	<tu tuid='account-register-email_confirmation'>
+		<tuv xml:lang="en"><seg>Confirm e-mail address</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vahvista sähköposti</seg></tuv>
+	</tu>
+	<tu tuid='account-register-verification'>
+		<tuv xml:lang="en"><seg>Verification</seg></tuv>
+		<tuv xml:lang="fi"><seg>Varmistus</seg></tuv>
+	</tu>
+    	<tu tuid='account-register-reminder-question'>
+		<tuv xml:lang="en"><seg>Password reminder question</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasanan muistutuskysymys</seg></tuv>
+	</tu>
+    	<tu tuid='account-register-reminder-answer'>
+		<tuv xml:lang="en"><seg>Password reminder answer</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasanan muistutusvastaus</seg></tuv>
+	</tu>
+	<tu tuid='account-register-enter_text'>
+		<tuv xml:lang="en"><seg>Enter the letters above</seg></tuv>
+		<tuv xml:lang="fi"><seg>Syötä teksti kuvasta</seg></tuv>
+	</tu>
+	<tu tuid='account-register-terms_and_privacy'>
+		<tuv xml:lang="en"><seg>I agree to the <a href="#" onclick="popup('popup_terms_')">terms of use</a> and <a href="#" onclick="popup('popup_privacy_')">privacy policy</a></seg></tuv>
+		<tuv xml:lang="fi"><seg>Olen lukenut ja hyväksynyt <a href="#" onclick="popup('popup_terms_')">käyttäjäehdot.</a> Lue myös <a href="#" onclick="popup('popup_privacy_')">tietosuojaperiaatteet.</a></seg></tuv>
+	</tu>	
+	
+	<tu tuid='account-register-terms_and_privacy_test'>
+		<tuv xml:lang="en"><seg>I agree to the <a href="#" onclick="popup('popup_terms_')">terms of use</a> and <a href="#" onclick="popup('popup_privacy_')">privacy policy</a></seg></tuv>
+		<tuv xml:lang="fi"><seg>Olen lukenut ja hyväksynyt <a href="#" onclick="popup('popup_terms_')">käyttäjäehdot.</a> Lue myös <a href="#" onclick="popup('popup_privacy_')">tietosuojaperiaatteet.</a></seg></tuv>
+	</tu>
+	<tu tuid='account-register-current_password'>
+		<tuv xml:lang="en"><seg>Current password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Nykyinen salasana</seg></tuv>
+	</tu>	
+	<tu tuid='account-register-submit'>
+		<tuv xml:lang="en"><seg>Submit</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lähetä</seg></tuv>
+	</tu>	
+	<tu tuid='account-register-gender'>
+		<tuv xml:lang="en"><seg>Gender</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sukupuoli</seg></tuv>
+	</tu>	
+	<tu tuid='account-profile-joined'>
+		<tuv xml:lang="en"><seg>Joined</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröitynyt</seg></tuv>
+	</tu>
+	<tu tuid='account-profile-last_login'>
+		<tuv xml:lang="en"><seg>Last login</seg></tuv>
+		<tuv xml:lang="fi"><seg>Viimeksi kirjautunut</seg></tuv>
+	</tu>
+	<tu tuid='account-edit-profile'>
+		<tuv xml:lang="en"><seg>Edit profile</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa tiliä</seg></tuv>
+	</tu>
+	<tu tuid='account-user-content'>
+		<tuv xml:lang="en"><seg>Content by user</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjän luoma sisältö</seg></tuv>
+	</tu>
+	<tu tuid='account-profile-first-name'>
+		<tuv xml:lang="en"><seg>First name</seg></tuv>
+		<tuv xml:lang="fi"><seg>Etunimi</seg></tuv>
+	</tu>
+	<tu tuid='account-profile-surname'>
+		<tuv xml:lang="en"><seg>Surname</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sukunimi</seg></tuv>
+	</tu>
+	<tu tuid='account-edit-title'>
+		<tuv xml:lang="en"><seg>Edit account</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa tiliä</seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-content-added'>
+		<tuv xml:lang="en"><seg>User has added %s content.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjä on lisännyt %s sisältöä.</seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-joined'>
+		<tuv xml:lang="en"><seg>Joined: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Liittynyt: </seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-not-logged'>
+		<tuv xml:lang="en"><seg>You must login in order to view userlist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sinun pitää kirjautua sisään nähdäksesi käyttäjälistan!</seg></tuv>
+	</tu>
+</body>
