@@ -9,6 +9,7 @@ echo $this->doctype();
     <link rel="icon" type="image/png" href="<?php echo $baseUrl; ?>/images/favicon.png"/>
     <title><?php echo $this->escape($this->translate($this->title)); ?></title>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $baseUrl; ?>/css/new_public.css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo $baseUrl; ?>/js/functions.js"></script>
     <script type="text/javascript" src="<?php echo $baseUrl; ?>/js/OibsUtils.js"></script>
     <?php
@@ -235,7 +236,7 @@ echo $this->doctype();
         <div class="popup_text" style="color:#fff;">
             <div class="popup_close" style="float:left;">
                 <div style="float:right;">
-                    <a href="#" onclick="popup('popup_naming_competition')"><img src="<?php echo $baseUrl; ?>/images/icon_close.png" alt="" /></a>
+                    <a href="#" onclick="popup_close('popup_naming_competition')"><img src="<?php echo $baseUrl; ?>/images/icon_close.png" alt="" /></a>
                 </div>
             </div>
             <div style="clear:both; padding-top: 10px;">
@@ -244,7 +245,7 @@ echo $this->doctype();
         </div>
     </div>
     
-    <div id="backdrop" onclick="closePopups()" style="display:none;"></div>  <!-- this is the pseudo-div used for the bakcdrop of all css-popups -->
+    <div id="backdrop" onclick="popup_close('popup_verification')"></div>  <!-- this is the pseudo-div used for the bakcdrop of all css-popups -->
     <?php //echo "<p>this->messages as seen by layout.phtml:" . $this->messages . "</p>";?>
 </body>
 </html>

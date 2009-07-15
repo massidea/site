@@ -46,23 +46,6 @@ function reloadCaptcha(baseUrl){
 	image.src = baseUrl+"/en/account/captcha" + '?' + (new Date()).getTime();
 }
 
-
-/**
-*	Hide or show an element
-*
-*	@param e:		Affected element
-*/
-function hideshow(e) {
-    if (e.length < 1) { return; }
-    element = document.getElementById(e);
-    
-    if (element.style.display == "none") {
-        element.style.display = "block"; 
-    } else { 
-        element.style.display = "none"; 
-    }
-}
-
 /**
 *	Hide or show an element and change some innerhtml related or more from user -block
 *
@@ -223,91 +206,21 @@ function replyToComment(id)
     d.value = id;
 }
 
-/** Po-up and backdrop **/
-
-/**
-*   blanket_size - define size of the backdrop / "blanket"
-*/
-function blanket_size(popUpDivVar) 
-{
-    if (typeof window.innerWidth != 'undefined') {
-        viewportheight = window.innerHeight;
-    } else {
-        viewportheight = document.documentElement.clientHeight;
-    }
-
-    if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
-        blanket_height = viewportheight;
-    } else {
-        if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
-            blanket_height = document.body.parentNode.clientHeight;
-        } else {
-            blanket_height = document.body.parentNode.scrollHeight;
-        }
-    }
-
-    var blanket = document.getElementById('backdrop');
-    blanket.style.height = blanket_height + 'px';
-    var popUpDiv = document.getElementById(popUpDivVar);
-    popUpDiv.style.top = 100 + 'px';	// we always show the pop-up at top:100
-}
-
-/*
-*   window_pos - define the position of the pop
-*/
-function window_pos(div) 
-{
-    if (typeof window.innerWidth != 'undefined') {
-        viewportwidth = window.innerHeight;
-    } else {
-        viewportwidth = document.documentElement.clientHeight;
-    }
-
-    if ((viewportwidth > document.body.parentNode.scrollWidth) && (viewportwidth > document.body.parentNode.clientWidth)) {
-        window_width = viewportwidth;
-    } else {
-        if (document.body.parentNode.clientWidth > document.body.parentNode.scrollWidth) {
-            window_width = document.body.parentNode.clientWidth;
-        } else {
-            window_width = document.body.parentNode.scrollWidth;
-        }
-    }
-
-    var popUpDiv = document.getElementById(div);
-    var half = popUpDiv.offsetWidth / 2;        // makes the calculation more clear
-    window_width=window_width/2-half;           // calc half of popup,
-    popUpDiv.style.left = window_width + 'px';  // set that half as left position
-}
-
-/** 
-*	Close all popup windows, used in the onclick of the backdrop div .
-*	Goes through all the div elements
-*/
-function closePopups() 
-{
-    var elements = document.getElementsByTagName('div');    // get all div elements to an array
-
-    for (var i = 0; i < elements.length; i++) {             // go through elements array
-        var div = elements[i];                              // shorten and clear code
-        // if there is a visible pop-up div, hide it and the backdrop
-        if ((div.id.search(/popup/i) >= "0") && (div.style.display == "block")) {
-            div.style.display = "none";
-            document.getElementById('backdrop').style.display = "none";
-        }
-    }
-}
-
 /**
 *	Combine the previous functions to a container / loader function to generate the plop-up
 */
-function popup(windowname) 
-{
-    blanket_size(windowname);
-    hideshow('backdrop'); // we have to display before calculating pos because of .offsetWidth
-    hideshow(windowname);
-    window_pos(windowname);
+function popup(windowname) {	
+		$("#backdrop").fadeIn("slow");
+		$("#"+windowname).fadeIn("slow");
 }
 
+/**
+ *	Close popup
+ */
+function popup_close(windowname) {
+		$("#backdrop").fadeOut("slow");
+		$("#"+windowname).fadeOut("slow");	
+}
 /**
 *   Disable all submit buttons in form
 *

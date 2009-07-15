@@ -1161,18 +1161,20 @@ div.privmsg_userinfo {
 
 /** Pop - ups **/
 #backdrop {
-	background-color:#111;
+	display: none;
+	position: fixed;
+	background-color: #000000;
 	opacity: 0.65;
 	filter:alpha(opacity=65);
-	position:absolute;
 	z-index: 9001;
 	top:0px;
 	left:0px;
 	width:100%;
+	height: 100%;
 }
 
 .popup {
-	position:absolute;
+	position: fixed;
 	background-color:#fff;
 	width:300px;
 	height:300px;
@@ -1180,7 +1182,10 @@ div.privmsg_userinfo {
 	padding: 10px;
 	overflow-x: hidden;
     border: 2px double #C3C3C3;
-}
+    margin: -150px;
+    top: 50%;
+    left: 50%;
+}  
 
 .popup_terms {
 	position:absolute;
