@@ -1,229 +1,73 @@
-<?php
-
-if($this->language == "en")
-{
-	if($this->authenticated)
-	{
-		?>
-		<div style="float: left; width: 480px; padding-top: 30px;">
-            <h1>Guidelines for adding content</h1>
-
-            <ul>
-                <li>
-                    OIBS content is short descriptions of today’s challenges, 
-                    visions of the future and the related ideas and solutions.
-                </li>
-                <li>
-                    All content is in the form of an A4 sheet, with the min. 
-                    length of 1500 marks.
-                </li>
-                <li>
-                    Describe the problem or vision accurately.
-                </li>
-                <li>
-                    Include references in your writing
-                </li>
-                <li>
-                    All content is open and public. Therefore, ideas planned to 
-                    be patented are not recommended to be added into the 
-                    database.
-                </li>
-                <li>
-                    The current OIBS is a demo version. Thus, when adding new 
-                    content we recommend to save a copy of the material for the 
-                    possible re-adding process into the new version.
-                </li>
-                <li>
-                    To add an idea, it has to relate to the content found in the
-                    OIBS database. In other words, there has to be a challenge 
-                    or vision what the idea is for.
-                </li>
-            </ul>
+<?php if($this->authenticated):?>
+        
+		<div style="float: left; width: 400px; padding-top: 30px;">
+            <?php echo $this->translate('content-index-authenticated-text', $this->language); ?>
         </div>
         
         <div style="float: left; padding: 30px 0px 0px 5px;">
             <img 
-                src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/add_content_picture_en.png" 
-                alt="Add content"
-                title="Add content"
+                src="<?php echo $this->baseUrl(); ?>/images/<?php echo $this->language; ?>/Add_content_picture.png" 
+                alt="<?php echo $this->translate('content-index-image-add',
+                                                 $this->language); ?>"
+                title="<?php echo $this->translate('content-index-image-add',
+                                                   $this->language); ?>"
                 usemap="#addcontent"
             />
             <map id="addcontent" name="addcontent">
                 <area 
                     shape="rect"
                     coords="9,64,112,143"
-                    href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/en/content/add/problem"
-                    alt="Add problem"
-                    title="Add problem"
+                    href="<?php echo $this->url(array(/*'controller' => 'content',
+                                                      'action' => 'add',*/
+                                                      'language' => $this->language,
+                                                      'contenttype' => 'problem'),
+                                                'addcnttype', true); ?>"
+                    alt="<?php echo $this->translate('content-index-image-add-problem',
+                                                     $this->language); ?>"
+                    title="<?php echo $this->translate('content-index-image-add-problem',
+                                                       $this->language); ?>"
                 />
                 <area 
                     shape="rect"
                     coords="9,228,112,308"
-                    href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/en/content/add/finfo"
-                    alt="Add future info"
-                    title="Add future info"
+                    href="<?php echo $this->url(array(/*'controller' => 'content',
+                                                      'action' => 'add',*/
+                                                      'language' => $this->language,
+                                                      'contenttype' => 'finfo'),
+                                                'addcnttype', true); ?>"
+                    alt="<?php echo $this->translate('content-index-image-add-finfo',
+                                                     $this->language); ?>"
+                    title="<?php echo $this->translate('content-index-image-add-finfo',
+                                                       $this->language); ?>"
                 />
             </map>
         </div>
-		<?php
-	}
-	else
-	{
-		?>
+        
+<?php else: ?>
+        
         <div style="float: left; width: 475px; padding-top: 30px;">
-            <h1>Guidelines for adding content</h1>
-
-            <ul>
-                <li>
-                    In order to add new content into OIBS, 
-                    <a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/en/account/register">register</a> or 
-                    <a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/en/account/login">log in</a> with your account.
-                </li>
-                <li>
-                    Start by browsing the content or by adding a new challenge 
-                    or a new vision.
-                </li>
-                <li>
-                    Ideas can be added only when they relate to the content 
-                    found in the database. In other words, there has to be a 
-                    challenge or a vision, what the solution if for.
-                </li>
-                <li>
-                    All content is open and public. Therefore, ideas planned to 
-                    be patented are not recommended to be added into the 
-                    database.
-                </li>
-                <li>
-                    The current OIBS website is a demo version. When adding new 
-                    content, it’s recommended to save a copy of the material for
-                    the possible re-adding process into the new version of the 
-                    website. 
-                </li>
-            </ul>
+            <?php
+            printf($this->translate('content-index-non-authenticated-text',
+                          $this->language),
+                          $this->url(array('controller' => 'account',
+                                           'action' => 'register',
+                                           'language' => $this->language),
+                                     'lang_default', true),
+                          $this->url(array('controller' => 'account',
+                                           'action' => 'login',
+                                           'language' => $this->language),
+                                     'lang_default', true)
+            );
+            ?>
         </div>
         
         <div style="float: left; padding: 30px 0px 0px 5px;">
             <img 
-                src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/user_steps_vertical_en.png" 
-                alt="Steps for adding content"
-                title="Steps for adding content"
+                src="<?php echo $this->baseUrl(); ?>/images/<?php echo $this->language; ?>/User_steps_vertical.png" 
+                alt="<?php echo $this->translate('content-index-image-steps',
+                                                 $this->language); ?>"
+                title="<?php echo $this->translate('content-index-image-steps',
+                                                   $this->language); ?>"
             />
         </div>
-		<?php
-	}
-}
-elseif($this->language == "fi")
-{
-	if($this->authenticated)
-    {
-		?>
-        <div style="float: left; width: 480px; padding-top: 30px;">
-            <h1>Ohjeet aineiston lisäämiseksi</h1>
-
-            <ul>
-                <li>
-                    OIBS:in aineisto on lyhyitä kuvauksia tämän päivän 
-                    haasteista, tulevaisuuden näkymistä sekä niihin 
-                    tarjotuista ideoista.
-                </li>
-                <li>
-                    Kaikki aineisto on A4-arkin muodossa, min. pituus on 1500 
-                    merkkiä.
-                </li>
-                <li>
-                    Kuvaile ongelma tai visio mahdollisimman tarkasti.
-                </li>
-                <li>
-                    Sisällytä lähteet kirjoitukseesi.
-                </li>
-                <li>
-                    Kaikki OIBS:n sisältö on avointa ja julkista. 
-                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
-                    tallentaa järjestelmään.
-                </li>
-                <li>
-                    Sivusto on demoversio. Säilytä kopio tallentamastasi 
-                    materiaalista, jotta mahdollinen uudelleentalletus sivuston
-                    uuteen versioon onnistuu vaivattomasti.
-                </li>
-                <li>
-                    Lisätäksesi jonkin uuden idean, sen on liityttävä 
-                    tietokannasta jo löytyvään aineistoon. Toisin sanoen ideat
-                    (ratkaisut) ovat vastauksia tietokannasta löytyviin 
-                    ongelmiin tai tulevaisuuden visioihin. 
-                </li>
-            </ul>
-        </div>
-        
-        <div style="float: left; padding: 30px 0px 0px 5px;">
-            <img 
-                src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/add_content_picture_fi.png" 
-                alt="Lisää sisältöä"
-                title="Lisää sisältöä"
-                usemap="#addcontent"
-            />
-            <map id="addcontent" name="addcontent">
-                <area 
-                    shape="rect"
-                    coords="16,61,116,141"
-                    href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/fi/content/add/problem"
-                    alt="Lisää ongelma"
-                    title="Lisää ongelma"
-                />
-                <area 
-                    shape="rect"
-                    coords="16,218,116,298"
-                    href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/fi/content/add/finfo"
-                    alt="Lisää tulevaisuuden näkymä"
-                    title="Lisää tulevaisuuden näkymä"
-                />
-            </map>
-        </div>
-		<?php
-	}
-	else
-	{
-		?>
-        <div style="float: left; width: 475px; padding-top: 30px;">
-            <h1>Ohjeet aineiston lisäämiseksi</h1>
-
-            <ul>
-                <li>
-                    <a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/en/account/register">Rekisteröidy</a> tai 
-                    <a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/en/account/login">kirjaudu sisään</a> 
-                    tunnuksillasi lisätäksesi tietokantaan uutta aineistoa.
-                </li>
-                <li>
-                    Aloita joko selaamalla sivuston aineistoa tai lisäämällä 
-                    tietokantaan jokin tämän päivän ongelma tai tulevaisuuden 
-                    visio.
-                </li>
-                <li>
-                    Ideoita voidaan ainoastaan lisätä tietokannasta löytyvään 
-                    aineistoon. Toisin sanoen ideat (ratkaisut) ovat vastauksia 
-                    kuvailtuihin ongelmiin tai tulevaisuuden visioihin.
-                </li>
-                <li>
-                    Kaikki OIBS:n sisältö on avointa ja julkista. 
-                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
-                    tallentaa järjestelmään.
-                </li>
-                <li>
-                    Sivusto on demoversio. Pidä itselläsi kopio tallentamastasi 
-                    materiaalista, jotta mahdollinen uudelleentalletus sivuston 
-                    uuteen versioon onnistuu vaivattomasti.
-                </li>
-            </ul>
-        </div>
-        
-        <div style="float: left; padding: 30px 0px 0px 5px;">
-            <img 
-                src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/user_steps_vertical_fi.png" 
-                alt="Sisällön lisäämisen vaiheet"
-                title="Sisällön lisäämisen vaiheet"
-            />
-        </div>
-		<?php
-	}
-}
-?>
+		<?php endif; ?>

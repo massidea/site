@@ -204,7 +204,7 @@ img { border: 0; }
 .footer { 
 	width: 803px;
 	height:25px;
-	padding-top:5px;
+	padding-top:10px;
 	background-image: url('../images/bg_footer.png');
 	background-position: top left;
 	background-repeat: no-repeat;
@@ -224,6 +224,10 @@ img { border: 0; }
 .u {
 	text-decoration: underline;
 }
+
+.flags {
+    margin-left: 3px;
+}
 /*********************************************************/
 
 #form_registration_container {
@@ -239,13 +243,25 @@ img { border: 0; }
 }
 
 #register_form {
-	padding: 0.2em 2em 0.5em 2em;
+	padding: 0;
+    margin: 0;
 }
 
 .form_registration_input input[type="text"],
-.form_registration_input input[type="password"] {
-    border: 0px solid red;
+.form_registration_input input[type="password"],
+.form_registration_input select {
+    border: 1px solid #88e;
     width: 180px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 3px;
+    background: transparent;
+    float:left;
+}
+
+#reminder_question {
+    border: 1px solid #88e;
+    width: 150px;
     height: 20px;
     margin-top: 5px;
     margin-left: 3px;
@@ -275,25 +291,22 @@ img { border: 0; }
 
 .form_registration_input,
 .form_registration_input {
-    background: #DDDDDD 
-	url("../images/bg_registration_input.png") no-repeat;
     width: 200px;
-    height: 30px;
+    height: 20px;
     float: left;
 }
 
 .form_registration_input_description,
 .form_registration_input_description {
-    background: #DDDDDD 
-	url("../images/bg_registration_input.png") no-repeat;
+    background-color: #fff;
     width: 200px;
     height: 30px;
     float: left;
 }
 
 .form_registration_row {
-    height: 40px;
-	margin-top: 5px;
+    height: 34px;
+	margin-top: 0x;
 }
 
 #form_registration_container .form_register_required {
@@ -315,6 +328,28 @@ img { border: 0; }
 #form_content_add_container dt,
 #login_form_container dt{
 	height: 0;
+}
+
+#account_profile_image{
+	border: 1px solid #e5e5e5;
+	margin-left: 10px;
+	padding: 4px;
+	width: 280px;
+}
+
+#hiddenmenu{
+	display: none; 
+	padding: 4px;
+	background-color: #FFFFFF; 
+	border: 1px solid #000000; 
+	font-family: Tahoma;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+#account_profile_image_submit{
+	margin-left: 9px;
+	margin-top: 6px;
 }
 
 #form_registration_container dd,
@@ -458,6 +493,14 @@ img { border: 0; }
 	width: 20em;
 }
 
+form#limit_tags_form #show{
+	margin-right: 20px;
+}
+
+form#limit_tags_form #selection{
+	margin-right: 10px;
+}
+
 #profile_form label {
 	font-weight: bold;
 	display: block;
@@ -519,7 +562,7 @@ form#add_content_form .butan {
 	font-weight: bold;
 }
 
-orm#preview {
+form#preview {
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -531,6 +574,14 @@ form#preview label {
 	width: 170px;
 }
 
+#form_preview_content {
+	width: inherit;
+	height: inherit;
+	background-color: white;
+	margin: -1em;
+	display: none;
+	padding-bottom: 20px;
+}
 
 .form_addcontent_row {
 	margin-left: 10px;
@@ -1188,6 +1239,20 @@ div.privmsg_userinfo {
 }  
 
 .popup_terms {
+	position: fixed;
+	background-color:#fff;
+	width:600px;
+	height:600px;
+	z-index: 9002;
+	padding: 10px;
+	overflow-x: hidden;
+    border: 2px double #C3C3C3;
+    margin: -150px;
+    top: 40%;
+    left: 40%;
+} 
+
+/*.popup_terms {
 	position:absolute;
 	background-color:#fff;
 	width:600px;
@@ -1196,7 +1261,7 @@ div.privmsg_userinfo {
 	padding: 10px;
 	overflow-x: hidden;
     border: 2px double #C3C3C3;
-}
+}*/
 
 .popup_close {
 	padding: 5px;
@@ -1493,13 +1558,38 @@ div.privmsg_userinfo {
 	padding: 1em;
 }
 
+.rsslogo {
+	vertical-align: middle;
+	margin-left: 20px;
+	width: 18px;
+	height: 18px;
+}
+
 #content_list_content_left {
 	float: left;
 	width: 14em;
 }
 
+#content_list_content_industries_navigation {
+    background: #E1EFF1;
+    border: 1px solid #5CCBD5;
+    padding: 1em 1em 0.7em 1em;
+    margin: 0 0 1em 0;  
+}
+
+#content_list_content_industries_navigation p {
+    margin: 0 0 0.3em 0;
+    padding: 0;
+}
+
+#content_list_content_industries_navigation  .industry_top {
+    font-weight: bold;
+    
+}
+
 #content_list_content_industries {
-	background: #f6f6f6;
+	background: #E4E6E6;
+    border: 1px solid #C9C9C9;
 	padding: 1em;
 }
 
@@ -1536,7 +1626,7 @@ div.privmsg_userinfo {
 }
 
 #content_view_user_related {
-	height: 20em;
+	height: auto;
 	overflow: auto;
 }
 
@@ -1690,6 +1780,18 @@ div.privmsg_userinfo {
 .content_view_comment_textbody {
 }
 
+.content_view_comment_reply {
+    padding: 0.4em;
+    display: block;
+    height: 1.2em;
+    background: #F7F7F7;
+    border-bottom: 1px solid #EFEFEF;
+}
+
+.content_view_comment_reply a {
+    float: right;
+    font-weight: bold;
+}
 #content_view_comments_header {
 	margin: 1em 0 1em 0;
 }
@@ -1815,6 +1917,11 @@ div.privmsg_userinfo {
 	border-bottom: 0.1em solid #D9C3AD;
 }
 
+#admin_tools {
+    border-bottom: 1px dotted black;
+    padding: 3px;
+}
+
 #account_view_header {
 	padding: 1em;
 }
@@ -1869,19 +1976,32 @@ div.privmsg_userinfo {
 #account_profile_user_content_idea_tools,
 #account_profile_user_content_futureinfo_tools,
 #account_profile_user_content_finfo_tools {
-    width: 12em;
-    height: 2em;
+    /*width: 12em;
+    height: 2em;*/
 }
 
 .account_profile_content_view {
-    width: 37em; 
+    width: 30em; 
+    float: left;
+}
+
+.account_profile_content_view_stats {
+    margin: 0 1em 0 1em;
+    width: 8em;
     float: left;
 }
 
 .account_profile_content_tools {
     float: left; 
-    width: 13em;
-    text-align: right;
+    width: 5em;
+    text-align: left;
+    margin: 0 1em 0 1em;
+}
+
+.account_profile_content_tools_edit,
+.account_profile_content_tools_publish,
+.account_profile_content_tools_delete {
+
 }
 
 .account_profile_user_content_problem_container {
@@ -1913,6 +2033,7 @@ div.privmsg_userinfo {
 	overflow: auto;
 	background: #F6F6F6;
 	padding: 0.5em;
+    width: 50em;
 }
 
 #hover_span {
@@ -1930,6 +2051,24 @@ div.privmsg_userinfo {
 
 #tag_cloud_container {
 	padding: 2em;
+}
+
+#tag_cloud_container_tags {
+	padding: 30px;
+	text-align: center;
+}
+
+#tag_cloud_container_tags a {
+	font-weight: bold;
+	margin: 3px;
+	color: #7B9139;
+	text-decoration: none;
+} 
+
+#tag_cloud_container_tags a:hover {
+	 background-color: #7B9139;
+	 color: white;
+	 text-decoration: none;
 }
 
 #tag_list_container {
@@ -2026,30 +2165,29 @@ div.privmsg_userinfo {
     padding: 0.3em;
 }
 
-.form_userlist_username_element,
-.form_userlist_select_element,
-.form_userlist_content_element,
-.form_userlist_checkbox_element {
-    margin: 0.2em;
-    padding: 0.2em;
-    
+.userlist_filter {
+    background: #E1EFF1;
+    border: 1px solid #5CCBD5;
+    padding: 1em;
+    margin: 0 0 1em 0;
 }
 
-#user_list_search {
-    
+.form_userlist_element,
+.form_userlist_content_count_element
+/*.form_userlist_checkbox_element */ {
+    margin: 0 0 0.2em 0;
+    padding: 0 0 0.2em 0;
 }
 
 #submit_user_filter{
     float: left;
 }
 
-.form_userlist_username_label,
-.form_userlist_select_label {
-    width: 5em;
+.form_userlist_element_label,
+.form_userlist_select_label,
+.form_userlist_content_label {
+    width: 8em;
     float: left;
-}
-
-.form_userlist_username_element {
 }
 
 .form_element_select_input {
@@ -2064,6 +2202,27 @@ div.privmsg_userinfo {
     float: left;
 }
 
+.form_userlist_element_input {
+    /*float: left;*/
+    width: 10em;
+    margin: 0 0 0 8em;
+}
+.form_element_username_input input,
+.form_element_select_input select,
+.form_element_content_input input {
+    font-size: 10pt;
+}
+
+.form_element_content_input {
+    margin: 0 0.5em 0 0;
+}
+.form_element_content_input input {
+    width: 3em;
+}
+
+.form_element_select_input {
+    margin: 0 0.5em 0 0;
+}
 /** 
 The following css are for boxes used around the site for various purposes.
 Original from http://www.jankoatwarpspeed.com/post/2008/05/22/CSS-Message-Boxes-for-different-message-types.aspx
@@ -2102,6 +2261,53 @@ usage example: <div class="message"><h3>header</h3><p>message</p></div>
     background-color: #EECDCD;
     background-image: url('../images/icon_error.png');
 }
+
+/* Under development... uncommenting soon :)
+#frontpage_imagemap {
+	cursor:pointer;
+}
+*/
+
+#help-contentbox {
+	border: 1px solid #999;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#help-contentbox div {
+	margin: 0px;
+	padding: 5px;
+}
+
+#help-contentbox div:nth-child(odd){
+	background: #eee;
+}
+
+#indexLoginBox {
+	position: absolute;
+	background-color: #F8F8F8; 
+	border: 1px solid #AAAAAA; 
+	width: 0px; 
+	height: 0px;
+	overflow: hidden;
+}
+
+#indexLoginBoxContent {
+	position: absolute;
+	width: 180px;
+	height: 150px;
+}
+
+#errorpage div{
+	border: 1px dashed #999; 
+	padding: 5px; 
+	margin: 3px;
+	width: auto; 
+	height: auto; 
+	overflow: auto;
+}
+
+
 /***************************************** GENERIC BOX COLLECTION END *********/
 
 
@@ -2119,7 +2325,7 @@ usage example: <div class="message"><h3>header</h3><p>message</p></div>
 	border-bottom: 1px solid #AAAAAA;
 	padding: 0.3em;
 	font-size: 8pt;
-	color: #AAAAAA;
+	color: green;
 	margin: 0 0 1em 0;
 }
 #content_view_content_info_container_p {
@@ -2193,3 +2399,55 @@ usage example: <div class="message"><h3>header</h3><p>message</p></div>
 }
 
 /***************************************** PREVIEW POP-UP CSS END *************/
+
+/** Paginator styles **/
+.paginationControl {
+	color: #006600;
+	word-spacing: 3px;
+	margin-top: -5px;
+}
+
+.paginationControl a {
+	color: #669900;
+	font-size: 110%;
+}
+
+.paginationControl a:hover {
+	font-weight: bold;
+}
+
+.paginationControl img {
+	background-color: #FFFFFF;
+	vertical-align: middle;
+}
+
+.currentpage {
+	background-color: #ccff66;
+	font-size: 130%;
+	border-width: 1px 1px 2px 1px;
+	border-style: solid;
+	padding: 3px 4px 1px 4px;
+}
+
+.disabled {
+	visibility: hidden;
+}
+
+.quote {
+    margin: 0.5em;
+    background: #FAFAFA;
+    padding: 0.2em;
+    border: 1px solid #AAAAAA;
+}
+
+.quote_t {
+    background: #EAEAEA;
+    padding: 0.2em;
+    font-weight: bold;
+}
+
+.pointerCursor,
+#voteup,
+#votedown {
+    cursor: pointer;
+}

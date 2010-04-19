@@ -14,15 +14,14 @@
  *
  * @category  Zend
  * @package   Zend_Measure
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Current.php 9508 2008-05-23 10:56:41Z thomas $
+ * @version   $Id: Current.php 16220 2009-06-21 19:49:21Z thomas $
  */
 
 /**
  * Implement needed classes
  */
-require_once 'Zend/Measure/Exception.php';
 require_once 'Zend/Measure/Abstract.php';
 require_once 'Zend/Locale.php';
 
@@ -32,7 +31,7 @@ require_once 'Zend/Locale.php';
  * @category   Zend
  * @package    Zend_Measure
  * @subpackage Zend_Measure_Current
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Measure_Current extends Zend_Measure_Abstract

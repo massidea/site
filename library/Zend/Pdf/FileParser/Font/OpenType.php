@@ -12,10 +12,12 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Pdf
  * @subpackage FileParser
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: OpenType.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 /** Zend_Pdf_FileParser_Font */
@@ -47,7 +49,7 @@ require_once 'Zend/Pdf/Cmap.php';
  *
  * @package    Zend_Pdf
  * @subpackage FileParser
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Font
@@ -326,7 +328,7 @@ abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Fon
             $nameOffset = $this->readUInt(2);
 
             $languageCode = $this->_languageCodeForPlatform($platformID, $languageID);
-            if (is_null($languageCode)) {
+            if ($languageCode === null) {
                 $this->_debugLog('Skipping languageID: 0x%x; platformID %d', $languageID, $platformID);
                 continue;    // Not a supported language. Move on.
             }
@@ -471,7 +473,7 @@ abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Fon
          */
         $this->numGlyphs = $this->readUInt(2);
         $this->_debugLog('number of glyphs: %d', $this->numGlyphs);
-        
+
         // Skip other maxp table entries (if presented with table version 1.0)...
     }
 
@@ -646,10 +648,10 @@ abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Fon
          * even any of the extended latin characters, it is considered symbolic
          * to PDF and must be described differently in the Font Descriptor.
          */
-        /** 
+        /**
          * @todo Font is recognized as Adobe Latin subset font if it only contains
          * Basic Latin characters (only bit 0 of Unicode range bits is set).
-         * Actually, other Unicode subranges like General Punctuation (bit 31) also 
+         * Actually, other Unicode subranges like General Punctuation (bit 31) also
          * fall into Adobe Latin characters. So this code has to be modified.
          */
         $this->isAdobeLatinSubset = (($unicodeRange1 == 1) && ($unicodeRange2 == 0) &&

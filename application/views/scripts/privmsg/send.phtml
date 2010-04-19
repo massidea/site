@@ -1,36 +1,13 @@
 ﻿<div id="privmsg_title">
     <h1>
-    <?php 
-        echo $this->translate('privmsg-send-title');
-    ?>
+        <?php echo $this->translate('privmsg-send-title'); ?>
     </h1>
     
-    <?php
-
-    if($this->language == "en")
-    {
-        echo '
-        <p>
-            With this form you can send private message to an another user. 
-            The user you are sending to receives a notification, when he/she logs in
-            the next time. Header and message fields are mandatory, and you can also send
-            your email address to receiver.
-        </p><br />
-        ';
-    }
-    elseif($this->language == "fi")
-    {
-        echo '
-        <p>
-            Tällä lomakkeella voit lähettää toiselle käyttäjälle henkilökohtaisen
-            viestin. Käyttäjä saa ilmoituksen lähettämästäsi viestistä kirjautuessaan
-            seuraavan kerran sisään. Otsikko -ja viesti-kentät ovat pakollisia täyttää, jonka lisäksi
-            voit antaa vastaanottavalle käyttäjälle myös sähköpostiosoitteesi.
-        </p><br />
-        ';
-    }
+    <p>
+        <?php echo $this->translate('info-text'); ?>
+    </p>
     
-    ?>
+    <br />
     
     <div class="form_privmsg_row">
         <label>

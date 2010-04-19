@@ -86,9 +86,8 @@ class Oibs_Decorators_GroupDecorator extends Zend_Form_Decorator_Abstract
         $desc      = $this->buildDescription();
 
         $output = /*'<dl class="form_element">*/
-					'<div class="form_addcontent_row">'
-					. $label
-					. '<div id="groupdd">'
+					'<div class="form_addcontent_row" style="margin-top: 10px;">'
+					. '<div id="group_div">'
 					. $input
 					. $errors
 					. $desc

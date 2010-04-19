@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ComboBox.php 14300 2009-03-13 15:24:35Z matthew $
+ * @version    $Id: ComboBox.php 16204 2009-06-21 18:58:29Z thomas $
  */
 
 /** Zend_Dojo_View_Helper_Dijit */
@@ -29,7 +29,7 @@ require_once 'Zend/Dojo/View/Helper/Dijit.php';
  * @uses       Zend_Dojo_View_Helper_Dijit
  * @package    Zend_Dojo
  * @subpackage View
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
   */
 class Zend_Dojo_View_Helper_ComboBox extends Zend_Dojo_View_Helper_Dijit
@@ -70,8 +70,11 @@ class Zend_Dojo_View_Helper_ComboBox extends Zend_Dojo_View_Helper_Dijit
         }
         if (array_key_exists('store', $params) && is_array($params['store'])) {
             // using dojo.data datastore
-            if (false !== ($store = $this->_renderStore($params['store']))) {
+            if (false !== ($store = $this->_renderStore($params['store'], $id))) {
                 $params['store'] = $params['store']['store'];
+                if ($this->_useProgrammatic()) {
+                    unset($params['store']);
+                }
                 if (is_string($store)) {
                     $html .= $store;
                 }
@@ -90,11 +93,14 @@ class Zend_Dojo_View_Helper_ComboBox extends Zend_Dojo_View_Helper_Dijit
                     $storeParams['params'] = $params['storeParams'];
                     unset($params['storeParams']);
                 }
-                if (false !== ($store = $this->_renderStore($storeParams))) {
+                if (false !== ($store = $this->_renderStore($storeParams, $id))) {
                     if (is_string($store)) {
                         $html .= $store;
                     }
                 }
+            }
+            if ($this->_useProgrammatic()) {
+                unset($params['store']);
             }
             $html .= $this->_createFormElement($id, $value, $params, $attribs);
             return $html;
@@ -113,7 +119,7 @@ class Zend_Dojo_View_Helper_ComboBox extends Zend_Dojo_View_Helper_Dijit
      * @param  array $params 
      * @return string|false
      */
-    protected function _renderStore(array $params)
+    protected function _renderStore(array $params, $id)
     {
         if (!array_key_exists('store', $params) || !array_key_exists('type', $params)) {
             return false;
@@ -138,8 +144,11 @@ class Zend_Dojo_View_Helper_ComboBox extends Zend_Dojo_View_Helper_Dijit
                 $js = 'var ' . $storeParams['jsId'] . ' = '
                     . 'new ' . $storeParams['dojoType'] . '('
                     .     Zend_Json::encode($extraParams)
-                    . ");\n";
-                $this->dojo->addJavascript($js);
+                    . ");\n"
+                    . 'dijit.byId("' . $id . '").attr("store", ' 
+                    . $storeParams['jsId'] . ');';
+                $js = "function() {\n$js\n}";
+                $this->dojo->prependOnLoad($js);
             }
             return true;
         }

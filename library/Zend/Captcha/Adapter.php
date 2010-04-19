@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Captcha
  * @subpackage Adapter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -30,9 +30,9 @@ require_once 'Zend/Validate/Interface.php';
  * @category   Zend
  * @package    Zend_Captcha
  * @subpackage Adapter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id: Adapter.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 interface Zend_Captcha_Adapter extends Zend_Validate_Interface 
 {
@@ -50,7 +50,7 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
      * @param  mixed $element
      * @return string
      */
-    public function render(Zend_View_Interface $view, $element = null);
+    public function render(Zend_View_Interface $view = null, $element = null);
 
     /**
      * Set captcha name

@@ -1,0 +1,97 @@
+<?php
+$content_header = $this->element->content_header;
+$content_keywords = $this->element->content_keywords;
+$content_type = $this->element->content_type;
+$content_relatesto_id = $this->element->content_relatesto_id;
+$content_textlead = $this->element->content_textlead;
+$content_text = $this->element->content_text;
+$content_related_companies = $this->element->content_related_companies;
+$content_research = $this->element->content_research;
+$content_opportunity = $this->element->content_opportunity;
+$content_threat = $this->element->content_threat;
+$content_solution = $this->element->content_solution;
+$content_campaigns = $this->element->content_campaigns;
+$content_file_upload = $this->element->content_file_upload;
+$content_references = $this->element->content_references;
+$content_language = $this->element->content_language;
+$content_finfo_class = $this->element->content_finfo_class;
+$content_industry = $this->element->content_industry;
+$content_division = $this->element->content_division;
+$content_group = $this->element->content_group;
+$content_class = $this->element->content_class;
+$innovation_type = $this->element->innovation_type;
+$content_publish = $this->element->content_publish;
+$content_save = $this->element->content_save;
+$preview = $this->element->preview;
+?>
+
+
+<form id="<?php echo $this->escape($this->element->getName()); ?>"
+	  <?php //name="echo $this->escape($this->element->getName()); "?>
+	  action="<?php echo $this->escape($this->element->getAction()); ?>"
+      method="<?php echo $this->escape($this->element->getMethod()); ?>"
+      enctype="<?php echo $this->escape($this->element->getAttrib('enctype')); ?>">
+    
+    <div>
+        <div id="form_helptext_mandatory" class="form_helptext" >
+            <?php echo $this->translate('content-add-helptext-mandatory'); ?>
+        </div>
+        
+        <div class="form_helptext_line"></div>
+		
+		<?php echo $content_header; ?>
+		
+	    <?php echo $content_keywords; ?>
+	          
+		<?php echo $content_type; ?>
+		
+	    <?php echo $content_relatesto_id; ?>
+
+		<?php echo $content_textlead; ?>
+		
+	    <?php echo $content_text; ?>
+	    
+		<?php echo $content_related_companies; ?>
+		
+	    <?php echo $content_research; ?>
+	      
+		<?php echo $content_opportunity; ?>
+		
+	    <?php echo $content_threat; ?>
+	      
+		<?php echo $content_solution; ?>
+	    	    
+		<div id="form_helptext_optional" class="form_helptext" >
+			<?php echo $this->translate('content-add-helptext-optional'); ?>
+		</div>
+		<div class="form_helptext_line"></div>		
+		
+	    <?php echo $content_campaigns; ?>
+	    
+		<?php echo $content_file_upload; ?>
+		
+	    <?php echo $content_references; ?>
+	    
+	    <?php echo $content_language; ?>
+	      
+		<?php echo $content_finfo_class; ?>
+		
+	    <?php echo $content_industry; ?>
+	       
+		<?php echo $content_division; ?>
+		
+	    <?php echo $content_group; ?>
+	    
+	    <?php echo $content_class; ?>
+           
+        <?php echo $innovation_type; ?>
+        
+        <?php echo $content_publish; ?>     
+           
+        <?php echo $content_save; ?>
+        
+        <?php echo $preview; ?>     
+
+    
+    </div>
+</form>

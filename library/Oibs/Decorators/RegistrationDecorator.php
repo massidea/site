@@ -45,9 +45,14 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 		{
             return '';
         }
+        $errors = $element->getView()->formErrors($messages);
+        if (1==1){}
         
-        return '<div class="error" style="width: 300px; margin-left:auto; margin-right: auto;">' .
-               $element->getView()->formErrors($messages) . '</div>';
+        return '
+        <div class="error">
+        ' . $errors . '
+        </div>
+        ';
     }
 
     public function buildDescription()
@@ -58,7 +63,11 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 		{
             return '';
         }
-        return '<div class="registration_description">' . $desc . '</div>';
+        return '
+        <div class="registration_description">
+        ' . $desc . '
+        </div>
+        ';
     }
 
     public function render($content)
@@ -87,24 +96,26 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
         $desc      = $this->buildDescription();
 
         if (empty($desc)) {
-            $output =   '<div class="form_registration_row">'
-                        . $label
-                        . '<div class="form_registration_input">'
-                        . $input
-                        . $text
-                        . '</div>'
-                        . '</div>'
-                        . $errors;
+            $output =   '
+                        <div class="form_registration_row">
+                            ' . $label . '
+                            <div class="form_registration_input">
+                                '. $input .'
+                                '. $text .'
+                            </div>
+                        </div>
+                        '. $errors;
         } else {
-             $output = '<div class="form_registration_row">'
-                        . $label
-                        . '<div class="form_registration_input_description">'
-                        . $input
-                        . $desc
-                        . $text
-                        . '</div>'
-                        . '</div>'
-                        . $errors;
+             $output = '
+                        <div class="form_registration_row">
+                            '. $label .'
+                            <div class="form_registration_input_description">
+                                '. $input .'
+                                '. $desc .'
+                                '. $text .'
+                            </div>
+                        </div>
+                        '. $errors;
         }
 
         switch ($placement) 

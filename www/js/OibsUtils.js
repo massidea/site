@@ -1,26 +1,34 @@
 // Horribly working language changer script
 // - Made horribly changes -iirouu <3
 
+// Make comments as well (even horrible ones help!) -Joel
+
 function changeLang(language, baseurl)
 {
-	var url = document.location.href;
-	
-	var oldLang = readCookie('lang');
-	
-	if(url.indexOf("/"+oldLang) != -1) {
-		var splitter = url.split(baseurl+"/"+oldLang);
-	
-		if(splitter[1] == undefined && baseurl.indexOf("/") != -1) {
-			alert("Check config! path.baseurl is what you are looking for...");
-			return null;
-		}
-	
-		window.location = "http://"+baseurl+"/"+language+splitter[1];
-	} else {
-		window.location = "http://"+baseurl+"/"+language;
-	}
+    var url = document.location.href;
+    var oldLang = "";
 
-	return true;
+    var oldLangTemp1 = url.split(baseurl+"/");
+    var oldLangTemp2 = oldLangTemp1[1].split("/");
+    var oldLangCheck = oldLangTemp2[0];
+
+    if(oldLangCheck.length == 2) {
+            oldLang = oldLangCheck;
+    }
+    if(oldLang != "" && url.indexOf("/"+oldLang) != -1) {
+            var splitter = url.split(baseurl+"/"+oldLang);
+
+            if(splitter[1] == undefined && baseurl.indexOf("/") != -1) {
+                    alert("Check config! path.baseurl is what you are looking for...");
+                    return null;
+            }
+
+            window.location = "http://"+baseurl+"/"+language+splitter[1];
+    } else {
+            window.location = "http://"+baseurl+"/"+language;
+    }
+
+    return true;
 }
 
 function createCookie(name,value,days) {

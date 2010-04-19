@@ -3,88 +3,98 @@
 
 <?php
 
-if($this->privmsgs)
-{
-	foreach($this->privmsgs as $privmsg)
-	{
+if($this->privmsgs):
+	foreach($this->privmsgs as $privmsg):
 		$sent = strtotime($privmsg['created_pmg']);
 		$elapsed = time() - $sent;
 		
 		// calculate how long ago was the message sent
-		if($elapsed < 3600)
-		{
+		if($elapsed < 3600) {
 			$minutes = round($elapsed / 60);
 			
 			$sent = "(" . $minutes . " " . $this->translate('minutes-ago') . ")";
-		}
-		elseif($elapsed < 86400)
-		{
+		} elseif($elapsed < 86400) {
 			$hours = round($elapsed / 3600);
 			
 			$sent = "(" . $hours . " " . $this->translate('hours-ago') . ")";
-		}
-		elseif($elapsed < 604800)
-		{
+		} elseif($elapsed < 604800) {
 			$days = round($elapsed / 86400);
 			
 			$sent = "(" . $days . " " . $this->translate('days-ago') . ")";
-		}
-		elseif($elapsed < 31449600)
-		{
+		} elseif($elapsed < 31449600) {
 			$weeks = round($elapsed / 604800);
 			
 			$sent = "(" . $weeks . " " . $this->translate('weeks-ago') . ")";
-		}
-		else
-		{
+		} else {
 			$years = round($elapsed / 31449600);
 			
 			$sent = "(" . $years . " " . $this->translate('years-ago') . ")";
 		}
+        ?>
         
-        echo '
 		<div class="privmsg">
-			<div class="privmsg_userinfo"><center>
-				<a href="'.$this->language.'/account/view/user/' . $privmsg['username_pmg'] . '">';
-                if($privmsg['user_has_image'])
-                {
-                    echo'<img src="';
-                        echo $this->url(array('controller' => 'account', 'action' => 'profilethumb', 'id' => $privmsg['id_sender_pmg'], 'language' => $this->language, 'thumb' => 'true'), 'lang_default', true);
-                        echo '" alt="User image" width="80" height="80"';
-                    echo '/>';
-                }
-                else
-                {
-                    echo '<img src="';
-                        echo Zend_Controller_Front::getInstance()->getBaseUrl(); 
-                        echo '/images/no_profile_img_placeholder.gif" alt="No Profile Image';
-                    echo '" />';
-                }
-                echo '
-				</a></center><br />
-				<a href="/'.$this->language.'/account/view/user/' . $privmsg['username_pmg'] . '">
-					From: '. $privmsg['username_pmg'] .
-				'</a>
+			<div class="privmsg_userinfo">
+                    <center>
+                    <a href="<?php echo $this->url(array('controller' => 'account',
+                                                         'action' => 'view',
+                                                         'user' => $privmsg['username_pmg'],
+                                                         'language' => $this->language),
+                                                   'lang_default', true); ?>">
+                                                   
+                        <?php if($privmsg['user_has_image']): ?>
+                        
+                            <img src="<?php echo $this->url(array('controller' => 'account', 
+                                                                  'action' => 'profilethumb', 
+                                                                  'id' => $privmsg['id_sender_pmg'], 
+                                                                  'language' => $this->language, 
+                                                                  'thumb' => 'true'), 
+                                                            'lang_default', true); ?>" 
+                                alt="User image" width="80" height="80" />
+                    </a>
+                    </center>
+                    
+                    <br />
+                    
+                    <?php $this->translate('privmsg-message-from'); ?>
+                    <a href="<?php echo $this->url(array('controller' => 'account',
+                                                         'action' => 'view',
+                                                         'user' => $privmsg['username_pmg'],
+                                                         'language' => $this->language),
+                                                   'lang_default', true); ?>">
+                        <?php echo $privmsg['username_pmg']; ?>
+                    </a>
+                <?php else: ?>
+                    <center>
+                    <img src="<?php echo $this->baseUrl('/images/system.png'); ?>" 
+                        alt="System" />
+                    </center>
+                    
+                    <br />
+                    
+                    <?php echo $this->translate('privmsg-message-from'); ?>
+                    <b>
+                        <?php echo $this->translate($privmsg['username_pmg']); ?>
+                    </b>;
+                <?php endif; ?>
+                
 				<br />
-				'. $sent .'
+				<?php echo $sent; ?>
 			</div><!-- end of privmsg_userinfo -->
 			<div class="privmsg_content">
-		';
 
-		if($privmsg['read_pmg'] == 0)
-		{
-			echo ' <span style="color: red;"><b>NEW!</b></span>';
-		}
-		
-		echo'
-			<p>'
-            . stripslashes($privmsg['header_pmg']) . '</p><p>'
-			. stripslashes($privmsg['message_body_pmg']) .
-			'</p>
+                <?php if($privmsg['read_pmg'] == 0): ?>
+                    <span style="color: red;">
+                        <b>NEW!</b>
+                    </span>
+                <?php endif; ?>
+                
+                <p>
+                    <?php echo stripslashes($privmsg['header_pmg']); ?>
+                </p>
+                <p>
+                    <?php echo stripslashes($privmsg['message_body_pmg']); ?>
+                </p>
 			</div><!-- end of privmsg_content -->
 		</div><!-- end of privmsg -->
-		';
-    }
-}
-
-?>
+    <?php endforeach; ?>
+<?php endif; ?>

@@ -15,8 +15,9 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: QueryParser.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 /** Zend_Search_Lucene_Index_Term */
@@ -31,8 +32,14 @@ require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
 /** Zend_Search_Lucene_Search_Query_Boolean */
 require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
 
-/** Zend_Search_Lucene_Search_Query_Phrase */
-require_once 'Zend/Search/Lucene/Search/Query/Phrase.php';
+/** Zend_Search_Lucene_Search_Query_Preprocessing_Phrase */
+require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Phrase.php';
+
+/** Zend_Search_Lucene_Search_Query_Preprocessing_Term */
+require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Term.php';
+
+/** Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy */
+require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Fuzzy.php';
 
 /** Zend_Search_Lucene_Search_Query_Wildcard */
 require_once 'Zend/Search/Lucene/Search/Query/Wildcard.php';
@@ -62,7 +69,7 @@ require_once 'Zend/Search/Lucene/FSM.php';
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM

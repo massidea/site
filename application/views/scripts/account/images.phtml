@@ -1,0 +1,61 @@
+<!-- This script is still pretty much under construction...sorry if it's not very clear :/ You know what happens when the time tends to run out ;) -->
+<?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
+<h3>Profile image management</h3>
+<div style="width: 100%;" onclick="javascript:menufadeout();">
+	<div style="margin-left: auto; margin-right: auto;">
+		<?php $counter = 0;?>
+		<?php if(count($this->image_ids) > 0) :?>
+		<!-- The loop to go through all images -->
+		<?php foreach($this->image_ids as $image):?>
+		<?php $counter++; ?>
+		<div style="text-align:center; margin-top: 20px;" id="image_item" 
+			 onmouseout="javascript:profileImageMenuOut('img-<?php echo$counter;?>');">
+
+			<?php if(!isset($image['status'])):?>   
+				<a href="<?php echo $this->url(array('controller' => 'account',
+													'action' => 'activateimage',
+													'id' => $image['id_usi'],
+													'language' => $this->language),
+													'lang_default', true); ?>">    
+			<?php endif; ?>
+			<img id="img-<?php echo $counter;?>" src="<?php echo $this->url(array('controller' => 'account',
+																				  'action' => 'showimage',
+																				  'img' => $image['id_usi'],
+																				  'thumb' => '1',
+																				  'language' => $this->language),
+																				  'lang_default', true); ?>
+												"alt="User Image" class="profile_image" style="vertical-align: middle;
+			<?php 
+			if(isset($image['status']))
+			{
+				echo 'border: 4px solid lime;';
+			}
+			else
+			{
+				echo 'border:4px solid black;';
+			}
+			?>										
+"onmouseover="javascript:profileImageMenu('img-<?php echo $counter;?>', '<?php echo $this->baseUrl.'/'; echo $this->language;?>/account/activateimage/id/<?php echo $image['id_usi'];?>', '<?php echo $this->baseUrl.'/'; echo $this->language;?>/account/deleteimage/id/<?php echo $image['id_usi'];?>');"/>
+
+			<?php 
+			if(!isset($image['status']))
+			{
+				echo '</a>';
+			}
+			?>
+		</div>
+		<div style="clear: both;"></div>
+		<?php endforeach; ?>
+		<div style="clear:both;"></div>
+	</div>
+	<br /><br />
+	<?php echo $this->form;?>
+	</div>
+	<?php else:?>
+		No profile images.
+	<?php echo $this->form;?>
+	</div>
+	</div>
+<?php endif; ?>
+<!-- This is the small menu that comes above the image when you mouseover it :) Check functions.js for more.-->
+<div id="hiddenmenu"><a id="hiddenmenuselect" href="">Select</a>/<a id="hiddenmenudelete" href="">Delete</div>

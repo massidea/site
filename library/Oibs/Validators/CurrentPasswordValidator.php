@@ -4,7 +4,7 @@ class Oibs_Validators_CurrentPasswordValidator extends Zend_Validate_Abstract
 	const MSG_URI = 'msgUri';
 	
     protected $_messageTemplates = array(
-        self::MSG_URI => "Current password does not match",
+        self::MSG_URI => "account-currentpassword-nomatch",
     );
 	
 	/**
@@ -23,15 +23,23 @@ class Oibs_Validators_CurrentPasswordValidator extends Zend_Validate_Abstract
 		// User id
 		$id = $identity->user_id;
 		
-		$userpw = new Models_User();
-        $saltLength = $userpw->getSaltCountByUsername($auth->getIdentity()->username);
+		$userpw = new Default_Model_User();
+        
+        // Why this function is called when it has not been implemented? :/
+        //$saltLength = $userpw->getSaltCountByUsername($auth->getIdentity()->username);
+        $data = $userpw->getUserRow($id)->toArray();
+        // the length of the salt is really not that difficult to get :)
+        $saltLength = strlen($data['password_salt_usr']); 
+
         // Gets user password data, saltLength 7 for backwards compatability
         if($saltLength == 7) {
-            $data = $userpw->getUserRow($id)->toArray();	
+            // This is just repetition, let's declare the variable above these statements.
+            //$data = $userpw->getUserRow($id)->toArray();	
             $password = $data['password_usr'];
             $compared_password = md5($value);
         } else {
-            $data = $userpw->getUserRow($id)->toArray();	
+            // Repetition...
+            //$data = $userpw->getUserRow($id)->toArray();	
             $password = $data['password_usr'];
             $compared_password = md5($data['password_salt_usr'].$value.$data['password_salt_usr']);
         }

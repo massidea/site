@@ -15,8 +15,9 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Boolean.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 
@@ -31,7 +32,7 @@ require_once 'Zend/Search/Lucene/Search/Weight/Boolean.php';
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_Query
@@ -757,16 +758,15 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     }
 
     /**
-     * Highlight query terms
+     * Query specific matches highlighting
      *
-     * @param integer &$colorIndex
-     * @param Zend_Search_Lucene_Document_Html $doc
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
     {
         foreach ($this->_subqueries as $id => $subquery) {
             if ($this->_signs === null  ||  $this->_signs[$id] !== false) {
-                $subquery->highlightMatchesDOM($doc, $colorIndex);
+                $subquery->_highlightMatches($highlighter);
             }
         }
     }
@@ -794,10 +794,10 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             }
 
             $query .= '(' . $subquery->__toString() . ')';
+        }
 
-            if ($subquery->getBoost() != 1) {
-                $query .= '^' . round($subquery->getBoost(), 4);
-            }
+        if ($this->getBoost() != 1) {
+            $query = '(' . $query . ')^' . round($this->getBoost(), 4);
         }
 
         return $query;

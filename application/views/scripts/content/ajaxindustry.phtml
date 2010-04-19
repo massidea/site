@@ -1,0 +1,64 @@
+<?php
+/*
+$url = $this->url(array(
+    	'controller' => 'content',
+    	'action' => 'ajaxindustry',
+        'language' => $this->language,
+    ), 'lang_default', true
+);
+
+$options = array(
+    'url' => $url,
+);
+
+switch($this->type) {
+    case 'industry':
+        $options['target'] = 'content_division_div';
+        $options['type'] = 'division';
+        break;
+    case 'division':
+        $options['target'] = 'content_group_div';
+	    $options['type'] = 'group';
+        break;
+    case 'group':
+        $options['target'] = 'content_class_div';
+	    $options['type'] = 'class';
+        break;
+    default:
+        break;    
+}
+*/
+?>
+
+<?php false && if(isset($options['target'])): ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#content_<?php echo $this->type; ?>').change(function() {
+        $(this).industrySelector(
+            <?php echo Zend_Json::encode($options); ?>
+        );
+    });
+});
+</script>
+
+<?php endif; ?>
+
+<select id="content_<?php echo $this->type; ?>" 
+    name="content_<?php echo $this->type; ?>">
+    
+    <option value="0">
+        <?php echo $this->translate('content-add-select-'.$this->type); ?>
+    </option>
+  
+<?php if(isset($this->industries)): ?>
+    <?php foreach($this->industries as $industry): ?>
+    
+    <option value="<?php echo $industry['id_ind']; ?>">
+        <?php echo $this->escape($industry['name_ind']); ?>
+    </option>
+    
+    <?php endforeach; ?>
+<?php endif; ?>
+    
+</select>

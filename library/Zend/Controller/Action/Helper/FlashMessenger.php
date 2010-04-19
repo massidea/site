@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action_Helper
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -36,9 +36,9 @@ require_once 'Zend/Controller/Action/Helper/Abstract.php';
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action_Helper
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id: FlashMessenger.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Action_Helper_Abstract implements IteratorAggregate, Countable
 {
@@ -133,20 +133,15 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     public function addMessage($message)
     {
         if (self::$_messageAdded === false) {
-            self::$_session->setExpirationHops(5, null, true);
+            self::$_session->setExpirationHops(1, null, true);
         }
 
         if (!is_array(self::$_session->{$this->_namespace})) {
             self::$_session->{$this->_namespace} = array();
         }
 
-        //self::$_session->{$this->_namespace}[] = $message;
-		// patched from http://framework.zend.com/issues/secure/attachment/10470/flashmessenger.patch
-		$sessionMessages = self::$_session->{$this->_namespace};
-		$sessionMessages[] = $message;
-		//echo "tässä vaiheessa messu on: " . $message; die; // oikein..
-		self::$_session->{$this->_namespace} = $sessionMessages;
-		//print_r($_SESSION); die;   // tässä kohtaa message on oikein : Array ( [__ZF] => Array ( [FlashMessenger] => Array ( [ENNH] => 1 ) ) [FlashMessenger] => Array ( [default] => Array ( [0] => OMA VIESTI ) ) ) 
+        self::$_session->{$this->_namespace}[] = $message;
+
         return $this;
     }
 
@@ -157,7 +152,7 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
      */
     public function hasMessages()
     {
-        return isset(self::$_session->{$this->_namespace});
+        return isset(self::$_messages[$this->_namespace]);
     }
 
     /**
@@ -168,7 +163,7 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     public function getMessages()
     {
         if ($this->hasMessages()) {
-            return self::$_session->{$this->_namespace};
+            return self::$_messages[$this->_namespace];
         }
 
         return array();

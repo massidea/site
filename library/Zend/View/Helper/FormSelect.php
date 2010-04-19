@@ -15,8 +15,9 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: FormSelect.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 
@@ -32,7 +33,7 @@ require_once 'Zend/View/Helper/FormElement.php';
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement
@@ -111,12 +112,16 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement
                 . ">\n    ";
 
         // build the list of options
-        $list = array();
+        $list       = array();
+        $translator = $this->getTranslator();
         foreach ((array) $options as $opt_value => $opt_label) {
             if (is_array($opt_label)) {
                 $opt_disable = '';
                 if (is_array($disable) && in_array($opt_value, $disable)) {
                     $opt_disable = ' disabled="disabled"';
+                }
+                if (null !== $translator) {
+                    $opt_value = $translator->translate($opt_value);
                 }
                 $list[] = '<optgroup'
                         . $opt_disable

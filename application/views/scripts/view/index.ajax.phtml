@@ -1,0 +1,42 @@
+<?php
+	// ** This page is for passing viewController data via ajax,
+	//    and is requested with GET-parameters "?format=html".
+	//    Must be requested with XMLHttpRequest. ** 
+
+	// Find out which data was requested
+	$getData = $_GET['page'];
+?>
+
+<?php // If requested "more from user" ?>
+<?php if ($getData == "morefromuser") {?>
+	<?php $loopround = 0; ?>
+	<?php foreach($this->moreFromUser as $user_cnt): ?>
+	
+		<div id="content_view_user_related_entry_<?php echo $user_cnt['id_cnt']; ?>" class="content_view_user_related_entry_<?php echo $user_cnt['key_cty'];?>">
+			<span><a href="<?php echo $this->url(array('content_id' => $user_cnt['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>"><?php echo stripslashes($user_cnt['title_cnt']); ?></a></span><br />
+			<span><?php echo $this->translate('content-view-user-related-views'); echo $user_cnt['views']; ?></span>
+		</div>
+		
+		<?php
+		$loopround++;
+		if ($loopround == 10) // limit view to 10 items
+			break;
+		?>
+	
+	<?php endforeach; ?>
+	
+<?php // If requested "content rating" ?>
+<?php } elseif ($getData == "content_rating") { ?>
+		<div id="content_view_content_rating">
+			<span id="current_rating" style="padding: 2px;">
+                <?php echo " " . $this->translate('content-rating'); ?>
+            	<?php print_r($this->rating); ?>
+	        </span>
+		</div>		
+	    <?php if($this->user_can_comment): // if can comment, can also rate ?>
+		<div id="content_view_content_vote" style="padding: 2px;">
+				<img id="voteup" onclick="ajaxLoad_vote('1');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_up.png" alt="Vote up" />
+				<img id="votedown" onclick="ajaxLoad_vote('-1');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_down.png" alt="Vote down" />
+		</div>
+		<?php endif; ?>
+<?php } ?>

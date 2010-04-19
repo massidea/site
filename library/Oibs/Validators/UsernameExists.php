@@ -43,7 +43,7 @@ class Oibs_Validators_UsernameExists extends Zend_Validate_Abstract
 	    $value = (string) $value;
 	    $this->_setValue($value);
 
-        $userModel = new Models_User();
+        $userModel = new Default_Model_User();
         
         if ($userModel->usernameExists($value)) {
             $this->_error(self::NOT_MATCH);

@@ -1,0 +1,949 @@
+<?php
+/**
+ *  User -> User database model for user table.
+ *
+*     Copyright (c) <2009>, Markus Riihelä
+*     Copyright (c) <2009>, Mikko Sallinen
+*
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ * more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * License text found in /license/
+ */
+
+/**
+ *  User - class
+ *
+ *  @package     models
+ *  @author         Markus Riihelä & Mikko Sallinen
+ *  @copyright     2009 Markus Riihelä & Mikko Sallinen
+ *  @license     GPL v2
+ *  @version     1.0
+ */ 
+class Default_Model_User extends Zend_Db_Table_Abstract
+{
+    // Table name
+    protected $_name = 'users_usr';
+    
+    // Primary key of table
+    protected $_primary = 'id_usr';
+    
+    // Tables model depends on
+    protected $_dependentTables = array('Default_Model_UserProfiles', 'Default_Model_UserImages',
+                                        'Default_Model_PrivateMessages', 'Default_Model_CommentRatings', 
+                                        'Default_Model_Comments', 'Default_Model_ContentPublishTimes', 
+                                        'Default_Model_ContentHasUser', 'Default_Model_UserHasGroup', 
+                                        'Default_Model_Links', 'Default_Model_Files', 
+                                        'Default_Model_ContentRatings');
+        
+    // Table references  to other tables
+    protected $_referenceMap    = array(
+        'UserLanguage' => array(
+            'columns'            => array('id_lng_usr'),
+            'refTableClass'        => 'Default_Model_Languages',
+            'refColumns'        =>    array('id_lng')        
+        ),
+        'CommentUser' => array(
+            'columns'            => array('id_usr'),
+            'refTableClass'        => 'Default_Model_Comments',
+            'refColumns'        => array('id_usr_cmt')
+        )
+    );
+    
+    protected $_id = 0;
+    protected $_data = null;
+    
+    /**
+    *   __construct
+    *
+    *   User constructor.
+    *
+    *   @param integer $id User id value.
+    */
+    public function __construct($id = -1)
+    {
+        parent::__construct();
+        
+        $this->_id = $id;
+        
+        if ($id != -1){
+            $this->_data = $this->find((int)$id)->current();
+        } // end if
+    }
+        
+    public function loginUser($data)
+    {
+        $id = $this->getIdByUsername($data['username']);
+        $user = $this->find((int)$id)->current();
+        $salt = $user['password_salt_usr'];
+        $auth = Zend_Auth::getInstance();
+        $authAdapter = new 
+        Zend_Auth_Adapter_DbTable($this->getAdapter(),'users_usr');
+        $authAdapter->setIdentityColumn('login_name_usr')
+                    ->setCredentialColumn('password_usr');
+        $authAdapter->setIdentity($data['username'])
+                     ->setCredential(md5($salt.$data['password'].$salt));
+				
+        $result = $auth->authenticate($authAdapter);
+        if($result->isValid())
+        {
+            $storage = new Zend_Auth_Storage_Session();
+            $storage->write($authAdapter->getResultRowObject());
+            return true;
+        } 
+
+        return false;
+    }
+
+        
+    /**
+    *    getUserImageData
+    *
+    *    Function to get users image data, if $thumb
+    *    is true return data for thumbnail version of
+    *    userimage, else return data for full version 
+    *    of userimage.
+    *
+    *    FIX TODO:
+    *    Currently when editing user settings, 
+    *    new empty image is created to database.
+    *    This function returns the most recently
+    *    created image. Since new image is created
+    *    anytime user edits his/her settings, 
+    *    this function will return null if user
+    *    has not added image with his/her most
+    *    recent profile.
+    *    FIXED: Works somehow, new empty images
+    *    should not be created when editing 
+    *    profile anymore.
+    *
+    *    @param integer $id is of user
+    *    @param boolean $thumb is the image thumbnail
+    *    @return array
+    */
+    public function getUserImageData($id=0, $thumb=true)
+    {
+        // Get image data        
+        if ($id != 0) {
+            // Check if we should get data for thumbnail
+            // or the full image
+            $thumbnail = $thumb ? 'thumbnail_usi' : 'image_usi'; 
+        
+            // Create query
+            $select = $this->_db->select()
+                                ->from('usr_images_usi', 
+                                       array($thumbnail, 'created_usi', 'modified_usi'))
+                                ->where('id_usr_usi = ?', $id)
+                                ->order('modified_usi DESC');
+            
+            // Fetch data from database
+            $result = $this->_db->fetchAll($select);
+            
+            // There's no need for this check here
+            //if($result != null) {
+            //    $imageData = $result[0][$thumbnail];
+            //} else {
+            //    $imageData = null;
+            //}
+            
+           //$rowset = $this->find((int)$id)->current();
+            
+            //$row = $rowset->findDependentRowset('Default_Model_UserImages', 'UserUser')->current();
+            
+            // Basically same check as above
+            // if (!empty($row)) {
+            //if (!empty($imageData)){
+                //$imageData = $thumb ? $row->thumbnail_usi : $row->image_usi;
+                //  $imageData = $thumb ? $imageData : $imageData;
+            //}
+        }// end if
+        
+        // If there is no image return null
+        //$hasImage = empty($imageData) ? null : $imageData;
+        $hasImage = $result != null ? $result[0][$thumbnail] : null;
+        
+        return $hasImage;
+    } // end of getUserImageData
+    
+    /**
+    * userHasProfileImage
+    *
+    * Function to get users thumbnail image data
+    *
+    * @param $id integer userid
+    * @return boolean
+    */
+    public function userHasProfileImage($id = 0)
+    {
+        // Get image data        
+        if ($id != 0) {
+            $rowset = $this->find((int)$id)->current();
+            
+            $row = $rowset->findDependentRowset('Default_Model_UserImages', 'UserUser')->current();
+            
+            if(isset($row->thumbnail_usi) && isset($row->image_usi)) {
+                //$image_data = $row->thumbnail_usi;
+                return true;
+            } // end if
+        } // end if
+        
+        // If there is no image return null
+        return false;//empty($image_data) ? null : $image_data;    
+    } // end of userHasProfileImage
+    
+    /**
+    *    loginSuccess
+    *
+    *    Log successfull user logins 
+    *
+    */
+    public function loginSuccess()
+    {
+        //$this->getUserRow();
+        
+        // Update users last login time
+        $this->_data->last_login_usr = new Zend_Db_Expr('NOW()');
+        $this->_data->save();
+        
+    } // end of loginSuccess
+    
+    /**
+    *    createAuthIdentity
+    *
+    *    Creates users identity for session
+    *
+    *    @return array
+    */
+    public function createAuthIdentity()
+    {
+        //$this->getUserRow();
+        $identity = new stdClass;
+        
+        $identity->user_id = $this->_data->id_usr;
+        $identity->username = $this->_data->login_name_usr;
+        //$identity->user_type = $this->userlevel;
+        //$identity->firstname = $this->profile->firstname;
+        //$identity->surname = $this->profile->surname;
+        //$identity->email = $this->profile->email;
+        $identity->created = $this->_data->created_usr;
+        return $identity;
+    } // end of createAuthIdentity
+    
+    /**
+    * registerUser Adds user register data to database
+    *
+    * Removed logic and validation from here, let's trust the isValid function
+    *
+    * @todo user languages
+    * @param array $formData register form data
+    */    
+    public function registerUser($formData = null)
+    {
+        if ($formData == null) {
+            return false;
+        }
+        
+        // Create new empty user row
+        $row = $this->createRow();
+        
+        // Set user data (needs sanitation)
+        $row->login_name_usr = htmlentities($formData['username']);
+        $row->email_usr = htmlentities($formData['email']);
+        
+        // Set language to some random language (needs fixing)
+        $row->id_lng_usr = 12;
+        
+        // Generate salt
+        $salt = $this->generateSalt();
+        
+        // Create and set password hash - md5(salt + password string + salt)
+        $row->password_usr = md5($salt.$formData['password'].$salt);
+        $row->password_salt_usr = $salt;
+        
+        $row->created_usr = new Zend_Db_Expr('NOW()');
+        $row->modified_usr = new Zend_Db_Expr('NOW()');
+        
+        // Save user data
+        return $row->save();
+    } // end of registerUser
+        
+    /**
+    *    generateSalt
+    *
+    *    Generates random salt for password hashing and returns it.
+    *
+    *    @param integer $length length of salt
+    *    @return string
+    */
+    public function generateSalt($length = 128)
+    {
+        // Valid characters
+        $pattern = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        
+        // Get count of valid characters
+        $k = strlen($pattern) - 1;
+        
+        // Get random character from valid characters and add it to output
+        $salt = $pattern{rand(0, $k)};
+        
+        for($i = 1; $i < $length; $i++) {
+            $salt .= $pattern{rand(0, $k)};
+        } // end for
+    
+        return $salt;
+    } // end of generateSalt
+    
+    /**
+    *    Create a new password for user and set it to profile to wait activation and send email to user
+    */
+    /*
+    public function fetchPassword($lang)
+    {
+    
+        if (!$this->isSaved())
+        {
+            return false;
+        }
+        // generate new password properties
+        $this->newPassword = $this->createRandomPassword();
+        $this->profile->new_password = md5($this->newPassword);
+        $this->profile->new_password_ts = time();
+        $this->profile->new_password_key = md5(uniqid() .
+        $this->getId() .
+        $this->newPassword);
+        // save new password to profile and send e-mail
+        $this->profile->save();
+        
+        // Send password to user
+        $mail = new Zend_Mail();
+        $emailText = '';
+        
+        // open the resetpassword email template text with correct language
+        $handle = @fopen('../application/layouts/passwordreset_email_plain_'.$lang .'.txt', 'r');
+        if ($handle) {
+            // read first line of file to be the mail subject
+            $mailSubject = fgets($handle);
+            while (!feof($handle)) {
+                // read rest of the file to the mail text
+                $emailText .= fgets($handle);
+            }
+            fclose($handle);
+        
+        
+            $activation_link = 'http://oibs.projects.tamk.fi/account/fetchpassword?action=confirm&id='.$this->userid.'&key='.$this->profile->new_password_key.'';
+            
+            // insert username and password to text
+            $emailText = str_replace('<activation_link>', $activation_link, $emailText);
+            $emailText = str_replace('<username>', $this->username, $emailText);
+            $emailText = str_replace('<password>', $this->newPassword, $emailText);
+            
+            $mail->setBodyText($emailText, "UTF-8");
+            $mail->setFrom('noreply@oibs.tamk.fi');
+            $mail->addTo($this->profile->email);
+            $mail->setSubject(trim($mailSubject));
+            $mail->send();
+            
+            return true;
+        }
+    }
+    */
+    
+    /**
+    *    getUserByName
+    *
+    *    Get user data by username
+    *
+    *    @param string $username
+    *    @return array
+    */
+    public function getUserByName($username = null)
+    {
+        /*
+        $select = $this->_db->select()
+            ->from('users_usr', array('*'))
+            ->where('login_name_usr = ?', $username);
+        
+        $stmt = $this->_db->query($select);
+
+        $result = $stmt->fetchAll();
+        */
+        
+        $where = $this->select()->where('login_name_usr = ?', $username);
+        $result = $this->fetchAll($where)->current();
+        /*
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        */
+        if (!empty($result)) {
+            return $result;
+        }
+        else {
+            return null;
+        }
+    } // end of getUserByName
+    
+    
+    /**
+    *    getUserRow
+    *
+    *    Get user data by id
+    *
+    *    @param integer $id user id
+    *    @return array
+    */
+    public function getUserRow($id = -1)
+    {
+        if($id == -1) {
+            $id = $this->_id;
+        } // end if
+        
+        return $this->find((int)$id)->current();
+    } // end of getUserRow
+    
+    /**
+    * getUserContent
+    *
+    * Get (all) content from a specific user. This is a horrible, horrible 
+    * function but will have to do for now. 
+    *
+    * Edited 11/09/2009 by Pekka Piispanen:
+    * Removed the retrieval of user id and username. That data was never needed
+    * when this function was used, and that data caused unnecessary empty row
+    * to user's content row, so the check if user hasn't got any contents failed.
+    *
+    * @author Pekka Piispanen
+    * @author Joel Peltonen
+    * @todo pagination 
+    * @todo ignore parameter / functionality to leave out a content
+    * @todo splitting model-specific selects to their own models
+    * @todo moving the logic to controller instead of model
+    * @todo the functionality where this is used should be ajaxified
+    * @param integer $author_id id of whose content to get
+    * @return array
+    */    
+    public function getUserContent($author_id = 0, $type = 0)
+    {
+        $result = array();  // container for final results array
+        
+        $whereType = 1;
+        if($type !== 0) {
+            $whereType = $this->_db->quoteInto('cty.key_cty = ?', $type);
+        }
+        
+        // If author id is set get users content
+        if ($author_id != 0) {
+            //if($count == -1) {
+                $contentSelect = $this->_db->select()
+                                           ->from(array('chu' => 'cnt_has_usr'), 
+                                                  array('id_usr', 'id_cnt'))
+                                           ->joinLeft(array('cnt' => 'contents_cnt'),         
+                                                  'cnt.id_cnt = chu.id_cnt',
+                                                  array('id_cnt', 'id_cty_cnt', 'title_cnt', 
+                                                        'lead_cnt', 'published_cnt', 'created_cnt'))
+                                           ->joinLeft(array('cty' => 'content_types_cty'),    
+                                                  'cty.id_cty = cnt.id_cty_cnt',  
+                                                  array('key_cty'))
+                                           ->joinLeft(array('vws' => 'cnt_views_vws'),
+                                                      'vws.id_cnt_vws = cnt.id_cnt',
+                                                      array('views' => 'COUNT(DISTINCT vws.views_vws)'))
+                                           ->joinLeft(array('crt' => 'content_ratings_crt'),
+                                                      'cnt.id_cnt = crt.id_cnt_crt',
+                                                      array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
+                                            ->joinLeft(array('cmt' => 'comments_cmt'),
+                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))                     
+                                           ->where('chu.id_usr = ?', $author_id)
+                                           //->where($whereType)
+                                           
+                                           /* Below where statement is just a hack for my own database,
+                                              there was somehow an invisible content with id_cnt "", and
+                                              because it was invisible, I couldn't delete it and I wasn't
+                                              able to test content linking. And there was no time to clean
+                                              up my database and create a new one with new contents. 
+                                              
+                                              - Pekka Piispanen
+                                           */
+                                           ->where('cnt.id_cnt != ?', "")
+                                           ->order('cnt.id_cty_cnt ASC')
+                                           ->order('cnt.created_cnt DESC')
+                                           ->group('cnt.id_cnt')
+                ;
+                $result = $this->_db->fetchAll($contentSelect);
+                //echo "<pre>"; print_r($result); die();
+                /*
+               $viewsSelect = $this->_db->select()
+                                        ->from(array('vws' => 'cnt_views_vws'), 
+                                               array('id_cnt_vws', 'SUM(views_vws)'))
+                                        ->distinct()
+                                        ->group('id_cnt_vws')
+                ;
+                $viewsResult = $this->_db->fetchAll($viewsSelect);
+
+                
+                // This horrible device injects the views to a complete result array
+                $i = 0; // keeps track of result array cells
+                foreach ($contentResult as $content)                                    // For each content found by owner
+                {
+                    $result[$i] = $content;                                             // initialise results array cell
+                    foreach ($viewsResult as $views)                                    // go through array of views
+                    {
+                        if ($views['id_cnt_vws'] == $content['id_cnt'])                 // if views for the content in question found
+                        {
+                            if (isset($result[$i]['views'])) {                          // if this is not the first views for content,
+                                $result[$i]['views'] += $views['SUM(views_vws)'];       // add views to previous views  
+                            } else {                                                    // otherwise 
+                                    $result[$i]['views'] = $views['SUM(views_vws)']+1;  // make a new cell for views in results array
+                            }
+                        }
+                    }                                                                   // after going through views and checking..
+                    if (!isset($result[$i]['views'])) {                                 // ...if content views cell not set...
+                        $result[$i]['views'] = 0;                                       // ...set views to 0 to prevent errors
+                    }
+
+                    $i++;
+                }
+                */
+                
+                
+            //}
+            //else {
+            //    $select = $this->select()->limitPage($page, $count)
+            //                             ->order('id_cty_cnt ASC')
+            //                             ->order('created_cnt DESC');
+            //}
+            //try{
+            
+            /*}catch(Zend_Exception $e){
+                echo '<pre>';
+                print_r($e);
+                echo '</pre>';
+            }
+            echo '<pre>';
+            print_r($result);
+            echo '</pre>';
+            die();*/
+            //$row = $this->find((int)$author_id)->current();
+            //$result = $row->findDefault_Model_ContentViaDefault_Model_ContentHasUser($select);
+        } // end if        
+        //echo var_dump($result); die;
+        return $result;
+    } // end of getUserContent
+    
+    public function getSimpleUserDataById($id = -1) 
+    {
+        $data = array();
+        
+        if ($id != -1) {
+            $select = $this->_db->select()
+                            ->from(array('users_usr' => 'users_usr'), array('id_usr', 'id_lng_usr', 'login_name_usr', 'created_usr'))
+                            ->where('id_usr = ?', $id)
+            ;
+            $result = $this->_db->fetchAll($select);
+            
+            if (count($result == 1)) $data = $result;
+        }
+        
+        return $data[0];
+    }
+    
+    /*
+    *   getUserListing
+    *
+    *   Gets user listing with filtering options.
+    *
+    *   Query in this function fetches all users
+    *   from database. This will cause a creation
+    *   of a very large array when user count
+    *   is big.
+    *
+    *   @params array $filter Filtering options
+    *   @return array
+    */
+    public function getUserListing(&$filter = null, $page = 1, $count = 10)
+    {
+
+
+        
+        // TODO: Filter by join date between selected times
+        // $joinDate = 1;
+        // if(!empty($filter['pv1']) && !empty($filter['pv2'])) {
+        //  $joinDate = $this->_db->quoteInto('usr.created_usr BETWEEN ?', $pv1);
+        //  $joinDate .= $this->_db->quoteInto(' AND ?', $pv2));
+        // }
+        
+        // Subquery to get users latest profile picture.
+        // Should fix bug in userlisting where wrong user profile
+        // picture is shown. Ugly and inefficient fix. 
+        // Current user picture should be added to user table
+        // or make users only have one profile picture.
+        // Increases load on database server.
+        // - Removed to increase efficiency on user listing.
+        /*
+        $subQuery = $this->_db->select()
+                              ->from(array('usi2' => 'usr_images_usi'),
+                                     array('usi2.id_usi'))
+                              ->order('usi2.created_usi DESC')
+                              ->where('usi2.id_usr_usi = usr.id_usr')
+                              ->limit(1);
+        */
+        
+        // Added subquery to usr_image_usi join to get
+        // only the latest user profile picture.
+        // This query will become a bottleneck on large user counts
+        $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
+                                             array('id_usr',
+                                                   'login_name_usr',
+                                                   'email_usr',
+                                                   'last_login_usr',
+                                                   'created_usr'))
+                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
+                                                 'chu.id_usr = usr.id_usr', 
+                                                 array('contentCount' => 'COUNT(DISTINCT chu.id_cnt)'))
+                                      //->joinLeft(array('usi' => 'usr_images_usi'), 
+                                      //      'usr.id_usr = usi.id_usr_usi', 
+                                      //      array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)', 
+                                      //            'usi.id_usi'))
+                                      // Join on result column of subquery
+                                      // This more than doubles loading time
+                                      // - Removed to increase efficiency.
+                                      //->joinLeft(array('usi' => 'usr_images_usi'),
+                                      //           'usi.id_usi = ' . ' (' . $subQuery . ') ',
+                                      //           array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)',
+                                      //                 'usi.id_usi'))
+                                      ->joinLeft(array('usp' => 'usr_profiles_usp'), 
+                                                 'usr.id_usr = usp.id_usr_usp', 
+                                                 array())
+                                      ->where($this->getUserSearchUsernameFilter($filter['username']))
+                                      ->where($this->getUserSearchCountryFilter($filter['country']))
+                                      ->where($this->getUserSearchCityFilter($filter['city']))
+                                      ->having($this->getUserSearchContentCountFilter($filter['contentlimit'],
+                                                                                      $filter['counttype']))
+                                      // TODO: Filter by join date
+                                      //->where($joinDate)
+                                      ->group('usr.id_usr')
+                                      ->order('usr.last_login_usr DESC')
+                                      ->limitPage($page, $count);
+        
+        // Fetch all results from database
+        $result = $this->_db->fetchAll($select);
+        
+        // Go through users in result, and find their profile images.
+        // Replaces subquery, and increases efficiency considerably.
+        // Increases database query count by the cell count of result array.
+        $size = count($result);
+        for ($i = 0; $i < $size; $i++) {
+            $imageQuery = $this->_db->select()
+                                    ->from(array('usi' => 'usr_images_usi'),
+                                           array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)', 
+                                                 'usi.id_usi'))
+                                    ->where('usi.id_usr_usi = ?', $result[$i]['id_usr'])
+                                    ->order('usi.created_usi DESC')
+                                    ->limit(1);
+            
+            $image = $this->_db->fetchAll($imageQuery);
+        
+            $result[$i]['hasImage'] = 0;
+            
+            if (!empty($image)) {
+                $result[$i]['hasImage'] = $image[0]['hasImage'];
+                $result[$i]['id_usi'] = $image[0]['id_usi'];
+            }
+        }
+        
+        // Check content count filtering and remove
+        // users that do not satisfy given parameters.
+        // Possible to do more efficiently.
+        /*
+        if(isset($result) && isset($filter['contentlimit'])) {
+            foreach ($result as $k => $res) {
+                if (!$this->checkContentCount($filter['counttype'], 
+                                              $filter['contentlimit'],
+                                              $res['contentCount'])) {
+                    unset($result[$k]);
+                }
+            }
+        }*/
+        
+        return $result;
+    }
+    
+    /**
+    *   getUserSearchCityFilter
+    *
+    *   Gets user search city filter.
+    *
+    *   @param int $city
+    *   @return string
+    */
+    public function getUserSearchCityFilter(&$city) 
+    {
+        $result = 1;
+        if (!empty($city)) {
+            $result = $this->_db->quoteInto("usp.profile_key_usp = 'city'
+                                                AND usp.public_usp = 1
+                                                AND usp.profile_value_usp LIKE ?", 
+                                             '%' . $city . '%');
+        }
+        
+        return $result;
+    }	
+    
+    /**
+    *   getUserSearchCountryFilter
+    *
+    *   Gets user search country filter.
+    *
+    *   @param int $country
+    *   @return string
+    */
+    public function getUserSearchCountryFilter(&$country) 
+    {
+        $result = 1;
+        if ($country != 0) {
+            $result = $this->_db->quoteInto("usp.profile_key_usp = 'country'
+                                                AND usp.public_usp = 1
+                                                AND usp.profile_value_usp = ?", 
+                                             $country);
+        }
+        
+        return $result;
+    }
+    
+    /**
+    *   getUserSearchUsernameFilter
+    *
+    *   Get user search username filter.
+    *
+    *   @param string $username
+    *   @return string
+    */
+    public function getUserSearchUsernameFilter(&$username) 
+    {
+        $result = 1;
+        if(!empty($username)) {
+            $result = $this->_db->quoteInto('usr.login_name_usr LIKE ?', 
+                                              '%' . $username . '%');
+        }
+        
+        return $result;
+    } 
+    
+    /**
+    *   getUserSearchContentCountFilter
+    *
+    *   Get user search content count filter.
+    *
+    *   @param int $count
+    *   @param int $type
+    *   @return string
+    */
+    public function getUserSearchContentCountFilter(&$count, &$type) 
+    {
+        $result = 1;
+        if(!empty($count) && 
+            $char = $this->checkContentCount($type)) {
+            $result = $this->_db->quoteInto('contentCount ' . $char . ' ?', 
+                                                  $count);
+        }
+        
+       return $result;
+    }
+    
+    /**
+    *   getUserCountBySearch
+    *
+    *   Get total user count by search
+    *
+    *   @param 
+    *   @return array
+    */
+    public function getUserCountBySearch(&$filter = null) 
+    {
+        $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
+                                             array('userCount' => 'COUNT(DISTINCT usr.id_usr)'))
+                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
+                                                 'chu.id_usr = usr.id_usr', 
+                                                 array('contentCount' => 'COUNT(DISTINCT chu.id_cnt)'))
+                                      ->joinLeft(array('usp' => 'usr_profiles_usp'), 
+                                                 'usr.id_usr = usp.id_usr_usp', 
+                                                 array())
+                                      ->where($this->getUserSearchUsernameFilter($filter['username']))
+                                      ->where($this->getUserSearchCountryFilter($filter['country']))
+                                      ->where($this->getUserSearchCityFilter($filter['city']))
+                                      ->having($this->getUserSearchContentCountFilter($filter['contentlimit'],
+                                                                                      $filter['counttype']))
+                                      // TODO: Filter by join date
+                                      //->where($joinDate)
+                                      /*->group('usr.id_usr')*/;        
+        $data = $this->_db->fetchAll($select);
+        
+        return isset($data[0]['userCount']) ? $data[0]['userCount'] : 0;   
+    }
+    
+    /**
+    *    checkContentCount
+    *
+    *    Checks content count to given limit and comparison type.
+    *
+    *    @params integer action comparision type
+    *    @params integer limit user given limit value
+    *    @params integer count content count
+    *    @return boolean
+    */
+    private function checkContentCount(&$action/*, &$limit, &$count*/)
+    {
+        switch($action) {
+            case 0:
+                //if($count > $limit) {
+                    return '>';
+                //}
+                //break;
+            case 1:
+                //if($count < $limit) {
+                    return '<';
+                //}
+                //break;
+            case 2:
+                //if ($count == $limit) {
+                    return '=';
+                //}
+                //break;
+            default:
+                return false;        
+        }
+    }
+    
+    
+	/*
+    *   changeUserEmail
+    *
+    *   Changes the e-mail address of the user.
+    *
+    *   @return N/A
+    */
+	public function changeUserEmail($id = -1, $email_address)
+	{
+		// this is the simplest possible example of the update() -function :) -sokuni
+		$data = array('email_usr' => $email_address);			
+		$where = $this->getAdapter()->quoteInto('id_usr = ?', $id);
+		$this->update($data, $where);	
+	}
+	
+    /**
+    * getUserEmail
+    *
+    * @author joel peltonen
+    * @param id userid
+    * @return string e-mail-address of user
+    */
+    public function getUserEmail($id = -1){
+        if ($id == -1) {
+            return false;
+        }
+        
+        $select = $this->select()
+                    ->from($this, array('email_usr'))
+                    ->where('id_usr = ?', $id);
+                    
+        $result = $this->fetchRow($select)->toArray();
+
+        
+        return $result['email_usr'];
+    }
+    
+	/*
+    *   changeUserPassword
+    *
+    *   Changes the password of the user.
+    *
+    *   @return N/A
+    */
+	public function changeUserPassword($id = -1, $password)
+	{
+		$select = $this->select()
+                            ->from($this, array('password_salt_usr'))
+                            ->where('id_usr = ?', $id);
+        $result = $this->fetchRow($select)->toArray();
+		
+		$salt = $result['password_salt_usr'];
+		$hashed_password = md5($salt.$password.$salt);
+		
+		$data = array('password_usr' => $hashed_password);			
+		$where = $this->getAdapter()->quoteInto('id_usr = ?', $id);
+		$this->update($data, $where);	
+	}
+    
+    /**
+    *   Checks if username exists in database
+    *
+    *   @param $username string username
+    *
+    *   @return boolean TRUE if username exists, FALSE if not
+    */
+    public function usernameExists($username)
+    {
+        $select = $this->_db->select()
+                        ->from(array('users_usr' => 'users_usr'), array('id_usr'))
+                        ->where('login_name_usr = ?', $username)
+        ;
+        $result = $this->_db->fetchAll($select);
+
+        if (!isset($result[0])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+    *   Checks if username exists in database
+    *
+    *   @param $username string username
+    *
+    *   @return integer userid
+    *   @author Joel Peltonen
+    */
+    public function getIdByUsername($username)
+    {
+        $select = $this->_db->select()
+                        ->from(array('users_usr' => 'users_usr'), array('id_usr'))
+                        ->where('login_name_usr = ?', $username)
+        ;
+        
+        $result = $this->_db->fetchAll($select);
+        
+        if (isset($result[0])) {
+            $uid = $result[0]['id_usr'];
+        } else {
+            $uid = null;
+        }
+    
+        return $uid;
+    }
+    
+    public function getUserNameById($id_usr)
+    {
+        if($id_usr != 0)
+        {
+            $select = $this->select()
+                    ->from($this, array('login_name_usr'))
+                    ->where("`id_usr` = $id_usr");
+
+            $result = $this->fetchAll($select)->toArray();
+            
+            return $result[0]['login_name_usr'];
+        }
+        else
+        {
+            return "privmsg-message-sender-system";
+        }
+    } // end of getUserNameById
+} // end of class

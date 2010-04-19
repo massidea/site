@@ -1,9 +1,13 @@
 <select name="content_class" id="content_class">
-<option value="0"><?php echo $this->translate("content-add-select-class"); ?></option>
-<?php
-foreach($this->classes as $class)
-{
-	echo '<option value="'.$class['id_ind'].'">'.$class['name_ind'].'</option>';
-}
-?>
+
+    <option value="0">
+        <?php echo $this->translate("content-add-select-class"); ?>
+    </option>
+    
+    <?php foreach($this->classes as $class): ?>
+        <option value="<?php echo $class['id_ind']; ?>">
+            <?php echo $class['name_ind']; ?>
+        </option>
+    <?php endforeach; ?>
+    
 </select>

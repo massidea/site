@@ -82,7 +82,7 @@ class Oibs_Decorators_LoginDecorator extends Zend_Form_Decorator_Abstract
         $desc      = $this->buildDescription();
 
         $output = /*'<dl class="form_element">*/
-					'<div class="form_addcontent_row">'
+					'<div class="login_form_element">'
 					. $label
 					. $input
 					. $errors

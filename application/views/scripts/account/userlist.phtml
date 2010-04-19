@@ -2,47 +2,64 @@
     <div id="user_list_top" class="clear">
         <?php echo $this->userSearch; ?>
     </div>
-    <div id="user_list_bottom">
-        <div id="user_list_user_pagination_top">
-            <?php echo $this->paginationControl($this->userListPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
-        </div>
-        <div id="account_user_list_container">
-            <?php foreach ($this->userListPaginator as $user): ?>
-                <div id="user_<?php echo $user['id_usr']; ?>" class="user_list_user_container clear">
-                    <div id="user_<?php echo $user['id_usr']; ?>_image" class="user_list_user_image">
-                        <?php if ($user['hasImage']): ?>
-                            <img src="<?php echo $this->url(array('controller' => 'account', 
-                                                                  'action' => 'profilethumb', 
-                                                                  'thumb' => true, 
-                                                                  'id' => $user['id_usr'], 
-                                                                  'language' => $this->language), 
-                                                            'lang_default', true); ?>" alt="User image" class="profile_image" />
-                        <?php else: ?>
-                            <img src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/no_profile_img_placeholder.gif" alt="No Profile Image" />
-                        <?php endif; ?>
+    <?php if (!empty($this->userListData)):?>
+        <div id="user_list_bottom">
+        
+            <?php if ($this->userCount > $this->count): ?>
+            <div id="user_list_user_pagination_top">
+                <?php echo $this->userPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
+            </div>
+            <?php endif; ?>
+            
+            <div id="account_user_list_container">
+            
+                <?php foreach ($this->userListData as $user): ?>
+                    <div id="user_<?php echo $user['id_usr']; ?>" class="user_list_user_container clear">
+                    
+                        <div id="user_<?php echo $user['id_usr']; ?>_image" class="user_list_user_image">
+                                <img src="<?php echo $this->url(array('controller' => 'account', 
+                                                                      'action' => 'profilethumb', 
+                                                                      'thumb' => true, 
+                                                                      'id' => $user['id_usr'], 
+                                                                      'language' => $this->language), 
+                                                                'lang_default', true); ?>" alt="User image" class="profile_image_mediumsize" />
+                        </div>
+                        
+                        <div id="user_<?php echo $user['id_usr']; ?>_info" class="user_list_user_info">
+                            <div id="user_<?php echo $user['id_usr']; ?>_info_header">
+                                <a href="<?php echo $this->url(array('controller' => 'account',
+                                                                     'action' => 'view',
+                                                                     'user' => $user['login_name_usr'],
+                                                                     'language' =>  $this->language),
+                                                               'lang_default', true); ?>">
+                                    <?php echo $user['login_name_usr']; ?>
+                                </a>
+                            </div>
+                            
+                            <div id="user_<?php echo $user['id_usr']; ?>_info_created" class="user_list_user_info_data">
+                                <?php echo $this->translate('account-userlist-user-joined').date('d M Y', strtotime($user['created_usr'])); ?>
+                            </div>
+                            
+                            <div id="user_<?php echo $user['id_usr']; ?>_info_content" class="user_list_user_info_data">
+                                <?php echo $this->translate(('account-userlist-user-content-added'), $user['contentCount']); ?>
+                            </div>
+                        </div>
+                        
                     </div>
-                    <div id="user_<?php echo $user['id_usr']; ?>_info" class="user_list_user_info">
-                        <div id="user_<?php echo $user['id_usr']; ?>_info_header">
-                            <a href="<?php echo $this->url(array('controller' => 'account',
-                                                                 'action' => 'view',
-                                                                 'user' => $user['login_name_usr'],
-                                                                 'language' =>  $this->language),
-                                                           'lang_default', true); ?>">
-                                <?php echo $user['login_name_usr']; ?>
-                            </a>
-                        </div>
-                        <div id="user_<?php echo $user['id_usr']; ?>_info_created" class="user_list_user_info_data">
-                            <?php echo $this->translate('account-userlist-user-joined').date('d M Y', strtotime($user['created_usr'])); ?>
-                        </div>
-                        <div id="user_<?php echo $user['id_usr']; ?>_info_content" class="user_list_user_info_data">
-                            <?php echo $this->translate(('account-userlist-user-content-added'), $user['contentCount']); ?>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+                
+            </div>
+            
+            <?php if ($this->userCount > $this->count): ?>
+        	<div id="user_list_user_pagination_bottom">
+                <?php echo $this->userPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
+        	</div>
+            <?php endif; ?>
+            
         </div>
-    	<div id="user_list_user_pagination_bottom">
-    		<?php echo $this->paginationControl($this->userListPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
-    	</div>
-    </div>
-</div>
+<?php else: ?>
+	<div>
+		<?php echo $this->translate('search-nothing-found'); ?>
+	</div>
+<?php endif; ?>   
+ </div>

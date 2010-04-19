@@ -15,16 +15,10 @@
  *
  * @category   Zend
  * @package    Zend_Db
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Db.php 9573 2008-05-29 22:25:26Z peptolab $
+ * @version    $Id: Db.php 16203 2009-06-21 18:56:17Z thomas $
  */
-
-
-/**
- * @see Zend_Loader
- */
-require_once 'Zend/Loader.php';
 
 
 /**
@@ -32,7 +26,7 @@ require_once 'Zend/Loader.php';
  *
  * @category   Zend
  * @package    Zend_Db
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db
@@ -52,6 +46,16 @@ class Zend_Db
      * Use the AUTO_QUOTE_IDENTIFIERS constant in the config of a Zend_Db_Adapter.
      */
     const AUTO_QUOTE_IDENTIFIERS = 'autoQuoteIdentifiers';
+
+    /**
+     * Use the ALLOW_SERIALIZATION constant in the config of a Zend_Db_Adapter.
+     */
+    const ALLOW_SERIALIZATION = 'allowSerialization';
+
+    /**
+     * Use the AUTO_RECONNECT_ON_UNSERIALIZE constant in the config of a Zend_Db_Adapter.
+     */
+    const AUTO_RECONNECT_ON_UNSERIALIZE = 'autoReconnectOnUnserialize';
 
     /**
      * Use the INT_TYPE, BIGINT_TYPE, and FLOAT_TYPE with the quote() method.
@@ -244,7 +248,10 @@ class Zend_Db
          * Load the adapter class.  This throws an exception
          * if the specified class cannot be loaded.
          */
-        @Zend_Loader::loadClass($adapterName);
+        if (!class_exists($adapterName)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($adapterName);
+        }
 
         /*
          * Create an instance of the adapter class.

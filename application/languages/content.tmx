@@ -5,6 +5,54 @@
 	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
 </header>
 <body>
+	<tu tuid='content-list-missing-header'>
+		<tuv xml:lang="en"><seg>Are we missing a feature?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Puuttuuko jokin toiminto?</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-p3'>
+		<tuv xml:lang="en"><seg>Familarize your self with content production guideline and start sharing your visions.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tutustu sisällöntuoton ohjenuoriin ja aloita omien ajatuksiesi jakaminen.</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-p1-idea'>
+		<tuv xml:lang="en"><seg>Ideas are related to challenges or visions found in the Massidea database. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Massidean tietokannassa ideat aina liittyvät tulevaisuustietoon tai haasteeseen.</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-p2-idea'>
+		<tuv xml:lang="en"><seg>In other words, ideas are answers or solutions to current challenges or visions of the future. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Toisin sanoin, ideat ovat vastauksia tai ratkaisuja tämän päivän haasteisiin tai tulevaisuuden visioihin.</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-p1-finfo'>
+		<tuv xml:lang="en"><seg>Visions of the future concern the future, not the present day. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuustiedot koskevat jotain tulevaa, eivät nykyistä tilannetta.</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-p2-finfo'>
+		<tuv xml:lang="en"><seg>Vision can be a future scenario, trend or anti-trend, which is expected to be realized. It can also be seed of change or a weak signal from the future which might become reality.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuustieto voi olla skenaario, trendi tai antitrendi, jota odotetaan toteutuvaksi. Tämä voi tarkoittaa myös muutoksen siementä tai heikkoa signaalia tulevaisuudesta, joka voisi toteutua.</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-p1-problem'>
+		<tuv xml:lang="en"><seg>Problems and obstacles are stopping us from achieving our goals. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Ongelmat ja haasteet estävät meitä tavoittamasta päämääriämme.</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-p2-problem'>
+		<tuv xml:lang="en"><seg>Whether it's a question of business or personal life related issues, we can turn problems into challenges and start solving them.</seg></tuv>
+		<tuv xml:lang="fi"><seg>On kyseessä työelämän tai henkilökohtaisen ongelma, voimme muuttaa onglman haasteeksi ja aloittaa niiden ratkaisemisen.</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-header-finfo'>
+		<tuv xml:lang="en"><seg>What is a vision?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mikä on tulevaisuustieto?</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-header-problem'>
+		<tuv xml:lang="en"><seg>What is a challenge?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mikä on haaste?</seg></tuv>
+	</tu>
+	<tu tuid='content-list-right-header-idea'>
+		<tuv xml:lang="en"><seg>What is a idea?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mikä on idea?</seg></tuv>
+	</tu>
+	<tu tuid='or'>
+		<tuv xml:lang="en"><seg>or</seg></tuv>
+		<tuv xml:lang="fi"><seg>tai</seg></tuv>
+	</tu>
 	<tu tuid='content-remove-invalid-content-id'>
 		<tuv xml:lang="en"><seg>Content removal not successful, an invalid content id was found.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe - sisällöllä virheellinen tunnistenumero.</seg></tuv>
@@ -13,7 +61,7 @@
 		<tuv xml:lang="en"><seg>Content removal not successful, an error ocurred.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe.</seg></tuv>
 	</tu>
-    <tu tuid='content-remove-successful'>
+	<tu tuid='content-remove-successful'>
 		<tuv xml:lang="en"><seg>Content removal successful.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö poistettiin onnistuneesti.</seg></tuv>
 	</tu>
@@ -25,25 +73,25 @@
 		<tuv xml:lang="en"><seg>%d Most recent content</seg></tuv>
 		<tuv xml:lang="fi"><seg>%d Viimeisintä sisältöä</seg></tuv>
 	</tu>
-	<tu tuid='view-index-title'>
-		<tuv xml:lang="en"><seg>OIBS content page</seg></tuv>
-		<tuv xml:lang="fi"><seg>OIBS sisältösivu</seg></tuv>
+	<tu tuid='content-list-problem'>
+		<tuv xml:lang="en"><seg>Problems</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ongelmat</seg></tuv>
 	</tu>
-	<tu tuid='content-list-recent_problem'>
-		<tuv xml:lang="en"><seg>%d Most recent problems</seg></tuv>
-		<tuv xml:lang="fi"><seg>%d Viimeisintä ongelmaa</seg></tuv>
+	<tu tuid='content-list-idea'>
+		<tuv xml:lang="en"><seg>Ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
 	</tu>
-	<tu tuid='content-list-recent_idea'>
-		<tuv xml:lang="en"><seg>%d Most recent ideas</seg></tuv>
-		<tuv xml:lang="fi"><seg>%d Viimeisintä ideaa</seg></tuv>
-	</tu>
-	<tu tuid='content-list-recent_finfo'>
-		<tuv xml:lang="en"><seg>%d Most recent future visions</seg></tuv>
-		<tuv xml:lang="fi"><seg>%d Viimeisintä tulevaisuuden näkymää</seg></tuv>
+	<tu tuid='content-list-finfo'>
+		<tuv xml:lang="en"><seg>Future visions</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymät</seg></tuv>
 	</tu>
 	<tu tuid='content-list-recent'>
 		<tuv xml:lang="en"><seg>Recent content</seg></tuv>
 		<tuv xml:lang="fi"><seg>Viimeisintä sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-list-industry-top'>
+		<tuv xml:lang="en"><seg>Top</seg></tuv>
+		<tuv xml:lang="fi"><seg>Alkuun</seg></tuv>
 	</tu>
 	<tu tuid='content-list-created'>
 		<tuv xml:lang="en"><seg>Created: </seg></tuv>
@@ -73,17 +121,45 @@
 		<tuv xml:lang="en"><seg>Content</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
 	</tu>
+	<tu tuid='content-view-unpublished'>
+		<tuv xml:lang="en"><seg>This content is unpublished</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tätä sisältöä ei ole julkaistu</seg></tuv>
+	</tu>
 	<tu tuid='content-view-comments'>
-		<tuv xml:lang="en"><seg>%d Comments</seg></tuv>
-		<tuv xml:lang="fi"><seg>%d Kommenttia</seg></tuv>
+		<tuv xml:lang="en"><seg>Comments</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kommentit</seg></tuv>
 	</tu>
 	<tu tuid='content-view-comment'>
 		<tuv xml:lang="en"><seg>%d Comment</seg></tuv>
 		<tuv xml:lang="fi"><seg>%d Kommentti</seg></tuv>
 	</tu>
+	<tu tuid='content-view-solve-problem'>
+		<tuv xml:lang="en"><seg>Can you solve this challenge?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Voitko ratkaista tämän haasteen?</seg></tuv>
+	</tu>
+	<tu tuid='content-view-solve-finfo'>
+		<tuv xml:lang="en"><seg>Do you have ideas for this vision?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Onko sinulla ideoita tähän näkymään?</seg></tuv>
+	</tu>
+	<tu tuid='content-view-solve-idea'>
+		<tuv xml:lang="en"><seg>Do you a have better idea?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Onko sinulla parempi idea?</seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-reply'>
+		<tuv xml:lang="en"><seg>Reply</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vastaa</seg></tuv>
+	</tu>
 	<tu tuid='content-view-tags'>
 		<tuv xml:lang="en"><seg>Tags: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Avainsanat: </seg></tuv>
+	</tu>
+	<tu tuid='content-view-industry-classification'>
+		<tuv xml:lang="en"><seg>Industry classification</seg></tuv>
+		<tuv xml:lang="fi"><seg>Toimialaluokitus</seg></tuv>
+	</tu>
+	<tu tuid='content-view-innovationtype-classification'>
+		<tuv xml:lang="en"><seg>Innovation type classification</seg></tuv>
+		<tuv xml:lang="fi"><seg>Innovaatiotyyppiluokitus</seg></tuv>
 	</tu>
 	<tu tuid='content-view-links'>
 		<tuv xml:lang="en"><seg>Links: </seg></tuv>
@@ -93,7 +169,7 @@
 		<tuv xml:lang="en"><seg>Submitted by</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisääjä</seg></tuv>
 	</tu>
-    <tu tuid='content-box-join-header'>
+	<tu tuid='content-box-join-header'>
 		<tuv xml:lang="en"><seg>Join today</seg></tuv>
 		<tuv xml:lang="fi"><seg>Liity jäseneksi</seg></tuv>
 	</tu>
@@ -101,12 +177,12 @@
 		<tuv xml:lang="en"><seg>a long time ago</seg></tuv>
 		<tuv xml:lang="fi"><seg>kauan sitten</seg></tuv>
 	</tu>
-    <tu tuid='content-box-join-message'>
+	<tu tuid='content-box-join-message'>
 		<tuv xml:lang="en"><seg>Registered users can vote up/down, comment and add  content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Rekisteröityneet käyttäjät voivat äänestää, kommentoida ja lisätä sisältöä!</seg></tuv>
 	</tu>
 	<tu tuid='content-view-user-related'>
-		<tuv xml:lang="en"><seg>More from user</seg></tuv>
+		<tuv xml:lang="en"><seg>More from author</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää käyttäjältä</seg></tuv>
 	</tu>
 	<tu tuid='content-view-user-related-views'>
@@ -118,8 +194,8 @@
 		<tuv xml:lang="fi"><seg>Liittyvää sisältöä</seg></tuv>
 	</tu>
 	<tu tuid='content-view-author'>
-		<tuv xml:lang="en"><seg>Author:</seg></tuv>
-		<tuv xml:lang="fi"><seg>Tekijä:</seg></tuv>
+		<tuv xml:lang="en"><seg>Corresponding author</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön tuottaja</seg></tuv>
 	</tu>
 	<tu tuid='content-view-joined'>
 		<tuv xml:lang="en"><seg>Joined:</seg></tuv>
@@ -142,52 +218,128 @@
 		<tuv xml:lang="fi"><seg>Viesti: </seg></tuv>
 	</tu>
 	<tu tuid='content-view-comment-add'>
-		<tuv xml:lang="en"><seg>Add Comment</seg></tuv>
-		<tuv xml:lang="fi"><seg>Lisää kommentti</seg></tuv>
+		<tuv xml:lang="en"><seg>Write your comment</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää kommenttisi</seg></tuv>
 	</tu>
-	<tu tuid='content-add-page_header'>
-		<tuv xml:lang="en"><seg>Add content</seg></tuv>
-		<tuv xml:lang="fi"><seg>Lisää sisältöä</seg></tuv>
+	<tu tuid='content-add-problem-page-header'>
+		<tuv xml:lang="en"><seg>Share your challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>Share your challenge</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-page-header'>
+		<tuv xml:lang="en"><seg>Share your vision of the future</seg></tuv>
+		<tuv xml:lang="fi"><seg>Share your vision of the future</seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-page-header'>
+		<tuv xml:lang="en"><seg>Share your new idea</seg></tuv>
+		<tuv xml:lang="fi"><seg>Share your new idea</seg></tuv>
 	</tu>
 	<tu tuid='content-add-not-logged'>
 		<tuv xml:lang="en"><seg>You must login in order to add content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kirjaudu sisään lisätäksesi sisältöä!</seg></tuv>
 	</tu>
-    <tu tuid='content-add-innovation-type'>
+	<tu tuid='content-link-not-logged'>
+		<tuv xml:lang="en"><seg>You must login in order to link contents!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu sisään linkittäksesi sisältöjä!</seg></tuv>
+	</tu>
+	<tu tuid='content-add-innovation-type'>
 		<tuv xml:lang="en"><seg>Innovation type</seg></tuv>
 		<tuv xml:lang="fi"><seg>Innovaatiotyyppi</seg></tuv>
 	</tu>
-    <tu tuid='content-add-industry'>
+	<tu tuid='content-add-industry'>
 		<tuv xml:lang="en"><seg>Industry</seg></tuv>
 		<tuv xml:lang="fi"><seg>Toimiala</seg></tuv>
 	</tu>
-    <tu tuid='content-add-division'>
+	<tu tuid='content-required-field'>
+		<tuv xml:lang="en"><seg>required</seg></tuv>
+		<tuv xml:lang="fi"><seg>pakollinen</seg></tuv>
+	</tu>
+	<tu tuid='content-add-division'>
 		<tuv xml:lang="en"><seg>Division</seg></tuv>
 		<tuv xml:lang="fi"><seg>Osa-alue</seg></tuv>
 	</tu>
-    <tu tuid='content-add-group'>
+	<tu tuid='content-add-group'>
 		<tuv xml:lang="en"><seg>Group</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ryhmä</seg></tuv>
 	</tu>
-    <tu tuid='content-add-class'>
+	<tu tuid='content-add-class'>
 		<tuv xml:lang="en"><seg>Class</seg></tuv>
 		<tuv xml:lang="fi"><seg>Luokka</seg></tuv>
 	</tu>
-    <tu tuid='content-add-header'>
+	<tu tuid='content-add-header'>
 		<tuv xml:lang="en"><seg>Header</seg></tuv>
 		<tuv xml:lang="fi"><seg>Otsikko</seg></tuv>
 	</tu>
-    <tu tuid='content-add-keywords'>
+	<tu tuid='content-add-keywords'>
 		<tuv xml:lang="en"><seg>Keywords</seg></tuv>
 		<tuv xml:lang="fi"><seg>Avainsanat</seg></tuv>
 	</tu>
-    <tu tuid='content-add-textlead'>
+	<tu tuid='content-add-textlead'>
 		<tuv xml:lang="en"><seg>Textlead</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ingressi</seg></tuv>
 	</tu>
-    <tu tuid='content-add-text'>
+	<tu tuid='content-add-text'>
 		<tuv xml:lang="en"><seg>Text</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
+	</tu>
+	<tu tuid='content-add-related_companies'>
+		<tuv xml:lang="en"><seg>Related companies</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liittyvät yritykset</seg></tuv>
+	</tu>
+	<tu tuid='content-add-research'>
+		<tuv xml:lang="en"><seg>Research question</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tutkimusongelma</seg></tuv>
+	</tu>
+	<tu tuid='content-add-campaigns'>
+		<tuv xml:lang="en"><seg>Campaigns</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kampanjat</seg></tuv>
+	</tu>
+	<tu tuid='content-add-opportunity'>
+		<tuv xml:lang="en"><seg>Opportunity</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mahdollisuus</seg></tuv>
+	</tu>
+	<tu tuid='content-add-threat'>
+		<tuv xml:lang="en"><seg>Threat</seg></tuv>
+		<tuv xml:lang="fi"><seg>Uhka</seg></tuv>
+	</tu>
+	<tu tuid='content-add-solution'>
+		<tuv xml:lang="en"><seg>Your idea/solution in one sentence</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideasi/ratkaisusi yhdellä lauseella</seg></tuv>
+	</tu>
+	<tu tuid='content-add-upload-file'>
+		<tuv xml:lang="en"><seg>Upload file(s)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tiedosto(ja)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-references'>
+		<tuv xml:lang="en"><seg>References</seg></tuv>
+		<tuv xml:lang="fi"><seg>Viittaukset</seg></tuv>
+	</tu>
+	<tu tuid='content-add-references-help-text'>
+		<tuv xml:lang="en"><seg> </seg></tuv>
+		<tuv xml:lang="fi"><seg> </seg></tuv>
+	</tu>
+	<tu tuid='content-add-language'>
+		<tuv xml:lang="en"><seg>Select language</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse kieli</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-classification'>
+		<tuv xml:lang="en"><seg>Visions of the future classification</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymän luokitus</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-finfo-classification'>
+		<tuv xml:lang="en"><seg>Select classification</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse luokitus</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-classification1'>
+		<tuv xml:lang="en"><seg>Trends and anti-trends</seg></tuv>
+		<tuv xml:lang="fi"><seg>Trendit ja anti-trendit</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-classification2'>
+		<tuv xml:lang="en"><seg>Expected future scenarios</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mahdollinen tulevaisuuden skenaario</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-classification3'>
+		<tuv xml:lang="en"><seg>Emerging weak signals and seeds of change</seg></tuv>
+		<tuv xml:lang="fi"><seg>Heikot signaalit ja muutoksen siemenet</seg></tuv>
 	</tu>
 	<tu tuid='content-add-contenttype-missing-or-invalid'>
 		<tuv xml:lang="en"><seg>Invalid content type or it was not set!</seg></tuv>
@@ -205,19 +357,67 @@
 		<tuv xml:lang="en"><seg>Idea must be related to a content that exists!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö, johon lisättävä idea liittyy, ei ole olemassa!</seg></tuv>
 	</tu>
-    <tu tuid='content-add-header-help-text'>
+	<tu tuid='content-add-header-help-text'>
 		<tuv xml:lang="en"><seg>The header should be concise and it should describe the subject as well as possible (max. length 100 marks)</seg></tuv>
 		<tuv xml:lang="fi"><seg>Mahdollisimman hyvin aihetta kuvaava, tiivis otsikko (maksimipituus 100 merkkiä).</seg></tuv>
 	</tu>
-    <tu tuid='content-add-keywords-help-text'>
-		<tuv xml:lang="en"><seg>Keywords should be selected carefully, as they will determine the search results. If the keywords do not represent the text, the text will not be found by the people seeking information on the subject. (max. length 120 marks)</seg></tuv>
-		<tuv xml:lang="fi"><seg>Avainsanat kannattaa valita huolellisesti, sillä hakutulokset tulevat näiden sanojen perusteella. Jos avainsanat eivät kuvaa tekstiä, jää teksti löytämättä jostain aihealueesta tietoa haluavilta. (maksimipituus 120 merkkiä)</seg></tuv>
+	<tu tuid='content-add-keywords-help-text'>
+		<tuv xml:lang="en"><seg>(Use commas to separate tags)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Erota avainsanat pilkulla)</seg></tuv>
 	</tu>
-    <tu tuid='content-add-textlead-help-text'>
-		<tuv xml:lang="en"><seg>The header should be concise and it should describe the subject as well as possible (max. length 100 marks)</seg></tuv>
-		<tuv xml:lang="fi"><seg>Mahdollisimman hyvin aihetta kuvaava, tiivis otsikko (maksimipituus 100 merkkiä).</seg></tuv>
+	<tu tuid='content-add-textlead-help-text'>
+		<tuv xml:lang="en"><seg>(This text is shown in search result lists)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Tämä teksti näkyy hakutuloslistoissa)</seg></tuv>
 	</tu>
-    <tu tuid='content-publish-invalid-content-id'>
+	<tu tuid='content-add-problem-textbody-help-text'>
+		<tuv xml:lang="en"><seg>(What is challenge and why it is important)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Mikä haaste on ja miksi se on tärkeä)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-textbody-help-text'>
+		<tuv xml:lang="en"><seg>(What is vision of the future and why it is important)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Mikä tulevaisuuden näkymä on ja miksi se on tärkeä)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-textbody-help-text'>
+		<tuv xml:lang="en"><seg>(What is idea and why it is important)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Mikä idea on ja miksi se on tärkeä)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-related_companies-help-text'>
+		<tuv xml:lang="en"><seg>(Use commas to separate companies)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Erota yritykset pilkulla)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-campaigns-help-text'>
+		<tuv xml:lang="en"><seg>(Use commas to separate campaigns)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Erota kampanjat pilkulla)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-research-help-text'>
+		<tuv xml:lang="en"><seg>(The single question you want get an answer)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Yksittäinen kysymys, johon haluat vastauksen)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-opportunity-help-text'>
+		<tuv xml:lang="en"><seg>(The most important if future scenario becomes realized)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Tärkein, jos tulevaisuuden skenaario toteutuu)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-file-upload-help-text'>
+		<tuv xml:lang="en"><seg>(optional, max size 2 MB)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(valinnainen, maksimikoko 2 MB)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-threat-help-text'>
+		<tuv xml:lang="en"><seg>(The most important if future scenario becomes realized)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Tärkein, jos tulevaisuuden skenaario toteutuu)</seg></tuv>
+	</tu>
+	<tu tuid='content-add-field-empty'>
+		<tuv xml:lang="en"><seg>field empty</seg></tuv>
+		<tuv xml:lang="fi"><seg>kenttä tyhjä</seg></tuv>
+	</tu>
+	<tu tuid='content-add-field-too-short'>
+		<tuv xml:lang="en"><seg>too short</seg></tuv>
+		<tuv xml:lang="fi"><seg>liian lyhyt</seg></tuv>
+	</tu>
+	<tu tuid='content-add-field-too-long'>
+		<tuv xml:lang="en"><seg>too long</seg></tuv>
+		<tuv xml:lang="fi"><seg>liian pitkä</seg></tuv>
+	</tu>
+	<tu tuid='content-publish-invalid-content-id'>
 		<tuv xml:lang="en"><seg>Content with given id doesn't exist!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Annetulla id:llä ei löydy sisältöä!</seg></tuv>
 	</tu>
@@ -237,6 +437,18 @@
 		<tuv xml:lang="en"><seg>Select an innovation type</seg></tuv>
 		<tuv xml:lang="fi"><seg>Valitse innovaatiotyyppi</seg></tuv>
 	</tu>
+	<tu tuid='content-add-helptext-mandatory'>
+		<tuv xml:lang="en"><seg>Following fields are mandatory.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Following fields are mandatory.</seg></tuv>
+	</tu>
+	<tu tuid='content-add-helptext-optional'>
+		<tuv xml:lang="en"><seg>Below fields are optional. Althouhg they help other users to find your challenge.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Below fields are optional. Althouhg they help other users to find your challenge.</seg></tuv>
+	</tu>
+	<tu tuid='content-add-select-language'>
+		<tuv xml:lang="en"><seg>Choose a language</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse kieli</seg></tuv>
+	</tu>
 	<tu tuid='content-add-select-industry'>
 		<tuv xml:lang="en"><seg>Select an industry</seg></tuv>
 		<tuv xml:lang="fi"><seg>Valitse toimiala</seg></tuv>
@@ -254,95 +466,928 @@
 		<tuv xml:lang="fi"><seg>Valitse osa-alue ensin</seg></tuv>
 	</tu>
 	<tu tuid='content-add-select-group'>
-		<tuv xml:lang="en"><seg>Select a group (optional)</seg></tuv>
-		<tuv xml:lang="fi"><seg>Valitse ryhmä (valinnainen)</seg></tuv>
+		<tuv xml:lang="en"><seg>Select a group</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse ryhmä</seg></tuv>
 	</tu>
 	<tu tuid='content-add-select-class-no-group'>
 		<tuv xml:lang="en"><seg>Select a group first</seg></tuv>
 		<tuv xml:lang="fi"><seg>Valitse ryhmä ensin</seg></tuv>
 	</tu>
 	<tu tuid='content-add-select-class'>
-		<tuv xml:lang="en"><seg>Select a class (optional)</seg></tuv>
-		<tuv xml:lang="fi"><seg>Valitse luokka (valinnainen)</seg></tuv>
+		<tuv xml:lang="en"><seg>Select a class</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse luokka</seg></tuv>
 	</tu>
-    <tu tuid='content-add-successful'>
-		<tuv xml:lang="en"><seg>Content added succesfully!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällön lisäys onnistui!</seg></tuv>
+	<tu tuid='content-publish-successful'>
+		<tuv xml:lang="en"><seg>Content published succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön julkaiseminen onnistui!</seg></tuv>
 	</tu>
-    <tu tuid='content-add-not-successful'>
-		<tuv xml:lang="en"><seg>There was some problem with adding content!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Jostain syystä sisällön lisäys ei onnistunut!</seg></tuv>
+	<tu tuid='content-publish-not-successful'>
+		<tuv xml:lang="en"><seg>There was some problem with publishing content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Jostain syystä sisällön julkaiseminen ei onnistunut!</seg></tuv>
 	</tu>
-    <tu tuid='content-edit'>
-		<tuv xml:lang="en"><seg>Edit</seg></tuv>
-		<tuv xml:lang="fi"><seg>Muokkaa</seg></tuv>
+	<tu tuid='content-save-successful'>
+		<tuv xml:lang="en"><seg>Saving was succesful!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tallentaminen onnistui!</seg></tuv>
 	</tu>
-    <tu tuid='content-edit-not-logged'>
-		<tuv xml:lang="en"><seg>You must login in order to edit content!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Kirjaudu sisään muokataksesi sisältöä!</seg></tuv>
+	<tu tuid='content-save-successful2'>
+		<tuv xml:lang="en"><seg>You can later on edit and publish saved contents in your</seg></tuv>
+		<tuv xml:lang="fi"><seg>Voit myöhemmin muokata ja julkaista tallennettuja sisältöjä</seg></tuv>
 	</tu>
-    <tu tuid='content-edit-not-owner'>
-		<tuv xml:lang="en"><seg>You must own the content in order to edit it!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisältöä voi muokata vain sen omistaja!</seg></tuv>
+	<tu tuid='content-save-successful3'>
+		<tuv xml:lang="en"><seg>own user page</seg></tuv>
+		<tuv xml:lang="fi"><seg>omalla käyttäjäsivullasi</seg></tuv>
 	</tu>
-    <tu tuid='content-edit-no-id'>
-		<tuv xml:lang="en"><seg>Id of content to be edited is missing!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Muokattavan sisällön id ei ole asetettu!</seg></tuv>
+	<tu tuid='content-save-successful4'>
+		<tuv xml:lang="en"><seg>by clicking</seg></tuv>
+		<tuv xml:lang="fi"><seg>klikkaamalla</seg></tuv>
 	</tu>
-    <tu tuid='content-edit-successful'>
-		<tuv xml:lang="en"><seg>Content edited succesfully!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällön muokkaus onnistui!</seg></tuv>
+	<tu tuid='content-save-successful5'>
+		<tuv xml:lang="en"><seg>"saved" tab</seg></tuv>
+		<tuv xml:lang="fi"><seg>"tallennetut"-välilehteä</seg></tuv>
 	</tu>
-    <tu tuid='content-edit-not-successful'>
-		<tuv xml:lang="en"><seg>There was some problem with editing content!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Jostain syystä sisällön muokkaus ei onnistunut!</seg></tuv>
+	<tu tuid='content-save-not-successful'>
+		<tuv xml:lang="en"><seg>There was some problem with saving content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Jostain syystä sisällön tallentaminen ei onnistunut!</seg></tuv>
 	</tu>
-    <tu tuid='content-publish'>
+	<tu tuid='content-add-publish'>
 		<tuv xml:lang="en"><seg>Publish</seg></tuv>
 		<tuv xml:lang="fi"><seg>Julkaise</seg></tuv>
 	</tu>
-    <tu tuid='content-delete'>
+	<tu tuid='content-add-save'>
+		<tuv xml:lang="en"><seg>Save</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tallenna</seg></tuv>
+	</tu>
+	<tu tuid='content-add-preview'>
+		<tuv xml:lang="en"><seg>Preview</seg></tuv>
+		<tuv xml:lang="fi"><seg>Esikatselu</seg></tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-header'>
+		<tuv xml:lang="en"><seg>How to write a good challenge?</seg></tuv>
+		<tuv xml:lang="fi"><seg>How to write a good challenge?</seg></tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-t1'>
+		<tuv xml:lang="en"><seg>Focus on the challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>Focus on the challenge</seg></tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p1'>
+		<tuv xml:lang="en">
+            <seg>
+                Focus on writing <i>only</i> about the challenge and not it's
+                solutions. Solutions are kept separate form the challenge thus
+                allowing multiple solutions to the same challenge.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Focus on writing <i>only</i> about the challenge and not it's
+                solutions. Solutions are kept separate form the challenge thus
+                allowing multiple solutions to the same challenge.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-t2'>
+		<tuv xml:lang="en"><seg>Motivate the reader</seg></tuv>
+		<tuv xml:lang="fi"><seg>Motivate the reader</seg></tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p2'>
+		<tuv xml:lang="en">
+            <seg>
+                Explain clearly 1) what the challenge is and 2) why it is
+                important to solve it.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Explain clearly 1) what the challenge is and 2) why it is
+                important to solve it.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p3'>
+		<tuv xml:lang="en">
+            <seg>
+                Write for a person who is not familiar with the topic.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Write for a person who is not familiar with the topic.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p4'>
+		<tuv xml:lang="en">
+            <seg>
+                Most importantly you are trying to motivate others to offer
+                their solutions.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Most importantly you are trying to motivate others to offer
+                their solutions.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p5'>
+		<tuv xml:lang="en">
+            <seg>
+                <b>Title, subheader and keywords</b> are important, as they will 
+                determine how attractive your article is and whether others 
+                will find it.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                <b>Title, subheader and keywords</b> are important, as they will 
+                determine how attractive your article is and whether others 
+                will find it.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p6'>
+		<tuv xml:lang="en">
+            <seg>
+                <b>Define the research question</b> to which you need an answer.
+                This will also help you to write more focused.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                <b>Define the research question</b> to which you need an answer.
+                This will also help you to write more focused.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-t3'>
+		<tuv xml:lang="en"><seg>Choose your language</seg></tuv>
+		<tuv xml:lang="fi"><seg>Choose your language</seg></tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p7'>
+		<tuv xml:lang="en">
+            <seg>
+                Altough English is preferred as the universal language.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Altough English is preferred as the universal language.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-problem-right-box-p8'>
+		<tuv xml:lang="en">
+            <seg>
+                <b>Include references</b> in your article (at least the website
+                in which the article can be found or the name and number of
+                the magazine).
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                <b>Include references</b> in your article (at least the website
+                in which the article can be found or the name and number of
+                the magazine).
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-header'>
+		<tuv xml:lang="en"><seg>How to write a good vision?</seg></tuv>
+		<tuv xml:lang="fi"><seg>How to write a good vision?</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-t1'>
+		<tuv xml:lang="en"><seg>Focus on the future</seg></tuv>
+		<tuv xml:lang="fi"><seg>Focus on the future</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p1'>
+		<tuv xml:lang="en">
+            <seg>
+                Focus on writing about one <i>specific</i> future vision, not
+                about the general view of the forthcoming.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Focus on writing about one <i>specific</i> future vision, not
+                about the general view of the forthcoming.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-t2'>
+		<tuv xml:lang="en"><seg>Motivate the reader</seg></tuv>
+		<tuv xml:lang="fi"><seg>Motivate the reader</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p2'>
+		<tuv xml:lang="en">
+            <seg>
+                Explain clearly 1) what the future vision is and estimate 2)
+                when and 3) how likely the vision is expected to be realized.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Explain clearly 1) what the future vision is and estimate 2)
+                when and 3) how likely the vision is expected to be realized.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p3'>
+		<tuv xml:lang="en">
+            <seg>
+                Write for a person who is not familiar with the topic.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Write for a person who is not familiar with the topic.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p4'>
+		<tuv xml:lang="en">
+            <seg>
+                Most importantly you are trying to motivate others to offer
+                their ideas and challenges based on your vision.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Most importantly you are trying to motivate others to offer
+                their ideas and challenges based on your vision.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-t3'>
+		<tuv xml:lang="en"><seg>Define the threat and opportunity</seg></tuv>
+		<tuv xml:lang="fi"><seg>Define the threat and opportunity</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p5'>
+		<tuv xml:lang="en">
+            <seg>
+                Identify the most important threat and opportunity when your
+                vision is realized.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Identify the most important threat and opportunity when your
+                vision is realized.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p6'>
+		<tuv xml:lang="en">
+            <seg>
+                <b>Title, subheader and keywords</b> are important, as they will 
+                determine how attractive your article is and whether others 
+                will find it.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                <b>Title, subheader and keywords</b> are important, as they will 
+                determine how attractive your article is and whether others 
+                will find it.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-t4'>
+		<tuv xml:lang="en"><seg>Choose your language</seg></tuv>
+		<tuv xml:lang="fi"><seg>Choose your language</seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p7'>
+		<tuv xml:lang="en">
+            <seg>
+                Altough English is preferred as the universal language.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Altough English is preferred as the universal language.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-finfo-right-box-p8'>
+		<tuv xml:lang="en">
+            <seg>
+                <b>Include references</b> in your article (at least the website
+                in which the article can be found or the name and number of
+                the magazine).
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                <b>Include references</b> in your article (at least the website
+                in which the article can be found or the name and number of
+                the magazine).
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-header'>
+		<tuv xml:lang="en"><seg>How to write a good idea?</seg></tuv>
+		<tuv xml:lang="fi"><seg>How to write a good idea?</seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-t1'>
+		<tuv xml:lang="en"><seg>Focus on the idea</seg></tuv>
+		<tuv xml:lang="fi"><seg>Focus on the idea</seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p1'>
+		<tuv xml:lang="en">
+            <seg>
+                Focus on writing <i>only</i> about the idea.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Focus on writing <i>only</i> about the idea.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-t2'>
+		<tuv xml:lang="en"><seg>Motivate the reader</seg></tuv>
+		<tuv xml:lang="fi"><seg>Motivate the reader</seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p2'>
+		<tuv xml:lang="en">
+            <seg>
+                Explain clearly 1) what the idea is and 2) why it is going to
+                work.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Explain clearly 1) what the idea is and 2) why it is going to
+                work.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p3'>
+		<tuv xml:lang="en">
+            <seg>
+                Write for a person who is not familiar with the topic to make
+                your article easily understandable.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Write for a person who is not familiar with the topic to make
+                your article easily understandable.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p4'>
+		<tuv xml:lang="en">
+            <seg>
+                Most importantly you are trying to motivate others to further
+                develop your idea or take it into practice.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Most importantly you are trying to motivate others to further
+                develop your idea or take it into practice.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p5'>
+		<tuv xml:lang="en">
+            <seg>
+                <b>Title, subheader and keywords</b> are important, as they will 
+                determine how attractive your article is and whether others 
+                will find it.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                <b>Title, subheader and keywords</b> are important, as they will 
+                determine how attractive your article is and whether others 
+                will find it.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-t3'>
+		<tuv xml:lang="en"><seg>Define your idea in one sentence</seg></tuv>
+		<tuv xml:lang="fi"><seg>Define your idea in one sentence</seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p6'>
+		<tuv xml:lang="en">
+            <seg>
+                Summarize your idea's key point.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Summarize your idea's key point.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-t4'>
+		<tuv xml:lang="en"><seg>Choose your language</seg></tuv>
+		<tuv xml:lang="fi"><seg>Choose your language</seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p7'>
+		<tuv xml:lang="en">
+            <seg>
+                Altough English is preferred as the universal language.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Altough English is preferred as the universal language.
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-add-idea-right-box-p8'>
+		<tuv xml:lang="en">
+            <seg>
+                <b>Include references</b> in your article (at least the website
+                in which the article can be found or the name and number of
+                the magazine).
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                <b>Include references</b> in your article (at least the website
+                in which the article can be found or the name and number of
+                the magazine).
+            </seg>
+        </tuv>
+	</tu>
+	<tu tuid='content-edit'>
+		<tuv xml:lang="en"><seg>Edit</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa</seg></tuv>
+	</tu>
+	<tu tuid='content-edit-not-logged'>
+		<tuv xml:lang="en"><seg>You must login in order to edit content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu sisään muokataksesi sisältöä!</seg></tuv>
+	</tu>
+	<tu tuid='content-edit-not-owner'>
+		<tuv xml:lang="en"><seg>You must own the content in order to edit it!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä voi muokata vain sen omistaja!</seg></tuv>
+	</tu>
+	<tu tuid='content-edit-no-id'>
+		<tuv xml:lang="en"><seg>Id of content to be edited is missing!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokattavan sisällön id ei ole asetettu!</seg></tuv>
+	</tu>
+	<tu tuid='content-edit-successful'>
+		<tuv xml:lang="en"><seg>Content edited succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön muokkaus onnistui!</seg></tuv>
+	</tu>
+	<tu tuid='content-edit-not-successful'>
+		<tuv xml:lang="en"><seg>There was some problem with editing content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Jostain syystä sisällön muokkaus ei onnistunut!</seg></tuv>
+	</tu>
+	<tu tuid='content-publish'>
+		<tuv xml:lang="en"><seg>Publish</seg></tuv>
+		<tuv xml:lang="fi"><seg>Julkaise</seg></tuv>
+	</tu>
+	<tu tuid='content-modified'>
+		<tuv xml:lang="en"><seg>Modified</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokattu</seg></tuv>
+	</tu>
+	<tu tuid='content-delete'>
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
+	</tu>    
+	<tu tuid='content-cancel'>
+		<tuv xml:lang="en"><seg>Cancel</seg></tuv>
+		<tuv xml:lang="fi"><seg>Peruuta</seg></tuv>
 	</tu>
-    <tu tuid='content-publish-successful'>
+	<tu tuid='content-publish-confirm'>
+		<tuv xml:lang="en"><seg>Do you want to publish this content?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Haluatko julkaista tämän sisällön?</seg></tuv>
+	</tu>
+	<tu tuid='content-delete-confirm'>
+		<tuv xml:lang="en"><seg>Do you want to delete this content?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Haluatko poistaa tämän sisällön?</seg></tuv>
+	</tu>
+	<tu tuid='content-publish-successful'>
 		<tuv xml:lang="en"><seg>Content published successfully!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisällön julkaisu onnistui!</seg></tuv>
 	</tu>
-    <tu tuid='content-publish-not-successful'>
+	<tu tuid='content-publish-not-successful'>
 		<tuv xml:lang="en"><seg>Content is already published!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö on jo julkaistu!</seg></tuv>
 	</tu>
-    <tu tuid='content-view-solution-to'>
+	<tu tuid='content-published'>
+		<tuv xml:lang="en"><seg>Published</seg></tuv>
+		<tuv xml:lang="fi"><seg>Julkaistu</seg></tuv>
+	</tu>
+	<tu tuid='content-view-solution-to'>
 		<tuv xml:lang="en"><seg>This is a solution to</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tämä on ratkaisu sisältöön</seg></tuv>
 	</tu>
-        <tu tuid='content-view-solutions-for'>
+	<tu tuid='content-view-solutions-for'>
 		<tuv xml:lang="en"><seg>Solution(s) for this content</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tähän sisältöön liittyvät ideat</seg></tuv>
 	</tu>
-    <tu tuid='content-rating'>
+	<tu tuid='content-view-rivals-for'>
+		<tuv xml:lang="en"><seg>Rival solution(s) for this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tähän sisältöön liittyvät kilpailevat ideat</seg></tuv>
+	</tu>
+	<tu tuid='content-view-linked-content'>
+		<tuv xml:lang="en"><seg>Linked content(s) for this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tähän sisältöön linkitetyt sisällöt</seg></tuv>
+	</tu>
+	<tu tuid='content-view-linked-to'>
+		<tuv xml:lang="en"><seg>This content is linked to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä sisältö on linkitetty sisältöön</seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-flagged'>
+		<tuv xml:lang="en"><seg>Flagged</seg></tuv>
+		<tuv xml:lang="fi"><seg>Merkattu</seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-alreadyflagged'>
+		<tuv xml:lang="en"><seg>Already flagged</seg></tuv>
+		<tuv xml:lang="fi"><seg>On jo merkattu</seg></tuv>
+	</tu>
+	<tu tuid='content-view-flagcontent'>
+		<tuv xml:lang="en"><seg>Flag as inappropriate</seg></tuv>
+		<tuv xml:lang="fi"><seg>Merkitse asiattomaksi</seg></tuv>
+	</tu>
+	<tu tuid='content-view-content-flagged'>
+		<tuv xml:lang="en"><seg>Flagged</seg></tuv>
+		<tuv xml:lang="fi"><seg>Merkattu</seg></tuv>
+	</tu>
+	<tu tuid='content-view-content-alreadyflagged'>
+		<tuv xml:lang="en"><seg>Already flagged</seg></tuv>
+		<tuv xml:lang="fi"><seg>On jo merkattu</seg></tuv>
+	</tu>
+	<tu tuid='content-linked-challenges'>
+		<tuv xml:lang="en"><seg>Linked challenges:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitetyt haasteet:</seg></tuv>
+	</tu>
+	<tu tuid='content-linked-visions'>
+		<tuv xml:lang="en"><seg>Linked visions:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitetyt näkymät:</seg></tuv>
+	</tu>
+	<tu tuid='content-rating'>
 		<tuv xml:lang="en"><seg>Rating</seg></tuv>
 		<tuv xml:lang="fi"><seg>Arvosana</seg></tuv>
 	</tu>    
-    <tu tuid='rating-succesful'>
+	<tu tuid='rating-succesful'>
 		<tuv xml:lang="en"><seg>Rating succesful! </seg></tuv>
 		<tuv xml:lang="fi"><seg>Arvosana tallennettu!</seg></tuv>
 	</tu>
-    <tu tuid='content-box-add-header'>
+	<tu tuid='content-box-add-header'>
 		<tuv xml:lang="en"><seg>Add content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää sisältöä!</seg></tuv>
 	</tu>
-    <tu tuid='content-box-add-idea'>
-		<tuv xml:lang="en"><seg>Add a solution to this content</seg></tuv>
-		<tuv xml:lang="fi"><seg>Lisää tähän sisältöön idea</seg></tuv>
+	<tu tuid='content-box-add-new-idea'>
+		<tuv xml:lang="en"><seg>Add a new solution to this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tähän sisältöön uusi idea</seg></tuv>
 	</tu>
-    <tu tuid='content-box-add-problem'>
+	<tu tuid='content-box-add-existing-idea'>
+		<tuv xml:lang="en"><seg>Add an existing solution to this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tähän sisältöön jo olemassa oleva idea</seg></tuv>
+	</tu>
+	<tu tuid='content-box-add-rival-idea'>
+		<tuv xml:lang="en"><seg>Add a rival solution to this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tähän sisältöön kilpaileva idea</seg></tuv>
+	</tu>
+	<tu tuid='content-box-add'>
+		<tuv xml:lang="en"><seg>Add</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää</seg></tuv>
+	</tu>
+	<tu tuid='content-box-link-existing'>
+		<tuv xml:lang="en"><seg>existing</seg></tuv>
+		<tuv xml:lang="fi"><seg>nykyinen</seg></tuv>
+	</tu>
+	<tu tuid='content-box-add-new'>
+		<tuv xml:lang="en"><seg>new</seg></tuv>
+		<tuv xml:lang="fi"><seg>uusi</seg></tuv>
+	</tu>
+	<tu tuid='content-box-add-new-problem'>
 		<tuv xml:lang="en"><seg>Add a new problem</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää uusi ongelma</seg></tuv>
 	</tu>
-    <tu tuid='content-box-add-futureinfo'>
+	<tu tuid='content-box-add-new-related-problem'>
+		<tuv xml:lang="en"><seg>Add a new problem to this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tähän sisältöön uusi ongelma</seg></tuv>
+	</tu>
+	<tu tuid='content-box-link-existing-problem'>
+		<tuv xml:lang="en"><seg>Link problem</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitä haaste</seg></tuv>
+	</tu>
+	<tu tuid='content-box-add-new-futureinfo'>
 		<tuv xml:lang="en"><seg>Add a new future information</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää uusi tulevaisuustieto</seg></tuv>
 	</tu>
+	<tu tuid='content-box-add-new-related-futureinfo'>
+		<tuv xml:lang="en"><seg>Add a new future information to this content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tähän sisältöön uusi tulevaisuustieto</seg></tuv>
+	</tu>
+	<tu tuid='content-box-link-existing-futureinfo'>
+		<tuv xml:lang="en"><seg>Link a vision</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitä tulevaisuustieto</seg></tuv>
+	</tu>
+	<tu tuid='content-box-no-linked-challenges'>
+		<tuv xml:lang="en"><seg>No linked challenges.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei linkitettyjä haasteita.</seg></tuv>
+	</tu>
+	<tu tuid='content-box-no-linked-visions'>
+		<tuv xml:lang="en"><seg>No linked visions.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei linkitettyjä näkymiä.</seg></tuv>
+	</tu>
+	<tu tuid='content-link-challenge-to'>
+		<tuv xml:lang="en"><seg>Linking an existing challenge to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Olemassaolevan haasteen linkittäminen</seg></tuv>
+	</tu>
+	<tu tuid='content-link-vision-to'>
+		<tuv xml:lang="en"><seg>Linking an existing vision to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Olemassaolevan näkymän linkittäminen</seg></tuv>
+	</tu>
+	<tu tuid='content-link-idea-to'>
+		<tuv xml:lang="en"><seg>Linking an existing idea to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Olemassaolevan idean linkittäminen</seg></tuv>
+	</tu>
+	<tu tuid='content-link-challenge'>
+		<tuv xml:lang="en"><seg>a challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>haasteeseen</seg></tuv>
+	</tu>
+	<tu tuid='content-link-vision'>
+		<tuv xml:lang="en"><seg>a vision</seg></tuv>
+		<tuv xml:lang="fi"><seg>näkymään</seg></tuv>
+	</tu>
+	<tu tuid='content-link-idea'>
+		<tuv xml:lang="en"><seg>an idea</seg></tuv>
+		<tuv xml:lang="fi"><seg>ideaan</seg></tuv>
+	</tu>
+	<tu tuid='content-link-target'>
+		<tuv xml:lang="en"><seg>Link target</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkityksen kohde</seg></tuv>
+	</tu>
+	<tu tuid='content-linking-to-content'>
+		<tuv xml:lang="en"><seg>Your content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältösi</seg></tuv>
+	</tu>
+	<tu tuid='content-link-helptext'>
+		<tuv xml:lang="en"><seg>is going to be linked with</seg></tuv>
+		<tuv xml:lang="fi"><seg>tullaan linkittämään alla olevan kanssa</seg></tuv>
+	</tu>
+	<tu tuid='content-link'>
+		<tuv xml:lang="en"><seg>Add link</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitä</seg></tuv>
+	</tu>
+	<tu tuid='content-link-confirm'>
+		<tuv xml:lang="en"><seg>Are you sure?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Oletko varma?</seg></tuv>
+	</tu>
+	<tu tuid='content-link-yes'>
+		<tuv xml:lang="en"><seg>Yes</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kyllä</seg></tuv>
+	</tu>
+	<tu tuid='content-link-no'>
+		<tuv xml:lang="en"><seg>No</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei</seg></tuv>
+	</tu>
+	<tu tuid='content-link-successful'>
+		<tuv xml:lang="en"><seg>Content linked succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö linkitettiin onnistuneesti!</seg></tuv>
+	</tu>
+	<tu tuid='content-link-not-content-owner'>
+		<tuv xml:lang="en"><seg>You can only link you're own content!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Voit linkittää vain omaa sisältöäsi!</seg></tuv>
+	</tu>
+	<tu tuid='content-link-invalid-linked-content-id'>
+		<tuv xml:lang="en"><seg>Content you're trying to link doesn't exist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä, jota yritit linkittää, ei ole olemassa!</seg></tuv>
+	</tu>
+	<tu tuid='content-link-invalid-contenttype'>
+		<tuv xml:lang="en"><seg>Invalid content type!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Virheellinen sisältötyyppi!</seg></tuv>
+	</tu>
+	<tu tuid='content-link-invalid-relatestoid'>
+		<tuv xml:lang="en"><seg>Content to what you're trying to link doesn't exist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä, johon yritit linkittää, ei ole olemassa!</seg></tuv>
+	</tu>
+	<tu tuid='content-link-same-content-types'>
+		<tuv xml:lang="en"><seg>You can't link contents with same content type!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Saman sisältötyypin sisältöjä ei voi linkittää!</seg></tuv>
+	</tu>
+	<tu tuid='content-link-not-published'>
+		<tuv xml:lang="en"><seg>You can't link unpublished contents!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Et voi linkittää julkaisemattomia sisältöjä!</seg></tuv>
+	</tu>
+	<tu tuid='content-link-linking-to-idea'>
+		<tuv xml:lang="en"><seg>You can't link content to an idea!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideaan ei voi linkittää!</seg></tuv>
+	</tu>
+	<tu tuid='content-index-authenticated-text'>
+		<tuv xml:lang="en"><seg>
+            <h3>Guidelines for adding content</h3>
+
+            <ul>
+                <li>
+                    OIBS content is short descriptions of today’s challenges, 
+                    visions of the future and the related ideas and solutions.
+                </li>
+                <li>
+                    All content is in the form of an A4 sheet, with the min. 
+                    length of 1500 marks.
+                </li>
+                <li>
+                    Describe the problem or vision accurately.
+                </li>
+                <li>
+                    Include references in your writing
+                </li>
+                <li>
+                    All content is open and public. Therefore, ideas planned to 
+                    be patented are not recommended to be added into the 
+                    database.
+                </li>
+                <li>
+                    The current OIBS is a demo version. Thus, when adding new 
+                    content we recommend to save a copy of the material for the 
+                    possible re-adding process into the new version.
+                </li>
+                <li>
+                    To add an idea, it has to relate to the content found in the
+                    OIBS database. In other words, there has to be a challenge 
+                    or vision what the idea is for.
+                </li>
+            </ul></seg></tuv>
+		<tuv xml:lang="fi"><seg>
+            <h1>Ohjeet aineiston lisäämiseksi</h1>
+
+            <ul>
+                <li>
+                    OIBS:in aineisto on lyhyitä kuvauksia tämän päivän 
+                    haasteista, tulevaisuuden näkymistä sekä niihin 
+                    tarjotuista ideoista.
+                </li>
+                <li>
+                    Kaikki aineisto on A4-arkin muodossa, min. pituus on 1500 
+                    merkkiä.
+                </li>
+                <li>
+                    Kuvaile ongelma tai visio mahdollisimman tarkasti.
+                </li>
+                <li>
+                    Sisällytä lähteet kirjoitukseesi.
+                </li>
+                <li>
+                    Kaikki OIBS:n sisältö on avointa ja julkista. 
+                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
+                    tallentaa järjestelmään.
+                </li>
+                <li>
+                    Sivusto on demoversio. Säilytä kopio tallentamastasi 
+                    materiaalista, jotta mahdollinen uudelleentalletus sivuston
+                    uuteen versioon onnistuu vaivattomasti.
+                </li>
+                <li>
+                    Lisätäksesi jonkin uuden idean, sen on liityttävä 
+                    tietokannasta jo löytyvään aineistoon. Toisin sanoen ideat
+                    (ratkaisut) ovat vastauksia tietokannasta löytyviin 
+                    ongelmiin tai tulevaisuuden visioihin. 
+                </li>
+            </ul>
+        </seg></tuv>
+	</tu>
+	<tu tuid='content-index-non-authenticated-text'>
+		<tuv xml:lang="en"><seg>
+            <h1>Guidelines for adding content</h1>
+
+            <ul>
+                <li>
+                    In order to add new content into OIBS, 
+                    <a href="%s">register</a> or 
+                    <a href="%s">log in</a> with your account.
+                </li>
+                <li>
+                    Start by browsing the content or by adding a new challenge 
+                    or a new vision.
+                </li>
+                <li>
+                    Ideas can be added only when they relate to the content 
+                    found in the database. In other words, there has to be a 
+                    challenge or a vision, what the solution if for.
+                </li>
+                <li>
+                    All content is open and public. Therefore, ideas planned to 
+                    be patented are not recommended to be added into the 
+                    database.
+                </li>
+                <li>
+                    The current OIBS website is a demo version. When adding new 
+                    content, it’s recommended to save a copy of the material for
+                    the possible re-adding process into the new version of the 
+                    website. 
+                </li>
+            </ul>
+          </seg></tuv>
+		<tuv xml:lang="fi"><seg>
+            <h1>Ohjeet aineiston lisäämiseksi</h1>
+
+            <ul>
+                <li>
+                    <a href="%s">Rekisteröidy</a> tai 
+                    <a href="%s">kirjaudu sisään</a> 
+                    tunnuksillasi lisätäksesi tietokantaan uutta aineistoa.
+                </li>
+                <li>
+                    Aloita joko selaamalla sivuston aineistoa tai lisäämällä 
+                    tietokantaan jokin tämän päivän ongelma tai tulevaisuuden 
+                    visio.
+                </li>
+                <li>
+                    Ideoita voidaan ainoastaan lisätä tietokannasta löytyvään 
+                    aineistoon. Toisin sanoen ideat (ratkaisut) ovat vastauksia 
+                    kuvailtuihin ongelmiin tai tulevaisuuden visioihin.
+                </li>
+                <li>
+                    Kaikki OIBS:n sisältö on avointa ja julkista. 
+                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
+                    tallentaa järjestelmään.
+                </li>
+                <li>
+                    Sivusto on demoversio. Pidä itselläsi kopio tallentamastasi 
+                    materiaalista, jotta mahdollinen uudelleentalletus sivuston 
+                    uuteen versioon onnistuu vaivattomasti.
+                </li>
+            </ul>
+        </seg></tuv>
+	</tu>
+	<tu tuid='content-index-image-add'>
+		<tuv xml:lang="en"><seg>Add content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-index-image-add-problem'>
+		<tuv xml:lang="en"><seg>Add problem</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää ongelma</seg></tuv>
+	</tu>
+	<tu tuid='content-index-image-add-finfo'>
+		<tuv xml:lang="en"><seg>Add future info</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää tulevaisuuden näkymä</seg></tuv>
+	</tu>
+	<tu tuid='content-index-image-steps'>
+		<tuv xml:lang="en"><seg>Steps for adding content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön lisäämisen vaiheet</seg></tuv>
+	</tu>
+	<tu tuid='content-is-linked-to'>
+		<tuv xml:lang="en"><seg>Is linked to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mihin linkitetään</seg></tuv>
+	</tu>
+	<tu tuid='content-add-problem-p1'>
+		<tuv xml:lang="en"><seg>
+            Problems and obstacles are stopping us from achieving our goals.
+            Whether it's a question of business or personal life related
+            issues, we can turn problems into challenges and start solving 
+            them.
+        </seg></tuv>
+		<tuv xml:lang="fi"><seg>
+            Problems and obstacles are stopping us from achieving our goals.
+            Whether it's a question of business or personal life related
+            issues, we can turn problems into challenges and start solving 
+            them.
+        </seg></tuv>
+	</tu>
+	<tu tuid='content-add-problem-p2'>
+		<tuv xml:lang="en"><seg>
+            Follow the instructions on the right and upload your challenge into
+            Massidea.org, and let the community offer you new solutions.
+        </seg></tuv>
+        <tuv xml:lang="fi"><seg>
+            Follow the instructions on the right and upload your challenge into
+            Massidea.org, and let the community offer you new solutions.
+        </seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-p1'>
+		<tuv xml:lang="en"><seg>
+            Your topic must concern the future, not the present day. Vision can
+            be a future scenario, trend or anti-trend, which is expected to be
+            realized. It can also be seed of change or a weak signal from the
+            future which might become reality.
+        </seg></tuv>
+		<tuv xml:lang="fi"><seg>
+            Your topic must concern the future, not the present day. Vision can
+            be a future scenario, trend or anti-trend, which is expected to be
+            realized. It can also be seed of change or a weak signal from the
+            future which might become reality.
+        </seg></tuv>
+	</tu>
+	<tu tuid='content-add-finfo-p2'>
+		<tuv xml:lang="en"><seg>
+            Your topic can cover e.g. future technology or science, new needs,
+            political or legislative decision.
+        </seg></tuv>
+        <tuv xml:lang="fi"><seg>
+            Your topic can cover e.g. future technology or science, new needs,
+            political or legislative decision.
+        </seg></tuv>
+	</tu>
+	<tu tuid='content-add-idea-p1'>
+		<tuv xml:lang="en"><seg>
+            Ideas are always related to a challenge or a vision found in the
+            Massidea database. In other words, ideas are answers or solutions
+            to current challenges or visions of the future.
+        </seg></tuv>
+		<tuv xml:lang="fi"><seg>
+            Ideas are always related to a challenge or a vision found in the
+            Massidea database. In other words, ideas are answers or solutions
+            to current challenges or visions of the future.
+        </seg></tuv>
+	</tu>    
 </body>

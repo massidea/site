@@ -75,6 +75,7 @@ function validateFormRegistration()
 }
 
 function checkRF() {
+    alert('ass');
 	var check = validateFormRegistration();
 	if (check == true) {
 		enableSubmit(document.getElementById("register_form"));

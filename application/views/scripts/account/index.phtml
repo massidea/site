@@ -1,121 +1,22 @@
-<div id="left_1">
-	<?php 
-	/*
-	echo '<pre>';
-	print_r($this->user);
-	echo '</pre>';
-	*/
-	if (!empty($this->user['profile_image_thumb_usr']))
-	{
-	?>
-	<p>
-		<img src="<?php echo $this->url(array('controller' => 'account', 'action' => 'profilethumb', 'id' => $this->user['id_usr'], 'language' =>$this->language), 'lang_default', true); ?>" alt="User image" class="profile_image" />
-	</p>
-	<?php
-	}
-	?>
-	<p>
-		<a href="<?php echo $this->url(array('controller' => 'account', 'action' => 'settings', 'language' => $this->language), 'lang_default', true); ?>"><strong><?php echo $this->translate('account-edit-profile'); ?></strong></a><br/>
-	</p>
-</div> <!-- end of "left_1"  -->
+<h4>This page should not be visible!</h4>
 
-<div id="right_1">
-	<table id="profile_table">
-		<tr>
-			<td class="profile_info"><?php echo $this->translate('account-register-username'); ?></td>
-			<td><?php echo $this->user['login_name_usr']; ?></td>
-		</tr>	
-		<tr>
-			<td class="profile_info"><?php echo $this->translate('account-register-created'); ?></td>
-			<td><?php echo $this->user['created_usr']; ?></td>
-		</tr>
-		<tr>
-			<td class="profile_info"><?php echo $this->translate('account-register-email'); ?></td>
-			<td><?php echo $this->user['email_usr']; ?></td>
-		</tr>
-		<tr>
-			<td class="profile_info"><?php echo $this->translate('account-register-gender'); ?></td>
-			<td><?php // echo $this->translate('account-register-'.$this->user->profile->gender); ?></td>
-		</tr>
-		<tr>
-			<td class="profile_info"><?php echo $this->translate('account-register-currently'); ?></td>
-			<td><?php // echo $this->translate($this->user->profile->currently); ?></td>
-		</tr>
-	</table>
-	
-	<p class="clear"></p>
-		<table class="submitted">
-		<tr>
-			<th colspan="5"><h2><?php printf($this->translate('account-user-content'), $this->count); ?></h2></th>
-		</tr>
-	<?php
-		foreach ($this->authorContents as $content){
-		?>
-		<tr><td id="<?php echo $this->type.'_'.$content['id_cnt']; ?>">
-			<a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'view', 'id' => $content['id_cnt'], 'language' => $this->language), 'lang_default', true); ?>">
-			<?php echo $content['title_cnt']; ?>
-			</a>
-			</td>
-			<td>
-			<?php echo $content['created_cnt']; ?>
-			</td>
-		</tr>
-		<?php
-		}
-	?>
-	</table >
-		
-	<table class="submitted">
-		<tr>
-			<th colspan="5"><?php //echo $this->translate('submitted problems'); ?></th>
-		</tr>
-		<?php
-		/*
-			// show problems submitted by this user
-			foreach ($this->problemList as $problem)
-			{
-				echo '
-				<tr><td>
-				<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/problems/show?id='.$problem['id'].'">'.$problem['title'].'</a>
-				</td><td class="actions">';
-				// show link to publish and delete the problem if it's not published already
-				if ($problem['published'] == false)
-				{
-					echo '
-					[<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/problems/publish?id='.$problem['id'] .'">'.$this->translate->_('Publish', $this->language).'</a>]
-					[<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/problems/editcontent?id='.$problem['id'].'">'.$this->translate->_('Delete', $this->language).'</a>]';
-				}
-				echo '
-				[<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/problems/editcontent?id='.$problem['id'].'">'.$this->translate->_('Edit', $this->language).'</a>]
-				</td></tr>';
-			}
-			*/
-		?>
-	</table>
-	
-	<table class="submitted">
-		<tr>
-			<th colspan="5"><?php //echo $this->translate->_('Submitted ideas', $this->language); ?></th>
-		</tr>
-		<?php
-		/*
-			// show ideas submitted by this user
-			foreach ($this->ideaList as $idea)
-			{
-				echo '<tr><td>';
-				echo '<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/ideas/show?id='.$idea['id'].'">'.$idea['title'].'</a>';
-				echo '</td><td class="actions">';
-				// show link to publish and delete idea if it's not published already
-				if ($idea['published'] == false)
-				{
-					echo '[<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/ideas/publish?id='.$idea['id'] .'">'.$this->translate->_('Publish', $this->language).'</a>]';
-					echo '[<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/ideas/editcontent?id='.$idea['id'].'">'.$this->translate->_('Delete', $this->language).'</a>]';
-				}
-				echo '[<a href="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/ideas/editcontent?id='.$idea['id'].'">'.$this->translate->_('Edit', $this->language).'</a>]';
-				echo '</td></tr>';
-			}
-			*/
-		?>
-	</table>
-</div> <!-- end of "right_1"  -->
-<p class="clear"></p>
+<p>but now that you are here, enjoy a nice ascii logo</p>
+<br /><br />
+<br /><br />
+<pre>
+        ______  ___                    ______________            
+        ___   |/  /_____ _________________(_)_____  /__________ _
+        __  /|_/ /_  __ `/_  ___/_  ___/_  /_  __  /_  _ \  __ `/
+        _  /  / / / /_/ /_(__  )_(__  )_  / / /_/ / /  __/ /_/ / 
+        /_/  /_/  \__,_/ /____/ /____/ /_/  \__,_/  \___/\__,_/ 
+</pre>
+
+<br /><br />
+<br /><br />
+<!--             ALSO AVAILABLE AS AN HTML COMMENT!                      -->
+<!--         ______  ___                    ______________               -->
+<!--         ___   |/  /_____ _________________(_)_____  /__________ _   -->
+<!--         __  /|_/ /_  __ `/_  ___/_  ___/_  /_  __  /_  _ \  __ `/   -->
+<!--         _  /  / / / /_/ /_(__  )_(__  )_  / / /_/ / /  __/ /_/ /    -->
+<!--         /_/  /_/  \__,_/ /____/ /____/ /_/  \__,_/  \___/\__,_/     -->
+<!--                                                                     -->

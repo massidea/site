@@ -1,5 +1,30 @@
 <?php
-
+/**
+ *  ErrorController -> 
+ *
+ *
+ *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ *  as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
+ *  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ *  more details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  License text found in /license/
+ */
+ 
+/**
+ *  ErrorController - class
+ *
+ *  @package        controllers
+ *  @author         
+ *  @copyright      
+ *  @license        GPL v2
+ *  @version        1.0
+ */
 class ErrorController extends Oibs_Controller_CustomController 
 {
 	public function errorAction() 
@@ -26,8 +51,21 @@ class ErrorController extends Oibs_Controller_CustomController
                 $this->getResponse()->setHttpResponseCode(500); 
                 $this->view->message = 'Application error'; 
                 break; 
-        } 
+        }
 
+        $logger = Zend_Registry::get('logs');
+        if(isset($logger['errors'])) {
+            $message = sprintf(
+                "FROM: %s. \nMESSAGE: %s. \nSTACK TRACE:\n%s", 
+                $_SERVER['REMOTE_ADDR'], 
+                $errors->exception->getMessage(),
+                $errors->exception->getTraceAsString()
+            );
+            
+            $logger['errors']->notice($message);
+            //$logger['errors']->debug($errors->exception->getMessage() . "\n" . );
+        }
+        
         // pass the environment to the view script so we can conditionally 
         // display more/less information
         $this->view->env       = $this->getInvokeArg('env'); 
@@ -38,6 +76,4 @@ class ErrorController extends Oibs_Controller_CustomController
         // pass the request to the view
         $this->view->request   = $errors->request; 
     } 
-}	
-	
-?>
+}

@@ -1,0 +1,863 @@
+.pointerCursor,
+#voteup,
+#votedown {
+    cursor: pointer;
+}
+
+.right {
+	float: right;
+}
+
+.box_468_light {
+    border: 1px solid #ccc;
+    padding: 5px;
+    width:468px;
+    float:left;
+}
+
+.box_468_medium {
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #F3F3F3;
+    width:468px;
+    float:left;
+}
+
+.view_content_left_header_top,
+#content_view_content_created_p,
+#content_view_content_rating_p {
+    padding-bottom: 20px;
+    padding-left: 3px;
+    padding-right: 3px;
+    color:#A7A7A7;
+}
+
+.view_content_left_header_btm {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color:#A7A7A7;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.text_80 {
+    font-size: 80%;
+}
+
+/** comment stuff **/
+/*
+#content_view_comment_form_container {
+    padding: 10px;
+}
+
+#content_view_comment_form_container dt {
+	display: block;
+	float: left;
+	width: 5em;
+	font-weight: bold;
+    color:#A7A7A7;
+}
+
+#content_view_comment_form_container dd {
+	width: 10em;
+	margin: 0.5em 0 0 8em;
+}
+
+.comment_subject {
+	width: 100%;
+}
+
+.comment_textarea {
+	width: 15em;
+	height: 10em;
+	width: 100%;
+}
+
+#content_view_comments {
+    width: 480px;
+    overflow: hidden;
+}
+
+.content_view_comment_user, .content_view_comment_container {
+	background: #e0e0e0;
+}
+.content_view_comment_container {
+	padding: 0.5;
+	margin: 0 0 1em 0;
+	border-bottom: 0.4em solid #e0e0e0;
+	border-top: 0.1em solid #e0e0e0;
+	border-right: 0.1em solid #e0e0e0;
+}
+
+.content_view_comment_user {
+	display: block;
+	float: left;
+	width: 8em;
+	padding: 0.5em;
+    min-height: 80px;
+}
+.content_view_comment {
+	display: block;
+	margin: 0 0 0 9em;
+	padding: 0 0.7em 0.7em 0.7em;
+	background: #FFFFFF;
+    min-height: 60px;
+}
+
+.content_view_comment_user p, .content_view_comment p {
+	margin: 0;
+	padding: 0;
+}
+
+.content_view_small {
+	font-size: 8pt;
+}
+
+.content_view_comment_title {
+	margin: 0 0 0.5em 0;
+	padding: 0.5em 0 0 0;
+}
+
+.content_view_comment_textbody {
+}
+
+.content_view_comment_reply {
+    padding: 0.4em;
+    display: block;
+    height: 20px;
+    background: #F7F7F7;
+    border-bottom: 1px solid #EFEFEF;
+}
+
+.content_view_comment_reply a {
+    float: right;
+    font-weight: bold;
+}
+#content_view_comments_header {
+	margin: 1em 0 1em 0;
+}
+
+#content_view_comment_pagination, #content_view_content_pagination {
+	display: block;
+	font-size: 10pt;
+}
+*/
+/** registration stuff */
+
+.form_registration_container {
+    width: 470px;
+    margin-left: 0px;
+	padding: 0px;
+    float:left;
+}
+
+#account_information-element,
+#confirmations-element,
+#personal_information-element {
+    margin: 0px;
+    padding: 0px;
+}
+
+.form_registration_header {
+	padding: 0;
+	margin: 0;
+    float:left;
+    width:470px;
+}
+
+.form_registration_header_left {
+    width: 152px; 
+    float: left;
+}
+
+.form_registration_header_right {
+    float: left;
+    width: 310px;
+}
+
+.form_registration_container legend {
+    color: #aaa;
+    font-weight: bold;
+    font-size: 1.2em;
+    border: 0px solid red;
+    position: relative;   /*ie hack */
+    /*left: 0.5em; /* ie hack */
+    top: -0.5em; /* ie hack */
+}
+
+#fieldset-account_information, 
+#fieldset-personal_information,
+#fieldset-confirmations {
+    border: 0px solid green;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+    background: url('/images/gray_dot_line_500.png');
+    background-repeat: repeat-x;
+    background-position: 0px 10px;
+}
+
+.form_registration_container .error,
+.form_registration_container .termserror {
+    clear: both;
+    padding: 0px; 
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 150px;
+}
+
+.form_registration_container .error ul,
+.form_registration_container .termserror ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.form_registration_container .error li,
+.form_registration_container .termserror li {
+    border-bottom: 1px solid #88e;
+    border-left: 1px solid #88e;
+    border-right: 1px solid #88e;
+    list-style-type:none; 
+    display:block;
+    background-color: pink;
+    height: 20px;
+    width: 225px;
+    padding-left: 25px;
+    background-image: url('/images/icon_thumb_down.png');
+    background-position: 4px 1px;
+    background-repeat: no-repeat;
+}
+
+
+.form_registration_container .termserror li {
+    border-top: 1px solid #88e;
+}
+
+.form_registration_input input[type="text"],
+.form_registration_input input[type="password"],
+.form_registration_input select {
+    border: 1px solid #7f9db9;
+    width: 250px;
+    height: 20px;
+    margin-top: 5px;
+    float: left;
+}
+
+.form_registration_row label {
+    padding-top: 8px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 10px;
+    text-align: right;
+    font-weight: bold;
+    float: left;
+    width: 140px;
+}
+
+.register_captcha {
+    clear:both;
+    margin-left: 150px;
+    margin-top: 10px;
+}
+
+.registration_required { 
+    padding-left: 5px;
+    padding-top: 9px;
+    color: red;
+    float: left;
+}
+
+.form_registration_input_description {
+    width: 200px;
+    height: 30px;
+    float: left;
+}
+
+#register_form {
+    margin: 0;
+    padding: 0;
+}
+
+dl, dt, dd {
+    padding: 0;
+    margin: 0;
+}
+
+.form_registration_row {
+	margin-top: 7px;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    border: 0px solid red;
+    width: 450px;
+    float: left;
+}
+
+.form_registration_input input[type="checkbox"]{
+    float: left;
+}
+
+.registration_submit_div {
+    margin-left: 150px;
+    padding-top: 20px;
+    clear: both;
+}
+
+.registration_form_submit_en {
+  width: 129px;
+  height: 22px;
+  padding: 22px 0 0;
+  color: #fff;
+  margin: 0;
+  border: 0;
+  background: transparent url('/images/button_registration_en.png') no-repeat center top; /* baseurl fail? */
+  overflow: hidden;
+  cursor: pointer; 
+  cursor: hand; /* IE 5.x */
+  text-indent: -5000px; /* Opera hack */
+}
+
+.registration_form_submit_fi {
+  width: 129px;
+  height: 22px;
+  padding: 22px 0 0;
+  margin: 0;
+  border: 0;
+  background: transparent url('/images/button_registration_fi.png') no-repeat center top; /* baseurl fail? */
+  overflow: hidden;
+  cursor: pointer;
+  cursor: hand; /* IE 5.x */
+  text-indent: -5000px; /* Opera hack */
+}
+
+.registration_terms_input {
+    margin-top: 15px;
+    float: left;
+    margin-left: 150px;
+}
+
+.registration_terms_desc {
+    margin-left: 10px;
+    margin-top:16px;
+    width: 250px;
+    float: left;
+}
+
+.registration_terms_description {
+    float: left;
+}
+
+/** add content form stuff */
+#content_industry {
+	/*width: 34.4em;*/
+}
+
+#login_form_container dt{
+	height: 0;
+}
+
+form_registration_container dd,
+#login_form_container dd,
+#account_settings_form_container dd {
+	margin: 0 5em 0em 0;
+}
+
+#form_registration_container dt,
+#login_form_container dt {
+	margin: 0 0 0em 0;
+}
+
+/* account/view kamaa */
+
+#account_view_header {
+	padding: 1em;
+}
+
+#account_view_left {
+	float: left;
+	display: block;
+	width: 15em;
+	padding: 1em;
+}
+
+/* Can be deleted? -jaakkop
+#account_view_left img {
+	width: 15em;
+}
+*/
+
+#account_view_right {
+	margin: 0 0 0 16em;
+	padding: 1em;
+}
+
+#account_profile_edit {
+	margin: 1em 0 0 0;
+}
+
+#account_view_full {
+	padding: 1em;
+}
+
+.account_profile_user_info {
+	margin: 0 0 0.5em 0;
+}
+
+.account_profile_content_left {
+	float: left;
+	width: 11em;
+	font-weight: bold;	
+}
+
+.account_profile_content_right {
+}
+
+.account_profile_user_content_problem_container, 
+.account_profile_user_content_idea_container, 
+.account_profile_user_content_futureinfo_container,
+.account_profile_user_content_finfo_container {
+	padding: 0 0 0 1em;
+	margin: 0 0 0.5em 0;
+	min-height: 4em;
+    clear: both;
+}
+
+#account_profile_user_content_problem_tools,
+#account_profile_user_content_idea_tools,
+#account_profile_user_content_futureinfo_tools,
+#account_profile_user_content_finfo_tools {
+    /*width: 12em;
+    height: 2em;*/
+}
+
+.account_profile_content_view {
+   width: 450px; 
+     /*float: left;*/
+}
+
+.account_profile_content_view_stats {
+    margin: 0.2em 0 0 0;
+   /* width: 8em;
+    float: left;*/
+}
+.account_profile_content_view_stats_views ,
+.account_profile_content_view_stats_ratings,
+.account_profile_content_view_stats_comments,
+.account_profile_content_view_stats_posted{
+    margin: 0 1em 0 0;
+    display: inline;
+}
+
+.account_profile_content_tools {
+    /*float: left; 
+    width: 5em;
+    text-align: left;
+    margin: 0 1em 0 1em;*/
+    margin: 0.2em 0 0 0;
+}
+
+.account_profile_content_tools_edit,
+.account_profile_content_tools_publish,
+.account_profile_content_tools_delete {
+    display: inline;
+    margin: 0 0.5em 0 0;
+}
+
+.account_profile_user_content_problem_container {
+	border-left: 0.5em solid #d21034;
+}
+
+.account_profile_user_content_idea_container {
+	border-left: 0.5em solid #4b9b07;
+}
+
+.account_profile_user_content_futureinfo_container,
+.account_profile_user_content_finfo_container {
+	border-left: 0.5em solid #ffc726;
+}
+
+.account_profile_user_content_header {
+	font-weight: bold;
+	margin: 0 0 0.2em 0;
+}
+
+.account_profile_user_content_lead {
+}
+
+#account_profile_user_problem_container, 
+#account_profile_user_idea_container, 
+#account_profile_user_futureinfo_container, 
+#account_profile_user_finfo_container {
+	max-height: 20em;
+	overflow: auto;
+	background: #F6F6F6;
+	padding: 0.5em;
+    width: 50em;
+}
+
+/* more from boxi */
+ #content_view_user_related_container, 
+#content_view_related_content_container {
+	margin: 0 0 1em 0;
+}
+#content_view_user_related, 
+#content_view_related_content {
+	background:#ffffff none repeat scroll 0 0;
+    border:1px solid #CCCCCC;
+	padding: 0.5em 0.5em;
+	font-size: 10pt;
+}
+
+#content_view_user_related {
+	height: 200px;
+	overflow: auto;
+}
+
+.content_view_user_related_entry_idea, .content_view_user_related_entry_problem,
+.content_view_user_related_entry_futureinfo, 
+.content_view_user_related_entry_finfo {
+	padding: 0 0 0 5px;
+	margin-top: 3px;
+    margin-bottom: 2px;
+	min-height: 10px;
+    clear: both;
+    font-size: 80%;
+}
+
+.content_view_user_related_entry_idea {
+	border-left: 0.5em solid #4b9b07;
+}
+
+.content_view_user_related_entry_problem {
+	border-left: 0.5em solid #d21034;
+}
+
+.content_view_user_related_entry_finfo {
+	border-left: 0.5em solid #ffc726;
+}
+
+#content_view_user_related_header,  #content_view_related_content_header {
+	height: 20px;
+	padding: 0.3em 1em 0 1em;
+	font-weight: bold;
+}
+
+/* Search result juttua , content list juttua ja paginaattorijuttua SAMASSA */
+#content_list_content_pagination_top,
+#content_list_content_pagination_bottom,
+#user_list_user_pagination_top,
+#user_list_user_pagination_bottom {
+	margin: 0 2em 0 0;
+	float: right;
+	font-size: 12pt;
+}
+
+.content_list_header_problem,
+.content_list_header_problems {
+    color: #d21034;
+}
+
+.content_list_header_finfo,
+.content_list_header_future,
+.content_list_header_futureinfo {
+    color: #ffc726;
+}
+
+.content_list_header_idea {
+    color: #4b9b07;
+}
+
+#search_result_content_pagination_top,
+#search_result_content_pagination_bottom {
+    clear: both;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 12pt;
+}
+
+#search_result {
+    width: 500px;
+    overflow: hidden;
+    float: left;
+    font-size: 14px;
+}
+
+.content_entry_container {
+	margin-top: 5px;
+	padding: 0;
+    clear: both;
+    
+    border: 0px solid blue;
+    overflow: hidden;
+}
+
+.content_container_left {
+    width: 70px;
+	padding: 0;
+	margin: 0;
+    float: left;
+}
+
+.content_container_right {
+	float: left;
+	padding: 0;
+    width: 420px;
+    border: 0px solid red;
+}
+
+.content_entry_lead {
+	padding: 0;	
+}
+
+.content_entry_user_image_problem {
+    border-left: 6px solid #D21034;
+}
+
+.content_entry_user_image_idea {
+    border-left: 6px solid #4B9B07;
+}
+
+.content_entry_user_image_finfo {
+    border-left: 6px solid #FFC726;
+}
+
+.search_result_details_left {
+    margin-top: 10px;
+    /*float:left;*/
+}
+
+.search_result_details_right {
+    margin-top: 10px;
+    float:right;
+}
+
+/*  acc settings */
+
+#account_settings_form_container {
+	margin: 0px;
+	padding: 1em;
+	border: 1px solid #AAAAAA;
+	background: #F8F8F8;
+}
+
+#account_settings_form_container label { 
+	font-weight: bold;
+	display: block;
+	float: left;
+	width: 10em;
+	/*margin: 0.2em 0;*/
+}
+
+#account_settings_form_container .form_element_left {
+	width: 15em;
+}
+
+#account_settings_form_container .form_element_right {
+	margin: 0 0 0 15em;
+}
+
+/* 
+	Btw. attribute selectors do not work correctly on IE6 and older
+	Considering the popularity of older IE -versions, for reference:
+	http://www.w3schools.com/browsers/browsers_stats.asp
+	
+	-sokuni
+*/
+#account_settings_form_container input[type="text"],
+#account_settings_form_container input[type="password"] {
+	width: 20em;
+}
+
+/* Tag viewaction stuff */
+
+#tag_list_container {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.tag_view_results {
+    border-left: 1px solid #AAAAAA;
+    padding-left: 4px;
+    overflow: hidden;
+}
+
+.tag_view_idea, .tag_view_problem, .tag_view_finfo, 
+.tag_view_futureinfo, .tag_view_future {
+    padding-left: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: 10px;
+    width: 450px;
+}
+
+.tag_view_idea {
+    border-left: 0.5em solid #4b9b07;
+    padding-left: 0.5em;
+}
+
+.tag_view_problem {
+    border-left: 0.5em solid #d21034;
+    padding-left: 0.5em;
+}
+
+.tag_view_finfo, 
+.tag_view_futureinfo,
+.tag_view_future {
+    border-left: 0.5em solid #ffc726;
+    padding-left: 0.5em;
+}
+
+.tag_view_title {
+	font-size: 12px;
+	font-weight: bold;
+	width: 400px;
+}
+
+.tag_view_lead {
+    
+}
+
+/*  profile image stuff */
+#account_profile_image{
+	border: 1px solid #e5e5e5;
+	margin-left: 10px;
+	padding: 4px;
+	width: 280px;
+}
+
+#hiddenmenu{
+	display: none; 
+	padding: 4px;
+	background-color: #FFFFFF; 
+	border: 1px solid #000000; 
+	font-family: Tahoma;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+#account_profile_image_submit{
+	margin-left: 9px;
+	margin-top: 6px;
+}
+
+/* registercomplete form */
+#registercomplete_form fieldset {
+    border: 0;
+}
+
+.form_registercomplete_row {
+	margin-top: 7px;
+    margin-bottom: 0px;
+    padding: 0px;
+    border: 0px solid red;
+    width: 450px;
+    clear: both;
+}
+
+#registercomplete_image {
+    border: 1px solid #7f9db9;
+    width: 250px;
+    height: 20px;
+    margin-top: 5px;
+    clear: both;
+}
+
+.form_registercomplete_row input[type="text"],
+.form_registercomplete_row input[type="password"],
+.form_registercomplete_row select,
+.form_registercomplete_row input,
+.form_registercomplete_row textarea {
+    border: 1px solid #7f9db9;
+    margin-top: 5px;
+    clear: both;
+}
+
+.form_registercomplete_row label {
+    float: left;
+    font-weight: bold;
+}
+
+.form_registercomplete_desc {
+    float: right;
+    color: #ccc;
+}
+
+#form_registercomplete_row_firstname,
+#form_registercomplete_row_country {
+    float: left;
+    margin-top: 7px;
+    margin-bottom: 0px;
+    padding: 0px;
+    border: 0px solid red;
+    width: 200px;
+    clear: none;
+}
+
+#form_registercomplete_row_surname,
+#form_registercomplete_row_deflang {
+    float: right;
+    margin-top: 7px;
+    margin-bottom: 0px;
+    padding: 0px;
+    border: 0px solid red;
+    width: 250px;
+    clear:none;
+}
+
+#registercomplete_bio {
+	height: 10em;
+	width: 100%;
+}
+
+.form_registration_input {
+
+}
+
+#image-label {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    clear:both;
+}
+
+.registrationcomplete_submit_div {
+    border: 0px solid red;
+    padding-top: 15px;
+    clear: both;
+}
+
+.registrationcomplete_form_submit_en {
+  width: 136px;
+  height: 22px;
+  padding: 22px 0 0;
+  margin: 0;
+  border: 0;
+  background: transparent url('../images/button_update_profile_en.png') no-repeat center top;
+  overflow: hidden;
+  cursor: pointer; 
+  cursor: hand; /* IE 5.x */
+}
+
+.registrationcomplete_form_submit_fi {
+  width: 136px;
+  height: 22px;
+  padding: 22px 0 0;
+  margin: 0;
+  border: 0;
+  background: transparent url('../images/button_update_profile_fi.png') no-repeat center top;
+  overflow: hidden;
+  cursor: pointer;
+  cursor: hand; /* IE 5.x */
+}
+
+#progressbar_bio {
+    clear:both;
+    width: 450px;
+    height: 22px;
+    border: 1px solid #7f9db9;
+}

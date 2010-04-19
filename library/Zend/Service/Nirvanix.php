@@ -15,15 +15,11 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Nirvanix.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
  
-/**
- * @see Zend_Loader
- */
-require_once 'Zend/Loader.php';
-
 /**
  * @see Zend_Http_Client
  */
@@ -37,7 +33,7 @@ require_once 'Zend/Http/Client.php';
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Nirvanix
@@ -91,7 +87,10 @@ class Zend_Service_Nirvanix
         $options['namespace'] = ucfirst($namespace);
         $options = array_merge($this->_options, $options);
 
-        Zend_Loader::loadClass($class);
+        if (!class_exists($class)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($class);
+        }
         return new $class($options);
     }
     

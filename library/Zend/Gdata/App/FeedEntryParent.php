@@ -16,8 +16,9 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: FeedEntryParent.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 
 /**
@@ -76,7 +77,7 @@ require_once 'Zend/Version.php';
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
@@ -591,7 +592,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function setMajorProtocolVersion($value)
     {
-        if (!($value >= 1) && !is_null($value)) {
+        if (!($value >= 1) && ($value !== null)) {
             require_once('Zend/Gdata/App/InvalidArgumentException.php');
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'Major protocol version must be >= 1');
@@ -648,7 +649,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      * namespaces and returns the full namespace URI if
      * available. Returns the prefix, unmodified, if it's not
      * registered.
-     * 
+     *
      * The current entry or feed's version will be used when performing the
      * namespace lookup unless overridden using $majorVersion and
      * $minorVersion. If the entry/fee has a null version, then the latest
@@ -666,13 +667,13 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
                                     $minorVersion = null)
     {
         // Auto-select current version
-        if (is_null($majorVersion)) {
+        if ($majorVersion === null) {
             $majorVersion = $this->getMajorProtocolVersion();
         }
-        if (is_null($minorVersion)) {
+        if ($minorVersion === null) {
             $minorVersion = $this->getMinorProtocolVersion();
         }
-        
+
         // Perform lookup
         return parent::lookupNamespace($prefix, $majorVersion, $minorVersion);
     }

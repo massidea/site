@@ -14,13 +14,10 @@
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Cmyk.php 16978 2009-07-22 19:59:40Z alexander $
  */
-
-
-/** Zend_Pdf_Exception */
-require_once 'Zend/Pdf/Exception.php';
 
 /** Zend_Pdf_Color */
 require_once 'Zend/Pdf/Color.php';
@@ -28,13 +25,12 @@ require_once 'Zend/Pdf/Color.php';
 /** Zend_Pdf_Element_Numeric */
 require_once 'Zend/Pdf/Element/Numeric.php';
 
-
 /**
  * CMYK color implementation
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Pdf_Color_Cmyk extends Zend_Pdf_Color
@@ -82,22 +78,22 @@ class Zend_Pdf_Color_Cmyk extends Zend_Pdf_Color
      */
     public function __construct($c, $m, $y, $k)
     {
+        if ($c < 0) { $c = 0; }
+        if ($c > 1) { $c = 1; }
+
+        if ($m < 0) { $m = 0; }
+        if ($m > 1) { $m = 1; }
+
+        if ($y < 0) { $y = 0; }
+        if ($y > 1) { $y = 1; }
+
+        if ($k < 0) { $k = 0; }
+        if ($k > 1) { $k = 1; }
+
         $this->_c = new Zend_Pdf_Element_Numeric($c);
         $this->_m = new Zend_Pdf_Element_Numeric($m);
         $this->_y = new Zend_Pdf_Element_Numeric($y);
         $this->_k = new Zend_Pdf_Element_Numeric($k);
-
-        if ($this->_c->value < 0) { $this->_c->value = 0; }
-        if ($this->_c->value > 1) { $this->_c->value = 1; }
-
-        if ($this->_m->value < 0) { $this->_m->value = 0; }
-        if ($this->_m->value > 1) { $this->_m->value = 1; }
-
-        if ($this->_y->value < 0) { $this->_y->value = 0; }
-        if ($this->_y->value > 1) { $this->_y->value = 1; }
-
-        if ($this->_k->value < 0) { $this->_k->value = 0; }
-        if ($this->_k->value > 1) { $this->_k->value = 1; }
     }
 
     /**
@@ -114,6 +110,16 @@ class Zend_Pdf_Color_Cmyk extends Zend_Pdf_Color
              . $this->_m->toString() . ' '
              . $this->_y->toString() . ' '
              . $this->_k->toString() .     ($stroking? " K\n" : " k\n");
+    }
+
+    /**
+     * Get color components (color space dependent)
+     *
+     * @return array
+     */
+    public function getComponents()
+    {
+        return array($this->_c->value, $this->_m->value, $this->_y->value, $this->_k->value);
     }
 }
 

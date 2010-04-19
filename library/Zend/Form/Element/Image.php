@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -28,9 +28,9 @@ require_once 'Zend/Form/Element/Xhtml.php';
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Image.php 8680 2008-03-07 22:25:35Z matthew $
+ * @version    $Id: Image.php 16218 2009-06-21 19:44:04Z thomas $
  */
 class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
 {
@@ -65,7 +65,8 @@ class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
 
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $this->addDecorator('Image')
+            $this->addDecorator('Tooltip')
+                 ->addDecorator('Image')
                  ->addDecorator('Errors')
                  ->addDecorator('HtmlTag', array('tag' => 'dd'))
                  ->addDecorator('Label', array('tag' => 'dt'));
@@ -126,4 +127,5 @@ class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
         $imageValue = $this->getImageValue();
         return ((null !== $imageValue) && ($this->getValue() == $imageValue));
     }
+    
 }

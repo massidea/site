@@ -18,12 +18,13 @@
  * @subpackage App
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: App.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 
 /**
  * Zend_Gdata_Feed
  */
-require_once 'Zend/Gdata/Feed.php';
+require_once 'Zend/Gdata/App/Feed.php';
 
 /**
  * Zend_Gdata_Http_Client
@@ -513,7 +514,7 @@ class Zend_Gdata_App
             }
             if ($method == 'PUT' || $method == 'DELETE') {
                 $editLink = $data->getEditLink();
-                if ($editLink != null) {
+                if ($editLink != null && $url == null) {
                     $url = $editLink->getHref();
                 }
             }
@@ -827,7 +828,7 @@ class Zend_Gdata_App
      * @param  string $className The class which is used as the return type
      * @param  string $useIncludePath Whether the include_path should be searched
      * @throws Zend_Gdata_App_Exception
-     * @return Zend_Gdata_Feed
+     * @return Zend_Gdata_App_Feed
      */
     public static function importFile($filename,
             $className='Zend_Gdata_App_Feed', $useIncludePath = false)
@@ -1020,8 +1021,13 @@ class Zend_Gdata_App
             $foundClassName = null;
             foreach ($this->_registeredPackages as $name) {
                  try {
-                     @Zend_Loader::loadClass("${name}_${class}");
-                     $foundClassName = "${name}_${class}";
+                     // Autoloading disabled on next line for compatibility
+                     // with magic factories. See ZF-6660.
+                     if (!class_exists($name . '_' . $class, false)) {
+                        require_once 'Zend/Loader.php';
+                        @Zend_Loader::loadClass($name . '_' . $class);
+                     }
+                     $foundClassName = $name . '_' . $class;
                      break;
                  } catch (Zend_Exception $e) {
                      // package wasn't here- continue searching
@@ -1088,15 +1094,11 @@ class Zend_Gdata_App
      * already to use a proxy server or other interface.
      *
      * @param $logfile The logfile to use when logging the requests
-     * @param $adapter (optional) The adapter to use for logging. Default is
-     *        to use Zend_Gdata_App_LoggingHttpClientAdapterSocket.
-     * @return void
      */
-    public function enableRequestDebugLogging($logfile,
-        $adapter = 'Zend_Gdata_App_LoggingHttpClientAdapterSocket')
+    public function enableRequestDebugLogging($logfile)
     {
         $this->_httpClient->setConfig(array(
-            'adapter' => $adapter,
+            'adapter' => 'Zend_Gdata_App_LoggingHttpClientAdapterSocket',
             'logfile' => $logfile
             ));
     }

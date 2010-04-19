@@ -13,20 +13,16 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @package    Zend_Memory
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Movable.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
-
-
-/** Zend_Memory_Exception */
-require_once 'Zend/Memory/Exception.php';
 
 /** Zend_Memory_Container */
 require_once 'Zend/Memory/Container.php';
 
 /** Zend_Memory_Value */
 require_once 'Zend/Memory/Value.php';
-
 
 /**
  * Memory value container
@@ -35,7 +31,7 @@ require_once 'Zend/Memory/Value.php';
  *
  * @category   Zend
  * @package    Zend_Memory
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Memory_Container_Movable extends Zend_Memory_Container {
@@ -138,6 +134,7 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
     public function __get($property)
     {
         if ($property != 'value') {
+            require_once 'Zend/Memory/Exception.php';
             throw new Zend_Memory_Exception('Unknown property: Zend_Memory_container::$' . $property);
         }
 
@@ -159,6 +156,7 @@ class Zend_Memory_Container_Movable extends Zend_Memory_Container {
     public function __set($property, $value)
     {
         if ($property != 'value') {
+            require_once 'Zend/Memory/Exception.php';
             throw new Zend_Memory_Exception('Unknown property: Zend_Memory_container::$' . $property);
         }
 

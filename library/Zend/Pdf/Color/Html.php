@@ -14,13 +14,10 @@
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Html.php 16978 2009-07-22 19:59:40Z alexander $
  */
-
-
-/** Zend_Pdf_Exception */
-require_once 'Zend/Pdf/Exception.php';
 
 /** Zend_Pdf_Color */
 require_once 'Zend/Pdf/Color.php';
@@ -31,7 +28,6 @@ require_once 'Zend/Pdf/Color/Rgb.php';
 /** Zend_Pdf_GrayScale */
 require_once 'Zend/Pdf/Color/GrayScale.php';
 
-
 /**
  * HTML color implementation
  *
@@ -40,7 +36,7 @@ require_once 'Zend/Pdf/Color/GrayScale.php';
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Pdf_Color_Html extends Zend_Pdf_Color
@@ -76,6 +72,16 @@ class Zend_Pdf_Color_Html extends Zend_Pdf_Color
     public function instructions($stroking)
     {
         return $this->_color->instructions($stroking);
+    }
+
+    /**
+     * Get color components (color space dependent)
+     *
+     * @return array
+     */
+    public function getComponents()
+    {
+        return $this->_color->getComponents();
     }
 
     /**
@@ -395,6 +401,7 @@ class Zend_Pdf_Color_Html extends Zend_Pdf_Color
                 $r = 0.604; $g = 0.804; $b = 0.196; break;
 
             default:
+                require_once 'Zend/Pdf/Exception.php';
                 throw new Zend_Pdf_Exception('Unknown color name: ' . $color);
         }
         if (($r == $g) && ($g == $b)) {

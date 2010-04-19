@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Server
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -51,9 +51,9 @@ require_once 'Zend/Server/Method/Parameter.php';
  *
  * @category   Zend
  * @package    Zend_Server
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 14323 2009-03-15 11:24:58Z matthew $
+ * @version    $Id: Abstract.php 16210 2009-06-21 19:22:17Z thomas $
  */
 abstract class Zend_Server_Abstract implements Zend_Server_Interface
 {

@@ -1,0 +1,64 @@
+<?php 
+$loginLink = $this->url(array('controller' => 'account',
+								'action' => 'login',
+								'language' => $this->language),
+								'lang_default', true);
+$signupLink = $this->url(array('controller' => 'account',
+								'action' => 'register',
+								'language' => $this->language),
+								'lang_default', true);
+?>
+<div id="content_production_container">    
+    <div id="content_production_container_right">
+        <b><?php echo $this->translate('help-guidelines-right-header'); ?></b>
+        <div id="content_production_right_box">
+            <?php echo $this->translate('help-guidelines-right-text'); ?>
+        </div>
+    </div>
+    <div id="content_production_container_left">
+        <?php if (!$this->authenticated) { ?>
+            <h3><a href="<?php echo $loginLink;?>"><?php echo $this->translate("help-login"); ?></a> <?php echo $this->translate("help-or"); ?> <a href="<?php echo $signupLink;?>"><?php echo $this->translate("help-sign-up"); ?></a> <?php echo $this->translate("help-to-add-new-content"); ?>
+            </h3>
+
+            <p>
+            <?php echo $this->translate("help-guidelines-top1"); ?>
+
+            <a href="<?php echo $loginLink;?>"><?php echo $this->translate("help-login"); ?></a> <?php echo $this->translate("help-or"); ?> <a href="<?php echo $signupLink;?>"><?php echo $this->translate("help-sign-up"); ?></a> <?php echo $this->translate("help-to-add-new-content"); ?>
+            </p>
+
+            <p><?php echo $this->translate("help-guidelines-top2"); ?></p>
+            
+            <div class="user_content_spacer"><img src="/images/gray_dot_line_500.png" alt="Massidea.org" /></div>
+
+        <?php } ?>
+
+        <h3><?php echo $this->translate('help-guidelines-header'); ?></h3>
+        <div class="content_production_left_paragraph">
+            <img class="content_production_guidelines_image" src="<?php echo $this->baseUrl; ?>/images/guidelines.png" alt="Guidelines" />
+            <?php echo $this->translate('help-guidelines-paragraph1'); ?>
+        </div>
+        <div>
+            <div class="content_production_left_paragraph_small">
+                <h4 class="problem"><?php echo $this->translate('help-guidelines-header-problem'); ?></h4>
+                <?php echo $this->translate('help-guidelines-paragraph2'); ?>
+                <a href="#">Read examples</a>
+            </div>
+            <div class="content_production_left_paragraph_small">
+                <h4 class="idea"><?php echo $this->translate('help-guidelines-header-idea'); ?></h4>
+                <?php echo $this->translate('help-guidelines-paragraph3'); ?>
+                <a href="#">Read examples</a>
+            </div>
+            <div class="content_production_left_paragraph_small">
+                <h4 class="finfo"><?php echo $this->translate('help-guidelines-header-finfo'); ?></h4>
+                <?php echo $this->translate('help-guidelines-paragraph4'); ?>
+                <a href="#">Read examples</a>
+            </div>
+        </div>
+        <div class="content_production_left_paragraph">
+            <?php echo $this->translate('help-guidelines-paragraph5'); ?>
+        </div>
+        <div>
+            <?php echo $this->translate('help-guidelines-paragraph6'); ?>
+        </div>
+    </div>
+</div>

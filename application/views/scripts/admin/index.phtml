@@ -1,0 +1,29 @@
+<?php 
+$url_manageroles = $this->url(array('controller' => 'admin',
+									'action' => 'manageroles',
+									'language' => $this->language),
+									'lang_default', true); 
+$url_contentflags = $this->url(array('controller' => 'admin',
+									 'action' => 'contentflags',
+									 'language' => $this->language),
+									 'lang_default', true); 
+$url_commentflags = $this->url(array('controller' => 'admin',
+									 'action' => 'commentflags',
+									 'language' => $this->language),
+									 'lang_default', true); 
+?>
+
+<h1><?php echo $this->translate('admin-title'); ?></h1>
+<h3><?php echo $this->translate('admin-tasks'); ?></h3>
+<a href="<?php echo $url_manageroles; ?>"><?php echo $this->translate('admin-manage-roles-task-title'); ?></a>
+<br /><br />
+
+<?php echo $this->translate('admin-edit-user-roles-task-title'); ?>
+<ul>
+    <li>
+        <?php echo $this->translate('admin-edit-user-roles-task-description'); ?>
+    </li>
+</ul>
+<a href="<?php echo $url_contentflags; ?>"><?php echo $this->translate('admin-content-flags-task-title'); ?></a><br />
+<a href="<?php echo $url_commentflags; ?>"><?php echo $this->translate('admin-comment-flags-task-title'); ?></a>
+<br /><br />

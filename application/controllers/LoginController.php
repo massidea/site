@@ -99,7 +99,7 @@ class LoginController extends Oibs_Controller_CustomController
 				
 				if ($result->isValid()) 
 				{
-					$user = new Models_User();
+					$user = new Default_Model_User();
 					
 					//$user->load($adapter->getResultRowObject()->userid);
 					// record login attempt

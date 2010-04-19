@@ -1,51 +1,238 @@
-<div class="search_result">
-<h1><?php echo $this->translate('search-result-title'); ?></h1>
-<?php if (!empty($this->contentPaginator)): ?>
-	<div id="content_list_content_left">
+<?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
 
-	</div>
-	<div id="content_list_content_right">
-		<h2><?php //printf($this->translate('content-list-recent_'.$this->type), $this->count); ?></h2>
-		<div id="search_result_content_pagination_top">
-			<?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
-		</div>
-		<div id="content_list_content_order">
-			<span><?php echo $this->translate('content-list-order-by'); ?></span>
-			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'author'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-author'); ?></a> | 
-			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'created'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-date'); ?></a> |
-			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'header'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-header'); ?></a> | 
-			<a href="<?php echo $this->url(array('controller' => 'search', 'action' => 'result', 'q' => $this->search, 'page' => $this->page, 'language' => $this->language, 'order' => 'views'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-views'); ?></a>
-		</div>
-		<?php foreach($this->contentPaginator as $entry): ?>	
-		<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt']; ?>" class="content_entry_container <?php echo $entry['key_cty'];?>_container">
-			<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_right'; ?>" class="content_container_right">
-					<div id="content_entry_owner_<?php echo $entry['id_cnt']; ?>" class="content_entry_owner <?php echo $entry['key_cty'];?>_user_header">
-						<a href="<?php echo $this->url(array('controller' => 'account', 'action' => 'view', 'user' => $entry['login_name_usr'], 'language' =>  $this->language), 'lang_default', true); ?>"><?php echo $entry['login_name_usr']?></a>
-					</div>
-					<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_created'; ?>" class="content_entry_created">
-						<?php echo $this->translate('Created: ').date('d M Y', strtotime($entry['created_cnt'])); ?>
-					</div>
-			</div>
-			<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_left'; ?>" class="content_container_left <?php echo $entry['key_cty']; ?>_container_left">
-				<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_header'; ?>" class="content_entry_header <?php echo $entry['key_cty']; ?>_entry_header">
-					<a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'view', 'id' => $entry['id_cnt'], 'language' => $this->language), 'lang_default', true); ?>">		
-					<?php echo stripslashes($entry['title_cnt']); ?>
-					</a>
-				</div>
-				<div id="<?php echo $entry['key_cty'].'_'.$entry['id_cnt'].'_lead'; ?>" class="content_entry_lead">
-					<?php echo stripslashes($entry['lead_cnt']); ?>
-				</div>
-			</div>
-		</div>
-		<?php endforeach; ?>
-			<div class="clear"></div>
-		<div id="search_result_content_pagination_bottom">
-			<?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
-		</div>
-	</div>
-<?php else: ?>
-	<div>
-		<?php echo $this->translate('Nothing found!!!'); ?>
-	</div>
-<?php endif; ?>
+<div class="search_result">
+    <h3><?php echo $this->translate('search-result-title'); ?></h3>
+    
+    <?php if ($this->search != NULL && $this->search != ""): ?>
+        <h4><?php printf($this->translate('search-result-searchterm'), $this->search); ?></h4>
+    <?php endif; ?>
+    
+    <?php if (!empty($this->contentData)): ?>
+
+            <div id="content_list_content_order">
+                <span><?php echo $this->translate('content-list-order-by'); ?></span>
+                <a href="<?php echo $this->url(array('controller' => 'search', 
+                                                     'action' => 'result', 
+                                                     'q' => $this->search, 
+                                                     'page' => $this->page, 
+                                                     'language' => $this->language, 
+                                                     'order' => 'author'), 
+                                                'lang_default', true); ?>">
+                    <?php echo $this->translate('content-list-order-by-author'); ?>
+                </a> 
+                
+                | 
+                
+                <a href="<?php echo $this->url(array('controller' => 'search', 
+                                                     'action' => 'result', 
+                                                     'q' => $this->search, 
+                                                     'page' => $this->page, 
+                                                     'language' => $this->language, 
+                                                     'order' => 'created'), 
+                                               'lang_default', true); ?>">
+                    <?php echo $this->translate('content-list-order-by-date'); ?>
+                </a> 
+                
+                |
+                
+                <a href="<?php echo $this->url(array('controller' => 'search', 
+                                                     'action' => 'result', 
+                                                     'q' => $this->search, 
+                                                     'page' => $this->page, 
+                                                     'language' => $this->language, 
+                                                     'order' => 'header'), 
+                                               'lang_default', true); ?>">
+                    <?php echo $this->translate('content-list-order-by-header'); ?>
+                </a> 
+                
+                | 
+                
+                <a href="<?php echo $this->url(array('controller' => 'search', 
+                                                     'action' => 'result', 
+                                                     'q' => $this->search, 
+                                                     'page' => $this->page, 
+                                                     'language' => $this->language, 
+                                                     'order' => 'views'), 
+                                               'lang_default', true); ?>">
+                    <?php echo $this->translate('content-list-order-by-views'); ?>
+                </a>
+            </div>
+            
+            <?php if (count($this->contentData) >> 0): ?>
+            
+            <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="------------" />
+            
+            <?php endif; ?>
+            
+            <?php // print search results
+            foreach($this->contentData as $entry): ?>
+            
+            <div class="content_entry_container">
+                <div class="content_container_left">
+                    <a href="<?php echo $this->url(array('controller' => 'account', 
+                                                         'action' => 'view', 
+                                                         'user' => $entry['login_name_usr'], 
+                                                         'language' =>  $this->language), 
+                                                   'lang_default', true); ?>">
+                        <?php
+                        /*
+                        switch($entry['key_cty']) {
+                            case 'finfo': 
+                                $pre = '<img src="/images/yellow_vertical_line.png" alt="Yellow" />';
+                                break;
+                            case 'problem': 
+                                $pre = '<img src="/images/red_vertical_line.png" alt="Yellow" />';
+                                break; 
+                            case 'idea':
+                            default:
+                                $pre = '<img src="/images/green_vertical_line.png" alt="Yellow" />';
+                                break;
+                        }
+                        $img = '<img src="'. $this->url(array('controller' => 'account',
+                                                              'action' => 'profilethumb',
+                                                              'id' => $entry['id_usr'],
+                                                              'language' => $this->language,
+                                                              'thumb' => 'true'),
+                                                              'lang_default', true).'" alt="User image" width="48" height="48" />';
+
+                        echo $pre.$img;
+                        */
+                        ?>
+                        <img src="<?php echo $this->url(array('controller' => 'account',
+                                                              'action' => 'profilethumb',
+                                                              'id' => $entry['id_usr'],
+                                                              'language' => $this->language,
+                                                              'thumb' => 'true'),
+                                                       'lang_default', true); ?>" 
+                        alt="User image" class="profile_image_smallsize smallsize_<?php echo $entry['key_cty']; ?>_border" />
+                    </a>
+                </div>
+                
+                <div class="content_container_right">
+                
+                    <p style="padding:0; margin:0;">
+                        <a href="<?php echo $this->url(array('controller' => 'account', 
+                                                             'action' => 'view', 
+                                                             'user' => $entry['login_name_usr'], 
+                                                             'language' =>  $this->language), 
+                                                       'lang_default', true); ?>">
+                            <?php echo $entry['login_name_usr']?>:
+                        </a>
+                        
+                        <a href="<?php echo $this->url(array('content_id' => $entry['id_cnt'], 
+                                                             'language' => $this->language), 
+                                                             'content_shortview', true); ?>">		
+                            <span style="font-weight: bold">
+                                <?php echo stripslashes($entry['title_cnt']); ?>
+                            </span>
+                        </a>
+                    </p>
+                    
+                    <p style="padding:0; margin:0;">
+                        <?php echo stripslashes($entry['lead_cnt']); ?>
+                    </p>
+                    
+                    <p style="padding:0; margin:0;">
+                        <a href="<?php echo $this->url(array('controller' => 'tag',
+                                                             'action' => 'index',
+                                                             'language' => $this->language),
+                                                       'lang_default', true); ?>">
+                            <b>Tags:</b>
+                        </a>
+                        
+                        <?php // tags
+                        if (isset($entry['tags'])): ?>
+                        
+                           <?php foreach ($entry['tags'] as $tag): ?>
+                           
+                                <a href="<?php echo $this->url(array('controller' => 'tag',
+                                                                     'action' => 'view',
+                                                                     'id' => $tag['id_tag'],
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">
+                                    <?php echo $tag['name_tag']; ?>
+                                </a>
+                                
+                            <?php endforeach; ?>
+                            
+                        <?php endif; ?>
+                        
+                    </p>
+                    
+                    <div class="search_result_details">
+                        <div class="search_result_details_left">
+                        <?php
+                        // generate rating row
+                        if (isset($entry['ratingdata'])): ?>
+                            <?php echo $entry['ratingdata']['positive_percentage']; ?>%
+                            
+                            <img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" 
+                                alt="" style="vertical-align: middle;" />
+                                
+                            <img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" 
+                                alt="" style="vertical-align: middle;" />
+                            
+                            <?php echo $entry['ratingdata']['negative_percentage']; ?>%
+                            (
+                            <?php echo $entry['ratingdata']['total']; ?>
+                            <?php echo $this->translate('ratings'); ?>
+                            )
+                        <?php endif; ?>
+                        
+                        </div>
+                        
+                        <div class="search_result_details_right">
+                        <?php 
+                        	$sent = strtotime($entry['created_cnt']);
+                            $elapsed = time() - $sent;
+                            
+                            if($elapsed < 3600) {
+                                $minutes = round($elapsed / 60);
+                                
+                                $sent = $minutes . " " . $this->translate('minutes-ago');
+                            } elseif($elapsed < 86400) {
+                                $hours = round($elapsed / 3600);
+                                
+                                $sent = $hours . " " . $this->translate('hours-ago');
+                            } elseif($elapsed < 604800) {
+                                $days = round($elapsed / 86400);
+                                
+                                $sent = $days . " " . $this->translate('days-ago');
+                            } elseif($elapsed < 31449600) {
+                                $weeks = round($elapsed / 604800);
+                                
+                                $sent = $weeks . " " . $this->translate('weeks-ago');
+                            } else {
+                                $years = round($elapsed / 31449600);
+                                
+                                $sent = $years . " " . $this->translate('years-ago');
+                            }
+                            
+                            echo $sent;
+                        ?> 
+                        |
+                        <?php echo $entry['viewCount'] . " " . $this->translate('views'); ?>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="------------" />
+            
+            <?php endforeach; ?>
+            
+            <div class="clear"></div>
+            
+            <div id="search_result_content_pagination_bottom">
+                <?php echo $this->contentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
+            </div>
+        </div>
+        
+    <?php else: ?>
+        <div>
+            <?php echo $this->translate('search-nothing-found'); ?>
+        </div>
+    <?php endif; ?>
+    
 </div>

@@ -15,8 +15,9 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Index
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: SegmentInfo.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 /** Zend_Search_Lucene_Index_DictionaryLoader */
@@ -25,14 +26,17 @@ require_once 'Zend/Search/Lucene/Index/DictionaryLoader.php';
 /** Zend_Search_Lucene_Index_DocsFilter */
 require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
 
+/** Zend_Search_Lucene_Index_TermsStream_Interface */
+require_once 'Zend/Search/Lucene/Index/TermsStream/Interface.php';
+
 /**
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Index
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Index_SegmentInfo
+class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_TermsStream_Interface
 {
     /**
      * "Full scan vs fetch" boundary.
@@ -1750,8 +1754,28 @@ class Zend_Search_Lucene_Index_SegmentInfo
      * @throws Zend_Search_Lucene_Exception
      * @return integer
      */
-    public function reset($startId = 0, $mode = self::SM_TERMS_ONLY)
+    public function resetTermsStream(/** $startId = 0, $mode = self::SM_TERMS_ONLY */)
     {
+    	/**
+    	 * SegmentInfo->resetTermsStream() method actually takes two optional parameters:
+    	 *   $startId (default value is 0)
+    	 *   $mode (default value is self::SM_TERMS_ONLY)
+    	 */
+    	$argList = func_get_args();
+    	if (count($argList) > 2) {
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Wrong number of arguments');
+    	} else if (count($argList) == 2) {
+    		$startId = $argList[0];
+    		$mode    = $argList[1];
+    	} else if (count($argList) == 1) {
+            $startId = $argList[0];
+            $mode    = self::SM_TERMS_ONLY;
+        } else {
+            $startId = 0;
+            $mode    = self::SM_TERMS_ONLY;
+        }
+
         if ($this->_tisFile !== null) {
             $this->_tisFile = null;
         }

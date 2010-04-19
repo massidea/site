@@ -19,50 +19,69 @@
  */
 
 /**
-*   oldReloadCaptcha - The captcha changer
-*
-*   What kind of trickery is this? 
-*   Most of this code is completely useless and serves no purpose... 
-*   Or does it?
-*
-*   @param num:	security-related passnumber
+*   Needs commenting!
 */
-function oldReloadCaptcha(num){
-    image 	= document.getElementById('captcha_image');
-    link 	= document.getElementById('a-reloadcaptcha');
-    num 	= Math.floor(Math.random()*11);	// do you see what I did here? ;)
-
-    image.src = "/captcha/png?id=secret-reload-" + num;
-    link.href = "javascript:reloadCaptcha('"+num+"')";
+function profileImageMenu(id, url, url2){
+        var element = '#'+id;
+        //$(element).fadeTo(50, 1);
+        var position = $(element).position();   
+        var img_height = $(element).height()/2;
+        var div_width = $("#hiddenmenu").width()/2;
+        var div_height = $("#hiddenmenu").height()/2;
+        var img_width = ($(element).width()/2)-div_width;    
+        var left = (position.left)+(img_width);
+        var top = (position.top)+(img_height)-div_height;
+        $("#hiddenmenu").fadeIn(100);
+        document.getElementById("hiddenmenuselect").href = url;
+        document.getElementById("hiddenmenudelete").href = url2;
+        $("#hiddenmenu").css({'position' : 'absolute', 'left' : left, 'top' : top}); 
 }
 
 /**
-*	The second captcha changer, now with baseurl
+*   Needs commenting!!
+*/
+function profileImageMenuOut(id) {
+    // var element = '#'+id;
+    // $(element).fadeTo(100, 1); 
+    // $("#hiddenmenu").fadeOut("fast");
+}
+
+/**
+*   Needs commenting!
+*/
+function menufadeout(){
+    $("#hiddenmenu").fadeOut("fast"); 
+}
+
+/**
+*	The captcha changer, now with baseurl
 *
-*   @param baseUrl base url
+*   @param baseUrl
 */
 function reloadCaptcha(baseUrl){
-	image 	= document.getElementById('registration_captcha');
+	var image = document.getElementById('registration_captcha');
+    // time used to make sure the image URL is always different
 	image.src = baseUrl+"/en/account/captcha" + '?' + (new Date()).getTime();
 }
 
 /**
 *	Hide or show an element and change some innerhtml related or more from user -block
 *
-*	@param e:		Affected element
-*	@param a:		The link element which needs the image changed
-*	@param t:		The link text after the image is changed
+*	@param e: Affected element
+*	@param a: The link element which needs the image changed
+*	@param t: The link text after the image is changed
 */
 function hideshow2(e, a, t) {
     if (e.length < 1) { return; }
-    element = document.getElementById(e);
-    link = document.getElementById(a);
+    
+    var element = document.getElementById(e);
+    var link = document.getElementById(a);
 
     // search the innerHTML of the link element, if right to down, change image.. and the opposite
     if (link.innerHTML.search(/down/i) >= "0") {
-        link.innerHTML = "<img src=\"/images/icon_arrow_right.png\" alt=\"\" /> " + t;
+        link.innerHTML = "<img src=\"/oibs190/www/images/icon_arrow_right.png\" alt=\"\" /> " + t;
     } else {
-        link.innerHTML = "<img src=\"/images/icon_arrow_down.png\" alt=\"\" /> " + t;
+        link.innerHTML = "<img src=\"/oibs190/www/images/icon_arrow_down.png\" alt=\"\" /> " + t;
     }
 
     if (element.style.display == "none") {
@@ -73,23 +92,26 @@ function hideshow2(e, a, t) {
 }
 
 /**
-*   Hide or show an element and change some innerhtml related or more from user -block
+*   Hide or show the more from user-box and edit an image
 *
-*   @param e:       Affected element
-*   @param a:       The link element which needs the image changed
+*   @param e: Element to hide or show
+*   @param a: The link element which needs it's image changed
 */
 function cycleMoreBox(e, a) {
     if (e.length < 1) { return; }
-    element = document.getElementById(e);
-    link = document.getElementById(a);
+    
+    var element = document.getElementById(e);
+    var link = document.getElementById(a);
 
-    // search the innerHTML of the link element, if right to down, change image.. and the opposite
+    // search the link element for plus or minus state and replace with opposite
+    // (plus to minus OR minus to plus)
     if (link.innerHTML.search(/minus/i) >= "0") {
         link.innerHTML = "<img src=\"/images/icon_plus_tiny.png\" alt=\"\" /> ";
     } else {
         link.innerHTML = "<img src=\"/images/icon_minus_tiny.png\" alt=\"\" /> ";
     }
 
+    // hide or show the element
     if (element.style.display == "none") {
         element.style.display = "block"; 
     } else { 
@@ -100,20 +122,17 @@ function cycleMoreBox(e, a) {
 /**
 *   Hide or show an element and change innerhtml (link text)
 *
+*   @deprecated     Not in use
 *   @param e1:      Element to hide / show
-*   @param e2:      Element to change text to
 */
-function hideshow3(e1, e2) {
+function hideshow(e1) {
     if (e1.length < 1) { return; }
-    element1 = document.getElementById(e1);
-    element2 = document.getElementById(e2);
+    var element1 = document.getElementById(e1);
 
     if (element1.style.display == "none") {
         element1.style.display = "block"; 
-        element2.innerHTML = "Show less";
     } else { 
         element1.style.display = "none"; 
-        element2.innerHTML = "Show more";
     }
 }
 
@@ -131,38 +150,19 @@ function replaceActive(element, max, common) {
 
     //then, deactivate the rest
     for (i=0;i<=max;i++) {
-        if (common + i != element) {    // don't deactivate the element you just changed
+        if (common + i != element) {    // ignore the element you just changed
             document.getElementById(common+i).className = "";
         }
     }
 }
 
-/** wtf */
-function changeIndustry(initial)
-{
-    var url = document.location.href;
-    if (url.indexOf('?') != -1)
-    {
-        if (url.indexOf('industryinitial') != -1)
-        {
-            var letter = initial;
-            var position = url.indexOf('industryinitial')+16;
-            var url = setCharAt(url, position, letter);
-
-            window.location = url;
-        }
-        else
-        {
-            window.location = url +"&industryinitial=" +initial;
-        }
-    }
-    else
-    {
-        window.location = url +"?industryinitial=" +initial;
-    }
-}
-
-/* TäSTä JATKUU */
+/**
+*   Needs commenting!
+*
+*   @param value
+*   @param section
+*   @param cnttype
+*/
 function changeUrlValue(value, section, cnttype)
 {
     var url = "http://oibs2.projects.tamk.fi/content/editcontent/" +cnttype;
@@ -200,6 +200,9 @@ function changeUrlValue(value, section, cnttype)
     }
 }
 
+/**
+*   Needs commenting!
+*/
 function replyToComment(id)
 {
     var d = document.getElementById("replyto");
@@ -207,20 +210,32 @@ function replyToComment(id)
 }
 
 /**
-*	Combine the previous functions to a container / loader function to generate the plop-up
+*   Fade in a pop-up
+*   
+*   @param windowname - which name to use for the pop-up window
 */
-function popup(windowname) {	
-		$("#backdrop").fadeIn("slow");
-		$("#"+windowname).fadeIn("slow");
+function popup(windowname) {
+    $("#backdrop").fadeIn("slow");
+    $("#"+windowname).fadeIn("slow");
 }
 
 /**
- *	Close popup
- */
-function popup_close(windowname) {
-		$("#backdrop").fadeOut("slow");
-		$("#"+windowname).fadeOut("slow");	
+*   Fade out backdrop
+*   Fade out popup with class ".popup"
+*/
+function popup_close() {
+    $("#backdrop").fadeOut("slow");
+    $(".popup").fadeOut("slow");
 }
+
+/**
+*   Close popup with class ".popup_terms"
+*/
+function popup_terms_close() {
+    $("#backdrop").fadeOut("slow");
+    $(".popup_terms").fadeOut("slow");
+}
+
 /**
 *   Disable all submit buttons in form
 *
@@ -242,7 +257,7 @@ function disableSubmit(form)
 }
 
 /**
-*   Enable all submit btns in form
+*   Enable all submit buttons in form
 */
 function enableSubmit(form) 
 {
@@ -259,110 +274,58 @@ function enableSubmit(form)
 }
 
 /**
-*   Submit content form
-*/
-function submitForm(field)
-{
-    if(field == "industry")
-    {
-        document.getElementById('add_content_form').submit();
-        /*// Get the index of selected option
-        var index = document.getElementById('division_').selectedIndex;
-        // Get the option object
-        var option = document.getElementById('division_')[index];
-        // Change it to 0
-        option.value = 0;
-        
-        if(document.getElementById('group_') != null)
-        {
-            var index2 = document.getElementById('group_').selectedIndex;
-            var option2 = document.getElementById('group_')[index];
-            option2.value = "";
-        }*/
-    }
-    /*else if(field == "division")
-    {
-        if(document.getElementById('group_') != null)
-        {
-            var index = document.getElementById('group_').selectedIndex;
-            var option = document.getElementById('group_')[index];
-            option.value = "";
-        }
-        
-        if(document.getElementById('class_') != null)
-        {
-            var index2 = document.getElementById('class_').selectedIndex;
-            var option2 = document.getElementById('class_')[index];
-            option2.value = "";
-        }
-    }
-    else if(field == "group")
-    {
-        if(document.getElementById('class_') != null)
-        {
-            var index = document.getElementById('class_').selectedIndex;
-            var option = document.getElementById('class_')[index];
-            option.value = "";
-        }
-    }
-
-    document.getElementById('content').submit(); */
-    }
-
-
-/**
 *   Redirect with a delay
 *
-*   @param  url string  where to redirect
-*   @param  time    string  when (seconds)
+*   @param  url where to redirect
+*   @param  time after what time to redirect 
 */
 function redirectDelay(url, time)
 {
-    setTimeout('window.location = "'+url+'"', time);
-    
+    setTimeout('window.location = "' + url + '"', time);
 }
 
-/************* Horrible image changer for the front page ****/
 /**
+*   Deprecated function for changing images based on clicks (no reload!)
+*   
+*   @deprecated
 *   @param to: image to be changed to src
 *   @param from: image to be changed from as this object
 *   @param langcat: language(from php)
 */
-function imageChanger(to, langcat) {
-    from = document.getElementById("frontpage_imagemap");
-
-    //alert(langcat);
-    if (langcat == "fi") {
-            newImage = "/images/Oibs_frontpage_finnish_" + to + ".png";
-    } else {
-            newImage = "/images/Oibs_frontpage_" + to + ".png";
-    }
+function imageChanger(to, langcat, host) {
+    var from = document.getElementById("frontpage_imagemap");
+    var newImage = host + '/images/' + langcat + '/Oibs_frontpage_' + to + '.png';
     from.src = newImage;
 }
 
 /**
-*   @param  x: change placeholer to show This.
+*   @deprecated
+*   @param from: Change this element's innerHTML
+*   @param to: Change "from"'s innerHTML to this element's innerHTML
 */
-function frontpageChanger(x) {
-    var placeholder = document.getElementById("placeholder");
-    z = document.getElementById(x);
+function frontpageChanger(from, to) {
+    var placeholder = document.getElementById(from);
+    var z = document.getElementById(to);
     placeholder.innerHTML = z.innerHTML;
 }
 
-function getXMLHTTP() { //fuction to return the xml http object
+/**
+*   returns the XML HTTP object
+*/
+function getXMLHTTP() {
     var xmlhttp=false;
     try {
-        xmlhttp=new XMLHttpRequest();
+        xmlhttp = new XMLHttpRequest();
     }
     catch(e) {
         try {
-            xmlhttp= new ActiveXObject("Microsoft.XMLHTTP");
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         } catch(e) {
             try {
                 xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
             }
             catch(e1){
-                xmlhttp=false;
+                xmlhttp = false;
             }
         }
     }
@@ -370,10 +333,17 @@ function getXMLHTTP() { //fuction to return the xml http object
     return xmlhttp;
 }
 
+/**
+*   Needs commenting!!!
+*
+*   @param strURL
+*   @param id
+*   @param val
+*/
 function getItems(strURL, id, val) {
     var req = getXMLHTTP();
 
-    if(id == "divisiondd")
+    if(id == "content_division_div")
     {
         var select = document.getElementById("content_division");
         select.options.length = 0;
@@ -381,27 +351,27 @@ function getItems(strURL, id, val) {
         
         select = document.getElementById("content_group");
         select.options.length = 0;
-        select.options[select.options.length] = new Option('Select a group (optional)', 0);
+        select.options[select.options.length] = new Option('Select a division first', 0);
         
         select = document.getElementById("content_class");
         select.options.length = 0;
-        select.options[select.options.length] = new Option('Select a class (optional)', 0);
+        select.options[select.options.length] = new Option('Select a group first', 0);
     }
-    else if(id == "groupdd")
+    else if(id == "content_group_div")
     {
         var select = document.getElementById("content_group");
         select.options.length = 0;
-        select.options[select.options.length] = new Option('Select a group (optional)', 0);
+        select.options[select.options.length] = new Option('Select a group', 0);
         
         select = document.getElementById("content_class");
         select.options.length = 0;
-        select.options[select.options.length] = new Option('Select a class (optional)', 0);
+        select.options[select.options.length] = new Option('Select a group first', 0);
     }
-    else if(id == "classdd")
+    else if(id == "content_class_div")
     {
         var select = document.getElementById("content_class");
         select.options.length = 0;
-        select.options[select.options.length] = new Option('Select a class (optional)', 0);
+        select.options[select.options.length] = new Option('Select a class', 0);
     }
 
     if (val != 0 && req) {
@@ -416,6 +386,7 @@ function getItems(strURL, id, val) {
                 }
             }
         }
+        
         req.open("GET", strURL, true);
         req.send(null);
     }
@@ -423,20 +394,24 @@ function getItems(strURL, id, val) {
 
 
 /**
-*   populatePreview() - insert data to preview pop-up
-*
-*
+*  Inserts data to preview pop-up
 */
 function populatePreview() 
 {
     // get form elements
-    var innovation = document.getElementById("innovation_type");
-	var industry = document.getElementById("content_industry");
-	var division = document.getElementById("content_division");
 	var title = document.getElementById("content_header");
 	var tags = document.getElementById("content_keywords");
 	var textlead = document.getElementById("content_textlead");
 	var textbody = document.getElementById("content_text");
+    
+    var industry = document.getElementById("content_industry");
+	var division = document.getElementById("content_division");
+    var group = document.getElementById("content_group");
+    
+    // "class" is a reserved word, cannot be used for variable names
+    var class_ = document.getElementById("content_class");
+    
+    var innovation = document.getElementById("innovation_type");
     
     // get preview elements
     var title_p = document.getElementById("preview_header");
@@ -446,6 +421,8 @@ function populatePreview()
     var tags_p = document.getElementById("content_view_tags_items_p");
     var industry_p = document.getElementById("content_view_industries_item_p");
     var division_p = document.getElementById("content_view_division_item_p");
+    var group_p = document.getElementById("content_view_group_item_p");
+    var class_p = document.getElementById("content_view_class_item_p");
     
     // START THE ENGINE
     title_p.innerHTML = title.value;
@@ -454,6 +431,8 @@ function populatePreview()
 
     industry_p.innerHTML = industry[industry.selectedIndex].innerHTML;
     division_p.innerHTML = division[division.selectedIndex].innerHTML;
+    group_p.innerHTML = group[group.selectedIndex].innerHTML;
+    class_p.innerHTML = class_[class_.selectedIndex].innerHTML;
     
     // Split (explode) the string to array
     var lollero = tags.value.split(",");
@@ -461,13 +440,89 @@ function populatePreview()
 
     for(i = 0; i < lollero.length; i++){
         if(i == lollero.length-1){
-            taglist += lollero[i];
+            taglist += '<a href="#">' + lollero[i] + '</a>';
         } else {
-            taglist += lollero[i] + ", ";
+            taglist += '<a href="#">' + lollero[i] + '</a>' + ', ';
         }
     }
 
-    tags_p.innerHTML = lollero;
+    tags_p.innerHTML = taglist;
     
     window.scrollTo(0,0);
 }
+
+/**
+* Project group selection 
+*/
+$(document).ready(function() {
+	$('#project_groups').change(function() {
+		var value = $(this).val();
+        
+        if(value != '' && value != undefined && value != 0) {
+            window.open(value);
+        }
+	});
+});
+
+/**
+* Industry selection
+* This is jQuery plugin to replace current getItems() function
+*/
+(function($) {
+	/*$.fn.selectIndustry = {
+		init: function(o) {
+			getI();
+		}
+	};
+	
+	function getI() {
+		alert('1');
+	};*/
+
+	$.fn.industrySelector = function(options) {		
+		var options = $.extend({}, $.fn.industrySelector.defaults, options);
+		
+		/*$(this).bind("click", function() {
+			getItems();
+		});*/
+		
+		return this.each(function() {
+			
+			$.get(
+				options.url,
+				{
+					id: $(this).val(), 
+					type: options.type
+				},
+				function(responseText) {
+					$('#'+options.target).html(responseText);
+				},
+				"html"
+			);
+		});
+
+	};
+	
+	/*function getItems() {
+		alert(element);
+	};*/
+	
+	$.fn.industrySelector.defaults = {
+		//language: "en",
+		url: "",
+		target: "",
+		type: ""
+	};
+})(jQuery);
+
+/*
+$(document).ready(function() {    
+    $('#content_industry').change(function() {
+        $(this).industrySelector({
+            target: 'content_division_div',
+            url: 'http://localhost/en/content/ajaxindustry',
+            type: 'division'
+        });
+    });
+});*/
+

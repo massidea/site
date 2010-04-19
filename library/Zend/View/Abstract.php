@@ -14,8 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_View
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Abstract.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 /** Zend_Loader */
@@ -32,7 +33,7 @@ require_once 'Zend/View/Interface.php';
  *
  * @category   Zend
  * @package    Zend_View
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_View_Abstract implements Zend_View_Interface
@@ -179,20 +180,32 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
 
         // user-defined helper path
         if (array_key_exists('helperPath', $config)) {
-            $prefix = 'Zend_View_Helper';
-            if (array_key_exists('helperPathPrefix', $config)) {
-                $prefix = $config['helperPathPrefix'];
+            if (is_array($config['helperPath'])) {
+                foreach ($config['helperPath'] as $prefix => $path) {
+                    $this->addHelperPath($path, $prefix);
+                }
+            } else {
+                $prefix = 'Zend_View_Helper';
+                if (array_key_exists('helperPathPrefix', $config)) {
+                    $prefix = $config['helperPathPrefix'];
+                }
+                $this->addHelperPath($config['helperPath'], $prefix);
             }
-            $this->addHelperPath($config['helperPath'], $prefix);
         }
 
         // user-defined filter path
         if (array_key_exists('filterPath', $config)) {
-            $prefix = 'Zend_View_Filter';
-            if (array_key_exists('filterPathPrefix', $config)) {
-                $prefix = $config['filterPathPrefix'];
+            if (is_array($config['filterPath'])) {
+                foreach ($config['filterPath'] as $prefix => $path) {
+                    $this->addFilterPath($path, $prefix);
+                }
+            } else {
+                $prefix = 'Zend_View_Filter';
+                if (array_key_exists('filterPathPrefix', $config)) {
+                    $prefix = $config['filterPathPrefix'];
+                }
+                $this->addFilterPath($config['filterPath'], $prefix);
             }
-            $this->addFilterPath($config['filterPath'], $prefix);
         }
 
         // user-defined filters

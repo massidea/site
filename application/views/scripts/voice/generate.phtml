@@ -1,0 +1,81 @@
+<?php
+
+// Get baseurl
+$baseUrl = $this->absoluteBaseUrl . "/";
+
+// Create a new DOM Document object
+$pDom = new DOMDocument();
+// Set encoding to UTF-8
+$pDom->encoding = ('UTF-8');
+// Enable output to be formatted nicely
+$pDom->formatOutput = true;
+// Create root element 'RSS'
+$pRSS = $pDom->createElement('rss');
+// And set it's 'version' attribute
+$pRSS->setAttribute('version', 2.0);
+$pRSS->setAttribute('xmlns:itunes', "http://www.itunes.com/dtds/podcast-1.0.dtd");
+$pRSS->setAttribute('xmlns:atom', "http://www.w3.org/2005/Atom");
+
+// Apply given settings to root element
+$pDom->appendChild($pRSS);
+// Create new element 'channel' inside root element
+$pChannel = $pDom->createElement('channel');
+// Apply
+$pRSS->appendChild($pChannel);
+
+// Create more elements
+$pTitle = $pDom->createElement('title', 'Massidea.org - Podcast');
+$pLink  = $pDom->createElement('link', $baseUrl);
+$pDesc  = $pDom->createElement('description', 'podcast');
+$pLang  = $pDom->createElement('language', 'fi-fi');
+$pAuthor = $pDom->createElement('itunes:author', 'Massidea.org');
+
+// And make 'em true
+$pChannel->appendChild($pTitle);
+$pChannel->appendChild($pLink);
+$pChannel->appendChild($pDesc);
+$pChannel->appendChild($pLang);
+$pChannel->appendChild($pAuthor);
+
+// Loop every content item (from the controller)
+foreach($this->contentData as $content) {
+	// Create item elements
+    $pItem  = $pDom->createElement('item');
+    $pTitle = $pDom->createElement('title', $content['title_cnt']);
+    $link = $baseUrl . $this->language . "/view/" . $content['id_cnt'];
+    $pLink  = $pDom->createElement('guide', $link);
+    $pDesc  = $pDom->createElement('description', $content['lead_cnt']);
+
+    // format date to use RCF-822 standard date syntax
+	$formattedDate = date("r", strtotime($content['created_cnt']));
+    $pPubDate = $pDom->createElement('pubDate', $formattedDate);
+
+    if(!file_exists('./upload/voice/'.md5($content['id_cnt']).'.mp3')) {
+		if($content['language_cnt'] == "fi") {
+			exec('echo "'.$content['title_cnt']."\n\n".$content['lead_cnt'].'" | iconv -f UTF-8 -t ISO8859-1 | text2wave -o - -eval "(voice_hy_fi_mv_diphone)" |lame - ./upload/voice/'.md5($content['id_cnt']).'.mp3 &');
+		} else if($content['language_cnt'] == "en") {
+			exec('echo "'.$content['title_cnt']."\n\n".$content['lead_cnt'].'" | iconv -f UTF-8 -t ISO8859-1 | text2wave -o - |lame - ./upload/voice/'.md5($content['id_cnt']).'.mp3 &');
+		}
+    }
+    
+    $pEnclosure = $pDom->createElement('enclosure');
+	$voiceLink = $baseUrl.'upload/voice/'.md5($content['id_cnt']).'.mp3';
+    $pEnclosure->setAttribute('url',  $voiceLink);
+    $pEnclosure->setAttribute('type', 'audio/mpeg');
+       
+    // Apply item elements
+    $pItem->appendChild($pTitle);
+    $pItem->appendChild($pLink);
+    $pItem->appendChild($pDesc);
+    $pItem->appendChild($pPubDate);
+    $pItem->appendChild($pEnclosure);
+    
+    // Apply items to element 'channel'
+    $pChannel->appendChild($pItem);
+}
+
+// Set browser header
+header('Content-type: application/rss+xml');
+
+// And finally, push DOM tree to browser :)
+echo $pDom->saveXML();

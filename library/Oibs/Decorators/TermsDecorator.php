@@ -7,4 +7,3 @@ class Oibs_Decorators_TermsDecorator extends Zend_Form_Decorator_Abstract
         return $output;
 	}
 }
-?>

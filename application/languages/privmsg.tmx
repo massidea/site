@@ -17,6 +17,10 @@
 		<tuv xml:lang="en"><seg>To:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kenelle:</seg></tuv>
 	</tu>
+    <tu tuid='privmsg-message-sender-system'>
+		<tuv xml:lang="en"><seg>System</seg></tuv>
+		<tuv xml:lang="fi"><seg>Järjestelmä</seg></tuv>
+	</tu>   
     <tu tuid='privmsg-message-from'>
 		<tuv xml:lang="en"><seg>From:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Keneltä:</seg></tuv>
@@ -72,5 +76,24 @@
      <tu tuid='years-ago'>
 		<tuv xml:lang="en"><seg>years ago</seg></tuv>
 		<tuv xml:lang="fi"><seg>vuotta sitten</seg></tuv>
+	</tu>
+    
+     <tu tuid='info-text'>
+		<tuv xml:lang="en">
+            <seg>
+                With this form you can send private message to an another user. 
+                The user you are sending to receives a notification, when he/she logs in
+                the next time. Header and message fields are mandatory, and you can also send
+                your email address to receiver.
+            </seg>
+        </tuv>
+		<tuv xml:lang="fi">
+            <seg>
+                Tällä lomakkeella voit lähettää toiselle käyttäjälle henkilökohtaisen
+                viestin. Käyttäjä saa ilmoituksen lähettämästäsi viestistä kirjautuessaan
+                seuraavan kerran sisään. Otsikko -ja viesti-kentät ovat pakollisia täyttää, jonka lisäksi
+                voit antaa vastaanottavalle käyttäjälle myös sähköpostiosoitteesi.
+            </seg>
+        </tuv>
 	</tu>
 </body>

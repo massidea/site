@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Select
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Select.php 6897 2007-11-22 08:31:59Z thomas $
+ * @version    $Id: Select.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 
 
@@ -38,7 +38,7 @@ require_once 'Zend/Db/Expr.php';
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Select
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Select
@@ -80,6 +80,13 @@ class Zend_Db_Select
     const SQL_ON         = 'ON';
     const SQL_ASC        = 'ASC';
     const SQL_DESC       = 'DESC';
+
+    /**
+     * Bind variables for query
+     *
+     * @var array
+     */
+    protected $_bind = array();
 
     /**
      * Zend_Db_Adapter_Abstract object.
@@ -157,6 +164,29 @@ class Zend_Db_Select
     {
         $this->_adapter = $adapter;
         $this->_parts = self::$_partsInit;
+    }
+
+    /**
+     * Get bind variables
+     *
+     * @return array
+     */
+    public function getBind()
+    {
+    	return $this->_bind;
+    }
+
+    /**
+     * Set bind variables
+     *
+     * @param mixed $bind
+     * @return Zend_Db_Select
+     */
+    public function bind($bind)
+    {
+    	$this->_bind = $bind;
+
+    	return $this;
     }
 
     /**
@@ -632,10 +662,15 @@ class Zend_Db_Select
      * Executes the current select object and returns the result
      *
      * @param integer $fetchMode OPTIONAL
+     * @param  mixed  $bind An array of data to bind to the placeholders.
      * @return PDO_Statement|Zend_Db_Statement
      */
-    public function query($fetchMode = null)
+    public function query($fetchMode = null, $bind = array())
     {
+        if (!empty($bind)) {
+            $this->bind($bind);
+        }
+
         $stmt = $this->_adapter->query($this);
         if ($fetchMode == null) {
             $fetchMode = $this->_adapter->getFetchMode();
@@ -647,7 +682,7 @@ class Zend_Db_Select
     /**
      * Converts this object to an SQL SELECT string.
      *
-     * @return string This object as a SELECT string.
+     * @return string|null This object as a SELECT string. (or null if a string cannot be produced.)
      */
     public function assemble()
     {
@@ -730,7 +765,7 @@ class Zend_Db_Select
                     $correlationName = $_correlationName;
                 } else {
                     // We assume just an array of identifiers, with no correlation name
-                    $tableName = $name;
+                    $tableName = $_tableName;
                     $correlationName = $this->_uniqueCorrelation($tableName);
                 }
                 break;
@@ -960,7 +995,7 @@ class Zend_Db_Select
      * Render DISTINCT clause
      *
      * @param string   $sql SQL query
-     * @return string
+     * @return string|null
      */
     protected function _renderColumns($sql)
     {

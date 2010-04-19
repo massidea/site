@@ -5,17 +5,105 @@
 	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
 </header>
 <body>
+	<tu tuid='tag-show-all'>
+		<tuv xml:lang="en"><seg>Show all</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näytä kaikki</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud'>
+		<tuv xml:lang="en"><seg>Tag cloud</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tagipilvi</seg></tuv>
+	</tu>
+    <tu tuid='tag-index'>
+		<tuv xml:lang="en"><seg>Tag list</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tagiluettelo</seg></tuv>
+	</tu>
+    <tu tuid='tag-problem'>
+		<tuv xml:lang="en"><seg>Challenges</seg></tuv>
+		<tuv xml:lang="fi"><seg>Haasteet</seg></tuv>
+	</tu>
+    <tu tuid='tag-futureinfo'>
+		<tuv xml:lang="en"><seg>Visions</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymät</seg></tuv>
+	</tu>
+    <tu tuid='tag-all'>
+		<tuv xml:lang="en"><seg>All</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaikki</seg></tuv>
+	</tu>
+    <tu tuid='tag-idea'>
+		<tuv xml:lang="en"><seg>Ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
+	</tu>
+    <tu tuid='tag-show'>
+		<tuv xml:lang="en"><seg>Show</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näytä</seg></tuv>
+	</tu>
+   <tu tuid='tag-sort'>
+		<tuv xml:lang="en"><seg>Order by</seg></tuv>
+		<tuv xml:lang="fi"><seg>Järjestys</seg></tuv>
+	</tu>
+	<tu tuid='tag-name'>
+		<tuv xml:lang="en"><seg>Name</seg></tuv>
+		<tuv xml:lang="fi"><seg>Nimi</seg></tuv>
+	</tu>
+    <tu tuid='tag-popularity'>
+		<tuv xml:lang="en"><seg>Popularity</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttöaste</seg></tuv>
+	</tu>
+	<tu tuid='tag-publication'>
+		<tuv xml:lang="en"><seg>Age</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ikä</seg></tuv>
+	</tu>
+    <tu tuid='tag-view-title'>
+		<tuv xml:lang="en"><seg>Massidea.org Tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Massidea.org Avainsanat</seg></tuv>
+	</tu>
 	<tu tuid='tag-view-header'>
 		<tuv xml:lang="en"><seg>Contents that have the tag: </seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällöt, joilla on tagi: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällöt, joilla on avainsanat: </seg></tuv>
 	</tu>
     <tu tuid='tag-cloud-header'>
 		<tuv xml:lang="en"><seg>All the tags used on the site, size equals popularity.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Kaikki sivustolla käytetyt tagit, suurempi on suositumpi. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaikki sivustolla käytetyt avainsanat, suurempi on suositumpi. </seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-number'>
+		<tuv xml:lang="en"><seg>Number of tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lukumäärä</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-show-all'>
+		<tuv xml:lang="en"><seg>All</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaikki</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-selection-name'>
+		<tuv xml:lang="en"><seg>Name</seg></tuv>
+		<tuv xml:lang="fi"><seg>Nimi</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-selection-popularity'>
+		<tuv xml:lang="en"><seg>Popularity</seg></tuv>
+		<tuv xml:lang="fi"><seg>Suosio</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-selection-creation'>
+		<tuv xml:lang="en"><seg>Creation Date</seg></tuv>
+		<tuv xml:lang="fi"><seg>Luonti pvm</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-selection-modified'>
+		<tuv xml:lang="en"><seg>Modified Date</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaus pvm</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-selection-length'>
+		<tuv xml:lang="en"><seg>Tag length</seg></tuv>
+		<tuv xml:lang="fi"><seg>Pituus</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-sortby'>
+		<tuv xml:lang="en"><seg>Sort by</seg></tuv>
+		<tuv xml:lang="fi"><seg>Järjestys</seg></tuv>
+	</tu>
+	<tu tuid='tag-cloud-show'>
+		<tuv xml:lang="en"><seg>Show</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näytä</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-cloudmsg'>
 		<tuv xml:lang="en"><seg>Tag cloud</seg></tuv>
-		<tuv xml:lang="fi"><seg>Tagipilvi</seg></tuv>
+		<tuv xml:lang="fi"><seg>Avainsanat</seg></tuv>
 	</tu>
 </body>
 

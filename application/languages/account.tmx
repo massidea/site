@@ -5,6 +5,70 @@
 	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
 </header>
 <body>
+	<tu tuid='account-select'>
+		<tuv xml:lang="en"><seg>Select status</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse</seg></tuv>
+	</tu>
+	<tu tuid='account-register-deflang'>
+		<tuv xml:lang="en"><seg>Defaut Language</seg></tuv>
+		<tuv xml:lang="fi"><seg>Oletuskieli</seg></tuv>
+	</tu>
+	<tu tuid='account-register-country'>
+		<tuv xml:lang="en"><seg>Home country</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kotimaa</seg></tuv>
+	</tu>
+	<tu tuid='account-register-bio-desc'>
+		<tuv xml:lang="en"><seg>(Tell us shortly who you are and what you have done)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Kerro lyhyesti, kuka olet ja mitä olet tehnyt)</seg></tuv>
+	</tu>
+	<tu tuid='account-register-bio'>
+		<tuv xml:lang="en"><seg>Bio</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lyhyt kuvaus</seg></tuv>
+	</tu>
+	<tu tuid='account-registercomplete-add-image'>
+		<tuv xml:lang="en"><seg>Upload avatar image</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lähetä käyttäjäkuva</seg></tuv>
+	</tu>
+	<tu tuid='account-registercomplete-formtitle'>
+		<tuv xml:lang="en"><seg>Update your personal profile</seg></tuv>
+		<tuv xml:lang="fi"><seg>Päivitä profiilisi</seg></tuv>
+	</tu>
+	<tu tuid='account-registercomplete-formdesc'>
+		<tuv xml:lang="en"><seg>By default the filled information will be shown to other users.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisätyt tiedot näytetään muille käyttäjille.</seg></tuv>
+	</tu>
+	<tu tuid='account-registercomplete-p2'>
+		<tuv xml:lang="en"><seg>You can update your profile later on by clicking the <a href="/en/account/settings">edit profile</a> link in your <a href="/en/account/">own user page</a>.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Voit päivittää profiiliasi myöhemmin <a href="/en/account/">omalla profiilisivullasi</a> näkyvän <a href="/fi/account/settings">"muokkaa tiliä"-linkin</a> kautta.</seg></tuv>
+	</tu>
+	<tu tuid='account-registercomplete-p1'>
+		<tuv xml:lang="en"><seg>You are logged in and you can immediately start commenting and adding content to Massidea.org.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Olet kirjautuneena sisään ja voit välittömästi aloittaa kommentoimisen ja sisällön lisäämisen.</seg></tuv>
+	</tu>
+	<tu tuid='account-registercomplete-header'>
+		<tuv xml:lang="en"><seg>Signing up was successful!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tilin luonti onnistui!</seg></tuv>
+	</tu>
+	<tu tuid='register-confirmations'>
+		<tuv xml:lang="en"><seg> </seg></tuv>
+		<tuv xml:lang="fi"><seg> </seg></tuv>
+	</tu>
+	<tu tuid='register-letters'>
+		<tuv xml:lang="en"><seg>letters</seg></tuv>
+		<tuv xml:lang="fi"><seg>kirjaimet</seg></tuv>
+	</tu>
+	<tu tuid='register-reload'>
+		<tuv xml:lang="en"><seg>Reload</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lataa uudelleen</seg></tuv>
+	</tu>
+	<tu tuid='register-personal-information'>
+		<tuv xml:lang="en"><seg>Personal information</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjän tiedot</seg></tuv>
+	</tu>
+	<tu tuid='register-account-information'>
+		<tuv xml:lang="en"><seg>Account information</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tilin tiedot</seg></tuv>
+	</tu>
 	<tu tuid='account-login-title'>
 		<tuv xml:lang="en"><seg>Login</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kirjaudu</seg></tuv>
@@ -12,14 +76,14 @@
 	<tu tuid='account-login-username'>
 		<tuv xml:lang="en"><seg>Username</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tunnus</seg></tuv>
-	</tu>	
+	</tu> 
 	<tu tuid='account-login-password'>
 		<tuv xml:lang="en"><seg>Password</seg></tuv>
 		<tuv xml:lang="fi"><seg>Salasana</seg></tuv>
 	</tu>
 	<tu tuid='account-login-text'>
-		<tuv xml:lang="en"><seg>Please log in using your OIBS username and password.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Ole hyvä ja kirjaudu sisään käyttäen OIBS tunnustasi.</seg></tuv>
+		<tuv xml:lang="en"><seg>Please log in using your username and password.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ole hyvä ja kirjaudu sisään käyttäen tunnustasi.</seg></tuv>
 	</tu>
 	<tu tuid='account-login-submit'>
 		<tuv xml:lang="en"><seg>Login</seg></tuv>
@@ -37,13 +101,17 @@
 		<tuv xml:lang="en"><seg>Wrong username and/or password!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Väärä käyttäjätunnus ja/tai salasana!</seg></tuv>
 	</tu>
-	<tu tuid='account-register-page_header'>
-		<tuv xml:lang="en"><seg>Registration</seg></tuv>
-		<tuv xml:lang="fi"><seg>Rekisteröityminen</seg></tuv>
+    <tu tuid='account-login-problems'>
+		<tuv xml:lang="en"><seg>Can't access your account?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ongelmia kirjautumisessa?</seg></tuv>
 	</tu>
-    <tu tuid='username-exists'>
-		<tuv xml:lang="en"><seg>Username taken</seg></tuv>
-		<tuv xml:lang="fi"><seg>Käyttäjänimi on jo rekisteröity.</seg></tuv>
+	<tu tuid='account-register-page_header'>
+		<tuv xml:lang="en"><seg>Sign up:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröidy: </seg></tuv>
+	</tu>
+    <tu tuid='account-register-page_header-text'>
+		<tuv xml:lang="en"><seg>Sign up:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröidy: </seg></tuv>
 	</tu>
     <tu tuid='field-empty'>
 		<tuv xml:lang="en"><seg>This is a required field</seg></tuv>
@@ -73,32 +141,103 @@
 		<tuv xml:lang="en"><seg>Field too short</seg></tuv>
 		<tuv xml:lang="fi"><seg>Liian lyhyt</seg></tuv>
 	</tu>
+    <tu tuid='field-too-long'>
+		<tuv xml:lang="en"><seg>Field too long</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liian pitkä</seg></tuv>
+	</tu>
 	<tu tuid='registration-successful'>
 		<tuv xml:lang="en"><seg>Registration succesful</seg></tuv>
 		<tuv xml:lang="fi"><seg>Rekisteröityminen onnistui</seg></tuv>
 	</tu>
-	<tu tuid='account-register-first_paragraph'>
-		<tuv xml:lang="en"><seg>Please fill your personal information. Fields marked with an "*" are required. Your password will be mailed to your e-mail account.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Ole hyvä ja syötä tarvittavat tiedot. Salasana lähetetään sinulle sähköpostissa. Pakolliset kentät ovat merkitty * merkillä.</seg></tuv>
+	<tu tuid='registration-box-header'>
+		<tuv xml:lang="en"><seg>Massidea.org registration...</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröityminen...</seg></tuv>
 	</tu>
-	<tu tuid='account-register-second_paragraph'>
-		<tuv xml:lang="en"><seg>By default, no personal information is shown to other users.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Oletuksena mitään henkilötietoja ei näytetä muille käyttäjille.</seg></tuv>
+	<tu tuid='account-register-p1'>
+		<tuv xml:lang="en"><seg>Registering with Massidea.org is free of charge.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröiminen on ilmaista.</seg></tuv>
 	</tu>
-	<tu tuid='account-register-username'>
-		<tuv xml:lang="en"><seg>Username</seg></tuv>
-		<tuv xml:lang="fi"><seg>Käyttäjänimi</seg></tuv>
+    <tu tuid='account-register-p2'>
+		<tuv xml:lang="en"><seg>Registered users can submit content, review and comment on content, add content-to-content links, rate content and create their own user profiles.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröityneet käyttäjät voivat julkaista sisältöjä, kommentoida, linkittää sisältöjä, antaa arvosanoja ja luoda oman profiilin.</seg></tuv>
+	</tu>
+	<tu tuid='account-register-p3'>
+		<tuv xml:lang="en"><seg>Fields marked with an "<span style="color:red;">*</span>" are required.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Pakolliset kentät ovat merkitty merkillä "<span style="color:red;">*</span>".</seg></tuv>
+	</tu>
+	<tu tuid='account-register-p4'>
+		<tuv xml:lang="en"><seg>By default only your location, no other personal information is shown to other users.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Oletuksena muille käyttäjille näytetään paikkakuntasi, mitään henkilötietoja ei näytetä.</seg></tuv>
+	</tu>
+    <tu tuid='account-register-p5'>
+		<tuv xml:lang="en"><seg>You can add more information to your profile after registering!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Voit lisätä lisätietoja profiiliisi rekisteröitymisen jälkeen!</seg></tuv>
+	</tu>
+	<tu tuid='account-register-verification-question-help'>
+		<tuv xml:lang="en"><seg>
+                The verification question and answer is needed when you forget your password.
+				When you forget the password, you must send e-mail directly to oibs@tamk.fi
+				containing your username. We will send you the corresponding secret question
+				and if you answer that correctly, we will reset your password.
+        </seg></tuv>
+		<tuv xml:lang="fi"><seg>
+                Varmistuskysymystä ja -vastausta tarvitaan siinä tilanteessa, jos unohdat
+				salasanasi. Salasanan unohtaessasi lähetä sähköpostilla käyttäjänimesi
+				osoitteeseen oibs@tamk.fi. Kysymme sinulta lähettämällesi käyttäjänimelle
+				kuuluvan varmistuskysymyksen, ja jos vastaat siihen oikein, resetoimme
+				salasanasi ja lähetämme sinulle uuden.
+        </seg></tuv>
+	</tu>
+	<tu tuid='account-register-firstname'>
+		<tuv xml:lang="en"><seg>First name</seg></tuv>
+		<tuv xml:lang="fi"><seg>Etunimi</seg></tuv>
+	</tu>
+    <tu tuid='account-register-surname'>
+		<tuv xml:lang="en"><seg>Family name</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sukunimi</seg></tuv>
+	</tu>
+    <tu tuid='account-register-city'>
+		<tuv xml:lang="en"><seg>Hometown: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Kotikunta: </seg></tuv>
+	</tu>
+    <tu tuid='account-register-employment'>
+		<tuv xml:lang="en"><seg>I am currently</seg></tuv>
+		<tuv xml:lang="fi"><seg>Olen</seg></tuv>
+	</tu>
+        <tu tuid='account-register_private_sector'>
+		<tuv xml:lang="en"><seg>Private sector</seg></tuv>
+		<tuv xml:lang="fi"><seg>Yksityisellä sektorilla</seg></tuv>
+	</tu>
+    <tu tuid='account-register_public_sector'>
+		<tuv xml:lang="en"><seg>Public sector</seg></tuv>
+		<tuv xml:lang="fi"><seg>Julkisella sektorilla</seg></tuv>
+	</tu>
+    <tu tuid='account-register_student'>
+		<tuv xml:lang="en"><seg>Student</seg></tuv>
+		<tuv xml:lang="fi"><seg>Opiskelija</seg></tuv>
+	</tu>
+    <tu tuid='account-register_pentioner'>
+		<tuv xml:lang="en"><seg>Pentioner</seg></tuv>
+		<tuv xml:lang="fi"><seg>Eläkkeellä</seg></tuv>
+	</tu>
+    <tu tuid='account-register_other'>
+		<tuv xml:lang="en"><seg>Other</seg></tuv>
+		<tuv xml:lang="fi"><seg>Jotakin muuta</seg></tuv>
+	</tu>
+    <tu tuid='account-register-username'>
+		<tuv xml:lang="en"><seg>Username:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjänimi:</seg></tuv>
 	</tu>
 	<tu tuid='account-register-password'>
-		<tuv xml:lang="en"><seg>Password</seg></tuv>
-		<tuv xml:lang="fi"><seg>Salasana</seg></tuv>
+		<tuv xml:lang="en"><seg>Password:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasana:</seg></tuv>
 	</tu>
 	<tu tuid='account-register-password_confirm'>
-		<tuv xml:lang="en"><seg>Confirm password</seg></tuv>
-		<tuv xml:lang="fi"><seg>Vahvista salasana</seg></tuv>
+		<tuv xml:lang="en"><seg>Confirm password:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vahvista salasana:</seg></tuv>
 	</tu>
 	<tu tuid='account-register-email'>
-		<tuv xml:lang="en"><seg>E-mail address</seg></tuv>
+		<tuv xml:lang="en"><seg>Email address:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sähköposti</seg></tuv>
 	</tu>
 	<tu tuid='account-register-email_confirmation'>
@@ -109,27 +248,18 @@
 		<tuv xml:lang="en"><seg>Verification</seg></tuv>
 		<tuv xml:lang="fi"><seg>Varmistus</seg></tuv>
 	</tu>
-    	<tu tuid='account-register-reminder-question'>
-		<tuv xml:lang="en"><seg>Password reminder question</seg></tuv>
-		<tuv xml:lang="fi"><seg>Salasanan muistutuskysymys</seg></tuv>
-	</tu>
-    	<tu tuid='account-register-reminder-answer'>
-		<tuv xml:lang="en"><seg>Password reminder answer</seg></tuv>
-		<tuv xml:lang="fi"><seg>Salasanan muistutusvastaus</seg></tuv>
-	</tu>
 	<tu tuid='account-register-enter_text'>
-		<tuv xml:lang="en"><seg>Enter the letters above</seg></tuv>
-		<tuv xml:lang="fi"><seg>Syötä teksti kuvasta</seg></tuv>
+		<tuv xml:lang="en"><seg>Enter the letters above:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Syötä teksti kuvasta:</seg></tuv>
+	</tu>
+	<tu tuid='username-exists'>
+		<tuv xml:lang="en"><seg>Username already in use</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjänimi jo käytössä</seg></tuv>
 	</tu>
 	<tu tuid='account-register-terms_and_privacy'>
-		<tuv xml:lang="en"><seg>I agree to the <a href="#" onclick="popup('popup_terms_')">terms of use</a> and <a href="#" onclick="popup('popup_privacy_')">privacy policy</a></seg></tuv>
-		<tuv xml:lang="fi"><seg>Olen lukenut ja hyväksynyt <a href="#" onclick="popup('popup_terms_')">käyttäjäehdot.</a> Lue myös <a href="#" onclick="popup('popup_privacy_')">tietosuojaperiaatteet.</a></seg></tuv>
+		<tuv xml:lang="en"><seg>I agree to the <a href="#" onclick="popup('popup_terms_')">services agreement</a> and <a href="#" onclick="popup('popup_privacy_')">register description</a></seg></tuv>
+		<tuv xml:lang="fi"><seg>Hyväksyn <a href="#" onclick="popup('popup_terms_')">loppukäyttäjäehdot</a> ja <a href="#" onclick="popup('popup_privacy_')">rekisteriselosteen</a></seg></tuv>
 	</tu>	
-	
-	<tu tuid='account-register-terms_and_privacy_test'>
-		<tuv xml:lang="en"><seg>I agree to the <a href="#" onclick="popup('popup_terms_')">terms of use</a> and <a href="#" onclick="popup('popup_privacy_')">privacy policy</a></seg></tuv>
-		<tuv xml:lang="fi"><seg>Olen lukenut ja hyväksynyt <a href="#" onclick="popup('popup_terms_')">käyttäjäehdot.</a> Lue myös <a href="#" onclick="popup('popup_privacy_')">tietosuojaperiaatteet.</a></seg></tuv>
-	</tu>
 	<tu tuid='account-register-current_password'>
 		<tuv xml:lang="en"><seg>Current password</seg></tuv>
 		<tuv xml:lang="fi"><seg>Nykyinen salasana</seg></tuv>
@@ -142,6 +272,12 @@
 		<tuv xml:lang="en"><seg>Gender</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sukupuoli</seg></tuv>
 	</tu>	
+	
+	<tu tuid='account-register-image'>
+		<tuv xml:lang="en"><seg>Image</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kuva...</seg></tuv>
+	</tu>
+	
 	<tu tuid='account-profile-joined'>
 		<tuv xml:lang="en"><seg>Joined</seg></tuv>
 		<tuv xml:lang="fi"><seg>Rekisteröitynyt</seg></tuv>
@@ -150,13 +286,41 @@
 		<tuv xml:lang="en"><seg>Last login</seg></tuv>
 		<tuv xml:lang="fi"><seg>Viimeksi kirjautunut</seg></tuv>
 	</tu>
+	<tu tuid='account-profile-never-logged-in'>
+		<tuv xml:lang="en"><seg>Never logged in</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei koskaan</seg></tuv>
+	</tu>
 	<tu tuid='account-edit-profile'>
 		<tuv xml:lang="en"><seg>Edit profile</seg></tuv>
 		<tuv xml:lang="fi"><seg>Muokkaa tiliä</seg></tuv>
 	</tu>
+    <tu tuid='account-edit-images'>
+		<tuv xml:lang="en"><seg>Change profile image</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vaihda käyttäjäkuva</seg></tuv>
+	</tu>
 	<tu tuid='account-user-content'>
 		<tuv xml:lang="en"><seg>Content by user</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjän luoma sisältö</seg></tuv>
+	</tu>
+    <tu tuid='account-list-user-content-all'>
+		<tuv xml:lang="en"><seg>All</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaikki</seg></tuv>
+	</tu>
+    <tu tuid='account-list-user-content-problems'>
+		<tuv xml:lang="en"><seg>Challenges</seg></tuv>
+		<tuv xml:lang="fi"><seg>Haasteet</seg></tuv>
+	</tu>
+    <tu tuid='account-list-user-content-ideas'>
+		<tuv xml:lang="en"><seg>Ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
+	</tu>
+    <tu tuid='account-list-user-content-visions'>
+		<tuv xml:lang="en"><seg>Visions</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näkymät</seg></tuv>
+	</tu>
+    <tu tuid='account-list-user-content-saved'>
+		<tuv xml:lang="en"><seg>Saved</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tallennetut</seg></tuv>
 	</tu>
 	<tu tuid='account-profile-first-name'>
 		<tuv xml:lang="en"><seg>First name</seg></tuv>
@@ -166,10 +330,96 @@
 		<tuv xml:lang="en"><seg>Surname</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sukunimi</seg></tuv>
 	</tu>
+	<tu tuid='account-profile-category'>
+		<tuv xml:lang="en"><seg>User Category</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjäryhmien</seg></tuv>
+	</tu>	
+	
+	<tu tuid='account-profile-profession'>
+		<tuv xml:lang="en"><seg>Profession</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ammatti</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-company'>
+		<tuv xml:lang="en"><seg>Company</seg></tuv>
+		<tuv xml:lang="fi"><seg>Yritys</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-city'>
+		<tuv xml:lang="en"><seg>City</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaupunki</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-phone'>
+		<tuv xml:lang="en"><seg>Phone</seg></tuv>
+		<tuv xml:lang="fi"><seg>Puhelin</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-birth'>
+		<tuv xml:lang="en"><seg>Birthday</seg></tuv>
+		<tuv xml:lang="fi"><seg>Syntymäpäivä</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-biography'>
+		<tuv xml:lang="en"><seg>Biography</seg></tuv>
+		<tuv xml:lang="fi"><seg>Elämäkerta</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-country'>
+		<tuv xml:lang="en"><seg>Country</seg></tuv>
+		<tuv xml:lang="fi"><seg>Maa</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-total'>
+		<tuv xml:lang="en"><seg>Total Contents</seg></tuv>
+		<tuv xml:lang="fi"><seg>Omaa sisältöä</seg></tuv>
+	</tu>
+    
+	<tu tuid='account-profile-total-finfo'>
+		<tuv xml:lang="en"><seg>Future Infos</seg></tuv>
+		<tuv xml:lang="fi"><seg>Visiot</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-total-problem'>
+		<tuv xml:lang="en"><seg>Problems</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ongelmat</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-profile-total-idea'>
+		<tuv xml:lang="en"><seg>Ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
+	</tu>
+
+	<tu tuid='account-profile-content-posted'>
+		<tuv xml:lang="en"><seg>Posted</seg></tuv>
+		<tuv xml:lang="fi"><seg>Luotu</seg></tuv>
+	</tu>
+    
+	<tu tuid='account-profile-content-views'>
+		<tuv xml:lang="en"><seg>Views</seg></tuv>
+		<tuv xml:lang="fi"><seg>Katsottu</seg></tuv>
+	</tu>
+
+	<tu tuid='account-profile-content-ratings'>
+		<tuv xml:lang="en"><seg>Ratings</seg></tuv>
+		<tuv xml:lang="fi"><seg>Arvostelu</seg></tuv>
+	</tu>
+    
+	<tu tuid='account-profile-content-comments'>
+		<tuv xml:lang="en"><seg>Comments</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kommentit</seg></tuv>
+	</tu>	
+    
 	<tu tuid='account-edit-title'>
 		<tuv xml:lang="en"><seg>Edit account</seg></tuv>
 		<tuv xml:lang="fi"><seg>Muokkaa tiliä</seg></tuv>
 	</tu>
+	
+	<tu tuid='account-profile-send-private-message'>
+		<tuv xml:lang="en"><seg>Send private message</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lähetä yksityisviesti</seg></tuv>
+	</tu>	
+	
 	<tu tuid='account-userlist-user-content-added'>
 		<tuv xml:lang="en"><seg>User has added %s content.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjä on lisännyt %s sisältöä.</seg></tuv>
@@ -178,8 +428,111 @@
 		<tuv xml:lang="en"><seg>Joined: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Liittynyt: </seg></tuv>
 	</tu>
-	<tu tuid='account-userlist-not-logged'>
-		<tuv xml:lang="en"><seg>You must login in order to view userlist!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sinun pitää kirjautua sisään nähdäksesi käyttäjälistan!</seg></tuv>
+	<tu tuid='Finland'>
+		<tuv xml:lang="en"><seg>Finland</seg></tuv>
+		<tuv xml:lang="fi"><seg>Suomi</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-username'>
+		<tuv xml:lang="en"><seg>Username</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjänimi</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-action-label'>
+		<tuv xml:lang="en"><seg>Users with</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjällä</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-more-than'>
+		<tuv xml:lang="en"><seg>More than</seg></tuv>
+		<tuv xml:lang="fi"><seg>Enemmän kuin</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-less-than'>
+		<tuv xml:lang="en"><seg>Less than</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vähemmän kuin</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-equal'>
+		<tuv xml:lang="en"><seg>Equal</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tasan</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-content-count-label'>
+		<tuv xml:lang="en"><seg>content</seg></tuv>
+		<tuv xml:lang="fi"><seg>sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-country-label'>
+		<tuv xml:lang="en"><seg>Country</seg></tuv>
+		<tuv xml:lang="fi"><seg>Maa</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-country-all'>
+		<tuv xml:lang="en"><seg>All countries</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaikki maat</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-city-label'>
+		<tuv xml:lang="en"><seg>City</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaupunki</seg></tuv>
+	</tu>
+	<tu tuid='userlist-filter-submit'>
+		<tuv xml:lang="en"><seg>Filter</seg></tuv>
+		<tuv xml:lang="fi"><seg>Suodata</seg></tuv>
+	</tu>
+	<tu tuid='account-login-via-openid'>
+		<tuv xml:lang="en"><seg>Login via OpenID</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu OpenID:llä</seg></tuv>
+	</tu>
+	<tu tuid='account-login-via-openid-loginbox'>
+		<tuv xml:lang="en"><seg>Or use your</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tai käytä</seg></tuv>
+	</tu>
+    <tu tuid='account-login-via-openid-loginbox-link'>
+		<tuv xml:lang="en"><seg>OpenID to login</seg></tuv>
+		<tuv xml:lang="fi"><seg>OpenID-tunnustasi</seg></tuv>
+	</tu>
+	<tu tuid='account-profile-openid'>
+		<tuv xml:lang="en"><seg>OpenID-account</seg></tuv>
+		<tuv xml:lang="fi"><seg>OpenID-tunnus</seg></tuv>
+	</tu>
+	<tu tuid='account-profile-openid-exists'>
+		<tuv xml:lang="en"><seg>This OpenID is already attached</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä OpenID-tunnus on jo liitetty</seg></tuv>
+	</tu>	
+	<tu tuid='account-openid-title'>
+		<tuv xml:lang="en"><seg>OpenID-login</seg></tuv>
+		<tuv xml:lang="fi"><seg>OpenID-kirjautuminen</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-openid-text'>
+		<tuv xml:lang="en"><seg>Login with attached OpenID</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu liitetyllä OpenID-tunnuksella</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-openid-loginurl'>
+		<tuv xml:lang="en"><seg>OpenID address</seg></tuv>
+		<tuv xml:lang="fi"><seg>OpenID osoite</seg></tuv>
+	</tu>
+
+	<tu tuid='account-openid-login-not-successful'>
+		<tuv xml:lang="en"><seg>Login failed</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjautuminen epäonnistui</seg></tuv>
+	</tu>
+
+	<tu tuid='account-password-nomatch'>
+		<tuv xml:lang="en"><seg>Password confirmation does not match</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasanan vahvistus ei täsmää</seg></tuv>
+	</tu>
+	
+	<tu tuid='account-currentpassword-nomatch'>
+		<tuv xml:lang="en"><seg>Current password does not match</seg></tuv>
+		<tuv xml:lang="fi"><seg>Nykyinen salasana ei täsmää</seg></tuv>
+	</tu>
+    <tu tuid='account-profile-public'>
+		<tuv xml:lang="en"><seg>Public</seg></tuv>
+		<tuv xml:lang="fi"><seg>Julkinen</seg></tuv>
+	</tu>
+	
+    <tu tuid='account-processimage-title'>
+		<tuv xml:lang="en"><seg>Edit profile thumbnail</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa profiilikuvaa</seg></tuv>
+	</tu>
+	
+    <tu tuid='account-processimage-save'>
+		<tuv xml:lang="en"><seg>Save</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tallenna</seg></tuv>
 	</tu>
 </body>

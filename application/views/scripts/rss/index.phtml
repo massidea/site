@@ -1,0 +1,78 @@
+<?php
+	// Get absolute baseurl
+	$baseUrl = $this->absoluteBaseUrl;
+?>
+
+<h1><?php echo $this->translate('rss-index-title');?></h1>
+<div id="rss_index_description">
+	<b><?php echo $this->translate('rss-index-description-title');?></b>
+	<p><?php echo $this->translate('rss-index-description-paragraph');?></p>
+</div>
+
+<?php 
+// Google reader URL header & footer
+$feed_google_header = "http://fusion.google.com/ig/sharetab?source=atgt&atr=Massidea.org&n_32=url%3D";
+$feed_google_footer = "%26row%3D1%26sect%3D1";
+
+// Define URL's for each feed
+$feedurl_all = $this->url(array('controller' => 'rss',
+								'action' => 'generate',
+								'type' => 'all',
+								'language' => $this->language));
+
+$feedurl_problem = $this->url(array('controller' => 'rss',
+								'action' => 'generate',
+								'type' => 'problem',
+								'language' => $this->language));
+
+$feedurl_idea = $this->url(array('controller' => 'rss',
+								'action' => 'generate',
+								'type' => 'idea',
+								'language' => $this->language));
+
+$feedurl_finfo = $this->url(array('controller' => 'rss',
+								'action' => 'generate',
+								'type' => 'finfo',
+								'language' => $this->language));
+?>
+
+<div id="rss_index_table">
+	<h3><?php echo $this->translate('rss-index-feedsfor-title');?></h3>
+	<div class="rss_index_box">
+		<a href="<?php echo $feedurl_all; ?>">	
+			<img src="../images/icon_rss_28x28.png" width="18" height="18" alt="*" />
+		</a>
+		<a href="<?php echo $feed_google_header . $baseUrl . $feedurl_all . $feed_google_footer; ?>">
+			<img src="http://gmodules.com/ig/images/plus_google.gif" border="0" alt="Add to Google" />
+		</a>
+		<span><?php echo $this->translate('rss-index-feed-all');?></span>
+	</div>
+	<div class="rss_index_box" id="rss_index_problemcolor">
+		<a href="<?php echo $feedurl_problem; ?>">	
+			<img src="../images/icon_rss_28x28.png" width="18" height="18" alt="*" />
+		</a>
+		<a href="<?php echo $feed_google_header . $baseUrl . $feedurl_problem . $feed_google_footer; ?>">
+			<img src="http://gmodules.com/ig/images/plus_google.gif" border="0" alt="Add to Google" />
+		</a>
+		<span><?php echo $this->translate('rss-index-feed-problem');?></span>
+	</div>
+	<div class="rss_index_box" id="rss_index_ideacolor">
+		<a href="<?php echo $feedurl_idea; ?>">	
+			<img src="../images/icon_rss_28x28.png" width="18" height="18" alt="*" />
+		</a>
+		<a href="<?php echo $feed_google_header . $baseUrl . $feedurl_idea . $feed_google_footer; ?>">
+			<img src="http://gmodules.com/ig/images/plus_google.gif" border="0" alt="Add to Google" />
+		</a>
+		<span><?php echo $this->translate('rss-index-feed-idea');?></span>
+	</div>
+	<div class="rss_index_box" id="rss_index_finfocolor">
+		<a href="<?php echo $feedurl_finfo; ?>">	
+		<img src="../images/icon_rss_28x28.png" width="18" height="18" alt="*" />
+		</a>
+		<a href="<?php echo $feed_google_header . $baseUrl . $feedurl_finfo . $feed_google_footer; ?>">
+			<img src="http://gmodules.com/ig/images/plus_google.gif" border="0" alt="Add to Google" />
+		</a>
+		<span><?php echo $this->translate('rss-index-feed-finfo');?></span>
+	</div>
+</div>
+<br />

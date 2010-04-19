@@ -5,7 +5,7 @@ class Oibs_Validators_PasswordConfirmation extends Zend_Validate_Abstract
     const NOT_MATCH = 'passConfirmationNotMatch';  
    
     protected $_messageTemplates = array(  
-        self::NOT_MATCH => 'Password confirmation does not match'  
+        self::NOT_MATCH => 'account-password-nomatch'  
     );  
 	 
 	/**

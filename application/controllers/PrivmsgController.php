@@ -1,5 +1,30 @@
 <?php
+/**
+ *  PrivmsgController -> 
+ *
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ * more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * License text found in /license/
+ */
 
+/**
+ *  PrivmsgController - class
+ *
+ *  @package     models
+ *  @author        
+ *  @copyright    
+ *  @license     GPL v2
+ *  @version     1.0
+ */
 class PrivmsgController extends Oibs_Controller_CustomController 
 {
 	public function init()
@@ -11,34 +36,39 @@ class PrivmsgController extends Oibs_Controller_CustomController
 	
 	public function indexAction()
 	{
-		//  Get user identity
+		// Get user identity
 		$auth = Zend_Auth::getInstance();
-		if ($auth->hasIdentity()) 
-		{
-			$models_privmsg = New Models_PrivateMessages();
+        
+		if ($auth->hasIdentity()) {
+			$Default_Model_privmsg = New Default_Model_PrivateMessages();
             
-            $privmsgs = $models_privmsg->getPrivateMessagesByUserId($auth->getIdentity()->user_id);
+            $privmsgs = $Default_Model_privmsg->getPrivateMessagesByUserId($auth->getIdentity()->user_id);
             
-            $models_user = New Models_User();
+            $Default_Model_user = New Default_Model_User();
             
             $i = 0;
-            while($i < count($privmsgs))
-            {
+            
+            while($i < count($privmsgs)) {
                 $privmsgs[$i]['header_pmg'] = $privmsgs[$i]['header_pmg'];
                 $privmsgs[$i]['message_body_pmg'] = $privmsgs[$i]['message_body_pmg'];
-                $privmsgs[$i]['username_pmg'] = $models_user->getUserNameById($privmsgs[$i]['id_sender_pmg']);
-                $privmsgs[$i]['user_has_image'] = $models_user->userHasProfileImage($privmsgs[$i]['id_sender_pmg']);
+                $privmsgs[$i]['username_pmg'] = $Default_Model_user->getUserNameById($privmsgs[$i]['id_sender_pmg']);
+                $privmsgs[$i]['user_has_image'] = $Default_Model_user->userHasProfileImage($privmsgs[$i]['id_sender_pmg']);
                 $i++;
             }
+            
             $this->view->privmsgs = $privmsgs;
             
-            $models_privmsg->markUnreadMessagesAsRead($auth->getIdentity()->user_id);
-		}
-        else
-        {
+            $Default_Model_privmsg->markUnreadMessagesAsRead($auth->getIdentity()->user_id);
+		} else {
             // If not logged, redirecting to system message page
             $message = 'privmsg-view-not-logged';
-            $this->flash($message, '/'.$this->view->language.'/msg/');
+            
+            $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                                                'action' => 'index', 
+                                                'language' => $this->view->language), 
+                                          'lang_default', true);
+                                          
+            $this->flash($message, $url);
         }
 	}
     
@@ -46,9 +76,9 @@ class PrivmsgController extends Oibs_Controller_CustomController
     {
         // Get authentication
         $auth = Zend_Auth::getInstance();
+        
         // If user has identity
-        if ($auth->hasIdentity())
-        {
+        if ($auth->hasIdentity()) {
             // Get requests
             $params = $this->getRequest()->getParams();
             
@@ -56,15 +86,19 @@ class PrivmsgController extends Oibs_Controller_CustomController
             $receiver = isset($params['username']) 
                                 ? $params['username'] : '';
 
-            $model_user = New Models_User();
+            $model_user = New Default_Model_User();
             
-            if(!$model_user->usernameExists($receiver))
-            {
+            $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                                                'action' => 'index', 
+                                                'language' => $this->view->language), 
+                                          'lang_default', true);
+                                                
+            if(!$model_user->usernameExists($receiver)) {
                 // If not logged, redirecting to system message page
                 $message = 'privmsg-send-invalid-receiver';
-                $this->flash($message, '/'.$this->view->language.'/msg/');
+                $this->flash($message, $url);
             }
-                                
+                
             // Receiver's username to view
             $this->view->receiver = $receiver;
             
@@ -73,38 +107,39 @@ class PrivmsgController extends Oibs_Controller_CustomController
             
             // Creating data array for form's hidden fields
             $data = array();
+            
             $data['sender_id'] = $auth->getIdentity()->user_id;
             $data['receiver_id'] = $model_user->getIdByUsername($receiver);
             
-            $form = new Forms_PrivMsgForm(null, $data);
+            $form = new Default_Form_PrivMsgForm(null, $data);
             $this->view->form = $form;
             
             // If private message is posted
-            if($this->getRequest()->isPost())
-            {
+            if($this->getRequest()->isPost()) {
                 // Get private message data
                 $data = $this->getRequest()->getPost();
                 
                 // Add a private message
-                $models_privmsg = new Models_PrivateMessages();
+                $Default_Model_privmsg = new Default_Model_PrivateMessages();
                 
-                if($models_privmsg->addMessage($data))
-                {
+                if($Default_Model_privmsg->addMessage($data)) {
                     $message = 'privmsg-add-successful';
-                }
-                else
-                {
+                } else {
                     $message = 'privmsg-add-not-successful';
                 }
                 
-                $this->flash($message, '/'.$this->view->language.'/msg/');
+                $this->flash($message, $url);
             } // end if
-        }
-        else
-        {
+        } else {
             // If not logged, redirecting to system message page
             $message = 'privmsg-send-not-logged';
-            $this->flash($message, '/'.$this->view->language.'/msg/');
+            
+            $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                                                'action' => 'index', 
+                                                'language' => $this->view->language), 
+                                          'lang_default', true);
+                                          
+            $this->flash($message, $url);
         }
     }
 }

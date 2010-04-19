@@ -1,16 +1,48 @@
+<?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
+
 <div id="tag_list_container">
-    <h1><?php echo $this->translate('tag-view-header') . " \"" . stripslashes($this->tagName) . "\""; ?></h1>
-    <hr />
+    <h3>
+        <?php echo $this->translate('tag-view-header'); ?>
+        "<?php echo $this->escape($this->tagName); ?>"
+    </h3>
+    
     <div class="tag_view_results">
-    <?php foreach($this->tags as $tag): ?>
-        <div class="tag_view_<?php echo $tag['type']; ?>">
-            <div class="tag_view_title"><a href="<?php echo $this->url(array('content_id' => $tag['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>"><?php echo stripslashes($tag['title_cnt']); ?></a></div>
-            <div class="tag_view_lead"><p><?php echo stripslashes($tag['lead_cnt']); ?></p></div>
-        </div>
+    <?php $i = 0; ?>
+    <?php foreach($this->content as $content): ?>
+    
+        <?php if ($i != 0): ?>
+            <div class="user_content_spacer">
+                <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
+            </div>
+        <?php endif; ?>
         
-        <hr />
+        <?php $i++; ?>
+        
+        <div class="tag_view_<?php echo $content['key_cty']; ?>">
+        
+            <div class="tag_view_title">
+                <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'], 
+                                                     'language' => $this->language), 
+                                               'content_shortview', true); ?>">
+                    <?php echo $this->escape($content['title_cnt']); ?>
+                </a>
+            </div>
+            
+            <div class="tag_view_lead">
+                <p style="padding: 0px; margin:0px;">
+                    <?php echo $this->escape($content['lead_cnt']); ?>
+                </p>                
+            </div>
+            
+        </div>
     <?php endforeach; ?>
     </div>
     
-    <h2><a href="/<?php echo $this->language; ?>/tag"><?php echo $this->translate('tag-view-cloudmsg'); ?></a></h2>
+    <h2>
+        <a href="<?php echo $this->url(array('controller' => 'tag',
+                                             'language' => $this->language), 
+                                       'lang_default', true); ?>">
+            <?php echo $this->translate('tag-view-cloudmsg'); ?>
+        </a>
+    </h2>
 </div>

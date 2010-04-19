@@ -26,7 +26,6 @@
  *  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * License text found in /license/
- *  License text found in /license/
  */
  
 /**
@@ -47,9 +46,10 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 {
 	public $db;
 	public $breadcrumbs;
-		
+	
 	protected $_redirector;
 	protected $_flashMessenger;
+    protected $_urlHelper;
 		
 	/**
 	*	init
@@ -59,24 +59,33 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	*/
 	public function init()
 	{
+        // Zend_Controller_Action_Helper_Redirector::setPrependBase(false);
 		// Load languages to view
 		$this->view->languages = Zend_Registry::get('Available_Translations');
 		$this->view->language = Zend_Registry::get('Zend_Locale');
-		
+                
+        // this can be used in any view now...useful I believe :)
+		$this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		//$this->db = Zend_Registry::get('db');
 		$this->breadcrumbs = new Oibs_Controller_Plugin_BreadCrumbs();
+        
+        // bbCode plugin
+        $this->view->BBCode = new Oibs_Controller_Plugin_BBCode();
 		
 		// Add the root step to breadcrumbs
-		$this->breadcrumbs->addStep('OIBS Home', '/');
+		$this->breadcrumbs->addStep('Massidea.org Home', '/');
 		
 		// Flash message
 		$this->_flashMessenger 	= $this->_helper->getHelper('FlashMessenger');
 		
-		// Redirector
+		// Redirector... by putting PrependBase to false, the url helper does not
+        // just 'attach' the new url on top of the old one. This avoids those mysterious
+        // urls like http://localhost/controller/action/something/action/something...
 		$this->_redirector = $this->_helper->getHelper('Redirector');
+		$this->_redirector->setPrependBase(false);
 		
-		// Set database
-		$this->db = Zend_Registry::get('db');
+        // Set database. Is this needed somewhere? This creates an error at least...Maybe depreciated.
+		//$this->db = Zend_Registry::get('db');
 		
 		// Get users name
 		$auth = Zend_Auth::getInstance();
@@ -86,28 +95,40 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			$this->view->username = $auth->getIdentity()->username;
             $this->view->userid = $auth->getIdentity()->user_id;
             
-            $models_privmsg = New Models_PrivateMessages();
-            $unread_privmsgs = $models_privmsg->getCountOfUnreadPrivMsgs($auth->getIdentity()->user_id);
+            $Default_Model_privmsg = New Default_Model_PrivateMessages();
+            $unread_privmsgs = $Default_Model_privmsg->getCountOfUnreadPrivMsgs($auth->getIdentity()->user_id);
             $this->view->unread_privmsgs = $unread_privmsgs;
+            
+            $Default_Model_UserProfiles = New Default_Model_UserProfiles();
+            $roles = $Default_Model_UserProfiles->getUserRoles($auth->getIdentity()->user_id);
+            $this->view->logged_user_roles = $roles;
         }
-			
+        else
+        {
+            $this->view->logged_user_roles = json_decode('["user"]');
+        }
+            
         $params = $this->getRequest()->getParams();
         $this->view->controller = $params['controller'];
         $this->view->action = $params['action'];
             
 		// Search form 
-		$simpleSearchForm = new Forms_SimpleSearchForm();
+		$simpleSearchForm = new Default_Form_SimpleSearchForm();
 		
 		// url helper
-		$urlHelper = $this->_helper->getHelper('url');
+		$this->_urlHelper = $this->_helper->getHelper('url');
 		// $params = $this->getRequest()->getParams();
-		
-		$url = $urlHelper->url(array('controller' => 'search', 'action' => 'result', 'language' => $this->view->language), 'lang_default', true); 
+        
+		$url = $this->_urlHelper->url(array('controller' => 'search', 
+                                            'action' => 'result', 
+                                            'language' => $this->view->language), 
+                                      'lang_default', true); 
+         
 		$simpleSearchForm ->setAction($url)
 			->setMethod('get');
 			
 		$this->view->searchForm = $simpleSearchForm;
-		
+        
 		/*
 		echo '<pre>';
 		print_r($params);
@@ -193,5 +214,39 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	{
 		$this->view->messages = join("",$this->_flashMessenger->getMessages());
 	} // end of setMessages
+
+	/**
+	*   encodeParam
+	*
+	*   Encodes given value and key to url.
+	*/
+    public static function encodeParam(&$value, &$key) {
+        $value = urlencode($value);
+        $key = urlencode($key);
+    } // end of encodeParam
+    
+    /**
+    *   checkIfArrayHasKeyWithValue
+    *
+    *   This function checks if an array has given key and value
+    *   It works recursivly so it doesn't matter how deep the array is.
+    *   Function found on php.net, submitted by 'brouwer dot p at gmail dot com'
+    */
+    function checkIfArrayHasKeyWithValue($array, $key, $value) {
+        //loop through the array
+        foreach($array as $val) {
+          //if $val is an array cal myInArray again with $val as array input
+          if(is_array($val)){
+            if($this->checkIfArrayHasKeyWithValue($val, $key, $value))
+              return true;
+          }
+          //else check if the given key has $value as value
+          else{
+            if($array[$key]==$value)
+              return true;
+          }
+        }
+        return false;
+    }
 } // end of class
 ?>

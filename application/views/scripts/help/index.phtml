@@ -1,23 +1,51 @@
-﻿<a href="<?php echo $this->url(array('controller' => 'help', 'action' => 'about', 'language' => $this->language), 'lang_default', true); ?>">
-                                    <?php echo "About"; ?></a>
-<table border="3">
-<th>Title</th>
-<th>Content</th>
-<?php
-		foreach ($this->help as $helpitem){
-		?>
-		<tr>
-			<td>
-				<?php echo $helpitem['title_hlp']; ?>
-			</td>
-			<td>
-				<?php echo $helpitem['content_hlp']; ?>
-			</td>
-		</tr>
-		<?php
-		}
-		
-	?>
-	</table>
-	<br>
+﻿<h1><?php echo $this->translate('help-index-header');?></h1>
+<div id="help-contentbox">
+	<div>
+        <h2><?php echo $this->translate('help-index-howtoregister-header');?></h2>
+        <p>
+            <?php echo $this->translate('help-index-howtoregister-text');?>
+        </p>
+	</div>
 	
+	<div>
+        <h2><?php echo $this->translate('help-index-loggingin-header');?></h2>
+        <p>
+            <?php echo $this->translate('help-index-loggingin-text');?>
+        </p>
+	</div>
+	
+	<div>
+        <h2><?php echo $this->translate('help-index-forgotpassword-header');?></h2>
+        <p>
+            <?php echo $this->translate('help-index-forgotpassword-text');?>
+        </p>
+	</div>
+	
+	<div>
+        <h2><?php echo $this->translate('help-index-searching-header');?></h2>
+        <p>
+            <?php echo $this->translate('help-index-searching-text');?>
+        </p>
+	</div>
+	
+	<div>
+        <h2><?php echo $this->translate('help-index-browsing-header');?></h2>
+        <p>
+            <?php echo $this->translate('help-index-browsing-text');?>
+        </p>
+	</div>
+	
+	<div>
+        <h2><?php echo $this->translate('help-index-addingcontent-header');?></h2>
+        <p>
+            <?php echo $this->translate('help-index-addingcontent-text');?>
+        </p>
+	</div>
+</div>
+<br />
+<a href="<?php echo $this->url(array('controller' => 'help', 
+                                     'action' => 'about', 
+                                     'language' => $this->language), 
+                               'lang_default', true); ?>">
+    <?php echo $this->translate('help-index-about-text'); ?>
+</a>

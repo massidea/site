@@ -2,7 +2,7 @@
 /**
  *  TagController -> Viewing tags
  *
-* 	Copyright (c) <2009>, Markus Riihel‰
+* 	Copyright (c) <2009>, Markus Riihel√§
 * 	Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -19,11 +19,11 @@
  */
  
 /**
- *  TagtController - class
+ *  TagController - class
  *
  *  @package 	controllers
- *  @author 		Markus Riihel‰ & Mikko Sallinen
- *  @copyright 	2009 Markus Riihel‰ & Mikko Sallinen
+ *  @author 		Markus Riihel√§ & Mikko Sallinen
+ *  @copyright 	2009 Markus Riihel√§ & Mikko Sallinen
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
@@ -39,9 +39,9 @@ class TagController extends Oibs_Controller_CustomController
 	{
 		parent::init();
 		
-		$this->view->title = 'tag-title';
+		$this->view->title = 'tag-view-title';
 		
-		$this->breadcrumbs->addStep('Tag', $this->getUrl(null, 'tag'));
+		//$this->breadcrumbs->addStep('Tag', $this->getUrl(null, 'tag'));
 	} // end of init()
 	
 	/**
@@ -52,15 +52,107 @@ class TagController extends Oibs_Controller_CustomController
 	*/
 	public function indexAction()
 	{
-		$this->view->title = "index-tag";
-		
-		$tags = new Models_Tags();
-		$tag_list = $tags->getTagCloudData();
-		
-		$tag_list = $this->changeTagSize($tag_list);
-		$this->view->tag_list = $tag_list;	
+        // Get cache from registry
+        $cache = Zend_Registry::get('cache');
+        $cacheFile = '';
+        
+		$this->view->title = 'tag-view-title';
+        
+        // default values and GET parameters
+        $limit = '0';
+        $order = 'name';
+        $direction = 'desc';
+        $where = 'All';
+        $ctype = 'all';
+        $list_type = 'cloud';
+        
+        $params = $this->getRequest()->getParams();
+        
+        if(isset($params['limit'])) {
+            $limit = $params['limit'];
+            $cacheFile .= '?limit=' . $limit;
+        }
+        
+        if(isset($params['order'])) {
+            $order = $params['order'];
+            $cacheFile .= '?order=' . $order;
+        }
+        
+        if(isset($params['direction'])) {
+            $direction = $params['direction'];
+            $cacheFile .= '?direction=' . $direction;
+        }
+        
+        if(isset($params['where'])) {
+            $where = $params['where'];
+            $cacheFile .= '?where=' . $where;
+        }
+        
+        if(isset($params['ctype'])) {
+            $ctype = $params['ctype'];
+            $cacheFile .= '?ctype=' . $ctype;
+        }
+        
+        if(isset($params['list_type'])) {
+            $list_type = $params['list_type'];
+            $cacheFile .= '?list_type=' . $list_type;
+        }
+        
+        /*
+        foreach ($params as $key => $val){
+            switch ($key) {
+                case 'limit':
+                    $limit = $val;
+                    break;
+                case 'order':
+                    $order = $val;
+                    break;
+                case 'direction':
+                    $direction = $val;
+                    break;
+                case 'where':
+                    $where = $val;
+                    break;
+                case 'ctype':
+                    $ctype = $val;
+                    break;
+                case 'list_type':
+                    $list_type = $val;
+                    break;
+                default:
+                    break;
+            }
+        }
+        */
+        
+        $cacheFile = 'Tags_' . md5($cacheFile);
+        
+        // Load tags from cache
+        if(!$result = $cache->load($cacheFile)) {
+            //Retrieving tags
+            $tags = new Default_Model_Tags();
+            $tagList = $tags->getTagCloudData($limit, $order, $direction, $where, $ctype);
+        
+            //Changing tag size
+            //$this->changeTagSize($tagList);
+            $tagList = $this->_helper->tagsizes->tagCalc($tagList);
+            
+            $cache->save($tagList, $cacheFile);
+        } else {
+            $tagList = $result;
+        }
+            
+        // inject things to view
+		$this->view->tag_list = $tagList;
+		$this->view->order = $order;
+        $this->view->direction = $direction;
+        $this->view->ctype = $ctype;
+        $this->view->where = $where;
+        $this->view->list_type = $list_type;
+
 	} // end of indexAction()
 
+	
 	/**
 	*	viewAction
 	*
@@ -69,16 +161,21 @@ class TagController extends Oibs_Controller_CustomController
 	*/	
 	public function viewAction()
 	{
-		$params = $this->getRequest()->getParams();
-		
-		$tag = new Models_Tags();
-		
-		$data = array();
+        $this->view->title = 'tag-view-title';
+        
+		//$params = $this->getRequest()->getParams();
+        $tagId = $this->getRequest()->getParam('id');
+				
+		//$data = array();
 		$result = array();
         
-		$data = $tag->getTagContentById($params['id']);
+		$tag = new Default_Model_Tags();
         
-        $contentTypesModel = new Models_ContentTypes();
+		$contentList = $tag->getTagContentById($tagId);
+		$tagName = $tag->getTagNameById($tagId);
+        
+        /* What is this
+        $contentTypesModel = new Default_Model_ContentTypes();
         $contentTypes = $contentTypesModel->getAllNamesAndIds();
         
         // match content type with data
@@ -91,12 +188,16 @@ class TagController extends Oibs_Controller_CustomController
                 
                 $j = 0;                 // go through content types until hit
                 while (!$break) {
-                    if ($dat['id_cty_cnt'] == $contentTypes[$j]['id_cty']) {
-                        $result[$i]['type'] = $contentTypes[$j]['key_cty'];
-                        $break = true;  // break if hit
+                    if (isset($result[$i]) && isset($contentTypes[$j])){
+                        if ($dat['id_cty_cnt'] == $contentTypes[$j]['id_cty']) {
+                            $result[$i]['type'] = $contentTypes[$j]['key_cty'];
+                            $break = true;  // break if hit
+                        }
                     }
+                    
                     $j++;
-                    if ($j > 100) {     // break if appears to be infinite
+                    
+                    if ($j > 100) {     // break if appears to be infinite...
                         $break = true;
                     }
                 }
@@ -104,10 +205,9 @@ class TagController extends Oibs_Controller_CustomController
                 $i++;
             }
         }
+        */
         
-		$tagName = $tag->getTagNameById($params['id']);
-        
-		$this->view->tags = $result;
+		$this->view->content = $contentList;
         $this->view->tagName = $tagName;
 	} // end of viewAction
 	
@@ -116,42 +216,38 @@ class TagController extends Oibs_Controller_CustomController
 	*
 	*	Tag index
 	*
-	*/	
-	public function changeTagSize($tag_list = null)
+	*/
+    /*	
+	public function changeTagSize(&$tag_list = null)
 	{
+		$minFontSize = 80;
+		$maxFontSize = 400;		
+		
 		$maxTagCount = null;
 		$minTagCount = null;
+        
+		foreach ($tag_list as $tag) {
+			$cnt = $tag['count'];
 		
-		$minFontSize = 100;
-		$maxFontSize = 250;
-		
-		$result = array();
-		
-		foreach ($tag_list as $tag)
-		{
-			$cnt = $tag['count']['tag_count'];
-		
-			if($maxTagCount == null || $cnt > $maxTagCount)
+			if($maxTagCount == null || $cnt > $maxTagCount) {
 				$maxTagCount = $cnt;
+            }
 				
-			if($minTagCount == null || $cnt < $minTagCount)
+			if($minTagCount == null || $cnt < $minTagCount) {
 				$minTagCount = $cnt;
+            }
 		}
 		
 		$spread = $maxTagCount - $minTagCount;
-		if($spread == 0)
+		if($spread == 0) {
 			$spread = 1;
+        }
 		
 		$step = ($maxFontSize - $minFontSize) / $spread;
-		
-		foreach ($tag_list as $tag)
-		{			
-			$tag['count']['tag_size'] = $minFontSize + (($tag['count']['tag_count'] - $minTagCount) * $step);
-
-			$result[] = $tag;			
+        
+		foreach ($tag_list as $k => $tag) {			
+			$tag_list[$k]['tag_size'] = round($minFontSize + (($tag['count'] - $minTagCount) * $step));		
 		}
-		
-		return $result;
 	} // end of calculateTagSize
+    */
 }
-?>

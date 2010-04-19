@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+<header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+	adminlang="en-us" srclang="fi-fi" o-tmf="abc">
+</header>
+<body>
+	<tu tuid='rss-index-title'>
+		<tuv xml:lang="en"><seg>RSS-feeds</seg></tuv>
+		<tuv xml:lang="fi"><seg>RSS-syötteet</seg></tuv>
+	</tu>
+	<tu tuid='rss-index-description-title'>
+		<tuv xml:lang="en"><seg>What are RSS-feeds?</seg></tuv>
+		<tuv xml:lang="fi"><seg>Mitä RSS-syötteet ovat?</seg></tuv>
+	</tu>
+	<tu tuid='rss-index-description-paragraph'>
+		<tuv xml:lang="en">
+			<seg>
+				The acronym RSS stands for "Really Simple Syndication" and it's used for publishing frequently updating data in the web. 
+				An RSS document includes full or summarized text, plus metadata such as publishing dates and authorship.
+				RSS-feeds can be read using software which collect and display feeds from the web. 
+			</seg>
+		</tuv>
+		<tuv xml:lang="fi">
+			<seg>
+				Lyhenne RSS tulee sanoista "Really Simple Syndication" ("Erittäin helppo syndikaatio") ja sitä käytetään usein päivittyvän
+				datan julkaisemiseen verkossa. RSS -dokumentti sisältää kokonaisen tai yhteenvedetyn tekstin sekä metadataa kuten 
+				julkaisupäivämäärän ja alkuperän. RSS-syötteitä voidaan lukea tietokoneohjelmistolla joka kerää ja esittää syötteitä verkosta.
+			</seg>
+		</tuv>
+	</tu>
+	<tu tuid='rss-index-feedsfor-title'>
+		<tuv xml:lang="en"><seg>Recent posts from</seg></tuv>
+		<tuv xml:lang="fi"><seg>Uusimmat sisällöt</seg></tuv>
+	</tu>
+	<tu tuid='rss-index-feed-all'>
+		<tuv xml:lang="en"><seg>all categories</seg></tuv>
+		<tuv xml:lang="fi"><seg>kaikista kategorioista</seg></tuv>
+	</tu>
+	<tu tuid='rss-index-feed-problem'>
+		<tuv xml:lang="en"><seg>today's challenges</seg></tuv>
+		<tuv xml:lang="fi"><seg>tämän päivän haasteista</seg></tuv>
+	</tu>
+	<tu tuid='rss-index-feed-idea'>
+		<tuv xml:lang="en"><seg>ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>ideoista</seg></tuv>
+	</tu>
+	<tu tuid='rss-index-feed-finfo'>
+		<tuv xml:lang="en"><seg>visions of the future</seg></tuv>
+		<tuv xml:lang="fi"><seg>tulevaisuuden näkymistä</seg></tuv>
+	</tu>
+	<tu tuid='rss-generate-description'>
+		<tuv xml:lang="en"><seg>Massidea.org - Recent posts</seg></tuv>
+		<tuv xml:lang="fi"><seg>Massidea.org - Uusimmat sisällöt</seg></tuv>
+	</tu>
+</body>
+
+

@@ -1,9 +1,19 @@
-<select id="content_division" name="content_division" onchange="getItems('/en/content/group/division/'+this.value, 'groupdd', this.value); checkCF();">
-<option value="0"><?php echo $this->translate("content-add-select-division"); ?></option>
-<?php
-foreach($this->divisions as $division)
-{
-	echo '<option value="'.$division['id_ind'].'">'.$division['name_ind'].'</option>';
-}
-?>
+<select id="content_division" name="content_division" 
+    onchange="getItems('<?php echo $this->url(array('controller' => 'content',
+                                                    'action' => 'group',
+                                                    'language' => $this->language),
+                                              'lang_default', true); ?>/division/'+this.value,
+        'content_group_div', this.value);"
+    >
+    
+    <option value="0">
+        <?php echo $this->translate("content-add-select-division"); ?>
+    </option>
+    
+    <?php foreach($this->divisions as $division): ?>
+    <option value="<?php echo $division['id_ind']; ?>">
+        <?php echo $division['name_ind']; ?>
+    </option>
+    <?php endforeach; ?>
+    
 </select>

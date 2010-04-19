@@ -1,57 +1,340 @@
+<?php 
+    // add stylesheet
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css'));  
+
+    // change background color
+    if ($this->type == "Problems" || $this->type == "problem") {
+        $this->headScript()->captureStart();
+        ?>setTimeout("changeBack('#d21034')", 300); <?php
+        $this->headScript()->captureEnd();
+    } else if ($this->type == "Ideas" || $this->type == "idea") {
+        $this->headScript()->captureStart();
+        ?>setTimeout("changeBack('#4b9b07')", 300);<?php 
+        $this->headScript()->captureEnd();
+    } else if ($this->type == "Future info" || $this->type == "finfo") {
+        $this->headScript()->captureStart();
+        ?>setTimeout("changeBack('#ffc726')", 300);<?php 
+        $this->headScript()->captureEnd();
+    } 
+            
+    // some variable initiation
+    $url_tag_cloud = $this->url(array('controller' => 'tag',
+        'action' => 'index',
+        'language' => $this->language), 
+        'lang_default', true);
+        
+    $url_sign_up = $this->url(array('controller' => 'account',
+        'action' => 'register',
+        'language' => $this->language), 
+        'lang_default', true);
+?>
+
 <div class="content_list_recent">
-<h1><?php printf($this->translate('content-list-recent_'.$this->type), $this->count);//echo $this->translate('content-list-recent'); ?></h1>
-<?php if (!empty($this->contentPaginator)): ?>
-    <div id="content_list_content_left">
-        <div id="content_list_content_industries">	
-            <?php foreach($this->industries as $industry): ?>
-                <p><a href="#"><?php echo $industry['name_ind']; ?></a></p>
-            <?php endforeach; ?>
-        </div>
-    </div>
-    <div id="content_list_content_right">
-        <h2><?php //printf($this->translate('content-list-recent_'.$this->type), $this->count); ?></h2>
+    <?php if (!empty($this->contentData)): ?>
+    <div id="search_result">
+    
+        <h3 class="content_list_header_<?php echo $this->type; ?>">
+            <?php echo $this->translate('content-list-'.$this->type); ?>
+            
+            <a href="<?php echo $this->url(array('controller' => 'rss',
+                                                 'action' => 'generate',
+                                                 'type' => $this->type,
+                                                 'language' => $this->language),
+                                           'lang_default', true); ?>">
+                                           
+                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" />
+            </a>
+        </h3>
+    
+        <?php /*if ($this->contentCount > $this->count): ?>
         <div id="content_list_content_pagination_top">
-            <?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
+            <?php echo $this->contentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
         </div>
-        <div id="content_list_content_order">
+        <?php endif;*/ ?>
+        
+        <?php /*<div id="content_list_content_order">
             <span><?php echo $this->translate('content-list-order-by'); ?></span>
-            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'author'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-author'); ?></a> | 
-            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'created'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-date'); ?></a> |
-            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'header'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-header'); ?></a> | 
-            <a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'list', 'type' => $this->type, 'page' => $this->page, 'language' => $this->language, 'order' => 'views'), 'lang_default', true); ?>"><?php echo $this->translate('content-list-order-by-views'); ?></a>
+            
+            <a href="<?php echo $this->url(array('type' => $this->type, 
+                                                 'page' => $this->page, 
+                                                 'language' => $this->language, 
+                                                 'order' => 'author'), 
+                                           'content_list', true); ?>">
+                <?php echo $this->translate('content-list-order-by-author'); ?>
+            </a> | 
+            
+            <a href="<?php echo $this->url(array('type' => $this->type, 
+                                                 'page' => $this->page, 
+                                                 'language' => $this->language, 
+                                                 'order' => 'created'), 
+                                           'content_list', true); ?>">
+                <?php echo $this->translate('content-list-order-by-date'); ?>
+            </a> |
+            
+            <a href="<?php echo $this->url(array('type' => $this->type, 
+                                                 'page' => $this->page, 
+                                                 'language' => $this->language, 
+                                                 'order' => 'header'), 
+                                           'content_list', true); ?>">
+                <?php echo $this->translate('content-list-order-by-header'); ?>
+            </a> | 
+            
+            <a href="<?php echo $this->url(array('type' => $this->type, 
+                                                 'page' => $this->page, 
+                                                 'language' => $this->language, 
+                                                 'order' => 'views'), 
+                                           'content_list', true); ?>">
+                <?php echo $this->translate('content-list-order-by-views'); ?>
+            </a>
         </div>
-        <?php foreach($this->contentPaginator as $entry): ?>	
-        <div id="<?php echo $this->type.'_'.$entry['id_cnt']; ?>" class="content_entry_container <?php echo $this->type;?>_container">
-            <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_right'; ?>" class="content_container_right">
-                    <div id="content_entry_owner_<?php echo $entry['id_cnt']; ?>" class="content_entry_owner <?php echo $this->type;?>_user_header">
-                        <a href="<?php echo $this->url(array('controller' => 'account', 'action' => 'view', 'user' => $entry['login_name_usr'], 'language' =>  $this->language), 'lang_default', true); ?>"><?php echo $entry['login_name_usr']?></a>
-                    </div>
-                    <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_created'; ?>" class="content_entry_created">
-                        <?php echo $this->translate('content-list-created').date('d M Y', strtotime($entry['created_cnt'])); ?>
-                    </div>
-            </div>
-            <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_left'; ?>" class="content_container_left <?php echo $this->type; ?>_container_left">
-                <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_header'; ?>" class="content_entry_header <?php echo $this->type; ?>_entry_header">
+        */ ?>
+        
+        <?php foreach($this->contentData as $entry): ?>	
+        
+        <div class="content_entry_container">
+            <div class="content_container_left">
+                <a href="<?php echo $this->url(array('controller' => 'account', 
+                                                     'action' => 'view', 
+                                                     'user' => $entry['login_name_usr'], 
+                                                     'language' =>  $this->language), 
+                                               'lang_default', true); ?>">
+                        <?php
+                        /*
+                        switch($entry['key_cty']) {
+                            case 'finfo': 
+                                $pre = '<img src="/images/yellow_vertical_line.png" alt="Yellow" />';
+                                break;
+                            case 'problem': 
+                                $pre = '<img src="/images/red_vertical_line.png" alt="Yellow" />';
+                                break; 
+                            case 'idea':
+                            default:
+                                $pre = '<img src="/images/green_vertical_line.png" alt="Yellow" />';
+                                break;
+                        }
+                        $img = '<img src="'. $this->url(array('controller' => 'account',
+                                                              'action' => 'profilethumb',
+                                                              'id' => $entry['id_usr'],
+                                                              'language' => $this->language,
+                                                              'thumb' => 'true'),
+                                                              'lang_default', true).'" alt="User image" width="48" height="48" />';
+                        // echo $pre.$img;
+                        $cty = 'problem';
+                        if (isset($entry['key_cty'])) {
+                            $cty = $entry['key_cty'];
+                        }
 
-                    <a href="<?php echo $this->url(array('content_id' => $entry['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>">
-                    <?php echo $entry['title_cnt']; ?>
+                        */
+                        ?>
+                        
+                    <img src="<?php echo $this->url(array('controller' => 'account',
+                                                          'action' => 'profilethumb',
+                                                          'id' => $entry['id_usr'],
+                                                          'language' => $this->language,
+                                                          'thumb' => 'true'),
+                                                   'lang_default', true); ?>" 
+                        alt="User image" class="profile_image_smallsize smallsize_<?php echo $entry['key_cty']; ?>_border" />
+                </a>
+            </div>
+
+            <div class="content_container_right">
+                <p style="padding:0; margin:0;">
+                    <a href="<?php echo $this->url(array('controller' => 'account', 
+                                     'action' => 'view', 
+                                     'user' => $entry['login_name_usr'], 
+                                     'language' =>  $this->language), 
+                               'lang_default', true); ?>">
+                               
+                        <?php echo $entry['login_name_usr']?>:
                     </a>
+                    
+                    <a href="<?php echo $this->url(array('content_id' => $entry['id_cnt'], 
+                                                         'language' => $this->language), 
+                                                   'content_shortview', true); ?>">	
+                                                   
+                        <span style="font-weight: bold">
+                            <?php echo stripslashes($entry['title_cnt']); ?>
+                        </span>
+                    </a>
+                    
+                </p>
+                
+                <p style="padding:0; margin:0;">
+                    <?php echo stripslashes($entry['lead_cnt']); ?>
+                </p>
+                
+                <p style="padding:0; margin:0;">
+                    <a href="<?php echo $this->url(array('controller' => 'tag',
+                                                         'action' => 'index',
+                                                         'language' => $this->language),
+                                                   'lang_default', true); ?>">
+                        <b>Tags:</b>
+                    </a>
+                     
+                    <?php if (isset($entry['tags'])): ?>
+                    
+                        <?php foreach ($entry['tags'] as $tag): ?>
+                        
+                        <a href="<?php echo $this->url(array('controller' => 'tag',
+                                                             'action' => 'view',
+                                                             'id' => $tag['id_tag'],
+                                                             'language' => $this->language),
+                                                       'lang_default', true); ?>">
+                            <?php echo $tag['name_tag']; ?>
+                        </a>
+                        
+                        <?php endforeach; ?>
+                        
+                    <?php endif; ?>
+                    
+                </p>
+                <?php /*
+                Disabled, kept here for possible future usage.
+                <div class="search_result_details">
+                    <div class="search_result_details_left">
+                    <?php
+                    // generate rating row
+                    if (isset($entry['ratingdata'])) {
+                        echo'
+                        ' . $entry['ratingdata']['positive_percentage'] . '% ' .
+                        '<img src="' . $this->baseUrl() . '/images/icon_thumb_up.png" alt="" style="vertical-align: middle;" /> ' .
+                        '<img src="' . $this->baseUrl() . '/images/icon_thumb_down.png" alt="" style="vertical-align: middle;" /> '
+                        . $entry['ratingdata']['negative_percentage'] . '%' .
+                        ' ('. $entry['ratingdata']['total'] . ' '
+                        . $this->translate('ratings') . ')';
+                    }
+                    ?>
+                    
+                    </div>
+                    <div class="search_result_details_right">
+                    <?php 
+                        if (isset($entry['created_cnt'])) {
+                            $sent = strtotime($entry['created_cnt']);
+                        } else {
+                            $sent = strtotime('now');
+                        }
 
+                        $elapsed = time() - $sent;
+                        
+                        if($elapsed < 3600)
+                        {
+                            $minutes = round($elapsed / 60);
+                            
+                            $sent = $minutes . " " . $this->translate('minutes-ago');
+                        }
+                        elseif($elapsed < 86400)
+                        {
+                            $hours = round($elapsed / 3600);
+                            
+                            $sent = $hours . " " . $this->translate('hours-ago');
+                        }
+                        elseif($elapsed < 604800)
+                        {
+                            $days = round($elapsed / 86400);
+                            
+                            $sent = $days . " " . $this->translate('days-ago');
+                        }
+                        elseif($elapsed < 31449600)
+                        {
+                            $weeks = round($elapsed / 604800);
+                            
+                            $sent = $weeks . " " . $this->translate('weeks-ago');
+                        }
+                        else
+                        {
+                            $years = round($elapsed / 31449600);
+                            
+                            $sent = $years . " " . $this->translate('years-ago');
+                        }
+                        echo $sent;
+                    ?> |
+                    <?php echo $entry['viewCount'] . " " . $this->translate('views'); ?>
+                    
+                    </div>
                 </div>
-                <div id="<?php echo $this->type.'_'.$entry['id_cnt'].'_lead'; ?>" class="content_entry_lead">
-                    <?php echo $entry['lead_cnt']; ?>
-                </div>
+                */?>
+            </div>
+                
+        </div>
+        
+        <?php endforeach; ?>
+        
+        <div class="clear"></div> 
+        
+        <?php if ($this->contentCount > $this->count): ?>
+        <div id="content_list_content_pagination_bottom">
+            <?php echo $this->contentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
+        </div>
+        <?php endif; ?>
+           
+        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="------------" />
+    </div>
+    
+    <?php else: ?>
+    
+    <div style="float:left; width: 490px;">
+        <?php echo $this->translate('search-nothing-found'); ?>
+    </div>
+    
+    <?php endif; ?>
+    
+    <div class="right_side" style="padding: 0px; margin: 0px; margin-top: 0px;">
+        <p class="right_side_title_small" style="padding-top: 0px; padding-bottom:3px;">
+            <?php echo $this->translate('content-list-right-header-'.$this->type); ?>
+        </p>
+        
+        <div class="top_right_box">
+            <div>
+                <p><?php echo $this->translate('content-list-right-p1-'.$this->type); ?></p>
+                <p><?php echo $this->translate('content-list-right-p2-'.$this->type); ?></p>
+                <p><?php echo $this->translate('content-list-right-p3'); ?></p>
             </div>
         </div>
-        <?php endforeach; ?>
-            <div class="clear"></div>
-        <div id="content_list_content_pagination_bottom">
-            <?php echo $this->paginationControl($this->contentPaginator, 'Sliding', 'pagination/paginationControl.phtml'); ?>
-        </div>
+        
+        <p id="tags_link" style="margin-top: 1px;" class="top_right_box_links">
+            <?php echo $this->translate('index-most-popular')?>
+            <a href="<?php echo $url_tag_cloud; ?>">
+                <?php echo $this->translate('index-tags')?>
+            </a>
+        </p>
+        
+		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+        
+        <div class="tag_cloud">
+            <?php if (isset($this->tags)): ?>
+            
+                <?php foreach ($this->tags as $tag): ?>
+                
+                    <a href="<?php echo $this->url(array('controller' => 'tag',
+                                            'action' => 'view',
+                                            'id' => $tag['id_tag'],
+                                            'language' => $this->language),
+                                      'lang_default', true); ?>" style="font-size:<?php echo $tag['tag_size']; ?>%">
+                        <?php echo stripslashes($tag['name_tag']); ?>
+                    </a>
+                    
+                <?php endforeach; ?>
+                
+            <?php endif; ?>
+            <p id="show_all_tags" style="padding: 0px;" class="top_right_box_links">
+                <a href="<?php echo $this->url(array('controller' => 'tag',
+                                                     'action' => 'index',
+                                                     'language' => $this->language), 
+                                                'lang_default', true); ?>">
+                    <?php echo $this->translate('index-show-all')?>
+                </a>
+            </p>
+		</div>
+        
+        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+        
+        <h3 style="padding:0; margin-top: 5px;">
+            <?php echo $this->translate('content-list-missing-header'); ?>
+        </h3>
+        
+        <p style="padding:0; margin:0;">
+            <?php echo $this->translate('index-opensource'); ?>
+        </p>
+        
     </div>
-<?php else: ?>
-    <div>
-        <?php echo $this->translate('Nothing found!!!'); ?>
-    </div>
-<?php endif; ?>
 </div>

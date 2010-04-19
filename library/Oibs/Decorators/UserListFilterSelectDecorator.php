@@ -63,7 +63,8 @@ class Oibs_Decorators_UserListFilterSelectDecorator extends Zend_Form_Decorator_
         // $desc      = $this->buildDescription();
 
         $output = /*'<dl class="form_element">*/
-					'<div class="form_userlist_select_element">
+                    '<div class="form_userlist_content_count_element">
+					<div class="form_userlist_select_element">
                     <div class="form_userlist_select_label">'
                     . $label
                     .'</div>

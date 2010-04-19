@@ -40,6 +40,9 @@ class AccountController extends Oibs_Controller_CustomController
     {
         parent::init();
         
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('login', 'html')->initContext();
+        
         $this->view->title = 'account-title';
     } // end of init()
     
@@ -49,7 +52,7 @@ class AccountController extends Oibs_Controller_CustomController
     *    Gets users profile thumbnail image from database. Sets image to view with empty layout. 
     *
     */
-    function profilethumbAction()
+    public function profilethumbAction()
     {
         // Set an empty layout for view
         $this->_helper->layout()->setLayout('empty');
@@ -62,26 +65,65 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->image = null;
         
         if (isset($params['id'])) {
-            // Get thumbnail data from database
-            $user = new Models_User($params['id']);
+            // Get thumbnail data and print
+            $user = new Default_Model_User($params['id']);
             $image = $user->getUserImageData($params['id'], $thumb);
-            
-            // If image data is not null, set imagedata and filetype to view.
+
             if($image != null) {
-                $this->view->image = $image;
-                $this->view->filetype = mime_content_type($image);
-            } // end if
-        } // end if
-    } // end of profilethumbAction()
-        
+                $this->view->img = $image;
+            } else {
+                $filename = '../www/images/no_profile_img_placeholder.gif';
+                $handle = fopen($filename, "r");
+                $image = fread($handle, filesize($filename));
+                $this->view->img = $image;
+            }
+        }
+    }
+    
     /**
     *    indexAction
     *    
     *    Contains users account information page, accessible only by users who are logged in.
     *
     */
-    function indexAction()
-    {
+    public function indexAction() {
+        if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+            $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+        }
+        
+        $auth = Zend_Auth::getInstance();
+		
+        // if user has identity
+        if ($auth->hasIdentity()) {  
+            $identity = $auth->getIdentity();
+			$id = $identity->user_id;
+            
+            $userModel = new Default_Model_User();
+            $name = $userModel->getUserNameById($id);
+            
+            $target = $this->_urlHelper->url(array('controller' => 'account', 
+                                                   'action' => 'view', 
+                                                   'user' => $name,
+                                                   'language' => $this->view->language),
+                                             'lang_default', true);
+
+            $redirector->gotoUrl($target);
+        } else {
+            $target = $this->_urlHelper->url(array('controller' => 'index', 
+                                                   'action' => 'index',
+                                                   'language' => $this->view->language),
+                                             'lang_default', true);
+            $redirector->gotoUrl($target);
+        }
+        
+        /*
+        $redirect = $this->_urlHelper->url(array('controller' => 'index', 
+                                                 'action' => 'index', 
+                                                 'language' => $this->view->language), 
+                                           'lang_default', true);
+        // Redirect user
+        $this->flash('logout-succesful-msg', $redirect); 
+    /*
         // Set array for userdata
         $data = array();
         
@@ -97,7 +139,7 @@ class AccountController extends Oibs_Controller_CustomController
             $id = $identity->user_id;
             
             // Load content created by user
-            $user = new Models_User();
+            $user = new Default_Model_User();
                 
             // Get users info
             $data = $user->getUserRow($id)->toArray();
@@ -106,11 +148,14 @@ class AccountController extends Oibs_Controller_CustomController
             $content_list = $user->getUserContent($id);
             
             // Set user data to view
+            // Why is this here twice
+            //$this->view->authorContents = $content_list;       
             $this->view->authorContents = $content_list;        
         } // end if
         
         // set user data to view
         $this->view->user = $data;
+        */
     } // end of indexAction()
     
     /*
@@ -118,66 +163,160 @@ class AccountController extends Oibs_Controller_CustomController
     *
 	*    Gets user profile information, users content and comments.
     */
-    function viewAction()
-    {
-        //  Get user identity
+    public function viewAction() {
+        // Get user identity
         $auth = Zend_Auth::getInstance();
         
-        $user_edit = false;
+        // Disable edit profile by default
+        $userEdit = false;                              
         
+        // Get params
         $params = $this->getRequest()->getParams();
+        // Get username from params
+        $username = $params['user'];				    
         
-        $username = $params['user'];
+        // Get content types
+        $contentTypes = new Default_Model_ContentTypes();        
+        $this->view->content_types = $contentTypes->getAllNamesAndIds();
         
-        $content_types = new Models_ContentTypes();
-        $select = $content_types->select()->order('id_cty ASC');
-        $this->view->content_types = $content_types->fetchAll($select);
-        
-        $user = new Models_User();
-        
+        // Get user data from User Model
+        $user = new Default_Model_User();        
         $data = $user->getUserByName($username);
+        
         $this->view->user = $data;
+		$id = $data['id_usr'];
+	
+        // Get public user data from UserProfiles Model
+		$userProfile = new Default_Model_UserProfiles();
+        $dataa = $userProfile->getPublicData($id);
+        
+        // $dataa is an array with key=>val like firstname => "Joel Peeloten"
+
+        // This was replaced with get public data and the foreach above
+        // Kept here just in case for the future
+        /* 
+        $dataa['gender'] 		= $userprofile->getUserProfileValue($id, 'gender');
+		$dataa['surname'] 		= $userprofile->getUserProfileValue($id, 'surname');
+		$dataa['firstname'] 	= $userprofile->getUserProfileValue($id, 'firstname');
+		$dataa['category'] 		= $userprofile->getUserProfileValue($id, 'user category');
+		$dataa['profession']	= $userprofile->getUserProfileValue($id, 'profession');
+		$dataa['company'] 		= $userprofile->getUserProfileValue($id, 'company');
+		$dataa['biography'] 	= $userprofile->getUserProfileValue($id, 'biography');
+		$dataa['city'] 			= $userprofile->getUserProfileValue($id, 'city');
+		$dataa['phone'] 		= $userprofile->getUserProfileValue($id, 'phone');
+		$dataa['birthday'] 		= $userprofile->getUserProfileValue($id, 'birthday');
+        */
+        
+		$dataa['country'] = $userProfile->getUserProfileValue($id, 'country');
+        
+        $userCountry = new Default_Model_UserCountry();
+		$dataa['country'] = $userCountry->getCountryNameById(
+            $dataa['country']['profile_value_usp']
+        );
         
         // Get content user has released
-        $content_list = $user->getUserContent($data['id_usr'], 1, 15);
-        
+        $type = isset($params['type']) ? $params['type'] : 0 ;
+        $contentList = $user->getUserContent($data['id_usr'], $type);
         $temp = array();
-		
-        foreach ($content_list as $c) {
-            $temp[$c['key_cty']][] = $c;
+        
+        // Initialize content counts
+        $dataa['contentCounts']['totalCount'] = 0;
+        $dataa['contentCounts']['savedCount'] = 0;
+        
+        $dataa['contentCounts']['problem'] = 0;
+        $dataa['contentCounts']['finfo'] = 0;
+        $dataa['contentCounts']['idea'] = 0;
+        
+        // Count amount of content user has published
+        // and check unpublished so only owner can see it.
+        foreach ($contentList as $k => $c) {
+            // If user not logged in and content not published,
+            // remove content from list
+            if (!$auth->hasIdentity() && $c['published_cnt'] == 0) {
+                unset($contentList[$k]);
+            // Else if user logged in and not owner of unpublished content,
+            // remove content from list
+            } else if ($auth->hasIdentity() && 
+                       $c['id_usr'] != $auth->getIdentity()->user_id && 
+                       $c['published_cnt'] == 0) {
+                unset($contentList[$k]);
+            // Else increase content counts and sort content by content type
+            } else {
+                if (isset($c['key_cty'])) {
+                    // Set content to array by its content type
+                    //$temp[$c['key_cty']][] = $c;
+                    //$temp[] = $c;
+                    
+                    // Increase total count
+                    $dataa['contentCounts']['totalCount']++;
+                    
+                    // Set content type count to 0 if count is not set
+                    if (!isset($dataa['contentCounts'][$c['key_cty']] )) {
+                        $dataa['contentCounts'][$c['key_cty']] = 0;
+                    }
+                    
+                    // Increase content type count
+                    $dataa['contentCounts'][$c['key_cty']]++;
+                }
+            }
+            
+            if($c['published_cnt'] == 0) {
+                $dataa['contentCounts']['savedCount']++;
+            }
         } // end foreach
-		
-        $content_list = $temp;
         
+        // If user has not any content in some of the content types, there is not
+        // array cell for that content type, which causes php notice in view
+        // Here is fixed that
+        
+        /*
+        if(!isset($dataa['contentCounts']['problem'])) {
+            $dataa['contentCounts']['problem'] = 0;
+        }
+        if(!isset($dataa['contentCounts']['finfo'])) {
+            $dataa['contentCounts']['finfo'] = 0;
+        }
+        if(!isset($dataa['contentCounts']['idea'])) {
+            $dataa['contentCounts']['idea'] = 0;
+        }
+        */
+        
+        //print_r($temp); die();
         // Set user data to view
-        $this->view->authorContents = $content_list;
-        //print_r($content_list); die();
         
-        $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
+        // This is here because this array breaks up the view script, thus giving an error :/
+        // $temp = array();
         
-        // If user is logged in
+        
+        // If user is logged in, and viewing self; allow edit
         if ($auth->hasIdentity()) {
-            // Get users identity
             $identity = $auth->getIdentity();
             
             if ($data['id_usr'] == $identity->user_id) {
-                $user_edit = true;
-            } // end if
-        } // end if
+                $userEdit = true;
+            }
+        }
         
-        $this->view->user_edit = $user_edit;
+        // Set to view
+        $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
+        $this->view->userprofile = $dataa;
+        $this->view->authorContents = $contentList;/*$temp*/
+        $this->view->user_edit = $userEdit;
+        $this->view->type = $type;
     }
     
     /**
     *    loginAction
     *
     *    Contains login form for users. If user was redirected
-    *    to login by AclManager the user is redirected back to the page that was requested originally, 
-    *    if user is already logged in redirects them to account/index page. Writes login attemps to a log file.
+    *    to login by AclManager the user is redirected back 
+    *    to the page that was requested originally, 
+    *    if user is already logged in redirects them to account/index page. 
+    *    Writes login attemps to a log file.
     */
-    function loginAction()
+    public function loginAction()
     {
-        // check if user is logged in
+        // Check if user is logged in
         $auth = Zend_Auth::getInstance();
         
         // Get url helper
@@ -185,13 +324,27 @@ class AccountController extends Oibs_Controller_CustomController
         
         // if user is already logged in redirect away from here
         if ($auth->hasIdentity()) {    
-            $target = $urlHelper->url(array('controller' => 'index', 'action' => 'index', 
-                                        'language' => $this->view->language), 'lang_default', true);
+            $target = $urlHelper->url(array('controller' => 'index', 
+                                            'action' => 'index', 
+                                            'language' => $this->view->language), 
+                                      'lang_default', true);
+                                      
             $this->_redirect($target);
         } // end if
         
+        // login ajax functionality: 
+        // check where user came from (and use to redirect back later)
+        if(isset($_SERVER['HTTP_REFERER'])){
+        	$formOptions = $_SERVER['HTTP_REFERER'];
+        } else {
+        	$formOptions = $urlHelper->url(array('controller' => 'index', 
+                                                 'action' => 'index', 
+                                                 'language' => $this->view->language), 
+                                           'lang_default', true);
+        }
+        
         // creata new LoginForm and set to view
-        $form = new Forms_LoginForm();
+        $form = new Default_Form_LoginForm($formOptions);
         $this->view->form = $form;
 
         // Get request
@@ -203,132 +356,315 @@ class AccountController extends Oibs_Controller_CustomController
             // Check user authentity if form data is valid
             if($form->isValid($formData)) {
                 // Get username and password
-                $username = $formData['username'];
-                $password = $formData['password'];  
+                $data = $form->getValues();
+                $users = new Default_Model_User;
+                $result = $users->loginUser($data);
 
-                $userModel = new Models_User();
-                $saltLength = $userModel->getSaltCountByUsername($username);
-
-                if($saltLength == 7) {
-                    // setup the authentication adapter
-                    $adapter = new Zend_Auth_Adapter_DbTable($this->db,
-                        'users_usr',
-                        'login_name_usr',
-                        'password_usr',
-                        'MD5(CONCAT(?))');
-                    $adapter->setIdentity($username);
-                    $adapter->setCredential($password);
-                    
-                    // try and authenticate the user
-                    $result = $auth->authenticate($adapter);
-                } else {          
-                    // setup the authentication adapter
-                    $adapter = new Zend_Auth_Adapter_DbTable($this->db,
-                        'users_usr',
-                        'login_name_usr',
-                        'password_usr',
-                        'MD5(CONCAT(password_salt_usr, ?, password_salt_usr))');
-                    $adapter->setIdentity($username);
-                    $adapter->setCredential($password);
-                    
-                    // try and authenticate the user
-                    $result = $auth->authenticate($adapter);
-                }
-                
                 // If user is authenticated
-                if ($result->isValid()) {
+                if ($result == true) {
                     // Get user id
-                    $id = $adapter->getResultRowObject()->id_usr;
+                    $id = $users->getIdByUsername($data['username']);
                     
                     // record login attempt
-                    $user = new Models_User($id);
+                    $user = new Default_Model_User($id);
                     $user->loginSuccess();
                     
                     // create identity data and write it to session
                     $identity = $user->createAuthIdentity();
                     $auth->getStorage()->write($identity);
                     
-                    // send user to front page
-                    $redirect = $urlHelper->url(array('controller' => 'index', 'action' => 'index', 
-                                                'language' => $this->view->language), 'lang_default', true);
+                    //echo var_dump($auth); die;
+                    // send user to front page (the old method)
+                    /*$redirect = $urlHelper->url(array('controller' => 'index', 'action' => 'index', 
+                                                'language' => $this->view->language), 'lang_default', true);*/
+					//echo $data['returnurl']; die;
+                    
+                    // Add login to log
+                    $logger = Zend_Registry::get('logs');
+                    if(isset($logger['login'])) {
+                        $message = sprintf(
+                            'Successful login attempt from %s user %s', 
+                            $_SERVER['REMOTE_ADDR'], 
+                            $identity->username
+                        );
+                        
+                        $logger['login']->notice($message);
+                    }
+                    
+                    $redirect = $data['returnurl'];
                     $this->_redirect($redirect);
-                } // end if
-                else
-                {
+                } else {
                     $this->view->errormsg = $this->view->translate('account-login-not-successful');
                 }
-        } //end if
+            } //end if
         } // end if
     } // end of loginAction()
+    
+    /**
+    *    openidAction
+    *
+    *    Blah
+    */
+    public function openidAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        
+        // Get url helper
+        $urlHelper = $this->_helper->getHelper('url');
+        
+        // if user is already logged in redirect away from here
+        if ($auth->hasIdentity()) {    
+            $target = $urlHelper->url(array('controller' => 'index', 
+                                            'action' => 'index', 
+                                            'language' => $this->view->language), 
+                                      'lang_default', true);
+            
+            $this->_redirect($target);
+        } // end if
+        
+        // if openid provider returns data
+		//$status = "";
+		if (isset($_POST['openid_action']) &&
+		    !empty($_POST['openid_identifier'])) {
+		
+		    $consumer = new Zend_OpenId_Consumer();
+            
+		    if (!$consumer->login($_POST['openid_identifier'])) {
+		    	//$status = "LOGIN FAILED";
+		        $this->view->errormsg = $this->view->translate(
+                    'account-openid-login-not-successful'
+                );
+		    }
+		} else if (isset($_GET['openid_mode'])) {
+		    if ($_GET['openid_mode'] == "id_res") {
+		        $consumer = new Zend_OpenId_Consumer();
+                
+		        if ($consumer->verify($_GET, $id)) {
+		        	$formOptions = htmlspecialchars($id);
+					$userProfiles = new Default_Model_UserProfiles();
+					$openIdResults = $userProfiles->searchUserOpenid($formOptions);
+					
+					// if attached openid is found
+					if($openIdResults) {
+						$userid = $openIdResults['id_usr_usp'];
+		
+		            	//$status = "VALID " . $formOptions . " / " . $userid;
+		            	$user = new Default_Model_User($userid);
+                    	$user->loginSuccess();
+	                    $identity = $user->createAuthIdentity();
+	                    $auth->getStorage()->write($identity);
+                        
+			            $target = $urlHelper->url(array('controller' => 'index', 
+                                                        'action' => 'index', 
+                                                        'language' => $this->view->language), 
+                                                  'lang_default', true);
+                                                  
+			            $this->_redirect($target);
+					} else {
+						//$status = "INVALID, NO ATTACHED OPENID FOUND FOR " . $formOptions;
+						$this->view->errormsg = $this->view->translate(
+                            'account-openid-login-not-successful'
+                        );
+					}
+		        } else {
+		            //$status = "INVALID " . htmlspecialchars($id);
+		            $this->view->errormsg = $this->view->translate(
+                        'account-openid-login-not-successful'
+                    );
+		        }
+		    } else if ($_GET['openid_mode'] == "cancel") {
+		        //$status = "CANCELLED";
+		        $this->view->errormsg = $this->view->translate(
+                    'account-openid-login-not-successful'
+                );
+		    }
+		}
+        
+		//echo $status;
+		$form = new Default_Form_OpenIDLoginForm();
+		$this->view->form = $form;
+    }
 
     /**
     *    logoutAction
     *
-     *    Logout the user and redirect to home page.
-     */
-    function logoutAction()
+    *    Logout the user and redirect to home page.
+    */
+    public function logoutAction()
     {
         // Clear users session data
         Zend_Auth::getInstance()->clearIdentity();
+        $redirect = $this->_urlHelper->url(array('controller' => 'index', 
+                                                 'action' => 'index', 
+                                                 'language' => $this->view->language), 
+                                           'lang_default', true);
         
         // Redirect user
-        $this->flash('logout-succesful-msg', '/en/msg/');    
+        $this->flash('logout-succesful-msg', $redirect);    
     } // end of logoutAction()
 
+    /**
+    * registerCompleteAction
+    * aka. user registration phase 2
+    *
+    * @author joel peltonen
+    */
+    public function registercompleteAction() 
+    {
+        $auth = Zend_Auth::getInstance();
+        
+        if (!$auth->hasIdentity()) { 
+            $urlHelper = $this->_helper->getHelper('url');
+            
+            $target = $urlHelper->url(array('controller' => 'index', 
+                                            'action' => 'index', 
+                                            'language' => $this->view->language), 
+                                      'lang_default', true);
+            $this->_redirect($target);
+        }
+        
+        // Create new registration form
+        $form = new Default_Form_RegistercompleteForm();
+        $this->view->form = $form;  
+
+        /*
+        // Get requests
+        $request = $this->getRequest();
+        
+        // If form is POST, get and validate form data
+        if ($request->isPost()) {
+        
+            $formData = $this->_request->getPost();
+            
+            // If form data is valid, handle data
+            if ($form->isValid($formData)) {
+                // save profile data
+            }
+        }
+        */
+    }
+    
     /**
     * registerAction
     *
     * User registration page and post-validation actions
     *
     * @author Joel Peltonen
+    * @author ...?
     */
-    function registerAction()
+    public function registerAction()
     {
+        // if user is logged in, redirect away
+        $auth = Zend_Auth::getInstance();
+        
+        if ($auth->hasIdentity()) { 
+            $urlHelper = $this->_helper->getHelper('url');
+            
+            $target = $urlHelper->url(array('controller' => 'index', 
+                                            'action' => 'index', 
+                                            'language' => $this->view->language), 
+                                      'lang_default', true);
+                                      
+            $this->_redirect($target);
+        }
+    
         // Create new registration form
-        $form = new Forms_RegistrationForm();
+        $form = new Default_Form_RegistrationForm();
         $this->view->form = $form;    
         
         // Get requests
-        $request = $this->getRequest();
+        //$request = $this->getRequest();
         
-        // If form is POST, get and validate form data
-        if ($this->_request->isPost()) 
-        {
+        // get and validate form data
+        if ($this->_request->isPost()) {
+        
             $formData = $this->_request->getPost();
 
-            $valid = $form->isValid($formData);
-            
-            // If form data is valid, handle database insertions
-            if ($valid) {
+            // If form is valid, handle database insertions 
+            // Else form population (automatic)
+            if ($form->isValid($formData)) {
                 // user data handling
-                $user = new Models_User();
+                $user = new Default_Model_User();
+                
                 if (!$user->registerUser($formData)) {
-                    $this->flash('registration-usermodel-data-procesing-failure', '/en/msg/');
+                    $redirect = $this->_urlHelper->url(array('controller' => 'msg', 
+                                                             'action' => 'index', 
+                                                             'language' => $this->view->language), 
+                                                       'lang_default', true);
+                                                       
+                    $this->flash('registration-usermodel-data-procesing-failure', $redirect);
                 }
                 
-                // Fetch user id, set variables for reminder saving
+                // Add register to log
+                $logger = Zend_Registry::get('logs');
+                if(isset($logger['register'])) {
+                    $message = sprintf(
+                        'Successful register attempt from %s user %s', 
+                        $_SERVER['REMOTE_ADDR'], 
+                        $formData['username']
+                    );
+                    
+                    $logger['register']->notice($message);
+                }
+                
+                // Fetch user id
                 $uid = $user->getIdByUsername($formData['username']);
-                $urq = $formData['reminder_question'];
-                $ura = $formData['reminder_answer'];
                 
-                // user image handling
-                $userImages = new Models_UserImages();
-                if (!$userImages->newUserImage($uid)) {
-                    $this->flash('registration-userimages-data-procesing-failure', '/en/msg/');
-                }
+                $userProfiles = new Default_Model_UserProfiles();
+                $userProfiles->setUserEmployment($uid, $formData,0);
+                $userProfiles->setUserCity($uid, $formData, 1);
                 
-                // user profile initiation and reminder saving
-                $userProfiles = new Models_UserProfiles();
-                if (!$userProfiles->initNewUser($uid, $urq, $ura)) {
-                    $this->flash('registration-userprofile-data-procesing-failure', '/en/msg/');
-                }
+                // check if user is logged in
+        		$auth = Zend_Auth::getInstance();
                 
-                // save reminder question and answer to profile table
-                try {
-                    $this->flash('registration-successful', '/en/msg/');
-                } catch(exception $e) {
-                    echo "<pre>"; print_r($e); echo "</pre>"; die;
-                }
+        		$username = $formData['username'];
+                $password = $formData['password']; 
+        		
+                // $model = new Default_Model_User();
+                $id = $user->getIdByUsername($username);
+      
+                $user = new Default_Model_User($id);
+                $result = $user->loginUser($formData);
+                
+                // the logging in worked;
+                if ($result == true) {
+                    // Get user id
+                    //$id = $adapter->getResultRowObject()->id_usr;
+                    
+                    // record login attempt
+                    $user->loginSuccess();
+                    
+                    // create identity data and write it to session
+                    $identity = $user->createAuthIdentity();
+                    $auth->getStorage()->write($identity);
+                    
+                    // Add login to log
+                    $logger = Zend_Registry::get('logs');
+                    if(isset($logger['login'])) {
+                        $message = sprintf(
+                            'Successful login attempt from %s user %s', 
+                            $_SERVER['REMOTE_ADDR'], 
+                            $identity->username
+                        );
+                        
+                        $logger['login']->notice($message);
+                    }
+                    
+                    // send phase 2 page
+                    $urlHelper = $this->_helper->getHelper('url');
+                    
+                    $redirect = $urlHelper->url(array('controller' => 'account', 
+                                                      'action' => 'registercomplete', 
+                                                      'language' => $this->view->language), 
+                                                'lang_default', true);
+                      
+                    $this->_redirect($redirect);
+                } else { 
+                    // logging in failed
+                    $this->view->errormsg = $this->view->translate(
+                        'account-login-not-successful'
+                    );
+                }      
             }
         }
     }
@@ -337,16 +673,15 @@ class AccountController extends Oibs_Controller_CustomController
     *    captchaAction
     *
     *    Create captcha
-    *
     */
-    function captchaAction()
+    public function captchaAction()
     {
         // Set views layout to empty
         $this->_helper->layout()->setLayout('empty');
           
         // generate code with 5 characters
         $security_code = $this->generateCode(5);
-
+        
         // start session so user input can be compared to $security_code
         $session = new Zend_Session_Namespace('registration');
         $session->security_code = md5($security_code);
@@ -359,50 +694,51 @@ class AccountController extends Oibs_Controller_CustomController
         $image = ImageCreate($width, $height);  
 
         // Set the font
-        $font = "images/HARNGTON.TTF";
-
+        $font = imageloadfont("images/anonymous.gdf");
+        
         // define colors used in image
         $white = ImageColorAllocate($image, 255, 255, 255);
         $blue = ImageColorAllocate($image, 51, 102, 153);
         $green = ImageColorAllocate($image, 112, 191, 12);
         $black = ImageColorAllocate($image, 0, 0, 0);
-        $grey = ImageColorAllocate($image, 221, 221, 221);
-        $grey2 = ImageColorAllocate($image, 198, 198, 198);
-        $grey3 = ImageColorAllocate($image, 170, 170, 170);
+        $grey = ImageColorAllocate($image, 150, 150, 150);
 
-        //Make the background grey
-        ImageFill($image, 0, 0, $grey); 
-
-        //Add randomly generated string in white to the image
-        //ImageString($image, 5, 20, 1, strtoupper($security_code), $green); 
-        //array imagettftext  ($image, float $size ,float $angle ,int $x ,int $y  , int $color  , string $fontfile  , string $text  )
-        //imagettftext($im,    20, 0, 10, 20, $black, $font, $text);
-        imagettftext($image, 30, 0, 20, 35, $green, $font, strtoupper($security_code));
+        //Make the background blue
+        ImageFill($image, 0, 0, $blue); 
         
+        //Generate random(ish) position for image text
+        $text_x = mt_rand(-2, 30);
+        $text_y = mt_rand(-2, 10);
+        
+        //Add randomly generated string in white to the image
+        
+        ImageString($image, $font, $text_x, $text_y, strtoupper($security_code), $white); 
+
         //Throw in some lines to make it a little bit harder for any bots to break
-        $s = ($width*$height)/1000; 
+        $s = ($width*$height)/500;
 		
         for($i=0; $i < $s; $i++) {
             imageline($image, mt_rand(0, $width), mt_rand(0, $height), mt_rand(0, $width), mt_rand(0, $height), $grey);
         } // end for
-        
-               // Shadow effect
-        ImageLine($image, 0, 0, $width, 1, $grey3);                 // top 1st line (dark)
-        ImageLine($image, 0, 1, $width, 1, $grey2);                 // top 2nd line (semi-dark)
-        ImageLine($image, 0, 0, 1, $height, $grey3);                // left 1st line (dark)
-        ImageLine($image, 1, 1, 1, $height, $grey2);                // left 2nd line (semi-dark)
-        
+
+        // borders for captcha; syntax is (image, Xstart, Ystart, Xend, Yend, color)
+        /*
+        imageline($image, 0,        0,          $width,     0,          $blue); //topl-topr
+        imageline($image, 0,        $height-1,  $width,     $height-1,  $blue); //btml-btmr
+        imageline($image, 0,        0,          0,          $height,    $blue); //topl-btml
+        imageline($image, $width-1, 0,          $width-1,   $height,    $blue); //topr-btmr
+        */
         $this->view->image = $image;
     } // end of captchaAction()
     
     /**
     *    generateCode
     *
-     *     generates random string of numbers and letters for captcha image
-     *
-     *    @param integer $characters count of characters in code
-     *    @return string
-     */
+    *     generates random string of numbers and letters for captcha image
+    *
+    *    @param integer $characters count of characters in code
+    *    @return string
+    */
     private function generateCode($characters)
     {
       // list all possible characters, similar looking characters and vowels have been removed 
@@ -416,8 +752,11 @@ class AccountController extends Oibs_Controller_CustomController
    } // end of generateCode()
 
     /**    
-    *    fetch forgotten password page: Users can request a password reset by givin their username, a new password is created and sent
-    *    to user email address. Users must also activate the new password on this page by clicking the activation link in the email.
+    *    fetch forgotten password page: 
+    *    Users can request a password reset by givin their username, 
+    *    a new password is created and sent to user email address.
+    *    Users must also activate the new password on this page 
+    *    by clicking the activation link in the email.
     *
     *    @param    String        $action        Defines wheather the user is asking for reset or activating the new password
     *    @param    String        $username        Username whose password will be changed
@@ -462,7 +801,7 @@ class AccountController extends Oibs_Controller_CustomController
                 }
                 else 
                 {
-                    $user = new Models_User();
+                    $user = new Default_Model_User();
                     
                     // load user data
                     if ($user->getUserByName($username) != null) 
@@ -490,7 +829,7 @@ class AccountController extends Oibs_Controller_CustomController
                 
                 $id = $this->getRequest()->getQuery('id');
                 $key = $this->getRequest()->getQuery('key');
-                $user = new Models_User();
+                $user = new Default_Model_User();
                 // load user data
                 if (!$user->load($id))
                 {
@@ -511,153 +850,105 @@ class AccountController extends Oibs_Controller_CustomController
     }
     
     /**
-    *    settings page: page for users to edit their personal information, accessible only to users who are logged in.
-    *    Divided to different "tabs" to simplify the edit form.
+    * settingsAction: users edit their information
+    * accessible only to users who are logged in
     *
-    *    @param    string    page        defines which form page is displayed
+    * @author tuomas valtanen
+    * @author joel peltonen
     */
-    function settingsAction()
-    {
-        // set breadscrumbs
-        $this->breadcrumbs->addStep('Settings');
-        
-        // Get authentication
+    function settingsAction() {
+        // get authentication instance
         $auth = Zend_Auth::getInstance();
 		
-        // If user has identity
-        if ($auth->hasIdentity())
-		{    
-			// Retrieving user id from the identity
+        // if user has identity
+        if ($auth->hasIdentity()) {    
+			// retrieve user id from the identity
 			$identity = $auth->getIdentity();
 			$id = $identity->user_id;
-
-			// Fetching the form -class
-            $form = new Forms_AccountSettingsForm();
-            $this->view->form = $form;
 			
-			// Gathering data for form population
-			$userinfos = new Models_UserProfiles();
-			$settingsdata = $userinfos->getUserInfoById($id);
+			// generate the form for user settings
+            $form = new Default_Form_AccountSettingsForm();
+            
+            // send form to view
+            try {
+                $this->view->form = $form;
+            } catch(Zend_Exception $e) { 
+                // this should be replaced by throwing a general 500 error
+                echo '<pre>Unknown server error occurred! Please try later </pre>';
+            }
+			
+			// get user data
+			$userInfos = new Default_Model_UserProfiles();
+			$settingsData = $userInfos->getUserInfoById($id);
+			//var_dump($settingsData);	
 
-			if(isset($settingsdata))
-			{
-				$form->populate($settingsdata);
+            // get user email and push to settingsData
+            $userModel = new Default_Model_User($id);
+            $email = $userModel->getUserEmail($id);
+            
+            $settingsData['email'] = $email;
+            $settingsData['confirm_email'] = $email;
+            
+            // populate form
+			if(isset($settingsData)) {
+				$form->populate($settingsData);
 			}
 			
-			// If submit has been pressed...
-			$request = $this->getRequest();
-			if($this->_request->isPost())
-			{
+			// If request is post
+			//$request = $this->getRequest();
+			if($this->_request->isPost()) {
+       
+                // get form data
 				$formData = $this->_request->getPost();
-			
-				if($form->isValid($formData))
-				{
-					$auth = Zend_Auth::getInstance();
-		
-					// If user is logged in
-					if ($auth->hasIdentity()) 
-					{
-						$userprofile = new Models_UserProfiles();
-						
-						// Updates first name if set
-						if(strlen($formData['first_name']) != 0 || $formData['first_name'] != $settingsdata['first_name'])
-						{
-							$userprofile->setUserFirstName($id, $formData);
-						}
-						
-						// Updates surname if set
-						if(strlen($formData['surname']) != 0 || $formData['surname'] != $settingsdata['surname'])
-						{
-							$userprofile->setUserSurname($id, $formData);
-						}
-						
-						$user = new Models_User($id);
+                
+				if($form->isValid($formData)) {
+                    // if form is valid
+					//$auth = Zend_Auth::getInstance();
+					
+					// If user is logged in -- double check? why? -joel
+					//if ($auth->hasIdentity()) {
+						$userProfile = new Default_Model_UserProfiles();
+                        $userProfile->setProfileData($id, $formData); 
+
+						$user = new Default_Model_User($id);
 						
 						// Updates email
-						if(strlen($formData['email']) != 0)
-						{
+						if(strlen($formData['email']) != 0) {
 							$user->changeUserEmail($id, $formData['email']);
 						}
 
 						// Updates the password
-						if(strlen($formData['password']) != 0)
-						{
+						if(strlen($formData['password']) != 0) {
 							$user->changeUserPassword($id, $formData['password']);
 						}
 						
-							$this->flash('Information has been changed.', '/en/account/settings/');	
-					}
-				}
-				else
-				{
-					// Just for possible debugging...
+                        // Redirects the user to a page that shows the update complete
+                        $redirect = $this->_urlHelper->url(array('controller' => 'account', 
+                                                                 'action' => 'settings', 
+                                                                 'language' => $this->view->language), 
+                                                           'lang_default', true);
+						$this->flash('Information has been changed.', $redirect);
+					//}
+				} else {
+                    // Formdata is not valid, do nothing -- here for possible debugging
 					// echo $form->getErrors();
 					// echo $form->getMessages();
 				}
+			} else {
+                // request is not post, do nothing
 			}
-        } // end if
-        else 
-		{
-            // Get url helper
+        } else {
+            // user has no identity -- Get url helper and redirect away
             $urlHelper = $this->_helper->getHelper('url');
             
-            $target = $urlHelper->url(array('controller' => 'index', 'action' => 'index', 
-                                        'language' => $this->view->language), 'lang_default', true);
+            $target = $urlHelper->url(array('controller' => 'index', 
+                                            'action' => 'index', 
+                                            'language' => $this->view->language), 
+                                      'lang_default', true);
+                                     
             $this->_redirect($target);
-        } // end else
-  
-        /*
-        // get requests
-        $request = $this->getRequest();
-
-        // if page is not set show the default tab
-        if (!$page = $request->getParam("page"))
-        {
-            $page ="account";
-        }
-
-        // some vatiables to make the tabs (these are here for a reason, but i'm not sure for what reason)
-        $this->view->account_class = "content_menu_item";
-        $this->view->account_url = "images/content_menu_left.gif";
-        $this->view->contact_class = "content_menu_item";
-        $this->view->contact_url = "images/content_menu_left.gif";
-        $this->view->personal_class = "content_menu_item";
-        $this->view->personal_url = "images/content_menu_left.gif";
-        $this->view->profile_class = "content_menu_item";
-        $this->view->profile_url = "images/content_menu_left.gif";
-
-        // settings page is divided to  tabs, this switch defines which tab button is activated currently
-        // other tabs not yet implemented
-        switch ($page) {
-        case "account":
-            $this->view->account_class = "content_menu_item_current";
-            $this->view->account_url = "images/content_menu_left_current.gif";
-            break;
-        }
-        // set the page variable to view so that the right page will be shown
-        $this->view->page = $page;
-
-        // user id of the user who is logged in
-        $userid = $this->view->identity->user_id;
-
-        
-        // process the form and show errors if update fails
-        $fp = new FormProcessor_Userprofile($this->db, $userid);
-        if ( $request->isPost() )
-        {
-            if (!$fp->process($request))
-            {
-                // set  errors to view if update failed
-                $this->view->errors = $fp->getErrors();
-            }
-        }
-        // user data from form processor
-        $user = $fp->user;
-        // set the data to view
-        $this->view->user = $user;
-        $this->view->fp = $fp;
-        */
-    } // end of settingsAction
+        } 
+    }
     
     /*
     *   userListingAction
@@ -666,62 +957,392 @@ class AccountController extends Oibs_Controller_CustomController
     */
     function userlistAction()
     {
-        try {
+        // assuming that the CleanQuery plugin has already stripped empty parameters
+        if (isset($_GET) && is_array($_GET) && !empty($_GET)) {
+            $path = '';
+            array_walk($_GET, array('AccountController', 'encodeParam'));
+            
+            foreach ($_GET as $key => $value) {
+                if ($key != 'Filter' && $key != 'submit_user_filter')
+                    $path .= '/' . $key . '/' . $value;
+            }
+            
+            $uri = $_SERVER['REQUEST_URI'];
+            $path = substr($uri, 0, strpos($uri, '?')) . $path;
+            $this->getResponse()->setRedirect($path, $this->_permanent ? 301 : 302);
+            $this->getResponse()->sendResponse();
+            return;
+        }
+
+        // Get requests
+        $params = $this->getRequest()->getParams();
+        
+        // Get page nummber and items per page
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 10;
+        
+        // Filter form data
+        $formData['username'] = isset($params['username']) ? $params['username'] : '';
+        $formData['country'] = isset($params['country']) ? $params['country'] : 0;
+        $formData['city'] = isset($params['city']) ? $params['city'] : '';        
+        $formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
+        $formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;
+        
+        // Get country listing
+        $userCountry = new Default_Model_UserCountry();
+        $formData['countryList'] = $userCountry->getCountryList();
+        
+        // Reorder country listing and add all countries option
+        $temp[0] = $this->view->translate('userlist-filter-country-all');
+        
+        foreach($formData['countryList'] as $k => $v) {
+            $temp[$v['id_ctr']] = $v['name_ctr'];
+        }
+        
+        $formData['countryList'] = $temp;
+        
+        // Get user listing
+        $user = new Default_Model_User();
+        $userListing = $user->getUserListing($formData, $page, $count);
+        
+        // Get total content count
+        $userCount = $user->getUserCountBySearch($formData);
+        
+        // Calculate total page count
+        $pageCount = ceil($userCount / $count);
+        
+        // User list search form
+        $userSearch = new Default_Form_UserListSearchForm(null, $formData);
+        
+        $url = $this->_urlHelper->url(array('controller' => 'account', 
+                                            'action' => 'userlist',
+                                            'language' => $this->view->language),
+                                      'lang_default', true); 
+          
+        $userSearch->setAction($url)
+                   ->setMethod('get');
+        
+        $this->view->userSearch = $userSearch;
+        
+        // Custom pagination to fix memory error on large amount of data
+        $paginator = new Zend_View();
+        $paginator->setScriptPath('../application/views/scripts');
+        $paginator->pageCount = $pageCount;
+        $paginator->currentPage = $page;
+        $paginator->pagesInRange = 10;
+        
+        /*
+        if (!empty($userListing)) {
+            // Content pagination
+            $paginator = Zend_Paginator::factory($userListing);
+            
+            // Set items per page
+            $paginator->setItemCountPerPage($count);
+            
+            // Get items by page
+            $paginator->getItemsByPage($page);
+            
+            // Set current page number
+            $paginator->setCurrentPageNumber($page);
+            
+            Zend_Paginator::setDefaultScrollingStyle('Sliding');
+            
+            $view = new Zend_View();
+            $paginator->setView($view);
+            
+            // Set paginator for view
+            $this->view->userListPaginator = $paginator;	
+        } // end if
+        */
+        
+        // Set to view
+        $this->view->userPaginator = $paginator;
+        $this->view->userListData = $userListing;
+        $this->view->count = $count;
+        $this->view->userCount = $userCount;
+        $this->view->page = $page;
+
+    } // end of userListingAction
+    
+    /**
+    *   imagesAction
+    *
+    *   User images
+    *
+    */
+    public function imagesAction()
+    {
         // Get authentication
         $auth = Zend_Auth::getInstance();
-        
+		
         // If user has identity
         if ($auth->hasIdentity()) { 
-            // Get requests
-            $params = $this->getRequest()->getParams();
+            $id = $auth->getIdentity()->user_id;
             
-            // Get page nummber and items per page
-    		$page = isset($params['page']) ? $params['page'] : 1;
-    		$count = isset($params['count']) ? $params['count'] : 10;
-            
-            // Get user listing
-            $user = new Models_User();
-            $userListing = $user->getUserListing();
-            
-            // User list search form
-            $userSearch = new Forms_UserListSearchForm();
-            $this->view->userSearch = $userSearch;
-                        
-            if (!empty($userListing)) {
-                // Content pagination
-    			$paginator = Zend_Paginator::factory($userListing);
-    			
-    			// Set items per page
-    			$paginator->setItemCountPerPage($count);
+            $model = new Default_Model_UserImages;            
+            $images = $model->getImagesByUsername($id);
+           
+            if(count($images) > 0) {
+                for($a = 0; $a < count($images); $a++) {
+                    $dates[$a] = $images[$a]['modified_usi'];
+                }
                 
-    			// Get items by page
-    			$paginator->getItemsByPage($page);
-                
-    			// Set current page number
-    			$paginator->setCurrentPageNumber($page);
-    			
-    			Zend_Paginator::setDefaultScrollingStyle('Sliding');
-    			
-    			$view = new Zend_View();
-    			$paginator->setView($view);
-    			
-    			// Set paginator for view
-    			$this->view->userListPaginator = $paginator;	
-            } // end if
+                $active = array_search(max($dates), $dates);
+                $images[$active]['status'] = 1;
+                $this->view->image_ids = $images;
+            }
             
-        $this->view->count = $count;
-		$this->view->page = $page;
-        
-            // $this->view->users = $userListing;
-        } // end if
-		else
-		{
-			$message = 'account-userlist-not-logged';
-            $this->flash($message, '/'.$this->view->language.'/msg/');
-		}
-        
-        } catch (Zend_Exception $e) {
-            echo $e->getMessage();
+            if(count($images) < 4) {
+                $form = new Default_Form_ProfileImageForm();
+                $this->view->form = $form;
+                $request = $this->getRequest();
+                
+                if($this->_request->isPost()) {
+                    $formData = $this->_request->getPost();
+                    
+                    if($form->isValid($formData)) {
+                		//Update the user's image
+                        $location = $form->image->getFileName();
+						
+                        // Check if user wants to add a new image
+                        if (!empty($location)) {
+                        	$user_id = $auth->getIdentity()->user_id;
+                            
+							// Move the uploaded file to temp
+	                        $tmpfile = $_FILES['image']['tmp_name'];
+							$uploaddir = "temp/";
+							$tmpname = "prethumb_" . $user_id;
+                            
+							if(move_uploaded_file($tmpfile, $uploaddir.$tmpname)) {
+	                            $redirect = $this->_urlHelper->url(array('controller' => 'account',
+                                                                         'action' => 'processimage',
+                                                                         'language' => $this->language),
+                                                                   'lang_default', true);
+	                            $this->_redirect($redirect);  
+							} else {
+								// Bitch about something because file cannot be moved...
+								echo "<p>Fail :(</p>";
+							}
+							
+                            //Image -stuff is broken...
+                            //$image= new Default_Model_UserImages();
+                            //$image->newUserImage($id, $outputfile);
+                         
+                        }
+                     }
+                 }
+            }
+            else
+            $this->view->form = 'You need to delete at least one profile image in order to add new ones!';
         }
-    } // end of userListingAction
+        else 
+        {
+            $redirect = $this->_urlHelper->url(array('controller' => 'msg', 
+                                                     'action' => 'index', 
+                                                     'language' => $this->view->language), 
+                                               'lang_default', true);
+            $this->_redirect($redirect);    
+        }
+    }
+
+    /**
+     * processimageAction
+     * 
+	 * Uploaded thumbnail image's resize and cropping.
+     */
+    public function processimageAction()
+    {
+		// Get authentication
+		$auth = Zend_Auth::getInstance();
+		
+		// If user has identity
+		if ($auth->hasIdentity()) { 
+			// Get user ID
+			$id = $auth->getIdentity()->user_id;
+			
+			// Get requests
+			$params = $this->getRequest()->getParams();
+            
+            $imagepath = $this->_urlHelper->url(array('controller' => 'account',
+                                                     'action' => 'showimage',
+            										 'prethumb' => '1',
+                                                     'language' => $this->view->language),
+                                                'lang_default', true);
+                                                
+            // Prevent browsers from caching the image by adding a random number to the url                                    
+			$this->view->prethumb = $imagepath . "/" . rand(0,9999);	
+			
+			$form = new Default_Form_ProcessImageForm();
+			$this->view->form = $form;
+			
+			if($this->_request->isPost()) {
+				// Get POST-data
+				$postdata = $this->_request->getPost();
+				$newcoord_x = $postdata['c_x'];
+				$newcoord_y = $postdata['c_y'];
+				$newcoord_w = $postdata['c_w'];
+				$newcoord_h = $postdata['c_h'];
+
+				// Local paths to files
+                $tmpfile = "temp/prethumb_" . $id;
+                $rdyfile = $tmpfile . "-ready";
+
+                // Find out what type of image we are dealing with
+				switch(exif_imagetype($tmpfile)) {
+					case IMAGETYPE_GIF:
+						$img_r = imagecreatefromgif($tmpfile);
+						break;
+					case IMAGETYPE_JPEG:
+						$img_r = imagecreatefromjpeg($tmpfile);
+						break;
+					case IMAGETYPE_PNG:
+						$img_r = imagecreatefrompng($tmpfile);
+						break;
+				}
+
+				// Set some properties...
+				$targ_w = $targ_h = 180;
+				$jpeg_quality = 90;
+			
+				$dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
+
+				imagecopyresampled($dst_r,$img_r,0,0,$newcoord_x,$newcoord_y,
+				$targ_w,$targ_h,$newcoord_w,$newcoord_h);
+				
+				// Save to temp
+				imagejpeg($dst_r,$rdyfile,$jpeg_quality);
+	            
+				// Save the thumbnail in the DB
+				$saveimage = new Default_Model_UserImages();
+				$saveimage->newUserImage($id, $tmpfile, $rdyfile);
+				
+				// All the dirty work is done, time for cleanup!
+				
+				// Delete the temporary files
+	            unlink($tmpfile);
+	            unlink($rdyfile);
+                
+	            // Free up memory
+	            imagedestroy($img_r);
+	            imagedestroy($dst_r);
+ 
+				// Get us outta here
+	            $redirect = $this->_urlHelper->url(array('controller' => 'account',
+	                                                     'action' => 'view',
+	                                                     'user' => $auth->getIdentity()->username,
+	                                                     'language' => $this->language),
+	                                               'lang_default', true);
+	            $this->_redirect($redirect);  
+	            
+			}	
+		}
+	}
+	
+    /**
+    *   showimageAction
+    *
+    *	@params	img			int			image id
+    *	@params thumb		boolean		outputs either thumbnail or original image
+    *	@params prethumb	boolean		outputs the uncut thumbnail (used in processimageAction)
+    *
+    */
+    public function showimageAction()
+    {
+        // Set an empty layout for view
+        $this->_helper->layout()->setLayout('empty');
+        
+        // Get requests
+        $params = $this->getRequest()->getParams(); 
+        
+        $this->view->image = null;
+        
+        $auth = Zend_Auth::getInstance();
+		
+        // If user has identity
+        if ($auth->hasIdentity()) { 
+            if($params['prethumb'] == true) {
+            	// Get user id
+            	$user_id = $auth->getIdentity()->user_id;
+                
+				// Get the right file path
+            	$filename = 'temp/prethumb_' . $user_id;
+                
+            	// Get the image contents 
+            	$contents = file_get_contents($filename);
+                
+            	// And push it to view
+            	if($contents != null) {
+            		$this->view->img = $contents;
+            	}
+            } else {
+	            $id = $params['img'];
+                
+	            // Get thumbnail data from database
+	            $user = new Default_Model_UserImages();
+	            $image = $user->getImageById($id);
+
+	            // If image data is not null, set imagedata and filetype to view.
+	            if($image != null) {
+	            	if($params['thumb'] == true)
+	            		$this->view->img = $image['thumbnail_usi'];
+	            	else
+	                	$this->view->img = $image['image_usi'];   
+	            } // end if		
+            }
+            
+        } // end if		
+    } // end of showimageAction()
+    
+    /**
+    *   deleteimageAction
+    *
+    *
+    *
+    */
+    public function deleteimageAction()
+    {
+        // Get requests
+        $params = $this->getRequest()->getParams(); 
+        $id = $params['img_id'];
+        $auth = Zend_Auth::getInstance();
+		
+        // If user has identity
+        if ($auth->hasIdentity()) {
+              $model = new Default_Model_UserImages();
+              $model->deleteImageById($id);
+              
+              $url = $this->_urlHelper->url(array('controller' => 'account',
+                                                  'action' => 'images',
+                                                  'language' => $this->language),
+                                            'lang_default', true);
+              $this->_redirect($url);
+        } else {
+            $this->_redirect($this->_baseUrl);
+        }
+    }
+    
+    /**
+    *   Activate image action
+    */
+    public function activateimageAction()
+    {
+        // Get requests
+        $params = $this->getRequest()->getParams(); 
+        $id = $params['img_id'];
+        $auth = Zend_Auth::getInstance();
+		
+        // If user has identity
+        if ($auth->hasIdentity()) {
+              $model = new Default_Model_UserImages();
+              $model->updateModDate($id);
+              
+              $url = $this->_urlHelper->url(array('controller' => 'account',
+                                                  'action' => 'images',
+                                                  'language' => $this->language),
+                                            'lang_default', true);
+              $this->_redirect($url);
+        } else {
+            $this->_redirect($this->_baseUrl);
+        }
+    }    
 } // end of class

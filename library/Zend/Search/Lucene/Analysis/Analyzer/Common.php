@@ -15,8 +15,9 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Common.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 
@@ -34,7 +35,7 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_Lucene_Analysis_Analyzer
@@ -69,7 +70,7 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_L
             $token = $filter->normalize($token);
 
             // resulting token can be null if the filter removes it
-            if (is_null($token)) {
+            if ($token === null) {
                 return null;
             }
         }

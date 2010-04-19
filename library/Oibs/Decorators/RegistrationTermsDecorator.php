@@ -17,13 +17,14 @@ class Oibs_Decorators_RegistrationTermsDecorator extends Zend_Form_Decorator_Abs
     {
         $element  = $this->getElement();
         $messages = $element->getMessages();
-        if (empty($messages)) 
-		{
-            //echo "MESSAGES R EMPTY"; die; 
-			return '';
+        if (empty($messages)) {
+			return ''; // if there are no messages = errors; return empty
         }
-        return '<div class="error" style="width: 300px; margin-left:auto; margin-right: auto;">' .
-               $element->getView()->formErrors($messages) . '</div>';
+        return '
+        <div class="termserror">
+        ' . $element->getView()->formErrors($messages) . '
+        </div>
+        ';
     }
 	
 	public function buildDescription()
@@ -34,7 +35,10 @@ class Oibs_Decorators_RegistrationTermsDecorator extends Zend_Form_Decorator_Abs
 		{
 			return '';
         }
-        return '<span class="registration_terms_description">' . $desc . '</span>';
+        return '
+            <span class="registration_terms_description">
+                ' . $desc . '
+            </span>';
     }
 	
     public function render($content)
@@ -43,13 +47,14 @@ class Oibs_Decorators_RegistrationTermsDecorator extends Zend_Form_Decorator_Abs
 		$errors    = $this->buildErrors();
 		$desc      = $this->buildDescription();
 		
-		$output = /*'<dl class="form_element">'
-					.*/'<div class="registration_terms_input">'
-						.$input
-					.'</div><div>'
-						.$desc
-						. $errors
-				   .'</div>';
+		$output = '
+            <div class="registration_terms_input">
+				'. $input .'
+			</div><div class="registration_terms_desc">
+				'. $desc .'
+            </div>
+            '. $errors .'
+            ';
 				   
         return $output;
 	}

@@ -1,5 +1,8 @@
+SetEnv APPLICATION_ENV development
+
 # Rewrite rules for Zend Framework
 RewriteEngine on
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/wiki
 RewriteCond %{REQUEST_URI} !^/phpdoc

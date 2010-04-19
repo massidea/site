@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Ip.php 13289 2008-12-15 23:18:58Z tjohns $
+ * @version    $Id: Ip.php 16223 2009-06-21 20:04:53Z thomas $
  */
 
 /**
@@ -27,17 +27,19 @@ require_once 'Zend/Validate/Abstract.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_Ip extends Zend_Validate_Abstract
 {
+    const INVALID        = 'ipInvalid';
     const NOT_IP_ADDRESS = 'notIpAddress';
 
     /**
      * @var array
      */
     protected $_messageTemplates = array(
+        self::INVALID        => "Invalid type given, value should be a string",
         self::NOT_IP_ADDRESS => "'%value%' does not appear to be a valid IP address"
     );
 
@@ -51,15 +53,18 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
-        $valueString = (string) $value;
+        if (!is_string($value)) {
+            $this->_error(self::INVALID);
+            return false;
+        }
 
-        $this->_setValue($valueString);
+        $this->_setValue($value);
 
-        if ((ip2long($valueString) === false) || (long2ip(ip2long($valueString)) !== $valueString)) {
+        if ((ip2long($value) === false) || (long2ip(ip2long($value)) !== $value)) {
             if (!function_exists('inet_pton')) {
                 $this->_error();
                 return false;
-            } else if ((@inet_pton($value) === false) ||(inet_ntop(@inet_pton($value)) !== $valueString)) {
+            } else if ((@inet_pton($value) === false) ||(inet_ntop(@inet_pton($value)) !== $value)) {
                 $this->_error();
                 return false;
             }

@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Acl
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Acl.php 9417 2008-05-08 16:28:31Z darby $
+ * @version    $Id: Acl.php 16199 2009-06-21 18:42:43Z thomas $
  */
 
 
@@ -41,7 +41,7 @@ require_once 'Zend/Acl/Assert/Interface.php';
 /**
  * @category   Zend
  * @package    Zend_Acl
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Acl

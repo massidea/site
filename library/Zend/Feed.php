@@ -15,9 +15,9 @@
  *
  * @category   Zend
  * @package    Zend_Feed
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Feed.php 13891 2009-01-31 11:41:00Z yoshida@zend.co.jp $
+ * @version    $Id: Feed.php 16205 2009-06-21 19:08:45Z thomas $
  */
 
 
@@ -29,7 +29,7 @@
  *
  * @category   Zend
  * @package    Zend_Feed
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Feed
@@ -373,11 +373,11 @@ class Zend_Feed
     public static function importArray(array $data, $format = 'atom')
     {
         $obj = 'Zend_Feed_' . ucfirst(strtolower($format));
-        /**
-         * @see Zend_Loader
-         */
-        require_once 'Zend/Loader.php';
-        Zend_Loader::loadClass($obj);
+        if (!class_exists($obj)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($obj);
+        }
+
         /**
          * @see Zend_Feed_Builder
          */
@@ -395,12 +395,10 @@ class Zend_Feed
     public static function importBuilder(Zend_Feed_Builder_Interface $builder, $format = 'atom')
     {
         $obj = 'Zend_Feed_' . ucfirst(strtolower($format));
-        /**
-         * @see Zend_Loader
-         */
-        require_once 'Zend/Loader.php';
-        Zend_Loader::loadClass($obj);
-
+        if (!class_exists($obj)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($obj);
+        }
         return new $obj(null, null, $builder);
     }
 }

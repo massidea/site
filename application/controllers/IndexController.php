@@ -27,6 +27,7 @@
  *  @version 	1.0
  */
 class IndexController extends Oibs_Controller_CustomController
+//class IndexController extends Zend_Controller_Action
 {
 	function init()
 	{
@@ -38,12 +39,91 @@ class IndexController extends Oibs_Controller_CustomController
 	 */
     function indexAction()
     {    	
-		//$this->view->title = "OIBS Home";
 		$this->view->title = "index-home";
+        
+        // Get cache from registry
+        $cache = Zend_Registry::get('cache');
+        
+        // $contentTypesModel = new Default_Model_ContentTypes();
+        // $userModel = new Default_Model_User();
+        
+        // Load recent posts from cache
+        $cachePosts = 'IndexPosts_' . $this->view->language;
+        
+        if(!$result = $cache->load($cachePosts)) {
+            $contentModel = new Default_Model_Content();
+            $contentHasTagModel = new Default_Model_ContentHasTag();
+            
+            // get data
+            //($cty = 'all', $page = 1, $count = -1, $order = 'created', $lang = 'en', $ind = 0)
+            $recentposts_raw = $contentModel->listRecent(
+                'all', 12, -1, 'created', $this->view->language, -1
+            );
+            
+            $recentposts = array();
+            
+            $i = 0;
+            // gather data for recent posts
+            foreach ($recentposts_raw as $post) {
+                $recentposts[$i] = $post;
+                $recentposts[$i]['tags'] = $contentHasTagModel->getContentTags(
+                    $post['id_cnt']
+                );
+                
+                $i++;
+            }
+            
+            // Save recent posts data to cache
+            $cache->save($recentposts, $cachePosts);          
+        } else {
+            $recentposts = $result;
+        }
+        
+        // Load most popular tags from cache
+        if(!$result = $cache->load('IndexTags')) {
+            $tagsModel = new Default_Model_Tags();
+            $tags = $tagsModel->getPopular(20);
+            
+            /*
+            // resize tags
+            foreach ($tags as $k => $tag) {
+                $size = round(50 + ($tag['count'] * 30));
+                if ($size > 300) {
+                    $size = 300;
+                }
+                $tags[$k]['tag_size'] = $size;
+            }
+            */
+            
+            // Action helper for tags
+            $tags = $this->_helper->tagsizes->tagCalc($tags);
+            
+            // Save most popular tags data to cache
+            $cache->save($tags, 'IndexTags');
+        } else {
+            $tags = $result;
+        }
+        
+        // Laod most active users from cache
+        if(!$result = $cache->load('IndexUsers')) {
+            $contentHasUserModel = new Default_Model_ContentHasUser();        
+            $activeusers = $contentHasUserModel->getMostActive(10);
+            
+            // Save most active users data to cache
+            $cache->save($activeusers, 'IndexUsers');
+        } else {
+            $activeusers = $result;
+        }
+        
+        // inject data to view
+        if (isset($recentposts)) {
+            $this->view->recentposts = $recentposts;
+        } else {
+            $this->view->recentposts = '';
+        }
+        
+        $this->view->poptags = $tags;
+        $this->view->activeusers = $activeusers;
+        $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();        
     }
-	/*
-	function jepjepAction()
-	{
-	}
-	*/
 }

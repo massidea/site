@@ -1,0 +1,75 @@
+<img src="<?php echo $this->baseUrl;?>/images/<?php echo $this->language; ?>/Oibs_frontpage_signature.png" id="frontpage_imagemap" usemap="#map1" alt="" style="cursor:pointer;" />
+
+<map id="map1" name="map1">
+        <area shape="rect" 
+                coords="100,267,250,350" 
+                onclick="imageChanger('student', '<?php echo $this->language; ?>', '<?php echo $this->baseUrl;?>'); frontpageChanger('frontpage_student_text');" 
+                alt="OIBS for students" 
+        />
+        <area shape="rect" 
+                coords="250,267,380,350"  
+                onclick="imageChanger('teachers', '<?php echo $this->language; ?>', '<?php echo $this->baseUrl;?>'); frontpageChanger('frontpage_teacher_text');" 
+                alt="OIBS for teachers" 
+        />
+        <area shape="rect" 
+                coords="381,267,500,350" 
+                onclick="imageChanger('pensioners2', '<?php echo $this->language; ?>', '<?php echo $this->baseUrl;?>'); frontpageChanger('frontpage_pensioner_text',  '<?php echo $this->language; ?>');" 
+                alt="OIBS for pensioners" 
+        />
+        <area shape="rect" 
+                coords="501,267,640,350" 
+                onclick="imageChanger('companies3', '<?php echo $this->language; ?>' , '<?php echo $this->baseUrl;?>'); frontpageChanger('frontpage_company_text',  '<?php echo $this->language; ?>');" 
+                alt="OIBS for companies" 
+        />
+        <area shape="rect" 
+                coords="641,267,780,350" 
+                onclick="imageChanger('public', '<?php echo $this->language; ?>', '<?php echo $this->baseUrl;?>'); frontpageChanger('frontpage_public_sector_text',  '<?php echo $this->language; ?>');" 
+                alt="OIBS for the public sector" 
+        />
+        <area shape="default" 
+                onclick="javascript:imageChanger('signature', '<?php echo $this->language; ?>', '<?php echo $this->baseUrl;?>'); frontpageChanger('frontpage_default_text',  '<?php echo $this->language; ?>');" 
+                alt="OIBS"
+        />
+</map> 
+
+
+<div id="placeholder">
+    <?php echo $this->translate('index-frontpage-default-text-1', $this->language); ?>
+	<p style="text-align: center;">
+		<img src="<?php echo $this->baseUrl;?>/images/<?php echo $this->language;?>/Triangle_with_repositories_small.png" alt="Innovation triangle" />
+	</p>
+    <?php echo $this->translate('index-frontpage-default-text-2', $this->language); ?>
+</div>
+<div style="display:none;">
+	<div id="frontpage_default_text">
+        <?php echo $this->translate('index-frontpage-default-text-1', $this->language); ?>
+		<p style="text-align: center;">
+			<img src="<?php echo $this->baseUrl;?>/images/<?php echo $this->language;?>/Triangle_with_repositories_small.png" alt="Innovation triangle" />
+		</p>
+        <?php echo $this->translate('index-frontpage-default-text-2', $this->language); ?>
+	</div>
+    
+	<div id="frontpage_student_text">
+        <?php echo $this->translate('index-frontpage-student-text', $this->language); ?>
+	</div>
+    
+	<div id="frontpage_teacher_text">
+        <?php echo $this->translate('index-frontpage-teacher-text', $this->language); ?>
+	</div>
+    
+	<div id="frontpage_pensioner_text">
+        <?php echo $this->translate('index-frontpage-penisoner-text', $this->language); ?>
+	</div>
+    
+	<div id="frontpage_company_text">
+        <?php echo $this->translate('index-frontpage-company-text', $this->language); ?>
+	</div>
+    
+	<div id="frontpage_public_sector_text">
+        <?php echo $this->translate('index-frontpage-public-text', $this->language); ?>
+	</div>
+    
+	<div id="frontpage_other_text">
+        <?php echo $this->translate('index-frontpage-other-text', $this->language); ?>
+	</div>
+</div>

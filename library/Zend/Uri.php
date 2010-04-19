@@ -14,22 +14,17 @@
  *
  * @category  Zend
  * @package   Zend_Uri
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Uri.php 12037 2008-10-20 18:54:44Z shahar $
+ * @version   $Id: Uri.php 16207 2009-06-21 19:17:51Z thomas $
  */
-
-/**
- * @see Zend_Loader
- */
-require_once 'Zend/Loader.php';
 
 /**
  * Abstract class for all Zend_Uri handlers
  *
  * @category  Zend
  * @package   Zend_Uri
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Uri
@@ -128,7 +123,10 @@ abstract class Zend_Uri
                 break;
         }
 
-        Zend_Loader::loadClass($className);
+        if (!class_exists($className)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($className);
+        }
         $schemeHandler = new $className($scheme, $schemeSpecific);
 
         return $schemeHandler;

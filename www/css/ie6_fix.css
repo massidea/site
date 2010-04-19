@@ -1,0 +1,10 @@
+/* Jani Penttinen
+ * IE6 CSS FIX
+*/
+
+div.top_row_center{ width: 780px !important; }
+div.top_row_center_left { float:left;}
+div.top_row_center_right { margin-left:0px; text-align:left; padding:0px;}
+div.top_row_center_right_login { padding:0px;}
+div.right_side{ width: 200px !important; margin:0; padding:0;}
+div.top_row_center_right_login_links, div.user_content_spacer, div.user_content_spacer img, div.user_content_row, div.linking_content, #form_content_add_container, .form_element, .form_helptext_line, .form_addcontent_row , #content_production_container_left, div.top_row_center_right_login_links{ width: 490px !important;}

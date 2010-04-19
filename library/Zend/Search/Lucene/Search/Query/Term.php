@@ -15,8 +15,9 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Term.php 16541 2009-07-07 06:59:03Z bkarwin $
  */
 
 
@@ -31,7 +32,7 @@ require_once 'Zend/Search/Lucene/Search/Weight/Term.php';
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Query
@@ -191,24 +192,13 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     }
 
     /**
-     * Returns query term
+     * Query specific matches highlighting
      *
-     * @return array
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    public function getTerms()
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
     {
-        return $this->_terms;
-    }
-
-    /**
-     * Highlight query terms
-     *
-     * @param integer &$colorIndex
-     * @param Zend_Search_Lucene_Document_Html $doc
-     */
-    public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
-    {
-        $doc->highlight($this->_term->text, $this->_getHighlightColor($colorIndex));
+    	$highlighter->highlight($this->_term->text);
     }
 
     /**
@@ -219,7 +209,19 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     public function __toString()
     {
         // It's used only for query visualisation, so we don't care about characters escaping
-        return (($this->_term->field === null)? '':$this->_term->field . ':') . $this->_term->text;
+        if ($this->_term->field !== null) {
+        	$query = $this->_term->field . ':';
+        } else {
+        	$query = '';
+        }
+
+        $query .= $this->_term->text;
+
+        if ($this->getBoost() != 1) {
+            $query = $query . '^' . round($this->getBoost(), 4);
+        }
+
+        return $query;
     }
 }
 

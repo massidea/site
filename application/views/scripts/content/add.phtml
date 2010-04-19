@@ -1,309 +1,299 @@
-<div id="form_content_add_container">
-	<h1><?php echo $this->translate('content-add-page_header') . " - " . $this->contenttype; ?></h1>
-	<?php
-	if($this->language == "en")
-	{
-		if($this->short_contenttype == "problem")
-		{
-			echo '
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
 
-            <p style="width: 700px;">
-                A challenge is an obstacle, which makes it hard to accomplish a desired goal, object or purpose.
-                It refers to a situation, condition or an issue, which hasn\'t been solved. A problem can be
-                understood in many different ways. For instance, it can be
-            </p>
-
-			<ul>
-				<li>
-						event or situation needing a solution or new help,
-				</li>
-				<li>
-						everyday matter which can be handled better,
-				</li>
-				<li>
-						business life challenge or financing problem,
-				</li>
-				<li>
-						customer\'s need or desire,
-				</li>
-				<li>
-						mathematical or academic problem,
-				</li>
-				<li>
-						designing problem etc.
-				</li>
-			</ul>
-            
-            <p style="width: 700px;">
-                The text should be relatively focused. Focus on writing about the current problem,
-                not about the solutions for it. The idea of OIBS is to keep the information of
-                challenges and the related solutions in separate repositories. <br /><br />
-
-                For ensuring that the text is as understandable to the readers as it is to the author,
-                it is a good idea to have someone proofread the text before adding it to the database.
-                The texts can be written either in Finnish or in English. Enclose possible references
-                in the article (at least the website in which the article can be found or the name
-                and number of the magazine). <br /><br />
-            </p>
-
-            <br />
-            
-			';
-        }
-        elseif($this->short_contenttype == "finfo")
-        {
-            echo '
-
-            For instance, the vision of the future can be
-            
-            <ul>
-                <li>
-                    a future technology or application,
-                </li>
-                <li>
-                    new scientific finding,
-                </li>
-                <li>
-                    a change in the operational environment of an industry,
-                </li>
-                <li>
-                    new service need or a possible change, which will affect the current customs or procedures
-                </li>
-                <li>
-                    a future political or legislative decision
-                </li>
-                <li>
-                    a weak signal of the future or a trend/mega trend.
-                </li>
-            </ul>
-        
-            <p style="width: 700px;">
-                The subject is relatively free. The only criteria is that the text must concern the future, 
-                i.e. the text concentrates on describing the possible, probable or desired future – not the present. <br /><br />
-
-                The text should be relatively focused. The purpose is to describe something precise - not 
-                to describe a future general view of Finland. For greater text quality, it is good to 
-                estimate when for instance, the changes described in the text are assumed to happen or 
-                when the technology described is estimated to be ready for commercialization. <br /><br />
-
-                Focus on writing about the future vision, not about the solutions. The idea of OIBS is to 
-                keep the future information and the related solutions in separate repositories. <br /><br />
-
-                For ensuring that the text is as understandable to the readers as it is to the author, it is 
-                a good idea to have someone proofread the text before adding it to the database. The texts 
-                can be written either in Finnish or in English. Enclose possible references in the article 
-                (at least the website in which the article can be found or the name and number of the magazine). <br /><br />
-            </p>
-            
-            <br />
-            
-            ';
-        }
-        elseif($this->short_contenttype == "idea")
-        {
-            echo '
-
-            <ul>
-                <li>
-                    Ideas are always related to a challenge or a vision found in the database.
-                </li>
-                <li>
-                    Start by browsing challenges or visions of the future.
-                </li>
-                <li>
-                    Each document contains a link where you can add a new or a competing idea.
-                </li>
-                <li>
-                    You are free to further develop ideas created by other users.
-                </li>
-            </ul>
-
-            <br />
-            
-            ';
-        }
+<?php $this->headScript()->captureStart()?>
+function previewRoll(action) {
+	if(action == 'open') {
+		$("#form_content_realcontent").fadeOut(function(){
+			$("#form_preview_content").fadeIn();
+		});
+	} else if(action == 'close') {
+		$("#form_preview_content").fadeOut(function(){
+			$("#form_content_realcontent").fadeIn();
+		});
 	}
-    elseif($this->language == "fi")
-    {
-        if($this->short_contenttype == "problem")
-		{
-            echo '
+}
 
-            <p style="width: 700px;">
-			Ongelma on este, joka tekee vaikeaksi saavuttaa haluttu päämäärä, kohde tai tarkoitus. 
-			Se viittaa tilanteeseen, ehtoon tai asiaan, jota ei ole vielä ratkaistu. Ongelma 
-			voidaan ymmärtää monin eri tavoin. Kyseessä voi olla esimerkiksi 
-			</p>
+setTimeout("preCheck('<?php echo $this->language; ?>')", 30);
 
-            <ul>
-                <li>
-                    tapahtuma tai tilanne, joka tarvitsee ratkaisun tai uutta apua,
-                </li>
-                <li>
-                    kohtaamasi arkipäiväinen asia, joka voitaisiin hoitaa paremmin,
-                </li>
-                <li>
-                    liike-elämän haaste tai rahoitusongelma,
-                </li>
-                <li>
-                    asiakkaan halu tai tarve,
-                </li>
-                <li>
-                    matemaattinen tai akateeminen ongelma,
-                </li>
-                <li>
-                    suunnitteluongelma,
-                </li>
-                <li>
-                    laskettavuus- tai päätösongelma.
-                </li>
-            </ul>
+<?php $this->headScript()->captureEnd()?>
+<?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
 
-			<p style="width: 700px;">
-                Tekstin tulee olla suhteellisen hyvin fokusoitunut ja siinä keskitytään kuvaamaan jotain 
-                täsmällistä kohdetta. Keskity kirjoituksessasi kuvailemaan ongelmaa, ei sen ratkaisua. 
-                OIBS-järjestelmän ajatuksena on pyrkiä pitämään ongelma ja siihen liittyvät ratkaisut 
-                omissa tietopankeissaan. <br /><br />
+<?php 
+if($this->short_contenttype == "problem") {
+?>
+    <?php $this->headScript()->captureStart() ?>
+    setTimeout("changeBack('#d21034')", 300);
+    <?php $this->headScript()->captureEnd() ?>
+<?php
+} else if($this->short_contenttype == "idea") {
+?>
+    <?php $this->headScript()->captureStart() ?>
+    setTimeout("changeBack('#4b9b07')", 300);
+    <?php $this->headScript()->captureEnd() ?>
+<?php
+} else if ($this->short_contenttype == "finfo") {;
+?>
+   <?php $this->headScript()->captureStart() ?>
+   setTimeout("changeBack('#ffc726')", 300);
+    <?php $this->headScript()->captureEnd() ?>
+<?php
+} ?>
 
-                Ennen tekstin lisäämistä sivulle varmista, että teksti on 
-                ymmärrettää myös muille kuin sen kirjoittajalle. Tekstit voi kirjoittaa englanniksi tai 
-                suomeksi. Liitä mukaan myös mahdolliset lähdeviitteet (vähintään verkko-osoite, josta 
-                artikkeli löytyy tai lehden nimi ja numero).
-			</p>
+<div id="form_content_add_container" style="float: left;">
 
-            <br />
-            
-            ';
-        }
-        elseif($this->short_contenttype == "finfo")
-        {
-            echo '
-
-            Ennakoiva tieto voi olla esimerkiksi
-
-            <ul>
-                <li>
-                    jokin tulevaisuuden teknologia tai sovellus,
-                </li>
-                <li>
-                    uusi tieteellinen löydös/asia,
-                </li>
-                <li>
-                    johonkin toimialaan liittyvä toimintaympäristön muutos,
-                </li>
-                <li>
-                    uusi palvelutarve tai muu mahdollinen muutos, joka tulee <br />
-                    vaikuttamaan nykyisiin käytänteisiin tai toimintatapoihin,
-                </li>
-                <li>
-                    tulossa oleva poliittinen tai lainsäädännöllinen päätös,
-                </li>
-                <li>
-                    heikko signaali tulevasta tai tuleva trendi/mega-trendi.
-                </li>
-            </ul>
-
-            <p style="width: 700px;">
-                Aihealue on suhteellisen vapaa. Ainoana rajoitteena on se, että tekstin on oltava 
-                "kiinni tulevaisuudessa". Keskity kuvailemaan mahdollista, todennäköistä tai toivottavaa 
-                tulevaisuutta, ei nykyisyyttä. <br /><br />
+	<div id="form_preview_content">
     
-                Tekstin tulee olla suhteellisen hyvin fokusoitunut ja siinä keskitytään kuvaamaan jotain 
-                täsmällistä kohdetta, ei luomaan kokonaiskuvaa esim. tulevaisuuden Suomesta. Tekstien 
-                laatua parantaa, jos on mahdollista arvioida milloin tekstin kuvaaman muutoksen oletetaan 
-                tapahtuvan tai kuvatun teknologian arvioidaan olevan valmiina kaupallistettavaksi. <br /><br />
-
-                Keskity kirjoituksessasi kuvailemaan tulevaisuustietoa, ei sen ratkaisua. OIBS-järjestelmän 
-                ajatuksena on pyrkiä pitämään tulevaisuustieto ja siihen liittyvät ideat omissa tietopankeissaan. <br /><br />
-
-                Ennen tekstin lisäämistä sivulle varmista, että teksti on ymmärrettävä myös muille kuin sen 
-                kirjoittajalle. Tekstit voi kirjoittaa englanniksi tai suomeksi. Liitä mukaan myös mahdolliset 
-                lähdeviitteet (vähintään verkko-osoite, josta artikkeli löytyy tai lehden nimi ja numero).
-            </p>
-
-            <br />
-            
-            ';
-        }
-        elseif($this->short_contenttype == "idea")
-        {
-            echo '
-
-            <ul>
-                <li>
-                    Ideat liittyvät aina tietokannasta löytyvään ongelmaan tai visioon.
-                </li>
-                <li>
-                    Aloita selaamalla tietokannasta löytyviä haasteita tai tulevaisuuden visioita.
-                </li>
-                <li>
-                    Jokaisen dokumentin yhteydessä on linkki, josta voit lisätä uuden tai kilpailevan idean.
-                </li>
-                <li>
-                    Voit vapaasti kehittää muiden käyttäjien luomia ideoita.
-                </li>
-            </ul>
-            
-            <br />
-
-            ';
-        }
-    }
-	
-    echo $this->form;
-	?>
-</div>
-
-
-
-<div id="popup_preview" class="popup_preview" style="display:none;">
-    <div class="popup_text">
-        <div class="popup_close">
-            <div style="float:right;">
-                <a href="#" onclick="popup_close('popup_preview')"><img src="/images/icon_close.png" alt="" /></a>
+        <!--<h3><a href="#" onclick="previewRoll('close');">Preview under construction, click here to close.</a></h3>-->
+        <h3 style="padding-top: 10px;">This is a preview</h3>
+        
+	    <div>
+            <div style="float: right; margin-right: 50px;">
+                <a href="#" onclick="previewRoll('close');">
+                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" 
+                        alt="" style="position: absolute;" />
+                </a>
             </div>
         </div>
-        <div style="clear:both; padding-top: 10px;">
+        
+        <div style="clear:both; padding-top: 60px;">
+        
             <div id="content_view_left_p">
+            
                 <div id="content_view_content_p">
+                
                     <div id="content_view_content_created_p">
-                        <span class="right">Viewed 10 times</span>
-                        Added: 2009-07-03 11:49:26
+                        <div style="float: left;">
+                            Added: <?php echo date('Y-m-d H:i:s');?>
+                        </div>
+                        <div style="float: right;">
+                            <a href="#">Flag as inappropriate</a>
+                        </div>
                     </div>
+                    
                     <div id="content_view_content_info_container_p">
                         <div id="content_view_content_rating_p">
                             <!-- try changing to class="right"> -->
-                            <span>                                         Rating                    0                    </span>
-                        </div>		
-                        <div id="content_view_content_vote_p">
-                            <img src="/images/icon_thumb_up.png" alt="Vote up" />
-                            <img src="/images/icon_thumb_down.png" alt="Vote down" />
+                            <div style="float: left;">
+                                Rating 0
+                            </div>
+                            <div style="float: right;">
+                                Viewed 0 times
+                            </div>
+                        </div>
+                        
+                        <div id="content_view_content_vote_p" style="padding: 2px;">
+                            <img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="Vote up" />
+                            <img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="Vote down" />
                         </div>
                     </div>
-                    <div id="content_view_content_container_p">
+                    
+                    <div id="content_view_content_container_p" style="padding-top: 10px;">
                         <div class="content_view_texttitle_finfo_p">
-                            <h1 id="preview_header">header</h1>
+                            <h3 style="margin: 0px; padding: 0px; font-weight: bold;" id="preview_header">
+                                Header goes here
+                            </h3>
+                            <p style="margin: 0px; padding: 0px; font-style: italic;" id="content_view_textlead_item_p">
+                                Textlead goes here
+                            </p>
                         </div>
-                        <div class="content_view_industries_p" id="content_view_industries_p">
-                            <p id="content_view_industries_item_p">Industry: Agriculture, foresty and fishing</p>
-                            <p id="content_view_division_item_p">Division: Forestry and logging</p>
+                        
+                        <div id="content_view_tags_p" style="padding-top: 7px;">
+                            <span class="content_view_bold_p" style="float: left;">
+                                <a href="#">Tags: </a>
+                            </span>
+                            
+                            <div id="content_view_tags_items_p">
+                                <a href="#">Tag</a>
+                            </div>
+                        </div>
+                        
+                        <div id="content_view_textbody_p">
+                            <p>Textbody goes here</p>
                         </div>
                     </div>
-                    <div id="content_view_textlead_p">
-                        <h2 id="content_view_textlead_item_p">Textlead hear</h2>
+                    
+                    <div class="user_content_spacer">
+                        <img alt="Massidea.org" src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>"/>
                     </div>
-                    <div id="content_view_textbody_p">
-                        Textbody hear
+                    
+                    <div class="content_view_industries_p" id="content_view_industries_p">
+                        <h3>Industry classification</h3>
+                        <p id="content_view_industries_item_p">Industry goes here</p>
+                        <p id="content_view_division_item_p">Division goes here</p>
+                        <p id="content_view_group_item_p">Group goes here</p>
+                        <p id="content_view_class_item_p">Class goes here</p>
                     </div>
-                    <div id="content_view_tags_p">
-                        <span class="content_view_bold_p">Tags: </span>
-                        <div id="content_view_tags_items_p">
-                            <a href="#">Tag</a>
-                        </div>
-                    </div>
+                    
                 </div>
+                
             </div>
+            
             <div class="clear_p"></div>
+            
+        </div>
+        
+	</div>
+	
+	<div id="form_content_realcontent">
+        <h2>
+            <?php echo $this->translate('content-add-'
+                                . $this->short_contenttype
+                                . '-page-header'
+                ); ?>
+        </h2>
+        <p>
+            <?php echo $this->translate('content-add-' 
+                                . $this->short_contenttype 
+                                . '-p1'
+                ); ?>
+        </p>
+        
+        <?php if($this->short_contenttype != "idea"): ?>
+        <p>
+        <?php echo $this->translate('content-add-' 
+                            . $this->short_contenttype 
+                            . '-p2'
+            ); ?>
+        </p>
+        <?php endif; ?>
+            
+        <?php
+        if($this->relatesToId != 0) {
+        ?>
+            <div id="linkedto" class="linkedto">
+                <p class="linkedtotext">
+                    <?php echo $this->translate('content-is-linked-to'); ?>
+                </p>
+                <?php 
+                if($this->relatesToType == "problem") { 
+                    $color = "red";
+                }
+                elseif($this->relatesToType == "finfo") {
+                    $color = "yellow";
+                }
+                elseif($this->relatesToType == "idea") {
+                    $color = "green";
+                }
+                ?>
+                
+                <div class="<?php echo $this->relatesToType; ?>Line"></div>
+                 
+                <!-- 
+                <img class="linkedtoimage" src="/images/<?php echo $color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" />
+                -->
+                 
+                <p style="padding-top: 9px;">
+                    <a href="<?php echo $this->url(array('content_id' => $this->relatesToId, 
+                                                     'language' => $this->language), 
+                                                     'content_shortview', true); ?>">
+                        <?php
+                            if(strlen($this->relatesToHeader) > 68) {
+                                $this->relatesToHeader = substr($this->relatesToHeader, 0, 68) . "...";
+                            }
+                            echo $this->relatesToHeader;
+                        ?>
+                    </a>
+                </p>
+            </div>
+        <?php
+        }
+        ?>
+        
+        <?php echo $this->form; ?>
+        
+    </div>
+    
+    <div class="IAmABufferHearMeRoar" style="clear:both; height:100px;"></div>
+    
+</div>
+
+<div class="right_side" style="padding: 0px; margin-right: 5px; margin-top: 0px;">
+
+    <?php $contentType = $this->short_contenttype; ?>
+    
+    <p class="right_side_title_small" style="padding-top: 0px; padding-bottom:3px; color:#c0c0c0;">
+        <?php echo $this->translate('content-add-'.$contentType.'-right-box-header'); ?>
+    </p>
+    
+    <div class="top_right_box" style="margin-bottom:10px; background: #EEEEEE; width:100%; margin-left:3px; padding:3px;">
+        <div>
+            <?php // What is this? 
+            if($contentType == "problem") {
+                ?>
+                
+                <p>
+                    <b><?php echo $this->translate('content-add-problem-right-box-t1'); ?></b><br />
+                    <?php echo $this->translate('content-add-problem-right-box-p1'); ?>
+                </p>
+                <p>
+                    <b><?php echo $this->translate('content-add-problem-right-box-t2'); ?></b><br />
+                    <?php echo $this->translate('content-add-problem-right-box-p2'); ?>
+                </p>
+                <p><?php echo $this->translate('content-add-problem-right-box-p3'); ?></p>
+                <p><?php echo $this->translate('content-add-problem-right-box-p4'); ?></p>
+                <p><?php echo $this->translate('content-add-problem-right-box-p5'); ?></p>
+                <p><?php echo $this->translate('content-add-problem-right-box-p6'); ?></p>
+                <p>
+                    <b><?php echo $this->translate('content-add-problem-right-box-t3'); ?></b><br />
+                    <?php echo $this->translate('content-add-problem-right-box-p7'); ?>
+                </p>
+                <p><?php echo $this->translate('content-add-problem-right-box-p8'); ?></p>
+                
+                <?php
+            }
+            elseif($contentType == "finfo") {
+                ?>
+                
+                <p>
+                    <b><?php echo $this->translate('content-add-finfo-right-box-t1'); ?></b><br />
+                    <?php echo $this->translate('content-add-finfo-right-box-p1'); ?>
+                </p>
+                <p>
+                    <b><?php echo $this->translate('content-add-finfo-right-box-t2'); ?></b><br />
+                    <?php echo $this->translate('content-add-finfo-right-box-p2'); ?>
+                </p>
+                <p><?php echo $this->translate('content-add-finfo-right-box-p3'); ?></p>
+                <p><?php echo $this->translate('content-add-finfo-right-box-p4'); ?></p>
+                <p>
+                    <b><?php echo $this->translate('content-add-finfo-right-box-t3'); ?></b><br />
+                    <?php echo $this->translate('content-add-finfo-right-box-p5'); ?>
+                </p>
+                <p><?php echo $this->translate('content-add-finfo-right-box-p6'); ?></p>
+                <p>
+                    <b><?php echo $this->translate('content-add-finfo-right-box-t4'); ?></b><br />
+                    <?php echo $this->translate('content-add-finfo-right-box-p7'); ?>
+                </p>
+                <p><?php echo $this->translate('content-add-finfo-right-box-p8'); ?></p>
+                
+                <?php
+            }
+            elseif($contentType == "idea") {
+                ?>
+                
+                <p>
+                    <b><?php echo $this->translate('content-add-idea-right-box-t1'); ?></b><br />
+                    <?php echo $this->translate('content-add-idea-right-box-p1'); ?>
+                </p>
+                <p>
+                    <b><?php echo $this->translate('content-add-idea-right-box-t2'); ?></b><br />
+                    <?php echo $this->translate('content-add-idea-right-box-p2'); ?>
+                </p>
+                <p><?php echo $this->translate('content-add-idea-right-box-p3'); ?></p>
+                <p><?php echo $this->translate('content-add-idea-right-box-p4'); ?></p>
+                <p><?php echo $this->translate('content-add-idea-right-box-p5'); ?></p>
+                <p>
+                    <b><?php echo $this->translate('content-add-idea-right-box-t3'); ?></b><br />
+                    <?php echo $this->translate('content-add-idea-right-box-p6'); ?>
+                </p>
+                <p>
+                    <b><?php echo $this->translate('content-add-idea-right-box-t4'); ?></b><br />
+                    <?php echo $this->translate('content-add-idea-right-box-p7'); ?>
+                </p>
+                <p><?php echo $this->translate('content-add-idea-right-box-p8'); ?></p>
+                
+                <?php
+            }
+            ?>
         </div>
     </div>
 </div>

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -15,22 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 13351 2008-12-18 15:26:14Z alexander $
+ * @version    $Id: Abstract.php 16223 2009-06-21 20:04:53Z thomas $
  */
-
 
 /**
  * @see Zend_Validate_Interface
  */
 require_once 'Zend/Validate/Interface.php';
 
-
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
@@ -91,6 +88,19 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     protected static $_defaultTranslator;
 
     /**
+     * Is translation disabled?
+     * @var Boolean
+     */
+    protected $_translatorDisabled = false;
+
+    /**
+     * Limits the maximum returned length of a error message
+     *
+     * @var Integer
+     */
+    protected static $_messageLength = -1;
+
+    /**
      * Returns array of validation failure messages
      *
      * @return array
@@ -108,6 +118,16 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     public function getMessageVariables()
     {
         return array_keys($this->_messageVariables);
+    }
+
+    /**
+     * Returns the message templates from the validator
+     *
+     * @return array
+     */
+    public function getMessageTemplates()
+    {
+        return $this->_messageTemplates;
     }
 
     /**
@@ -199,13 +219,13 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         }
 
         if (is_object($value)) {
-        	if (!in_array('__toString', get_class_methods($value))) {
-        		$value = get_class($value) . ' object';
-        	} else {
-        		$value = $value->__toString();
-        	}
+            if (!in_array('__toString', get_class_methods($value))) {
+                $value = get_class($value) . ' object';
+            } else {
+                $value = $value->__toString();
+            }
         } else {
-        	$value = (string)$value;
+            $value = (string)$value;
         }
 
         if ($this->getObscureValue()) {
@@ -216,6 +236,12 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         foreach ($this->_messageVariables as $ident => $property) {
             $message = str_replace("%$ident%", (string) $this->$property, $message);
         }
+
+        $length = self::getMessageLength();
+        if (($length > -1) && (strlen($message) > $length)) {
+            $message = substr($message, 0, (self::getMessageLength() - 3)) . '...';
+        }
+
         return $message;
     }
 
@@ -310,6 +336,10 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
      */
     public function getTranslator()
     {
+        if ($this->translatorIsDisabled()) {
+            return null;
+        }
+
         if (null === $this->_translator) {
             return self::getDefaultTranslator();
         }
@@ -353,6 +383,49 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
                 }
             }
         }
+
         return self::$_defaultTranslator;
+    }
+
+    /**
+     * Indicate whether or not translation should be disabled
+     *
+     * @param  bool $flag
+     * @return Zend_Validate_Abstract
+     */
+    public function setDisableTranslator($flag)
+    {
+        $this->_translatorDisabled = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Is translation disabled?
+     *
+     * @return bool
+     */
+    public function translatorIsDisabled()
+    {
+        return $this->_translatorDisabled;
+    }
+
+    /**
+     * Returns the maximum allowed message length
+     *
+     * @return integer
+     */
+    public static function getMessageLength()
+    {
+        return self::$_messageLength;
+    }
+
+    /**
+     * Sets the maximum allowed message length
+     *
+     * @param integer $length
+     */
+    public static function setMessageLength($length = -1)
+    {
+        self::$_messageLength = $length;
     }
 }

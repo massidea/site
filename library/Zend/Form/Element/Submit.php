@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -28,9 +28,9 @@ require_once 'Zend/Form/Element/Xhtml.php';
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Submit.php 8585 2008-03-06 19:32:34Z matthew $
+ * @version    $Id: Submit.php 16218 2009-06-21 19:44:04Z thomas $
  */
 class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
 {
@@ -114,7 +114,8 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
 
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $this->addDecorator('ViewHelper')
+            $this->addDecorator('Tooltip')
+                 ->addDecorator('ViewHelper')
                  ->addDecorator('DtDdWrapper');
         }
     }

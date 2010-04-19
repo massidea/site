@@ -1,0 +1,33 @@
+<?php
+
+if($this->managerolesaction == "")
+{
+    ?>
+    <h1><?php echo $this->translate('admin-manage-roles-title'); ?></h1>
+    <p>
+        <a href="/<?php echo $this->language; ?>/admin/manageroles/add">
+            <?php echo $this->translate('admin-manage-roles-add'); ?>
+        </a><br />
+        <a href="/<?php echo $this->language; ?>/admin/manageroles/edit">
+            <?php echo $this->translate('admin-manage-roles-edit'); ?>
+        </a><br />
+        <a href="/<?php echo $this->language; ?>/admin/manageroles/remove">
+            <?php echo $this->translate('admin-manage-roles-remove'); ?>
+        </a><br />
+    </p>
+    <?php
+}
+elseif($this->managerolesaction == "add")
+{
+    echo "<h1>".$this->translate('admin-manage-roles-add-title')."</h1>";
+}
+elseif($this->managerolesaction == "edit")
+{
+    echo "<h1>".$this->translate('admin-manage-roles-edit-title')."</h1>";
+}
+elseif($this->managerolesaction == "remove")
+{
+    echo "<h1>".$this->translate('admin-manage-roles-remove-title')."</h1>";
+}
+
+?>

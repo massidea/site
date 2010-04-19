@@ -3,22 +3,20 @@ class Oibs_Decorators_CaptchaDecorator extends Zend_Form_Decorator_Abstract
 {
     public function render($content)
     {
+        $translate = Zend_Registry::get('Zend_Translate'); 
+        $t1 = $translate->translate('register-reload');
+        $t2 = $translate->translate('register-letters');
     	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$output = /*'<dl class="form_element">'
-						<dt class="form_element_left">&nbsp;</dt>
-						<dd class="form_element_right">
-						<img src="'.$baseUrl.'/en/account/captcha" id="registration_captcha" alt="captcha" />
-                        <a href="javascript:reloadCaptcha(\''.$baseUrl.'\');"><img src="/images/icon_refresh_small.png" alt="reload" /></a>
-						</dd>';
-					//</dl>
-					// insert javascript hear to reload captchaimage. no hacks this time? ;p
-                    */
-                    '
-                    <div style="clear: both;"></div>
-                        <div class="form_element_center" style="background: #ddd url(\'/images/bg_captcha_div.png\') top center; background-repeat: repeat-x; width: 200px; margin-top: 10px; margin-bottom:20px; margin-left: 15em;">
-                            <img src="'.$baseUrl.'/en/account/captcha" id="registration_captcha" alt="captcha" style="float:left;" />
-                            <a href="javascript:reloadCaptcha(\''.$baseUrl.'\');"><img src="/images/icon_reload_registration.png" alt="reload" /></a>
+		$output =  '
+                    <div style="clear: both;">&nbsp;</div>
+                    <div class="register_captcha">
+                        <div style="float: left;">
+                            <img src="'.$baseUrl.'/en/account/captcha" id="registration_captcha" alt="captcha" />
                         </div>
+                        <div style="float: left; padding-left: 10px; padding-top:15px; font-weight: bold;">
+                            < <a href="javascript:reloadCaptcha(\''.$baseUrl.'\');">'.$t1.'</a> '.$t2.'
+                        </div>
+                    </div>
                     <div style="clear: both;"></div>
                     ';
         return $output;

@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mysqli.php 9738 2008-06-19 23:06:36Z peptolab $
+ * @version    $Id: Mysqli.php 16927 2009-07-21 17:49:39Z ralph $
  */
 
 
@@ -33,7 +33,7 @@ require_once 'Zend/Db/Statement.php';
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
@@ -125,7 +125,9 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     {
         if ($stmt = $this->_stmt) {
             $mysqli = $this->_adapter->getConnection();
-            while ($mysqli->next_result()) {}
+            while ($mysqli->more_results()) {
+                $mysqli->next_result();
+            }
             $this->_stmt->free_result();
             return $this->_stmt->reset();
         }
@@ -199,10 +201,14 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
         // send $params as input parameters to the statement
         if ($params) {
             array_unshift($params, str_repeat('s', count($params)));
+            $stmtParams = array();
+            foreach ($params as $k => &$value) {
+                $stmtParams[$k] = &$value;
+            }
             call_user_func_array(
                 array($this->_stmt, 'bind_param'),
-                $params
-            );
+                $stmtParams
+                );
         }
 
         // execute the statement

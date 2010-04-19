@@ -19,7 +19,7 @@
  */
 
 /**
- *  Viewontroller - class
+ *  Viewcontroller - class
  *
  *  @package    controllers
  *  @author     Joel Peltonen & Pekka Piispanen
@@ -32,21 +32,19 @@
     public function init()
     {
         parent::init();
-
+        
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('index', 'html')->initContext();
     }
 
     /**
     *   index page: Contains the content viewing functionality.
     *
     *   @todo   Implement group ownership user images and content links
-    *   @todo   AJAXify giving ratings
     *   @todo   Include translation and content info for page title
-    *   @todo   AJAXify the "more from" box
-    *   @todo   Limitations for the "more from" box - MAX 10 content
     *   @todo   More from box should show ratings
     *   @todo   If not ajax "more from", at least separate to proper MVC
     *   @todo   Look over comment loading for data being fetched and not shown
-    *   @todo   Custom paginator style
     *   @todo   Comment rating, userpic (maybe not)
     *
     *   @param  id      integer     id of content to view
@@ -59,19 +57,32 @@
         // get requests
         $request = $this->getRequest();
         $params = $request->getParams();
-
+        
+        
+        $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
         // get content id from params, if not set or invalid, send a message
         $id = (int)$params['content_id'];
+        
+        
+        
         if ($id == 0) {
-            $this->flash('content-not-found', '/en/msg/');   
+            $this->flash('content-not-found', '/'.$this->view->language.'/msg/');   
         }
         
         // Get specific content data -- this could fail? Needs check?
-        $contentModel = new Models_Content();
+        $contentModel = new Default_Model_Content();
         $contentData = $contentModel->getDataAsSimpleArray($id);
         
-        if ($contentData['published_cnt'] == 0) {
-            $this->flash('content-not-found', '/en/msg/');  
+        // Get content owner id (groups to be implemented later)
+        $contentHasUserModel = new Default_Model_ContentHasUser();
+        $owner = $contentHasUserModel->getContentOwners($id);
+        $ownerId = $owner['id_usr'];
+
+        // Get authentication
+        $auth = Zend_Auth::getInstance();
+        
+        if ($contentData['published_cnt'] == 0 && $auth->getIdentity()->user_id != $ownerId) {
+            $this->flash('content-not-found', '/'.$this->view->language.'/msg/');  
         }
    
         // get rating from params (if set)
@@ -84,69 +95,79 @@
         // turn commenting off by default
         $user_can_comment = false;
 
-        // Get authentication
-        $auth = Zend_Auth::getInstance();
-
+        // Comment model
+        $comment = new Default_Model_Comments();
+        
+        $parentId = isset($params['replyto']) ? $params['replyto'] : 0;
+        
         // If user has identity
-        if ($auth->hasIdentity()) 
-        {
+        if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) {
             // enable comment form, also used as rating permission
-            $user_can_comment = true;   
+            $user_can_comment = true;
             
             // generate comment form
-            $comment_form = new Forms_CommentForm();
-            
+            $comment_form = new Default_Form_CommentForm($parentId);
+     
             // if there is something in POST
-            if ($request->isPost())
-            {
+            if ($request->isPost()) {
+            
                 // Get comment form data
                 $formData = $this->_request->getPost();
-                
+                                
                 // Validate and save comment data
-                if ($comment_form->isValid($formData))
-                {
+                if ($comment_form->isValid($formData)) {
                     $user_id = $auth->getIdentity()->user_id;
 
-                    $comment = new Models_Comments();
                     $comment->addComment($id, $user_id, $formData);
-
-                    $comment_form = new Forms_CommentForm();
+                 
+                    $comment_form = new Default_Form_CommentForm($parentId);
+                 
+                    if($user_id != $ownerId) {
+                        $user = new Default_Model_User();
+                        $comment_sender = $user->getUserNameById($user_id);
+                        
+                        $Default_Model_privmsg = new Default_Model_PrivateMessages();
+                        $data = array();
+                        $data['privmsg_sender_id'] = 0;
+                        $data['privmsg_receiver_id'] = $ownerId;
+                        $data['privmsg_header'] = 'You have new comment!';
+                        $data['privmsg_message'] = '<a href="'.$baseUrl."/".$this->view->language.'/account/view/user/'.$comment_sender.'">'
+                        .$comment_sender.'</a> commented your content <a href="'.$baseUrl."/".$this->view->language.'/view/'.$id.'">'.$contentData['title_cnt'].'</a>';
+                        $data['privmsg_email'] = '';
+                        
+                        $Default_Model_privmsg->addMessage($data);
+                    }
                 } // end if
             } // end if
             $this->view->comment_form = $comment_form;
         } // end if
         
         // get content type of the specific content viewed
-        $contentTypesModel = New Models_ContentTypes();
+        $contentTypesModel = New Default_Model_ContentTypes();
         $contentType = $contentTypesModel->getTypeById($contentData['id_cty_cnt']);
         
         // Get content innovation type / industry / division / group / class
         // and send to view... somehow.
         // TO BE IMPLEMENTED
 
-        // Get content owner id (groups to be implemented later)
-        $contentHasUserModel = new Models_ContentHasUser();
-        $owner = $contentHasUserModel->getContentOwners($id);
-        $ownerId = $owner['id_usr'];
-
         // Get content owner data
-        $userModel = new Models_User();
+        $userModel = new Default_Model_User();
         $userData = $userModel->getSimpleUserDataById($ownerId);
 
         // get content owner picture ... to be implemented later
-        $user_has_image = $userModel->userHasProfileImage($ownerId);
+        $userImage = $userModel->getUserImageData($ownerId);
 
         // get other content from user.. function needs a looking-over!
         // Also it needs to be separated from this action so the MVC-is correct!
         $moreFromUser = $userModel->getUserContent($ownerId);
 
         // get (VIEWED) content views (returns a string directly)
-        $contentViewsModel = new Models_ContentViews();
+        $contentViewsModel = new Default_Model_ContentViews();
         $contentViewsModel->increaseViewCount($id);
         $views = $contentViewsModel->getViewsByContentId($id);
 
         // get content rating (returns a string directly)
-        $contentRatingsModel = new Models_ContentRatings();
+        $contentRatingsModel = new Default_Model_ContentRatings();
         $rating = $contentRatingsModel->getById($id);
         
         // $rate is gotten from params[], 1 and -1 are the only allowed
@@ -154,8 +175,9 @@
             && ($rate == 1 || $rate == -1)
             && $auth->hasIdentity())
         { 
-            if($contentRatingsModel->addRating($id, $ownerId, $rate)) {
+            if($contentRatingsModel->addRating($id, $auth->getIdentity()->user_id, $rate)) {
                 $this->view->savedRating = $rate;
+                $rating = $contentRatingsModel->getById($id);
             } else {
                 $this->flash('rating-failed-msg', '/en/msg/');
             }
@@ -163,7 +185,7 @@
 
         // get content tags - functions returns names as well
         // needs updating to proper MVC?
-        $contentHasTagModel = new Models_ContentHasTag();
+        $contentHasTagModel = new Default_Model_ContentHasTag();
         $tags = $contentHasTagModel->getContentTags($id);
         //echo "<pre>"; print_r($tags); echo "</pre>"; die;
 
@@ -172,79 +194,124 @@
 
         // This functionality needs looking over (code and general idea)
         // get content family (array of children, parents and siblings)
-        $contentHasContentModel = new Models_ContentHasContent();
+        $contentHasContentModel = new Default_Model_ContentHasContent();
         $family = $contentHasContentModel->getContentFamilyTree($id);
-
+        
         // split family array to child, parent and sibling arrays (full content)
         $children = array();
-        $i = 0;
+        $children_siblings = array();
+        
         if (isset($family['children'])) {
             foreach ($family['children'] as $child) {
-                $children[$i] = $contentModel->getDataAsSimpleArray((int)$child);
-                $i++;
+                $contenttypeid = $contentModel->getContentTypeIdByContentId((int)$child);
+                $contenttype = $contentTypesModel->getTypeById($contenttypeid);
+                
+                if($contenttype == "idea") {
+                    $children[] = $contentModel->getDataAsSimpleArray((int)$child);
+                } else {
+                    $children_siblings[] = $contentModel->getDataAsSimpleArray((int)$child);
+                }
+                // $i++;
             }
         }
 
         $parents = array();
-        $i = 0;
+        $parent_siblings = array();
+        
         if (isset($family['parents'])) {
             foreach ($family['parents'] as $parent) {
-                $parents[$i] = $contentModel->getDataAsSimpleArray((int)$parent);
-                $i++;
+                $contenttypeid = $contentModel->getContentTypeIdByContentId((int)$parent);
+                $contenttype = $contentTypesModel->getTypeById($contenttypeid);
+                
+                if($contenttype == "idea") {
+                    $parents[] = $contentModel->getDataAsSimpleArray((int)$parent);
+                } else {
+                    $parent_siblings[] = $contentModel->getDataAsSimpleArray((int)$parent);
+                }
             }
         }
-
-        $siblings = array(); // not implemented yet in models
-        $i = 0;
-        if (isset($family['siblings'])) {
-            foreach ($family['siblings'] as $sibling) {
-                $siblings[$i] = $contentModel->getDataAsSimpleArray((int)$sibling);
+            
+        // Here we get the rival solutions for a solution
+        $rivals = array();
+        if($contentType == "idea" && isset($family['parents'])) {
+            $i = 0;
+            // First here is checked the parents of this solution (=the problem
+            // or the future info)
+            foreach ($family['parents'] as $parent) {
+                // Get the family of the problem or future info
+                $parents_family = $contentHasContentModel->getContentFamilyTree((int)$parent);
+                
+                // Get the children of the problem or future info
+                if(isset($parents_family['children'])) {
+                    // Going through the children
+                    foreach($parents_family['children'] as $parent_child) {
+                        // Those children are rivals which are not this solution
+                        // which is currently viewed
+                        if((int)$parent_child != $id) {
+                            $rivals[$i] = $contentModel->getDataAsSimpleArray((int)$parent_child);
+                        }
+                    }
+                }
                 $i++;
             }
         }
 
         // get comments data 
-        // might need some looking over. many comments = memory death
-        $commentsModel = new Models_Comments();
-        $comments = $commentsModel->getAllByContentId($id);
-
-        // comments pagination
-        $paginator = Zend_Paginator::factory($comments);
-
-        // Set comments per page, comment count, set page number
-		$paginator->setItemCountPerPage($count);
-		$paginator->getItemsByPage($page);
-		$paginator->setCurrentPageNumber($page);
-
-        Zend_Paginator::setDefaultScrollingStyle('Sliding');
-
-        $view = new Zend_View();
-		$paginator->setView($view);
-
+        // $commentList = $comment->getAllByContentId($id, $page, $count);
+        $commentList = $comment->getCommentsByContent($id);
+        
+        $commentsSorted = array();
+        $this->getCommentChilds($commentList, $commentsSorted, 0, 0, 3);
+        
+        // Get total comment count
+        $commentCount = $comment->getCommentCountByContentId($id);
+        
+        // Calculate total page count
+        $pageCount = ceil($commentCount / $count);
+        
+        // Custom pagination to fix memory error on large amount of data
+        $paginator = new Zend_View();
+        $paginator->setScriptPath('../application/views/scripts');
+        $paginator->pageCount = $pageCount;
+        $paginator->currentPage = $page;
+        $paginator->pagesInRange = 10;
+        
         // get content industries -- will be updated later.
-        $cntHasIndModel = new Models_ContentHasIndustries();
+        $cntHasIndModel = new Default_Model_ContentHasIndustries();
         $hasIndustry = $cntHasIndModel->getIndustryIdOfContent($id);
         
-        $industriesModel = new Models_Industries();
+        $industriesModel = new Default_Model_Industries();
         $industriesArray = $industriesModel->getAllContentIndustryIds($hasIndustry);
         
         // roll values to an array
         $industries = array();
         foreach ($industriesArray as $industry) {
             $value = $industriesModel->getNameById($industry);
-            $industriesModel->getNameById($industry);
+            // $industriesModel->getNameById($industry);
 
            if (!empty($value)) {
                 $industries[] = $value;
             }
         }
         
+        // Check if and when the content is modified and if its more than 10minutes ago add for the view
+        $dateCreated = strtotime( $contentData['created_cnt'] );
+        $dateModified = strtotime( $contentData['modified_cnt'] );
+        $modified = 0;
+        if ( ($dateModified-$dateCreated)/60 > 10) {
+        	$modified = $contentData['modified_cnt'];
+        }
+                
+
         // Inject data to view
+        $this->view->id					= $id;
         $this->view->industries         = $industries;
-        $this->view->user_has_image     = $user_has_image;
+        $this->view->userImage          = $userImage;
         $this->view->commentPaginator   = $paginator;
+        $this->view->commentData        = $commentsSorted;
 		$this->view->user_can_comment   = $user_can_comment;
         $this->view->contentData        = $contentData;
+        $this->view->modified			= $modified;
         $this->view->userData           = $userData;
         $this->view->moreFromUser       = $moreFromUser;
         $this->view->views              = $views;
@@ -252,12 +319,59 @@
         $this->view->tags               = $tags;
         $this->view->links              = $links;
         $this->view->parents            = $parents;
+        $this->view->parent_siblings    = $parent_siblings;
         $this->view->children           = $children;
-        $this->view->comments           = $comments;
+        $this->view->children_siblings  = $children_siblings;
+        $this->view->rivals             = $rivals;
+        $this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
+        $this->view->count              = $count;
         
         // Inject title to view
-        $this->view->title = 'view-index-title';
+        $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
 	} // end of view2Action
+    
+    /**
+    *   getCommentParent
+    *
+    *   Get comments where parent matches $parent value.
+    *
+    *   @param array $array Comment array
+    *   @param int $parent Comment parent id
+    *   @return array
+    */
+    public function getCommentParent(&$array, $parent)
+    {
+        $parents = array();
+        
+        foreach($array as $key => $value) {
+            if($value['id_parent_cmt'] == $parent) {
+                $parents[] = $value;
+            }
+        }
+        
+        return $parents;
+    }
+    
+    /**
+    *   getCommentChilds
+    *
+    *   Sort comments.
+    *    
+    *   @param array $array Comment array
+    *   @param array $result Target array for results
+    *   @param int $parent Comment parent id
+    *   @param int $level Comment hieararchy depth
+    *   @param int $maxLevel Maximum comment depth
+    */
+    public function getCommentChilds(&$array, &$result, $parent = 0, $level = 0, $maxLevel = 3)
+    {
+        $parent = $this->getCommentParent($array, $parent);
+        
+        foreach($parent as $parent) {
+            $parent['level'] = $level > $maxLevel ? $maxLevel : $level;
+            $result[] = $parent;
+            $this->getCommentChilds($array, $result, $parent['id_cmt'], $level+1);
+        }
+    }
 }
-?>

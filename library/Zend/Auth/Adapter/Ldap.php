@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage Zend_Auth_Adapter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Ldap.php 11765 2008-10-09 01:53:43Z miallen $
+ * @version    $Id: Ldap.php 16200 2009-06-21 18:50:06Z thomas $
  */
 
 /**
@@ -29,7 +29,7 @@ require_once 'Zend/Auth/Adapter/Interface.php';
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage Zend_Auth_Adapter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
@@ -165,7 +165,23 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
             require_once 'Zend/Ldap.php';
             $this->_ldap = new Zend_Ldap();
         }
+
         return $this->_ldap;
+    }
+
+    /**
+     * Set an Ldap connection
+     *
+     * @param Zend_Ldap $ldap An existing Ldap object
+     * @return Zend_Auth_Adapter_Ldap Provides a fluent interface
+     */
+    public function setLdap(Zend_Ldap $ldap)
+    {
+        $this->_ldap = $ldap;
+
+        $this->setOptions(array($ldap->getOptions()));
+
+        return $this;
     }
 
     /**

@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Inflector.php 12501 2008-11-10 16:28:31Z matthew $
+ * @version    $Id: Inflector.php 16217 2009-06-21 19:39:00Z thomas $
  */
 
 /**
@@ -35,7 +35,7 @@ require_once 'Zend/Loader/PluginLoader.php';
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Filter_Inflector implements Zend_Filter_Interface 

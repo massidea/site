@@ -11,13 +11,13 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 {
 	public function preDispatch(Zend_Controller_Request_Abstract $request)
 	{
-		$config = Zend_Registry::get('config');
+		//$config = Zend_Registry::get('config');
 		
 		// Get languages
 		$locale = new Zend_Locale();		
 		$options = array('scan' => Zend_Translate::LOCALE_FILENAME, 'disableNotices' => true);
 		
-		$translate = @new Zend_Translate('tmx', $config->language->path/*APPLICATION_PATH . '/languages/'*/, 'auto', $options);
+		$translate = @new Zend_Translate('tmx', APPLICATION_PATH . '/languages/', 'auto', $options);
 
 		// 
 		$params = $this->getRequest()->getParams();
@@ -36,7 +36,7 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 
 		if(!$translate->isAvailable($language))
 		{
-			$language = $config->language->default;
+			$language = 'en';
 			//throw new Zend_Controller_Action_Exception('This page does not exist', 404);
 		}
 		//else
