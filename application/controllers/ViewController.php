@@ -81,7 +81,10 @@
         // Get authentication
         $auth = Zend_Auth::getInstance();
         
-        if ($contentData['published_cnt'] == 0 && $auth->getIdentity()->user_id != $ownerId) {
+        if ($contentData['published_cnt'] == 0 && 
+        	$auth->getIdentity()->user_id != $ownerId &&
+        	!in_array("admin", $this->view->logged_user_roles))
+        {
             $this->flash('content-not-found', '/'.$this->view->language.'/msg/');  
         }
    

@@ -9,32 +9,34 @@
     <div class="tag_view_results">
     <?php $i = 0; ?>
     <?php foreach($this->content as $content): ?>
-    
-        <?php if ($i != 0): ?>
-            <div class="user_content_spacer">
-                <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
-            </div>
-        <?php endif; ?>
-        
-        <?php $i++; ?>
-        
-        <div class="tag_view_<?php echo $content['key_cty']; ?>">
-        
-            <div class="tag_view_title">
-                <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'], 
-                                                     'language' => $this->language), 
-                                               'content_shortview', true); ?>">
-                    <?php echo $this->escape($content['title_cnt']); ?>
-                </a>
-            </div>
-            
-            <div class="tag_view_lead">
-                <p style="padding: 0px; margin:0px;">
-                    <?php echo $this->escape($content['lead_cnt']); ?>
-                </p>                
-            </div>
-            
-        </div>
+    	<?php if ($content['id_cnt'] != null)
+    	{
+    	?>
+	        <?php if ($i != 0): ?>
+	            <div class="user_content_spacer">
+	                <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
+	            </div>
+	        <?php endif; ?>
+	        
+	        <?php $i++; ?>
+	        
+	        <div class="tag_view_<?php echo $content['key_cty']; ?>">
+	            <div class="tag_view_title">
+	                <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'], 
+	                                                     'language' => $this->language), 
+	                                               'content_shortview', true); ?>">
+	                    <?php echo $this->escape($content['title_cnt']); ?>
+	                </a>
+	            </div>
+	            <div class="tag_view_lead">
+	                <p style="padding: 0px; margin:0px;">
+	                    <?php echo $this->escape($content['lead_cnt']); ?>
+	                </p>
+	            </div>
+	        </div>
+        <?php
+        }
+        ?>
     <?php endforeach; ?>
     </div>
     

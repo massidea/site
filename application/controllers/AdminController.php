@@ -366,6 +366,9 @@ class AdminController extends Oibs_Controller_CustomController
         if($posts)
     	{
 			// Remove content
+			//
+			// Currently does not delete anything other than the content itself
+			// (should delete comments etc. regarding to content)
     		if($posts['rm'] == "content")
     		{
     		    foreach($posts as $key => $post)
