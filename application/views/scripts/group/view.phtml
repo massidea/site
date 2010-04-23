@@ -1,0 +1,85 @@
+<div id="group-page">
+
+<h2><?php echo $this->grpData["group_name_grp"]; ?></h2>
+
+<div id="profile-meta">
+    <!--<img src="" alt="Group profile picture" class="avatar" />-->
+    
+    <p><?php echo $this->grpData["description_grp"]; ?></p>
+    
+    <p><strong>Tags:</strong></p>
+    
+    <p><?php echo $this->translate('group-founded') . ': '
+                . $this->grpData["created_grp"]; ?></p>
+    
+    <p><?php echo $this->translate('group-admins') . ': '; ?>
+    <?php
+        foreach ($this->grpAdmins as $user):
+            echo
+                '<a href="'
+              . $this->url(array(
+                    'controller' => 'account',
+                    'action' => 'view',
+                    'language' => $this->language,
+                    'user' => $user["login_name_usr"]), 'lang_default', true)
+              . '">'
+              . "{$user["login_name_usr"]}</a><br />\n";
+        endforeach;
+    ?></p>
+</div>
+
+
+
+<h4><?php echo $this->translate('group-members'); ?></h4>
+<?php
+    foreach ($this->grpUsers as $user):
+        echo
+            '<a href="'
+          . $this->url(array(
+                'controller' => 'account',
+                'action' => 'view',
+                'language' => $this->language,
+                'user' => $user["login_name_usr"]), 'lang_default', true)
+          . '">'
+          . "{$user["login_name_usr"]}</a><br />\n";
+    endforeach;
+?>
+
+<?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)) { ?>
+<h4><?php echo $this->translate('group-join'); ?></h4>
+<a href="<?php
+    echo $this->url(
+        array(
+            'controller' => 'group',
+            'action' => 'join',
+            'groupid' => $this->grpId,
+            'language' => $this->language),
+        'lang_default',
+        true);
+?>"><?php echo $this->translate('group-join_group'); ?></a>
+<?php } else { ?>
+<h4><?php echo $this->translate('group-leave'); ?></h4>
+<a href="<?php
+    echo $this->url(
+        array(
+            'controller' => 'group',
+            'action' => 'leave',
+            'groupid' => $this->grpId,
+            'language' => $this->language),
+        'lang_default',
+        true);
+?>"><?php echo $this->translate('group-leave_group'); ?></a>
+<?php } ?>
+
+<h4><?php echo $this->translate('group-comment'); ?></h4>
+<?php
+    echo $this->comment_form;
+    /*
+    echo "<pre>\n";
+    //var_dump($this->grpData);
+    //var_dump($this->grpUsers);
+    echo "</pre>\n";
+    //*/
+?>
+
+</div>

@@ -20,6 +20,7 @@ echo $this->doctype();
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/style.css'));
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix.css'), 'screen', 'IE 6');
+        $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
 	
     $this->headlink()->headLink(array(
         'rel' => 'shortcut icon',
@@ -35,7 +36,8 @@ echo $this->doctype();
         'href' => $headlink_rsslink),
         'PREPEND'
     );
-    
+
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/auto_translate.js'));                                    
     $this->headScript()->prependFile($this->baseUrl('/js/functions.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));

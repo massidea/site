@@ -1,6 +1,6 @@
 <?php
 /**
- *  ContentController -> Viewing content
+ *  CampaignController
  *
  *  Copyright (c) <2009>, Joel Peltonen <joel.peltonen@cs.tamk.fi>
  *  Copyright (c) <2009>, Pekka Piispanen <pekka.piispanen@cs.tamk.fi>
@@ -22,19 +22,29 @@
  *  ContentController - class
  *
  *  @package        controllers
- *  @author         Markus RIihelä
+ *  @author         Markus RIihelï¿½
  *  @copyright      2009 MassIdea.org
  *  @license        GPL v2
  *  @version        1.0
  */ 
-class CampaignController extends Zend_Controller_Action
+class CampaignController extends Oibs_Controller_CustomController
 {
 	/**
 	 * The default action - show the home page
 	 */
     public function indexAction() 
     {
-        // TODO Auto-generated {0}::indexAction() default action
+        // Add the "add new group"-form to the view.
+        $form = new Default_Form_AddCampaignForm();
+        $this->view->form = $form;
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            if ($form->isValid($post)) {
+                echo "valid";
+            }
+        }
     }
     
     /**
@@ -57,4 +67,3 @@ class CampaignController extends Zend_Controller_Action
         
     }
 }
-
