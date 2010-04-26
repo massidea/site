@@ -26,16 +26,40 @@ $pRSS->appendChild($pChannel);
 // Create more elements
 $pTitle = $pDom->createElement('title', 'Massidea.org - Podcast');
 $pLink  = $pDom->createElement('link', $baseUrl);
+$pCopy  = $pDom->createElement('copyright', "Massidea.org");
 $pDesc  = $pDom->createElement('description', 'podcast');
 $pLang  = $pDom->createElement('language', 'fi-fi');
+$pOwner = $pDom->createElement('itunes:owner', "Massidea.org");
+$pCategory = $pDom->createElement('itunes:category','');
+$pSubCategory = $pDom->createElement('itunes:category','');
 $pAuthor = $pDom->createElement('itunes:author', 'Massidea.org');
+$pImage = $pDom->createElement('itunes:image', $baseUrl."images/massidea_logo.png");
+$pSummary = $pDom->createElement('itunes:summary', "Massidea.org is an open innovation community where people can"
+												   ." share not only their ideas but also today's challenges and"
+												   ." visions of the future; key factors when creating new innovations."
+												   ." When combining a wide range of people and their different but"
+												   ." complementary insights, a novel thinking outside the box is possible."
+												   ." By smartly connecting people and their different brainchildren, a" 
+												   ." creative space - massidea.org - boosting the individual and communal" 
+												   ." creativity is born. Start smashing ideas with us in Massidea.org!"
+												   ." The human speech in these podcasts has been artificial produced from"
+												   ." text information by using speech synthesizer.");
+
+// Set category attributes 
+$pCategory->setAttribute('text', 'Goverment %amp; Organizations');
+$pSubCategory->setAttribute('text', 'Non Profit');
 
 // And make 'em true
 $pChannel->appendChild($pTitle);
 $pChannel->appendChild($pLink);
+$pChannel->appendChild($pAuthor);
 $pChannel->appendChild($pDesc);
 $pChannel->appendChild($pLang);
-$pChannel->appendChild($pAuthor);
+$pChannel->appendChild($pOwner);
+$pChannel->appendChild($pCategory);
+$pCategory->appendChild($pSubCategory);
+$pChannel->appendChild($pImage);
+$pChannel->appendChild($pSummary);
 
 // Loop every content item (from the controller)
 foreach($this->contentData as $content) {
@@ -43,9 +67,11 @@ foreach($this->contentData as $content) {
     $pItem  = $pDom->createElement('item');
     $pTitle = $pDom->createElement('title', $content['title_cnt']);
     $link = $baseUrl . $this->language . "/view/" . $content['id_cnt'];
-    $pLink  = $pDom->createElement('guide', $link);
-    $pDesc  = $pDom->createElement('description', $content['lead_cnt']);
-
+    $pLink  = $pDom->createElement('guid', $link);
+    $pAuthor = $pDom->createElement('itunes:author', $content['author']);
+    $pSubtitle  = $pDom->createElement('itunes:subtitle', $content['lead_cnt']);
+    $pKeywords = $pDom->createElement('itunes:keywords', $content['tags']);
+    
     // format date to use RCF-822 standard date syntax
 	$formattedDate = date("r", strtotime($content['created_cnt']));
     $pPubDate = $pDom->createElement('pubDate', $formattedDate);
@@ -65,9 +91,11 @@ foreach($this->contentData as $content) {
        
     // Apply item elements
     $pItem->appendChild($pTitle);
+    $pItem->appendChild($pKeywords);
     $pItem->appendChild($pLink);
-    $pItem->appendChild($pDesc);
+    $pItem->appendChild($pSubtitle);
     $pItem->appendChild($pPubDate);
+    $pItem->appendChild($pAuthor);
     $pItem->appendChild($pEnclosure);
     
     // Apply items to element 'channel'

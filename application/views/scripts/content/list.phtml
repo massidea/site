@@ -44,6 +44,14 @@
                                            
                 <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" />
             </a>
+            <a href="<?php echo $this->url(array('controller' => 'voice',
+                                                 'action' => 'generate',
+                                                 'type' => $this->type,
+                                                 'language' => $this->language),
+                                           'lang_default', true); ?>">
+                                           
+                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" />
+            </a>
         </h3>
     
         <?php /*if ($this->contentCount > $this->count): ?>

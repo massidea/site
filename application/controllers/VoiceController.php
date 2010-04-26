@@ -74,6 +74,28 @@ class VoiceController extends Oibs_Controller_CustomController
         $content = new Default_Model_Content();
         $data = $content->listRecent($cty, 1, $count, null, $this->view->language, null);
         
+        // Get tags for contents
+        $tags_model = new Default_Model_ContentHasTag();
+        $usersid_model = new Default_Model_ContentHasUser();
+        $users_model = new Default_Model_User();
+        $i = 0;
+        foreach ($data as $dataRow)
+        {
+        	$tags = $tags_model->getContentTags($dataRow['id_cnt']);
+        	$userId = $usersid_model->getContentOwners($dataRow['id_cnt']);
+
+   			$user = $users_model->getSimpleUserDataById($userId['id_usr']);
+   			$data[$i]['author'] = $user['login_name_usr'];
+   			
+        	$tagNames = array();
+        	foreach ($tags as $tag)
+        	{
+        		$tagNames[] = $tag['name_tag'];
+        	}
+        	$data[$i]['tags'] = join(", ", $tagNames);
+        	$i++;
+        }
+        
         // Set to view      
         $this->view->contentData = $data;
 	}
