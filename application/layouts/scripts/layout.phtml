@@ -342,8 +342,8 @@ echo $this->doctype();
 			<div class="sub_menu_left">&nbsp;</div>
             
 			<div id="todays_challenges" 
-                onmouseout="blurMenu('todays_challenges', 'red')" 
-                onmouseover="focusMenu(this.id, 'red');" 
+                onmouseout="blurMenu('todays_challenges', 'red', '<?=$this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'red', '<?=$this->baseUrl();?>');" 
                 class="sub_menu_item_red"
             >
                 
@@ -357,8 +357,8 @@ echo $this->doctype();
 			<div class="sub_menu_left_space">&nbsp;</div>
             
 			<div id="new_ideas" 
-                onmouseout="blurMenu(this.id, 'green')" 
-                onmouseover="focusMenu(this.id, 'green');" 
+                onmouseout="blurMenu(this.id, 'green', '<?=$this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'green', '<?=$this->baseUrl();?>');" 
                 class="sub_menu_item_green"
             >
                 <a href="<?php echo $this->url(array('type' => 'idea', 
@@ -371,8 +371,8 @@ echo $this->doctype();
 			<div class="sub_menu_left_space">&nbsp;</div>
             
             <div id="visions_of_the_future" 
-                onmouseout="blurMenu(this.id, 'yellow')" 
-                onmouseover="focusMenu(this.id, 'yellow');" 
+                onmouseout="blurMenu(this.id, 'yellow', '<?=$this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'yellow', '<?=$this->baseUrl();?>');" 
                 class="sub_menu_item_yellow"
             >
                 <a href="<?php echo $this->url(array('type' => 'finfo', 
