@@ -18,7 +18,7 @@
  * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: VideoQuery.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: VideoQuery.php 20099 2010-01-06 16:42:47Z bate $
  */
 
 /**
@@ -140,7 +140,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
                     $temp = trim($param);
                     // strip off the optional exclamation mark for numeric check
                     if (substr($temp, -1) == '!') {
-                        $temp = substr($temp, -1);
+                        $temp = substr($temp, 0, -1);
                     }
                     if (!is_numeric($temp)) {
                         require_once 'Zend/Gdata/App/InvalidArgumentException.php';
@@ -177,7 +177,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     public function setLocationRadius($value)
     {
         switch($value) {
-        	case null:
+            case null:
                 unset($this->_params['location-radius']);
             default:
                 $this->_params['location-radius'] = $value;
@@ -335,11 +335,11 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
      */
     public function setSafeSearch($value)
     {
-    	switch ($value) {
+        switch ($value) {
             case 'none':
                 $this->_params['safeSearch'] = 'none';
                 break;
-    		case 'moderate':
+            case 'moderate':
                 $this->_params['safeSearch'] = 'moderate';
                 break;
             case 'strict':
@@ -352,7 +352,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
                 throw new Zend_Gdata_App_InvalidArgumentException(
                     'The safeSearch parameter only supports the values '.
                     '\'none\', \'moderate\' or \'strict\'.');
-    	}
+        }
     }
 
     /**
@@ -363,9 +363,9 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
      */
     public function getSafeSearch()
     {
-    	if (array_key_exists('safeSearch', $this->_params)) {
-    		return $this->_params['safeSearch'];
-    	}
+        if (array_key_exists('safeSearch', $this->_params)) {
+            return $this->_params['safeSearch'];
+        }
         return $this;
     }
 
@@ -470,7 +470,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
                     }
                     break;
 
-            	case 'racy':
+                case 'racy':
                     if ($majorProtocolVersion == 2) {
                         require_once 'Zend/Gdata/App/VersionException.php';
                         throw new Zend_Gdata_App_VersionException("The $name " .

@@ -16,7 +16,7 @@
  * @package    Zend_Cache
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Core.php 16541 2009-07-07 06:59:03Z bkarwin $
+ * @version    $Id: Core.php 19781 2009-12-19 10:34:44Z mluiten $
  */
 
 
@@ -124,16 +124,38 @@ class Zend_Cache_Core
     /**
      * Constructor
      *
-     * @param  array $options Associative array of options
+     * @param  array|Zend_Config $options Associative array of options or Zend_Config instance
      * @throws Zend_Cache_Exception
      * @return void
      */
-    public function __construct(array $options = array())
+    public function __construct($options = array())
     {
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+        if (!is_array($options)) {
+            Zend_Cache::throwException("Options passed were not an array"
+            . " or Zend_Config instance.");
+        }
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
         }
         $this->_loggerSanity();
+    }
+
+    /**
+     * Set options using an instance of type Zend_Config
+     *
+     * @param Zend_Config $config
+     * @return Zend_Cache_Core
+     */
+    public function setConfig(Zend_Config $config)
+    {
+        $options = $config->toArray();
+        while (list($name, $value) = each($options)) {
+            $this->setOption($name, $value);
+        }
+        return $this;
     }
 
     /**
@@ -285,7 +307,7 @@ class Zend_Cache_Core
      * Test if a cache is available for the given id
      *
      * @param  string $id Cache id
-     * @return boolean True is a cache is available, false else
+     * @return int|false Last modified time of cache entry if it is available, false otherwise
      */
     public function test($id)
     {
@@ -483,11 +505,11 @@ class Zend_Cache_Core
         // we need to remove cache_id_prefix from ids (see #ZF-6178)
         $res = array();
         while (list(,$id) = each($array)) {
-        	if (strpos($id, $this->_options['cache_id_prefix']) === 0) {
-        		$res[] = preg_replace("~^{$this->_options['cache_id_prefix']}~", '', $id);
-        	} else {
-        		$res[] = $id;
-        	}
+            if (strpos($id, $this->_options['cache_id_prefix']) === 0) {
+                $res[] = preg_replace("~^{$this->_options['cache_id_prefix']}~", '', $id);
+            } else {
+                $res[] = $id;
+            }
         }
         return $res;
     }
@@ -520,7 +542,7 @@ class Zend_Cache_Core
         }
         return $this->_backend->getFillingPercentage();
     }
-    
+
     /**
      * Return an array of metadatas for the given cache id
      *
@@ -534,7 +556,7 @@ class Zend_Cache_Core
      */
     public function getMetadatas($id)
     {
-    	if (!$this->_extendedBackend) {
+        if (!$this->_extendedBackend) {
             Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
         }
         $id = $this->_id($id); // cache id may need prefix

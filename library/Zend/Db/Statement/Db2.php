@@ -17,7 +17,7 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Db2.php 16541 2009-07-07 06:59:03Z bkarwin $
+ * @version    $Id: Db2.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 /**
@@ -35,10 +35,6 @@ require_once 'Zend/Db/Statement.php';
  */
 class Zend_Db_Statement_Db2 extends Zend_Db_Statement
 {
-    /**
-     * Statement resource handle.
-     */
-    protected $_stmt = null;
 
     /**
      * Column names.
@@ -158,7 +154,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
 
         $error = db2_stmt_error();
         if ($error === '') {
-        	return false;
+            return false;
         }
 
         return $error;
@@ -172,10 +168,10 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      */
     public function errorInfo()
     {
-    	$error = $this->errorCode();
-    	if ($error === false){
-    		return false;
-    	}
+        $error = $this->errorCode();
+        if ($error === false){
+            return false;
+        }
 
         /*
          * Return three-valued array like PDO.  But DB2 does not distinguish

@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Alnum.php 16223 2009-06-21 20:04:53Z thomas $
+ * @version    $Id: Alnum.php 17467 2009-08-08 18:06:55Z thomas $
  */
 
 /**
@@ -127,7 +127,7 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
 
         self::$_filter->allowWhiteSpace = $this->allowWhiteSpace;
 
-        if ($value !== self::$_filter->filter($value)) {
+        if ($value != self::$_filter->filter($value)) {
             $this->_error(self::NOT_ALNUM);
             return false;
         }

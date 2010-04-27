@@ -17,7 +17,7 @@
  * @subpackage Value
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Struct.php 16208 2009-06-21 19:19:26Z thomas $
+ * @version    $Id: Struct.php 17759 2009-08-22 21:26:21Z lars $
  */
 
 
@@ -64,7 +64,7 @@ class Zend_XmlRpc_Value_Struct extends Zend_XmlRpc_Value_Collection
                 foreach ($this->_value as $name => $val) {
                     /* @var $val Zend_XmlRpc_Value */
                     $member = $struct->appendChild($dom->createElement('member'));
-                    $member->appendChild($dom->createElement('name', $name));
+                    $member->appendChild($dom->createElement('name', $this->_escapeXmlEntities($name)));
                     $member->appendChild($dom->importNode($val->getAsDOM(), 1));
                 }
             }

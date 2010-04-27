@@ -18,7 +18,7 @@
  * @subpackage App
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FeedEntryParent.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: FeedEntryParent.php 19870 2009-12-21 22:06:12Z tjohns $
  */
 
 /**
@@ -137,7 +137,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
             }
         } else {
             $this->transferFromDOM($element);
-        }  
+        }
     }
 
     /**
@@ -148,7 +148,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      * @deprecated Deprecated as of Zend Framework 1.7. Use
      *             setService() instead.
      * @param  Zend_Http_Client $httpClient
-     * @return Zend_Gdata_App_Feed Provides a fluent interface
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
      */
     public function setHttpClient(Zend_Http_Client $httpClient)
     {
@@ -534,7 +534,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      * an atom:title element in a feed or entry
      *
      * @param Zend_Gdata_App_Extension_Title $value
-     * @return Zend_Gdata_App_Feed_Entry_Parent Provides a fluent interface
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
      */
     public function setTitle($value)
     {
@@ -552,7 +552,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
 
     /**
      * @param Zend_Gdata_App_Extension_Updated $value
-     * @return Zend_Gdata_App_Feed_Entry_Parent Provides a fluent interface
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface
      */
     public function setUpdated($value)
     {

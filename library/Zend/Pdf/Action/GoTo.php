@@ -17,15 +17,18 @@
  * @subpackage Actions
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GoTo.php 17245 2009-07-28 13:59:45Z alexander $
+ * @version    $Id: GoTo.php 19672 2009-12-15 21:53:23Z alexander $
  */
+
+/** Internally used classes */
+require_once 'Zend/Pdf/Destination.php';
+
+require_once 'Zend/Pdf/Element/Dictionary.php';
+require_once 'Zend/Pdf/Element/Name.php';
+
 
 /** Zend_Pdf_Action */
 require_once 'Zend/Pdf/Action.php';
-
-/** Zend_Pdf_Destination */
-require_once 'Zend/Pdf/Destination.php';
-
 
 /**
  * PDF 'Go to' action
@@ -50,7 +53,6 @@ class Zend_Pdf_Action_GoTo extends Zend_Pdf_Action
      *
      * @param Zend_Pdf_Element_Dictionary $dictionary
      * @param SplObjectStorage            $processedActions  list of already processed action dictionaries, used to avoid cyclic references
-     * @throws Zend_Pdf_Exception
      */
     public function __construct(Zend_Pdf_Element $dictionary, SplObjectStorage $processedActions)
     {
@@ -81,7 +83,7 @@ class Zend_Pdf_Action_GoTo extends Zend_Pdf_Action
         $dictionary->Type = new Zend_Pdf_Element_Name('Action');
         $dictionary->S    = new Zend_Pdf_Element_Name('GoTo');
         $dictionary->Next = null;
-           $dictionary->D    = $destination->getResource();
+        $dictionary->D    = $destination->getResource();
 
         return new Zend_Pdf_Action_GoTo($dictionary, new SplObjectStorage());
     }
@@ -89,6 +91,7 @@ class Zend_Pdf_Action_GoTo extends Zend_Pdf_Action
     /**
      * Set goto action destination
      *
+     * @param Zend_Pdf_Destination|string $destination
      * @return Zend_Pdf_Action_GoTo
      */
     public function setDestination(Zend_Pdf_Destination $destination)
@@ -111,4 +114,3 @@ class Zend_Pdf_Action_GoTo extends Zend_Pdf_Action
         return $this->_destination;
     }
 }
-

@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 16920 2009-07-21 13:32:28Z ralph $
+ * @version    $Id: Abstract.php 19115 2009-11-20 17:41:25Z matthew $
  */
 
 
@@ -173,10 +173,10 @@ abstract class Zend_Db_Adapter_Abstract
                 $config = $config->toArray();
             } else {
                 /**
-                 * @see Zend_Db_Exception
+                 * @see Zend_Db_Adapter_Exception
                  */
-                require_once 'Zend/Db/Exception.php';
-                throw new Zend_Db_Exception('Adapter parameters must be in an array or a Zend_Config object');
+                require_once 'Zend/Db/Adapter/Exception.php';
+                throw new Zend_Db_Adapter_Exception('Adapter parameters must be in an array or a Zend_Config object');
             }
         }
 
@@ -209,7 +209,7 @@ abstract class Zend_Db_Adapter_Abstract
         if (!isset($config['charset'])) {
             $config['charset'] = null;
         }
-        
+
         if (!isset($config['persistent'])) {
             $config['persistent'] = false;
         }
@@ -738,7 +738,7 @@ abstract class Zend_Db_Adapter_Abstract
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param mixed $bind Data to bind into SELECT placeholders.
-     * @return string
+     * @return array
      */
     public function fetchAssoc($sql, $bind = array())
     {
@@ -775,7 +775,7 @@ abstract class Zend_Db_Adapter_Abstract
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param mixed $bind Data to bind into SELECT placeholders.
-     * @return string
+     * @return array
      */
     public function fetchPairs($sql, $bind = array())
     {
@@ -902,7 +902,7 @@ abstract class Zend_Db_Adapter_Abstract
             return str_replace('?', $this->quote($value, $type), $text);
         } else {
             while ($count > 0) {
-                if (strpos($text, '?') != false) {
+                if (strpos($text, '?') !== false) {
                     $text = substr_replace($text, $this->quote($value, $type), strpos($text, '?'), 1);
                 }
                 --$count;

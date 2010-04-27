@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NotEmpty.php 16852 2009-07-19 13:38:36Z matthew $
+ * @version    $Id: NotEmpty.php 18186 2009-09-17 18:57:00Z matthew $
  */
 
 /**
@@ -40,7 +40,7 @@ class Zend_Validate_NotEmpty extends Zend_Validate_Abstract
      */
     protected $_messageTemplates = array(
         self::IS_EMPTY => "Value is required and can't be empty",
-        self::INVALID  => "Invalid type given, value should be float, string, or integer",
+        self::INVALID  => "Invalid type given, value should be float, string, array, boolean or integer",
     );
 
     /**
@@ -53,19 +53,21 @@ class Zend_Validate_NotEmpty extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
-        if (!is_string($value) && !is_int($value) && !is_float($value) && !is_bool($value)) {
+        if (!is_null($value) && !is_string($value) && !is_int($value) && !is_float($value) &&
+            !is_bool($value) && !is_array($value)) {
             $this->_error(self::INVALID);
             return false;
         }
 
         $this->_setValue($value);
-
         if (is_string($value)
             && (('' === $value)
                 || preg_match('/^\s+$/s', $value))
         ) {
             $this->_error(self::IS_EMPTY);
             return false;
+        } elseif (is_int($value) && (0 === $value)) {
+            return true;
         } elseif (!is_string($value) && empty($value)) {
             $this->_error(self::IS_EMPTY);
             return false;

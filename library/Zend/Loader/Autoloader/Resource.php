@@ -16,7 +16,7 @@
  * @package    Zend_Loader
  * @subpackage Autoloader
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Resource.php 16541 2009-07-07 06:59:03Z bkarwin $
+ * @version    $Id: Resource.php 19190 2009-11-23 12:43:42Z bate $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -25,7 +25,7 @@ require_once 'Zend/Loader/Autoloader/Interface.php';
 
 /**
  * Resource loader
- * 
+ *
  * @uses       Zend_Loader_Autoloader_Interface
  * @package    Zend_Loader
  * @subpackage Autoloader
@@ -61,7 +61,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Constructor
-     * 
+     *
      * @param  array|Zend_Config $options Configuration options for resource autoloader
      * @return void
      */
@@ -85,13 +85,16 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
             throw new Zend_Loader_Exception('Resource loader requires both a namespace and a base path for initialization');
         }
 
+        if (!empty($namespace)) {
+            $namespace .= '_';
+        }
         Zend_Loader_Autoloader::getInstance()->unshiftAutoloader($this, $namespace);
     }
 
     /**
      * Overloading: methods
      *
-     * Allow retrieving concrete resource object instances using 'get<Resourcename>()' 
+     * Allow retrieving concrete resource object instances using 'get<Resourcename>()'
      * syntax. Example:
      * <code>
      * $loader = new Zend_Loader_Autoloader_Resource(array(
@@ -102,9 +105,9 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
      *
      * $foo = $loader->getModel('Foo'); // get instance of Stuff_Model_Foo class
      * </code>
-     * 
-     * @param  string $method 
-     * @param  array $args 
+     *
+     * @param  string $method
+     * @param  array $args
      * @return mixed
      * @throws Zend_Loader_Exception if method not beginning with 'get' or not matching a valid resource type is called
      */
@@ -129,12 +132,12 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
     }
 
     /**
-     * Attempt to autoload a class
-     * 
-     * @param  string $class 
-     * @return mixed False if not matched, otherwise result if include operation
+     * Helper method to calculate the correct class path
+     *
+     * @param string $class
+     * @return False if not matched other wise the correct path
      */
-    public function autoload($class)
+    public function getClassPath($class)
     {
         $segments          = explode('_', $class);
         $namespaceTopLevel = $this->getNamespace();
@@ -142,7 +145,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
         if (!empty($namespaceTopLevel)) {
             $namespace = array_shift($segments);
-            if ($namespace != $this->getNamespace()) {
+            if ($namespace != $namespaceTopLevel) {
                 // wrong prefix? we're done
                 return false;
             }
@@ -168,15 +171,36 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
             return false;
         }
 
-        $final = substr($class, strlen($lastMatch));
+        $final = substr($class, strlen($lastMatch) + 1);
         $path = $this->_components[$lastMatch];
-        return include $path . '/' . str_replace('_', '/', $final) . '.php';
+        $classPath = $path . '/' . str_replace('_', '/', $final) . '.php';
+
+        if (Zend_Loader::isReadable($classPath)) {
+            return $classPath;
+        }
+
+        return false;
+    }
+
+    /**
+     * Attempt to autoload a class
+     *
+     * @param  string $class
+     * @return mixed False if not matched, otherwise result if include operation
+     */
+    public function autoload($class)
+    {
+        $classPath = $this->getClassPath($class);
+        if (false !== $classPath) {
+            return include $classPath;
+        }
+        return false;
     }
 
     /**
      * Set class state from options
-     * 
-     * @param  array $options 
+     *
+     * @param  array $options
      * @return Zend_Loader_Autoloader_Resource
      */
     public function setOptions(array $options)
@@ -193,8 +217,8 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Set namespace that this autoloader handles
-     * 
-     * @param  string $namespace 
+     *
+     * @param  string $namespace
      * @return Zend_Loader_Autoloader_Resource
      */
     public function setNamespace($namespace)
@@ -205,7 +229,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Get namespace this autoloader handles
-     * 
+     *
      * @return string
      */
     public function getNamespace()
@@ -215,8 +239,8 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Set base path for this set of resources
-     * 
-     * @param  string $path 
+     *
+     * @param  string $path
      * @return Zend_Loader_Autoloader_Resource
      */
     public function setBasePath($path)
@@ -224,10 +248,10 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
         $this->_basePath = (string) $path;
         return $this;
     }
-    
+
     /**
      * Get base path to this set of resources
-     * 
+     *
      * @return string
      */
     public function getBasePath()
@@ -237,7 +261,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Add resource type
-     * 
+     *
      * @param  string $type identifier for the resource type being loaded
      * @param  string $path path relative to resource base path containing the resource types
      * @param  null|string $namespace sub-component namespace to append to base namespace that qualifies this resource type
@@ -261,7 +285,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
             require_once 'Zend/Loader/Exception.php';
             throw new Zend_Loader_Exception('Invalid path specification provided; must be string');
         }
-        $this->_resourceTypes[$type]['path'] = $this->getBasePath() . '/' . $path;
+        $this->_resourceTypes[$type]['path'] = $this->getBasePath() . '/' . rtrim($path, '\/');
 
         $component = $this->_resourceTypes[$type]['namespace'];
         $this->_components[$component] = $this->_resourceTypes[$type]['path'];
@@ -271,10 +295,10 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
     /**
      * Add multiple resources at once
      *
-     * $types should be an associative array of resource type => specification 
-     * pairs. Each specification should be an associative array containing 
-     * minimally the 'path' key (specifying the path relative to the resource 
-     * base path) and optionally the 'namespace' key (indicating the subcomponent 
+     * $types should be an associative array of resource type => specification
+     * pairs. Each specification should be an associative array containing
+     * minimally the 'path' key (specifying the path relative to the resource
+     * base path) and optionally the 'namespace' key (indicating the subcomponent
      * namespace to append to the resource namespace).
      *
      * As an example:
@@ -290,8 +314,8 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
      *     ),
      * ));
      * </code>
-     * 
-     * @param  array $types 
+     *
+     * @param  array $types
      * @return Zend_Loader_Autoloader_Resource
      */
     public function addResourceTypes(array $types)
@@ -317,9 +341,9 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Overwrite existing and set multiple resource types at once
-     * 
+     *
      * @see    Zend_Loader_Autoloader_Resource::addResourceTypes()
-     * @param  array $types 
+     * @param  array $types
      * @return Zend_Loader_Autoloader_Resource
      */
     public function setResourceTypes(array $types)
@@ -330,7 +354,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Retrieve resource type mappings
-     * 
+     *
      * @return array
      */
     public function getResourceTypes()
@@ -340,8 +364,8 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Is the requested resource type defined?
-     * 
-     * @param  string $type 
+     *
+     * @param  string $type
      * @return bool
      */
     public function hasResourceType($type)
@@ -351,8 +375,8 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Remove the requested resource type
-     * 
-     * @param  string $type 
+     *
+     * @param  string $type
      * @return Zend_Loader_Autoloader_Resource
      */
     public function removeResourceType($type)
@@ -367,7 +391,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Clear all resource types
-     * 
+     *
      * @return Zend_Loader_Autoloader_Resource
      */
     public function clearResourceTypes()
@@ -379,8 +403,8 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Set default resource type to use when calling load()
-     * 
-     * @param  string $type 
+     *
+     * @param  string $type
      * @return Zend_Loader_Autoloader_Resource
      */
     public function setDefaultResourceType($type)
@@ -393,7 +417,7 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
 
     /**
      * Get default resource type to use when calling load()
-     * 
+     *
      * @return string|null
      */
     public function getDefaultResourceType()
@@ -404,12 +428,12 @@ class Zend_Loader_Autoloader_Resource implements Zend_Loader_Autoloader_Interfac
     /**
      * Object registry and factory
      *
-     * Loads the requested resource of type $type (or uses the default resource 
-     * type if none provided). If the resource has been loaded previously, 
+     * Loads the requested resource of type $type (or uses the default resource
+     * type if none provided). If the resource has been loaded previously,
      * returns the previous instance; otherwise, instantiates it.
-     * 
-     * @param  string $resource 
-     * @param  string $type 
+     *
+     * @param  string $resource
+     * @param  string $type
      * @return object
      * @throws Zend_Loader_Exception if resource type not specified or invalid
      */

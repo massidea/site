@@ -17,7 +17,7 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Oracle.php 16541 2009-07-07 06:59:03Z bkarwin $
+ * @version    $Id: Oracle.php 18636 2009-10-17 05:44:41Z ralph $
  */
 
 /**
@@ -36,11 +36,6 @@ require_once 'Zend/Db/Statement.php';
  */
 class Zend_Db_Statement_Oracle extends Zend_Db_Statement
 {
-
-    /**
-     * The connection_stmt object.
-     */
-    protected $_stmt;
 
     /**
      * Column names.
@@ -234,16 +229,9 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
     public function _execute(array $params = null)
     {
         $connection = $this->_adapter->getConnection();
+
         if (!$this->_stmt) {
             return false;
-        }
-
-        if (! $this->_stmt) {
-            /**
-             * @see Zend_Db_Adapter_Oracle_Exception
-             */
-            require_once 'Zend/Db/Statement/Oracle/Exception.php';
-            throw new Zend_Db_Statement_Oracle_Exception(oci_error($connection));
         }
 
         if ($params !== null) {

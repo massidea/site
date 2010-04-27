@@ -101,6 +101,9 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
             
             $Default_Model_UserProfiles = New Default_Model_UserProfiles();
             $roles = $Default_Model_UserProfiles->getUserRoles($auth->getIdentity()->user_id);
+            if(is_string($roles)) {
+                $roles = array($roles);
+            }
             $this->view->logged_user_roles = $roles;
         }
         else

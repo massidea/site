@@ -17,7 +17,7 @@
  * @subpackage Gdata
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpClient.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: HttpClient.php 19512 2009-12-08 00:00:49Z tjohns $
  */
 
 /**
@@ -253,7 +253,7 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      */
     public function getAdapter()
     {
-    	return $this->adapter;
+        return $this->adapter;
     }
 
    /**
@@ -267,7 +267,7 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
         if ($adapter == null) {
             $this->adapter = $adapter;
         } else {
-        	  parent::setAdapter($adapter);
+              parent::setAdapter($adapter);
         }
     }
 
@@ -320,11 +320,11 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      *
      * @return Zend_Http_Client
      */
-    public function resetParameters()
+    public function resetParameters($clearAll = false)
     {
         $this->_streamingRequest = false;
 
-        return parent::resetParameters();
+        return parent::resetParameters($clearAll);
     }
 
     /**

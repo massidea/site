@@ -16,7 +16,7 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 16541 2009-07-07 06:59:03Z bkarwin $
+ * @version    $Id: Abstract.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 /**
@@ -87,8 +87,8 @@ abstract class Zend_Controller_Response_Abstract
      * Normalize a header name
      *
      * Normalizes a header name to X-Capitalized-Names
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return string
      */
     protected function _normalizeHeader($name)
@@ -543,9 +543,8 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function outputBody()
     {
-        foreach ($this->_body as $content) {
-            echo $content;
-        }
+        $body = implode('', $this->_body);
+        echo $body;
     }
 
     /**

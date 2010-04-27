@@ -17,7 +17,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LessThan.php 16223 2009-06-21 20:04:53Z thomas $
+ * @version    $Id: LessThan.php 17470 2009-08-08 22:27:09Z thomas $
  */
 
 
@@ -104,7 +104,7 @@ class Zend_Validate_LessThan extends Zend_Validate_Abstract
     {
         $this->_setValue($value);
         if ($this->_max <= $value) {
-            $this->_error();
+            $this->_error(self::NOT_LESS);
             return false;
         }
         return true;

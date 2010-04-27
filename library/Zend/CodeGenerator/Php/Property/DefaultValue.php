@@ -17,7 +17,7 @@
  * @subpackage PHP
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DefaultValue.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: DefaultValue.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 /**
@@ -50,22 +50,22 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
     const TYPE_NULL     = 'null';
     const TYPE_OTHER    = 'other';
     /**#@-*/
-    
+
     /**
      * @var array of reflected constants
      */
     protected static $_constants = array();
-    
+
     /**
      * @var mixed
      */
     protected $_value = null;
-    
+
     /**
      * @var string
      */
     protected $_type  = self::TYPE_AUTO;
-    
+
     /**
      * @var int
      */
@@ -78,11 +78,13 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
      */
     protected function _init()
     {
-        $reflect = new ReflectionClass(get_class($this));
-        self::$_constants = $reflect->getConstants();
-        unset($reflect);
+        if(count(self::$_constants) == 0) {
+            $reflect = new ReflectionClass(get_class($this));
+            self::$_constants = $reflect->getConstants();
+            unset($reflect);
+        }
     }
-    
+
     /**
      * isValidConstantType()
      *
@@ -93,7 +95,7 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
         if ($this->_type == self::TYPE_AUTO) {
             $type = $this->_getAutoDeterminedType($this->_value);
         }
-        
+
         // valid types for constants
         $scalarTypes = array(
             self::TYPE_BOOLEAN,
@@ -107,10 +109,10 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
             self::TYPE_CONSTANT,
             self::TYPE_NULL
             );
-        
+
         return in_array($type, $scalarTypes);
     }
-    
+
     /**
      * setValue()
      *
@@ -122,7 +124,7 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
         $this->_value = $value;
         return $this;
     }
-    
+
     /**
      * getValue()
      *
@@ -132,7 +134,7 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
     {
         return $this->_value;
     }
-    
+
     /**
      * setType()
      *
@@ -144,7 +146,7 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
         $this->_type = $type;
         return $this;
     }
-    
+
     /**
      * getType()
      *
@@ -154,7 +156,7 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
     {
         return $this->_type;
     }
-    
+
     /**
      * setArrayDepth()
      *
@@ -166,7 +168,7 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
         $this->_arrayDepth = $arrayDepth;
         return $this;
     }
-    
+
     /**
      * getArrayDepth()
      *
@@ -176,7 +178,7 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
     {
         return $this->_arrayDepth;
     }
-    
+
     /**
      * _getValidatedType()
      *
@@ -188,10 +190,10 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
         if (($constName = array_search($type, self::$_constants)) !== false) {
             return $type;
         }
-        
+
         return self::TYPE_AUTO;
     }
-    
+
     /**
      * _getAutoDeterminedType()
      *
@@ -221,10 +223,8 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
             default:
                 return self::TYPE_OTHER;
         }
-        
-        return self::TYPE_OTHER;
     }
-    
+
     /**
      * generate()
      *
@@ -233,16 +233,16 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
     public function generate()
     {
         $type = $this->_type;
-        
+
         if ($type != self::TYPE_AUTO) {
             $type = $this->_getValidatedType($type);
         }
-        
+
         $value = $this->_value;
-        
+
         if ($type == self::TYPE_AUTO) {
             $type = $this->_getAutoDeterminedType($value);
-            
+
             if ($type == self::TYPE_ARRAY) {
                 $rii = new RecursiveIteratorIterator(
                     $it = new RecursiveArrayIterator($value),
@@ -257,21 +257,27 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
                 }
                 $value = $rii->getSubIterator()->getArrayCopy();
             }
-            
+
         }
-        
+
         $output = '';
-        
+
         switch ($type) {
+            case self::TYPE_BOOLEAN:
+            case self::TYPE_BOOL:
+                $output .= ( $value ? 'true' : 'false' );
+                break;
             case self::TYPE_STRING:
-                $output .= "'" . $value . "'";
+                $output .= "'" . addcslashes($value, "'") . "'";
+                break;
+            case self::TYPE_NULL:
+                $output .= 'null';
                 break;
             case self::TYPE_NUMBER:
             case self::TYPE_INTEGER:
             case self::TYPE_INT:
             case self::TYPE_FLOAT:
             case self::TYPE_DOUBLE:
-            case self::TYPE_NULL:
             case self::TYPE_CONSTANT:
                 $output .= $value;
                 break;
@@ -292,9 +298,9 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
                         $outputParts[] = $partV;
                         $noKeyIndex++;
                     } else {
-                        $outputParts[] = (is_int($n) ? $n : "'" . $n . "'") . ' => ' . $partV;
+                        $outputParts[] = (is_int($n) ? $n : "'" . addcslashes($n, "'") . "'") . ' => ' . $partV;
                     }
-                   
+
                 }
                 $output .= implode(',' . PHP_EOL . str_repeat($this->_indentation, $this->_arrayDepth+1), $outputParts);
                 if ($curArrayMultiblock == true) {
@@ -304,11 +310,14 @@ class Zend_CodeGenerator_Php_Property_DefaultValue extends Zend_CodeGenerator_Ph
                 break;
             case self::TYPE_OTHER:
             default:
-                throw new Exception('I dont know this type');
+                require_once "Zend/CodeGenerator/Php/Exception.php";
+                throw new Zend_CodeGenerator_Php_Exception(
+                    "Type '".get_class($value)."' is unknown or cannot be used as property default value."
+                );
         }
-        
+
         $output .= ';';
-        
+
         return $output;
     }
 }

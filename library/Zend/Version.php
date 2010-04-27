@@ -16,7 +16,7 @@
  * @package    Zend_Version
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Version.php 17308 2009-07-30 18:53:39Z matthew $
+ * @version    $Id: Version.php 20147 2010-01-08 15:57:28Z matthew $
  */
 
 /**
@@ -32,7 +32,7 @@ final class Zend_Version
     /**
      * Zend Framework version identification - see compareVersion()
      */
-    const VERSION = '1.9.0';
+    const VERSION = '1.9.8';
 
     /**
      * Compare the specified Zend Framework version string $version
@@ -46,6 +46,8 @@ final class Zend_Version
      */
     public static function compareVersion($version)
     {
-        return version_compare($version, self::VERSION);
+        $version = strtolower($version);
+        $version = preg_replace('/(\d)pr(\d?)/', '$1a$2', $version);
+        return version_compare($version, strtolower(self::VERSION));
     }
 }

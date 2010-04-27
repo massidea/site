@@ -16,7 +16,7 @@
  * @package   Zend_File_Transfer
  * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Abstract.php 17201 2009-07-27 19:34:26Z thomas $
+ * @version   $Id: Abstract.php 20134 2010-01-07 21:57:02Z ralph $
  */
 
 /**
@@ -30,7 +30,7 @@
 abstract class Zend_File_Transfer_Adapter_Abstract
 {
     /**@+
-     * @const string Plugin loader Constants
+     * Plugin loader Constants
      */
     const FILTER    = 'FILTER';
     const VALIDATE  = 'VALIDATE';
@@ -246,7 +246,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      *
      * Otherwise, the path prefix is set on the appropriate plugin loader.
      *
+     * @param  string $prefix
      * @param  string $path
+     * @param  string $type
      * @return Zend_File_Transfer_Adapter_Abstract
      * @throws Zend_File_Transfer_Exception for invalid type
      */
@@ -1237,14 +1239,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             if (empty($result[$key])) {
                 if (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
                     $result[$key] = mime_content_type($file);
-                } else {
-                    $result[$key] = $value['type'];
                 }
             }
 
             if (empty($result[$key])) {
-                require_once 'Zend/File/Transfer/Exception.php';
-                throw new Zend_File_Transfer_Exception("The mimetype of file '{$value['name']}' could not been detected");
+                $result[$key] = 'application/octet-stream';
             }
         }
 

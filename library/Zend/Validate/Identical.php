@@ -16,10 +16,10 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Identical.php 16380 2009-06-30 20:10:03Z thomas $
+ * @version    $Id: Identical.php 17684 2009-08-20 09:20:36Z yoshida@zend.co.jp $
  */
 
-/** Zend_Validate_Abstract */
+/** @see Zend_Validate_Abstract */
 require_once 'Zend/Validate/Abstract.php';
 
 /**
@@ -81,7 +81,7 @@ class Zend_Validate_Identical extends Zend_Validate_Abstract
      */
     public function setToken($token)
     {
-        $this->_tokenstring = (string) $token;
+        $this->_tokenString = (string) $token;
         $this->_token       = $token;
         return $this;
     }

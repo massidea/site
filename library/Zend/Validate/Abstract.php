@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 16223 2009-06-21 20:04:53Z thomas $
+ * @version    $Id: Abstract.php 18688 2009-10-25 16:08:24Z thomas $
  */
 
 /**
@@ -142,12 +142,17 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     {
         if ($messageKey === null) {
             $keys = array_keys($this->_messageTemplates);
-            $messageKey = current($keys);
+            foreach($keys as $key) {
+                $this->setMessage($messageString, $key);
+            }
+            return $this;
         }
+
         if (!isset($this->_messageTemplates[$messageKey])) {
             require_once 'Zend/Validate/Exception.php';
             throw new Zend_Validate_Exception("No message template exists for key '$messageKey'");
         }
+
         $this->_messageTemplates[$messageKey] = $messageString;
         return $this;
     }

@@ -16,14 +16,11 @@
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ProjectProvider.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: ProjectProvider.php 17452 2009-08-08 08:27:54Z yoshida@zend.co.jp $
  */
 
-/** Zend_Tool_Project_Provider_Abstract */
+/** @see Zend_Tool_Project_Provider_Abstract */
 require_once 'Zend/Tool/Project/Provider/Abstract.php';
-
-/** Zend_Tool_Project_Provider_Exception */
-require_once 'Zend/Tool/Project/Provider/Exception.php';
 
 /**
  * @category   Zend
@@ -33,7 +30,7 @@ require_once 'Zend/Tool/Project/Provider/Exception.php';
  */
 class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provider_Abstract
 {
-    
+
     /**
      * createResource()
      *
@@ -44,7 +41,7 @@ class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provi
      */
     public static function createResource(Zend_Tool_Project_Profile $profile, $projectProviderName, $actionNames = null)
     {
-        
+
         if (!is_string($projectProviderName)) {
             /**
              * @see Zend_Tool_Project_Provider_Exception
@@ -60,7 +57,7 @@ class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provi
 
         return $projectProvider;
     }
-    
+
     /**
      * getName()
      *
@@ -70,7 +67,7 @@ class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provi
     {
         return 'ProjectProvider';
     }
-    
+
     /**
      * Create stub for Zend_Tool Project Provider
      *
@@ -81,20 +78,20 @@ class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provi
     public function create($name, $actions = null)
     {
         $profile = $this->_loadProfileRequired();
-        
+
         $projectProvider = self::createResource($profile, $name, $actions);
 
         if ($this->_registry->getRequest()->isPretend()) {
-            $this->_registry->getResponse()->appendContent('Would create a project provider named ' . $name 
+            $this->_registry->getResponse()->appendContent('Would create a project provider named ' . $name
                 . ' in location ' . $projectProvider->getPath()
                 );
         } else {
-            $this->_registry->getResponse()->appendContent('Creating a project provider named ' . $name 
+            $this->_registry->getResponse()->appendContent('Creating a project provider named ' . $name
                 . ' in location ' . $projectProvider->getPath()
                 );
             $projectProvider->create();
             $this->_storeProfile();
         }
-        
+
     }
 }

@@ -17,7 +17,7 @@
  * @subpackage PHPUnit
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbAdapter.php 16911 2009-07-21 11:54:03Z matthew $
+ * @version    $Id: DbAdapter.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 /**
@@ -29,6 +29,11 @@ require_once "Zend/Db/Adapter/Abstract.php";
  * @see Zend_Test_DbStatement
  */
 require_once "Zend/Test/DbStatement.php";
+
+/**
+ * @see Zend_Db_Profiler
+ */
+require_once 'Zend/Db/Profiler.php';
 
 /**
  * Testing Database Adapter which acts as a stack for SQL Results
@@ -71,7 +76,10 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
      * Empty constructor to make it parameterless.
      */
     public function __construct()
-    {        
+    {
+        $profiler = new Zend_Db_Profiler();
+        $profiler->setEnabled(true);
+        $this->setProfiler($profiler);
     }
 
     /**
@@ -88,7 +96,7 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
 
     /**
      * Append a new Insert Id to the {@see lastInsertId}.
-     * 
+     *
      * @param  int|string $id
      * @return Zend_Test_DbAdapter
      */
@@ -214,11 +222,20 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
      */
     public function prepare($sql)
     {
+        $queryId = $this->getProfiler()->queryStart($sql);
+
         if(count($this->_statementStack)) {
-            return array_pop($this->_statementStack);
+            $stmt = array_pop($this->_statementStack);
         } else {
-            return new Zend_Test_DbStatement();
+            $stmt = new Zend_Test_DbStatement();
         }
+
+        if($this->getProfiler()->getEnabled() == true) {
+            $qp = $this->getProfiler()->getQueryProfile($queryId);
+            $stmt->setQueryProfile($qp);
+        }
+
+        return $stmt;
     }
 
     /**
@@ -257,7 +274,7 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
      */
     protected function _commit()
     {
-        
+        return;
     }
 
     /**
@@ -301,7 +318,7 @@ class Zend_Test_DbAdapter extends Zend_Db_Adapter_Abstract
      */
     public function supportsParameters($type)
     {
-        return false;
+        return true;
     }
 
     /**

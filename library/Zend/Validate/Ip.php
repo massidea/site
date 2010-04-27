@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Ip.php 16223 2009-06-21 20:04:53Z thomas $
+ * @version    $Id: Ip.php 17470 2009-08-08 22:27:09Z thomas $
  */
 
 /**
@@ -62,10 +62,10 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
 
         if ((ip2long($value) === false) || (long2ip(ip2long($value)) !== $value)) {
             if (!function_exists('inet_pton')) {
-                $this->_error();
+                $this->_error(self::NOT_IP_ADDRESS);
                 return false;
             } else if ((@inet_pton($value) === false) ||(inet_ntop(@inet_pton($value)) !== $value)) {
-                $this->_error();
+                $this->_error(self::NOT_IP_ADDRESS);
                 return false;
             }
         }

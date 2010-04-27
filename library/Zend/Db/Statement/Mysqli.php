@@ -17,7 +17,7 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mysqli.php 16927 2009-07-21 17:49:39Z ralph $
+ * @version    $Id: Mysqli.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 
@@ -26,7 +26,7 @@
  */
 require_once 'Zend/Db/Statement.php';
 
-    
+
 /**
  * Extends for Mysqli
  *
@@ -38,13 +38,6 @@ require_once 'Zend/Db/Statement.php';
  */
 class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
 {
-
-    /**
-     * The mysqli_stmt object.
-     *
-     * @var mysqli_stmt
-     */
-    protected $_stmt;
 
     /**
      * Column names.
@@ -81,7 +74,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
              * @see Zend_Db_Statement_Mysqli_Exception
              */
             require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli prepare error: " . $mysqli->error);
+            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli prepare error: " . $mysqli->error, $mysqli->errno);
         }
     }
 
@@ -218,7 +211,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
              * @see Zend_Db_Statement_Mysqli_Exception
              */
             require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement execute error : " . $this->_stmt->error);
+            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement execute error : " . $this->_stmt->error, $this->_stmt->errno);
         }
 
 
@@ -230,7 +223,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
                  * @see Zend_Db_Statement_Mysqli_Exception
                  */
                 require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-                throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement metadata error: " . $this->_stmt->error);
+                throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement metadata error: " . $this->_stmt->error, $this->_stmt->errno);
             }
         }
 
@@ -282,12 +275,12 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
         // fetch the next result
         $retval = $this->_stmt->fetch();
         switch ($retval) {
-        case null: // end of data
-        case false: // error occurred
-            $this->_stmt->reset();
-            return $retval;
-        default:
-            // fallthrough
+            case null: // end of data
+            case false: // error occurred
+                $this->_stmt->reset();
+                return false;
+            default:
+                // fallthrough
         }
 
         // make sure we have a fetch mode

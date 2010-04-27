@@ -1,0 +1,1542 @@
+2010-04-20T10:50:24+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[28000] [1045] Access denied for user 'oibs'@'localhost' (using password: NO). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Mysql.php(96): Zend_Db_Adapter_Pdo_Abstract->_connect()
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(448): Zend_Db_Adapter_Pdo_Mysql->_connect()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(706): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Select), Array)
+#4 /home/stoney78/www/oibs/oibs/site/trunk/application/models/Content.php(166): Zend_Db_Adapter_Abstract->fetchAll(Object(Zend_Db_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/IndexController.php(61): Default_Model_Content->listRecent('all', 12, -1, 'created', Object(Zend_Locale), -1)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): IndexController->indexAction()
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#10 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(16): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/')
+#11 [internal function]: AccountControllerTest->testGuestGetsRedirectedToIndexActionOfIndexPageFromIndexAction()
+#12 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#14 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#15 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#17 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#18 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#19 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#20 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#21 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#22 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#23 {main}
+2010-04-20T10:50:28+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T10:51:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[28000] [1045] Access denied for user 'oibs'@'localhost' (using password: NO). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Mysql.php(96): Zend_Db_Adapter_Pdo_Abstract->_connect()
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(448): Zend_Db_Adapter_Pdo_Mysql->_connect()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(706): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Select), Array)
+#4 /home/stoney78/www/oibs/oibs/site/trunk/application/models/Content.php(166): Zend_Db_Adapter_Abstract->fetchAll(Object(Zend_Db_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/IndexController.php(61): Default_Model_Content->listRecent('all', 12, -1, 'created', Object(Zend_Locale), -1)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): IndexController->indexAction()
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#10 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(16): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/')
+#11 [internal function]: AccountControllerTest->testGuestGetsRedirectedToIndexActionOfIndexPageFromIndexAction()
+#12 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#14 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#15 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#17 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#18 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#19 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#20 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#21 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#22 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#23 {main}
+2010-04-20T10:51:05+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T10:51:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[28000] [1045] Access denied for user 'oibs'@'localhost' (using password: NO). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Mysql.php(96): Zend_Db_Adapter_Pdo_Abstract->_connect()
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(448): Zend_Db_Adapter_Pdo_Mysql->_connect()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(706): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Select), Array)
+#4 /home/stoney78/www/oibs/oibs/site/trunk/application/models/Content.php(166): Zend_Db_Adapter_Abstract->fetchAll(Object(Zend_Db_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/IndexController.php(61): Default_Model_Content->listRecent('all', 12, -1, 'created', Object(Zend_Locale), -1)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): IndexController->indexAction()
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#10 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/IndexControllerTest.php(12): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/')
+#11 [internal function]: IndexControllerTest->testIndexAction()
+#12 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(IndexControllerTest), Array)
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#14 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#15 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(IndexControllerTest))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#17 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(IndexControllerTest), Object(PHPUnit_Framework_TestResult))
+#18 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#19 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#20 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#21 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#22 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#23 {main}
+2010-04-20T10:51:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T10:53:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T10:54:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T12:38:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T12:46:01+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T12:49:38+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T12:53:22+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-20T12:54:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Argument 1 passed to Zend_Auth_Adapter_DbTable::__construct() must be an instance of Zend_Db_Adapter_Abstract, null given, called in /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php on line 89 and defined. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Auth/Adapter/DbTable.php(128): PHPUnit_Util_ErrorHandler::handleError(4096, 'Argument 1 pass...', '/home/stoney78/...', 128, Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/LoginController.php(89): Zend_Auth_Adapter_DbTable->__construct(NULL, 'users_usr', 'login_name_usr', 'password_usr', 'md5(?)')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): LoginController->indexAction()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_HttpTestCase), Object(Zend_Controller_Response_HttpTestCase))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Test/PHPUnit/ControllerTestCase.php(193): Zend_Controller_Front->dispatch()
+#6 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(53): Zend_Test_PHPUnit_ControllerTestCase->dispatch('/account/login/')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/ControllerTestCase.php(39): ControllerTestCase->doDispatch('/account/login/', Array)
+#8 /home/stoney78/www/oibs/oibs/site/trunk/tests/application/controllers/AccountControllerTest.php(23): ControllerTestCase->logIn(Array)
+#9 [internal function]: AccountControllerTest->testUserCanLoadThisPage()
+#10 /usr/share/pear/PHPUnit/Framework/TestCase.php(837): ReflectionMethod->invokeArgs(Object(AccountControllerTest), Array)
+#11 /usr/share/pear/PHPUnit/Framework/TestCase.php(720): PHPUnit_Framework_TestCase->runTest()
+#12 /usr/share/pear/PHPUnit/Framework/TestResult.php(686): PHPUnit_Framework_TestCase->runBare()
+#13 /usr/share/pear/PHPUnit/Framework/TestCase.php(667): PHPUnit_Framework_TestResult->run(Object(AccountControllerTest))
+#14 /usr/share/pear/PHPUnit/Framework/TestSuite.php(753): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#15 /usr/share/pear/PHPUnit/Framework/TestSuite.php(729): PHPUnit_Framework_TestSuite->runTest(Object(AccountControllerTest), Object(PHPUnit_Framework_TestResult))
+#16 /usr/share/pear/PHPUnit/Framework/TestSuite.php(688): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#17 /usr/share/pear/PHPUnit/TextUI/TestRunner.php(349): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult), false, Array, Array, false)
+#18 /usr/share/pear/PHPUnit/TextUI/Command.php(213): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#19 /usr/share/pear/PHPUnit/TextUI/Command.php(146): PHPUnit_TextUI_Command->run(Array, true)
+#20 /usr/bin/phpunit(54): PHPUnit_TextUI_Command::main()
+#21 {main}
+2010-04-23T13:17:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T13:22:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:13:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Plugin by name 'ExtendedPartialLoop' was not found in the registry; used paths:
+Oibs_Viwe_Helper_: /home/stoney78/www/oibs/oibs/site/trunk/application/../library/Oibs/View/Helper/
+Zend_View_Helper_: Zend/View/Helper/:/home/stoney78/www/oibs/oibs/site/trunk/application/views/helpers/. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(1116): Zend_Loader_PluginLoader->load('ExtendedPartial...')
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(567): Zend_View_Abstract->_getPlugin('helper', 'extendedPartial...')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(334): Zend_View_Abstract->getHelper('extendedPartial...')
+#3 [internal function]: Zend_View_Abstract->__call('extendedPartial...', Array)
+#4 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->extendedPartialLoop('partials/conten...', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#13 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#16 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#17 {main}
+2010-04-23T14:13:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Oibs/View/Helper/ExtendedPartialLoop.php(27): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Oibs_View_Helper_ExtendedPartialLoop->partial('partials/conten...', NULL, Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Oibs/View/Helper/ExtendedPartialLoop.php(20): Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#12 [internal function]: Oibs_View_Helper_ExtendedPartialLoop->extendedPartialLoop('partials/conten...', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#14 [internal function]: Zend_View_Abstract->__call('extendedPartial...', Array)
+#15 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->extendedPartialLoop('partials/conten...', Array)
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#25 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#26 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#27 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#28 {main}
+2010-04-23T14:14:35+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Oibs/View/Helper/ExtendedPartialLoop.php(27): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Oibs_View_Helper_ExtendedPartialLoop->partial('partials/conten...', NULL, Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Oibs/View/Helper/ExtendedPartialLoop.php(20): Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#12 [internal function]: Oibs_View_Helper_ExtendedPartialLoop->extendedPartialLoop('partials/conten...', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#14 [internal function]: Zend_View_Abstract->__call('extendedPartial...', Array)
+#15 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->extendedPartialLoop('partials/conten...', Array)
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#25 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#26 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#27 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#28 {main}
+2010-04-23T14:23:49+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:25:57+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:37:09+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(31): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:41:20+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(31): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:41:31+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(31): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:42:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(31): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:48:43+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(16): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(31): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T14:55:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(17): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(32): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T15:00:35+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(17): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(30): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T15:11:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(20): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(30): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-23T15:11:38+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: language is not specified. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Router/Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(20): Zend_View->url(Array, 'content_shortvi...', true)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#10 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#12 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#13 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(30): Zend_View->partialLoop('partials/conten...', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#26 {main}
+2010-04-26T13:17:20+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (podcasts.png). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:26:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (podcasts.png). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:27:17+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (podcasts.png). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:27:25+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (podcasts.png). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:27:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (podcasts.png). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:40:03+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:40:03+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:40:14+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:40:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:40:17+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:40:17+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-26T13:40:21+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T13:40:21+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T13:47:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T13:47:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T21:19:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T21:19:35+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T21:19:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T21:19:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T21:19:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-26T21:19:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:39:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Action "" does not exist and was not trapped in __call(). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(515): Zend_Controller_Action->__call('Action', Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('Action')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#5 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#6 {main}
+2010-04-27T11:39:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Action "" does not exist and was not trapped in __call(). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(515): Zend_Controller_Action->__call('Action', Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('Action')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#5 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#6 {main}
+2010-04-27T11:39:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Action "" does not exist and was not trapped in __call(). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(515): Zend_Controller_Action->__call('Action', Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('Action')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#5 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#6 {main}
+2010-04-27T11:39:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Action "" does not exist and was not trapped in __call(). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(515): Zend_Controller_Action->__call('Action', Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('Action')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#5 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#6 {main}
+2010-04-27T11:39:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (podcasts.png). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T11:46:29+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:46:29+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:46:54+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:46:54+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:46:55+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:46:55+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:47:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:47:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:47:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:47:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:47:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:47:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T11:51:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: script 'partial/tag.php' not found in path (/home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(827): Zend_View_Abstract->_script('partial/tag.php')
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partial/tag.php')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partial/tag.php', NULL, Array)
+#3 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partial/tag.php', Array)
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#5 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(54): Zend_View->partialLoop('partial/tag.php', Array)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#11 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#12 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#13 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->partialLoop('partials/conten...', Array)
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#26 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#27 {main}
+2010-04-27T11:52:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: script 'partials/tag.php' not found in path (/home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(827): Zend_View_Abstract->_script('partials/tag.ph...')
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/tag.ph...')
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/tag.ph...', NULL, Array)
+#3 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/tag.ph...', Array)
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#5 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/partials/content_row.phtml(54): Zend_View->partialLoop('partials/tag.ph...', Array)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Helper/PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#11 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#12 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(340): call_user_func_array(Array, Array)
+#13 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#14 /home/stoney78/www/oibs/oibs/site/trunk/application/views/scripts/index/index.phtml(29): Zend_View->partialLoop('partials/conten...', Array)
+#15 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View.php(108): include('/home/stoney78/...')
+#16 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/View/Abstract.php(831): Zend_View->_run('/home/stoney78/...')
+#17 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(903): Zend_View_Abstract->render('index/index.pht...')
+#18 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('index/index.pht...', NULL)
+#19 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/Helper/ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#20 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action/HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#21 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#22 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#23 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#24 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#25 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#26 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#27 {main}
+2010-04-27T12:06:30+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:06:31+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:24:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:24:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:37:47+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:37:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:37:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:37:49+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T12:38:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T12:38:05+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Db/Table/Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 /home/stoney78/www/oibs/oibs/site/trunk/application/models/UserProfiles.php(216): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 /home/stoney78/www/oibs/oibs/site/trunk/application/controllers/AccountController.php(191): Default_Model_UserProfiles->getPublicData(NULL)
+#7 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Action.php(513): AccountController->viewAction()
+#8 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Dispatcher/Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#9 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#10 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#11 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#12 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#13 {main}
+2010-04-27T13:14:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T13:14:16+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T14:35:31+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T14:35:31+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T14:45:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T14:45:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T14:45:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-04-27T14:46:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (<). 
+STACK TRACE:
+#0 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/stoney78/www/oibs/oibs/site/trunk/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/stoney78/www/oibs/oibs/site/trunk/www/index.php(30): Zend_Application->run()
+#4 {main}

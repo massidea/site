@@ -24,79 +24,11 @@ $url_more = $this->url(array('controller' => 'search',
 
 <div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
 
-<?php if (isset($this->recentposts) && $this->recentposts != null && $this->recentposts != ''): ?>
-
-    <?php foreach($this->recentposts as $post): ?>
-    
-    <div class="user_content_row">
-        <div class="user_image_list">
-            <img src="<?php echo $this->url(array('controller' => 'account',
-                                                  'action' => 'profilethumb',
-                                                  'id' => $post['id_usr'],
-                                                  'language' => $this->language,
-                                                  'thumb' => 'true'),
-                                           'lang_default', true)?>" 
-                alt="User image" class="profile_image_smallsize smallsize_<?php echo $post['key_cty'];?>_border" />
-        </div>
-        
-        <div class="user_summary_list_without_stats">
-            <?php
-                $url_post = $this->url(array('content_id' => $post['id_cnt'],
-                                             'language' => $this->language), 
-                                       'content_shortview', true); 
-                
-                $url_user = $this->url(array('controller' => 'account',
-                                             'action' => 'view', 
-                                             'user' => $post['login_name_usr'],
-                                             'language' => $this->language),
-                                       'lang_default', true);
-            ?>
-            <span class="summary_topic">
-                <a href="<?php echo $url_user; ?>">
-                    <?php echo $post['login_name_usr']; ?>
-                </a>
-                : 
-                <b>
-                    <a href="<?php echo $url_post;?>">
-                        <?php echo $post['title_cnt'];?>
-                    </a>
-                </b>
-            </span>
-            
-            <br />
-            
-            <span class="summary_leadtext">
-                <?php echo $post['lead_cnt']; ?>
-            </span>
-            
-            <br />
-            
-            <span class="summary_tags">
-                <b>
-                    <a href="<?php echo $url_tag_cloud; ?>">
-                        Tags
-                    </a>:
-                </b>
-                <?php foreach ($post['tags'] as $tag): ?>
-                <a href="<?php echo $this->url(array('controller' => 'tag',
-                                                     'action' => 'view',
-                                                     'id' => $tag['id_tag'],
-                                                     'language' => $this->language), 
-                                               'lang_default', true);?>">
-                    <?php echo $tag['name_tag']; ?>
-                </a>
-                <?php endforeach; ?>
-           </span>
-        </div>
-        
-        <div style="clear: both;"></div>
-        
-    </div>
-    
-    <?php endforeach; ?>
-    
-<?php endif; ?>
-
+<?php 
+    if (isset($this->recentposts) && $this->recentposts != null && $this->recentposts != '') {
+        echo $this->partialLoop('partials/content_row.phtml', $this->recentposts);
+    }
+?>
     <div class="user_content_spacer">
         <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
     </div>
@@ -151,16 +83,8 @@ Commented to fix temporary problem, will be researched further later
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
     
     <div class="tag_cloud">
-        <?php foreach ($this->poptags as $tag): ?>
-            <a href="<?php echo $this->url(array('controller' => 'tag',
-                                                 'action' => 'view',
-                                                 'id' => $tag['id_tag'],
-                                                 'language' => $this->language),
-                                           'lang_default', true);?>" 
-                style="font-size:<?php echo $tag['tag_size']?>%">
-                <?php echo stripslashes($tag['name_tag']); ?>
-            </a>
-        <?php endforeach; ?>
+       
+        <?php echo $this->partialLoop('partials/tag.phtml', $this->poptags); ?>
         
         <p id="show_all_tags" style="padding: 0px; margin-top: 10px;" class="top_right_box_links">
             <a href="<?php echo $url_tag_cloud; ?>">
@@ -181,19 +105,7 @@ Commented to fix temporary problem, will be researched further later
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
     
     <div class="top_right_box_links_users">
-        <?php foreach ($this->activeusers as $user): ?>
-        
-        <a href="<?php echo $this->url(array('controller' => 'account',
-                                'action' => 'view', 
-                                'user' => $user['login_name_usr'],
-                                'language' => $this->language),
-                                'lang_default', true);?>">
-            <?php echo $user['login_name_usr']; ?>
-        </a> 
-        (<?php echo $user['count']; ?>)
-        <br />
-        
-        <?php endforeach; ?>
+        <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
     </div>
     
     <div class="top_right_box_links_show_all_users">

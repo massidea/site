@@ -43,7 +43,7 @@ require_once 'Zend/XmlRpc/Fault.php';
  * @package  Zend_XmlRpc
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: Request.php 16208 2009-06-21 19:19:26Z thomas $
+ * @version $Id: Request.php 17786 2009-08-23 22:26:33Z lars $
  */
 class Zend_XmlRpc_Request
 {
@@ -326,7 +326,7 @@ class Zend_XmlRpc_Request
             $types = array();
             $argv  = array();
             foreach ($xml->params->children() as $param) {
-                if (! $param->value instanceof SimpleXMLElement) {
+                if (!isset($param->value)) {
                     $this->_fault = new Zend_XmlRpc_Fault(633);
                     $this->_fault->setEncoding($this->getEncoding());
                     return false;

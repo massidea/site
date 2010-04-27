@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Float.php 17081 2009-07-25 21:19:17Z thomas $
+ * @version    $Id: Float.php 17470 2009-08-08 22:27:09Z thomas $
  */
 
 /**
@@ -104,7 +104,7 @@ class Zend_Validate_Float extends Zend_Validate_Abstract
             $valueFiltered = str_replace($locale['decimal_point'], '.', $valueFiltered);
 
             if (strval(floatval($valueFiltered)) != $valueFiltered) {
-                $this->_error();
+                $this->_error(self::NOT_FLOAT);
                 return false;
             }
 
@@ -112,11 +112,11 @@ class Zend_Validate_Float extends Zend_Validate_Abstract
             try {
                 if (!Zend_Locale_Format::isFloat($value, array('locale' => 'en')) &&
                     !Zend_Locale_Format::isFloat($value, array('locale' => $this->_locale))) {
-                    $this->_error();
+                    $this->_error(self::NOT_FLOAT);
                     return false;
                 }
             } catch (Zend_Locale_Exception $e) {
-                $this->_error();
+                $this->_error(self::NOT_FLOAT);
                 return false;
             }
         }

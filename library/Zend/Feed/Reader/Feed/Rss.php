@@ -16,7 +16,7 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Rss.php 16963 2009-07-22 14:39:31Z padraic $
+ * @version    $Id: Rss.php 19044 2009-11-19 16:44:24Z padraic $
  */
 
 /**
@@ -51,9 +51,8 @@ class Zend_Feed_Reader_Feed_Rss extends Zend_Feed_Reader_FeedAbstract
     /**
      * Constructor
      *
-     * @param  Zend_Feed_Abstract $feed
+     * @param  DOMDocument $dom
      * @param  string $type
-     * @param  string $xpath
      */
     public function __construct(DomDocument $dom, $type = null)
     {
@@ -74,7 +73,7 @@ class Zend_Feed_Reader_Feed_Rss extends Zend_Feed_Reader_FeedAbstract
         }
     }
 
-	/**
+    /**
      * Get a single author
      *
      * @param  int $index
@@ -170,7 +169,7 @@ class Zend_Feed_Reader_Feed_Rss extends Zend_Feed_Reader_FeedAbstract
         return $this->_data['copyright'];
     }
 
-	/**
+    /**
      * Get the feed creation date
      *
      * @return string|null
@@ -201,19 +200,19 @@ class Zend_Feed_Reader_Feed_Rss extends Zend_Feed_Reader_FeedAbstract
                 $dateModified = $this->_xpath->evaluate('string(/rss/channel/lastBuildDate)');
             }
             if ($dateModified) {
-                $date = new Zend_Date();
-                try {
-                    $date->set($dateModified, Zend_Date::RFC_822);
-                } catch (Zend_Date_Exception $e) {
+                $dateStandards = array(Zend_Date::RSS, Zend_Date::RFC_822,
+                Zend_Date::RFC_2822, Zend_Date::DATES);
+                $date = new Zend_Date;
+                foreach ($dateStandards as $standard) {
                     try {
-                        $date->set($dateModified, Zend_Date::RFC_2822);
+                        $date->set($dateModified, $standard);
+                        break;
                     } catch (Zend_Date_Exception $e) {
-                        try {
-                            $date->set($dateModified, Zend_Date::DATES);
-                        } catch (Zend_Date_Exception $e) {
+                        if ($standard == Zend_Date::DATES) {
                             require_once 'Zend/Feed/Exception.php';
                             throw new Zend_Feed_Exception(
-                                'Could not load date due to unrecognised format (should follow RFC 822 or 2822): '
+                                'Could not load date due to unrecognised'
+                                .' format (should follow RFC 822 or 2822):'
                                 . $e->getMessage()
                             );
                         }
@@ -493,7 +492,7 @@ class Zend_Feed_Reader_Feed_Rss extends Zend_Feed_Reader_FeedAbstract
         return $this->_data['title'];
     }
 
-	/**
+    /**
      * Read all entries to the internal entries array
      *
      */

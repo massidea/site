@@ -17,7 +17,7 @@
  * @subpackage Ec2
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Abstract.php 19978 2009-12-30 15:29:14Z sidhighwind $
  */
 
 require_once 'Zend/Service/Amazon/Abstract.php';
@@ -163,7 +163,7 @@ abstract class Zend_Service_Amazon_Ec2_Abstract extends Zend_Service_Amazon_Abst
 
         $arrData = array();
         foreach($paramaters as $key => $value) {
-            $arrData[] = $key . '=' . str_replace("%7E", "~", urlencode($value));
+            $arrData[] = $key . '=' . str_replace("%7E", "~", rawurlencode($value));
         }
 
         $data .= implode('&', $arrData);

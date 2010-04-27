@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Int.php 17116 2009-07-26 09:39:09Z thomas $
+ * @version    $Id: Int.php 17470 2009-08-08 22:27:09Z thomas $
  */
 
 /**
@@ -104,7 +104,7 @@ class Zend_Validate_Int extends Zend_Validate_Abstract
             $valueFiltered = str_replace($locale['thousands_sep'], '', $valueFiltered);
 
             if (strval(intval($valueFiltered)) != $valueFiltered) {
-                $this->_error();
+                $this->_error(self::NOT_INT);
                 return false;
             }
 
@@ -112,11 +112,11 @@ class Zend_Validate_Int extends Zend_Validate_Abstract
             try {
                 if (!Zend_Locale_Format::isInteger($value, array('locale' => 'en')) &&
                     !Zend_Locale_Format::isInteger($value, array('locale' => $this->_locale))) {
-                    $this->_error();
+                    $this->_error(self::NOT_INT);
                     return false;
                 }
             } catch (Zend_Locale_Exception $e) {
-                $this->_error();
+                $this->_error(self::NOT_INT);
                 return false;
             }
         }

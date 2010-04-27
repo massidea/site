@@ -17,7 +17,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Regex.php 16223 2009-06-21 20:04:53Z thomas $
+ * @version    $Id: Regex.php 17470 2009-08-08 22:27:09Z thomas $
  */
 
 
@@ -117,7 +117,7 @@ class Zend_Validate_Regex extends Zend_Validate_Abstract
             throw new Zend_Validate_Exception("Internal error matching pattern '$this->_pattern' against value '$value'");
         }
         if (!$status) {
-            $this->_error();
+            $this->_error(self::NOT_MATCH);
             return false;
         }
         return true;

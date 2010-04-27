@@ -17,7 +17,7 @@
  * @subpackage Zend_Translate_Adapter
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Adapter.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Adapter.php 17761 2009-08-22 22:23:12Z thomas $
  */
 
 /**
@@ -479,7 +479,7 @@ abstract class Zend_Translate_Adapter {
                 $this->_translate[$key] = array();
             }
 
-            $this->_translate[$key] = array_merge($this->_translate[$key], $temp[$key]);
+            $this->_translate[$key] = $temp[$key] + $this->_translate[$key];
         }
 
         if ($this->_automatic === true) {

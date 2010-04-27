@@ -1,0 +1,14 @@
+<?php
+$language = Zend_Layout::getMvcInstance()->getView()->language;
+$tag_url = $this->url(array('controller' => 'tag',
+                                     'action'     => 'view',
+                                     'id'         => $this->id_tag,
+                                     'language'   => $language),
+                                     'lang_default', true);
+if (isset($this->tag_size)) {
+    $style = ' style="font-size:' . $this->tag_size . '%"';
+} else {
+    $style = '';
+}
+?>
+<a href="<?php echo $tag_url; ?>"<?php echo $style; ?>><?php echo stripslashes($this->name_tag); ?></a>

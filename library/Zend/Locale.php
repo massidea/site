@@ -16,7 +16,7 @@
  * @package   Zend_Locale
  * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Locale.php 16246 2009-06-22 19:35:09Z thomas $
+ * @version   $Id: Locale.php 17479 2009-08-09 08:19:03Z thomas $
  */
 
 /**
@@ -251,7 +251,7 @@ class Zend_Locale
     }
 
     /**
-     * Sets a new default locale
+     * Sets a new default locale which will be used when no locale can be detected
      * If provided you can set a quality between 0 and 1 (or 2 and 100)
      * which represents the percent of quality the browser
      * requested within HTTP
@@ -279,12 +279,13 @@ class Zend_Locale
             $quality /= 100;
         }
 
+        $locale = self::_prepareLocale($locale);
         if (isset(self::$_localeData[(string) $locale]) === true) {
             self::$_default = array((string) $locale => $quality);
         } else {
-            $locale = explode('_', (string) $locale);
-            if (isset(self::$_localeData[$locale[0]]) === true) {
-                self::$_default = array($locale[0] => $quality);
+            $elocale = explode('_', (string) $locale);
+            if (isset(self::$_localeData[$elocale[0]]) === true) {
+                self::$_default = array($elocale[0] => $quality);
             } else {
                 require_once 'Zend/Locale/Exception.php';
                 throw new Zend_Locale_Exception("Unknown locale '" . (string) $locale . "' can not be set as default!");
@@ -748,6 +749,14 @@ class Zend_Locale
      */
     public static function isLocale($locale, $strict = false, $compatible = true)
     {
+        if ($locale instanceof Zend_Locale) {
+            return true;
+        }
+
+        if (($locale !== null) and !is_string($locale) and !is_array($locale)) {
+            return false;
+        }
+
         try {
             $locale = self::_prepareLocale($locale, $strict);
         } catch (Zend_Locale_Exception $e) {
