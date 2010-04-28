@@ -935,6 +935,36 @@ CREATE  TABLE IF NOT EXISTS `oibs`.`usr_roles_urr` (
   PRIMARY KEY (`id_urr`) )
 ENGINE = MyISAM;
 
+-- -----------------------------------------------------
+-- Table `oibs`.`notifications_ntf`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `oibs`.`notifications_ntf` (
+  `id_ntf` INT UNIQUE NOT NULL ,
+  `notification_ntf` VARCHAR(20),
+  `description_ntf` VARCHAR(255),
+  PRIMARY KEY (`id_ntf`))
+ENGINE = MyISAM;
+
+-- -----------------------------------------------------
+-- Table `oibs`.`usr_has_ntf`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `oibs`.`usr_has_ntf` (
+  `id_usr` INT NOT NULL ,
+  `id_ntf` INT NOT NULL ,
+  PRIMARY KEY (`id_ntf`, `id_usr`) ,
+  INDEX `fk_usr` (`id_usr` ASC) ,
+  INDEX `fk_ntf` (`id_ntf` ASC) ,
+  CONSTRAINT `fk_usr`
+    FOREIGN KEY (`id_usr`)
+    REFERENCES `oibs`.`users_usr` (`id_usr`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_ntf`
+    FOREIGN KEY (`id_ntf`)
+    REFERENCES `oibs`.`notifications_ntf` (`id_ntf`) )
+ENGINE = MyISAM;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -138,6 +138,32 @@
                         .$comment_sender.'</a> commented your content <a href="'.$baseUrl."/".$this->view->language.'/view/'.$id.'">'.$contentData['title_cnt'].'</a>';
                         $data['privmsg_email'] = '';
                         
+                        // Send email to contentowner about new comment
+                        // if its allowed
+                        $notificationsModel = new Default_Model_Notifications();
+						$notifications = $notificationsModel->getNotificationsById($ownerId);
+
+	                    if (in_array('comment', $notifications)) {
+	                        $ownerEmail = $user->getUserEmail($ownerId);
+	                        $ownerUsername = $user->getUserNameById($ownerId);
+	
+	      					$bodyText = "Your content has a new comment at Massidea.org\n\n"
+	      								.$comment_sender." commented your content ".$contentData['title_cnt']."\n\n"
+	      								."Comment: ".$formData['comment_message'];
+	      					$bodyHtml = "Your content has a new comment at Massidea.org<br /><br />"
+	      								.'<a href="'.$baseUrl."/".$this->view->language.'/account/view/user/'.$comment_sender.'">'.$comment_sender.'</a>'
+	      								.' commented your content <a href="'.$baseUrl."/".$this->view->language.'/view/'.$id.'">'.$contentData['title_cnt'].'</a><br /><br />'
+	      								.'Comment: '.$formData['comment_message'];
+	
+	      					$mail = new Zend_Mail();
+	    					$mail->setBodyText($bodyText);
+	      					$mail->setBodyHtml($bodyHtml);
+	     					$mail->setFrom('no-reply@massidea.org', 'Massidea.org');
+	      					$mail->addTo($ownerEmail, $ownerUsername);
+	      					$mail->setSubject('Massidea.org: You have a new comment');
+	      					$mail->send();
+	                    }
+                        
                         $Default_Model_privmsg->addMessage($data);
                     }
                 } // end if

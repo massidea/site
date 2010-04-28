@@ -2215,3 +2215,12 @@ INSERT INTO industries_ind (id_ind, id_lng_ind, id_parent_ind, name_ind, created
 INSERT INTO `futureinfo_classes_fic` (name_fic, description_fic, created_fic, modified_fic) VALUES ('Trends and anti-trends', '', NOW(), NOW());
 INSERT INTO `futureinfo_classes_fic` (name_fic, description_fic, created_fic, modified_fic) VALUES ('Expected future scenarios', '', NOW(), NOW());
 INSERT INTO `futureinfo_classes_fic` (name_fic, description_fic, created_fic, modified_fic) VALUES ('Emerging weak signals and seeds of change', '', NOW(), NOW());
+
+-- -----------------------
+-- Insert notification types
+-- -----------------------
+INSERT INTO notifications_ntf (id_ntf, notification_ntf, description_ntf) VALUES (1, 'privmsg', 'New private message');
+INSERT INTO notifications_ntf (id_ntf, notification_ntf, description_ntf) VALUES (2, 'comment', 'New comment on content');
+INSERT INTO notifications_ntf (id_ntf, notification_ntf, description_ntf) VALUES (3, 'link',    'New content to content link');
+
+

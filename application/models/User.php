@@ -946,4 +946,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             return "privmsg-message-sender-system";
         }
     } // end of getUserNameById
+    
+    public function getContentOwner($contentId) {
+    	
+    	$select = $this->select()
+    					->from('users_usr')
+    					->join(array('cnt_has_usr'), 'cnt_has_usr.id_usr = users_usr.id_usr', array())
+    					->where('cnt_has_usr.id_cnt = ?', $contentId);
+
+        $result = $this->fetchAll($select)->toArray();
+	    return $result[0];
+    }
 } // end of class
