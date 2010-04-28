@@ -58,8 +58,28 @@
 		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe - sisällöllä virheellinen tunnistenumero.</seg></tuv>
 	</tu>
 	<tu tuid='content-remove-not-successful'>
-		<tuv xml:lang="en"><seg>Content removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="en"><seg>Content removal not successful. Errors that occured:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe.</seg></tuv>
+	</tu>
+	<tu tuid='content-remove-remove-content-not-successful'>
+		<tuv xml:lang="en"><seg>Contents content removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe.</seg></tuv>
+	</tu>
+	<tu tuid='content-remove-removecontenttags-not-successful'>
+		<tuv xml:lang="en"><seg>Contents tags removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön tagien poistossa tapahtui virhe.</seg></tuv>
+	</tu>
+	<tu tuid='content-remove-removeuserfromcontent-not-successful'>
+		<tuv xml:lang="en"><seg>Contents user removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön käyttäjän yhteyden poistossa tapahtui virhe.</seg></tuv>
+	</tu>
+	<tu tuid='content-remove-removeinnovationtypesfromcontent-not-successful'>
+		<tuv xml:lang="en"><seg>Contents innovation types removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön innovaatiotyyppien poistossa tapahtui virhe.</seg></tuv>
+	</tu>
+	<tu tuid='content-remove-removeindustriesfromcontent-not-successful'>
+		<tuv xml:lang="en"><seg>Contents industries removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön alojen poistossa tapahtui virhe.</seg></tuv>
 	</tu>
 	<tu tuid='content-remove-successful'>
 		<tuv xml:lang="en"><seg>Content removal successful.</seg></tuv>

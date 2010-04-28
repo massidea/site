@@ -1230,13 +1230,26 @@ class ContentController extends Oibs_Controller_CustomController
                 $cntHasUsr = new Default_Model_ContentHasUser();
                 $userIsOwner = $cntHasUsr->contentHasOwner($userId, $contentId);
                 
-                if($userIsOwner) {
+            if($userIsOwner) {
+            	
                     $contentRemoveSuccessful = true;
                     
-                    if(!$content->removeContent($contentId)) {
-                        $contentRemoveSuccessful = false;
-                    }
+                    /* Checking each remove separately.
+                     * Changing to false if remove fails. 
+                     */
+                     
+                    $contentRemoveChecker = array(
+                    	'removeContent' => 						true,
+                       	'removeContentTags' => 					true,
+                       	'removeUserFromContent' => 				true,
+                       	'removeInnovationTypesFromContent' =>	true,
+                       	'removeIndustriesFromContent' =>		true
+                    );
                     
+                    if(!$content->removeContent($contentId)) {
+                        $contentRemoveChecker['removeContent'] = false;
+                    }                  
+
                     $cntHasTag = new Default_Model_ContentHasTag();
                     $tags = $cntHasTag->getContentTags($contentId);
                     
@@ -1248,32 +1261,45 @@ class ContentController extends Oibs_Controller_CustomController
                     }
                     
                     if(!$cntHasTag->removeContentTags($contentId)) {
-                        $contentRemoveSuccessful = false;
+                        $contentRemoveChecker['removeContentTags'] = false;
                     }
                     
                     $cntHasUsr = new Default_Model_ContentHasUser();
                     
                     if(!$cntHasUsr->removeUserFromContent($contentId)) {
-                        $contentRemoveSuccessful = false;
+                        $contentRemoveChecker['removeUserFromContent'] = false;
                     }
                     
                     $cntHasIvt = new Default_Model_ContentHasInnovationTypes();
                     
                     if(!$cntHasIvt->removeInnovationTypesFromContent($contentId)) {
-                        $contentRemoveSuccessful = false;
+                        $contentRemoveChecker['removeInnovationTypesFromContent'] = false;
                     }
                     
                     $cntHasInd = new Default_Model_ContentHasIndustries();
                     
                     if(!$cntHasInd->removeIndustriesFromContent($contentId)) {
-                        $contentRemoveSuccessful = false;
+                        $contentRemoveChecker['removeIndustriesFromContent'] = false;
                     }
+                    
+                    if((!$contentRemoveChecker['removeContent']) || 
+                    (!$contentRemoveChecker['removeContentTags']) || 
+                    (!$contentRemoveChecker['removeUserFromContent']) || 
+                    (!$contentRemoveChecker['removeInnovationTypesFromContent']) || 
+                    (!$contentRemoveChecker['removeIndustriesFromContent']))
+                    	 $contentRemoveSuccessful = false;
                     
                     if($contentRemoveSuccessful == true) {
                         $message = 'content-remove-successful';
                         $this->flash($message, $url);
                     } else {
-                        $message = 'content-remove-not-successful';
+                    	$message = $this->view->translate('content-remove-not-successful') . '<br />';
+                    	if(!$contentRemoveChecker['removeContent']) $message .= $this->view->translate('content-remove-remove-content-not-successful') . '<br />';
+                    	if(!$contentRemoveChecker['removeContentTags']) $message .= $this->view->translate('content-remove-removecontenttags-not-successful') . '<br />';
+                    	if(!$contentRemoveChecker['removeUserFromContent']) $message .= $this->view->translate('content-remove-removeuserfromcontent-not-successful') . '<br />';
+                    	if(!$contentRemoveChecker['removeInnovationTypesFromContent']) $message .= $this->view->translate('content-remove-removeinnovationtypesfromcontent-not-successful') . '<br />';
+                    	if(!$contentRemoveChecker['removeIndustriesFromContent']) $message .= $this->view->translate('content-remove-removeindustriesfromcontent-not-successful') . '<br />';
+                      	
                         $this->flash($message, $url);
                     }
                 } else {

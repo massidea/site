@@ -83,10 +83,13 @@ class Default_Model_ContentHasIndustries extends Zend_Db_Table_Abstract
     {
         $return = false;
     
-        $where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
-        if($this->delete($where))
-        {
-            $return = true;
+        if($this->getIndustryIdOfContent($id_cnt)) {
+        	$where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
+       		 if($this->delete($where)) {
+            	$return = true;
+       		 }
+        } else {
+        	 $return = true;
         }
         
         return $return;

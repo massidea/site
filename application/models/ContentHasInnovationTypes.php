@@ -83,10 +83,13 @@ class Default_Model_ContentHasInnovationTypes extends Zend_Db_Table_Abstract
     {
         $return = false;
     
-        $where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
-        if($this->delete($where))
-        {
-            $return = true;
+        if($this->getInnovationTypeIdOfContent($id_cnt)) {
+        	$where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
+        	if($this->delete($where)) {
+         	   $return = true;
+        	}
+        } else {
+        	$return = true;
         }
         
         return $return;
