@@ -251,24 +251,84 @@ echo $this->doctype();
                 <!-- Language selector -->
 				<div class="top_row_center_right_language">
 		    <input type="hidden" id="translate-language-code-value" value=<?php
-			//get select language code from request url
-			$split = split('/',$this->url());
-			echo $split[1]==''?'en':$split[1];
-		    ?> />
-                    <select id="languages" 
-                        onchange="changeLang(document.getElementById('languages').value, 
-                            '<?php echo $_SERVER['HTTP_HOST'] . $this->baseUrl(); ?>')">
+		    		    
+		    $languageCodes = array(
+		    "af" => "Afrikaans",
+			"sq" => "Albanian",
+			"ar" => "Arabic",
+			"be" => "Belarusian",
+			"bg" => "Bulgarian",
+			"ca" => "Catalan",
+			"zh-CN" => "Chinese",
+			"hr" => "Croatian",
+			"cs" => "Czech",
+			"da" => "Danish",
+			"nl" => "Dutch",
+		    "en" => "English",
+			"et" => "Estonian",
+			"tl" => "Filipino",
+		    "fi" => "Finnish",
+			"fr" => "French",
+			"gl" => "Galician",
+			"de" => "German",
+			"el" => "Greek",
+			"ht" => "Haitian",
+			"iw" => "Hebrew",
+			"hi" => "Hindi",
+			"hu" => "Hungarian",
+			"is" => "Icelandic",
+			"id" => "Indonesian",
+			"ga" => "Irish",
+			"it" => "Italian",
+			"ja" => "Japanese",
+			"ko" => "Korean",
+			"lv" => "Latvian",
+			"lt" => "Lithuanian",
+			"mk" => "Macedonian",
+			"ms" => "Malay",
+			"mt" => "Maltese",
+			"no" => "Norwegian",
+			"fa" => "Persian",
+			"pl" => "Polish",
+			"pt" => "Portuguese",
+			"ro" => "Romanian",
+			"ru" => "Russian",
+			"sr" => "Serbian",
+			"sk" => "Slovak",
+			"sl" => "Slovenian",
+			"es" => "Spanish",
+			"sw" => "Swahili",
+			"sv" => "Swedish",
+			"th" => "Thai",
+			"tr" => "Turkish",
+			"uk" => "Ukrainian",
+			"vi" => "Vietnamese",
+			"cy" => "Welsh",
+			"yi" => "Yiddish"
+		    );
+		    
+		    //get select language code from request url	    
+		    $subject = str_replace($this->baseUrl(),'',$this->url());
+		    if($subject == "/") $subject = str_replace("/","/en",$subject);
+		    
+		    $pattern = '/^(\/([^\/]+)[\/]?)/';
+		    preg_match($pattern,$subject,$matches);
+			 
+		    if(isset($languageCodes[$matches[2]])) $lang = $matches[2];
+		    else $lang = "en";
+		      
+		    echo $lang;
+		    
+			//$split = split('/',$this->url());
+			//echo $split[2]==''?'en':$split[2];
+			
+		    ?> /> 
+		    <?php //echo print_r($matches); ?>
+            		<select id="languages" onchange="changeLang(document.getElementById('languages').value,'<?php echo $_SERVER['HTTP_HOST'] . $this->baseUrl(); ?>')">
                         
-                        <?php foreach($this->languages as $language): ?>
-                            <option value="<?php echo $language; ?>"
-                                <?php if($language == $this->language): ?>
-                                    selected="selected"
-                                <?php endif; ?>
-                            >
-                            
-                            <?php echo $this->translate('lang-'.$language); ?>                            
-                            </option>
-                        <?php endforeach; ?>
+            <?php foreach($this->languages as $language): ?>
+                   <option value="<?php echo $language; ?>"<?php if($language == $this->language): ?> selected="selected"<?php endif; ?>><?php echo $this->translate('lang-'.$language); ?></option>
+            <?php endforeach; ?>
 			<!-- language code from google -->
 			<option  value="af">Afrikaans</option>
 			<option  value="sq">Albanian</option>
