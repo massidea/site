@@ -86,5 +86,22 @@ class Default_Model_Languages extends Zend_Db_Table_Abstract
 		
 		return $result;
 	} // end of getAllNamesAndIds
+	
+	/**
+	*	getAllNamesAndCodes
+	*
+	*	Gets all possible language names and codes
+	*
+	*	@return array
+	*/
+	public function getAllNamesAndCodes()
+	{
+		$select = $this->select()
+                       ->from($this, array('iso6391_lng', 'name_lng'));
+                                    
+		$result = $this->fetchAll($select)->toArray();
+		
+		return $result;
+	} // end of getAllNamesAndIds
 } // end of class
 ?>
