@@ -257,7 +257,7 @@ div.sub_menu{
 	margin-left: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
-	padding: 0px;
+	padding: 2px 0px 0px 0px;
 	width: 748px; 
 	height: 40px;
 	background-image: url('../images/menu_border.png');
