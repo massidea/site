@@ -1,34 +1,13 @@
 // Horribly working language changer script
-// - Made horribly changes -iirouu <3
 
-// Make comments as well (even horrible ones help!) -Joel
-
-function changeLang(language, baseurl)
-{
+// Get old language and replace current url with new language
+function changeLang(oldLanguage) {
     var url = document.location.href;
-    var oldLang = "";
-
-    var oldLangTemp1 = url.split(baseurl+"/");
-    var oldLangTemp2 = oldLangTemp1[1].split("/");
-    var oldLangCheck = oldLangTemp2[0];
-
-    if(oldLangCheck.length == 2) {
-            oldLang = oldLangCheck;
-    }
-    if(oldLang != "" && url.indexOf("/"+oldLang) != -1) {
-            var splitter = url.split(baseurl+"/"+oldLang);
-
-            if(splitter[1] == undefined && baseurl.indexOf("/") != -1) {
-                    alert("Check config! path.baseurl is what you are looking for...");
-                    return null;
-            }
-
-            window.location = "http://"+baseurl+"/"+language+splitter[1];
+    if(url.indexOf(oldLanguage) > 0) {
+    	window.location = url.replace("/"+oldLanguage, "/"+$("#languages").val());
     } else {
-            window.location = "http://"+baseurl+"/"+language;
+    	window.location = url+$("#languages").val();
     }
-
-    return true;
 }
 
 function createCookie(name,value,days) {
