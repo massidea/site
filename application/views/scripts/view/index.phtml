@@ -398,7 +398,7 @@ if (isset($this->parent_siblings[0])) {
             
         </div>
         
-        <div class="user_content_spacer"><img src="/images/gray_dot_line_500.png" alt="Massidea.org" /></div>
+        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
 
         <div class="content_view_industries">
             <h3><?php echo $this->translate('content-view-industry-classification')?></h3>
@@ -417,7 +417,7 @@ if (isset($this->parent_siblings[0])) {
         </div>
         
 		<!-- From now on, also ideas are allowed to link to ideas (check was removed) -->
-        <div class="user_content_spacer"><img src="/images/gray_dot_line_500.png" alt="Massidea.org" /></div>
+        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
 
         <div class="view_content_left_contentlinks">
             <p style="font-weight: bold; font-size:80%;"><?php echo $this->translate('content-view-solve-'.$this->contentType);?>
@@ -425,14 +425,14 @@ if (isset($this->parent_siblings[0])) {
                                      'contenttype' => 'idea',
                                      'relatestoid' => $this->contentData['id_cnt']),
                                'linkcontent', true); ?>">
-            <img style="vertical-align:middle;" src="/images/button_add_existing_idea_<?php echo $this->language; ?>.png" alt="" title="add new idea" />
+            <img style="vertical-align:middle;" src="<?php echo $this->baseUrl('/images/button_add_existing_idea_'.$this->language); ?>.png" alt="" title="add new idea" />
             </a>
             <?php echo $this->translate('or');?>
             <a href="<?php echo $this->url(array('language' => $this->language,
                                      'contenttype' => 'idea',
                                      'relatestoid' => $this->contentData['id_cnt']),
                                'addcnttype', true); ?>">
-            <img style="vertical-align:middle;" src="/images/button_add_new_idea_<?php echo $this->language; ?>.png" alt="" title="add new idea" />
+            <img style="vertical-align:middle;" src="<?php echo $this->baseUrl('/images/button_add_new_idea_'.$this->language); ?>.png" alt="" title="add new idea" />
             </a>
             </p>
         </div>
@@ -473,7 +473,7 @@ if (isset($this->parent_siblings[0])) {
         <?php } ?>
 
         
-        <div class="user_content_spacer"><img src="/images/gray_dot_line_500.png" alt="Massidea.org" /></div>
+        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
         
         <?php if ($this->comments > 0) { ?>
         <div class="view_content_comments">
@@ -693,15 +693,15 @@ if (isset($this->parent_siblings[0])) {
                                      'action' => 'send',
                                      'language' => $this->language),
                                'lang_default', true); ?>/<?php echo $this->userData['login_name_usr']; ?>">
-            <img src="/images/button_send_message_<?php echo $this->language ?>.png" alt="<?php echo $this->translate('account-profile-send-private-message'); ?>" title="<?php echo $this->translate('account-profile-send-private-message'); ?>" />
+            <img src="<?php echo $this->baseUrl('/images/button_send_message_' . $this->language); ?>.png" alt="<?php echo $this->translate('account-profile-send-private-message'); ?>" title="<?php echo $this->translate('account-profile-send-private-message'); ?>" />
             </a>
 
     </div>
     
     <div id="content_view_user_related_header">
         <div class="pointerCursor" style="float: left;">
-            <img class="expand_user_related" src="/images/icon_plus_tiny.png" alt="" />
-            <img class="expand_user_related" src="/images/icon_minus_tiny.png" alt="" style="display: none" />
+            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>" alt="" />
+            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>" alt="" style="display: none" />
         </div>
         <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-user-related'); ?></span>
     </div>
@@ -709,7 +709,7 @@ if (isset($this->parent_siblings[0])) {
     </div>
     
     <div class="cotent_view_related_missing" style="padding-top: 10px;">
-        <img src="/images/placeholder_related.png" alt="" />
+        <img src="<?php echo $this->baseUrl('/images/placeholder_related.png');?>" alt="" />
     </div>
 </div>
 
