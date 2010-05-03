@@ -2,7 +2,6 @@ SetEnv APPLICATION_ENV development
 
 # Rewrite rules for Zend Framework
 RewriteEngine on
-RewriteBase /~iiuusit/
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/wiki
