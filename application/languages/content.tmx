@@ -501,6 +501,18 @@
 		<tuv xml:lang="en"><seg>Content published succesfully!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisällön julkaiseminen onnistui!</seg></tuv>
 	</tu>
+	<tu tuid='content-publish-click'>
+		<tuv xml:lang="en"><seg>Click</seg></tuv>
+		<tuv xml:lang="fi"><seg>Klikkaa</seg></tuv>
+	</tu>
+	<tu tuid='content-publish-here'>
+		<tuv xml:lang="en"><seg>here</seg></tuv>
+		<tuv xml:lang="fi"><seg>tästä</seg></tuv>
+	</tu>
+	<tu tuid='content-publish-view-content'>
+		<tuv xml:lang="en"><seg>to view your published content.</seg></tuv>
+		<tuv xml:lang="fi"><seg>nähdäksesi julkaisusi.</seg></tuv>
+	</tu>
 	<tu tuid='content-publish-not-successful'>
 		<tuv xml:lang="en"><seg>There was some problem with publishing content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Jostain syystä sisällön julkaiseminen ei onnistunut!</seg></tuv>

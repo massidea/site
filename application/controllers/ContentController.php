@@ -1394,12 +1394,24 @@ class ContentController extends Oibs_Controller_CustomController
                                           'lang_default', true);
 
 			if($content->checkIfContentExists($contentId)) {
+				
+				//$contentUrl = $this->baseUrl ."/". $this->view->language ."/view/".$contentId;
+				$contentUrl = $this->_urlHelper->url(array('controller' => 'view',
+                                                'action' => $contentId, 
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+				
 				$cntHasUsr = new Default_Model_ContentHasUser();
 				$userIsOwner = $cntHasUsr->contentHasOwner($userId, $contentId);
 
 				if($userIsOwner) {
 					if($content->publishContent($contentId)) {
-						$message = 'content-publish-successful';
+						$message = $this->view->translate('content-publish-successful');
+						$message .= " ".$this->view->translate('content-publish-click');
+						$message .= " <a href=\"".$contentUrl."\">";
+						$message .= " ".$this->view->translate('content-publish-here');
+						$message .= "</a> ";
+						$message .= " ".$this->view->translate('content-publish-view-content');
 						//$this->flash($message, $url);
 					} else {
 						$message = 'content-publish-not-successful';
