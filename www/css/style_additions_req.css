@@ -314,7 +314,7 @@ dl, dt, dd {
   color: #fff;
   margin: 0;
   border: 0;
-  background: transparent url('/images/button_registration_en.png') no-repeat center top; /* baseurl fail? */
+  background: transparent url('../images/button_registration_en.png') no-repeat center top;
   overflow: hidden;
   cursor: pointer; 
   cursor: hand; /* IE 5.x */
@@ -327,7 +327,7 @@ dl, dt, dd {
   padding: 22px 0 0;
   margin: 0;
   border: 0;
-  background: transparent url('/images/button_registration_fi.png') no-repeat center top; /* baseurl fail? */
+  background: transparent url('../images/button_registration_fi.png') no-repeat center top;
   overflow: hidden;
   cursor: pointer;
   cursor: hand; /* IE 5.x */

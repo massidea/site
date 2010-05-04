@@ -282,7 +282,7 @@ echo $this->doctype();
 			
 		    ?> /> 
 
-            		<select id="languages" onchange="changeLang(document.getElementById('languages').value,'<?php echo $_SERVER['HTTP_HOST'] . $this->baseUrl(); ?>')">
+            		<select id="languages" onchange="changeLang('<?php echo $lang; ?>', '<?php echo $this->baseUrl('/');?>')">
                         
             <?php foreach($this->languages as $language): ?>
                    <option value="<?php echo $language; ?>"<?php if($language == $this->language): ?> selected="selected"<?php endif; ?>><?php echo $this->translate('lang-'.$language); ?></option>
