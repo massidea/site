@@ -507,8 +507,8 @@ echo $this->doctype();
 			<div class="sub_menu_right_space" style="width: 0px;">&nbsp;</div>
             
 			<div id="admintools" 
-                onmouseout="blurMenu(this.id, 'blue')" 
-                onmouseover="focusMenu(this.id, 'blue');" 
+                onmouseout="blurMenu(this.id, 'blue', '<?=$this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'blue', '<?=$this->baseUrl();?>');" 
                 class="sub_menu_item_blue"
             >
                 <a href="<?php echo $this->url(array('controller' => 'admin',

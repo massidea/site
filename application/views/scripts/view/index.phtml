@@ -19,11 +19,11 @@ $(document).ready(function(){
 	
 	$(".expand_user_related").click(function(){
 		if (plusminus==1){
-			$(".expand_user_related").attr("src", "/images/icon_minus_tiny.png");
+			$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 			$("#content_view_user_related").slideToggle('normal');
 			plusminus = 2;
 		} else if (plusminus==2){
-			$(".expand_user_related").attr("src", "/images/icon_plus_tiny.png");
+			$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
 			$("#content_view_user_related").slideToggle('normal');
 			plusminus = 1;
 		}
@@ -32,11 +32,11 @@ $(document).ready(function(){
 	function ajaxLoad_morefromuser(){
 		$.ajax({
 			beforeSend: function(){
-				$(".expand_user_related").attr("src", "/images/ajax-loader-black.gif");
+				$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 			},
 			complete: function(){
 				plusminus = 2;
-				$(".expand_user_related").attr("src", "/images/icon_minus_tiny.png");
+				$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 			},
 			url: "?page=morefromuser&format=html",
 			success: function(result){
@@ -55,8 +55,8 @@ function ajaxLoad_vote(score){
 	$.ajax({
 		type: "POST",
 		beforeSend: function(){
-			if (score == "1") $("#voteup").attr("src", "/images/ajax-loader-black.gif");
-			if (score == "-1") $("#votedown").attr("src", "/images/ajax-loader-black.gif");
+			if (score == "1") $("#voteup").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
+			if (score == "-1") $("#votedown").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 		},
 		url: "?rate="+score,
 		success: function(result){
@@ -117,8 +117,8 @@ function flagAsSpam(commentId)
 		url: "<?php echo $flagCommentUrl;?>",
 		data: "flaggedid=" + commentId,
 		success: function(msg){
-			if(msg == '1') { replaceCommentText = '<?php echo $this->translate('content-view-comment-flagged') ?>'; }
-			if(msg == '0') { replaceCommentText = '<?php echo $this->translate('content-view-comment-alreadyflagged') ?>'; }
+			if(msg == '1') { replaceCommentText = '<?php echo $this->translate('content-view-comment-flagged'); ?>'; }
+			if(msg == '0') { replaceCommentText = '<?php echo $this->translate('content-view-comment-alreadyflagged'); ?>'; }
 			$('#flagSpamLink_'+commentId).replaceWith(replaceCommentText);
 		}
 	});

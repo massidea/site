@@ -21,7 +21,7 @@
             echo '<h3 style="padding: 0px; margin: 0px;">' . $cloud . $divider . $index . '</h3>';
             ?>
     </div>
-    <img src="/images/gray_dot_line_720.png" alt="Massidea.org" />
+    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
     <div class="tag_alphanum_row" style="padding-top:5px;">
     <?php
     // ignoring case, LIKE() is case insensitive
@@ -47,7 +47,7 @@
     
     ?>
     </div>
-    <img src="/images/gray_dot_line_720.png" alt="Massidea.org" />
+    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
     <div class="tag_filters_row" style="padding-top:5px;">
         <div class="tag_filters_left" style="float:left;">
             <?php
@@ -121,7 +121,7 @@
             ?>
         </div>
     </div>
-    <img src="/images/gray_dot_line_720.png" alt="Massidea.org" />
+    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
     <div style="clear:both;"> </div>
 	<div id="tag_cloud_container_tags" style="width:720px;">
     <h3><?php if ($where == 'All') { echo $this->translate('tag-all'); } else { echo $where; }?></h3>
@@ -162,5 +162,5 @@
         }
         ?></div>
 	</div>
-    <img src="/images/gray_dot_line_720.png" alt="Massidea.org" />
+    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
 </div>
