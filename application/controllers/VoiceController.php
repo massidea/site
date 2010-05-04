@@ -82,10 +82,9 @@ class VoiceController extends Oibs_Controller_CustomController
         foreach ($data as $dataRow)
         {
         	$tags = $tags_model->getContentTags($dataRow['id_cnt']);
-        	$userId = $usersid_model->getContentOwners($dataRow['id_cnt']);
 
-   			$user = $users_model->getSimpleUserDataById($userId['id_usr']);
-   			$data[$i]['author'] = $user['login_name_usr'];
+   			$user = $users_model->getContentOwner($dataRow['id_cnt']);
+        	$data[$i]['author'] = $user['login_name_usr'];
    			
         	$tagNames = array();
         	foreach ($tags as $tag)

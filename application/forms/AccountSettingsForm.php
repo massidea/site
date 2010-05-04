@@ -305,7 +305,17 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 				array('NotEmpty', true, array('messages' => array('isEmpty' => 'Empty'))), 
 				))
 				->setDecorators(array('CustomDecorator'));
-		
+
+		$notificationsModel = new Default_Model_Notifications();
+        $notificationsList = $notificationsModel->getForSettingsForm(); 
+		$notifications = new Zend_Form_Element_MultiCheckbox('notifications');
+		$notifications->setMultiOptions($notificationsList)
+					     ->setDecorators(array('SettingsNotificationsDecorator'))
+					   	 //->setDecorators(array('CustomDecorator'))
+						 ->setLabel($translate->_("account-register-emailnotifications"));
+		//$this->addElement($notifications);
+                                 
+				
 		// Form submit buttom form element		
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel($translate->_("account-register-submit"));
@@ -327,9 +337,12 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                                     $password, $password_confirm, 
                                     $email,
                                     $confirm_email, 
-                                    $current_password, 
+                                    $current_password,
+                                    $notifications, 
                                     $submit));
-        
+		
+
+                                    
         // if you use try..catch Don't echo e!!
         }catch(Zend_Exception $e){echo '<pre>General error occurred! Please try again.';echo '</pre>';}
     }

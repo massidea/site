@@ -46,8 +46,8 @@ class Default_Model_Notifications extends Zend_Db_Table_Abstract
         			   ->where('usr_has_ntf.id_usr = ?', $usrId);
         $result = $this->fetchAll($select);
         foreach ($result as $row) {
-        	array_push($notifications, $row->notification_ntf);
-        }   
+        	array_push($notifications, $row->id_ntf);
+        }
     	return $notifications;
     }
     
@@ -58,6 +58,32 @@ class Default_Model_Notifications extends Zend_Db_Table_Abstract
 
         $result = $this->fetchAll($select)->toArray();
 		return $result;
+	}
+	
+	public function getForSettingsForm()
+	{		
+		$select = $this->select()
+                  	->from($this, array('id_ntf', 'notification_ntf'));
+
+        $result = $this->fetchAll($select);
+        $rows = array();
+        foreach ($result as $row)
+        {
+        	$rows[$row->id_ntf] = $row->notification_ntf;
+        }
+		return $rows;
 	}	
+	
+	public function setUserNotifications($userId, $data)
+	{
+		$usrhasntf = new Default_Model_UserHasNotifications();
+		$usrhasntf->delete('id_usr = '.$userId);
+		foreach ($data as $id_ntf) {
+			$row = $usrhasntf->createRow();
+			$row->id_ntf = $id_ntf;
+			$row->id_usr = $userId;
+			$row->save();
+		}
+	} // end of setUserNotifications
 } // end of class
 ?>

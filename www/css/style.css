@@ -1089,6 +1089,20 @@ form#preview label {
     width: 500px;
 }
 
+.form_notifications {
+	width: 500px;	
+}
+
+#account_settings_form_container #submit-element {
+	clear: both;	
+}
+
+.form_notifications #notifications-label {
+	clear: both;
+	width: 350px;
+	font-weight: normal;
+}
+
 .form_addcontent_row .progress ul {
     margin: 0px;
     padding: 0px;

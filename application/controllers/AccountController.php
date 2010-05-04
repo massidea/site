@@ -888,11 +888,15 @@ class AccountController extends Oibs_Controller_CustomController
             
             $settingsData['email'] = $email;
             $settingsData['confirm_email'] = $email;
-            
+            $notificationsModel = new Default_Model_Notifications();
+            $notifications = $notificationsModel->getNotificationsById($id);
+            $settingsData['notifications'] = $notifications;
+
             // populate form
 			if(isset($settingsData)) {
 				$form->populate($settingsData);
 			}
+			
 			
 			// If request is post
 			//$request = $this->getRequest();
@@ -907,6 +911,10 @@ class AccountController extends Oibs_Controller_CustomController
 					
 					// If user is logged in -- double check? why? -joel
 					//if ($auth->hasIdentity()) {
+						// Updates checked notifications  
+					
+						$notificationsModel->setUserNotifications($id, $formData['notifications']);						
+		
 						$userProfile = new Default_Model_UserProfiles();
                         $userProfile->setProfileData($id, $formData); 
 

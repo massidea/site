@@ -252,6 +252,22 @@
 		<tuv xml:lang="en"><seg>Enter the letters above:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Syötä teksti kuvasta:</seg></tuv>
 	</tu>
+	<tu tuid='account-register-emailnotifications'>
+		<tuv xml:lang="en"><seg>Email notifications:</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sähköposti-ilmoitukset:</seg></tuv>
+	</tu>
+	<tu tuid='account-register-emailnotifications-link'>
+		<tuv xml:lang="en"><seg>Content links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön linkitykset</seg></tuv>
+	</tu>
+	<tu tuid='account-register-emailnotifications-privmsg'>
+		<tuv xml:lang="en"><seg>Messages</seg></tuv>
+		<tuv xml:lang="fi"><seg>Viestit</seg></tuv>
+	</tu>
+	<tu tuid='account-register-emailnotifications-comment'>
+		<tuv xml:lang="en"><seg>Comments</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kommentit</seg></tuv>
+	</tu>
 	<tu tuid='username-exists'>
 		<tuv xml:lang="en"><seg>Username already in use</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjänimi jo käytössä</seg></tuv>
