@@ -45,4 +45,8 @@
 		<tuv xml:lang="en"><seg>Search term: %s</seg></tuv>
 		<tuv xml:lang="fi"><seg>Hakusanalla: %s</seg></tuv>
 	</tu>
+	<tu tuid='search-error-minchars'>
+		<tuv xml:lang="en"><seg>The search query length must be over 3 characters long</seg></tuv>
+		<tuv xml:lang="fi"><seg>Hakusanan täytyy olla yli 3 merkkiä pitkä</seg></tuv>
+	</tu>
 </body>

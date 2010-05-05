@@ -97,7 +97,10 @@ Commented to fix temporary problem, will be researched further later
     
     <p id="most_active_users" style="padding: 0px;" class="top_right_box_links">
         <?php echo $this->translate('index-most-active')?>
-        <a href="#">
+        <a href="<?php echo $this->url(array('controller' => 'account',
+                                             'action' => 'userlist',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
             <?php echo $this->translate('index-users')?>
         </a>
     </p>
@@ -109,7 +112,10 @@ Commented to fix temporary problem, will be researched further later
     </div>
     
     <div class="top_right_box_links_show_all_users">
-        <a href="#">
+        <a href="<?php echo $this->url(array('controller' => 'account',
+                                             'action' => 'userlist',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
             <?php echo $this->translate('index-show-all')?>
             <?php echo $this->translate('index-users')?>
         </a>
