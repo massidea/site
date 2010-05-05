@@ -3,7 +3,7 @@
 // Get old language and replace current url with new language
 function changeLang(oldLanguage, baseurl) {
     var url = document.location.href;
-    alert("indexOf = "+url.indexOf(oldLanguage)+"\noldLanguage = "+oldLanguage+"\nvalittu = "+$("#languages").val()+"\nurl = "+url+"\nbaseurl = "+baseurl);
+    //alert("indexOf = "+url.indexOf(oldLanguage)+"\noldLanguage = "+oldLanguage+"\nvalittu = "+$("#languages").val()+"\nurl = "+url+"\nbaseurl = "+baseurl);
     if(url.indexOf(oldLanguage) > 0) {
     	window.location = url.replace("/"+oldLanguage, "/"+$("#languages").val());
     } else {
