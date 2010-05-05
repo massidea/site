@@ -3,9 +3,9 @@
 <div class="search_result">
     <h3><?php echo $this->translate('search-result-title'); ?></h3>
     
-    <?php if (!$this->errors): ?>
+    <?php if ($this->search != NULL && $this->search != ""): ?>
         <h4><?php printf($this->translate('search-result-searchterm'), $this->search); ?></h4>
-    <?php //endif; ?>
+    <?php endif; ?>
     
     <?php if (!empty($this->contentData)): ?>
 
@@ -58,7 +58,7 @@
                 </a>
             </div>
             
-            <?php if (count($this->contentData) > 0): ?>
+            <?php if (count($this->contentData) >> 0): ?>
             
             <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="------------" />
             
@@ -234,7 +234,5 @@
             <?php echo $this->translate('search-nothing-found'); ?>
         </div>
     <?php endif; ?>
-    <?php else: ?>
-    <?php echo $this->translate('search-error-minchars'); ?>
-    <?php endif;?>
+    
 </div>

@@ -333,52 +333,48 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
         }
 
         $contentEntries = array();
-        $searchLength = strlen($searchword);
         
-        // Do not search empty and under 3 characters length searchwords 
-        if ($searchword != NULL xor $searchword != "" && $searchLength <= 3)
-        {
+        // enable empty searches as content listing
+        if ($searchword == NULL || $searchword == "") {
+            $searchword = "%";
+        } else {
             $searchword = '%'.$searchword.'%';
+        }
+        
+        $select = $this->_db->select()->from(array('cty' => 'content_types_cty'),
+                                             array('cty.key_cty'))
+                                      ->joinLeft(array('cnt' => 'contents_cnt'),
+                                             'cnt.id_cty_cnt = cty.id_cty',
+                                             array('cnt.id_cnt',
+                                                   'cnt.title_cnt',
+                                                   'cnt.lead_cnt',
+                                                   'cnt.created_cnt'))
+                                      ->joinLeft(array('cht' => 'cnt_has_tag'),
+                                             'cht.id_cnt = cnt.id_cnt',
+                                             array())
+                                      ->joinLeft(array('tag' => 'tags_tag'),
+                                             'cht.id_tag = tag.id_tag',
+                                             array())
+                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
+                                             'chu.id_cnt = cnt.id_cnt', 
+                                             array())
+                                      ->joinLeft(array('vws' => 'cnt_views_vws'),
+                                                 'cnt.id_cnt = vws.id_cnt_vws',
+                                                 array('viewCount' => 'COUNT(vws.id_usr_vws)'))
+                                      ->joinLeft(array('usr' => 'users_usr'),
+                                             'chu.id_usr = usr.id_usr',
+                                             array('usr.id_usr', 'usr.login_name_usr'))
+                                      ->where('cnt.published_cnt = 1')
+                                      // extra "(" hacks AND statements together
+                                      ->where('(cnt.title_cnt LIKE ?', $searchword)
+                                      ->orWhere('cnt.lead_cnt LIKE ?', $searchword)
+                                      ->orWhere('cnt.body_cnt LIKE ?', $searchword)
+                                      ->orWhere('tag.name_tag LIKE ?)',$searchword)
+                                      ->group('cnt.id_cnt')
+                                      ->order($order)
+                                      ->limitPage($page, $count);
 
-	        $select = $this->_db->select()->from(array('cty' => 'content_types_cty'),
-	                                             array('cty.key_cty'))
-	                                      ->joinLeft(array('cnt' => 'contents_cnt'),
-	                                             'cnt.id_cty_cnt = cty.id_cty',
-	                                             array('cnt.id_cnt',
-	                                                   'cnt.title_cnt',
-	                                                   'cnt.lead_cnt',
-	                                                   'cnt.created_cnt'))
-	                                      ->joinLeft(array('cht' => 'cnt_has_tag'),
-	                                             'cht.id_cnt = cnt.id_cnt',
-	                                             array())
-	                                      ->joinLeft(array('tag' => 'tags_tag'),
-	                                             'cht.id_tag = tag.id_tag',
-	                                             array())
-	                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
-	                                             'chu.id_cnt = cnt.id_cnt', 
-	                                             array())
-	                                      ->joinLeft(array('vws' => 'cnt_views_vws'),
-	                                                 'cnt.id_cnt = vws.id_cnt_vws',
-	                                                 array('viewCount' => 'COUNT(vws.id_usr_vws)'))
-	                                      ->joinLeft(array('usr' => 'users_usr'),
-	                                             'chu.id_usr = usr.id_usr',
-	                                             array('usr.id_usr', 'usr.login_name_usr'))
-	                                      ->where('cnt.published_cnt = 1')
-	                                      // extra "(" hacks AND statements together
-	                                      ->where('(cnt.title_cnt LIKE ?', $searchword)
-	                                      ->orWhere('cnt.lead_cnt LIKE ?', $searchword)
-	                                      ->orWhere('cnt.body_cnt LIKE ?', $searchword)
-	                                      ->orWhere('tag.name_tag LIKE ?)',$searchword)
-	                                      ->group('cnt.id_cnt')
-	                                      ->order($order)
-	                                      ->limitPage($page, $count);
-	
-	        $contentEntries = $this->_db->fetchAll($select);
-        }
-        else
-        {
-        	$contentEntries = -1;
-        }
+        $contentEntries = $this->_db->fetchAll($select);
 
         return $contentEntries;
     } // end of getByName

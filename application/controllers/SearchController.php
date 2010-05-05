@@ -242,8 +242,6 @@ class SearchController extends Oibs_Controller_CustomController
                                         ->getPercentagesById($content['id_cnt']);
                 $i++;
             }
-        } else {
-        	$errors = 1;
         }
         
         // Calculate total page count
@@ -260,7 +258,6 @@ class SearchController extends Oibs_Controller_CustomController
         $this->view->page = $page;
         $this->view->contentPaginator = $paginator;        
         $this->view->contentData = $results;  
-        $this->view->errors = $errors;
 
 	} // end of result
 	
