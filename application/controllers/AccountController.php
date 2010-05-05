@@ -888,15 +888,19 @@ class AccountController extends Oibs_Controller_CustomController
             
             $settingsData['email'] = $email;
             $settingsData['confirm_email'] = $email;
-            $notificationsModel = new Default_Model_Notifications();
+            
+            // Get users email notifications and push to settingsdata in correct form
+            $notificationsModel = new Default_Model_Notifications(); 
             $notifications = $notificationsModel->getNotificationsById($id);
-            $settingsData['notifications'] = $notifications;
-
+			$settingsData['notifications'] = array();
+            foreach ($notifications as $id_ntf => $notification) {
+            		array_push($settingsData['notifications'], $id_ntf); 
+            }
+            
             // populate form
 			if(isset($settingsData)) {
 				$form->populate($settingsData);
 			}
-			
 			
 			// If request is post
 			//$request = $this->getRequest();

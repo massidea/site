@@ -37,6 +37,13 @@ class Default_Model_Notifications extends Zend_Db_Table_Abstract
 	// Tables model depends on
 	protected $_dependentTables = array('Default_Model_UserHasNotifications');
 
+	/* getNotificationsById
+	 * 
+	 * gets notifications by user id
+	 * 
+	 * @param user id
+	 * @return array ( id_ntf => notification_ntf)
+	 */
     public function getNotificationsById($usrId)
     {
     	$notifications = array();
@@ -46,11 +53,18 @@ class Default_Model_Notifications extends Zend_Db_Table_Abstract
         			   ->where('usr_has_ntf.id_usr = ?', $usrId);
         $result = $this->fetchAll($select);
         foreach ($result as $row) {
-        	array_push($notifications, $row->id_ntf);
+        	$notifications[$row->id_ntf] = $row->notification_ntf;
         }
     	return $notifications;
     }
     
+    /* getAll
+     * 
+     * returns all rows from table
+     * 
+     * @param
+     * @return array
+     */
 	public function getAll()
 	{		
 		$select = $this->select()
@@ -60,6 +74,13 @@ class Default_Model_Notifications extends Zend_Db_Table_Abstract
 		return $result;
 	}
 	
+	/* getForSettingsForm
+	 * 
+	 * returns all notifications in right format for account settings form
+	 * 
+	 * @param
+	 * @return array ( id_ntf => notification_ntf ) 
+	 */
 	public function getForSettingsForm()
 	{		
 		$select = $this->select()
@@ -74,6 +95,13 @@ class Default_Model_Notifications extends Zend_Db_Table_Abstract
 		return $rows;
 	}	
 	
+	/*setUserNotifications
+	 * 
+	 * sets users notifications in the database
+	 * 
+	 * @param user id, array('id_ntf', 'id_ntf' ..)
+	 * @return
+	 */
 	public function setUserNotifications($userId, $data)
 	{
 		$usrhasntf = new Default_Model_UserHasNotifications();

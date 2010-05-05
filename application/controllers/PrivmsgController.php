@@ -135,7 +135,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 				$notifications = $notificationsModel->getNotificationsById($receiverId);
 
 				if (in_array('privmsg', $notifications)) {
-
+					
 					$senderId = $data['privmsg_sender_id'];
 					$receiverEmail = $model_user->getUserEmail($receiverId);
 					$receiverUsername = $model_user->getUserNameById($receiverId);

@@ -306,16 +306,14 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 				))
 				->setDecorators(array('CustomDecorator'));
 
+		// Email notifications checkboxes
 		$notificationsModel = new Default_Model_Notifications();
-        $notificationsList = $notificationsModel->getForSettingsForm(); 
+        $notificationsList = $notificationsModel->getForSettingsForm();
 		$notifications = new Zend_Form_Element_MultiCheckbox('notifications');
 		$notifications->setMultiOptions($notificationsList)
 					     ->setDecorators(array('SettingsNotificationsDecorator'))
-					   	 //->setDecorators(array('CustomDecorator'))
 						 ->setLabel($translate->_("account-register-emailnotifications"));
-		//$this->addElement($notifications);
-                                 
-				
+                                 	
 		// Form submit buttom form element		
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel($translate->_("account-register-submit"));
