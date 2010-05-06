@@ -187,7 +187,7 @@ echo $this->doctype();
                                             'lang_default', true);?>" method="post">
                                         <div>Your OpenID</div>
                                         <div>
-                                            <input style="margin-bottom: 12px; width: 212px; padding-left: 20px; background: #fff url('/images/openid-16x16.png') 2px no-repeat;" name="openid_identifier" type="text" />
+                                            <input style="margin-bottom: 12px; width: 212px; padding-left: 20px; background: #fff url('<?php echo $this->baseUrl('/images/openid-16x16.png'); ?>') 2px no-repeat;" name="openid_identifier" type="text" />
                                         </div>
                                         <div>
                                             <input style="margin-right: 6px;" type="submit" name="openid_action" value="Login" /> 
@@ -566,39 +566,32 @@ echo $this->doctype();
                                                              'action' => 'about',
                                                              'language' => $this->language),
                                                        'lang_default', true); ?>">
-                            <?php echo $this->translate('index-about'); ?>
-                        </a>
+                            <?php echo $this->translate('index-about'); ?></a>
                     </span>
                     
                     <a href="<?php echo $this->url(array('controller' => 'help',
                                                          'action' => 'contact',
                                                          'language' => $this->language),
                                                    'lang_default', true); ?>">
-                        <?php echo $this->translate('index-contact'); ?>
-                    </a> 
+                    <?php echo $this->translate('index-contact'); ?></a> 
                     
                     <a href="http://www.oibs.fi/wiki">
-                        <?php echo $this->translate('index-development'); ?>
-                    </a> 
+                    	<?php echo $this->translate('index-development'); ?></a> 
                     
                     <a href="<?php echo $this->url(array('controller' => 'help',
                                                          'action' => 'index',
                                                          'language' => $this->language),
                                                    'lang_default', true); ?>">
-                        <?php echo $this->translate('index-help'); ?>
-                    </a>
+                    	<?php echo $this->translate('index-help'); ?></a>
                     
                     <a href="#">
-                        <?php echo $this->translate('index-jobs'); ?>
-                    </a>
+                    	<?php echo $this->translate('index-jobs'); ?></a>
                     
-                    <a href="#" onclick="popup('popup_terms_')">
-                        <?php echo $this->translate('index-service-agreement'); ?>
-                    </a> 
+                    <a href="#" onclick="popup('popup_terms_'); return false;">
+                        <?php echo $this->translate('index-service-agreement'); ?></a> 
                     
-                    <a href="#" onclick="popup('popup_privacy_')">
-                        <?php echo $this->translate('index-register-description'); ?>
-                    </a>
+                    <a href="#" onclick="popup('popup_privacy_'); return false;">
+                        <?php echo $this->translate('index-register-description'); ?></a>
                 </div>
                 
                 <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png'); ?>" 
