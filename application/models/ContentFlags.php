@@ -94,7 +94,7 @@ class Default_Model_ContentFlags extends Zend_Db_Table_Abstract
         
         $result = $this->fetchAll($select)->toArray();
         
-        if (count($result) >> 0) {
+        if (count($result) > 0) {
             return true;
         } else {
             return false;

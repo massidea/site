@@ -2,7 +2,7 @@
 /**
  *  Files -> Files database model for content files table.
  *
-* 	Copyright (c) <2009>, Markus Riihelä
+* 	Copyright (c) <2009>, Markus Riihelï¿½
 * 	Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -22,8 +22,8 @@
  *  Files - class
  *
  *  @package 	models
- *  @author 		Markus Riihelä & Mikko Sallinen
- *  @copyright 	2009 Markus Riihelä & Mikko Sallinen
+ *  @author 		Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright 	2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
@@ -126,5 +126,19 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
         
         return $exists;
     }
+
+    /**
+    *   removeContentFiles
+    *   Removes specified file
+    *
+    *   @param		int		id_cnt_fil	Id of the content
+    *   @author		Mikko Korpinen
+    */
+    public function removeContentFiles($id_cnt_fil)
+    {
+        $where = $this->getAdapter()->quoteInto('id_cnt_fil = ?', $id_cnt_fil);
+        $this->delete($where);
+    }
+
 } // end of class
 ?>

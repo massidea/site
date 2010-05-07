@@ -169,6 +169,19 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
 
         return $return;
 	} // end of increaseViewCount
+
+    /**
+    *   removeContentViews
+    *   Removes content views row
+    *
+    *   @param int id_cnt_vws
+    *   @author Mikko Korpinen
+    */
+    public function removeContentViews($id_cnt_vws = 0)
+    {
+        $where = $this->getAdapter()->quoteInto('id_cnt_vws = ?', $id_cnt_vws);
+        $this->delete($where);
+    } // end of removeContentViews
     
 } // end of class
 ?>

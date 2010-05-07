@@ -21,7 +21,7 @@
  *  AdminController - class
  *
  *  @package        controllers
- *  @author         Pekka Piispanen
+ *  @author         Pekka Piispanen & Mikko Korpinen
  *  @copyright      2009 Pekka Piispanen
  *  @license        GPL v2
  *  @version        1.0
@@ -283,38 +283,41 @@ class AdminController extends Oibs_Controller_CustomController
     	
         if($posts)
     	{
-			// Remove comment
-    		if($posts['rm'] == "comment")
-    		{
-    		    foreach($posts as $key => $post)
-    			{
-    				if($key != "rm" && $key != "selectall")
-    				{
-    					$cmf_ids = $flagmodel->getFlagsByCommentId($key);
-	    				foreach($cmf_ids as $cmf_id)
-	    				{
-	    					$flagmodel->removeFlag($cmf_id);
-	    				}
-    					$commentmodel->removeComment($key);
-    				} 
-    			}
-    		}
+        // Remove comment text ("Comment removed"-text)
+        if($posts['rm'] == "comment")
+        {
+            foreach($posts as $key => $post)
+            {
+                if($key != "rm" && $key != "selectall")
+                {
+                    // Flags from comment_flags_cfl
+                    $cmf_ids = $flagmodel->getFlagsByCommentId($key);
+                    foreach($cmf_ids as $cmf_id)
+                    {
+                        $flagmodel->removeFlag($cmf_id);
+                    }
+                    // Text from comments_cmt
+                    $commentmodel->removeCommentText($key);
+                }
+            }
+        }
 
-    	    // Remove flags
-    	    if($posts['rm'] == "flag")
-    		{
-    		    foreach($posts as $key => $post)
-    			{
-    				if($key != "rm" && $key != "selectall")
-    				{
-	    				$cmf_ids = $flagmodel->getFlagsByCommentId($key);
-	    				foreach($cmf_ids as $cmf_id)
-	    				{
-	    					$flagmodel->removeFlag($cmf_id);
-	    				}
-    				}
-    			}
-    		}
+        // Remove flags
+        if($posts['rm'] == "flag")
+        {
+            foreach($posts as $key => $post)
+            {
+                if($key != "rm" && $key != "selectall")
+                {
+                    // Flags from comment_flags_cfl
+                    $cmf_ids = $flagmodel->getFlagsByCommentId($key);
+                    foreach($cmf_ids as $cmf_id)
+                    {
+                        $flagmodel->removeFlag($cmf_id);
+                    }
+                }
+            }
+        }
     		
     	}
     	
@@ -360,68 +363,171 @@ class AdminController extends Oibs_Controller_CustomController
     	$posts = $this->_request->getPost();
     	
     	// Get models for the job
-    	$flagmodel = new Default_Model_ContentFlags();
+    	$contentflagmodel = new Default_Model_ContentFlags();
+        $commentflagmodel = new Default_Model_CommentFlags();
     	$contentmodel = new Default_Model_Content();
+        $commentmodel = new Default_Model_Comments();
+
+        // Get cache from registry
+        $cache = Zend_Registry::get('cache');
+        // Recent posts id
+        $cachePosts = 'IndexPosts_' . $this->view->language;
 
         if($posts)
     	{
-			// Remove content
-			//
-			// Currently does not delete anything other than the content itself
-			// (should delete comments etc. regarding to content)
-    		if($posts['rm'] == "content")
-    		{
-    		    foreach($posts as $key => $post)
-    			{
-    				if($key != "rm" && $key != "selectall")
-    				{
-    					$cfl_ids = $flagmodel->getFlagsByContentId($key);
-	    				foreach($cfl_ids as $cfl_id)
-	    				{
-	    					$flagmodel->removeFlag($cfl_id);
-	    				}
-    					$contentmodel->removeContent($key);
-    				} 
-    			}
-    		}
-    		
-			// Unpublish content
-    		if($posts['rm'] == "pubflag")
-    		{
-    		    foreach($posts as $key => $post)
-    			{
-    				if($key != "rm" && $key != "selectall")
-    				{
-    					$cfl_ids = $flagmodel->getFlagsByContentId($key);
-	    				foreach($cfl_ids as $cfl_id)
-	    				{
-	    					$flagmodel->removeFlag($cfl_id);
-	    				}
-    					$contentmodel->publishContent($key,0);
-    				} 
-    			}
-    		}
+            // Remove content
+            if($posts['rm'] == "content")
+            {
+                foreach($posts as $key => $post)
+                {
+                    if($key != "rm" && $key != "selectall")
+                    {
 
-    	    // Remove flags
-    	    if($posts['rm'] == "flag")
-    		{
-    		    foreach($posts as $key => $post)
-    			{
-    				if($key != "rm" && $key != "selectall")
-    				{
-    					$cfl_ids = $flagmodel->getFlagsByContentId($key);
-	    				foreach($cfl_ids as $cfl_id)
-	    				{
-	    					$flagmodel->removeFlag($cfl_id);
-	    				}
-    				}
-    			}
-    		}
-    		
-    	}
+                        // cnt_has_cmp
+                        $cntHasCmp = new Default_Model_ContentHasCampaign();
+                        $cntHasCmp->removeContentCampaigns($key);
 
+                        // cnt_has_cnt
+                        $cntHasCnt = new Default_Model_ContentHasContent();
+                        $cntHasCnt->removeContentFromContents($key);
+
+                        // cnt_has_fic
+                        $cntHasFic = new Default_Model_ContentHasFutureinfoClasses();
+                        $cntHasFic->removeFutureinfoClassesFromContent($key);
+
+                        // cnt_has_grp
+                        // Not used?
+
+                        // cnt_has_ind
+                        $cntHasInd = new Default_Model_ContentHasIndustries();
+                        $cntHasInd->removeIndustriesFromContent($key);
+
+                        // cnt_has_ivt
+                        $cntHasIvt = new Default_Model_ContentHasInnovationTypes();
+                        $cntHasIvt->removeInnovationTypesFromContent($key);
+
+                        // related_companies_rec and cnt_has_rec
+                        $cntHasRec = new Default_Model_ContentHasRelatedCompany();
+                        $recs = $cntHasRec->getContentRelComps($key);
+                        $rec = new Default_Model_RelatedCompanies();
+                        foreach($recs as $id_rec)
+                        {
+                            if (!$cntHasRec->checkIfOtherContentHasRelComp($id_rec['id_rec'], $key))
+                            {
+                                $rec->removeRelComp($id_rec['id_rec']);
+                            }
+                        }
+                        $cntHasRec->removeContentRelComps($key);
+
+                        // tags_tag and cnt_has_tag
+                        $cntHasTag = new Default_Model_ContentHasTag();
+                        $tags = $cntHasTag->getContentTags($key);
+                        $tag = new Default_Model_Tags();
+                        foreach($tags as $id_tag)
+                        {
+                            if(!$cntHasTag->checkIfOtherContentHasTag($id_tag['id_tag'], $key))
+                            {
+                                $tag->removeTag($id_tag['id_tag']);
+                            }
+                        }
+                        $cntHasTag->removeContentTags($key);
+
+                        // cnt_has_usr
+                        $cntHasUsr = new Default_Model_ContentHasUser();
+                        $cntHasUsr->removeUserFromContent($key);
+
+                        // cnt_publish_times_pbt
+                        // Not used?
+
+                        // cnt_views_vws
+                        $cntWiewsVws = new Default_Model_ContentViews();
+                        $cntWiewsVws->removeContentViews($key);
+
+                        // Flags from content_flags_cfl
+                        $cnfl_ids = $contentflagmodel->getFlagsByContentId($key);
+                        foreach($cnfl_ids as $cfl_id)
+                        {
+                            $contentflagmodel->removeFlag($cfl_id);
+                        }
+                        // Flags from comment_flags_cfl
+                        $cmfl_ids = $commentflagmodel->getFlagsByContentId($key);
+                        if (is_array($cmfl_ids))
+                        {
+                            foreach($cmfl_ids as $cfl_id)
+                            {
+                                echo $fcl_id;
+                                $commentflagmodel->removeFlag($cfl_id);
+                            }
+                        }
+
+                        // content_ratings_crt
+                        $contentRatingRct = new Default_Model_ContentRatings();
+                        $contentRatingRct->removeContentRatings($key);
+
+                        // files_fil
+                        $files = new Default_Model_Files();
+                        $files->removeContentFiles($key);
+
+                        // links_lnk
+                        // Not used?
+
+                        // usr_favourites_fvr
+                        $usrFavFvr = new Default_Model_UserFavourites();
+                        $usrFavFvr->removeContentsFromFavouritesByContentId($key);
+
+                        // contents_cnt
+                        $contentmodel->removeContent($key);
+                        // coments_cmt
+                        $commentmodel->removeAllContentComments($key);
+
+                        // Remove recent post cache
+                        $cache->remove($cachePosts);
+                    }
+                }
+            }
+    		
+            // Unpublish content
+            if($posts['rm'] == "pubflag")
+            {
+                foreach($posts as $key => $post)
+                {
+                    if($key != "rm" && $key != "selectall")
+                    {
+                        // Flags from content_flags_cfl
+                        $cfl_ids = $contentflagmodel->getFlagsByContentId($key);
+                        foreach($cfl_ids as $cfl_id)
+                        {
+                            $contentflagmodel->removeFlag($cfl_id);
+                        }
+                        // Unpublish
+                        $contentmodel->publishContent($key,0);
+
+                        // Remove recent post cache
+                        $cache->remove($cachePosts);
+                    }
+                }
+            }
+
+            // Remove flags
+            if($posts['rm'] == "flag")
+            {
+                foreach($posts as $key => $post)
+                {
+                    if($key != "rm" && $key != "selectall")
+                    {
+                        // Flags from content_flags_cfl
+                        $cfl_ids = $contentflagmodel->getFlagsByContentId($key);
+                        foreach($cfl_ids as $cfl_id)
+                        {
+                            $contentflagmodel->removeFlag($cfl_id);
+                        }
+                    }
+                }
+            }
+        }
+    		
     	// Awesome algorithm for counting how many flags each flagged content has
-    	$flagItems = $flagmodel->getAllFlags();
+    	$flagItems = $contentflagmodel->getAllFlags();
     	$tmpCount = array();
     	foreach($flagItems as $flagItem)
     	{

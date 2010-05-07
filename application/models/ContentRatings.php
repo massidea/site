@@ -2,7 +2,7 @@
 /**
  *  ContentRatings -> ContentRatings database model for content ratings table.
  *
- *  Copyright (c) <2009>, Markus Riihelä
+ *  Copyright (c) <2009>, Markus Riihelï¿½
  *  Copyright (c) <2009>, Mikko Sallinen
  *  Copyright (c) <2009>, Joel Peltonen
  *
@@ -23,8 +23,8 @@
  *  ContentRatings - class
  *
  *  @package        models
- *  @author         Markus Riihelä & Mikko Sallinen & Joel Peltonen
- *  @copyright      2009 Markus Riihelä & Mikko Sallinen & Joel Peltonen
+ *  @author         Markus Riihelï¿½ & Mikko Sallinen & Joel Peltonen
+ *  @copyright      2009 Markus Riihelï¿½ & Mikko Sallinen & Joel Peltonen
  *  @license        GPL v2
  *  @version        1.0
  */ 
@@ -197,5 +197,19 @@ class Default_Model_ContentRatings extends Zend_Db_Table_Abstract
             return false;
         }
     }
+
+    /**
+    *   removeContentRatings
+    *   Removes specified rating
+    *
+    *   @param		int		id_cnt_crt	Id of the content
+    *   @author		Mikko Korpinen
+    */
+    public function removeContentRatings($id_cnt_crt)
+    {
+        $where = $this->getAdapter()->quoteInto('id_cnt_crt = ?', $id_cnt_crt);
+        $this->delete($where);
+    }
+
 } // end of class
 ?>

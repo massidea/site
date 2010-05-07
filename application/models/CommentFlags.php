@@ -94,7 +94,7 @@ class Default_Model_CommentFlags extends Zend_Db_Table_Abstract
         
         $result = $this->fetchAll($select)->toArray();
         
-        if (count($result) >> 0) {
+        if (count($result) > 0) {
             return true;
         } else {
             return false;
@@ -143,6 +143,41 @@ class Default_Model_CommentFlags extends Zend_Db_Table_Abstract
 		//$this->getAdapter()->
         
     	return $finalresult;//['id_cmf'];
+    }
+
+    /**
+    *   getFlagsByContentId
+    *   Get all comment flags by content id
+    *
+    *   @param		int		id_cnt	Id of the content
+    *   @author		Mikko Korpinen
+    */
+    public function getFlagsByContentId($id_cnt)
+    {
+        /*
+        $contentSelect = $this->_db->select()
+                               ->from(array('cfl' => 'content_flags_cfl'),
+                                      array('id_cfl', 'id_content_cfl', 'id_user_cfl',
+                                          'flag_cfl', 'created_cfl', 'modified_cfl',
+                                          'count'=>'COUNT(cfl.id_content_cfl)'))
+                               ->joinLeft(array('cnt' => 'contents_cnt'),
+                                          'cfl.id_content_cfl = cnt.id_cnt',
+                                          array('id_cnt'))
+                               ->where('flag_cfl','1')
+                               ->group('cfl.id_content_cfl')
+                               ->order('count DESC');
+        */
+    	$select = $this->_db->select()
+                       ->from(array('cmf' => 'comment_flags_cmf'), array('id_cmf'))
+                       ->joinLeft(array('cmt' => 'comments_cmt'),
+                               'cmf.id_comment_cmf = cmt.id_cmt')
+                       ->where('cmt.id_cnt_cmt = ?', (int)$id_cnt);
+
+		$results = $this->getAdapter()->fetchAll($select);
+        foreach ($results as $result) {
+            $finalresult[] = $result['id_cmf'];
+        }
+        return $finalresult;
     }
     
     /** 

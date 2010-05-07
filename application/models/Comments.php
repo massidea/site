@@ -209,8 +209,8 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             $comment->save();
         } // end if
     } // end of addComment
-    
-    /** 
+
+    /**
     *   getCommentIdsByContentId
     *   Fetchs all comment ids related to content
     *   
@@ -250,6 +250,36 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     public function removeComment($id_cmt)
     {
         $where = $this->getAdapter()->quoteInto('id_cmt = ?', (int)$id_cmt);
+        $this->delete($where);
+    }
+
+    /**
+    *   removeCommentText
+    *   Writes Comment removed into specified comment
+    *
+    *   @param int id_cmt Id of the comment
+    *   @author Mikko Korpinen
+    */
+    public function removeCommentText($id_cmt)
+    {
+        $data = array(
+            "body_cmt" => "Comment removed",
+            "modified_cmt" => new Zend_Db_Expr('NOW()')
+        );
+        $where = $this->getAdapter()->quoteInto('id_cmt = ?', (int)$id_cmt);
+        $this->update($data, $where);
+    }
+
+    /**
+    *   removeAllContentComments
+    *   Removes all content comments
+    *
+    *   @param int id_cnt Id of the content
+    *   @author Mikko Korpinen
+    */
+    public function removeAllContentComments($id_cnt)
+    {
+        $where = $this->getAdapter()->quoteInto('id_cnt_cmt = ?', (int)$id_cnt);
         $this->delete($where);
     }
     

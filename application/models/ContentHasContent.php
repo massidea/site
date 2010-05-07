@@ -2,7 +2,7 @@
 /**
  *  ContentHasContent -> ContentHasContent database model for content has content link table.
  *
-* 	Copyright (c) <2009>, Markus Riihelä
+* 	Copyright (c) <2009>, Markus Riihelï¿½
 * 	Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -22,8 +22,8 @@
  *  ContentHasContent - class
  *
  *  @package 	models
- *  @author 		Markus Riihelä & Mikko Sallinen
- *  @copyright 	2009 Markus Riihelä & Mikko Sallinen
+ *  @author 		Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright 	2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
@@ -137,6 +137,21 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
         }
         
         return $return;
+    }
+
+    /**
+    *   removeContentFromContents
+    *   Removes specified content from contents (child or parent)
+    *
+    *   @param int id_cnt Id of content
+    *   @author Mikko Korpinen
+    */
+    public function removeContentFromContents($id_cnt = 0)
+    {
+        $parent = $this->getAdapter()->quoteInto('id_parent_cnt = ?', (int)$id_cnt);
+        $child = $this->getAdapter()->quoteInto('id_child_cnt = ?', (int)$id_cnt);
+        $where = "$parent OR $child";
+        $this->delete($where);
     }
     
 } // end of class
