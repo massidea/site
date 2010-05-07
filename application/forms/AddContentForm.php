@@ -381,7 +381,7 @@ class Default_Form_AddContentForm extends Zend_Form
         $file = new Zend_Form_Element_File('content_file_upload');
         $file->setDestination('../www/upload')
              ->removeDecorator('DtDdWrapper')
-			 ->addValidator('Count', false, 1)
+			 //->addValidator('Count', false, 1)
 			 ->addValidator('Size', false, 2097152)
 			 ->addValidator('Extension', false, 'png,gif,jpg,jpeg,doc,zip,xls,mpp,pdf,wmv,avi,mkv,mov,mpeg,mp4,divx,flv,ogg,3gp');
         $file->setLabel($translate->_("content-add-upload-file"))

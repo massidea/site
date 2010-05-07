@@ -52,35 +52,53 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     /**
     *   newUserImage > set new user image to default, used in registration
     *   
-    *   @param  idUsr      int     user id for the user whose pic to modify
+    *   @param  id_cnt		int		content id with which the file is linked 
+    *   @param  id_usr      int     user id for the user whose pic to modify
+    *   @param  uploadedFile array  has info of file, if left empty will use $_FILES 
     *   @return success boolean was the procedure succesful?
     */
-    public function newFile($id_cnt, $id_usr) 
+    public function newFile($id_cnt, $id_usr, $uploadedFile = "") 
     {
+    	if ($uploadedFile == "") {
+    		$uploadedFile = $_FILES['content_file_upload'];
+    	}
+    	
         // $path was replaced by $_FILES['image']['tmp_name']
 		//$thumbdata = fopen($_FILES['image']['tmp_name'], 'r');
 		//$thumbnail = fread($thumbdata, filesize($_FILES['image']['tmp_name']));
 
         // Read fullsized file info location relates to index.php bootstrap loader
-        $fullsizedata = fopen($_FILES['content_file_upload']['tmp_name'], 'r');
-        $fullsize = fread($fullsizedata, filesize($_FILES['content_file_upload']['tmp_name']));
+        $fullsizedata = fopen($uploadedFile['tmp_name'], 'r');
+        $fullsize = fread($fullsizedata, filesize($uploadedFile['tmp_name']));
 
         // generate new row
         $file = $this->createRow();
         // Set images and user id
         $file->id_cnt_fil = $id_cnt;
         $file->id_usr_fil = $id_usr;
-        $file->filename_fil = $_FILES['content_file_upload']['name'];
-        $file->filesize_fil = $_FILES['content_file_upload']['size'];
+        $file->filename_fil = $uploadedFile['name'];
+        $file->filesize_fil = $uploadedFile['size'];
         $file->data_fil = $fullsize;
-        $file->filetype_fil = $_FILES['content_file_upload']['type'];
+        $file->filetype_fil = $uploadedFile['type'];
 
         $file->created_fil = new Zend_Db_Expr('NOW()');
         $file->modified_fil = new Zend_Db_Expr('NOW()');
         
+        
         $file->save();
     }
     
+    public function getFilenamesByCntId($id_cnt){
+    	$select = $this->select()
+    				   ->from($this, array('id_fil', 'filename_fil'))
+    				   ->where('id_cnt_fil = ?', $id_cnt);
+    	$result = $this->fetchAll($select);
+    	$rows = array();
+    	foreach ($result as $row) {
+    		$rows[$row->id_fil] = $row->filename_fil;
+    	}
+		return $rows;
+    }
     
     public function getFileData($id_fil = 0)
     {
@@ -98,6 +116,15 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
             
             return $result;
         }
+    }
+    
+    public function deleteFiles($files) {
+    	foreach ($files as $file) {
+    		$this->delete('id_fil = ' . $file);
+    	}
+    	
+    	
+    	//$usrhasntf->delete('id_usr = '.$userId);
     }
     
     /**

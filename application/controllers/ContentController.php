@@ -450,8 +450,7 @@ class ContentController extends Oibs_Controller_CustomController
                                         			$data['content_language'] = $languages->getLangNameByLangId($data['content_language']);
                                         		}
 
-                                        		//echo "<pre>"; print_r($data); echo "</pre>"; die();
-
+                                        		$data['files'] = $_FILES['content_file_upload']; 												
                                         		// Add a new content
                                         		$content = new Default_Model_Content();
                                         		$add = $content->addContent($data);
@@ -1079,8 +1078,13 @@ class ContentController extends Oibs_Controller_CustomController
                                                 $title_cnt = $content->getContentHeaderByContentId($data['id_cnt']);
 
                                                 $this->view->contentHeader = $title_cnt;
-
-                                                // Form for content adding
+                                                
+                                                // Get contents filenames from database
+												$filesModel = new Default_Model_Files();
+												$filenames = $filesModel->getFilenamesByCntId($contentId);
+                                                $formData['filenames'] = $filenames;
+                                                
+												// Form for content adding
                                                 $form = new Default_Form_EditContentForm(null, $formData, $contentId, $contentType, $this->view->language);
                                                 $this->view->form = $form;
                                                 $url = $this->_urlHelper->url(array('controller' => 'msg',
@@ -1166,20 +1170,16 @@ class ContentController extends Oibs_Controller_CustomController
 
                                                 		//echo "<pre>"; print_r($data); echo "</pre>"; die();
 
+                                                		$data['files'] = $_FILES['content_file_upload'];
+                                                		
                                                 		// Edit content
                                                 		$content = new Default_Model_Content();
-                                                		$edit = $content->editContent($data);
-
-                                                		if(!$edit) {
-                                                			$edit_successful = false;
-                                                		} else {
-                                                			$edit_successful = true;
-                                                		} // end if
-
+                                                		$edit_successful = $content->editContent($data);
+														
                                                 		$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                                 'action' => 'index',
                                                                 'language' => $this->view->language),
-                                                          'lang_default', true);
+                                                          		'lang_default', true);
 
                                                 		if($edit_successful) {
                                                 			if($data['publish'] == 1) {

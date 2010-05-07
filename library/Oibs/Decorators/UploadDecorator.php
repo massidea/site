@@ -36,12 +36,10 @@ class Oibs_Decorators_UploadDecorator extends Zend_Form_Decorator_File
 		{
             $text = '<div id="progressbar_'.$name.'" class="progress"></div>';
 		}
-		
-        return $element->getView()->$helper(
-            $element->getName(),
-            $element->getValue(),
-            $element->getAttribs(),
-            $element->options) . $text;
+        
+		return $element->getView()->$helper(
+            $element->getName()."[]", //small hack to add brackets [] to make it possible to upload multiple files
+            $element->getAttribs()) . $text;
     }
 
     public function buildErrors()
@@ -70,7 +68,7 @@ class Oibs_Decorators_UploadDecorator extends Zend_Form_Decorator_File
     public function render($content)
     {
         $element = $this->getElement();
-        if (!$element instanceof Zend_Form_Element) 
+        if (!$element instanceof Zend_Form_Element_File) 
 		{
             return $content;
         }
@@ -86,7 +84,7 @@ class Oibs_Decorators_UploadDecorator extends Zend_Form_Decorator_File
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
         $name      = $this->getElement()->getName();
-        
+
         /*$output = '<div class="form_addcontent_title_row"><b>'
 					. $label
                     . '</b>'

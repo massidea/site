@@ -1026,6 +1026,10 @@ form#preview label {
     color: #808080;
 }
 
+form #uploadedFiles_div .form_element_input label {
+	font-weight: normal;
+}
+
 .linkedto {
     height: 34px;
     border: 1px solid #CCCCCC;

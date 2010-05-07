@@ -368,13 +368,25 @@ class Default_Form_EditContentForm extends Zend_Form
         // File upload
         $file = new Zend_Form_Element_File('content_file_upload');
         $file->setDestination('../www/upload')
-             ->removeDecorator('DtDdWrapper')
-			 ->addValidator('Count', false, 1)
+        	 ->removeDecorator('DtDdWrapper')
+			 //->addValidator('Count', false, 1)
 			 ->addValidator('Size', false, 2097152)
 			 ->addValidator('Extension', false, 'png,gif,jpg,jpeg,doc,zip,xls,mpp,pdf,wmv,avi,mkv,mov,mpeg,mp4,divx,flv,ogg,3gp');
         $file->setLabel($translate->_("content-add-upload-file"))
              ->setDescription($translate->_("content-add-file-upload-help-text"))
-             ->setDecorators(array('UploadDecorator'));
+             ->setDecorators(array('UploadDecorator'))
+             ->setAttrib("onchange", "multiFile(this, '".$translate->_("content-add-file-delete-file-button")."');");
+        
+        $uploadedFilesBoxes = new Zend_Form_Element_MultiCheckbox('uploadedFiles');
+        $uploadedFilesBoxes->setMultiOptions($data['filenames'])
+        				   ->setDecorators(array('FormElementDecorator'))
+        				   ->setLabel($translate->_('content-add-file-delete-files-label'));
+        				   
+        				   //->setDecorators(array('SettingsCheckboxDecorator'));
+        /*$uploadedFiles = $data['filenames'];
+        Zend_Debug::dump($uploadedFiles);
+        die;*/  
+        
         
         // References
 		$references = new Zend_Form_Element_Textarea('content_references');
@@ -465,12 +477,12 @@ class Default_Form_EditContentForm extends Zend_Form
 		$save = new Zend_Form_Element_Submit('content_save');
 		$save->setLabel($translate->_("content-add-save"))
              ->removeDecorator('DtDdWrapper');
-        
+             
         $preview = new Zend_Form_Element_Button('preview');
         $preview->setLabel($translate->_("content-add-preview"))
                 ->removeDecorator('DtDdWrapper')
                 ->setAttrib('onclick',"populatePreview(); previewRoll('open')");
-		
+                
 		// Add elements to form
         $elements = array($header, $keywords, $content_type,
                           $textlead, $text, $related_companies);
@@ -485,7 +497,13 @@ class Default_Form_EditContentForm extends Zend_Form
             array_push($elements, $solution);
         }
         
-        array_push($elements, $campaigns, $file, $references, $language);
+        array_push($elements, $campaigns, $file);
+        
+        if (count($data['filenames'])) {
+        	array_push($elements, $uploadedFilesBoxes);
+        }
+        
+        array_push($elements, $references, $language);
         
         if($contentType == "finfo") {
             array_push($elements, $finfoClasses);

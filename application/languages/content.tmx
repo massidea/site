@@ -421,6 +421,14 @@
 		<tuv xml:lang="en"><seg>(optional, max size 2 MB)</seg></tuv>
 		<tuv xml:lang="fi"><seg>(valinnainen, maksimikoko 2 MB)</seg></tuv>
 	</tu>
+	<tu tuid='content-add-file-delete-file-button'>
+		<tuv xml:lang="en"><seg>Remove</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
+	</tu>
+	<tu tuid='content-add-file-delete-files-label'>
+		<tuv xml:lang="en"><seg>Remove existing attachments</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista aikaisemmat liitetiedostot</seg></tuv>
+	</tu>
 	<tu tuid='content-add-threat-help-text'>
 		<tuv xml:lang="en"><seg>(The most important if future scenario becomes realized)</seg></tuv>
 		<tuv xml:lang="fi"><seg>(Tärkein, jos tulevaisuuden skenaario toteutuu)</seg></tuv>
