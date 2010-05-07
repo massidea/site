@@ -2,7 +2,7 @@
 /**
  *  ContentHasUser -> ContentHasInnovationTypes database model for content has userlink table.
  *
-* 	Copyright (c) <2009>, Markus Riihelä
+* 	Copyright (c) <2009>, Markus Riihelï¿½
 * 	Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -22,8 +22,8 @@
  *  ContentHasUser - class
  *
  *  @package 	models
- *  @author 		Markus Riihelä & Mikko Sallinen
- *  @copyright 	2009 Markus Riihelä & Mikko Sallinen
+ *  @author 		Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright 	2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
@@ -57,7 +57,7 @@ class Default_Model_ContentHasUser extends Zend_Db_Table_Abstract
         $contentSelect = $this->_db->select()
                                ->from(array('chu' => 'cnt_has_usr'), 
                                       array('id_usr', 'id_cnt', 'count'=>'COUNT(chu.id_usr)'))
-                               ->joinLeft(array('usr' => 'users_usr'),
+                               ->joinRight(array('usr' => 'users_usr'),
                                           'chu.id_usr = usr.id_usr',
                                           array('id_usr', 'login_name_usr'))
                                ->group('chu.id_usr')
