@@ -1,8 +1,7 @@
 .pointerCursor,
 #voteup,
 #votedown,
-#favouriteadd,
-#favouriteremove {
+#content_view_content_add_favourite {
     cursor: pointer;
 }
 

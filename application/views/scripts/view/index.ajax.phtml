@@ -51,8 +51,8 @@
 
 	    <?php if($this->user_can_comment): // if can comment, can also add to favourites ?>
 		<div id="content_view_content_add_favourite" style="padding: 2px;">
-		<?php if(!$this->favourite['is_favourite']):?>		<img id="favouriteadd" onclick="ajaxLoad_favourite('add');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_fav_on.png" alt="Add to favourites" /> <p style="float: right;"><?php echo " " . $this->translate('content-favourite-add'); ?></p><?php endif; ?>
-		<?php if($this->favourite['is_favourite']):?>		<img id="favouriteremove" onclick="ajaxLoad_favourite('remove');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_fav_off.png" alt="Remove from favourites" /> <p style="float: right;"><?php echo " " . $this->translate('content-favourite-remove'); ?></p><?php endif; ?>
+		<?php if(!$this->favourite['is_favourite']):?>		<div onclick="ajaxLoad_favourite('add');"><img id="favouriteadd" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_fav_on.png" alt="Add to favourites" /> <p style="float: right;"><?php echo " " . $this->translate('content-favourite-add'); ?></p></div><?php endif; ?>
+		<?php if($this->favourite['is_favourite']):?>		<div onclick="ajaxLoad_favourite('remove');"><img id="favouriteremove" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_fav_off.png" alt="Remove from favourites" /> <p style="float: right;"><?php echo " " . $this->translate('content-favourite-remove'); ?></p></div><?php endif; ?>
 		</div>
 		<?php endif; ?>
 
