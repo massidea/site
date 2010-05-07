@@ -2,7 +2,7 @@
 /**
  *  User -> User database model for user table.
  *
-*     Copyright (c) <2009>, Markus Riihelä
+*     Copyright (c) <2009>, Markus Riihelï¿½
 *     Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -22,8 +22,8 @@
  *  User - class
  *
  *  @package     models
- *  @author         Markus Riihelä & Mikko Sallinen
- *  @copyright     2009 Markus Riihelä & Mikko Sallinen
+ *  @author         Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright     2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license     GPL v2
  *  @version     1.0
  */ 
@@ -41,7 +41,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                         'Default_Model_Comments', 'Default_Model_ContentPublishTimes', 
                                         'Default_Model_ContentHasUser', 'Default_Model_UserHasGroup', 
                                         'Default_Model_Links', 'Default_Model_Files',
-                                        'Default_Model_ContentRatings','Default_Model_UserFavourites',
+                                        'Default_Model_ContentRatings','Default_Model_UserHasFavourites',
                                         'Default_Model_UserHasNotifications');
 
         

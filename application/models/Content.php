@@ -42,7 +42,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                                         'Default_Model_ContentHasInnovationTypes', 'Default_Model_ContentHasContent', 
                                         'Default_Model_ContentHasUser', 'Default_Model_ContentHasGroup',
                                         'Default_Model_Files', 'Default_Model_ContentPublishTimes',
-                                        'Default_Model_UserFavourites');
+                                        'Default_Model_UserHasFavourites');
     
     // Table reference map
     protected $_referenceMap    = array(
@@ -688,7 +688,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
         $content['threat_cnt'] = strip_tags($data['content_threat']);
         $content['solution_cnt'] = strip_tags($data['content_solution']);
         $content['references_cnt'] = strip_tags($data['content_references']);
-        //$content['published_cnt'] = $data['publish']; //it defaults to 0 so let it be 1 if data is already published§
+        //$content['published_cnt'] = $data['publish']; //it defaults to 0 so let it be 1 if data is already publishedï¿½
         $content['modified_cnt'] = new Zend_Db_Expr('NOW()');
         
         $where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
