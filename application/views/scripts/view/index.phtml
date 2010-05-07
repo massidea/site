@@ -47,9 +47,36 @@ $(document).ready(function(){
 	};
 	
 	$("#content_view_content_info_container").load("?page=content_rating&format=html");
+	$("#content_view_favourite").load("?page=add_favourite&format=html");
 	
 
 });
+
+function ajaxLoad_favourite(method){
+	$.ajax({
+		type: "POST",
+		beforeSend: function(){
+			if (method == "add") $("#favouriteadd").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
+			if (method == "remove") $("#favouriteremove").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
+		},
+		url: "?favourite="+method,
+		success: function(){
+			ajaxRefresh_favourite();
+		}
+	});
+};
+
+function ajaxRefresh_favourite(){
+	$.ajax({
+		beforeSend: function(){
+		},
+		url: "?page=add_favourite&format=html",
+		success: function(result){
+			$("#content_view_favourite").html(result);
+			$("#current_favourites").animate({backgroundColor: "red"}, 1).animate({backgroundColor: "#ffffff"}, 1400);
+		}
+	});
+};
 
 function ajaxLoad_vote(score){
 	$.ajax({
@@ -350,7 +377,10 @@ if (isset($this->parent_siblings[0])) {
             <div class="view_content_left_header_btm">
                 <div style="float:left; padding:5px;">
                 	<div id="content_view_content_info_container"></div>
-                </div>                            
+                </div>  
+                <div style="float:left; padding:5px;">
+                	<div id="content_view_favourite"></div>
+                </div>                  
                 <div style="float:right; padding:5px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
             </div>
         </div>

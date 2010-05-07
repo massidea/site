@@ -1061,6 +1061,26 @@
 		<tuv xml:lang="en"><seg>Rating succesful! </seg></tuv>
 		<tuv xml:lang="fi"><seg>Arvosana tallennettu!</seg></tuv>
 	</tu>
+	<tu tuid='content-favourites'>
+		<tuv xml:lang="en"><seg>Favourited</seg></tuv>
+		<tuv xml:lang="fi"><seg>Suosikkina</seg></tuv>
+	</tu> 
+	<tu tuid='content-favourite-add'>
+		<tuv xml:lang="en"><seg>Add</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lisää</seg></tuv>
+	</tu> 
+	<tu tuid='content-favourite-remove'>
+		<tuv xml:lang="en"><seg>Remove</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
+	</tu> 
+	<tu tuid='favourite-adding-failed'>
+		<tuv xml:lang="en"><seg>Adding the favourite failed for some odd reason...</seg></tuv>
+		<tuv xml:lang="fi"><seg>Suosikin lisääminen epäonnistui jostain eriskummallisesta syystä...</seg></tuv>
+	</tu> 
+	<tu tuid='favourite-removing-failed'>
+		<tuv xml:lang="en"><seg>Removing the favourite failed for some odd reason...</seg></tuv>
+		<tuv xml:lang="fi"><seg>Suosikin poistaminen epäonnistui jostain eriskummallisesta syystä...</seg></tuv>
+	</tu> 
 	<tu tuid='content-box-add-header'>
 		<tuv xml:lang="en"><seg>Add content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää sisältöä!</seg></tuv>

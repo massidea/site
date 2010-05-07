@@ -40,8 +40,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                         'Default_Model_PrivateMessages', 'Default_Model_CommentRatings', 
                                         'Default_Model_Comments', 'Default_Model_ContentPublishTimes', 
                                         'Default_Model_ContentHasUser', 'Default_Model_UserHasGroup', 
-                                        'Default_Model_Links', 'Default_Model_Files', 
-                                        'Default_Model_ContentRatings','Default_Model_UserHasNotifications');
+                                        'Default_Model_Links', 'Default_Model_Files',
+                                        'Default_Model_ContentRatings','Default_Model_UserFavourites',
+                                        'Default_Model_UserHasNotifications');
+
         
     // Table references  to other tables
     protected $_referenceMap    = array(

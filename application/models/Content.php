@@ -41,7 +41,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                                         'Default_Model_ContentHasTag', 'Default_Model_ContentHasIndustries',
                                         'Default_Model_ContentHasInnovationTypes', 'Default_Model_ContentHasContent', 
                                         'Default_Model_ContentHasUser', 'Default_Model_ContentHasGroup',
-                                        'Default_Model_Files', 'Default_Model_ContentPublishTimes');
+                                        'Default_Model_Files', 'Default_Model_ContentPublishTimes',
+                                        'Default_Model_UserFavourites');
     
     // Table reference map
     protected $_referenceMap    = array(

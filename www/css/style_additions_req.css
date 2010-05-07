@@ -1,6 +1,8 @@
 .pointerCursor,
 #voteup,
-#votedown {
+#votedown,
+#favouriteadd,
+#favouriteremove {
     cursor: pointer;
 }
 

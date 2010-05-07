@@ -964,7 +964,27 @@ CREATE  TABLE IF NOT EXISTS `oibs`.`usr_has_ntf` (
     REFERENCES `oibs`.`notifications_ntf` (`id_ntf`) )
 ENGINE = MyISAM;
 
+-- -----------------------------------------------------
+-- Table `oibs`.`usr_favourites_fvr`
+-- -----------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS `oibs`.`usr_favourites_fvr` (
+  `id_cnt_fvr` INT(11) NOT NULL,
+  `id_usr_fvr` INT(11) NOT NULL,
+  PRIMARY KEY(`id_cnt_fvr`,`id_usr_fvr`),
+  INDEX `fk_usr_favourites_fvr_cnt` (`id_cnt_fvr` ASC),
+  INDEX `fk_usr_favourites_fvr_usr` (`id_usr_fvr` ASC),
+  CONSTRAINT `fk_usr_favourites_fvr_cnt`
+    FOREIGN KEY (`id_cnt_fvr`)
+    REFERENCES `oibs`.`contents_cnt` (`id_cnt`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usr_favourites_fvr_usr`
+    FOREIGN KEY (`id_usr_fvr`)
+    REFERENCES `oibs`.`users_usr` (`id_usr`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = MyISAM;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

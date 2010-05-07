@@ -58,7 +58,6 @@
         $request = $this->getRequest();
         $params = $request->getParams();
         
-        
         $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
         // get content id from params, if not set or invalid, send a message
         $id = (int)$params['content_id'];
@@ -90,6 +89,9 @@
    
         // get rating from params (if set)
         $rate = isset($params['rate']) ? $params['rate'] : "NONE";
+        
+        // get favourite method, "add" or "remove"
+        $favouriteMethod = isset($params['favourite']) ? $params['favourite'] : "NONE";
         
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
@@ -212,6 +214,46 @@
             }
         }
 
+        // get contents total favourites
+        $userFavouritesModel = new Default_Model_UserFavourites();
+        $totalFavourites = $userFavouritesModel->getUsersCountByFavouriteContent($id);
+        $totalFavourites = $totalFavourites[0]['users_count_fvr'];
+        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$auth->getIdentity()->user_id);
+        
+        /*
+         * favouritemethod comes from parameters sent by
+         * ajax function (ajaxLoad_favourite(method)) in index.phtml in /view/.
+         * this function gets parameter "method" (add/remove) from onClick event that is in index.ajax.phtml.
+         * if this onClick event is activated by clicking "heart" (icon_fav_on/off) icon in content view page,
+         * it runs the ajaxLoad_favourite(method) function which sends parameter "favourite" (add/remove) to
+         * this viewController which then handles the adding or removing the content from favourites.
+         */
+        if($favouriteMethod != "NONE" && $auth->hasIdentity()) {
+        	$favouriteUserId = $auth->getIdentity()->user_id;
+        	//If favourite method was "add", then add content to user favourites
+        	if($favouriteMethod == "add" 
+        		&& !$isFavourite) 
+        		{
+        		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
+        			$this->view->favouriteMethod = $favouriteMethod;
+        		} else $this->flash('favourite-adding-failed','/en/msg');
+        	} 
+        	//If favourite method was "remove" then remove content from user favourites.
+        	elseif ($favouriteMethod == "remove"
+        		&& $isFavourite)
+        		{
+        		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
+        			$this->view->favouriteMethod = $favouriteMethod;
+        		} else $this->flash('favourite-removing-failed','/en/msg');
+        	} else unset($favouriteMethod);
+        }
+        
+        $favourite = array(
+        	'total_favourites' 	=> $totalFavourites,
+        	'is_favourite'		=> $isFavourite
+        );
+        //print_r($favourite);die;
+        
         // get content tags - functions returns names as well
         // needs updating to proper MVC?
         $contentHasTagModel = new Default_Model_ContentHasTag();
@@ -355,6 +397,7 @@
         $this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
         $this->view->count              = $count;
+        $this->view->favourite			= $favourite;
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
