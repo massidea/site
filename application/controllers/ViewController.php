@@ -215,11 +215,11 @@
         }
 
         // get contents total favourites
-        $userFavouritesModel = new Default_Model_UserFavourites();
+        $userFavouritesModel = new Default_Model_UserHasFavourites();
         $totalFavourites = $userFavouritesModel->getUsersCountByFavouriteContent($id);
         $totalFavourites = $totalFavourites[0]['users_count_fvr'];
         $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$auth->getIdentity()->user_id);
-        
+
         /*
          * favouritemethod comes from parameters sent by
          * ajax function (ajaxLoad_favourite(method)) in index.phtml in /view/.
@@ -250,7 +250,7 @@
         
         $favourite = array(
         	'total_favourites' 	=> $totalFavourites,
-        	'is_favourite'		=> $isFavourite
+        	'is_favourite'		=> $isFavourite,
         );
         //print_r($favourite);die;
         
