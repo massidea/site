@@ -38,41 +38,9 @@
             // Get the names and descriptions of all groups.
             $groupModel = new Default_Model_Groups();
             $this->view->groupdata = $groupModel->getAllGroups();
-            
-            // Add the "add new group"-form to the view.
-            $form = new Default_Form_AddGroupForm();
-            $this->view->form = $form;
-            
-            // If the form is posted and valid, add the new group to db.
-            $request = $this->getRequest();
-            if ($request->isPost()) {
-                $post = $request->getPost();
-                if ($form->isValid($post)) {
-                    // Add new group to db.
-                    $newGroupId = $groupModel->createGroup(
-                        $post['groupname'], $post['groupdesc']);
-                    
-                    // Add the current user to the new group.
-                    $userHasGroupModel = new Default_Model_UserHasGroup();
-                    $userHasGroupModel->addUserToGroup(
-                        $newGroupId, $this->view->userid);
-                    
-                    // Make the current user an admin for the new group.
-                    $groupAdminModel = new Default_Model_GroupAdmins();
-                    $groupAdminModel->addAdminToGroup(
-                        $newGroupId, $this->view->userid);
-                    
-                    // Redirect back to groups page.
-                    $target = $this->_urlHelper->url(array(
-                        'controller' => 'group', 
-                        'action'     => 'index',
-                        'language'   => $this->view->language),
-                        'lang_default', true);
-                    $this->_redirector->gotoUrl($target);
-                }
-            }
         } else {
             // Groups are only visible to registered users.
+            // Redirect to main page.
             $target = $this->_urlHelper->url(array(
                 'controller' => 'index', 
                 'action' => 'index',
@@ -80,9 +48,9 @@
                 'lang_default', true);
             $this->_redirector->gotoUrl($target);
         }
-	}
-    
-    /*
+    }
+
+    /**
      * viewAction - shows an individual group's page
      *
      * @author Mikko Aatola
@@ -99,7 +67,7 @@
             $grpModel = new Default_Model_Groups();
             $usrHasGrpModel = new Default_Model_UserHasGroup();
             $grpAdminsModel = new Default_Model_GroupAdmins();
-            $comment_form = new Default_Form_CommentForm($parentId);
+            $campaignModel = new Default_Model_Campaigns();
             
             // Add data to the view.
             $this->view->grpId = $grpId;
@@ -107,7 +75,7 @@
             $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
             $this->view->grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
             $this->view->userHasGroup = $usrHasGrpModel;
-            $this->view->comment_form = $comment_form;
+            $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
         } else {
             // Groups are only visible to registered users.
             $target = $this->_urlHelper->url(array(
@@ -116,6 +84,45 @@
                 'language' => $this->view->language),
                 'lang_default', true);
             $this->_redirector->gotoUrl($target);
+        }
+    }
+
+    function createAction()
+    {
+        // Add the "add new group"-form to the view.
+        $form = new Default_Form_AddGroupForm();
+        $this->view->form = $form;
+
+        // If the form is posted and valid, add the new group to db.
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            if ($form->isValid($post)) {
+                // Add new group to db.
+                $groupModel = new Default_Model_Groups();
+                $newGroupId = $groupModel->createGroup(
+                    $post['groupname'],
+                    $post['groupdesc'],
+                    $post['groupbody']);
+
+                // Add the current user to the new group.
+                $userHasGroupModel = new Default_Model_UserHasGroup();
+                $userHasGroupModel->addUserToGroup(
+                    $newGroupId, $this->view->userid);
+
+                // Make the current user an admin for the new group.
+                $groupAdminModel = new Default_Model_GroupAdmins();
+                $groupAdminModel->addAdminToGroup(
+                    $newGroupId, $this->view->userid);
+
+                // Redirect back to groups page.
+                $target = $this->_urlHelper->url(array(
+                    'controller' => 'group',
+                    'action'     => 'index',
+                    'language'   => $this->view->language
+                    ), 'lang_default', true);
+                $this->_redirector->gotoUrl($target);
+            }
         }
     }
     

@@ -1,10 +1,9 @@
 <?php
-echo $this->form;
+    $link = $this->url(
+        array(
+            'controller' => 'campaign',
+            'action' => 'create',
+            'language' => $this->language),
+        'lang_default', true);
 ?>
-
-<script type="text/javascript">
-$(function() {
-    $("#campaign_start").datepicker();
-    $("#campaign_end").datepicker();
-});
-</script>
+<a href="<?php echo $link; ?>">Create a new campaign</a>

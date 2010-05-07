@@ -52,7 +52,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         // Find all matching campaigns
         $result = $this->fetchAll($select)->toArray();
         
-        return empty($result);
+        return !empty($result);
     } // end of campaignExists
 
     /**
@@ -74,21 +74,58 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         return $row;
     } // end of getCampaign
 
+    public function getCampaignById($campaign)
+    {
+        // Select campaign by id
+        $select = $this->select()->where('id_cmp = ?', $campaign)
+                                 ->limit(1);
+
+        $row = $this->fetchAll($select)->current();
+
+        return $row;
+    }
+
+    /**
+     * getCampaignsByGroup
+     *
+     * Get campaigns by group id.
+     *
+     * @param $groupid id of the group
+     */
+    public function getCampaignsByGroup($groupid)
+    {
+        $select = $this->select()->where('id_grp_cmp = ?', $groupid);
+
+        return $this->fetchAll($select)->toArray();
+    }
+
     /**
     *   createCampaign
     *
     *   Adds a given campaign to database and returns the created row
     *
-    *   @param string $campaign name of campaign that will be created
+    *   @param string $name name of campaign that will be created
     *   @return array
     */
-    public function createCampaign($campaign)
+    public function createCampaign($name, $ingress, $desc, $start, $end, $group)
     {
         // Create new empty row
         $row = $this->createRow();
         
         // Set campaign data
-        $row->name_cmp = $campaign;
+        $row->name_cmp = $name;
+        $row->ingress_cmp = $ingress;
+        $row->description_cmp = $desc;
+
+        // MM/DD/YYYY -> YYYY-MM-DD
+        $start = explode('/', $start);
+        $start = implode('-', array($start[2], $start[0], $start[1]));
+        $end = explode('/', $end);
+        $end = implode('-', array($end[2], $end[0], $end[1]));
+
+        $row->start_time_cmp = $start;
+        $row->end_time_cmp = $end;
+        $row->id_grp_cmp = $group;
         
         $row->created_cmp = new Zend_Db_Expr('NOW()');
         $row->modified_cmp = new Zend_Db_Expr('NOW()');

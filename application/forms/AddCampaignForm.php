@@ -49,8 +49,8 @@ class Default_Form_AddCampaignForm extends Zend_Form
             'required'   => true,
             'filters'    => array('StringTrim'),
             'validators' => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty')))
-                //new Oibs_Validators_CampaignExists('campaign_name')
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
+                new Oibs_Validators_CampaignExists('campaign_name')
             ),
             'decorators' => array('SettingsTextDecorator')
         ));
@@ -93,7 +93,7 @@ class Default_Form_AddCampaignForm extends Zend_Form
         
         $this->addElement('submit', 'submit', array(
             'ignore' => true,
-            'label'  => $translate->_('groups-btn_create')
+            'label'  => 'Create campaign'
         ));
         
         $this->addElement('hash', 'csrf', array(

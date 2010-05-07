@@ -75,7 +75,7 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
      * @param groupname string
      * @return id of the new group
      */
-    public function createGroup($name, $description = "")
+    public function createGroup($name, $description = "", $body = "")
     {
         // Create new empty row.
         $row = $this->createRow();
@@ -83,6 +83,7 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         // Set group data.
         $row->group_name_grp = $name;
         $row->description_grp = $description;
+        $row->body_grp = $body;
         $row->created_grp = new Zend_Db_Expr('NOW()');
         $row->modified_grp = new Zend_Db_Expr('NOW()');
         

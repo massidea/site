@@ -1,7 +1,7 @@
 <h2><?php echo $this->translate('groups-title'); ?></h2>
 
 <h4><?php echo $this->translate('groups-all_groups') . ":"; ?></h4>
-<table cellpadding="2" cellspacing="0">
+<table cellpadding="2" cellspacing="0" style="padding-bottom: 20px;">
     <tr>
         <td style="font-style: italic; border-bottom: 1px solid black; padding-right: 10px;"><?php echo $this->translate('groups-name'); ?></td>
         <td style="font-style: italic; border-bottom: 1px solid black; padding-left: 10px;"><?php echo $this->translate('groups-description'); ?></td>
@@ -26,12 +26,12 @@
 <?php endforeach; ?>
 </table>
 
-<h4><?php echo $this->translate('groups-create_new_group'); ?></h4>
 <?php
-    echo $this->form;
-
-    // Don't mind these. Just testing how this stuff works.
-    //Zend_Debug::dump($this->groupdata);
-    // Use baseUrl to point to documentRoot (oibs/www) e.g. when referring to /images, /css or /js.
-    //echo $this->baseUrl('/css/style.css');
+    $addgrpurl = $this->url(
+        array(
+            'controller' => 'group',
+            'action'     => 'create',
+            'language'   => $this->language
+        ), 'lang_default', true);
 ?>
+<p><a href="<?php echo $addgrpurl; ?>">Create new group</a></p>

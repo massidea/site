@@ -29,22 +29,11 @@
  */ 
 class CampaignController extends Oibs_Controller_CustomController
 {
-	/**
-	 * The default action - show the home page
-	 */
+    /**
+     * The default action - show the home page
+     */
     public function indexAction() 
     {
-        // Add the "add new group"-form to the view.
-        $form = new Default_Form_AddCampaignForm();
-        $this->view->form = $form;
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $post = $request->getPost();
-            if ($form->isValid($post)) {
-                echo "valid";
-            }
-        }
     }
     
     /**
@@ -54,7 +43,40 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function createAction()
     {
-        
+        $grpId = $this->_request->getParam('grpid');
+        // TODO:
+        // if (!userIsAdminInGroup(grpid)) die;
+        $this->view->grpid = $grpId;
+
+        // Add the "add new campaign"-form to the view.
+        $form = new Default_Form_AddCampaignForm();
+        $this->view->form = $form;
+
+        // Handle posted form.
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            if ($form->isValid($post)) {
+                $campaignModel = new Default_Model_Campaigns();
+
+                $name = $post['campaign_name'];
+                $ingress = $post['campaign_ingress'];
+                $desc = $post['campaign_desc'];
+                $start = $post['campaign_start'];
+                $end = $post['campaign_end'];
+
+                $newCampaign = $campaignModel->createCampaign(
+                    $name, $ingress, $desc, $start, $end, $grpId);
+
+                // Redirect back to campaigns page.
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid'    => $grpId,
+                        'language'   => $this->view->language),
+                    'group_shortview', true);
+                $this->_redirector->gotoUrl($target);
+            }
+        }
     }
     
     /**
@@ -64,6 +86,12 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function viewAction()
     {
-        
+        $cmpid = $this->_request->getParam('cmpid');
+
+        $cmpmodel = new Default_Model_Campaigns();
+        $cmp = $cmpmodel->getCampaignById($cmpid);
+        echo "<pre>";
+        var_dump($cmp->toArray());
+        echo "</pre>";
     }
 }

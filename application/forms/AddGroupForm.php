@@ -44,31 +44,43 @@ class Default_Form_AddGroupForm extends Zend_Form
                     'Oibs/Decorators/',
                     'decorator');
 
-        $this->addElement('text', 'groupname', array(
-            'label'      => $translate->_('groups-new_group_name') . ":",
-            'required'   => true,
-            'filters'    => array('StringTrim'),
-            'validators' => array(
+        // Group name (must be unique).
+        $groupname = new Zend_Form_Element_Text('groupname');
+        $groupname
+            ->setLabel($translate->_('groups-new_group_name'))
+            ->setRequired(true)
+            ->setFilters(array('StringTrim'))
+            ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
                 new Oibs_Validators_GroupExists('groupname')
-            ),
-            'decorators' => array('SettingsTextDecorator')
-        ));
-        
-        $this->addElement('text', 'groupdesc', array(
-            'label'      => $translate->_('groups-new_group_description') . ":",
-            'required'   => true,
-            'filters'    => array('StringTrim'),
-            'decorators' => array('SettingsTextDecorator')
-        ));
-        
-        $this->addElement('submit', 'submit', array(
-            'ignore' => true,
-            'label'  => $translate->_('groups-btn_create')
-        ));
-        
-        $this->addElement('hash', 'csrf', array(
-            'ignore' => true
-        ));
+            ))
+            ->setDecorators(array('SettingsTextDecorator'));
+
+        // Description.
+        $groupdesc = new Zend_Form_Element_Text('groupdesc');
+        $groupdesc
+            ->setLabel($translate->_('groups-new_group_description'))
+            ->setRequired(true)
+            ->setFilters(array('StringTrim'))
+            ->setDecorators(array('SettingsTextDecorator'));
+
+        // Body text.
+        $groupbody = new Zend_Form_Element_Text('groupbody');
+        $groupbody
+            ->setLabel('Body text')
+            ->setFilters(array('StringTrim'))
+            ->setDecorators(array('SettingsTextDecorator'));
+
+        // Submit button.
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit
+            ->setIgnore(true)
+            ->setLabel($translate->_('groups-btn_create'));
+
+        $this->addElements(array(
+            $groupname,
+            $groupdesc,
+            $groupbody,
+            $submit));
     }
 }
