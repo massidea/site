@@ -33,20 +33,17 @@ class Default_Model_UserFavourites extends Zend_Db_Table_Abstract
 	protected $_name = 'usr_favourites_fvr';
 
 	// Primary keys of table
-	protected $_primary = array('id_cnt_fvr','id_usr_fvr');
+	protected $_primary = array('id_usr_fvr');
 
 	protected $_referenceMap = array(
-        'FavouritesContent' => array(
-            'columns'           => array('id_cnt_fvr'),
-            'refTableClass'     => 'Default_Model_Content',
-            'refColumns'        => array('id_cnt')
-	),
 		 'FavouritesUser' => array(
             'columns'           => array('id_usr_fvr'),
             'refTableClass'     => 'Default_Model_User',
             'refColumns'        => array('id_usr')
-	),
+	)
 	);
+	
+	
 	
 
 } // end of class

@@ -236,19 +236,4 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 
 } // end of class
 
-/*
- $fav = new Default_Model_UserFavourites();
- $count = $fav->getFavouritesCountByUser(2);
-  print_r($count);
- $conid = $fav->getAllFavouriteContentIdsFromUser(2);
- print_r($conid);
- $usrid = $fav->getAllUserIdsFromFavouriteContent(141);
- print_r($usrid);
- $exists[] = $fav->checkIfUserHasFavouriteContent(2);
- $exists[] = $fav->checkIfUserHasFavouriteContent(22);
-print_r($exists);
-$delete[] = $fav->removeUserFavouriteContent(53, 2);
-print_r($delete);
-die;
- */
 ?>
