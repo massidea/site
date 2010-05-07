@@ -49,7 +49,7 @@ p {
 
 /* ALL LINK DEFINITIONS */
 a:link {text-decoration: underline; color: #0089CF;}
-a:visited {text-decoration: none; color: #0089CF;}
+a:visited {text-decoration: underline; color: #0089CF;}
 a:hover {text-decoration: none; color: #0089CF;}
 a:active {text-decoration: none; color: #0089CF;}
 
@@ -575,10 +575,6 @@ div.footer_links{
 	color: #0089CF;
 	padding-bottom: 0px;
 	margin-bottom: 0px;
-}
-
-div.footer_links a:hover {
-    text-decoration: underline;
 }
 
 div.footer_left{
@@ -1431,6 +1427,10 @@ form#preview label {
 .form_userlist_content_count_element .form_userlist_content_element .form_element_content_input {
     float: left;
     margin: 0 0.5em 0 0 ;
+}
+
+.form_element_content_input input {
+	width: 55px;
 }
 
 .form_userlist_content_count_element {

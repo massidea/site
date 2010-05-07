@@ -63,7 +63,7 @@ class Oibs_Decorators_UserListFilterContentDecorator extends Zend_Form_Decorator
         // $desc      = $this->buildDescription();
 
         $output = /*'<dl class="form_element">*/
-					'<div class="form_userlist_content_element clear">
+					'<div class="form_userlist_content_element">
                     <div class="form_element_content_input">'
                     . $input
                     .'</div>
