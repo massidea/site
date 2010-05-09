@@ -2,6 +2,14 @@
 
 // Get old language and replace current url with new language
 function changeLang(oldLanguage, baseurl) {
+    //reset cookies
+    var language = $("#languages").val();
+    oldLan = readCookie('language');
+    if(oldLan==null||oldLan==''||oldLan!=language){
+	eraseCookie('language');
+	createCookie('language',language,1);
+	
+    }
     var url = document.location.href;
     //alert("indexOf = "+url.indexOf(oldLanguage)+"\noldLanguage = "+oldLanguage+"\nvalittu = "+$("#languages").val()+"\nurl = "+url+"\nbaseurl = "+baseurl);
     if(url.indexOf(oldLanguage) > 0) {
