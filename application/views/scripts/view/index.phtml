@@ -554,7 +554,7 @@ if (isset($this->parent_siblings[0])) {
                     
 					<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_textbody" 
                         class="content_view_comment_textbody">
-                        <?php echo $this->BBCode->parse($comment['body_cmt']); ?>
+                        <?php echo $this->BBCode->parse(stripslashes($comment['body_cmt'])); ?>
                     </div>
                     
                     <div id="unmodified_<?php echo $comment['id_cmt']; ?>" style="display:none;">
