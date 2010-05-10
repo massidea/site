@@ -515,6 +515,21 @@ $(document).ready(function() {
 	};
 })(jQuery);
 
+function multiFile(obj, message) {
+	var file = obj.value;
+	if ( $(":file[value="+file+"]").length == 1) {
+		$(obj).hide();
+		$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
+		$(obj).parent().after("<div>"+ file + "<input id='removeFile' type='button' value='" + message + "' /></div>");
+		$("#removeFile").click(function() {
+			$(this).parent().remove();
+			$(obj).remove();
+		});
+	}
+	else {
+		obj.value = "";
+	}
+}
 /*
 $(document).ready(function() {    
     $('#content_industry').change(function() {
