@@ -158,7 +158,7 @@ function textCounter(field,counter,min,max,lang) {
     
     if(lang == "fi") {
         required = "pakollinen";
-        needed = " lisÃ¤Ã¤";
+        needed = " lisää";
         until_limit = " rajaan";
         at_the_limit = "rajalla";
         too_many = " liikaa";
