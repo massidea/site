@@ -68,7 +68,7 @@ function validateFormAddContent()
 	var textbody = document.getElementById("content_text");
     var relatedcompanies = document.getElementById("content_related_companies");
 	
-	if (title.value.length == 0
+    if (title.value.length == 0
 	|| 	textlead.value.length == 0
 	||	textbody.value.length < 1000
     ||  keywords.value.length == 0
@@ -129,11 +129,15 @@ function validateFormAddContent()
 
 function checkCF() {
 	var check = validateFormAddContent();
+	var publishButton = document.getElementById("content_publish");
 	if (check == true) {
-        document.getElementById("content_publish").disabled = false;
+		if (publishButton != null)
+			publishButton.disabled = false;
+		
         document.getElementById("content_save").disabled = false;
 	} else {
-        document.getElementById("content_publish").disabled = true;
+		if (publishButton != null)
+			publishButton.disabled = true;
         document.getElementById("content_save").disabled = true;
 	}
 }
