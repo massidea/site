@@ -221,7 +221,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	{
 		$return = false;
 
-		if($id_cnt_fvr != 0 && $id_usr_fvr != 0) {
+		if($id_cnt_fvr != 0) {
 			$where = $this->getAdapter()->quoteInto('id_cnt_fvr = ?', (int)$id_cnt_fvr);
 
 			if(!$this->delete($where)) {

@@ -455,7 +455,6 @@ class AdminController extends Oibs_Controller_CustomController
                         {
                             foreach($cmfl_ids as $cfl_id)
                             {
-                                echo $fcl_id;
                                 $commentflagmodel->removeFlag($cfl_id);
                             }
                         }
@@ -471,9 +470,9 @@ class AdminController extends Oibs_Controller_CustomController
                         // links_lnk
                         // Not used?
 
-                        // usr_favourites_fvr
-                        $usrFavFvr = new Default_Model_UserFavourites();
-                        $usrFavFvr->removeContentsFromFavouritesByContentId($key);
+                        // usr_has_fvr
+                        $usrHasFvr = new Default_Model_UserHasFavourites();
+                        $usrHasFvr->removeContentsFromFavouritesByContentId($key);
 
                         // contents_cnt
                         $contentmodel->removeContent($key);
