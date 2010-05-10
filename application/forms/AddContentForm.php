@@ -386,7 +386,8 @@ class Default_Form_AddContentForm extends Zend_Form
 			 ->addValidator('Extension', false, 'png,gif,jpg,jpeg,doc,zip,xls,mpp,pdf,wmv,avi,mkv,mov,mpeg,mp4,divx,flv,ogg,3gp');
         $file->setLabel($translate->_("content-add-upload-file"))
              ->setDescription($translate->_("content-add-file-upload-help-text"))
-             ->setDecorators(array('UploadDecorator'));
+             ->setDecorators(array('UploadDecorator'))
+             ->setAttrib("onchange", "multiFile(this, '".$translate->_("content-add-file-delete-file-button")."');");
         
         // References, Textarea
 		$references = new Zend_Form_Element_Textarea('content_references');

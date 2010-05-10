@@ -949,6 +949,17 @@ form#edit_content_form label {
     color: #808080;
 }
 
+.content_file_list_file {
+	color: #808080;
+	width: 250px;
+	float: left;
+}
+#removeFile {
+	float: left;
+	
+}
+
+
 form#add_content_form fieldset    { 
 	padding: 1.4em; 
 	margin: 0 0 1.5em 0; 

@@ -515,12 +515,20 @@ $(document).ready(function() {
 	};
 })(jQuery);
 
+/* multiFile
+ * 
+ * function to create new file input for each file chosen, hides the old one. Also makes a button to make 
+ * it possible to remove a chosen file
+ * 
+ * @param 	obj			file input object
+ * @param	message		translated text for remove file button
+ */
 function multiFile(obj, message) {
 	var file = obj.value;
 	if ( $(":file[value="+file+"]").length == 1) {
 		$(obj).hide();
 		$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
-		$(obj).parent().after("<div>"+ file + "<input id='removeFile' type='button' value='" + message + "' /></div>");
+		$(obj).parent().after("<div class='clear'><input id='removeFile' type='button' value='" + message + "' /><div class='content_file_list_file'>"+ file + "</div></div>");
 		$("#removeFile").click(function() {
 			$(this).parent().remove();
 			$(obj).remove();
