@@ -83,10 +83,7 @@ class Default_Model_Notifications extends Zend_Db_Table_Abstract
 	 */
 	public function getForSettingsForm()
 	{		
-		$select = $this->select()
-                  	->from($this, array('id_ntf', 'notification_ntf'));
-
-        $result = $this->fetchAll($select);
+        $result = $this->fetchAll();
         $rows = array();
         foreach ($result as $row)
         {

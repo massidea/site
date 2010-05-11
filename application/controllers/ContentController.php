@@ -1174,14 +1174,14 @@ class ContentController extends Oibs_Controller_CustomController
                                                 		
                                                 		// Edit content
                                                 		$content = new Default_Model_Content();
-                                                		$edit_successful = $content->editContent($data);
+                                                		$edit = $content->editContent($data);
 														
                                                 		$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                                 'action' => 'index',
                                                                 'language' => $this->view->language),
                                                           		'lang_default', true);
 
-                                                		if($edit_successful) {
+                                                		if($edit) {
                                                 			if($data['publish'] == 1) {
                                                 				$url = $this->_urlHelper->url(array('content_id' => $edit,
                                                                         'language' => $this->view->language), 

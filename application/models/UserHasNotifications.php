@@ -32,10 +32,10 @@ class Default_Model_UserHasNotifications extends Zend_Db_Table_Abstract
     protected $_name = 'usr_has_ntf';
     
 	// Primary key of table
-	//protected $_primary = 'id_ntf';
+	//protected $_primary = array('id_ntf', 'id_usr');
 	
 	// Tables model depends on
-	protected $_dependentTables = array('Default_Model_Notifications', 'Users_usr');
+	//protected $_dependentTables = array('Default_Model_Notifications', 'Default_Model_User');
 
 	protected $_referenceMap	= array(
 			'User' 			=> array(
