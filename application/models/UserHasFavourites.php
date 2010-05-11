@@ -33,28 +33,28 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	protected $_name = 'usr_has_fvr';
 
 	// Primary keys of table
-	protected $_primary = array('id_cnt_fvr','id_usr_fvr');
+	protected $_primary = array('id_cnt','id_usr');
 
 	protected $_referenceMap = array(
         'FavouritesContent' => array(
-            'columns'           => array('id_cnt_fvr'),
+            'columns'           => array('id_cnt'),
             'refTableClass'     => 'Default_Model_Content',
             'refColumns'        => array('id_cnt')
 	),
 		 'FavouritesUser' => array(
-            'columns'           => array('id_usr_fvr'),
+            'columns'           => array('id_usr'),
             'refTableClass'     => 'Default_Model_User',
             'refColumns'        => array('id_usr')
 	),
 	);
 	
 	//Get all favourite content ID:s that user has
-	public function getAllFavouriteContentIdsFromUser($id_usr_fvr = 0)
+	public function getAllFavouriteContentIdsFromUser($id_usr = 0)
 	{
-		if($id_usr_fvr != 0) {
+		if($id_usr != 0) {
 			$select = $this->select()
-			->from($this, array('id_cnt_fvr'))
-			->where('id_usr_fvr = ?',$id_usr_fvr);
+			->from($this, array('id_cnt'))
+			->where('id_usr = ?',$id_usr);
 
 			$result = $this->fetchAll($select)->toArray();
 			return $result;
@@ -64,12 +64,12 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 
 	//Get all user ID:s that have same favourite content ID:s
-	public function getAllUserIdsFromFavouriteContent($id_cnt_fvr = 0)
+	public function getAllUserIdsFromFavouriteContent($id_cnt = 0)
 	{
-		if($id_cnt_fvr != 0) {
+		if($id_cnt != 0) {
 			$select = $this->select()
-			->from($this, array('id_usr_fvr'))
-			->where('id_cnt_fvr = ?',$id_cnt_fvr);
+			->from($this, array('id_usr'))
+			->where('id_cnt = ?',$id_cnt);
 
 			$result = $this->fetchAll($select)->toArray();
 			return $result;
@@ -79,12 +79,12 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 
 	//Get favourites count by user
-	public function getFavouritesCountByUser($id_usr_fvr = 0)
+	public function getFavouritesCountByUser($id_usr = 0)
 	{
-		if($id_usr_fvr != 0) {
+		if($id_usr != 0) {
 			$select = $this->select()
-			->from($this, array('favourites_count_fvr' => 'COUNT(id_cnt_fvr)'))
-			->where('id_usr_fvr = ?',$id_usr_fvr);
+			->from($this, array('favourites_count' => 'COUNT(id_cnt)'))
+			->where('id_usr = ?',$id_usr);
 
 			$result = $this->fetchAll($select)->toArray();
 			return $result;
@@ -94,12 +94,12 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 
 	//Get users count by favourite content
-	public function getUsersCountByFavouriteContent($id_cnt_fvr = 0)
+	public function getUsersCountByFavouriteContent($id_cnt = 0)
 	{
-		if($id_cnt_fvr != 0) {
+		if($id_cnt != 0) {
 			$select = $this->select()
-			->from($this, array('users_count_fvr' => 'COUNT(id_usr_fvr)'))
-			->where('id_cnt_fvr = ?',$id_cnt_fvr);
+			->from($this, array('users_count_fvr' => 'COUNT(id_usr)'))
+			->where('id_cnt = ?',$id_cnt);
 
 			$result = $this->fetchAll($select)->toArray();
 			return $result;
@@ -109,14 +109,14 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 
 	//Check if user has content favourited
-	public function checkIfUserHasFavouriteContent($id_usr_fvr = 0)
+	public function checkIfUserHasFavouriteContent($id_usr = 0)
 	{
 		$return = false;
 
-		if($id_usr_fvr != 0) {
+		if($id_usr != 0) {
 			$select = $this->select()
 			->from($this, array('*'))
-			->where('id_usr_fvr = ?',$id_usr_fvr);
+			->where('id_usr = ?',$id_usr);
 
 			$this->fetchAll($select)->count() == 0 ? $return = false : $return = true;
 				
@@ -125,14 +125,14 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 
 	//Check if content is added to favourites by any user
-	public function checkIfContentIsFavourited($id_cnt_fvr = 0)
+	public function checkIfContentIsFavourited($id_cnt = 0)
 	{
 		$return = false;
 
-		if($id_cnt_fvr != 0) {
+		if($id_cnt != 0) {
 			$select = $this->select()
 			->from($this, array('*'))
-			->where('id_cnt_fvr = ?',$id_cnt_fvr);
+			->where('id_cnt = ?',$id_cnt);
 
 			$this->fetchAll($select)->count() == 0 ? $return = false : $return = true;
 				
@@ -141,15 +141,15 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 
 	//Check if content is added to user favourites
-	public function checkIfContentIsUsersFavourite($id_cnt_fvr = 0, $id_usr_fvr = 0)
+	public function checkIfContentIsUsersFavourite($id_cnt = 0, $id_usr = 0)
 	{
 		$return = false;
 
-		if($id_cnt_fvr != 0 && $id_usr_fvr != 0) {
+		if($id_cnt != 0 && $id_usr != 0) {
 			$select = $this->select()
 			->from($this, array('*'))
-			->where('id_cnt_fvr = ?',$id_cnt_fvr)
-			->where('id_usr_fvr = ?',$id_usr_fvr);
+			->where('id_cnt = ?',$id_cnt)
+			->where('id_usr = ?',$id_usr);
 
 			$this->fetchAll($select)->count() == 0 ? $return = false : $return = true;
 				
@@ -158,15 +158,15 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 
 	//Add content to favourites
-	public function addContentToFavourites($id_cnt_fvr = 0, $id_usr_fvr = 0)
+	public function addContentToFavourites($id_cnt = 0, $id_usr = 0)
 	{
 		$return = false;
 
-		if($id_cnt_fvr != 0 && $id_usr_fvr != 0) {
+		if($id_cnt != 0 && $id_usr != 0) {
 			$content = $this->createRow();
 
-			$content->id_cnt_fvr = $id_cnt_fvr;
-			$content->id_usr_fvr = $id_usr_fvr;
+			$content->id_cnt = $id_cnt;
+			$content->id_usr = $id_usr;
 
 			if(!$content->save()) {
 				$return = false;
@@ -179,13 +179,13 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	
 	//Removes all favourite content from user by user id
 	//This is used when user wants to remove all of his favourite content
-	public function removeAllFavouriteContentByUserId($id_usr_fvr = 0)
+	public function removeAllFavouriteContentByUserId($id_usr = 0)
 	{
 		$return = false;
 
-		if($id_usr_fvr != 0) {
+		if($id_usr != 0) {
 
-			$where = $this->getAdapter()->quoteInto('id_usr_fvr = ?', (int)$id_usr_fvr);
+			$where = $this->getAdapter()->quoteInto('id_usr = ?', (int)$id_usr);
 
 			if(!$this->delete($where)) {
 				$return = false;
@@ -198,13 +198,13 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	
 	//Removes favourite content from user by user id
 	//This is used when user wants to remove single content from his favourite list
-	public function removeUserFavouriteContent($id_cnt_fvr = 0, $id_usr_fvr = 0)
+	public function removeUserFavouriteContent($id_cnt = 0, $id_usr = 0)
 	{
 		$return = false;
 
-		if($id_cnt_fvr != 0 && $id_usr_fvr != 0) {
-			$where[] = $this->getAdapter()->quoteInto('id_usr_fvr = ?', (int)$id_usr_fvr);
-			$where[] = $this->getAdapter()->quoteInto('id_cnt_fvr = ?', (int)$id_cnt_fvr);
+		if($id_cnt != 0 && $id_usr != 0) {
+			$where[] = $this->getAdapter()->quoteInto('id_usr = ?', (int)$id_usr);
+			$where[] = $this->getAdapter()->quoteInto('id_cnt = ?', (int)$id_cnt);
 			
 			if(!$this->delete($where)) {
 				$return = false;
@@ -217,12 +217,12 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	
 	//Removes all favourite content from users by content id
 	//If content is deleted this is used to remove references to deleted content
-	public function removeContentsFromFavouritesByContentId($id_cnt_fvr = 0) 
+	public function removeAllContentFromFavouritesByContentId($id_cnt = 0) 
 	{
 		$return = false;
 
-		if($id_cnt_fvr != 0) {
-			$where = $this->getAdapter()->quoteInto('id_cnt_fvr = ?', (int)$id_cnt_fvr);
+		if($id_cnt != 0) {
+			$where = $this->getAdapter()->quoteInto('id_cnt = ?', (int)$id_cnt);
 
 			if(!$this->delete($where)) {
 				$return = false;

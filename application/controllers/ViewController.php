@@ -231,16 +231,14 @@
         if($favouriteMethod != "NONE" && $auth->hasIdentity()) {
         	$favouriteUserId = $auth->getIdentity()->user_id;
         	//If favourite method was "add", then add content to user favourites
-        	if($favouriteMethod == "add" 
-        		&& !$isFavourite) 
+        	if($favouriteMethod == "add" && !$isFavourite) 
         		{
         		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
         			$this->view->favouriteMethod = $favouriteMethod;
         		} else $this->flash('favourite-adding-failed','/en/msg');
         	} 
         	//If favourite method was "remove" then remove content from user favourites.
-        	elseif ($favouriteMethod == "remove"
-        		&& $isFavourite)
+        	elseif ($favouriteMethod == "remove" && $isFavourite)
         		{
         		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
         			$this->view->favouriteMethod = $favouriteMethod;

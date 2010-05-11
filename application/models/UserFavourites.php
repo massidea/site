@@ -30,14 +30,14 @@
 class Default_Model_UserFavourites extends Zend_Db_Table_Abstract
 {
 	// Name of table
-	protected $_name = 'usr_favourites_fvr';
+	protected $_name = 'usr_favourites_ufv';
 
 	// Primary keys of table
-	protected $_primary = array('id_usr_fvr');
+	protected $_primary = array('id_usr_ufv');
 
 	protected $_referenceMap = array(
 		 'FavouritesUser' => array(
-            'columns'           => array('id_usr_fvr'),
+            'columns'           => array('id_usr_ufv'),
             'refTableClass'     => 'Default_Model_User',
             'refColumns'        => array('id_usr')
 	)
