@@ -364,21 +364,16 @@ $printUs = 7;
             <?php $i = 0; ?>
             
             <?php foreach($this->authorContents as $content): ?>
-                <?php if($this->type === "saved" && $this->user_edit) : ?>
-                    <?php if($content['published_cnt'] != 0): 
-                            continue; 
-                          endif; ?>
-                <?php else: ?>
-                    <?php if($this->type !== 0 && $content['key_cty'] !== $this->type): 
-                            continue; 
-                          endif; ?>
-                <?php endif; ?>
-                
-                <?php if ($i != 0): ?>
+                <?php if($this->type === "saved" && $this->user_edit) {
+                      	if($content['published_cnt'] != 0) { continue; }
+                	  } else { 
+                      	if($this->type !== 0 && $content['key_cty'] !== $this->type) { continue; }
+                	  } 
+                if ($i != 0) { ?>
                 <div class="user_content_spacer" style="clear:both;">
                     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
                 </div>
-                <?php endif;
+                <?php }
                 
                 $i++; ?>
                 

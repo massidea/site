@@ -1182,6 +1182,9 @@ class ContentController extends Oibs_Controller_CustomController
                                                           		'lang_default', true);
 
                                                 		if($edit) {
+                                                			$favourite = new Default_Model_UserHasFavourites();
+                                                			$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
+                                                			
                                                 			if($data['publish'] == 1) {
                                                 				$url = $this->_urlHelper->url(array('content_id' => $edit,
                                                                         'language' => $this->view->language), 

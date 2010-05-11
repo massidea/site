@@ -233,7 +233,42 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		return $return;
 	}
 
+	//Set content edited value to 1 so user who has this content favourited knows it has been changed
+	public function setFavouriteModifiedTrue($id_cnt = 0)
+	{
+		$return = false;
+		if($id_cnt != 0) {
+			$data = array('content_edited' => 1);
+			$where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
 
+			if(!$this->update($data,$where)) {
+				$return = false;
+			} else {
+				$return = true;
+			}
+
+		}
+		return $return;
+	}
+	
+	//Set content edited value to 0 so user who has this content favourited can check it off from edited list.
+	public function setFavouriteModifiedFalse($id_cnt = 0)
+	{
+		$return = false;
+		if($id_cnt != 0) {
+			$data = array('content_edited' => 0);
+			$where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
+
+			if(!$this->update($data,$where)) {
+				$return = false;
+			} else {
+				$return = true;
+			}
+
+		}
+		return $return;
+	}
+	
 } // end of class
 
 ?>

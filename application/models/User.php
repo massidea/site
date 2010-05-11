@@ -959,4 +959,55 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->fetchAll($select)->toArray();
 	    return $result[0];
     }
+    
+   /**
+    * getUserFavouriteContent
+    *
+    * Get (all) favourite content from a specific user. 
+    *
+    * @author Jari Korpela
+    * @param integer $author_id id of whose favourite content to get
+    * @return array
+    */    
+    public function getUserFavouriteContent($author_id = 0, $type = 0)
+    {
+        $result = array();  // container for final results array
+        
+        $whereType = 1;
+        if($type !== 0) {
+            $whereType = $this->_db->quoteInto('cty.key_cty = ?', $type);
+        }
+        // If author id is set get users content
+        if ($author_id != 0) {
+
+                $contentSelect = $this->_db->select()
+	                ->from(array('uhf' => 'usr_has_fvr'),
+	                			array('id_usr','id_cnt','content_edited'))
+	                ->joinLeft(array('cnt' => 'contents_cnt'),
+	                			'uhf.id_cnt = cnt.id_cnt',
+	                			array('id_cnt', 'id_cty_cnt', 'title_cnt', 
+	                                  'lead_cnt', 'published_cnt', 'created_cnt'))
+	                ->joinLeft(array('cty' => 'content_types_cty'),    
+	                                  'cty.id_cty = cnt.id_cty_cnt',  
+	                                  array('key_cty'))
+	                ->joinLeft(array('vws' => 'cnt_views_vws'),
+	                                 'vws.id_cnt_vws = cnt.id_cnt',
+	                                  array('views' => 'COUNT(DISTINCT vws.views_vws)'))
+	                ->joinLeft(array('crt' => 'content_ratings_crt'),
+	                                 'cnt.id_cnt = crt.id_cnt_crt',
+	                                 array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
+	                ->joinLeft(array('cmt' => 'comments_cmt'),
+	                                 'cnt.id_cnt = cmt.id_cnt_cmt',
+	                                 array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))   
+	                ->where('uhf.id_usr = ?', $author_id)
+	                ->order('cnt.id_cty_cnt ASC')
+	                ->order('cnt.created_cnt DESC')
+	                ->group('cnt.id_cnt')
+	                ;
+                
+                $result = $this->_db->fetchAll($contentSelect);
+        } 
+        return $result;
+    } // end of getUserFavouriteContent
+        
 } // end of class

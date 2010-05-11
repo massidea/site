@@ -296,11 +296,52 @@ class AccountController extends Oibs_Controller_CustomController
                 $userEdit = true;
             }
         }
-        
+         
+        if ($auth->hasIdentity() && $data['id_usr'] == $auth->getIdentity()->user_id) {
+        	$favouriteModel = new Default_Model_UserHasFavourites();
+        	$favouriteType = isset($params['favourite']) ? $params['favourite'] : 0;
+        	$favouriteList = $user->getUserFavouriteContent($data['id_usr']);
+
+        	// Initialize Favourite counts
+        	$dataa['favouriteCounts']['totalCount'] = 0;
+
+        	$dataa['favouriteCounts']['problem'] = 0;
+        	$dataa['favouriteCounts']['finfo'] = 0;
+        	$dataa['favouriteCounts']['idea'] = 0;
+
+        	foreach($favouriteList as $k => $favourite) {
+        		/*
+        		 * If content Id doesn't exist anymore:
+        		 * unset from Favouritelist and remove all lines from user_has_favourites table that
+        		 * refers to this content id
+        		 */
+        		if ($favourite['id_cnt'] == '') {
+                	unset($favouriteList[$k]);
+                	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
+            	}
+            	
+        	    if (isset($favourite['key_cty'])) {
+                    
+                    // Increase total count
+                    $dataa['favouriteCounts']['totalCount']++;
+                    
+                    // Set content type count to 0 if count is not set
+                    if (!isset($dataa['favouriteCounts'][$favourite['key_cty']] )) {
+                        $dataa['favouriteCounts'][$favourite['key_cty']] = 0;
+                    }
+                    
+                    // Increase content type count
+                    $dataa['favouriteCounts'][$favourite['key_cty']]++;
+                }
+        	}	
+        	//print_r($dataa);print_r($favouriteList);die;
+        }
+
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
         $this->view->authorContents = $contentList;/*$temp*/
+        $this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
     }
