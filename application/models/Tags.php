@@ -2,7 +2,7 @@
 /**
  *  Tags -> Tags database model for tags table.
  *
- *  Copyright (c) <2009>, Markus Riihelä
+ *  Copyright (c) <2009>, Markus Riihelï¿½
  *  Copyright (c) <2009>, Mikko Sallinen
  *  Copyright (c) <2009>, Joel Peltonen
  *
@@ -23,7 +23,7 @@
  *  Tags - class
  *
  *  @package    models
- *  @author     Markus Riihelä
+ *  @author     Markus Riihelï¿½
  *  @author     Mikko Sallinen
  *  @author     Joel Peltonen
  *  @license    GPL v2
@@ -447,7 +447,11 @@ class Default_Model_Tags extends Zend_Db_Table_Abstract
     public function removeTag($id_tag = 0)
     {
         $where = $this->getAdapter()->quoteInto('id_tag = ?', $id_tag);
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     } // end of removeTag
     
     /**

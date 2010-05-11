@@ -164,7 +164,11 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     public function removeContentFiles($id_cnt_fil)
     {
         $where = $this->getAdapter()->quoteInto('id_cnt_fil = ?', $id_cnt_fil);
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 } // end of class

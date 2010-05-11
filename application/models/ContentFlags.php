@@ -136,6 +136,7 @@ class Default_Model_ContentFlags extends Zend_Db_Table_Abstract
                        ->where('id_content_cfl = ?', (int)$id_cnt);
 
 		$results = $this->getAdapter()->fetchAll($select);
+                $finalresult = '';
 		foreach ($results as $result)
 		{
 			$finalresult[] = $result['id_cfl'];
@@ -155,6 +156,10 @@ class Default_Model_ContentFlags extends Zend_Db_Table_Abstract
     public function removeFlag($id_cfl)
     {
         $where = $this->getAdapter()->quoteInto('id_cfl = ?', $id_cfl);
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 } // end of class

@@ -250,7 +250,11 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     public function removeComment($id_cmt)
     {
         $where = $this->getAdapter()->quoteInto('id_cmt = ?', (int)$id_cmt);
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -280,7 +284,11 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     public function removeAllContentComments($id_cnt)
     {
         $where = $this->getAdapter()->quoteInto('id_cnt_cmt = ?', (int)$id_cnt);
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**

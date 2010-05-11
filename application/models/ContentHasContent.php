@@ -151,7 +151,11 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
         $parent = $this->getAdapter()->quoteInto('id_parent_cnt = ?', (int)$id_cnt);
         $child = $this->getAdapter()->quoteInto('id_child_cnt = ?', (int)$id_cnt);
         $where = "$parent OR $child";
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
 } // end of class

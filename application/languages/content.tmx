@@ -61,25 +61,77 @@
 		<tuv xml:lang="en"><seg>Content removal not successful. Errors that occured:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe.</seg></tuv>
 	</tu>
-	<tu tuid='content-remove-remove-content-not-successful'>
-		<tuv xml:lang="en"><seg>Contents content removal not successful, an error ocurred.</seg></tuv>
+        <tu tuid='content-remove-removeContentFromCampaign-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from campaign removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa kamppanjoista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFromContent-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from contents removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisällöistä tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFromFutureinfoClasses-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from futureinfo classes removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa tulevaisuuden näkymästä tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFromIndustries-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from industries removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa toimialaluokituksesta tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFromInnovationTypes-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from innovation types removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa innovatio tyypeistä tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFromRelatedCompanies-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from related companies removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisältöön liittyvistä yrityksistä tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentRelatedCompanies-not-successful'>
+		<tuv xml:lang="en"><seg>Contents related companies removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa liittyvistä yrityksistä tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFromTags-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from tags removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisällön tageista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentTags-not-successful'>
+		<tuv xml:lang="en"><seg>Contents tags removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa tageista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFromUser-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from user removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa käyttäjistä tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentViews-not-successful'>
+		<tuv xml:lang="en"><seg>Contents views removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa katselukerroista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFlags-not-successful'>
+		<tuv xml:lang="en"><seg>Contents flags removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisällön lipuista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentCommentFlags-not-successful'>
+		<tuv xml:lang="en"><seg>Contents comment flags removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisältöön liittyvien kommenttien lipuista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentRatings-not-successful'>
+		<tuv xml:lang="en"><seg>Contents ratings removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisällön arvostelusta tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContentFiles-not-successful'>
+		<tuv xml:lang="en"><seg>Contents files removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisällön tiedostoista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeUserHasFavorites-not-successful'>
+		<tuv xml:lang="en"><seg>Contents from favorites removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa käyttäjän suosikeista tapahtui virhe.</seg></tuv>
+	</tu>
+        <tu tuid='content-remove-removeContent-not-successful'>
+		<tuv xml:lang="en"><seg>Content removal not successful, an error ocurred.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisällön poistossa tapahtui virhe.</seg></tuv>
 	</tu>
-	<tu tuid='content-remove-removecontenttags-not-successful'>
-		<tuv xml:lang="en"><seg>Contents tags removal not successful, an error ocurred.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällön tagien poistossa tapahtui virhe.</seg></tuv>
-	</tu>
-	<tu tuid='content-remove-removeuserfromcontent-not-successful'>
-		<tuv xml:lang="en"><seg>Contents user removal not successful, an error ocurred.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällön käyttäjän yhteyden poistossa tapahtui virhe.</seg></tuv>
-	</tu>
-	<tu tuid='content-remove-removeinnovationtypesfromcontent-not-successful'>
-		<tuv xml:lang="en"><seg>Contents innovation types removal not successful, an error ocurred.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällön innovaatiotyyppien poistossa tapahtui virhe.</seg></tuv>
-	</tu>
-	<tu tuid='content-remove-removeindustriesfromcontent-not-successful'>
-		<tuv xml:lang="en"><seg>Contents industries removal not successful, an error ocurred.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällön alojen poistossa tapahtui virhe.</seg></tuv>
+        <tu tuid='content-remove-removeContentComments-not-successful'>
+		<tuv xml:lang="en"><seg>Contents comments removal not successful, an error ocurred.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällön poistossa sisällön kommenteista tapahtui virhe.</seg></tuv>
 	</tu>
 	<tu tuid='content-remove-successful'>
 		<tuv xml:lang="en"><seg>Content removal successful.</seg></tuv>

@@ -1018,6 +1018,155 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		return $return;
 	} // end of removeContent
 
+
+        /**
+	 *   removeContent
+	 *   Removes specified content from the database and all related stuff
+	 *
+	 *   @param int id_cnt The id of content to be removed
+	 *   @return boolean array $contentRemoveChecker
+	 *   @author Mikko Korpinen
+	 */
+        public function removeContentAndDepending($id_cnt = 0)
+        {
+            $contentRemoveChecker = array(
+                'removeContentFromCampaign' =>          true,
+                'removeContentFromContent' =>           true,
+                'removeContentFromFutureinfoClasses' => true,
+                'removeContentFromIndustries' =>        true,
+                'removeContentFromInnovationTypes' =>   true,
+                'removeContentFromRelatedCompanies' =>  true,
+                'removeContentRelatedCompanies' =>      true,
+                'removeContentFromTags' =>              true,
+                'removeContentTags' =>                  true,
+                'removeContentFromUser' =>              true,
+                'removeContentViews' =>                 true,
+                'removeContentFlags' =>                 true,
+                'removeContentCommentFlags' =>          true,
+                'removeContentRatings' =>               true,
+                'removeContentFiles' =>                 true,
+                'removeUserFromFavorites' =>            true,
+                'removeContent' =>                      true,
+                'removeContentComments' =>              true
+            );
+
+            // cnt_has_cmp
+            $cntHasCmp = new Default_Model_ContentHasCampaign();
+            if (!$cntHasCmp->removeContentCampaigns($id_cnt))
+                $contentRemoveChecker['removeContentFromCampaign'] = false;
+
+            // cnt_has_cnt
+            $cntHasCnt = new Default_Model_ContentHasContent();
+            if (!$cntHasCnt->removeContentFromContents($id_cnt))
+                $contentRemoveChecker['removeContentFromContent'] = false;
+
+            // cnt_has_fic
+            $cntHasFic = new Default_Model_ContentHasFutureinfoClasses();
+            if (!$cntHasFic->removeFutureinfoClassesFromContent($id_cnt))
+                $contentRemoveChecker['removeContentFromFutureinfoClasses'] = false;
+
+            // cnt_has_grp
+            // Not used?
+
+            // cnt_has_ind
+            $cntHasInd = new Default_Model_ContentHasIndustries();
+            if (!$cntHasInd->removeIndustriesFromContent($id_cnt))
+                $contentRemoveChecker['removeContentFromIndustries'] = false;
+
+            // cnt_has_ivt
+            $cntHasIvt = new Default_Model_ContentHasInnovationTypes();
+            if (!$cntHasIvt->removeInnovationTypesFromContent($id_cnt))
+                $contentRemoveChecker['removeContentFromInnovationTypes'] = false;
+
+            // related_companies_rec and cnt_has_rec
+            $cntHasRec = new Default_Model_ContentHasRelatedCompany();
+            $recs = $cntHasRec->getContentRelComps($id_cnt);
+            $rec = new Default_Model_RelatedCompanies();
+            foreach($recs as $id_rec) {
+                if (!$cntHasRec->checkIfOtherContentHasRelComp($id_rec['id_rec'], $id_cnt)) {
+                    if (!$rec->removeRelComp($id_rec['id_rec']))
+                        $contentRemoveChecker['removeRelatedCompanies'] = false;
+                }
+            }
+            if (!$cntHasRec->removeContentRelComps($id_cnt))
+                $contentRemoveChecker['removeContentFromRelatedCompanies'] = false;
+
+            // tags_tag and cnt_has_tag
+            $cntHasTag = new Default_Model_ContentHasTag();
+            $tags = $cntHasTag->getContentTags($id_cnt);
+            $tag = new Default_Model_Tags();
+            foreach($tags as $id_tag) {
+                if(!$cntHasTag->checkIfOtherContentHasTag($id_tag['id_tag'], $id_cnt)) {
+                    if (!$tag->removeTag($id_tag['id_tag']))
+                        $contentRemoveChecker['removeTags'] = false;
+                }
+            }
+            if (!$cntHasTag->removeContentTags($id_cnt))
+                $contentRemoveChecker['removeContentFromTags'] = false;
+
+            // cnt_has_usr
+            $cntHasUsr = new Default_Model_ContentHasUser();
+            if (!$cntHasUsr->removeUserFromContent($id_cnt))
+                $contentRemoveChecker['removeContentFromUser'] = false;
+
+            // cnt_publish_times_pbt
+            // Not used?
+
+            // cnt_views_vws
+            $cntWiewsVws = new Default_Model_ContentViews();
+            if (!$cntWiewsVws->removeContentViews($id_cnt))
+                $contentRemoveChecker['removeContentViews'] = false;
+
+            // Flags from content_flags_cfl
+            $contentflagmodel = new Default_Model_ContentFlags();
+            $cnfl_ids = $contentflagmodel->getFlagsByContentId($id_cnt);
+            if (is_array($cnfl_ids)) {
+                foreach($cnfl_ids as $cfl_id) {
+                    if (!$contentflagmodel->removeFlag($cfl_id))
+                        $contentRemoveChecker['removeContentFlags'] = false;
+                }
+            }
+            // Flags from comment_flags_cfl
+            $commentflagmodel = new Default_Model_CommentFlags();
+            $cmfl_ids = $commentflagmodel->getFlagsByContentId($id_cnt);
+            if (is_array($cmfl_ids)) {
+                foreach($cmfl_ids as $cfl_id) {
+                    if (!$commentflagmodel->removeFlag($cfl_id))
+                        $contentRemoveChecker['removeContentCommentFlags'] = false;
+                }
+            }
+
+            // content_ratings_crt
+            $contentRatingRct = new Default_Model_ContentRatings();
+            if (!$contentRatingRct->removeContentRatings($id_cnt))
+                $contentRemoveChecker['removeContentRatings'] = false;
+
+            // files_fil
+            $files = new Default_Model_Files();
+            if (!$files->removeContentFiles($id_cnt))
+                $contentRemoveChecker['removeContentFiles'] = false;
+
+            // links_lnk
+            // Not used?
+
+            // usr_has_fvr
+            $usrHasFvr = new Default_Model_UserHasFavourites();
+            if (!$usrHasFvr->removeAllContentFromFavouritesByContentId($id_cnt))
+                $contentRemoveChecker['removeUserFromFavorites'] = false;
+
+            // contents_cnt
+            $contentmodel = new Default_Model_Content();
+            if (!$contentmodel->removeContent($id_cnt))
+                $contentRemoveChecker['removeContent'] = false;
+            // coments_cmt
+            $commentmodel = new Default_Model_Comments();
+            if (!$commentmodel->removeAllContentComments($id_cnt))
+                $contentRemoveChecker['removeContentComments'] = false;
+
+            
+            return $contentRemoveChecker;
+        }
+
 	/**
 	 * checkIfContentExists
 	 *

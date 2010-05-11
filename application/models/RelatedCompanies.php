@@ -150,7 +150,11 @@ class Default_Model_RelatedCompanies extends Zend_Db_Table_Abstract
     public function removeRelComp($id_rec = 0)
     {
         $where = $this->getAdapter()->quoteInto('id_rec = ?', $id_rec);
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     } // end of removeRelComp
     
     /**

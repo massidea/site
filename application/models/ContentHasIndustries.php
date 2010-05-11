@@ -82,16 +82,15 @@ class Default_Model_ContentHasIndustries extends Zend_Db_Table_Abstract
     public function removeIndustriesFromContent($id_cnt)
     {
         $return = false;
-    
+
         if($this->getIndustryIdOfContent($id_cnt)) {
-        	$where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
-       		 if($this->delete($where)) {
-            	$return = true;
-       		 }
+            $where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
+            if($this->delete($where)) {
+                $return = true;
+            }
         } else {
-        	 $return = true;
+            $return = true;
         }
-        
         return $return;
     } // end of removeIndustriesFromContent
     

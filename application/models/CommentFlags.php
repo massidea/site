@@ -154,19 +154,6 @@ class Default_Model_CommentFlags extends Zend_Db_Table_Abstract
     */
     public function getFlagsByContentId($id_cnt)
     {
-        /*
-        $contentSelect = $this->_db->select()
-                               ->from(array('cfl' => 'content_flags_cfl'),
-                                      array('id_cfl', 'id_content_cfl', 'id_user_cfl',
-                                          'flag_cfl', 'created_cfl', 'modified_cfl',
-                                          'count'=>'COUNT(cfl.id_content_cfl)'))
-                               ->joinLeft(array('cnt' => 'contents_cnt'),
-                                          'cfl.id_content_cfl = cnt.id_cnt',
-                                          array('id_cnt'))
-                               ->where('flag_cfl','1')
-                               ->group('cfl.id_content_cfl')
-                               ->order('count DESC');
-        */
     	$select = $this->_db->select()
                        ->from(array('cmf' => 'comment_flags_cmf'), array('id_cmf'))
                        ->joinLeft(array('cmt' => 'comments_cmt'),
@@ -174,6 +161,7 @@ class Default_Model_CommentFlags extends Zend_Db_Table_Abstract
                        ->where('cmt.id_cnt_cmt = ?', (int)$id_cnt);
 
 		$results = $this->getAdapter()->fetchAll($select);
+        $finalresult = '';
         foreach ($results as $result) {
             $finalresult[] = $result['id_cmf'];
         }
@@ -190,6 +178,10 @@ class Default_Model_CommentFlags extends Zend_Db_Table_Abstract
     public function removeFlag($id_cmf)
     {
         $where = $this->getAdapter()->quoteInto('id_cmf = ?', $id_cmf);
-        $this->delete($where);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 } // end of class

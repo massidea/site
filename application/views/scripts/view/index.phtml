@@ -111,8 +111,9 @@ function ajaxRefresh_vote(){
 */
 replyTo = function (replyId, username)
 {
-    var source = $('#unmodified_' + replyId/* + '_textbody'*/).html();
-    var text = '[quote=' + username + ']' + trimmer(source) + '[/quote]\n';
+    // Quote is not necessary
+    // var source = $('#unmodified_' + replyId/* + '_textbody'*/).html();
+    var text = '@' + username + ':\n\n'; //'[quote=' + username + ']' + trimmer(source) + '[/quote]\n';
     
     $('textarea#comment_message').val(text);
     $('#comment_parent').val(replyId);
