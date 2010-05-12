@@ -33,19 +33,145 @@ class Default_Model_UserFavourites extends Zend_Db_Table_Abstract
 	protected $_name = 'usr_favourites_ufv';
 
 	// Primary keys of table
-	protected $_primary = array('id_usr_ufv');
+	protected $_primary = array('id_usr');
 
 	protected $_referenceMap = array(
 		 'FavouritesUser' => array(
-            'columns'           => array('id_usr_ufv'),
+            'columns'           => array('id_usr'),
             'refTableClass'     => 'Default_Model_User',
             'refColumns'        => array('id_usr')
 	)
 	);
 	
-	
-	
+	public function setFavouritePublicTrue($id_usr = 0)
+	{
+		$return = false;
+		if($id_usr != 0) {
+			$data = array('public' => 1);
+			$where = $this->getAdapter()->quoteInto('id_usr = ?', $id_usr);
 
+			if(!$this->update($data,$where)) {
+				$return = false;
+			} else {
+				$return = true;
+			}
+
+		}
+		return $return;
+	}
+	
+	public function setFavouriteNotifyTrue($id_usr = 0)
+	{
+		$return = false;
+		if($id_usr != 0) {
+			$data = array('notify' => 1);
+			$where = $this->getAdapter()->quoteInto('id_usr = ?', $id_usr);
+
+			if(!$this->update($data,$where)) {
+				$return = false;
+			} else {
+				$return = true;
+			}
+
+		}
+		return $return;
+	}
+	
+	public function setFavouritePublicFalse($id_usr = 0)
+	{
+		$return = false;
+		if($id_usr != 0) {
+			$data = array('public' => 0);
+			$where = $this->getAdapter()->quoteInto('id_usr = ?', $id_usr);
+
+			if(!$this->update($data,$where)) {
+				$return = false;
+			} else {
+				$return = true;
+			}
+
+		}
+		return $return;
+	}
+	
+	public function setFavouriteNotifyFalse($id_usr = 0)
+	{
+		$return = false;
+		if($id_usr != 0) {
+			$data = array('notify' => 0);
+			$where = $this->getAdapter()->quoteInto('id_usr = ?', $id_usr);
+
+			if(!$this->update($data,$where)) {
+				$return = false;
+			} else {
+				$return = true;
+			}
+
+		}
+		return $return;
+	}
+
+	public function addUserToFavouritesSettings($id_usr = 0)
+	{
+		$return = false;
+
+		if($id_usr != 0) {
+			$content = $this->createRow();
+
+			$content->id_usr = $id_usr;
+			$content->public = 0;
+			$content->notify = 0;
+
+			if(!$content->save()) {
+				$return = false;
+			} else {
+				$return = true;
+			}
+		}
+		return $return;
+	}
+	
+	public function getFavouritePublicSetup($id_usr = 0)
+	{
+		if($id_usr != 0) {
+			$select = $this->select()
+			->from($this, array('public'))
+			->where('id_usr = ?',$id_usr);
+
+			$result = $this->fetchAll($select)->toArray();
+			return $result;
+		} else {
+			return NULL;
+		}
+	}
+	
+	public function getFavouriteNotifySetup($id_usr = 0)
+	{
+		if($id_usr != 0) {
+			$select = $this->select()
+			->from($this, array('notify'))
+			->where('id_usr = ?',$id_usr);
+
+			$result = $this->fetchAll($select)->toArray();
+			return $result;
+		} else {
+			return NULL;
+		}
+	}
+	
+	public function getAllFavouriteSetup($id_usr = 0)
+	{
+		if($id_usr != 0) {
+			$select = $this->select()
+			->from($this, array('public'))
+			->where('id_usr = ?',$id_usr);
+
+			$result = $this->fetchAll($select)->toArray();
+			return $result;
+		} else {
+			return NULL;
+		}
+	}
 } // end of class
 
 ?>
