@@ -201,16 +201,6 @@ class ContentController extends Oibs_Controller_CustomController
 			$relatesToId = isset($params['relatestoid'])
 			? $params['relatestoid'] : 0;
 
-			// quick and dirty fix..
-			if ($contentType == 'idea' && $relatesToId == 0
-			&& !$this->getRequest()->isPost()) {
-				$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    'action' => 'index',
-                                                    'language' => $this->view->language),
-                                              'lang_default', true); 
-				$this->flash('error-idea-relatesto-0', $url);
-			}
-
 			// Get all content types from the database
 			$modelContentTypes = new Default_Model_ContentTypes();
 			//$contentTypes = $modelContentTypes->getAllNamesAndIds();
@@ -418,17 +408,6 @@ class ContentController extends Oibs_Controller_CustomController
                                         			}
                                         		}
                                         		$data['content_related_companies'] = array_unique($relatedCompanies);
-
-                                        		// Campaigns
-                                        		if($data['content_campaigns'] != "") {
-                                        			$campaigns = array();
-                                        			foreach(explode(',', $data['content_campaigns']) as $campaign) {
-                                        				if(trim($campaign) != "") {
-                                        					$campaigns[] = strip_tags(trim($campaign));
-                                        				}
-                                        			}
-                                        			$data['content_campaigns'] = array_unique($campaigns);
-                                        		}
 
                                         		// Get user id
                                         		$data['User']['id_usr'] = $auth->getIdentity()->user_id;
@@ -936,19 +915,7 @@ class ContentController extends Oibs_Controller_CustomController
 					$formData['published_cnt'] = $data['published_cnt'];
 
 					$modelCntHasCmp = New Default_Model_ContentHasCampaign();
-					$campaigns = $modelCntHasCmp->getContentCampaigns($data['id_cnt']);
 
-					$cmps = "";
-					$cmpCount = count($campaigns);
-
-					for($i = 0; $i < $cmpCount; $i++) {
-						$cmps .= $campaigns[$i]['name_cmp'];
-						if ($i != $cmpCount - 1) {
-							$cmps .= ', ';
-						}
-					}
-
-					$formData['content_campaigns'] = stripslashes($cmps);
 					$formData['content_references'] = $data['references_cnt'];
 
 					$languages = New Default_Model_Languages();
@@ -1136,18 +1103,6 @@ class ContentController extends Oibs_Controller_CustomController
                                                 		}
 
                                                 		$data['content_related_companies'] = array_unique($relatedCompanies);
-
-                                                		// Campaigns
-                                                		if($data['content_campaigns'] != "") {
-                                                			$campaigns = array();
-                                                			foreach(explode(',', $data['content_campaigns']) as $campaign) {
-                                                				if(trim($campaign) != "") {
-                                                					$campaigns[] = strip_tags(trim($campaign));
-                                                				}
-                                                			}
-
-                                                			$data['content_campaigns'] = array_unique($campaigns);
-                                                		}
 
                                                 		// Get user id
                                                 		$data['User']['id_usr'] = $auth->getIdentity()->user_id;

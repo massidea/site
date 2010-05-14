@@ -418,11 +418,12 @@ echo $this->doctype();
                                    'lang_default', true);
                                    
                 if ($this->authenticated) {     
-                	/*   Quite confusing for not having a link to adding ideas...
+                	/*   Quite confusing for not having a link to adding ideas... */
+                        // Idea can now be, without a link to the problem or finfo
                     $url_add_i = $this->url(array('contenttype' => 'idea',
                                                   'language' => $this->language),
                                                   'addcnttype', true);    
-					*/    
+					    
                     $url_add_c = $this->url(array('contenttype' => 'problem',
                                                   'language' => $this->language),
                                                   'addcnttype', true);

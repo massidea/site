@@ -25,7 +25,6 @@ function preCheck(lang) {
     textCounter(document.getElementById("content_textlead"),'progressbar_content_textlead',1,160,lang);
     textCounter(document.getElementById("content_text"),'progressbar_content_text',1000,4000,lang);
     textCounter(document.getElementById("content_related_companies"),'progressbar_content_related_companies',1,120,lang);
-    textCounter(document.getElementById("content_campaigns"),'progressbar_content_campaigns',0,120,lang);
     textCounter(document.getElementById("content_references"),'progressbar_content_references',0,2000,lang);
     
     document.getElementById('progressbar_content_header').style.display = "block";
@@ -33,7 +32,6 @@ function preCheck(lang) {
     document.getElementById('progressbar_content_textlead').style.display = "block";
     document.getElementById('progressbar_content_text').style.display = "block";
     document.getElementById('progressbar_content_related_companies').style.display = "block";
-    document.getElementById('progressbar_content_campaigns').style.display = "block";
     document.getElementById('progressbar_content_references').style.display = "block";
     
     if(document.getElementById("content_research")) {

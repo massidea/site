@@ -353,30 +353,6 @@ class Default_Form_AddContentForm extends Zend_Form
                 ->setLabel($translate->_("content-add-solution"))
 				->setDecorators(array('FormElementDecorator'));
         
-        // Campaigns, Input
-		$campaigns = new Zend_Form_Element_Text('content_campaigns');
-		$campaigns->addFilter('StringtoLower')
-                ->setAttribs(array(
-					"onblur" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();",
-					"onfocus" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();"
-					))
-                ->addValidators(array(array('StringLength', 
-                                              true, 
-                                              array(1,
-                                                    120,
-                                                    'messages' => 
-                                                        array('stringLengthTooLong' => 
-                                                            'field-too-long')
-                                                   )
-                                             )
-                                     )
-                               )
-                ->setLabel($translate->_("content-add-campaigns"))
-                ->setDescription($translate->_("content-add-campaigns-help-text"))
-				->setDecorators(array('FormOptionalElementDecorator'));
-        
         // File upload, File
         $file = new Zend_Form_Element_File('content_file_upload');
         $file->setDestination('../www/upload')
@@ -496,7 +472,6 @@ class Default_Form_AddContentForm extends Zend_Form
             $textlead,
             $text,
             $related_companies,
-            $campaigns,
             $file,
             $references,
             $language,
@@ -506,7 +481,7 @@ class Default_Form_AddContentForm extends Zend_Form
             $class,
             $publish,
             $save,
-            $preview,
+            $preview
         ));
         
         // Add content type specific elements
