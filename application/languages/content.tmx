@@ -497,6 +497,10 @@
 		<tuv xml:lang="en"><seg>too long</seg></tuv>
 		<tuv xml:lang="fi"><seg>liian pitkä</seg></tuv>
 	</tu>
+	<tu tuid='content-files'>
+		<tuv xml:lang="en"><seg>Files</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tiedostot</seg></tuv>
+	</tu>
 	<tu tuid='content-publish-invalid-content-id'>
 		<tuv xml:lang="en"><seg>Content with given id doesn't exist!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Annetulla id:llä ei löydy sisältöä!</seg></tuv>

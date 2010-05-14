@@ -50,7 +50,9 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     );
     
     /**
-    *   newUserImage > set new user image to default, used in registration
+    *   newFile
+    *   
+    *   handle uploading of new file, file goes to files/[userid]/[hash of filecontent+filename]
     *   
     *   @param  id_cnt		int		content id with which the file is linked 
     *   @param  id_usr      int     user id for the user whose pic to modify
@@ -63,29 +65,23 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     		$uploadedFile = $_FILES['content_file_upload'];
     	}
     	
-        // $path was replaced by $_FILES['image']['tmp_name']
-		//$thumbdata = fopen($_FILES['image']['tmp_name'], 'r');
-		//$thumbnail = fread($thumbdata, filesize($_FILES['image']['tmp_name']));
-
-        // Read fullsized file info location relates to index.php bootstrap loader
-        $fullsizedata = fopen($uploadedFile['tmp_name'], 'r');
-        $fullsize = fread($fullsizedata, filesize($uploadedFile['tmp_name']));
-
-        // generate new row
-        $file = $this->createRow();
-        // Set images and user id
-        $file->id_cnt_fil = $id_cnt;
-        $file->id_usr_fil = $id_usr;
-        $file->filename_fil = $uploadedFile['name'];
-        $file->filesize_fil = $uploadedFile['size'];
-        $file->data_fil = $fullsize;
-        $file->filetype_fil = $uploadedFile['type'];
-
-        $file->created_fil = new Zend_Db_Expr('NOW()');
+    	$hash = hash_hmac_file('sha1', $uploadedFile['tmp_name'], $id_cnt.$uploadedFile['name']);
+		$dir = "files/".$id_usr."/";
+    	if (! file_exists($dir)) {
+    		mkdir($dir, 0700, true);
+    	} 
+    	move_uploaded_file($uploadedFile['tmp_name'], $dir.$hash);
+    	
+    	$file = $this->createRow();
+    	$file->id_cnt_fil = $id_cnt;
+    	$file->id_usr_fil = $id_usr;
+    	$file->filetype_fil = $uploadedFile['type'];
+    	$file->filename_fil = $uploadedFile['name'];
+    	$file->hash_fil = $hash;
+    	
+ 	    $file->created_fil = new Zend_Db_Expr('NOW()');
         $file->modified_fil = new Zend_Db_Expr('NOW()');
-        
-        
-        $file->save();
+    	$file->save();
     }
     
     public function getFilenamesByCntId($id_cnt){
@@ -100,31 +96,92 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
 		return $rows;
     }
     
+    public function getFile($id_fil = 0)
+    {
+        if ($id_fil != 0) {
+            return $this->find($id_fil);         
+        }
+    }
+    
     public function getFileData($id_fil = 0)
     {
         // Get file data        
         if ($id_fil != 0) {
         
             // Create query
-            $select = $this->_db->select()
+            /*$select = $this->_db->select()
                                 ->from('files_fil', 
                                        array('data_fil', 'filetype_fil'))
                                 ->where('id_fil = ?', $id_fil);
             
             // Fetch data from database
-            $result = $this->_db->fetchAll($select);
-            
+            $result = $this->_db->fetchAll($select);*/
+        	
+        	$rs = $this->find($id_fil);
+    		$cur = $rs->current();
+    		$dir = "files/".$cur->id_usr_fil."/".$cur->hash_fil;
+    		
+            $result = file_get_contents($dir);
             return $result;
         }
     }
     
-    public function deleteFiles($files) {
-    	foreach ($files as $file) {
-    		$this->delete('id_fil = ' . $file);
+    public function getContentFiles($id_cnt = 0) {
+    	if ($id_cnt != 0) {
+    		$select = $this->select()->from($this, array("id_fil", "filename_fil"))
+    								 ->where('id_cnt_fil = ?', $id_cnt);
+    		$result = $this->fetchAll($select);
+    		return $result;
     	}
-    	
-    	
-    	//$usrhasntf->delete('id_usr = '.$userId);
+    }
+    
+    public function deleteFiles($files) {
+    	if (isset($files))
+    	{
+	    	foreach ($files as $file) {
+	      		// Delete from filesystem
+				$this->deleteFromFilesystem($file);
+
+    			// Delete link from database
+    			$this->delete('id_fil = ' . $file);
+	    	}	
+    	}
+    }
+    
+    /* deleleteFromFilesystem
+     * 
+     * delete a file from filesystem according to database link
+     * 
+     * @param	id_fil		files_fil tables id
+     * @return  success 	whether removing file from filesystem was successfull or not
+     */
+    private function deleteFromFilesystem($id_fil)
+    {
+    	     // Delete from filesystem
+    		$rs = $this->find($id_fil);
+    		$cur = $rs->current();
+    		$dir = "files/".$cur->id_usr_fil."/".$cur->hash_fil;
+    		$success = @unlink($dir);
+    		
+    		return $success;
+    }
+    
+    /* deleteFromFilsystemByContentId
+     * 
+     * Deletes specified contents files from filesystem
+     * 
+     * $param 	$id_cnt_fil 	content id
+     * $return  bool			if fileremoval was successfull
+     */
+    private function deleteFromFilesystemByContentId($id_cnt_fil){
+        $select = $this->select()->from($this, array('id_fil'))
+        			   ->where('id_cnt_fil = ?', $id_cnt_fil);
+		$result = $this->fetchAll($select);
+      	$results = array();
+        foreach ($result as $row) {
+        	array_push($results, $this->deleteFromFilesystem($row->id_fil));
+        }
+        return !in_array(false, $results);
     }
     
     /**
@@ -164,7 +221,11 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     public function removeContentFiles($id_cnt_fil)
     {
         $where = $this->getAdapter()->quoteInto('id_cnt_fil = ?', $id_cnt_fil);
-        if ($this->delete($where)) {
+        $databaseDeleteResult = $this->delete($where);
+        
+        $this->deleteFromFilesystemByContentId($id_cnt_fil);
+        
+        if ($databaseDeleteResult && $filesystemDeleteResult) {
             return true;
         } else {
             return false;

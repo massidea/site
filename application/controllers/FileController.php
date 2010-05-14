@@ -48,8 +48,10 @@ class FileController extends Oibs_Controller_CustomController
             $files = new Default_Model_Files();
             
             if($files->fileExists($id_fil)) {
-                $file = $files->getFileData($id_fil);
-                $this->view->file = $file[0]['data_fil'];
+                $fileData = $files->getFileData($id_fil);
+                $file = $files->getFile($id_fil);
+                $this->view->filename = $file[0]['filename_fil'];
+                $this->view->file = $fileData;
                 $this->view->filetype = $file[0]['filetype_fil'];
             }
             else {

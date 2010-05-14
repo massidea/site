@@ -72,6 +72,9 @@
         $contentModel = new Default_Model_Content();
         $contentData = $contentModel->getDataAsSimpleArray($id);
         
+        $filesModel = new Default_Model_Files();
+        $files = $filesModel->getFilenamesByCntId($id);
+        
         // Get content owner id (groups to be implemented later)
         $contentHasUserModel = new Default_Model_ContentHasUser();
         $owner = $contentHasUserModel->getContentOwners($id);
@@ -250,7 +253,6 @@
         	'total_favourites' 	=> $totalFavourites,
         	'is_favourite'		=> $isFavourite,
         );
-        //print_r($favourite);die;
         
         // get content tags - functions returns names as well
         // needs updating to proper MVC?
@@ -370,9 +372,9 @@
         if ( ($dateModified-$dateCreated)/60 > 10) {
         	$modified = $contentData['modified_cnt'];
         }
-                
-
+        
         // Inject data to view
+        $this->view->files 				= $files;
         $this->view->id					= $id;
         $this->view->industries         = $industries;
         $this->view->userImage          = $userImage;
