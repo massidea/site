@@ -42,95 +42,74 @@ if($this->short_contenttype == "problem") {
 <div id="form_content_add_container" style="float: left;">
 
 	<div id="form_preview_content">
-    
-        <!--<h3><a href="#" onclick="previewRoll('close');">Preview under construction, click here to close.</a></h3>-->
-        <h3 style="padding-top: 10px;">This is a preview</h3>
-        
-	    <div>
-            <div style="float: right; margin-right: 50px;">
-                <a href="#" onclick="previewRoll('close');">
-                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" 
-                        alt="" style="position: absolute;" />
-                </a>
-            </div>
-        </div>
-        
-        <div style="clear:both; padding-top: 60px;">
-        
-            <div id="content_view_left_p">
-            
-                <div id="content_view_content_p">
-                
-                    <div id="content_view_content_created_p">
-                        <div style="float: left;">
-                            Added: <?php echo date('Y-m-d H:i:s');?>
-                        </div>
-                        <div style="float: right;">
-                            <a href="#">Flag as inappropriate</a>
-                        </div>
-                    </div>
-                    
-                    <div id="content_view_content_info_container_p">
-                        <div id="content_view_content_rating_p">
-                            <!-- try changing to class="right"> -->
-                            <div style="float: left;">
-                                Rating 0
-                            </div>
-                            <div style="float: right;">
-                                Viewed 0 times
-                            </div>
-                        </div>
-                        
-                        <div id="content_view_content_vote_p" style="padding: 2px;">
-                            <img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="Vote up" />
-                            <img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="Vote down" />
-                        </div>
-                    </div>
-                    
-                    <div id="content_view_content_container_p" style="padding-top: 10px;">
-                        <div class="content_view_texttitle_finfo_p">
-                            <h3 style="margin: 0px; padding: 0px; font-weight: bold;" id="preview_header">
-                                Header goes here
-                            </h3>
-                            <p style="margin: 0px; padding: 0px; font-style: italic;" id="content_view_textlead_item_p">
-                                Textlead goes here
-                            </p>
-                        </div>
-                        
-                        <div id="content_view_tags_p" style="padding-top: 7px;">
-                            <span class="content_view_bold_p" style="float: left;">
-                                <a href="#">Tags: </a>
-                            </span>
-                            
-                            <div id="content_view_tags_items_p">
-                                <a href="#">Tag</a>
-                            </div>
-                        </div>
-                        
-                        <div id="content_view_textbody_p">
-                            <p>Textbody goes here</p>
-                        </div>
-                    </div>
-                    
-                    <div class="user_content_spacer">
-                        <img alt="Massidea.org" src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>"/>
-                    </div>
-                    
-                    <div class="content_view_industries_p" id="content_view_industries_p">
-                        <h3>Industry classification</h3>
-                        <p id="content_view_industries_item_p">Industry goes here</p>
-                        <p id="content_view_division_item_p">Division goes here</p>
-                        <p id="content_view_group_item_p">Group goes here</p>
-                        <p id="content_view_class_item_p">Class goes here</p>
-                    </div>
-                    
+
+            <div style="float: right; margin-right: 60px;">
+                <div>
+                    <a href="#" onclick="previewRoll('close');">
+                        <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>"
+                            alt="" style="position: absolute;" />
+                    </a>
                 </div>
-                
+                <div>
+                    <a href="#" onclick="previewRoll('close');"
+                       style="position: absolute; margin-top: 50px; margin-left: -15px;">
+                        <?php echo $this->translate('content-add-preview-close'); ?>
+                    </a>
+                </div>
             </div>
-            
-            <div class="clear_p"></div>
-            
-        </div>
+
+            <h3 style="padding-top: 10px;"><?php echo $this->translate('content-add-preview-header'); ?></h3>
+
+            <div style="clear:both; padding-top: 30px;">
+
+                <div id="content_view_left_p">
+
+                    <div id="content_view_content_p">
+
+                        <div id="content_view_content_container_p" style="padding-top: 10px;">
+                            <div class="content_view_texttitle_finfo_p">
+                                <h3 style="margin: 0px; padding: 0px; font-weight: bold;" id="preview_header">
+                                    Header goes here
+                                </h3>
+                                <p style="margin: 0px; padding: 0px; font-style: italic;" id="content_view_textlead_item_p">
+                                    Textlead goes here
+                                </p>
+                            </div>
+
+                            <div id="content_view_tags_p" style="padding-top: 7px;">
+                                <span class="content_view_bold_p" style="float: left;">
+                                    <a href="#">Tags: </a>
+                                </span>
+
+                                <div id="content_view_tags_items_p">
+                                    <a href="#">Tag</a>
+                                </div>
+                            </div>
+
+                            <div id="content_view_textbody_p">
+                                <p>Textbody goes here</p>
+                            </div>
+                        </div>
+
+                        <div class="user_content_spacer">
+                            <img alt="Massidea.org" src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>"/>
+                        </div>
+
+                        <div class="content_view_industries_p" id="content_view_industries_p">
+                            <h3>Industry classification</h3>
+                            <p id="content_view_industries_item_p">Industry goes here</p>
+                            <p id="content_view_division_item_p">Division goes here</p>
+                            <p id="content_view_group_item_p">Group goes here</p>
+                            <p id="content_view_class_item_p">Class goes here</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="clear_p"></div>
+
+            </div>
         
 	</div>
 	

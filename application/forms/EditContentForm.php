@@ -341,30 +341,6 @@ class Default_Form_EditContentForm extends Zend_Form
                 ->setLabel($translate->_("content-add-solution"))
 				->setDecorators(array('FormElementDecorator'));
         
-        // Campaigns
-		$campaigns = new Zend_Form_Element_Text('content_campaigns');
-		$campaigns->setValue($data['content_campaigns'])
-                ->setAttribs(array(
-					"onblur" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();",
-					"onfocus" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_campaigns',0,120,'".$lang."'); checkCF();"
-					))
-                ->addValidators(array(array('StringLength', 
-                                              true, 
-                                              array(1,
-                                                    120,
-                                                    'messages' => 
-                                                        array('stringLengthTooLong' => 
-                                                            'field-too-long')
-                                                   )
-                                             )
-                                     )
-                               )    
-                ->setLabel($translate->_("content-add-campaigns"))
-                ->setDescription($translate->_("content-add-campaigns-help-text"))
-				->setDecorators(array('FormOptionalElementDecorator'));
-        
         // File upload
         $file = new Zend_Form_Element_File('content_file_upload');
         $file->setDestination('../www/upload')
@@ -497,7 +473,7 @@ class Default_Form_EditContentForm extends Zend_Form
             array_push($elements, $solution);
         }
         
-        array_push($elements, $campaigns, $file);
+        array_push($elements, $file);
         
         if (count($data['filenames'])) {
         	array_push($elements, $uploadedFilesBoxes);

@@ -617,6 +617,14 @@
 		<tuv xml:lang="en"><seg>Preview</seg></tuv>
 		<tuv xml:lang="fi"><seg>Esikatselu</seg></tuv>
 	</tu>
+        <tu tuid='content-add-preview-header'>
+		<tuv xml:lang="en"><seg>This is a preview</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä on esikatselu</seg></tuv>
+	</tu>
+        <tu tuid='content-add-preview-close'>
+		<tuv xml:lang="en"><seg>Close preview</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sulje esikatselu</seg></tuv>
+	</tu>
 	<tu tuid='content-add-problem-right-box-header'>
 		<tuv xml:lang="en"><seg>How to write a good challenge?</seg></tuv>
 		<tuv xml:lang="fi"><seg>How to write a good challenge?</seg></tuv>
