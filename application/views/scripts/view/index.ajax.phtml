@@ -5,6 +5,15 @@
 
 	// Find out which data was requested
 	$getData = $_GET['page'];
+	
+	$loginLink = $this->url(array('controller' => 'account',
+								'action' => 'login',
+								'language' => $this->language),
+								'lang_default', true);
+	$signupLink = $this->url(array('controller' => 'account',
+								'action' => 'register',
+								'language' => $this->language),
+								'lang_default', true);
 ?>
 
 <?php // If requested "more from user" ?>
@@ -33,23 +42,33 @@
                 <div id="content_view_content_rating_positive">
             	<?php print_r($this->rating['positive_percentage']); echo '%'; ?>
             	</div>
-		        <?php if($this->user_can_comment): // if can comment, can also rate ?>
-					<div id="content_view_content_vote">
+		        <?php if($this->user_can_comment) { // if can comment, can also rate ?>
+					<div class="content_view_content_vote">
 							<img id="voteup" onclick="ajaxLoad_vote('1');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_up.png" alt="Vote up" />
 							<img id="votedown" onclick="ajaxLoad_vote('-1');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_down.png" alt="Vote down" />
 					</div>
-				<?php endif; ?>
+				<?php } else { ?>
+					<div class="content_view_content_vote">
+							<img src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_up.png" alt="Vote up" />
+							<img src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_down.png" alt="Vote down" />
+					</div>
+				<?php } ?>
 				<div id="content_view_content_rating_negative">
 				<?php print_r($this->rating['negative_percentage']); echo '%'; ?>
 				</div>
 				<div id="content_view_content_rating_total">
-				<?php echo '(' . $this->rating['total'] . ' ratings)'; ?>
+				<?php echo '(' . $this->rating['total'] . ' ' . $this->translate('content-rating') . ')'; ?>
 				</div>
+				<?php if(!$this->user_can_comment): // if can comment, can also rate ?>
+				<div class="content_view_content_vote">
+				<span><a href="<?php echo $loginLink;?>"><?php echo $this->translate("content-login"); ?></a> <?php echo $this->translate("content-or"); ?> <a href="<?php echo $signupLink;?>"><?php echo $this->translate("content-signup"); ?></a> <?php echo $this->translate("content-torate"); ?></span>
+				</div>
+				<?php endif; ?>
 	        </span>
 		</div>		
 
-<?php
-	} elseif ($getData == "add_favourite") { ?>
+<?php 
+	} elseif ($getData == "add_favourite") { /*?>
 
 		<div id="content_view_content_favourite">
 			<span id="current_favourites" style="padding: 2px;">
@@ -63,7 +82,7 @@
 		<?php if(!$this->favourite['is_favourite']):?>		<div onclick="ajaxLoad_favourite('add');"><img id="favouriteadd" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_fav_on.png" alt="Add to favourites" /> <p style="float: right;"><?php echo " " . $this->translate('content-favourite-add'); ?></p></div><?php endif; ?>
 		<?php if($this->favourite['is_favourite']):?>		<div onclick="ajaxLoad_favourite('remove');"><img id="favouriteremove" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_fav_off.png" alt="Remove from favourites" /> <p style="float: right;"><?php echo " " . $this->translate('content-favourite-remove'); ?></p></div><?php endif; ?>
 		</div>
-		<?php endif; ?>
+		<?php endif; */ ?>
 
 
 <?php } ?>

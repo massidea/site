@@ -92,7 +92,7 @@
         $rate = isset($params['rate']) ? $params['rate'] : "NONE";
         
         // get favourite method, "add" or "remove"
-        $favouriteMethod = isset($params['favourite']) ? $params['favourite'] : "NONE";
+        //$favouriteMethod = isset($params['favourite']) ? $params['favourite'] : "NONE";
         
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
@@ -397,7 +397,7 @@
         $this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
         $this->view->count              = $count;
-        $this->view->favourite			= $favourite;
+        //$this->view->favourite			= $favourite;
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];

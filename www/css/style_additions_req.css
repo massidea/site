@@ -566,7 +566,7 @@ form_registration_container dd,
 	float:left;
 }
 
-#content_view_content_vote {
+.content_view_content_vote {
 	padding: 2px;
 	float:left;
 }

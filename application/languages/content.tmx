@@ -1126,13 +1126,29 @@
 		<tuv xml:lang="fi"><seg>Linkitetyt näkymät:</seg></tuv>
 	</tu>
 	<tu tuid='content-rating'>
-		<tuv xml:lang="en"><seg>Rating</seg></tuv>
-		<tuv xml:lang="fi"><seg>Arvosana</seg></tuv>
+		<tuv xml:lang="en"><seg>Ratings</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ääntä</seg></tuv>
 	</tu>    
 	<tu tuid='rating-succesful'>
 		<tuv xml:lang="en"><seg>Rating succesful! </seg></tuv>
 		<tuv xml:lang="fi"><seg>Arvosana tallennettu!</seg></tuv>
 	</tu>
+	<tu tuid='content-login'>
+		<tuv xml:lang="en"><seg>Login</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kirjaudu</seg></tuv>
+	</tu>
+	<tu tuid='content-signup'>
+		<tuv xml:lang="en"><seg>sign up</seg></tuv>
+		<tuv xml:lang="fi"><seg>rekisteröidy</seg></tuv>
+	</tu>
+	<tu tuid='content-or'>
+		<tuv xml:lang="en"><seg>or</seg></tuv>
+		<tuv xml:lang="fi"><seg>tai</seg></tuv>
+	</tu>
+	<tu tuid='content-torate'>
+		<tuv xml:lang="en"><seg>to rate!</seg></tuv>
+		<tuv xml:lang="fi"><seg>äänestääksesi!</seg></tuv>
+	</tu> 
 	<tu tuid='content-favourites'>
 		<tuv xml:lang="en"><seg>Favourited</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosikkina</seg></tuv>
