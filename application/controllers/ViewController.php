@@ -61,9 +61,7 @@
         $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
         // get content id from params, if not set or invalid, send a message
         $id = (int)$params['content_id'];
-        
-        
-        
+                
         if ($id == 0) {
             $this->flash('content-not-found', '/'.$this->view->language.'/msg/');   
         }
@@ -202,7 +200,8 @@
 
         // get content rating (returns a string directly)
         $contentRatingsModel = new Default_Model_ContentRatings();
-        $rating = $contentRatingsModel->getById($id);
+        //$rating = $contentRatingsModel->getById($id);
+        $rating = $contentRatingsModel->getPercentagesById($id);
         
         // $rate is gotten from params[], 1 and -1 are the only allowed
         if ($rate != "NONE"
@@ -211,7 +210,8 @@
         { 
             if($contentRatingsModel->addRating($id, $auth->getIdentity()->user_id, $rate)) {
                 $this->view->savedRating = $rate;
-                $rating = $contentRatingsModel->getById($id);
+                //$rating = $contentRatingsModel->getById($id);
+                $rating = $contentRatingsModel->getPercentagesById($id);
             } else {
                 $this->flash('rating-failed-msg', '/en/msg/');
             }

@@ -547,6 +547,30 @@ form_registration_container dd,
 	font-weight: bold;
 }
 
+#content_view_content_rating_positive {
+	padding: 2px;
+	color: green;
+	font-weight:bold;
+	float:left;
+}
+
+#content_view_content_rating_negative {
+	padding: 2px;
+	color: red;
+	font-weight:bold;
+	float:left;
+}
+
+#content_view_content_rating_total {
+	padding: 2px;
+	float:left;
+}
+
+#content_view_content_vote {
+	padding: 2px;
+	float:left;
+}
+
 /* Search result juttua , content list juttua ja paginaattorijuttua SAMASSA */
 #content_list_content_pagination_top,
 #content_list_content_pagination_bottom,
