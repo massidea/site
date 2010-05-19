@@ -1,4 +1,7 @@
 # Ignore all dotfiles...
 .*
+config/*
+logs/*
+
 # except for .gitignore
 !.gitignore
