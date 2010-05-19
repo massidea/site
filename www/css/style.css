@@ -83,6 +83,11 @@ div.sub_menu_item_blue a:visited {text-decoration: none; color: #0089CF;}
 div.sub_menu_item_blue a:hover {text-decoration: none; color: #0089CF;}
 div.sub_menu_item_blue a:active {text-decoration: none ; color: #0089CF;}
 
+div.sub_menu_item_deepblue a:link {text-decoration: none; color: #003581;}
+div.sub_menu_item_deepblue a:visited {text-decoration: none; color: #003581;}
+div.sub_menu_item_deepblue a:active {text-decoration: none ; color: #003581;}
+div.sub_menu_item_deepblue a:hover {text-decoration: none; color: #003581;}
+
 div.user_content_top_menu a:link {text-decoration: none; color: #0089CF;}
 div.user_content_top_menu a:visited {text-decoration: none; color: #0089CF;}
 div.user_content_top_menu a:hover {text-decoration: none; color: #0089CF;}
@@ -147,6 +152,11 @@ span.top_right_box_links a:link {text-decoration: none; color: #0089CF;}
 span.top_right_box_links a:visited {text-decoration: none; color: #0089CF;}
 span.top_right_box_links a:hover {text-decoration: none; color: #0089CF;}
 span.top_right_box_links a:active {text-decoration: none; color: #0089CF;}
+
+div.footer_links a:link {text-decoration: none;}
+div.footer_links a:visited {text-decoration: none;}
+div.footer_links a:hover {text-decoration: none;}
+div.footer_links a:active {text-decoration: none;}
 
 /* DIV DEFINITIONS*/
 
@@ -259,7 +269,7 @@ div.sub_menu{
 	margin-bottom: 0px;
 	padding: 2px 0px 0px 0px;
 	width: 748px; 
-	height: 40px;
+	height: 48px;
 	background-image: url('../images/menu_border.png');
 	background-position: bottom left;
 	background-repeat: repeat-x;
@@ -302,7 +312,8 @@ div.sub_menu_item_red{
 	background-repeat: repeat-x; 
 	font-weight: bold; 
 	float: left; 
-	height: 30px; 
+	height: 38px; 
+	max-width:60px;
 	padding-left: 3px;
 	padding-right: 3px;
 	padding-top: 10px; 
@@ -315,7 +326,8 @@ div.sub_menu_item_green{
 	background-repeat: repeat-x;
 	font-weight: bold; 
 	float: left; 
-	height: 30px; 
+	height: 38px; 
+	max-width:35px;
 	padding-left: 3px;
 	padding-right: 3px;
 	padding-top: 10px; 
@@ -329,7 +341,8 @@ div.sub_menu_item_yellow{
 	background-repeat: repeat-x;
 	font-weight: bold; 
 	float: left; 
-	height: 30px; 
+	height: 38px;
+	max-width:60px;
 	padding-left: 3px;
 	padding-right: 3px;
 	padding-top: 10px; 
@@ -341,12 +354,26 @@ div.sub_menu_item_blue{
 	background-position: bottom left;
 	background-repeat: repeat-x;
 	font-weight: bold; 
-	float: right; 
-	height: 30px; 
+	float: left; 
+	height: 38px; 
+	max-width:80px;
 	padding-left: 3px;
 	padding-right: 3px;
 	padding-top: 10px; 
 	color: #0089CF;
+}
+
+div.sub_menu_item_deepblue{
+	background-image: url('../images/menu_border_deepblue.png');
+	background-position: bottom left;
+	background-repeat: repeat-x;
+	font-weight: bold; 
+	float: left; 
+	height: 38px; 
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-top: 10px; 
+	color: #003581;
 }
 
 #add_content_menu_challenge{

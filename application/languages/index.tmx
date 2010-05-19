@@ -25,6 +25,10 @@
 		<tuv xml:lang="en"><seg>Users</seg></tuv>
 		<tuv xml:lang="fi"><seg>käyttäjät</seg></tuv>
 	</tu>
+	<tu tuid='index-groups-campaigns'>
+		<tuv xml:lang="en"><seg>Groups and campaigns</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ryhmät ja kampanjat</seg></tuv>
+	</tu>
 	<tu tuid='index-most-active'>
 		<tuv xml:lang="en"><seg>Most active</seg></tuv>
 		<tuv xml:lang="fi"><seg>Aktiivisimmat</seg></tuv>
@@ -94,6 +98,10 @@
 	<tu tuid='index-home'>
 		<tuv xml:lang="en"><seg>Massidea.org</seg></tuv>
 		<tuv xml:lang="fi"><seg>Massidea.org</seg></tuv>
+	</tu>
+	<tu tuid='index-latest'>
+		<tuv xml:lang="en"><seg>Home</seg></tuv>
+		<tuv xml:lang="fi"><seg>Etusivu</seg></tuv>
 	</tu>
 	<tu tuid='index-search'>
 		<tuv xml:lang="en"><seg>Search</seg></tuv>

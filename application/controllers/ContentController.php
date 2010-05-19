@@ -275,7 +275,11 @@ class ContentController extends Oibs_Controller_CustomController
 			// Content type id is needed when adding content  to database
 			$contentTypeId = $modelContentTypes->getIdByType($contentType);
 
-			// Creating array for form data
+			// Cacheing making of the form
+			$cache = Zend_Registry::get('cache');	
+			$formCacheTag = 'content_add_form_'.$contentType.'_'.$this->language;		
+			if (!($form = $cache->load($formCacheTag))) {
+            // Creating array for form data
 			$formData = array();
 
 			// Adding data to formData
@@ -360,12 +364,15 @@ class ContentController extends Oibs_Controller_CustomController
                                         $formData['Classes'][0] = $this->view->translate(
                                         "content-add-select-class-no-group"
                                         );
+			   					
+			
 
-                                        // Form for content adding
+			                            // Form for content adding
                                         $form = new Default_Form_AddContentForm(
-                                        null, $formData, $this->view->language, $contentType
+                                        	null, $formData, $this->view->language, $contentType
                                         );
-
+										$cache->save($form, $formCacheTag);										
+										}
 
                                         $this->view->form = $form;
                                         // Get requests

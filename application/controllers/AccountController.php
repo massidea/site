@@ -61,22 +61,39 @@ class AccountController extends Oibs_Controller_CustomController
         $params = $this->getRequest()->getParams();
         
         $thumb = isset($params['thumb']) ? true : false;
-        
-        $this->view->image = null;
+		$thumbnail = $thumb ? 'thumbnail_usi' : 'image_usi'; 
+
+        $image = null;
         
         if (isset($params['id'])) {
-            // Get thumbnail data and print
-            $user = new Default_Model_User($params['id']);
-            $image = $user->getUserImageData($params['id'], $thumb);
+		$userid = $params['id'];
 
-            if($image != null) {
-                $this->view->img = $image;
-            } else {
-                $filename = '../www/images/no_profile_img_placeholder.gif';
-                $handle = fopen($filename, "r");
-                $image = fread($handle, filesize($filename));
-                $this->view->img = $image;
-            }
+	        // Get cache from registry
+        	$cache = Zend_Registry::get('cache');
+        	
+        	$mimeType = "image/jpeg";
+        
+        	// Load recent posts from cache
+        	$cacheImages = 'ProfileThumbs_' . $userid . '_' . $thumbnail;
+        
+        	if(!$result = $cache->load($cacheImages)) {
+				$user = new Default_Model_User($userid);
+				$imagedata = $user->getUserImageData($userid, $thumb);
+	            		
+	            if($imagedata == null) {
+	                $filename = '../www/images/no_profile_img_placeholder.gif';
+	                $handle = fopen($filename, "r");
+	                $imagedata[$thumbnail] = fread($handle, filesize($filename));
+	            } 
+
+        		// Save recent posts data to cache
+        		$cache->save($imagedata, $cacheImages);          
+        	} else {
+				$imagedata = $result;
+        	}
+        	
+	        $this->view->mime = $mimeType;
+        	$this->view->img = $imagedata[$thumbnail];
         }
     }
     

@@ -16,7 +16,8 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 		// Get languages
 		$locale = new Zend_Locale();		
 		$options = array('scan' => Zend_Translate::LOCALE_FILENAME, 'disableNotices' => true);
-		
+		$cache = Zend_Registry::get('cache');
+		Zend_Translate::setCache($cache);
 		$translate = @new Zend_Translate('tmx', APPLICATION_PATH . '/languages/', 'auto', $options);
 
 		// 

@@ -358,16 +358,28 @@ echo $this->doctype();
 		<div class="sub_menu">
 			<!-- LEFT SIDE OF THE MENU -->
 			<div class="sub_menu_left">&nbsp;</div>
+			
+			<div id="home_latest" 
+                onmouseout="blurMenu(this.id, 'deepblue', '<?php echo $this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'deepblue', '<?php echo $this->baseUrl();?>');" 
+                class="sub_menu_item_deepblue"
+            >
+                <a href="<?php echo $this->url(array('language' => $this->language),
+                                               'lang_default', true); ?>/">
+                	<?php echo $this->translate('index-latest');?>
+                </a>
+            </div>
+			
+			<div class="sub_menu_left_space">&nbsp;</div>
             
 			<div id="todays_challenges" 
                 onmouseout="blurMenu(this.id, 'red', '<?php echo $this->baseUrl();?>')" 
                 onmouseover="focusMenu(this.id, 'red', '<?php echo $this->baseUrl();?>');" 
                 class="sub_menu_item_red"
             >
-                
                 <a href="<?php echo $this->url(array('type' => 'problem', 
                                                      'language' => $this->language),
-                                               'content_list', true); ?>">
+                                               		'content_list', true); ?>">
                     <?php echo $this->translate('index-problems');?>
                 </a>
             </div>
@@ -399,6 +411,36 @@ echo $this->doctype();
                     <?php echo $this->translate('index-futureinfo');?>
                 </a>
             </div>
+            
+            <div class="sub_menu_left_space">&nbsp;</div>
+            
+            <div id="groups_campaigns" 
+                onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
+                class="sub_menu_item_blue"
+            >
+                <a href="<?php echo $this->url(array('language' => $this->language),
+                                                	'lang_default', true); ?>">
+                    <?php echo $this->translate('index-groups-campaigns');?>
+                </a>
+            </div>
+            
+            <div class="sub_menu_left_space">&nbsp;</div>
+            
+            <div id="users" 
+                onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
+                class="sub_menu_item_blue"
+            >
+                <a href="<?php echo $this->url(array('controller' => 'account',
+                                                     'action' => 'userlist',
+                                                     'language' => $this->language),
+                                                'lang_default', true); ?>">
+                    <?php echo $this->translate('index-users');?>
+                </a>
+            </div>
+            
+            <div class="sub_menu_left_space">&nbsp;</div>
 			
 			<!-- RIGHT SIDE OF THE MENU, note that the placement order is reversed -->
 			<div class="sub_menu_right">&nbsp;</div>
@@ -483,22 +525,7 @@ echo $this->doctype();
 				</div>		
 				
 			</div>
-            
-			<div class="sub_menu_right_space" style="width: 0px;">&nbsp;</div>
-            
-			<div id="users" 
-                onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')" 
-                onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
-                class="sub_menu_item_blue"
-            >
-                <a href="<?php echo $this->url(array('controller' => 'account',
-                                                     'action' => 'userlist',
-                                                     'language' => $this->language),
-                                                'lang_default', true); ?>">
-                    <?php echo $this->translate('index-users');?>
-                </a>
-            </div>
-            
+                                    
             <?php 
             $auth = Zend_Auth::getInstance();
 	        if ($auth->hasIdentity()):
@@ -523,7 +550,7 @@ echo $this->doctype();
 	            endif;
 	        endif;
 	        ?>
-			
+			<div class="sub_menu_right_space" style="width: 0px;">&nbsp;</div>
 			<!-- Resets the floating row -->
 			<div style="clear: both;"></div>
 		</div>
@@ -542,7 +569,7 @@ echo $this->doctype();
             folder in the views -folder. All partials (right -side alternatives)
 			should be stored right there. Cheerio. - Tuomas -->
             
-
+			
             if(isset($this->layout()->right_side)){
 				echo '<div class="right_side" style="padding: 0px; margin: 0px; margin-top: -52px;">';
 				echo $this->layout()->right_side;

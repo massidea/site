@@ -169,7 +169,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         
         // If there is no image return null
         //$hasImage = empty($imageData) ? null : $imageData;
-        $hasImage = $result != null ? $result[0][$thumbnail] : null;
+        $hasImage = $result != null ? $result[0] : null;
         
         return $hasImage;
     } // end of getUserImageData
