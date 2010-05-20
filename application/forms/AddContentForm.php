@@ -63,12 +63,6 @@ class Default_Form_AddContentForm extends Zend_Form
 		// Header, input
 		$header = new Zend_Form_Element_Text('content_header');
 		$header->addFilter('StringtoLower')
-				->setAttribs(array(
-					"onfocus" => "textCounter(this,'progressbar_content_header',1,120,'".$lang."'); checkCF();",
-					"onblur" => "textCounter(this,'progressbar_content_header',1,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_header',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_header',1,120,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->addValidators(array(
                                       array('NotEmpty', 
@@ -79,7 +73,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                       array('StringLength', 
                                             true, 
                                             array(1, 
-                                                  120,
+                                                  140,
                                                   'messages' => 
                                                       array('stringLengthTooLong' => 
                                                         'content-add-field-too-long')))
@@ -91,12 +85,6 @@ class Default_Form_AddContentForm extends Zend_Form
 		// Keywords, input
 		$keywords = new Zend_Form_Element_Text('content_keywords');
 		$keywords->addFilter('StringtoLower')			
-				->setAttribs(array(
-					"onfocus" => "textCounter(this,'progressbar_content_keywords',1,120,'".$lang."'); checkCF();",
-					"onblur" => "textCounter(this,'progressbar_content_keywords',1,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_keywords',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_keywords',1,120,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -133,12 +121,6 @@ class Default_Form_AddContentForm extends Zend_Form
 		// Lead, Textarea
 		$textlead = new Zend_Form_Element_Textarea('content_textlead');
 		$textlead->addFilter('StringtoLower')
-				->setAttribs(array(
-					"onfocus" => "textCounter(this,'progressbar_content_textlead',1,160,'".$lang."'); checkCF();",
-					"onblur" => "textCounter(this,'progressbar_content_textlead',1,160,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_textlead',1,160,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_textlead',1,160,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->setAttrib('class', 'textlead')
                 ->addValidators(array(array('NotEmpty', 
@@ -151,7 +133,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                               true, 
                                               array(1, 
-                                                    160,
+                                                    320,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'content-add-field-too-long')
@@ -166,12 +148,6 @@ class Default_Form_AddContentForm extends Zend_Form
 		// Body, Textarea
 		$text = new Zend_Form_Element_Textarea('content_text');
 		$text->addFilter('StringtoLower')
-				->setAttribs(array(
-					"onblur" => "textCounter(this,'progressbar_content_text',1000,4000,'".$lang."'); checkCF();",
-					"onfocus" => "textCounter(this,'progressbar_content_text',1000,4000,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_text',1000,4000,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_text',1000,4000,'".$lang."'); checkCF();"
-                    ))
                 ->setRequired(true)
                 ->setAttrib('class', 'textbody')
                 ->addValidators(array(array('NotEmpty', 
@@ -183,7 +159,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                            ),
                                         array('StringLength', 
                                               true, 
-                                              array(1000, 
+                                              array(1, 
                                                     4000,
                                                     'messages' => 
                                                         array('stringLengthTooShort' => 
@@ -199,12 +175,6 @@ class Default_Form_AddContentForm extends Zend_Form
         // Related companies, Input
 		$related_companies = new Zend_Form_Element_Text('content_related_companies');
 		$related_companies->addFilter('StringtoLower')			
-				->setAttribs(array(
-					"onfocus" => "textCounter(this,'progressbar_content_related_companies',1,120,'".$lang."'); checkCF();",
-					"onblur" => "textCounter(this,'progressbar_content_related_companies',1,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_related_companies',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_related_companies',1,120,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -231,12 +201,6 @@ class Default_Form_AddContentForm extends Zend_Form
         // Problem research question, Input
 		$research = new Zend_Form_Element_Text('content_research');
 		$research->addFilter('StringtoLower')
-				->setAttribs(array(
-					"onkeydown" => "textCounter(this,'progressbar_content_research',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_research',1,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_research',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_research',1,120,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -261,12 +225,6 @@ class Default_Form_AddContentForm extends Zend_Form
         // Future info opportunity, Input
 		$opportunity = new Zend_Form_Element_Text('content_opportunity');
 		$opportunity->addFilter('StringtoLower')
-				->setAttribs(array(
-					"onblur" => "textCounter(this,'progressbar_content_opportunity',1,120,'".$lang."'); checkCF();",
-					"onfocus" => "textCounter(this,'progressbar_content_opportunity',1,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_opportunity',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_opportunity',1,120,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -293,12 +251,6 @@ class Default_Form_AddContentForm extends Zend_Form
         // Future info threat, Input
 		$threat = new Zend_Form_Element_Text('content_threat');
 		$threat->addFilter('StringtoLower')
-				->setAttribs(array(
-					"onblur" => "textCounter(this,'progressbar_content_threat',1,120,'".$lang."'); checkCF();",
-					"onfocus" => "textCounter(this,'progressbar_content_threat',1,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_threat',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_threat',1,120,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -325,12 +277,6 @@ class Default_Form_AddContentForm extends Zend_Form
         // Idea/solution in one sentence, Input
 		$solution = new Zend_Form_Element_Text('content_solution');
 		$solution->addFilter('StringtoLower')
-				->setAttribs(array(
-					"onblur" => "textCounter(this,'progressbar_content_solution',1,120,'".$lang."'); checkCF();",
-					"onfocus" => "textCounter(this,'progressbar_content_solution',1,120,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_solution',1,120,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_solution',1,120,'".$lang."'); checkCF();"
-					))
                 ->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -368,12 +314,6 @@ class Default_Form_AddContentForm extends Zend_Form
         // References, Textarea
 		$references = new Zend_Form_Element_Textarea('content_references');
 		$references->addFilter('StringtoLower')
-                ->setAttribs(array(
-					"onblur" => "textCounter(this,'progressbar_content_references',0,2000,'".$lang."'); checkCF();",
-					"onfocus" => "textCounter(this,'progressbar_content_references',0,2000,'".$lang."'); checkCF();",
-					"onkeydown" => "textCounter(this,'progressbar_content_references',0,2000,'".$lang."'); checkCF();",
-					"onkeyup" => "textCounter(this,'progressbar_content_references',0,2000,'".$lang."'); checkCF();"
-					))
                 ->setAttrib('class', 'textlead')
                 ->addValidators(array(array('StringLength', 
                                               true, 
@@ -396,6 +336,8 @@ class Default_Form_AddContentForm extends Zend_Form
                 ->setLabel($translate->_("content-add-language"))
 				->setDecorators(array('FormElementDecorator'))
 				->setMultiOptions($data['languages']);
+		
+		/*
         
         // Future info classification, Select
         $finfoClasses = new Zend_Form_Element_Select('content_finfo_class');
@@ -441,6 +383,8 @@ class Default_Form_AddContentForm extends Zend_Form
                 ->setLabel($translate->_("content-view-innovationtype-classification"))
                 ->setDecorators(array('FormElementDecorator'))
                 ->setMultiOptions($data['InnovationTypes']);
+                
+        */
         
         // Form buttons
         
@@ -475,10 +419,10 @@ class Default_Form_AddContentForm extends Zend_Form
             $file,
             $references,
             $language,
-            $industry,
-            $division,
-            $group,
-            $class,
+            //$industry,
+            //$division,
+            //$group,
+            //$class,
             $publish,
             $save,
             $preview
