@@ -1,0 +1,42 @@
+<h3>
+<?php echo $this->campaign['name_cmp']; ?>
+    campaign by
+<?php echo $this->grpname; ?>
+</h3>
+
+<h4>Ingress</h4>
+<p><?php echo $this->campaign['ingress_cmp']; ?></p>
+
+<h4>Description</h4>
+<p><?php echo $this->campaign['description_cmp']; ?></p>
+
+<?php $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601); ?>
+<h4>Campaign has started</h4>
+<p> <?php echo $cmpstart->toString('dd MMM, yyyy'); ?> </p>
+
+<?php $cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601); ?>
+<h4>Campaign is ending</h4>
+<p><?php echo $cmpend->toString('dd MMM, yyyy'); ?></p>
+
+
+<h3>Linked contents:</h3>
+<p>
+<?php foreach ($this->cmpcnts as $content): ?>
+<?php
+$url_post = $this->url(array('content_id' => $content['id_cnt'],
+                             'language' => $this->language ),
+                             'content_shortview', true);
+?>
+    <a href="<?php echo $url_post; ?>"><?php echo $content['title_cnt']?></a>
+    <?php echo "<br />\n"; ?>
+<?php endforeach; ?>
+</p>
+
+<?php
+$linkurl = $this->url(array('controller' => 'campaign',
+                            'action'     => 'link',
+                            'cmpid'      => $this->campaign['id_cmp'],
+                            'language'   => $this->language),
+                        'lang_default', true);
+?>
+<p><a href="<?php echo $linkurl; ?>">Link more content to campaign</a></p>
