@@ -156,7 +156,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         if(true) {
             // Set lifetime to 2 hours
-            $frontend = array('lifetime' => 2700,
+            $frontend = array('lifetime' => 7200,
                               'automatic_serialization' => true
                               );
             
