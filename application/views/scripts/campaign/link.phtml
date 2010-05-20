@@ -1,0 +1,15 @@
+<p><b>User's contents:</b></p>
+
+<?php foreach ($this->usrcnt as $content): ?>
+    <p><?php echo $content['title_cnt']; ?></p>
+    <?php
+        $linkurl = $this->url(array('controller' => 'campaign',
+                                    'action'     => 'makelink',
+                                    'cmpid'      => $this->cmpid,
+                                    'cntid'      => $content['id_cnt'],
+                                    'language'   => $this->language),
+                              'lang_default', true);
+    ?>
+    <p><a href="<?php echo $linkurl; ?>">Link this content</a></p>
+    <pre><?php var_dump($content); ?></pre>
+<?php endforeach; ?>
