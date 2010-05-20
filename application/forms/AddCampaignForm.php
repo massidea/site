@@ -96,8 +96,5 @@ class Default_Form_AddCampaignForm extends Zend_Form
             'label'  => 'Create campaign'
         ));
         
-        $this->addElement('hash', 'csrf', array(
-            'ignore' => true
-        ));
     }
 }
