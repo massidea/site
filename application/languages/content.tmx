@@ -1052,7 +1052,11 @@
 	<tu tuid='content-delete'>
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
-	</tu>    
+	</tu>
+    <tu tuid='content-editlinks'>
+		<tuv xml:lang="en"><seg>Edit links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa linkkejä</seg></tuv>
+	</tu>
 	<tu tuid='content-cancel'>
 		<tuv xml:lang="en"><seg>Cancel</seg></tuv>
 		<tuv xml:lang="fi"><seg>Peruuta</seg></tuv>

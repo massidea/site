@@ -212,6 +212,10 @@
 		<tuv xml:lang="en"><seg>Public sector</seg></tuv>
 		<tuv xml:lang="fi"><seg>Julkisella sektorilla</seg></tuv>
 	</tu>
+    <tu tuid='account-register_education_sector'>
+		<tuv xml:lang="en"><seg>Education sector</seg></tuv>
+		<tuv xml:lang="fi"><seg>Opetussektorilla</seg></tuv>
+	</tu>
     <tu tuid='account-register_student'>
 		<tuv xml:lang="en"><seg>Student</seg></tuv>
 		<tuv xml:lang="fi"><seg>Opiskelija</seg></tuv>
