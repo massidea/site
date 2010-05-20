@@ -2,8 +2,7 @@
 /**
  *  CampaignController
  *
- *  Copyright (c) <2009>, Joel Peltonen <joel.peltonen@cs.tamk.fi>
- *  Copyright (c) <2009>, Pekka Piispanen <pekka.piispanen@cs.tamk.fi>
+ *  Copyright (c) <2010>, Mikko Aatola
  *
  *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
  *  as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -19,19 +18,16 @@
  */
  
 /**
- *  ContentController - class
+ *  CampaignController - class
  *
  *  @package        controllers
- *  @author         Markus RIihel�
- *  @copyright      2009 MassIdea.org
+ *  @author         Mikko Aatola
+ *  @copyright      2010 MassIdea.org
  *  @license        GPL v2
  *  @version        1.0
  */ 
 class CampaignController extends Oibs_Controller_CustomController
 {
-    /**
-     * The default action - show the home page
-     */
     public function indexAction() 
     {
     }
@@ -89,9 +85,74 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmpid = $this->_request->getParam('cmpid');
 
         $cmpmodel = new Default_Model_Campaigns();
-        $cmp = $cmpmodel->getCampaignById($cmpid);
-        echo "<pre>";
-        var_dump($cmp->toArray());
-        echo "</pre>";
+        $cmp = $cmpmodel->getCampaignById($cmpid)->toArray();
+        $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
+
+        $grpmodel = new Default_Model_Groups();
+        $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+        $grpname = $grp['group_name_grp'];
+
+        $this->view->campaign = $cmp;
+        $this->view->cmpcnts = $cnts;
+        $this->view->grpname = $grpname;
+    }
+
+    /**
+     * linkAction
+     *
+     * Link content to campaign.
+     */
+    public function linkAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $usrId = $auth->getIdentity()->user_id;
+
+        $cmpId = $this->_request->getParam('cmpid');
+        // TODO:
+        // if (!isset($cmpId))
+        //     redirect_to_campaigns_page();
+        $this->view->cmpid = $cmpId;
+
+        $usrmodel = new Default_Model_User();
+        $usrcnt = $usrmodel->getUserContent($usrId);
+
+        $cmpmodel = new Default_Model_Campaigns();
+        $cmpcnt = $cmpmodel->getAllContentsInCampaign($cmpId);
+
+        $cnt = array();
+        foreach ($usrcnt as $usercontent) {
+            if (!$this->checkIfArrayHasKeyWithValue($cmpcnt, 'id_cnt', $usercontent['id_cnt'])) {
+                $cnt[] = $usercontent;
+            }
+        }
+
+        $this->view->usrcnt = $cnt;
+    }
+
+    public function makelinkAction()
+    {
+        $cmpId = $this->_request->getParam('cmpid');
+        $this->view->cmpid = $cmpId;
+
+        $cntId = $this->_request->getParam('cntid');
+        $this->view->cntid = $cntId;
+
+        // TODO:
+        // if ( !((isset($cmpId)) && (isset($cntId))) )
+        //     redirect_to_campaigns_page();
+
+        $cmphascntmodel = new Default_Model_CampaignHasContent();
+        $cmphascntmodel->addContentToCampaign($cmpId, $cntId);
+
+        // TODO:
+        // Tell the user that the link was created.
+
+        // Redirect back to the current campaign's page.
+        $target = $this->_urlHelper->url(array('controller' => 'campaign',
+                                   'action'     => 'view',
+                                   'cmpid'      => $cmpId,
+                                   'language'   => $this->language),
+                              'lang_default', true);
+        $this->_redirector->gotoUrl($target);
     }
 }
