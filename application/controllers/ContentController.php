@@ -934,8 +934,6 @@ class ContentController extends Oibs_Controller_CustomController
 
 					$formData['published_cnt'] = $data['published_cnt'];
 
-					$modelCntHasCmp = New Default_Model_ContentHasCampaign();
-
 					$formData['content_references'] = $data['references_cnt'];
 
 					$languages = New Default_Model_Languages();
