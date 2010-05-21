@@ -1266,8 +1266,12 @@
 		<tuv xml:lang="fi"><seg>Sisältösi</seg></tuv>
 	</tu>
 	<tu tuid='content-link-helptext'>
-		<tuv xml:lang="en"><seg>is going to be linked with</seg></tuv>
-		<tuv xml:lang="fi"><seg>tullaan linkittämään alla olevan kanssa</seg></tuv>
+		<tuv xml:lang="en"><seg>Select the content which will be linked.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse sisältö mikä linkitetään.</seg></tuv>
+	</tu>
+    <tu tuid='content-link-not-content-this-type'>
+		<tuv xml:lang="en"><seg>You don't have any content with this content type.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sinulla ei ole tämän tyyppistä sisältöä.</seg></tuv>
 	</tu>
 	<tu tuid='content-link'>
 		<tuv xml:lang="en"><seg>Add link</seg></tuv>

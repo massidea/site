@@ -615,9 +615,6 @@ class ContentController extends Oibs_Controller_CustomController
 			$relatestoid = isset($params['relatestoid'])
 			? $params['relatestoid'] : '';
 
-			$confirmLinkingId = isset($params['confirm'])
-			? $params['confirm'] : '';
-
 			if($this->validateLinking($contenttype, $relatestoid, -1)) {
 				$model_content_types = new Default_Model_ContentTypes();
 				$model_cnt_has_cnt = new Default_Model_ContentHasContent();
@@ -631,10 +628,11 @@ class ContentController extends Oibs_Controller_CustomController
 
 				$contents = array();
 
+                $hasUserContents = true;
+
 				if(!$this->checkIfArrayHasKeyWithValue($userContents, "id_cty_cnt", $id_cty)) {
 					$this->view->linkingContentType = $contenttype;
-                    // Good place to echo????
-					echo "You don't have any content with this content type!";
+					$hasUserContents = false;
 				} else {
 					foreach($userContents as $content) {
 						if(!$model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt'])) {
@@ -646,14 +644,7 @@ class ContentController extends Oibs_Controller_CustomController
 					$this->view->relatesToId = $relatestoid;
 					$this->view->linkingContentType = $contenttype;
 					$this->view->contents = $contents;
-
-					if($confirmLinkingId != 0) {
-						$contentModel = new Default_Model_Content();
-						$linkingContent = $contentModel->getContentRow($confirmLinkingId);
-
-						$this->view->confirmLinkingId = $confirmLinkingId;
-						$this->view->linkingContent = $linkingContent;
-					}
+                    $this->view->hasUserContents = $hasUserContents;
 				}
 			}
 		} else {

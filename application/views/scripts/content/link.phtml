@@ -27,7 +27,7 @@ elseif($this->relatesToContentContentTypeId == "idea") {
 <?php
 echo "<h3 class=\"recent_posts\">".$title." ".$title2."</h3>";
 
-if($this->relatesToId != 0) {
+if($this->relatesToId != 0 && $this->hasUserContents == true) {
 ?>
     <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
         <p class="linkedtotext">
@@ -61,12 +61,9 @@ if($this->relatesToId != 0) {
             </a>
         </p>
     </div>
-<?php
-}
 
-//$this->relatesToContentTitle
-
-if(!isset($_GET['confirm'])) {
+    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('content-link-helptext'); ?></p>
+    <?php
     if($this->contents) {
         foreach($this->contents as $content) {
             if($content['published_cnt'] != 0) {
@@ -80,88 +77,25 @@ if(!isset($_GET['confirm'])) {
                         echo $content['title_cnt'];
                         echo "</a> ";
                         ?>
+                        <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
                     </div>
                     <div style="margin-top: 4px;">
-                        <?php 
-                        echo "<a href=\"".$this->baseUrl."/".$this->language."/content/link/"
-                        .$this->linkingContentType."/relatestoid/".$this->relatesToId
-                        ."?confirm=".$content['id_cnt']."\" style=\"font-weight: bold;\">".
-                            $this->translate('content-link'); ?>
-                        </a>
+                        <?php
+                        echo "<a href=\"".$this->baseUrl."/".$this->language."/content/makelinks/"
+                        .$this->linkingContentType."/".$this->relatesToId
+                        ."/to/".$content['id_cnt']."\">".
+                        $this->translate('content-link')."</a>";?>
                     </div>
                 </div>
+                <div style="clear: both;"></div>
                 <?php
             }
         }
     }
-}
-else {
+} else {
     ?>
-    <span style="color: #808080; margin-left: 15px;"><?php echo $this->translate('content-link-helptext'); ?></span><br /><br />
-    
-    <div id="linkedwith" class="linkedwith" style="margin-bottom: 10px;">
-        <p class="linkedtotext">
-            <?php echo $this->translate('content-linking-to-content', 
-                                                    $this->language);
-            ?>
-        </p>
-        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" height="101" width="4" />
-        
-        <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('content_id' => $this->linkingContent['id_cnt'], 
-                                                     'language' => $this->language), 
-                                                     'content_shortview', true); ?>">
-                <?php
-                    if(strlen($this->linkingContent['title_cnt']) > 68) {
-                        $this->linkingContent['title_cnt'] = substr($this->linkingContent['title_cnt'], 0, 68) . "...";
-                    }
-                    echo $this->linkingContent['title_cnt'];
-                ?>
-            </a><br />
-            <?php 
-            if($this->linkingContent['modified_cnt'] != 0) {
-                echo $this->translate('content-published') . " " .
-                date("d.m.Y", strtotime($this->linkingContent['modified_cnt']));
-            }
-            else {
-                echo $this->translate('content-published') . " " .
-                date("d.m.Y", strtotime($this->linkingContent['created_cnt']));
-            }
-            echo "<br />";
-            echo $this->linkingContent['lead_cnt'];
-            echo "<br /><br />";
-            
-            if($this->linkingContentType == "problem") {
-                echo "<span style=\"font-weight: bold;\">"
-                .$this->translate('content-add-research') . ":</span><br />";
-                echo "<span>" . $this->linkingContent['research_question_cnt'] . "</span>";
-            }
-            elseif($this->linkingContentType == "finfo") {
-                echo "<span style=\"font-weight: bold;\">"
-                .$this->translate('content-add-opportunity') . ":</span>";
-                echo "<span> ".$this->linkingContent['opportunity_cnt'] . "</span>";
-                echo "<br />";
-                echo "<span style=\"font-weight: bold;\">"
-                .$this->translate('content-add-threat') . ":</span>";
-                echo "<span> " . $this->linkingContent['threat_cnt'] . "</span>";
-            }
-            elseif($this->linkingContentType == "idea") {
-                echo "<span style=\"font-weight: bold;\">"
-                .$this->translate('content-add-solution') 
-                .":</span><br />";
-                echo "<span>" . $this->linkingContent['solution_cnt'] . "</span>";
-            }
-            ?>
-        </p>
-    </div>
-    <?php 
-    echo "<a href=\"".$this->baseUrl."/".$this->language."/content/makelinks/"
-                      .$this->linkingContentType."/".$this->relatesToId
-                      ."/to/".$this->linkingContent['id_cnt']."\">Confirm the link</a> or ";
-    echo "<a href=\"".$this->baseUrl."/".$this->language."/content/link/"
-                         .$this->linkingContentType."/relatestoid/"
-                         .$this->relatesToId."\">Go back to list
-               </a>"; 
+    <p><?php echo $this->translate('content-link-not-content-this-type'); ?></p>
+    <?php
 }
 ?>
 </div>
