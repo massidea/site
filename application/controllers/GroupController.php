@@ -3,15 +3,16 @@
  *  GroupController -> Viewing content from the database
  *
  *   Copyright (c) <2010>, Mikko Aatola <mikko@aatola.net>
+ *             (c) <2010>, Sami Kiviharju <stoney78@kapsi.fi>
  *
- * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * License text found in /license/
@@ -21,18 +22,18 @@
  *  GroupController - class
  *
  *  @package    controllers
- *  @author     Mikko Aatola
- *  @copyright  2010 Mikko Aatola
+ *  @author     Mikko Aatola & Sami kiviharju
+ *  @copyright  2010 Mikko Aatola & Sami Kiviharju
  *  @license    GPL v2
  *  @version    1.0
- */ 
+ */
  class GroupController extends Oibs_Controller_CustomController
 {
     function indexAction()
     {
         // Get authentication
         $auth = Zend_Auth::getInstance();
-        
+
         // If user has identity
         if ($auth->hasIdentity()) {
             // Get the names and descriptions of all groups.
@@ -42,7 +43,7 @@
             // Groups are only visible to registered users.
             // Redirect to main page.
             $target = $this->_urlHelper->url(array(
-                'controller' => 'index', 
+                'controller' => 'index',
                 'action' => 'index',
                 'language' => $this->view->language),
                 'lang_default', true);
@@ -59,7 +60,7 @@
     {
         // Get authentication
         $auth = Zend_Auth::getInstance();
-        
+
         // If user has identity
         if ($auth->hasIdentity()) {
             // Get data for this specific group.
@@ -68,18 +69,20 @@
             $usrHasGrpModel = new Default_Model_UserHasGroup();
             $grpAdminsModel = new Default_Model_GroupAdmins();
             $campaignModel = new Default_Model_Campaigns();
-            
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $user = $auth->getIdentity();
             // Add data to the view.
             $this->view->grpId = $grpId;
             $this->view->grpData = $grpModel->getGroupData($grpId);
             $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
-            $this->view->grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $this->view->grpAdmins = $grpAdmins;
             $this->view->userHasGroup = $usrHasGrpModel;
             $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
+            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
         } else {
             // Groups are only visible to registered users.
             $target = $this->_urlHelper->url(array(
-                'controller' => 'index', 
+                'controller' => 'index',
                 'action' => 'index',
                 'language' => $this->view->language),
                 'lang_default', true);
@@ -125,20 +128,20 @@
             }
         }
     }
-    
+
     function joinAction()
     {
         $auth = Zend_Auth::getInstance();
-        
+
         if ($auth->hasIdentity()) {
             // Get group id and user id.
             $grpId = $this->_request->getParam('groupid');
             $usrId = $auth->getIdentity()->user_id;
-            
+
             // Join the group.
             $usrHasGroupModel = new Default_Model_UserHasGroup();
             $usrHasGroupModel->addUserToGroup($grpId, $usrId);
-            
+
             // Redirect back to the group page.
             $target = $this->_urlHelper->url(
                 array(
@@ -150,23 +153,23 @@
             // Not logged in - can't join a group.
             $target = $this->_urlHelper->url(
                 array(
-                    'controller' => 'index', 
+                    'controller' => 'index',
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
             $this->_redirector->gotoUrl($target);
         }
     }
-    
+
     function leaveAction()
     {
         $auth = Zend_Auth::getInstance();
-        
+
         if ($auth->hasIdentity()) {
             // Get group id and user id.
             $grpId = $this->_request->getParam('groupid');
             $usrId = $auth->getIdentity()->user_id;
-            
+
             $groupAdminsModel = new Default_Model_GroupAdmins();
             if ($groupAdminsModel->userIsAdmin($grpId, $usrId)) {
                 // Group admin can't leave the group.
@@ -174,17 +177,17 @@
                          . "because you're its admin.";
                 $url = $this->_urlHelper->url(
                     array(
-                        'controller' => 'msg', 
+                        'controller' => 'msg',
                         'action' => 'index',
                         'language' => $this->view->language),
-                    'lang_default', true); 
+                    'lang_default', true);
                 $this->flash($message, $url);
             } else {
                 // Remove user from group.
                 $usrHasGroupModel = new Default_Model_UserHasGroup();
                 $usrHasGroupModel->removeUserFromGroup($grpId, $usrId);
             }
-            
+
             // Redirect back to the group page.
             $target = $this->_urlHelper->url(
                 array(
@@ -196,7 +199,7 @@
             // Not logged in - can't join a group.
             $target = $this->_urlHelper->url(
                 array(
-                    'controller' => 'index', 
+                    'controller' => 'index',
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
