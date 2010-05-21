@@ -633,11 +633,12 @@ class ContentController extends Oibs_Controller_CustomController
 
 				if(!$this->checkIfArrayHasKeyWithValue($userContents, "id_cty_cnt", $id_cty)) {
 					$this->view->linkingContentType = $contenttype;
+                    // Good place to echo????
 					echo "You don't have any content with this content type!";
 				} else {
 					foreach($userContents as $content) {
 						if(!$model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt'])) {
-							if($content['id_cty_cnt'] == $id_cty) {
+							if($content['id_cty_cnt'] == $id_cty && $content['id_cnt'] != $relatestoid) {
 								$contents[] = $content;
 							}
 						}
@@ -675,6 +676,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$model_content_types = new Default_Model_ContentTypes();
 		$model_content = new Default_Model_Content();
 		$model_cnt_has_usr = new Default_Model_ContentHasUser();
+        $model_cnt_has_cnt = new Default_Model_contentHasContent();
 
 		$content_types = $model_content_types->getAllNamesAndIds();
 
@@ -703,26 +705,6 @@ class ContentController extends Oibs_Controller_CustomController
 			$this->view->relatesToContentContentTypeId = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
 		}
 
-		// Setting the variable first to be true
-		/*$invalid_relatestotype = true;
-		 $invalid_relatestotype_idea = true;
-
-		 // If the content type of content to be linked is not same than
-		 // the content type of related content, invalid_relatestotype
-		 // is set to false
-		 if(!$invalid_contenttype && !$invalid_relatestoid) {
-		 $relatestotypeid = $model_content->getContentTypeIdByContentId($relatestoid);
-		 $relatestotype = $model_content_types->getTypeById($relatestotypeid);
-		 if($relatestotype != $contenttype) {
-		 $invalid_relatestotype = false;
-		 }
-		 if(!$invalid_relatestotype) {
-		 if($relatestotype != "idea") {
-		 $invalid_relatestotype_idea = false;
-		 }
-		 }
-		 }*/
-
 		if(!$invalid_contenttype && !$invalid_relatestoid) {
 			if($linkedcontentid == -1) {
 				return true;
@@ -730,6 +712,18 @@ class ContentController extends Oibs_Controller_CustomController
 				$linkedContent = $model_content->getContentRow($linkedcontentid);
 				if($linkedContent['published_cnt'] != 0) {
 					if($model_content->checkIfContentExists($linkedcontentid)) {
+                        // User can not link content with themselves
+                        if ($relatestoid == $linkedcontentid) {
+                            $message = 'content-link-themselves';
+
+							$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                                'action' => 'index',
+                                                                'language' => $this->view->language),
+                                                          'lang_default', true);
+
+							$this->flash($message, $url);
+                        }
+
 						$auth = Zend_Auth::getInstance();
 						$id_usr = $auth->getIdentity()->user_id;
 
@@ -779,24 +773,6 @@ class ContentController extends Oibs_Controller_CustomController
 				$this->flash($message, $url);
 			} elseif($invalid_relatestoid) {
 				$message = 'content-link-invalid-relatestoid';
-
-				$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    'action' => 'index', 
-                                                    'language' => $this->view->language), 
-                                              'lang_default', true);
-
-				$this->flash($message, $url);
-			} elseif($invalid_relatestotype) {
-				$message = 'content-link-same-content-types';
-
-				$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    'action' => 'index', 
-                                                    'language' => $this->view->language), 
-                                              'lang_default', true);
-
-				$this->flash($message, $url);
-			} elseif($invalid_relatestotype_idea) {
-				$message = 'content-link-linking-to-idea';
 
 				$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                     'action' => 'index', 

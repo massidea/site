@@ -17,198 +17,65 @@
  *	authors:	Joel Peltonen <joel.peltonen@cs.tamk.fi>
  *	Licence:	GPL v2.0
  */	
- 
-function preCheck(lang) {
-    checkCF();
-    textCounter(document.getElementById("content_header"),'progressbar_content_header',1,120,lang);
-    textCounter(document.getElementById("content_keywords"),'progressbar_content_keywords',1,120,lang);
-    textCounter(document.getElementById("content_textlead"),'progressbar_content_textlead',1,160,lang);
-    textCounter(document.getElementById("content_text"),'progressbar_content_text',1000,4000,lang);
-    textCounter(document.getElementById("content_related_companies"),'progressbar_content_related_companies',1,120,lang);
-    textCounter(document.getElementById("content_references"),'progressbar_content_references',0,2000,lang);
-    
-    document.getElementById('progressbar_content_header').style.display = "block";
-    document.getElementById('progressbar_content_keywords').style.display = "block";
-    document.getElementById('progressbar_content_textlead').style.display = "block";
-    document.getElementById('progressbar_content_text').style.display = "block";
-    document.getElementById('progressbar_content_related_companies').style.display = "block";
-    document.getElementById('progressbar_content_references').style.display = "block";
-    
-    if(document.getElementById("content_research")) {
-        textCounter(document.getElementById("content_research"),'progressbar_content_research',1,120,lang);
-        document.getElementById('progressbar_content_research').style.display = "block";
-    }
-    if(document.getElementById("content_opportunity")) {
-        textCounter(document.getElementById("content_opportunity"),'progressbar_content_opportunity',1,120,lang);
-        document.getElementById('progressbar_content_opportunity').style.display = "block";
-    }
-    if(document.getElementById("content_threat")) {
-        textCounter(document.getElementById("content_threat"),'progressbar_content_threat',1,120,lang);
-        document.getElementById('progressbar_content_threat').style.display = "block";
-    }
-    if(document.getElementById("content_solution")) {
-        textCounter(document.getElementById("content_solution"),'progressbar_content_solution',1,120,lang);
-        document.getElementById('progressbar_content_solution').style.display = "block";
-    }
-}
 
-/**
-*	On the fly validator for the AddContent form
-*/
-function validateFormAddContent()
-{
-	var innovation = document.getElementById("innovation_type");
-	var industry = document.getElementById("content_industry");
-	var division = document.getElementById("content_division");
-	var title = document.getElementById("content_header");
-	var keywords = document.getElementById("content_keywords");
-	var textlead = document.getElementById("content_textlead");
-	var textbody = document.getElementById("content_text");
-    var relatedcompanies = document.getElementById("content_related_companies");
-	
-    if (title.value.length == 0
-	|| 	textlead.value.length == 0
-	||	textbody.value.length < 1000
-    ||  keywords.value.length == 0
-    ||  relatedcompanies.value.length == 0) {
-		return false;
-	} else if (title.value.length > 120) {
-		return false;
-	}
-	else if (keywords.value.length > 120) {
-		return false;
-	}
-	else if (textlead.value.length > 160) {
-		return false;
-	}
-	else if (textbody.value.length > 4000) {
-		return false;
-	}
-    else if (relatedcompanies.value.length > 120) {
-        return false;
-    }
-    if(document.getElementById("content_research")) {
-        var research = document.getElementById("content_research");
-        if(research.value.length == 0 || research.value.length > 120) {
-            return false;
-        }
-    }
-    if(document.getElementById("content_opportunity")) {
-        var opportunity = document.getElementById("content_opportunity");
-        if(opportunity.value.length == 0 || opportunity.value.length > 120) {
-            return false;
-        }
-    }
-    if(document.getElementById("content_threat")) {
-        var threat = document.getElementById("content_threat");
-        if(threat.value.length == 0 || threat.value.length > 120) {
-            return false;
-        }
-    }
-    if(document.getElementById("content_solution")) {
-        var solution = document.getElementById("content_solution");
-        if(solution.value.length == 0 || solution.value.length > 120) {
-            return false;
-        }
-    }
-    // These fields aren't required anymore
-	/*else if(industry.value == 0) {
-		return false;
-	}
-	else if(division.value == 0) {
-		return false;
-	}
-	else if(innovation.value == 0) {
-		return false;
-	}*/
-	
-	return true;
-}
+$(document).ready(function() {
+	// Get all input elements
+	var allInputs = $(":input[type=text], :input[type=textarea]");
 
-function checkCF() {
-	var check = validateFormAddContent();
-	var publishButton = document.getElementById("content_publish");
-	if (check == true) {
-		if (publishButton != null)
-			publishButton.disabled = false;
+	// Definitions for input boxes ([0] = minimum, [1] = maximum, [2] = required (1 true/0 false)
+	var inputDefinitions = {
+		'content_header': 				[1, 140,  1],
+		'content_keywords': 			[1, 120,  1],
+		'content_textlead': 			[1, 320,  1],
+		'content_text': 				[1, 4000, 1],
+		'content_header': 				[1, 140,  1],
+		'content_related_companies':	[1, 120,  1],		
+		'content_research': 			[1, 120,  1],
+		'content_opportunity': 			[1, 120,  1],
+		'content_threat': 				[1, 120,  1],
+		'content_solution': 			[1, 120,  1],
+		'content_references': 			[1, 2000, 0]
+	};
+
+	$(allInputs).live('keydown keyup', function(){
+		textCount(this);
+	});
+
+	function textCount(obj) {
+		var thisMin = inputDefinitions[obj.name][0];
+		var thisMax = inputDefinitions[obj.name][1];
+		var thisReq = inputDefinitions[obj.name][2];
+		var curLength = $(obj).val().length;
+		var curLeft = (thisMax-curLength);
+		var thisProgress = $('#progressbar_'+obj.name);
+
+		if(curLength < thisMax) {
+			progressText = curLeft + " until limit";
+			$(thisProgress).attr('class','progress_ok');
+		}
+		if(curLength > thisMax) {
+			progressText = Math.abs(curLeft) + " too many";
+			$(thisProgress).attr('class','progress');
+		}
+		if(curLength == thisMax) {
+			progressText = "at the limit";
+			$(thisProgress).attr('class','progress_ok');
+		}
 		
-        document.getElementById("content_save").disabled = false;
-	} else {
-		if (publishButton != null)
-			publishButton.disabled = true;
-        document.getElementById("content_save").disabled = true;
-	}
-}
+		if(curLength == 0) {
+			progressText = "required";
+			$(thisProgress).attr('class','progress');
+		}
 
-/**
-*	Counter for field character count, character count limiter and value changer
-*/
-function textCounter(field,counter,min,max,lang) {
-	var charcnt = field.value.length;   
-	object = document.getElementById(counter);
-    
-    // Initializing variables for progress bar texts, default texts are in english
-    var required = "required";
-    var needed = " needed";
-    var until_limit = " until limit";
-    var at_the_limit = "at the limit";
-    var too_many = " too many";
-    
-    if(lang == "fi") {
-        required = "pakollinen";
-        needed = " lisää";
-        until_limit = " rajaan";
-        at_the_limit = "rajalla";
-        too_many = " liikaa";
-    }
-
-    // If the field is empty
-    if (charcnt == 0)
-    {	
-        object.innerHTML=required;
-        object.className = "progress";
-    }
-    
-    // If there's enough characters
-    if (charcnt >= min) {
-		left = max - charcnt;
-		object.innerHTML=left+until_limit;
-        object.className = "progress_ok";
+		$(thisProgress).html(progressText);
 	}
 	
-    // If the maximum character amount is reached
-    if (charcnt == max)		
-	{	
-		object.innerHTML=at_the_limit;
-		object.className = "progress_ok";
-	}
-    
-    // If the maximum character amount is exceeded
-    if (charcnt > max) {
-		over = charcnt-max;
-		object.innerHTML=over+too_many;
-        object.className = "progress";
-		// we no longer forcibly cut, simply tell how many chars over the limit.
-		//field.value = field.value.substring(0, max-1);		// trim extra chars
-	}
-    
-    // If the field is not empty but character amount is below required amount
-    if (charcnt < min && charcnt != 0)
-	{	
-		more = min - charcnt;
-		object.innerHTML=more+needed;
-		object.className = "progress";
-	}
+	// Precheck on page load
+	$(allInputs).each(function(){
+		if(this.name != "q") textCount(this);
+	});
 	
-    // I concider 50k > max to be ridiculous.
-	ridiculous = max+50000;
-	// If the charcnt is riciulously long, trim value (helps prevent crashes)
-    if (charcnt >= ridiculous) {
-		field.value = field.value.substring(0, max-1);
-		object.innerHTML="Field trimmed, value too long.";
-		alert("Gigantic pasting or button-stuck may crash browsers. Field trimmed.");
-	}
-}
+});
 
 /**
 *	Change the property of an object.
