@@ -1,10 +1,13 @@
+<<<<<<< HEAD:README.md
 
+=======
+>>>>>>> upstream/master:README.md
 ![Massidea.org](http://www.massidea.org/images/massidea_logo.png "Massidea.org")
 
 Massidea.org is a free open innovation community where users are uploading their ideas, visions of the future and today's challenges and linking them with other user.s brainchildren.
 The mixed outcome - lucky insight - is boosting individual.s creativity and enabling the birth of smashing idea.
 
-== Migration notes (Old Migration notes.txt) == 
+## Migration notes (Old Migration notes.txt)
  -----------------------------------------------------------
 | Zend FW 1.7.4 to 1.9.0 Migration notes by Tuomas Valtanen |  
  -----------------------------------------------------------
