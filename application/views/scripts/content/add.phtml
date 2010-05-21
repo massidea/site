@@ -1,6 +1,8 @@
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
 
 <?php $this->headScript()->captureStart()?>
+
+var language = '<?php echo $this->language;?>';
 function previewRoll(action) {
 	if(action == 'open') {
 		$("#form_content_realcontent").fadeOut(function(){
@@ -13,7 +15,7 @@ function previewRoll(action) {
 	}
 }
 
-setTimeout("preCheck('<?php echo $this->language; ?>')", 30);
+//setTimeout("preCheck('<?php echo $this->language; ?>')", 30);
 
 <?php $this->headScript()->captureEnd()?>
 <?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>

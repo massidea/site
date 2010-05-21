@@ -63,6 +63,8 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
     public function buildErrors()
     {
         $element  = $this->getElement();
+        //$belongs  = $element->getView()->getBelongsTo();
+        $belongs = $element->getName();
         $messages = $element->getMessages();
         
         if (empty($messages)) 
@@ -71,8 +73,10 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
         }
         //return '<div class="error_messages">' .
         //       $element->getView()->formErrors($messages) . '</div>';
-        return '<div class="progress">' .
-               $element->getView()->formErrors($messages) . '</div>';
+        return '<div id="progressbar_'.$belongs.'" class="progress">' .
+               $element->getView()->formErrors($messages) . 
+               //Zend_Debug::dump($belongs) . 
+        	   '</div>';
     }
 
     public function buildDescription()
