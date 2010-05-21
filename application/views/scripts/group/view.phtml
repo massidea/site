@@ -1,118 +1,104 @@
+<?php
+Zend_Layout::getMvcInstance()->setLayout('layout_new');
+$date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601);
+?>
 <div id="group-page">
+    <h2><?php echo $this->grpData["group_name_grp"]; ?></h2>
 
-<h2><?php echo $this->grpData["group_name_grp"]; ?></h2>
+    <div id="profile-meta">
+        <?php //TODO: tähän tulostetaan ryhmän kuva, ei tätä kiinteää kuvaa ?>
+        <img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" />
 
-<div id="profile-meta">
-    <!--<img src="" alt="Group profile picture" class="avatar" />-->
+        <p><?php echo $this->grpData["description_grp"]; ?></p>
+        <?php //TODO:muutä tätä järkevämmäksi? ?>
+        <p><strong><a href="<?php echo $this->url(array('controller' => 'tag',
+                                                        'action' => 'index',
+                                                        'language' => $this->language),
+                                                        'lang_default', true); ?>">
+                  <?php echo $this->translate('content-view-tags'); ?>
+                  </a>
+            </strong><?php // tägit tähän väliin ?></p>
 
-    <h4>Description</h4>
-    <dl><dd><?php echo $this->grpData["description_grp"]; ?></dd></dl>
-    
-    <h4>Tags:</h4>
-    
-    <h4><?php echo $this->translate('group-founded'); ?></h4>
-    <dl><dd><?php echo $this->grpData["created_grp"]; ?></dd></dl>
-    
-    <h4><?php echo $this->translate('group-admins'); ?></h4>
-    <dl>
-    <?php foreach ($this->grpAdmins as $user): ?>
-        <?php
-            $usrlink = $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'language' => $this->language,
-                'user' => $user["login_name_usr"]), 'lang_default', true);
-        ?>
-        <dd>
-            <a href="<?php echo $usrlink; ?>">
-            <?php echo "{$user["login_name_usr"]}"; ?>
-            </a>
-        </dd>
-    <?php endforeach; ?>
-    </dl>
+        <p><?php echo $this->translate('group-founded') . ': ' . $date_founded->toString('dd MMM, yyyy'); ?></p>
 
-    <h4><?php echo $this->translate('group-members'); ?></h4>
-    <dl>
-    <?php
-        foreach ($this->grpUsers as $user):
-            $usrlink = $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'language' => $this->language,
-                'user' => $user["login_name_usr"]), 'lang_default', true);
-    ?>
-        <dd>
-            <a href="<?php echo $usrlink; ?>"><?php echo "{$user["login_name_usr"]}"; ?></a>
-        </dd>
-    <?php endforeach; ?>
-    </dl>
 
-    <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)): ?>
-    <h4><?php echo $this->translate('group-join'); ?></h4>
-    <?php
-        $joinurl = $this->url(
-            array(
-                'controller' => 'group',
-                'action' => 'join',
-                'groupid' => $this->grpId,
-                'language' => $this->language
-            ), 'lang_default', true
-        );
-    ?>
-    <dl>
-        <dd><a href="<?php echo $joinurl; ?>"><?php echo $this->translate('group-join_group'); ?></a></dd>
-    </dl>
 
-    <?php else: ?>
+        <?php echo $this->translate('group-admins') . ':'; ?>
+        <ul>
+        <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
+        </ul>
 
-    <h4><?php echo $this->translate('group-leave'); ?></h4>
-    <?php
-        $leaveurl = $this->url(
-            array(
-                'controller' => 'group',
-                'action' => 'leave',
-                'groupid' => $this->grpId,
-                'language' => $this->language
-            ), 'lang_default', true);
-    ?>
-    <dl>
-        <dd><a href="<?php echo $leaveurl; ?>"><?php echo $this->translate('group-leave_group'); ?></a></dd>
-    </dl>
 
-    <?php endif; ?>
 
-    <h4>Campaigns</h4>
-    <dl>
-    <?php foreach ($this->campaigns as $cmp): ?>
-        <?php $cmpurl = $this->url(
-            array(
-                'controller' => 'campaign',
-                'action'     => 'view',
-                'cmpid'      => $cmp['id_cmp'],
-                'language'   => $this->language
-            ), 'lang_default', true);
-        ?>
-        <dd>
-        <a href="<?php echo $cmpurl; ?>"><?php echo $cmp['name_cmp']; ?></a>
-        </dd>
-    <?php endforeach; ?>
-    </dl>
+        <h4><?php echo $this->translate('group-members'); ?></h4>
+        <span class="more"><strong><a href="">Show all</a></strong></span>
+        <div class="clear"></div>
+        <ul>
+           <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
+        </ul>
+        <span class="more"><strong><a href="">Show all</a></strong></span>
+        <div class="clear dot-line-200"></div>
+    </div>
+    <div id="activity" class="right">
+        <div class="left">
+            <div id="group-info">
+                <p><?php echo $this->grpData['body_grp']; ?></p>
+            </div>
+            <div class="clear"></div>
+            <div id="group-campaigns">
+                <h3>Campaigns</h3>
+            </div>
+            <div id="join-group">
+                <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
+                    $joinurl = $this->url(
+                        array(
+                            'controller' => 'group',
+                            'action' => 'join',
+                            'groupid' => $this->grpId,
+                            'language' => $this->language
+                        ), 'lang_default', true
+                    );
+                ?>
 
-    <dl><dd>- - - - -</dd></dl>
+                <p class="join">
+                    <a href="<?php echo $joinurl; ?>"><?php echo $this->translate('group-join_group'); ?></a>
+                </p>
+                <?php
+                elseif ($this->userIsGroupAdmin):
+                     $cmplink = $this->url(
+                        array(
+                            'controller' => 'campaign',
+                            'action'     => 'create',
+                            'language'   => $this->language,
+                            'grpid'      => $this->grpData["id_grp"]
+                        ), 'lang_default', true
+                );
+                ?>
+                <p class="join">
+                    <a href="<?php echo $cmplink; ?>">Create a campaign</a>
+                </p>
+                <?php else:
+                    $leaveurl = $this->url(
+                        array(
+                            'controller' => 'group',
+                            'action' => 'leave',
+                            'groupid' => $this->grpId,
+                            'language' => $this->language
+                        ), 'lang_default', true);
+                ?>
+                <p class="join">
+                    <a href="<?php echo $leaveurl; ?>"><?php echo $this->translate('group-leave_group'); ?></a>
+                </p>
 
-    <?php
-        $cmplink = $this->url(
-            array(
-                'controller' => 'campaign',
-                'action'     => 'create',
-                'language'   => $this->language,
-                'grpid'      => $this->grpData["id_grp"]
-            ), 'lang_default', true
-        );
-    ?>
-    <dl>
-        <dd><a href="<?php echo $cmplink; ?>">Create a campaign</a></dd>
-    </dl>
-</div>
-
+                    <?php endif; ?>
+            </div>
+            <div class="clear"></div>
+            <div class="scroll-box">
+                <ul>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
 </div>
