@@ -1052,7 +1052,11 @@
 	<tu tuid='content-delete'>
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
-	</tu>    
+	</tu>
+    <tu tuid='content-editlinks'>
+		<tuv xml:lang="en"><seg>Edit links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa linkkejä</seg></tuv>
+	</tu>
 	<tu tuid='content-cancel'>
 		<tuv xml:lang="en"><seg>Cancel</seg></tuv>
 		<tuv xml:lang="fi"><seg>Peruuta</seg></tuv>
@@ -1284,6 +1288,10 @@
 	<tu tuid='content-link-successful'>
 		<tuv xml:lang="en"><seg>Content linked succesfully!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö linkitettiin onnistuneesti!</seg></tuv>
+	</tu>
+    <tu tuid='content-link-themselves'>
+		<tuv xml:lang="en"><seg>You can't link to content themselves!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Et voi linkittää sisältöä itseensä!</seg></tuv>
 	</tu>
 	<tu tuid='content-link-not-content-owner'>
 		<tuv xml:lang="en"><seg>You can only link you're own content!</seg></tuv>

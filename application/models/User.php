@@ -421,6 +421,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * when this function was used, and that data caused unnecessary empty row
     * to user's content row, so the check if user hasn't got any contents failed.
     *
+    * Edited 19.5.2010 by Mikko Korpinen
+    * For edit links in user pages array need cntHasCntCount (edit links will be
+    * showing if content has any content.
+    *
     * @author Pekka Piispanen
     * @author Joel Peltonen
     * @author Mikko Aatola
@@ -462,9 +466,12 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('crt' => 'content_ratings_crt'),
                                                       'cnt.id_cnt = crt.id_cnt_crt',
                                                       array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
-                                            ->joinLeft(array('cmt' => 'comments_cmt'),
+                                           ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
-                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))                     
+                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
+                                           ->joinLeft(array('cntHasCnt' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = cntHasCnt.id_parent_cnt',
+                                                      array('cntHasCntCount' => 'COUNT(cntHasCnt.id_child_cnt)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
                                            

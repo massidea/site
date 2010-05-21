@@ -116,6 +116,7 @@ class Default_Form_RegistrationForm extends Zend_Form
                         "" => "account-select",
                         "private_sector" => "account-register_private_sector",
                         "public_sector" => "account-register_public_sector",
+                        "education_sector" => "account-register_education_sector",
                         "student" => "account-register_student",
                         "pentioner" => "account-register_pentioner",
                         "other" => "account-register_other",
