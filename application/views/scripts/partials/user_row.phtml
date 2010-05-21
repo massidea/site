@@ -4,10 +4,17 @@ $url = $this->url(array('controller' => 'account',
                         'action' => 'view',
                         'user' => $this->login_name_usr,
                         'language' => $language),
-                        'lang_default', true);
+                        'lang_default',
+                        true);
 ?>
-<a href="<?php echo $url ?>">
-    <?php echo $this->login_name_usr; ?>
-</a>
-(<?php echo $this->count; ?>)
-<br />
+<li><a href="<?php echo $url ?>"><?php echo $this->login_name_usr; ?></a>
+<?php
+if(isset($this->count)) {
+    echo "($this->count)";
+}
+if (isset($this->city)) {
+    echo " | $this->city";
+}
+?>
+</li>
+<?php unset($language, $url); ?>

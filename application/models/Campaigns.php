@@ -21,7 +21,7 @@
  *  Campaigns - class
  *
  *  @package    models
- *  @author     Pekka Piispanen
+ *  @author     Pekka Piispanen, Mikko Aatola
  *  @license    GPL v2
  *  @version    1.0
  */ 
@@ -34,7 +34,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     protected $_primary = 'id_cmp';
 
     // Table dependet tables
-    protected $_dependentTables = array('Default_Model_ContentHasCampaign');
+    protected $_dependentTables = array('Default_Model_CampaignHasContent');
 
     /**
     *   campaignExists
@@ -137,34 +137,6 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     } // end of createCampaign
 
     /**
-    *   getContentByCampaignId
-    *
-    *   Gets content by campaign id value.
-    *
-    *   @param integer $id
-    *   @return array
-    */
-    public function getContentByCampaignId($id = 0)
-    {
-        $data = array();
-        
-        if ($id != 0)
-        {
-            // Find content row by id
-            $rowset = $this->find((int)$id)->current();
-        
-            $data = $rowset->findManyToManyRowset('Default_Model_Content', 'Default_Model_ContentHasCampaign')->toArray();
-            /*
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
-            */
-        } // end if
-        
-        return $data;
-    } // end of getContentByCampaignId
-
-    /**
     *   getAll
     *
     *   Gets all campaigns
@@ -179,7 +151,6 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     /** 
     *   removeCampaign
     *   Removes the campaign from the database
-    *   The campaign is removed when it is not used with any content
     *   
     *   @param int id_cmp
     *   @author Pekka Piispanen
@@ -189,52 +160,27 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
         $this->delete($where);
     } // end of removeCampaign
-        
+
     /**
-    * addCampaignsToContent
-    *
-    * @param int contentId
-    * @param array campaignArray
-    * @param array campaignExisting
-    */
-    public function addCampaignsToContent($contentId = -1, array $campaignArray = array(), $campaignExisting = null)
+     * Returns all contents in the specified campaign.
+     *
+     * @author Mikko Aatola
+     * @param id_cmp id of the campaign
+     * @return array of contents in the specified campaign
+     */
+    public function getAllContentsInCampaign($id_cmp)
     {
-        $result = false;
-    
-        if(!empty($campaignArray) && $contentId != -1) {
-            $chcModel = new Default_Model_ContentHasCampaign();
-            
-            foreach($campaignArray as $id => $campaign) {
-                $cmpFound = false;
-                
-                // Check if campaign is already added for this content
-                if($campaignExisting != null) {
-                    foreach($campaignExisting as $existingCmp) {
-                        if($campaign == $existingCmp['name_cmp']) {
-                            $cmpFound = true;
-                        }
-                    }
-                }
-                
-                // If campaign is not already associated with current content
-                if(!$cmpFound) {
-                    // Check if given keyword does not exists in database
-                    if($this->campaignExists($campaign)) {
-                        // Create new keyword
-                        $campaign = $this->createCampaign($campaign);
-                    } else {
-                        // Get keyword
-                        $campaign = $this->getCampaign($campaign);
-                    } // end else
-                    
-                    // Add keywords to content
-                    $chcModel->addCampaignToContent($campaign->id_cmp, $contentId);
-                }
-            } // end foreach 
+        $data = $this->_db->select()
+            ->from(array('chc' => 'cmp_has_cnt'),
+                   array('id_cnt'))
+            ->join(array('cnt' => 'contents_cnt'),
+                   'chc.id_cnt = cnt.id_cnt',
+                   array('id_cty_cnt', 'title_cnt', 'lead_cnt'))
+            ->where('id_cmp = ?', $id_cmp);
         
-            $result = true;
-        }
-        
+        $result = $this->_db->fetchAll($data);
+
         return $result;
     }
+
 } // end of class
