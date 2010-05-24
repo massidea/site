@@ -457,7 +457,9 @@ $printUs = 7;
                         	<?php if ($content['cntHasCntCount'] > 0): ?>
                         	<div class="account_profile_content_tools_editlinks">
                                 <b>
-                                    <a href="#" onclick="popup('popup_delete_content_<?php echo $content['id_cnt']; ?>')">
+                                    <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
+                                                                 'language' => $this->language),
+                                                                 'unlinkcontent', true); ?>">
                                         <?php echo $this->translate('content-editlinks')." (".$content['cntHasCntCount'].")"?>
                                     </a>
                                 </b>

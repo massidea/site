@@ -282,29 +282,6 @@ class AccountController extends Oibs_Controller_CustomController
             }
         } // end foreach
         
-        // If user has not any content in some of the content types, there is not
-        // array cell for that content type, which causes php notice in view
-        // Here is fixed that
-        
-        /*
-        if(!isset($dataa['contentCounts']['problem'])) {
-            $dataa['contentCounts']['problem'] = 0;
-        }
-        if(!isset($dataa['contentCounts']['finfo'])) {
-            $dataa['contentCounts']['finfo'] = 0;
-        }
-        if(!isset($dataa['contentCounts']['idea'])) {
-            $dataa['contentCounts']['idea'] = 0;
-        }
-        */
-        
-        //print_r($temp); die();
-        // Set user data to view
-        
-        // This is here because this array breaks up the view script, thus giving an error :/
-        // $temp = array();
-        
-        
         // If user is logged in, and viewing self; allow edit
         if ($auth->hasIdentity()) {
             $identity = $auth->getIdentity();

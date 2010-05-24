@@ -427,6 +427,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     * @author Pekka Piispanen
     * @author Joel Peltonen
+    * @author Mikko Aatola
     * @todo pagination 
     * @todo ignore parameter / functionality to leave out a content
     * @todo splitting model-specific selects to their own models
@@ -442,6 +443,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $whereType = 1;
         if($type !== 0) {
             $whereType = $this->_db->quoteInto('cty.key_cty = ?', $type);
+        } else {
+            $whereType = '1 = 1';
         }
         
         // If author id is set get users content
@@ -466,11 +469,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
-                                           ->joinLeft(array('cntHasCnt' => 'cnt_has_cnt'),
-                                                      'cnt.id_cnt = cntHasCnt.id_parent_cnt',
-                                                      array('cntHasCntCount' => 'COUNT(cntHasCnt.id_child_cnt)'))
+                                           ->joinLeft(array('chc' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc.id_parent_cnt',
+                                                      array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
                                            ->where('chu.id_usr = ?', $author_id)
-                                           //->where($whereType)
+                                           ->where($whereType)
                                            
                                            /* Below where statement is just a hack for my own database,
                                               there was somehow an invisible content with id_cnt "", and
@@ -485,42 +488,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
                 ;
+
                 $result = $this->_db->fetchAll($contentSelect);
-                //echo "<pre>"; print_r($result); die();
-                /*
-               $viewsSelect = $this->_db->select()
-                                        ->from(array('vws' => 'cnt_views_vws'), 
-                                               array('id_cnt_vws', 'SUM(views_vws)'))
-                                        ->distinct()
-                                        ->group('id_cnt_vws')
-                ;
-                $viewsResult = $this->_db->fetchAll($viewsSelect);
-
-                
-                // This horrible device injects the views to a complete result array
-                $i = 0; // keeps track of result array cells
-                foreach ($contentResult as $content)                                    // For each content found by owner
-                {
-                    $result[$i] = $content;                                             // initialise results array cell
-                    foreach ($viewsResult as $views)                                    // go through array of views
-                    {
-                        if ($views['id_cnt_vws'] == $content['id_cnt'])                 // if views for the content in question found
-                        {
-                            if (isset($result[$i]['views'])) {                          // if this is not the first views for content,
-                                $result[$i]['views'] += $views['SUM(views_vws)'];       // add views to previous views  
-                            } else {                                                    // otherwise 
-                                    $result[$i]['views'] = $views['SUM(views_vws)']+1;  // make a new cell for views in results array
-                            }
-                        }
-                    }                                                                   // after going through views and checking..
-                    if (!isset($result[$i]['views'])) {                                 // ...if content views cell not set...
-                        $result[$i]['views'] = 0;                                       // ...set views to 0 to prevent errors
-                    }
-
-                    $i++;
-                }
-                */
-                
                 
             //}
             //else {
@@ -542,10 +511,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             //$row = $this->find((int)$author_id)->current();
             //$result = $row->findDefault_Model_ContentViaDefault_Model_ContentHasUser($select);
         } // end if        
-        //echo var_dump($result); die;
+
         return $result;
     } // end of getUserContent
-    
+
     public function getSimpleUserDataById($id = -1) 
     {
         $data = array();

@@ -1325,6 +1325,38 @@
 		<tuv xml:lang="en"><seg>You can't link content to an idea!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ideaan ei voi linkittää!</seg></tuv>
 	</tu>
+    <tu tuid='content-unlink-from-challenge'>
+		<tuv xml:lang="en"><seg>Remove linking from challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys haasteesta</seg></tuv>
+	</tu>
+	<tu tuid='content-unlink-from-vision'>
+		<tuv xml:lang="en"><seg>Remove linking from vision</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys näkymästä</seg></tuv>
+	</tu>
+	<tu tuid='content-unlink-from-idea'>
+		<tuv xml:lang="en"><seg>Remove linking from idea</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys ideasta</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-invalid-relatestoid'>
+		<tuv xml:lang="en"><seg>Content to what you're trying to see doesn't exist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä, jonka yritit nähdä, ei ole olemassa!</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-target'>
+		<tuv xml:lang="en"><seg>Remove link target</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkin poiston kohde</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-helptext'>
+		<tuv xml:lang="en"><seg>Select the content which link will be remove</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse sisältö minkä linkki poistetaan</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink'>
+		<tuv xml:lang="en"><seg>Remove link</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkki</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-successful'>
+		<tuv xml:lang="en"><seg>Content link removed succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitys poistettu onnistuneesti!</seg></tuv>
+	</tu>
 	<tu tuid='content-index-authenticated-text'>
 		<tuv xml:lang="en"><seg>
             <h3>Guidelines for adding content</h3>

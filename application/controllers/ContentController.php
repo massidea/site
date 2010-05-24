@@ -275,84 +275,79 @@ class ContentController extends Oibs_Controller_CustomController
 			// Content type id is needed when adding content  to database
 			$contentTypeId = $modelContentTypes->getIdByType($contentType);
 
-			// Cacheing of formData
-			$cache = Zend_Registry::get('cache');
-			$formDataCacheTag = 'formData_'.$contentType.'_'.$this->view->language;
-			 
-			if (! ($formData = $cache->load($formDataCacheTag) )) {
-				// Creating array for form data
-				$formData = array();
+            // Creating array for form data
+			$formData = array();
 
-				// Adding data to formData
-				$formData['content_type'] = $contentTypeId;
-				$formData['content_relatesto_id'] = $relatesToId;
+			// Adding data to formData
+			$formData['content_type'] = $contentTypeId;
+			$formData['content_relatesto_id'] = $relatesToId;
 
-				// Content classifications
-				$modelFutureinfoClasses = new Default_Model_FutureinfoClasses();
-				$futureinfoClasses = $modelFutureinfoClasses->getAllNamesAndIds();
+			// Content classifications
+			$modelFutureinfoClasses = new Default_Model_FutureinfoClasses();
+			$futureinfoClasses = $modelFutureinfoClasses->getAllNamesAndIds();
 
-				$formData['FutureinfoClasses'] = array();
-				$formData['FutureinfoClasses'][0] =
-				$this->view->translate("content-add-select-finfo-classification");
+			$formData['FutureinfoClasses'] = array();
+			$formData['FutureinfoClasses'][0] =
+			$this->view->translate("content-add-select-finfo-classification");
 
-				foreach($futureinfoClasses as $fic) {
-					$formData['FutureinfoClasses'][$fic['id_fic']] = $fic['name_fic'];
-				} // end foreach
+			foreach($futureinfoClasses as $fic) {
+				$formData['FutureinfoClasses'][$fic['id_fic']] = $fic['name_fic'];
+			} // end foreach
 
-				if(empty($formData['FutureinfoClasses'])) {
-					$formData['FutureinfoClasses'] = array(0 => '----');
-				}
+			if(empty($formData['FutureinfoClasses'])) {
+				$formData['FutureinfoClasses'] = array(0 => '----');
+			}
 
-				$modelInnovationTypes = new Default_Model_InnovationTypes();
-				$innovationTypes = $modelInnovationTypes->getAllNamesAndIds();
+			$modelInnovationTypes = new Default_Model_InnovationTypes();
+			$innovationTypes = $modelInnovationTypes->getAllNamesAndIds();
 
-				$formData['InnovationTypes'] = array();
-				$formData['InnovationTypes'][0] =
-				$this->view->translate("content-add-select-innovation");
+			$formData['InnovationTypes'] = array();
+			$formData['InnovationTypes'][0] =
+			$this->view->translate("content-add-select-innovation");
 
-				foreach($innovationTypes as $ivt) {
-					$formData['InnovationTypes'][$ivt['id_ivt']] =
-					$ivt['name_ivt'];
-				} // end foreach
+			foreach($innovationTypes as $ivt) {
+				$formData['InnovationTypes'][$ivt['id_ivt']] =
+				$ivt['name_ivt'];
+			} // end foreach
 
-				if(empty($formData['InnovationTypes'])) {
-					$formData['InnovationTypes'] = array(0 => '----');
-				}
+			if(empty($formData['InnovationTypes'])) {
+				$formData['InnovationTypes'] = array(0 => '----');
+			}
 
-				$languages = New Default_Model_Languages();
-				$idLngInd = $languages->getLangIdByLangName($this->view->language);
-				$allLanguages = $languages->getAllNamesAndIds();
+			$languages = New Default_Model_Languages();
+			$idLngInd = $languages->getLangIdByLangName($this->view->language);
+			$allLanguages = $languages->getAllNamesAndIds();
 
-				$formData['languages'] = array();
-				$formData['languages'][0] = $this->view->translate("content-add-select-language");
-				foreach($allLanguages as $lng) {
-					$formData['languages'][$lng['id_lng']] = $lng['name_lng'];
-				}
+			$formData['languages'] = array();
+			$formData['languages'][0] = $this->view->translate("content-add-select-language");
+			foreach($allLanguages as $lng) {
+				$formData['languages'][$lng['id_lng']] = $lng['name_lng'];
+			}
 
-				$modelIndustries = new Default_Model_Industries();
-				$industries = $modelIndustries->getNamesAndIdsById(0, $idLngInd);
+			$modelIndustries = new Default_Model_Industries();
+			$industries = $modelIndustries->getNamesAndIdsById(0, $idLngInd);
 
-				$formData['Industries'] = array();
-				$formData['Industries'][0] =
-				$this->view->translate("content-add-select-industry");
+			$formData['Industries'] = array();
+			$formData['Industries'][0] =
+			$this->view->translate("content-add-select-industry");
 
-				foreach($industries as $ind) {
-					$formData['Industries'][$ind['id_ind']] = $ind['name_ind'];
-				} // end foreach
+			foreach($industries as $ind) {
+				$formData['Industries'][$ind['id_ind']] = $ind['name_ind'];
+			} // end foreach
 
-				if(empty($formData['Industries'])) {
-					$formData['Industries'] = array(0 => '----');
-				}
+			if(empty($formData['Industries'])) {
+				$formData['Industries'] = array(0 => '----');
+			}
 
-				// The id of first industry listed is needed when listing the
-				// divisions for the first time
-				$firstIndustryId = $modelIndustries->getIndustryId();
-				$divisions = $modelIndustries->getNamesAndIdsById(
-				$firstIndustryId, $idLngInd
-				);
+			// The id of first industry listed is needed when listing the
+			// divisions for the first time
+			$firstIndustryId = $modelIndustries->getIndustryId();
+			$divisions = $modelIndustries->getNamesAndIdsById(
+			$firstIndustryId, $idLngInd
+			);
 
-				$formData['Divisions'] = array();
-				$formData['Divisions'][0] = $this->view->translate(
+			$formData['Divisions'] = array();
+			$formData['Divisions'][0] = $this->view->translate(
                                     "content-add-select-division-no-industry"
                                     );
 
@@ -365,29 +360,15 @@ class ContentController extends Oibs_Controller_CustomController
                                         $formData['Classes'][0] = $this->view->translate(
                                         "content-add-select-class-no-group"
                                         );
-                                    $cache->save($formData, $formDataCacheTag);
-									} 
+			   					
+			
 
-								
-									$formCacheTag = 'form_'.$contentType.'_'.$this->view->language;
-									// Form for content adding, cacheing if not cached.
-									// Generate new form if is post because cache will save post parameters and fail  
-									if ($this->getRequest()->isPost()) {
-										$form = new Default_Form_AddContentForm(
-										null, $formData, $this->view->language, $contentType
-										);
-									}
-									 
-									elseif ( ! ($form = $cache->load($formCacheTag))  ) {
-										$form = new Default_Form_AddContentForm(
-										null, $formData, $this->view->language, $contentType
-										);
-										 
-										$cache->save($form, $formCacheTag);
-									}
-									 
-                                    $this->view->form = $form;
-                                        
+			                            // Form for content adding
+                                        $form = new Default_Form_AddContentForm(
+                                        	null, $formData, $this->view->language, $contentType
+                                        );
+
+                                        $this->view->form = $form;
                                         // Get requests
                                         if($this->getRequest()->isPost()) {
                                         	// Get content data
@@ -512,6 +493,12 @@ class ContentController extends Oibs_Controller_CustomController
 		} // end if
 	} // end of addAction()
 
+    /**
+	 *   makelinksAction
+	 *
+	 *   Make content link to content.
+	 *
+	 */
 	public function makelinksAction() {
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
@@ -599,6 +586,106 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 
+    /**
+	 *   removelinksAction
+	 *
+	 *   Remove content link from content.
+	 *
+     *   @author Mikko Korpinen
+	 */
+	public function removelinksAction() {
+		// Get authentication
+		$auth = Zend_Auth::getInstance();
+		// If user has identity
+		if ($auth->hasIdentity())
+		{
+			// Get requests
+			$params = $this->getRequest()->getParams();
+
+			// Get content type
+			$contenttype = isset($params['contenttype'])
+			? $params['contenttype'] : '';
+
+			$relatestoid = isset($params['parentid'])
+			? $params['parentid'] : '';
+
+			$linkedcontentid = isset($params['childid'])
+			? $params['childid'] : '';
+
+            $model_cnt_has_cnt = new Default_Model_ContentHasContent();
+            $model_cnt_has_cnt->removeContentFromContent($relatestoid, $linkedcontentid);
+
+            $message = 'content-unlink-successful';
+
+            // Send email to owner of content about a new link
+            // if user allows linking notifications
+
+            $userModel = new Default_Model_User();
+            $owner = $userModel->getContentOwner($relatestoid);
+
+            $notificationsModel = new Default_Model_Notifications();
+            $notifications = $notificationsModel->getNotificationsById($owner['id_usr']);
+            /*
+            if (in_array('link', $notifications)) {
+
+                $linker = $userModel->getContentOwner($linkedcontentid);
+
+                $cntModel = new Default_Model_Content();
+                $originalHeader = $cntModel->getContentHeaderByContentId($relatestoid);
+                $linkedHeader =  $cntModel->getContentHeaderByContentId($linkedcontentid);
+
+                $receiverEmail = $owner['email_usr'];
+                $receiverUsername = $linker['email_usr'];
+
+                $senderUsername = $linker['login_name_usr'];
+
+                $bodyText = "Your content has been linked with another content at Massidea.org\n\n"
+                            .$senderUsername." linked his content, ".$linkedHeader.", with yours, ".$originalHeader.".";
+                $linkedUrl = $this->baseUrl."/".$this->view->language."/view/".$linkedcontentid;
+                $originalUrl = $this->baseUrl."/".$this->view->language."/view/".$relatestoid;
+                $bodyHtml = "Your content has been linked with another content at ".'<a href="'.$baseUrl.'/">Massidea.org</a><br /><br />'
+                            .'<a href="'.$this->baseUrl."/".$this->view->language.'/account/view/user/'.$senderUsername.'">'.$senderUsername.'</a>'
+                            .' linked his content, <a href="'.$linkedUrl.'">'.$linkedHeader."</a>, with yours, "
+                            .'<a href="'.$originalUrl.'">'.$originalHeader.'</a>.';
+
+                $mail = new Zend_Mail();
+                $mail->setBodyText($bodyText);
+                $mail->setBodyHtml($bodyHtml);
+                $mail->setFrom('no-reply@massidea.org', 'Massidea.org');
+                $mail->addTo($receiverEmail, $receiverUsername);
+                $mail->setSubject('Massidea.org: Your content has been linked');
+                $mail->send();
+            }
+            */
+
+            $url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                                'lang_default', true);
+
+            $this->flash($message, $url);
+		} else {
+			// If not logged, redirecting to system message page
+			$message = 'content-link-not-logged';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+
+			$this->flash($message, $url);
+		}
+	}
+
+    /**
+	 *   linkAction
+	 *
+	 *   Get user contents which are related to particular content type
+     *
+     *   @author ???
+     *   @author 2010 Mikko Korpinen
+	 *
+	 */
 	public function linkAction() {
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
@@ -622,12 +709,12 @@ class ContentController extends Oibs_Controller_CustomController
 				$id_usr = $auth->getIdentity()->user_id;
 				$id_cty = $model_content_types->getIdByType($contenttype);
 
-
 				$userModel = new Default_Model_User();
 				$userContents = $userModel->getUserContent($id_usr);
 
 				$contents = array();
 
+                // If user have not this types content then set false
                 $hasUserContents = true;
 
 				if(!$this->checkIfArrayHasKeyWithValue($userContents, "id_cty_cnt", $id_cty)) {
@@ -658,6 +745,70 @@ class ContentController extends Oibs_Controller_CustomController
 			$this->flash($message, $url);
 		}
 	}
+
+    /**
+	 *   unlinkAction
+	 *
+	 *   Get user contents which are related to particular content
+     *
+     *   @author 2010 Mikko Korpinen
+	 *
+	 */
+    public function unlinkAction() {
+		// Get authentication
+		$auth = Zend_Auth::getInstance();
+		// If user has identity
+		if ($auth->hasIdentity())
+		{
+			// Get requests
+			$params = $this->getRequest()->getParams();
+
+			$relatestoid = isset($params['relatestoid'])
+			? $params['relatestoid'] : '';
+
+            $contenttype = '';
+            $contents = array();
+
+            $model_content = new Default_Model_Content();
+            $contentExists = $model_content->checkIfContentExists($relatestoid);
+
+            if ($contentExists) {
+                $relatesToContent = $model_content->getDataAsSimpleArray($relatestoid);
+                $this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
+
+                $model_content_types = new Default_Model_ContentTypes();
+                $model_cnt_has_cnt = new Default_Model_ContentHasContent();
+
+                $id_usr = $auth->getIdentity()->user_id;
+                $contenttype = $model_content_types->getTypeById($relatestoid);
+                $id_cty = $model_content_types->getIdByType($contenttype);
+
+                $contentContents = $model_cnt_has_cnt->getContentContents($relatestoid);
+
+                $contents = array();
+
+                foreach($contentContents as $content) {
+                    if($model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt'])) {
+                        $contents[] = $content;
+                    }
+                }
+            }
+            $this->view->contentExists = $contentExists;
+            $this->view->relatesToId = $relatestoid;
+            $this->view->linkingContentType = $contenttype;
+            $this->view->contents = $contentContents;
+		} else {
+			// If not logged, redirecting to system message page
+			$message = 'content-link-not-logged';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+		}
+	}
+
 	/**
 	 *  This function validates linking before linking is made
 	 *
@@ -714,7 +865,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 							$this->flash($message, $url);
                         }
-
+                        
 						$auth = Zend_Auth::getInstance();
 						$id_usr = $auth->getIdentity()->user_id;
 
@@ -900,8 +1051,6 @@ class ContentController extends Oibs_Controller_CustomController
 					$formData['content_solution'] = $data['solution_cnt'];
 
 					$formData['published_cnt'] = $data['published_cnt'];
-
-					$modelCntHasCmp = New Default_Model_ContentHasCampaign();
 
 					$formData['content_references'] = $data['references_cnt'];
 
