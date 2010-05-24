@@ -275,79 +275,84 @@ class ContentController extends Oibs_Controller_CustomController
 			// Content type id is needed when adding content  to database
 			$contentTypeId = $modelContentTypes->getIdByType($contentType);
 
-            // Creating array for form data
-			$formData = array();
+			// Cacheing of formData
+			$cache = Zend_Registry::get('cache');
+			$formDataCacheTag = 'formData_'.$contentType.'_'.$this->view->language;
+			 
+			if (! ($formData = $cache->load($formDataCacheTag) )) {
+				// Creating array for form data
+				$formData = array();
 
-			// Adding data to formData
-			$formData['content_type'] = $contentTypeId;
-			$formData['content_relatesto_id'] = $relatesToId;
+				// Adding data to formData
+				$formData['content_type'] = $contentTypeId;
+				$formData['content_relatesto_id'] = $relatesToId;
 
-			// Content classifications
-			$modelFutureinfoClasses = new Default_Model_FutureinfoClasses();
-			$futureinfoClasses = $modelFutureinfoClasses->getAllNamesAndIds();
+				// Content classifications
+				$modelFutureinfoClasses = new Default_Model_FutureinfoClasses();
+				$futureinfoClasses = $modelFutureinfoClasses->getAllNamesAndIds();
 
-			$formData['FutureinfoClasses'] = array();
-			$formData['FutureinfoClasses'][0] =
-			$this->view->translate("content-add-select-finfo-classification");
+				$formData['FutureinfoClasses'] = array();
+				$formData['FutureinfoClasses'][0] =
+				$this->view->translate("content-add-select-finfo-classification");
 
-			foreach($futureinfoClasses as $fic) {
-				$formData['FutureinfoClasses'][$fic['id_fic']] = $fic['name_fic'];
-			} // end foreach
+				foreach($futureinfoClasses as $fic) {
+					$formData['FutureinfoClasses'][$fic['id_fic']] = $fic['name_fic'];
+				} // end foreach
 
-			if(empty($formData['FutureinfoClasses'])) {
-				$formData['FutureinfoClasses'] = array(0 => '----');
-			}
+				if(empty($formData['FutureinfoClasses'])) {
+					$formData['FutureinfoClasses'] = array(0 => '----');
+				}
 
-			$modelInnovationTypes = new Default_Model_InnovationTypes();
-			$innovationTypes = $modelInnovationTypes->getAllNamesAndIds();
+				$modelInnovationTypes = new Default_Model_InnovationTypes();
+				$innovationTypes = $modelInnovationTypes->getAllNamesAndIds();
 
-			$formData['InnovationTypes'] = array();
-			$formData['InnovationTypes'][0] =
-			$this->view->translate("content-add-select-innovation");
+				$formData['InnovationTypes'] = array();
+				$formData['InnovationTypes'][0] =
+				$this->view->translate("content-add-select-innovation");
 
-			foreach($innovationTypes as $ivt) {
-				$formData['InnovationTypes'][$ivt['id_ivt']] =
-				$ivt['name_ivt'];
-			} // end foreach
+				foreach($innovationTypes as $ivt) {
+					$formData['InnovationTypes'][$ivt['id_ivt']] =
+					$ivt['name_ivt'];
+				} // end foreach
 
-			if(empty($formData['InnovationTypes'])) {
-				$formData['InnovationTypes'] = array(0 => '----');
-			}
+				if(empty($formData['InnovationTypes'])) {
+					$formData['InnovationTypes'] = array(0 => '----');
+				}
 
-			$languages = New Default_Model_Languages();
-			$idLngInd = $languages->getLangIdByLangName($this->view->language);
-			$allLanguages = $languages->getAllNamesAndIds();
+				$languages = New Default_Model_Languages();
+				$idLngInd = $languages->getLangIdByLangName($this->view->language);
+				$allLanguages = $languages->getAllNamesAndIds();
 
-			$formData['languages'] = array();
-			$formData['languages'][0] = $this->view->translate("content-add-select-language");
-			foreach($allLanguages as $lng) {
-				$formData['languages'][$lng['id_lng']] = $lng['name_lng'];
-			}
+				$formData['languages'] = array();
+				$formData['languages'][0] = $this->view->translate("content-add-select-language");
+				foreach($allLanguages as $lng) {
+					$formData['languages'][$lng['id_lng']] = $lng['name_lng'];
+				}
 
-			$modelIndustries = new Default_Model_Industries();
-			$industries = $modelIndustries->getNamesAndIdsById(0, $idLngInd);
+				$modelIndustries = new Default_Model_Industries();
+				$industries = $modelIndustries->getNamesAndIdsById(0, $idLngInd);
 
-			$formData['Industries'] = array();
-			$formData['Industries'][0] =
-			$this->view->translate("content-add-select-industry");
+				$formData['Industries'] = array();
+				$formData['Industries'][0] =
+				$this->view->translate("content-add-select-industry");
 
-			foreach($industries as $ind) {
-				$formData['Industries'][$ind['id_ind']] = $ind['name_ind'];
-			} // end foreach
+				foreach($industries as $ind) {
+					$formData['Industries'][$ind['id_ind']] = $ind['name_ind'];
+				} // end foreach
 
-			if(empty($formData['Industries'])) {
-				$formData['Industries'] = array(0 => '----');
-			}
+				if(empty($formData['Industries'])) {
+					$formData['Industries'] = array(0 => '----');
+				}
 
-			// The id of first industry listed is needed when listing the
-			// divisions for the first time
-			$firstIndustryId = $modelIndustries->getIndustryId();
-			$divisions = $modelIndustries->getNamesAndIdsById(
-			$firstIndustryId, $idLngInd
-			);
+				// The id of first industry listed is needed when listing the
+				// divisions for the first time
+				$firstIndustryId = $modelIndustries->getIndustryId();
+				$divisions = $modelIndustries->getNamesAndIdsById(
+				$firstIndustryId, $idLngInd
+				);
 
-			$formData['Divisions'] = array();
-			$formData['Divisions'][0] = $this->view->translate(
+				$formData['Divisions'] = array();
+				$formData['Divisions'][0] = $this->view->translate(
                                     "content-add-select-division-no-industry"
                                     );
 
@@ -360,15 +365,29 @@ class ContentController extends Oibs_Controller_CustomController
                                         $formData['Classes'][0] = $this->view->translate(
                                         "content-add-select-class-no-group"
                                         );
-			   					
-			
+                                    $cache->save($formData, $formDataCacheTag);
+									} 
 
-			                            // Form for content adding
-                                        $form = new Default_Form_AddContentForm(
-                                        	null, $formData, $this->view->language, $contentType
-                                        );
-
-                                        $this->view->form = $form;
+								
+									$formCacheTag = 'form_'.$contentType.'_'.$this->view->language;
+									// Form for content adding, cacheing if not cached.
+									// Generate new form if is post because cache will save post parameters and fail  
+									if ($this->getRequest()->isPost()) {
+										$form = new Default_Form_AddContentForm(
+										null, $formData, $this->view->language, $contentType
+										);
+									}
+									 
+									elseif ( ! ($form = $cache->load($formCacheTag))  ) {
+										$form = new Default_Form_AddContentForm(
+										null, $formData, $this->view->language, $contentType
+										);
+										 
+										$cache->save($form, $formCacheTag);
+									}
+									 
+                                    $this->view->form = $form;
+                                        
                                         // Get requests
                                         if($this->getRequest()->isPost()) {
                                         	// Get content data
