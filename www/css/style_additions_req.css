@@ -506,21 +506,26 @@ form_registration_container dd,
 	margin: 0 0 1em 0;
 }
 #content_view_user_related, 
-#content_view_related_content {
+#content_view_content_related {
 	background:#ffffff none repeat scroll 0 0;
     border:1px solid #CCCCCC;
 	padding: 0.5em 0.5em;
 	font-size: 10pt;
 }
 
-#content_view_user_related {
-	height: 200px;
+#content_view_user_related, #content_view_content_related {
+	height: 145px;
 	overflow: auto;
 }
 
-.content_view_user_related_entry_idea, .content_view_user_related_entry_problem,
+.content_view_user_related_entry_idea, 
+.content_view_user_related_entry_problem,
 .content_view_user_related_entry_futureinfo, 
-.content_view_user_related_entry_finfo {
+.content_view_user_related_entry_finfo, 
+.content_view_content_related_entry_idea, 
+.content_view_content_related_entry_problem,
+.content_view_content_related_entry_futureinfo, 
+.content_view_content_related_entry_finfo {
 	padding: 0 0 0 5px;
 	margin-top: 3px;
     margin-bottom: 2px;
@@ -529,15 +534,15 @@ form_registration_container dd,
     font-size: 80%;
 }
 
-.content_view_user_related_entry_idea {
+.content_view_user_related_entry_idea, .content_view_content_related_entry_idea {
 	border-left: 0.5em solid #4b9b07;
 }
 
-.content_view_user_related_entry_problem {
+.content_view_user_related_entry_problem, .content_view_content_related_entry_problem {
 	border-left: 0.5em solid #d21034;
 }
 
-.content_view_user_related_entry_finfo {
+.content_view_user_related_entry_finfo, .content_view_content_related_entry_finfo {
 	border-left: 0.5em solid #ffc726;
 }
 
