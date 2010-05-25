@@ -164,15 +164,19 @@
                         <?php
                         // generate rating row
                         if (isset($entry['ratingdata'])): ?>
+                        <div class="content_rating_positive"> 
                             <?php echo $entry['ratingdata']['positive_percentage']; ?>%
-                            
+                        </div>
+                        <div class="content_view_content_vote">
                             <img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" 
                                 alt="" style="vertical-align: middle;" />
                                 
                             <img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" 
                                 alt="" style="vertical-align: middle;" />
-                            
+                        </div>
+                        <div class="content_rating_negative">     
                             <?php echo $entry['ratingdata']['negative_percentage']; ?>%
+                        </div>
                             (
                             <?php echo $entry['ratingdata']['total']; ?>
                             <?php echo $this->translate('ratings'); ?>

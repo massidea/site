@@ -552,28 +552,33 @@ form_registration_container dd,
 	font-weight: bold;
 }
 
-#content_view_content_rating_positive {
-	padding: 2px;
+.content_rating_positive {
+	padding-right: 2px;
 	color: green;
 	font-weight:bold;
-	float:left;
+	display:inline;
 }
 
-#content_view_content_rating_negative {
-	padding: 2px;
+.content_rating_negative {
+	padding-right: 2px;
 	color: red;
 	font-weight:bold;
-	float:left;
+	display:inline;
 }
 
 #content_view_content_rating_total {
-	padding: 2px;
-	float:left;
+	padding-right: 2px;
+	display:inline;
+}
+
+#content_view_content_rating {
+	padding: 1px;
 }
 
 .content_view_content_vote {
-	padding: 2px;
-	float:left;
+	padding-right: 2px;
+	display:inline-block;
+	vertical-align: middle;
 }
 
 /* Search result juttua , content list juttua ja paginaattorijuttua SAMASSA */
@@ -640,6 +645,10 @@ form_registration_container dd,
     border: 0px solid red;
 }
 
+.content_container_right .translate {
+	margin-top: 2px;
+}
+
 .content_entry_lead {
 	padding: 0;	
 }
@@ -657,7 +666,7 @@ form_registration_container dd,
 }
 
 .search_result_details_left {
-    margin-top: 10px;
+    margin-top: 10px;  
     /*float:left;*/
 }
 

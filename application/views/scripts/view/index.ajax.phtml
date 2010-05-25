@@ -52,7 +52,7 @@
 		<div id="content_view_content_rating">
 			<span id="current_rating">
                 <?php //echo " " . $this->translate('content-rating'); ?>
-                <div id="content_view_content_rating_positive">
+                <div class="content_rating_positive">
             	<?php print_r($this->rating['positive_percentage']); echo '%'; ?>
             	</div>
 		        <?php if($this->user_can_comment) { // if can comment, can also rate ?>
@@ -66,7 +66,7 @@
 							<img src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_down.png" alt="Vote down" />
 					</div>
 				<?php } ?>
-				<div id="content_view_content_rating_negative">
+				<div class="content_rating_negative">
 				<?php print_r($this->rating['negative_percentage']); echo '%'; ?>
 				</div>
 				<div id="content_view_content_rating_total">
