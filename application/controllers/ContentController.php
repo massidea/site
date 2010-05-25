@@ -1373,8 +1373,15 @@ class ContentController extends Oibs_Controller_CustomController
 
         // Get cache from registry
         $cache = Zend_Registry::get('cache');
-        // Recent posts id
-        $cachePosts = 'IndexPosts_' . $this->view->language;
+        $cachePosts = array();
+        if ($handle = opendir(APPLICATION_PATH.'/../tmp')) {
+            while (false !== ($file = readdir($handle))) {
+                if (strcmp(substr($file, 0, 24), "zend_cache---IndexPosts_") == 0) {
+                    $cachePosts[] = $file;
+                }
+            }
+            closedir($handle);
+        }
 
         if ($auth->hasIdentity()) {
             $userId = $auth->getIdentity()->user_id;
@@ -1397,8 +1404,12 @@ class ContentController extends Oibs_Controller_CustomController
                     $content = new Default_Model_Content();
                     $contentRemoveChecker = $content->removeContentAndDepending($contentId);
 
-                    // Remove recent post cache
-                    $cache->remove($cachePosts);
+                    if (isset($cachePosts)) {
+                        // Remove recent post cache
+                        foreach($cachePosts as $cachePost) {
+                            $cache->remove(mb_substr($cachePost, 13));
+                        }
+                    }
 
 
                     foreach($contentRemoveChecker as $crc) {
