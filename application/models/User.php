@@ -474,16 +474,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                       array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
-                                           
-                                           /* Below where statement is just a hack for my own database,
-                                              there was somehow an invisible content with id_cnt "", and
-                                              because it was invisible, I couldn't delete it and I wasn't
-                                              able to test content linking. And there was no time to clean
-                                              up my database and create a new one with new contents. 
-                                              
-                                              - Pekka Piispanen
-                                           */
-                                           ->where('cnt.id_cnt != ?', "")
                                            ->order('cnt.id_cty_cnt ASC')
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')

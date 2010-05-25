@@ -233,7 +233,7 @@ class AccountController extends Oibs_Controller_CustomController
         
         // Get content user has released
         $type = isset($params['type']) ? $params['type'] : 0 ;
-        $contentList = $user->getUserContent($data['id_usr'], $type);
+        $contentList = $user->getUserContent($data['id_usr']);
         $temp = array();
         
         // Initialize content counts
