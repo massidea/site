@@ -191,7 +191,11 @@
 
         // get other content from user.. function needs a looking-over!
         // Also it needs to be separated from this action so the MVC-is correct!
+        
         $moreFromUser = $userModel->getUserContent($ownerId);
+    	
+        // get related contents
+        $relatedContents = $contentModel->getRelatedContents($id);
 
         // get (VIEWED) content views (returns a string directly)
         $contentViewsModel = new Default_Model_ContentViews();
@@ -355,7 +359,7 @@
         $industriesArray = $industriesModel->getAllContentIndustryIds($hasIndustry);
         
         // roll values to an array
-        $industries = array();
+        /*$industries = array();
         foreach ($industriesArray as $industry) {
             $value = $industriesModel->getNameById($industry);
             // $industriesModel->getNameById($industry);
@@ -363,7 +367,7 @@
            if (!empty($value)) {
                 $industries[] = $value;
             }
-        }
+        }*/
         
         // Check if and when the content is modified and if its more than 10minutes ago add for the view
         $dateCreated = strtotime( $contentData['created_cnt'] );
@@ -376,7 +380,6 @@
         // Inject data to view
         $this->view->files 				= $files;
         $this->view->id					= $id;
-        $this->view->industries         = $industries;
         $this->view->userImage          = $userImage;
         $this->view->commentPaginator   = $paginator;
         $this->view->commentData        = $commentsSorted;
@@ -385,6 +388,7 @@
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;
         $this->view->moreFromUser       = $moreFromUser;
+        $this->view->relatedContents    = $relatedContents;
         $this->view->views              = $views;
         $this->view->rating             = $rating;
         $this->view->tags               = $tags;
