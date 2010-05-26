@@ -188,11 +188,31 @@ class ContentController extends Oibs_Controller_CustomController
 	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-
+		
 		// If user has identity
 		if ($auth->hasIdentity()) {
 			// Get requests
 			$params = $this->getRequest()->getParams();
+			
+			// Get session data
+			$previewSession = new Zend_Session_Namespace('contentpreview');
+			
+			// If preview
+			$backFromPreview = isset($previewSession->backFromPreview) ? $previewSession->backFromPreview : 0;
+			$preview = isset($params['preview']) ? 1:0;
+			if($preview)
+			{
+				$previewSession->unsetAll();
+				$previewSession->previewData = $params;
+				$backToUrl = $this->getRequest()->getRequestUri();
+				$previewSession->backToUrl = $backToUrl;
+				
+				$url = $this->_urlHelper->url(array('controller' => 'content',
+													'action' => 'preview',
+													'language' => $this->view->language),
+													'lang_default', true);
+				$this->_redirect($url);
+			}
 
 			// Get content type
 			$contentType = isset($params['contenttype'])
@@ -441,7 +461,8 @@ class ContentController extends Oibs_Controller_CustomController
                                         		} elseif($data['content_class'] != 0) {
                                         			$data['content_industry_id'] = $data['content_class'];
                                         		}
-
+												$languages = new Default_Model_Languages();
+												
                                         		if($data['content_language'] == 0) {
                                         			$data['content_language'] = $this->view->language;
                                         		}
@@ -499,6 +520,19 @@ class ContentController extends Oibs_Controller_CustomController
                                         		}
                                         	}
                                         } // end if
+                                        
+								    // populate form
+									if($backFromPreview)
+									{
+										// Get previewdata and populate it to form
+										$previewData = $previewSession->previewData;
+										$form->populate($previewData);
+										
+										// Delete session data
+										$previewSession->unsetAll();
+									}
+
+									
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-add-not-logged';
@@ -812,47 +846,125 @@ class ContentController extends Oibs_Controller_CustomController
 	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-		// If user has identity
-		if ($auth->hasIdentity())
-		{
+		
+		// If user has authenticated
+		if($auth->hasIdentity())
+		{			
+			// Get user data
+			$userId = $auth->getIdentity()->user_id;
+			$userName = $auth->getIdentity()->username;
+	        $userModel = new Default_Model_User();
+	        $userData = $userModel->getSimpleUserDataById($userId);
+			
+			// Get preview data from session
+			$previewSession = new Zend_Session_Namespace('contentpreview');
+			$postSession = $previewSession->previewData;
+			
 			// Get requests
 			if($this->getRequest()->isPost())
 			{
-				// Get content data
-				$data = $this->getRequest()->getPost();
-				// Content keywords
-				//$keywords = split(', ', trim($data['content_keywords']));
-				//$data['content_keywords'] = array_unique($keywords);
-
-				// Get user id
-				$data['User']['id_usr'] = $auth->getIdentity()->user_id;
-
-				$this->view->data = $data;
-
-				/*// Add a new content
-				 $content = new Default_Model_Content();
-				 if($content->addContent($data))
-				 {
-				 $message = 'content-add-successful';
-				 }
-				 else
-				 {
-				 $message = 'content-add-not-successful';
-				 }
-
-				 $this->flash($message, '/'.$this->view->language.'/msg/');*/
+				// Get POST data
+				$postData = $this->getRequest()->getPost();
+				
+				// If "edit" button was pushed
+				$editMode = isset($postData['content_edit']) ? 1:0;
+				if($editMode) {
+					$previewSession->backFromPreview = 1;
+					//$contentModel = new Default_Model_ContentTypes();
+					//$contentType = $contentModel->getTypeById($postSession['content_type']);
+					$backToUrl = $previewSession->backToUrl;
+					
+					/*
+					$url = $this->_urlHelper->url(array('contenttype' => $contentType,
+                                                  		'language' => $this->view->language),
+                                                  		'addcnttype', true);
+					//Zend_Debug::dump($url);
+					*/
+					$this->_redirect($backToUrl);
+				}
 			}
-		} else {
-			// If not logged, redirecting to system message page
-			$message = 'content-add-not-logged';
-
+			
+			// Set today's date and time
+			$today = date('Y-m-d H:i:m');
+			
+	        // Get content type of the specific content viewed
+	        $contentTypesModel = New Default_Model_ContentTypes();
+	        $contentType = $contentTypesModel->getTypeById($postSession['content_type']);
+			
+			// Reformat preview data
+			$contentData = 
+				array('id_cnt' 					=> 'preview',
+					  'id_cty_cnt' 				=> $postSession['content_type'],
+					  'title_cnt' 				=> $postSession['content_header'],
+					  'lead_cnt' 				=> $postSession['content_textlead'],
+					  'language_cnt' 			=> $postSession['content_language'],
+					  'body_cnt' 				=> $postSession['content_text'],
+					  'research_question_cnt' 	=> $postSession['content_research'],
+					  'opportunity_cnt' 		=> $postSession['content_opportunity'],
+					  'threat_cnt' 				=> $postSession['content_threat'],
+					  'solution_cnt' 			=> $postSession['content_solution'],
+					  'references_cnt' 			=> $postSession['content_references'],
+					  'views_cnt' 				=> 0,
+					  'published_cnt' 			=> 1,
+					  'created_cnt' 			=> $today,
+					  'modified_cnt' 			=> $today,
+					  'id_usr' 					=> $userId,
+					  'login_name_usr' 			=> $userName,
+					  'key_cty' 				=> $postSession['content_type'],
+					  'name_cty'				=> $contentType
+			);
+			
+			// Reformat tags
+			$rawtags = explode(",", $postSession['content_keywords']);
+			foreach($rawtags as $rawtag)
+				$tags[count($tags)]['name_tag'] = $rawtag;
+	        
+			// Get form
+	        $form = new Default_Form_PreviewContentForm();
+			
+	        // Inject previewdata to view
+	        $this->view->previewMode		= 1;
+	        $this->view->files 				= null;
+	        $this->view->id					= 'preview';
+	        //$this->view->industries         = $industries;
+	        //$this->view->userImage          = $userImage;
+	        //$this->view->commentPaginator   = $paginator;
+	        //$this->view->commentData        = $commentsSorted;
+			//$this->view->user_can_comment   = $user_can_comment;
+	        $this->view->contentData        = $contentData;
+	        //$this->view->modified			= $contentData['modified_cnt'];
+	        $this->view->userData           = $userData;
+	        //$this->view->moreFromUser       = $moreFromUser;
+	        $this->view->views              = $contentData['views_cnt'];
+	        //$this->view->rating             = $rating;
+	        $this->view->tags               = $tags;
+	        //$this->view->links              = $links;
+	        //$this->view->parents            = $parents;
+	        //$this->view->parent_siblings    = $parent_siblings;
+	        //$this->view->children           = $children;
+	        //$this->view->children_siblings  = $children_siblings;
+	        //$this->view->rivals             = $rivals;
+	        //$this->view->comments           = $commentCount;
+	        $this->view->contentType        = $contentType;
+	        //$this->view->count              = $count;
+	        $this->view->form				= $form;
+	        //$this->view->favourite			= $favourite;
+	        
+	        // Inject title to view
+	        $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
+	        $this->renderScript('view/index.phtml');
+		}
+		else
+		{
+			$message = 'content-preview-not-logged-in';
+	
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                'action' => 'index', 
-                                                'language' => $this->view->language), 
-                                          'lang_default', true);
-
+	                                            'action' => 'index', 
+	                                            'language' => $this->view->language), 
+	                                            'lang_default', true);
+	
 			$this->flash($message, $url);
-		} // end else
+		}
 	}
 
 	/**
@@ -871,6 +983,26 @@ class ContentController extends Oibs_Controller_CustomController
 			// Get requests
 			$params = $this->getRequest()->getParams();
 
+			// Get session data
+			$previewSession = new Zend_Session_Namespace('contentpreview');
+			
+			// If preview
+			$backFromPreview = isset($previewSession->backFromPreview) ? $previewSession->backFromPreview : 0;
+			$preview = isset($params['preview']) ? 1:0;
+			if($preview)
+			{
+				$previewSession->unsetAll();
+				$previewSession->previewData = $params;
+				$backToUrl = $this->getRequest()->getRequestUri();
+				$previewSession->backToUrl = $backToUrl;
+				
+				$url = $this->_urlHelper->url(array('controller' => 'content',
+													'action' => 'preview',
+													'language' => $this->view->language),
+													'lang_default', true);
+				$this->_redirect($url);
+			}
+			
 			// Get content type
 			$contentId = isset($params['content_id'])
 			? $params['content_id'] : 0;
@@ -1076,6 +1208,17 @@ class ContentController extends Oibs_Controller_CustomController
                                                         'action' => 'index', 
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
+                                                
+												// populate form
+												if($backFromPreview)
+												{
+													// Get previewdata and populate it to form
+													$previewData = $previewSession->previewData;
+													$form->populate($previewData);
+													
+													// Delete session data
+													$previewSession->unsetAll();
+												}
 
                                                 // If posted
                                                 if($this->getRequest()->isPost()) {
@@ -1083,7 +1226,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 	$data = $this->getRequest()->getPost();
                                                 	// Content id
                                                 	$data['content_id'] = $contentId;
-
+													
                                                 	// If form data is valid, handle database insertions
                                                 	if($form->isValid($data)) {
                                                 		// If form data is going to be published
@@ -1181,7 +1324,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 		}
                                                 	} else {
                                                 		// What is this?
-                                                		echo "eimoi"; die();
+                                                		//Zend_Debug::dump($form); die;
                                                 	}
 
                                                 	/*

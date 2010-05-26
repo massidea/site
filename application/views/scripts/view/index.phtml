@@ -9,7 +9,11 @@
 										'language' => $this->language),
 										'lang_default', true); 
 ?>
-<?php $this->headScript()->captureStart() ?>
+<?php $previewMode = $this->previewMode; ?>
+<?php 
+if(!$previewMode)
+{
+	$this->headScript()->captureStart() ?>
 $(document).ready(function(){
 	var plusminus = 0;
 	$("#content_view_user_related").hide();
@@ -42,6 +46,9 @@ $(document).ready(function(){
 			success: function(result){
 				$("#content_view_user_related").append(result);
 				$("#content_view_user_related").slideToggle('normal');
+			},
+			error: function(event){
+				alert('event');
 			}
 		});
 	};
@@ -171,7 +178,8 @@ function flagContent()
 		}
 	});
 }
-<?php $this->headScript()->captureEnd() ?>
+<?php $this->headScript()->captureEnd();
+} ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
 <?php 
 if ($this->contentData['name_cty'] == "Problems") {
@@ -278,6 +286,8 @@ if (isset($this->parent_siblings[0])) {
 <div style="clear:both;"></div>
         <?php if ($this->contentData['published_cnt'] == 0): ?>
             <h1><?php echo $this->translate('content-view-unpublished'); ?></h1>
+        <?php elseif ($previewMode):?>
+        	<h1><?php echo $this->translate('content-add-preview-header'); ?></h1>
         <?php endif; ?>
 <div class="user_content_row" style="float: left;">
     <div style="padding: 10px;">
@@ -288,7 +298,7 @@ if (isset($this->parent_siblings[0])) {
                 
                 <!-- AddThis Button BEGIN -->
                 <div id="view_content_left_header_top_add_this">
-                    <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=xa-4b12c6f671039279">
+                    <a class="addthis_button_expanded" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=xa-4b12c6f671039279">
                         <img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" 
                             width="125" height="16" alt="Bookmark and Share" style="border:0"/>
                     </a>
@@ -414,13 +424,13 @@ if (isset($this->parent_siblings[0])) {
             <?php endif; ?>
             
             <?php
-            if ($this->contentData['name_cty'] == "Problems") { ?>
+            if ($this->contentType == "problem") { ?>
                 <p><b><?php echo $this->translate('content-add-research') .":</b> "
                 . stripslashes($this->contentData['research_question_cnt']); ?></p>
-            <?php } elseif($this->contentData['name_cty'] == "Ideas") { ?>
+            <?php } elseif($this->contentType == "idea") { ?>
                 <p><b><?php echo $this->translate('content-add-solution') .":</b> "
                 . stripslashes($this->contentData['solution_cnt']); ?></p>
-            <?php } elseif($this->contentData['name_cty'] == "Future info") { ?>
+            <?php } elseif($this->contentType == "finfo") { ?>
                 <p><b><?php echo $this->translate('content-add-opportunity') .":</b> "
                 . stripslashes($this->contentData['opportunity_cnt']); ?></p>
                 <p><b><?php echo $this->translate('content-add-threat') .":</b> "
@@ -428,6 +438,8 @@ if (isset($this->parent_siblings[0])) {
             <?php } ?>
             
         </div>
+        
+		<?php if(!$previewMode): ?>
         <div class="content_view_files">
         <?php if(!empty($this->files)) : ?>
         	 <?php 
@@ -441,6 +453,7 @@ if (isset($this->parent_siblings[0])) {
         </div>
         <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
 
+		<?php /* ?>
         <div class="content_view_industries">
             <h3><?php echo $this->translate('content-view-industry-classification')?></h3>
                 <?php if (!empty($this->industries[0])) : ?>
@@ -456,6 +469,7 @@ if (isset($this->parent_siblings[0])) {
                 <p><?php echo $this->translate('content-add-class') . ": " . $this->industries[3]; ?></p>
                 <?php endif; ?> 
         </div>
+        <?php */ ?>
         
 		<!-- From now on, also ideas are allowed to link to ideas (check was removed) -->
         <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
@@ -708,8 +722,11 @@ if (isset($this->parent_siblings[0])) {
                     </ul>
                 </div>
                 <?php endif; */?>
-    </div>
+                <?php endif; ?>
+		<?php if($previewMode) echo "<br />" . $this->form; ?>
+    	</div>
 </div>
+<?php if(!$previewMode): ?>
 <div class="right_side" style="float:left; padding: 0px; margin: 0px; margin-top: 0px;">
     <p class="right_side_title_small" style="padding-top: 11px; padding-bottom:3px;"><?php echo $this->translate('content-view-author'); ?></p>
     <div class="top_right_box" style="margin-bottom:10px;">
@@ -753,5 +770,6 @@ if (isset($this->parent_siblings[0])) {
         <img src="<?php echo $this->baseUrl('/images/placeholder_related.png');?>" alt="" />
     </div>
 </div>
+<?php endif; ?>
 
 <div style="clear:both;"></div>
