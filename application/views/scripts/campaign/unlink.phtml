@@ -1,11 +1,30 @@
+<p><b>User's contents:</b></p>
+
+<?php foreach ($this->usrcnt as $content): ?>
+    <p><?php echo $content['title_cnt']; ?></p>
+    <?php
+        $linkurl = $this->url(array('controller' => 'campaign',
+                                    'action'     => 'makelink',
+                                    'cmpid'      => $this->cmpid,
+                                    'cntid'      => $content['id_cnt'],
+                                    'language'   => $this->language),
+                              'lang_default', true);
+    ?>
+    <p><a href="<?php echo $linkurl; ?>">Link this content</a></p>
+    <pre><?php var_dump($content); ?></pre>
+<?php endforeach; ?>
+
+
+
+
 <div class="linking_content">
-<h3 class=\"recent_posts\"><?php echo $this->translate('campaign-link-content-to-campaign'); ?></h3>
+<h3 class="recent_posts"><?php echo $this->translate('campaign-unlink-content-from-campaign'); ?></h3>
 <?php
-if($this->cmpid != 0 && $this->hasUserContents == true) {
+if($this->contentexists) {
 ?>
     <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
         <p class="linkedtotext">
-            <?php echo $this->translate('campaign-link-target',
+            <?php echo $this->translate('campaign-unlink-target',
                                                     $this->language);
             ?>
         </p>
@@ -29,27 +48,27 @@ if($this->cmpid != 0 && $this->hasUserContents == true) {
         </p>
     </div>
 
-    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('campaign-link-helptext'); ?></p>
+    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('campaign-unlink-helptext'); ?></p>
     <?php
-    if($this->usrcnt) {
-        foreach($this->usrcnt as $content) {
+    if($this->contents) {
+        foreach($this->contents as $content) {
             if($content['published_cnt'] != 0) {
                 ?>
                 <div class="form_helptext_line"></div>
                 <div style="height: 20px;">
-                    <div style="float: left; width: 450px;">
+                    <div style="float: left; width: 420px;">
                         <?php
                         if($content['key_cty'] == "problem") {
-                            $linkedColor = "red";
+                            $color = "red";
                         }
                         elseif($content['key_cty'] == "finfo") {
-                            $linkedColor = "yellow";
+                            $color = "yellow";
                         }
                         elseif($content['key_cty'] == "idea") {
-                            $linkedColor = "green";
+                            $color = "green";
                         }
                         ?>
-                        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" height="15" width="4"/>
+                        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
                         <?php
                         $linkurl = $this->url(array('content_id' => $content['id_cnt'],
                                                     'language' => $this->language),
@@ -60,12 +79,13 @@ if($this->cmpid != 0 && $this->hasUserContents == true) {
                     </div>
                     <div style="margin-top: 4px;">
                         <?php
-                        $linkurl = $this->url(array('cntid'    => $content['id_cnt'],
-                                                    'cmpid'    => $this->cmpid,
+                        $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
+                                                    'childid'     => $content['id_cnt'],
+                                                    'parentid'    => $this->relatesToId,
                                                     'language' => $this->language),
-                                              'makecampaignlinks', true);
+                                              'removecampaignlinks', true);
                         ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('campaign-link'); ?></a>
+                        <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('campaign-unlink'); ?></a>
                     </div>
                 </div>
                 <div style="clear: both;"></div>
@@ -75,7 +95,7 @@ if($this->cmpid != 0 && $this->hasUserContents == true) {
     }
 } else {
     ?>
-    <p><?php echo $this->translate('campaign-link-not-content-this-type'); ?></p>
+    <p><?php echo $this->translate('campaign-content-not-exists'); ?></p>
     <?php
 }
 ?>

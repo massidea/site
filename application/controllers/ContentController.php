@@ -789,9 +789,9 @@ class ContentController extends Oibs_Controller_CustomController
             $contents = array();
 
             $model_content = new Default_Model_Content();
-            $contentExists = $model_content->checkIfContentExists($relatestoid);
+            $contentexists = $model_content->checkIfContentExists($relatestoid);
 
-            if ($contentExists) {
+            if ($contentexists) {
                 $relatesToContent = $model_content->getDataAsSimpleArray($relatestoid);
                 $this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
 
@@ -812,7 +812,7 @@ class ContentController extends Oibs_Controller_CustomController
                     }
                 }
             }
-            $this->view->contentExists = $contentExists;
+            $this->view->contentexists = $contentexists;
             $this->view->relatesToId = $relatestoid;
             $this->view->linkingContentType = $contenttype;
             $this->view->contents = $contentContents;
