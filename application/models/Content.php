@@ -27,6 +27,7 @@
  *  @license    GPL v2
  *  @version    1.0
  */
+
 class Default_Model_Content extends Zend_Db_Table_Abstract
 {
 	// Table name
