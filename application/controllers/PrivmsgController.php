@@ -38,7 +38,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 	{
 		// Get user identity
 		$auth = Zend_Auth::getInstance();
-
+		
 		if ($auth->hasIdentity()) {
 			$Default_Model_privmsg = New Default_Model_PrivateMessages();
 
@@ -76,6 +76,9 @@ class PrivmsgController extends Oibs_Controller_CustomController
 	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
+		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
+    						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
+		
 
 		// If user has identity
 		if ($auth->hasIdentity()) {
@@ -136,27 +139,22 @@ class PrivmsgController extends Oibs_Controller_CustomController
 
 				if (in_array('privmsg', $notifications)) {
 					
-					$senderId = $data['privmsg_sender_id'];
-					$receiverEmail = $model_user->getUserEmail($receiverId);
+					$senderName = $auth->getIdentity()->username; 
 					$receiverUsername = $model_user->getUserNameById($receiverId);
-					$senderUsername = $model_user->getUserNameById($senderId);
-
-					$bodyText = "You have received a new private message at Massidea.org\n\n"
-							.$senderUsername." sent you a private message\n\n"
-							.$data['privmsg_header'].": ".$data['privmsg_message'];
-
-					$bodyHtml = "Your have received a new private message at ".'<a href="'.$baseUrl.'/">Massidea.org</a><br /><br />'
-							.'<a href="'.$baseUrl."/".$this->view->language.'/account/view/user/'.$senderUsername.'">'.$senderUsername.'</a>'
-							.' sent you a private message <br /><br />'
-							.'<a href="'.$baseUrl."/".$this->view->language.'/privmsg/'.$id.'">'.$data['privmsg_header'].'</a><br /> '.str_replace("\n", "<br />", $data['privmsg_message']);
-
-					$mail = new Zend_Mail();
-					$mail->setBodyText($bodyText);
-					$mail->setBodyHtml($bodyHtml);
-					$mail->setFrom('no-reply@massidea.org', 'Massidea.org');
-					$mail->addTo($receiverEmail, $receiverUsername);
-					$mail->setSubject('Massidea.org: You have a new private message');
-					$mail->send();
+					
+					$emailNotification = new Oibs_Controller_Plugin_Email();
+	                $emailNotification->setNotificationType('privmsg')
+	                    			   ->setSenderId($auth->getIdentity()->user_id)
+	                    			   ->setReceiverId($receiverId)
+	                    			   ->setParameter('URL', $absoluteBaseUrl."/en")
+	                    			   ->setParameter('SENDER-NAME', $senderName)
+	                    			   ->setParameter('MESSAGE-TITLE', $data['privmsg_header'])
+	                    			   ->setParameter('MESSAGE-BODY', nl2br($data['privmsg_message']));
+		           	if ($emailNotification->isValid()) {
+	            		$emailNotification->send();
+	            	} else {
+	            		echo $emailNotification->getErrorMessage(); die;
+	            	}					
 				}
 				$this->flash($message, $url);
 			} // end if
