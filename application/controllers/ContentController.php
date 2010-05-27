@@ -549,6 +549,9 @@ class ContentController extends Oibs_Controller_CustomController
 	public function makelinksAction() {
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
+		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
+    						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
+		
 		// If user has identity
 		if ($auth->hasIdentity())
 		{
@@ -581,34 +584,28 @@ class ContentController extends Oibs_Controller_CustomController
 				$notifications = $notificationsModel->getNotificationsById($owner['id_usr']);
 				
 				if (in_array('link', $notifications)) {
-
-					$linker = $userModel->getContentOwner($linkedcontentid);
-					
 					$cntModel = new Default_Model_Content();
 					$originalHeader = $cntModel->getContentHeaderByContentId($relatestoid);
 					$linkedHeader =  $cntModel->getContentHeaderByContentId($linkedcontentid);
 					
-					$receiverEmail = $owner['email_usr'];	
-					$receiverUsername = $linker['email_usr'];
-
-					$senderUsername = $linker['login_name_usr'];
-
-					$bodyText = "Your content has been linked with another content at Massidea.org\n\n"
-								.$senderUsername." linked his content, ".$linkedHeader.", with yours, ".$originalHeader.".";
-					$linkedUrl = $this->baseUrl."/".$this->view->language."/view/".$linkedcontentid;
-					$originalUrl = $this->baseUrl."/".$this->view->language."/view/".$relatestoid;
-					$bodyHtml = "Your content has been linked with another content at ".'<a href="'.$baseUrl.'/">Massidea.org</a><br /><br />'
-								.'<a href="'.$this->baseUrl."/".$this->view->language.'/account/view/user/'.$senderUsername.'">'.$senderUsername.'</a>'
-								.' linked his content, <a href="'.$linkedUrl.'">'.$linkedHeader."</a>, with yours, "
-								.'<a href="'.$originalUrl.'">'.$originalHeader.'</a>.';
-
-					$mail = new Zend_Mail();
-					$mail->setBodyText($bodyText);
-					$mail->setBodyHtml($bodyHtml);
-					$mail->setFrom('no-reply@massidea.org', 'Massidea.org');
-					$mail->addTo($receiverEmail, $receiverUsername);
-					$mail->setSubject('Massidea.org: Your content has been linked');
-					$mail->send();
+					$senderId = $auth->getIdentity()->user_id;
+					$senderName = $auth->getIdentity()->username; 
+					$emailNotification = new Oibs_Controller_Plugin_Email();
+	                $emailNotification->setNotificationType('link')
+	                    			   ->setSenderId($auth->getIdentity()->user_id)
+	                    			   ->setReceiverId($owner['id_usr'])
+	                    			   ->setParameter('URL', $absoluteBaseUrl."/en")
+	                    			   ->setParameter('SENDER-NAME', $senderName)
+	                    			   ->setParameter('LINKED-ID', $linkedcontentid)
+	                    			   ->setParameter('LINKED-TITLE', $linkedHeader)
+	                    			   ->setParameter('ORIGINAL-ID', $relatestoid)
+	                    			   ->setParameter('ORIGINAL-TITLE', $originalHeader);
+	                    			   
+	            	if ($emailNotification->isValid()) {
+	            		$emailNotification->send();
+	            	} else {
+	            		//echo $emailNotification->getErrorMessage(); die;
+	            	}
 				}
 
 
@@ -1011,7 +1008,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 			$cntHasUsr = New Default_Model_ContentHasUser();
 			$userIsOwner = $cntHasUsr->contentHasOwner($userId, $contentId);
-
+			
 			if($userIsOwner) {
 				if($contentId != 0) {
 					$content = New Default_Model_Content();
@@ -1226,7 +1223,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 	$data = $this->getRequest()->getPost();
                                                 	// Content id
                                                 	$data['content_id'] = $contentId;
-													
+
                                                 	// If form data is valid, handle database insertions
                                                 	if($form->isValid($data)) {
                                                 		// If form data is going to be published

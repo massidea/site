@@ -1,0 +1,6 @@
+New Comment at Massidea.org
+Your content has a new comment at <a href="http://www.massidea.org"> Massidea.org </a>
+
+<a href="%URL%/account/view/user/%SENDER-NAME%">%SENDER-NAME%</a> commented your content <a href="%URL%/view/%CONTENT-ID%>%CONTENT-TITLE%</a>
+
+Comment: %COMMENT%
