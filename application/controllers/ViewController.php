@@ -57,8 +57,11 @@
         // get requests
         $request = $this->getRequest();
         $params = $request->getParams();
-        
+
         $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
+    						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
+		
         // get content id from params, if not set or invalid, send a message
         $id = (int)$params['content_id'];
                 
@@ -147,24 +150,22 @@
 						$notifications = $notificationsModel->getNotificationsById($ownerId);
 
 	                    if (in_array('comment', $notifications)) {
-	                        $ownerEmail = $user->getUserEmail($ownerId);
-	                        $ownerUsername = $user->getUserNameById($ownerId);
-	
-	      					$bodyText = "Your content has a new comment at Massidea.org\n\n"
-	      								.$comment_sender." commented your content ".$contentData['title_cnt']."\n\n"
-	      								."Comment: ".$formData['comment_message'];
-	      					$bodyHtml = "Your content has a new comment at Massidea.org<br /><br />"
-	      								.'<a href="'.$baseUrl."/".$this->view->language.'/account/view/user/'.$comment_sender.'">'.$comment_sender.'</a>'
-	      								.' commented your content <a href="'.$baseUrl."/".$this->view->language.'/view/'.$id.'">'.$contentData['title_cnt'].'</a><br /><br />'
-	      								.'Comment: '.$formData['comment_message'];
-	
-	      					$mail = new Zend_Mail();
-	    					$mail->setBodyText($bodyText);
-	      					$mail->setBodyHtml($bodyHtml);
-	     					$mail->setFrom('no-reply@massidea.org', 'Massidea.org');
-	      					$mail->addTo($ownerEmail, $ownerUsername);
-	      					$mail->setSubject('Massidea.org: You have a new comment');
-	      					$mail->send();
+	                    	
+	                    	$emailNotification = new Oibs_Controller_Plugin_Email();
+	                    	$emailNotification->setNotificationType('comment')
+	                    					   ->setSenderId($user_id)
+	                    					   ->setReceiverId($ownerId)
+	                    					   ->setParameter('URL', $absoluteBaseUrl."/en")
+	                    					   ->setParameter('SENDER-NAME', $comment_sender)
+	                    					   ->setParameter('CONTENT-ID', $id)
+	                    					   ->setParameter('CONTENT-TITLE', $contentData['title_cnt'])
+	                    					   ->setParameter('COMMENT', $formData['comment_message']);
+	                    					   
+							if ($emailNotification->isValid()) {
+								$emailNotification->send();
+							} else {
+								//echo $emailNotification->getErrorMessage(); die;
+							}
 	                    }
                         
                         $Default_Model_privmsg->addMessage($data);
