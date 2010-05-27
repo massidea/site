@@ -1,0 +1,4 @@
+Massidea.org: Your content has been linked
+Your content has been linked with another content at <a href="http://massidea.org">Massidea.org</a>
+
+<a href="%URL%/account/view/user/%SENDER-NAME%">%SENDER-NAME%</a> linked his content <a href="%URL%/view/%LINKED-ID%">%LINKED-TITLE%</a> with yours <a href="%URL%/view/%ORIGINAL-ID%>%ORIGINAL-TITLE%</a>.
