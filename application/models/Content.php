@@ -645,6 +645,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
             }
         }
         
+        // Reset and save latest post time hash in cache 
+        $cache = Zend_Registry::get('cache');
+        $cache->remove('LatestPostHash');
+        $cache->save('LatestPostHash', md5(time()));
+        
         return $return;
     } // end of addContent
    
