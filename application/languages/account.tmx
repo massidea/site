@@ -436,6 +436,10 @@
 		<tuv xml:lang="fi"><seg>Lähetä yksityisviesti</seg></tuv>
 	</tu>	
 	
+	<tu tuid='account-userlist-search-instructions'>
+		<tuv xml:lang="en"><seg>You can use % or * as a wildcard in the search fields and _ or ? as one character match. Search uses wildcards automatically in the both ends of the search word.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Voit käyttää haussa % tai * jokerimerkkinä ja _ tai ? merkkiä yhden merkin korvausmerkkinä. Haku käyttää automaattisesti jokerimerkkejä tekstin molemmin puolin.</seg></tuv>
+	</tu>
 	<tu tuid='account-userlist-user-content-added'>
 		<tuv xml:lang="en"><seg>User has added %s content.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjä on lisännyt %s sisältöä.</seg></tuv>

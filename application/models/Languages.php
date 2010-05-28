@@ -66,7 +66,7 @@ class Default_Model_Languages extends Zend_Db_Table_Abstract
 				->where("`id_lng` = '$id_lng'");
         
 		$result = $this->fetchAll($select)->toArray();
-        
+
         return $result[0]['iso6391_lng'];
     }
     
@@ -91,7 +91,7 @@ class Default_Model_Languages extends Zend_Db_Table_Abstract
 	*	getAllNamesAndCodes
 	*
 	*	Gets all possible language names and codes
-	*
+	*   @copyright 2010 Jari Korpela
 	*	@return array
 	*/
 	public function getAllNamesAndCodes()
@@ -103,5 +103,25 @@ class Default_Model_Languages extends Zend_Db_Table_Abstract
 		
 		return $result;
 	} // end of getAllNamesAndIds
+	
+	
+	/**
+	*	getLanguageByLangCode
+	*
+	*	Gets all possible language names and codes
+	*   @copyright 2010 Jari Korpela
+	*	@return array
+	*/
+    public function getLanguageByLangCode($code_lng)
+    {
+        $select = $this->select()
+				->from($this, array('name_lng'))
+				->where("`iso6391_lng` = '$code_lng'");
+        
+		$result = $this->fetchAll($select)->toArray();
+        
+        return $result[0]['name_lng'];
+    }// end of getLanguageByLangCode
+	
 } // end of class
 ?>
