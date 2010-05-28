@@ -1,0 +1,14 @@
+<?php
+$language = Zend_Layout::getMvcInstance()->getView()->language;
+$grpurl = $this->url(array('groupid' => $this->id_grp,
+                           'language' => $language),
+                           'group_shortview', true);
+?>
+
+<li>
+    <span>
+        <strong><a href="<?php echo $grpurl; ?>"><?php echo $this->escape($this->group_name_grp); ?></a></strong><br />
+        <?php echo $this->escape($this->description_grp); ?>
+    </span>
+    <div class="clear"></div>
+</li>

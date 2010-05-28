@@ -1,0 +1,25 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="gaccampaignlist">
+    <h3>Recent campaigns</h3>
+    <div class="campaign-list">
+        <ul>
+            <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
+        </ul>
+    </div>
+</div>
+
+<div id="gacsidebar">
+    <div class="box">
+        <h2>What are groups and campaigns?</h2>
+        <div class="box-content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra nibh non diam cursus a aliquet dui tempus. Phasellus pellentesque mattis elit. Aenean sagittis ultrices lacus, pharetra congue turpis semper sit amet. Vivamus quam diam, elementum viverra dignissim vitae, elementum at dolor. Aliquam sit amet volutpat.
+        </div>
+    </div>
+
+    <div id="groups">
+        <h3>Recent groups</h3>
+        <ul>
+            <?php echo $this->partialLoop('partials/group_row.phtml', $this->groups); ?>
+        </ul>
+    </div>
+</div>
