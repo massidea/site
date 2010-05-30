@@ -39,8 +39,10 @@ class AjaxController extends Oibs_Controller_CustomController
 	
 	function getrecentcontentAction()
 	{
-	    
-    	sleep(1);
+
+	// Use sleep() function for debugging ajax requests     
+    	//sleep(1);
+
         // Get requests
         $params = $this->getRequest()->getParams(); 
         $offset = isset($params['offset']) ? $params['offset'] : 0;
