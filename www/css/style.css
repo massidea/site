@@ -1484,8 +1484,25 @@ form #uploadedFiles_div .form_element_input label {
     clear: left;
 }
 
+#user_list_top {
+	display:inline-block;
+	width:100%;
+	padding-top:2px;
+}
+
+#user_list_search_form {
+	float:left;
+	width:50%;
+}
+
 #account_user_list_container {
     margin: 2em 0 0 0;
+}
+
+
+#user_list_search_instructions {
+	float:right;
+	width:50%;
 }
 
 .user_list_user_container {
