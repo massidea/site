@@ -1033,7 +1033,7 @@ class AccountController extends Oibs_Controller_CustomController
             array_walk($_GET, array('AccountController', 'encodeParam'));
             
             foreach ($_GET as $key => $value) {
-                if ($key != 'Filter' && $key != 'submit_user_filter')
+                if ($key != 'filter' && $key != 'submit_user_filter')
                     $path .= '/' . $key . '/' . $value;
             }
             
@@ -1053,8 +1053,8 @@ class AccountController extends Oibs_Controller_CustomController
         
         // Filter form data
         $formData['username'] = isset($params['username']) ? $params['username'] : '';
-        $formData['country'] = isset($params['country']) ? $params['country'] : 0;
-        $formData['city'] = isset($params['city']) ? $params['city'] : '';        
+        $formData['city'] = isset($params['city']) ? $params['city'] : '';
+        //$formData['country'] = isset($params['country']) ? $params['country'] : 0;    
         $formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
         $formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;
         
@@ -1071,6 +1071,14 @@ class AccountController extends Oibs_Controller_CustomController
         
         $formData['countryList'] = $temp;
         
+        //Set array patterns
+        $pat_sql = array("%","_");
+        $pat_def = array("*","?");
+        
+        //Replace * and ? characters  
+        $formData['username'] = str_replace($pat_def,$pat_sql,$formData['username']);
+        $formData['city'] = str_replace($pat_def,$pat_sql,$formData['city']);
+        
         // Get user listing
         $user = new Default_Model_User();
         $userListing = $user->getUserListing($formData, $page, $count);
@@ -1080,7 +1088,7 @@ class AccountController extends Oibs_Controller_CustomController
         
         // Calculate total page count
         $pageCount = ceil($userCount / $count);
-        
+                
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
         
