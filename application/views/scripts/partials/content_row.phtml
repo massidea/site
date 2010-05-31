@@ -22,7 +22,7 @@ $url_img = $this->url(array('controller' => 'account',
                             'thumb' => 'true'),
                             'lang_default', true)
 ?>
-<div class="user_content_row" id="postid_<?php echo $this->id_cnt; ?>" style="display: none;">
+<div class="user_content_row user_content_row_new" id="postid_<?php echo $this->id_cnt; ?>">
     <div class="user_image_list">
         <img src="<?php echo $url_img; ?>"
         alt="User image" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
