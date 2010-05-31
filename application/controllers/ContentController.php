@@ -800,12 +800,11 @@ class ContentController extends Oibs_Controller_CustomController
                 $id_cty = $model_content_types->getIdByType($contenttype);
 
                 $contentContents = $model_cnt_has_cnt->getContentContents($relatestoid);
-
-                $contents = array();
-
-                foreach($contentContents as $content) {
-                    if($model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt'])) {
-                        $contents[] = $content;
+                
+                $model_user = new Default_Model_User();
+                foreach($contentContents as $key1 => $contents) {
+                    foreach ($contents as $key2 => $content) {
+                        $contentContents[$key1][$key2]['username'] = $model_user->getUserNameById($content['id_usr']);
                     }
                 }
             }
