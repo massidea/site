@@ -1,18 +1,26 @@
 <div id="user_list">
+
     <div id="user_list_top" class="clear">
-        <?php echo $this->userSearch; ?>
+
+	<div id="user_list_search_form">
+		<?php echo $this->userSearch; ?>
+	</div>
+	
+	    <div id="user_list_search_instructions">
+    	<?php echo $this->translate('account-userlist-search-instructions'); ?>
     </div>
+    </div>
+
     <?php if (!empty($this->userListData)):?>
-        <div id="user_list_bottom">
-        
             <?php if ($this->userCount > $this->count): ?>
             <div id="user_list_user_pagination_top">
                 <?php echo $this->userPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
             </div>
             <?php endif; ?>
-            
+        <div id="user_list_bottom">
+                   
             <div id="account_user_list_container">
-            
+
                 <?php foreach ($this->userListData as $user): ?>
                     <div id="user_<?php echo $user['id_usr']; ?>" class="user_list_user_container clear">
                     

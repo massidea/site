@@ -10,41 +10,47 @@
 										'lang_default', true); 
 ?>
 <?php $this->headScript()->captureStart() ?>
-$(document).ready(function(){
-	var plusminus = 0;
-	$("#content_view_user_related").hide();
-	$(".expand_user_related").one("click",function(){
-		ajaxLoad_morefromuser();
-	});
+
+function expandCollapse(type) {
+	target = "#content_view_"+type+"_related";
+	expandButton = ".expand_"+type+"_related";
+	if ($(target).is(':hidden')){
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
+	} else {
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
+	}
+	$(target).slideToggle('normal');
+}
 	
-	$(".expand_user_related").click(function(){
-		if (plusminus==1){
-			$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
-			$("#content_view_user_related").slideToggle('normal');
-			plusminus = 2;
-		} else if (plusminus==2){
-			$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
-			$("#content_view_user_related").slideToggle('normal');
-			plusminus = 1;
+function ajaxLoad_moreRelated(type){
+	expandButton = ".expand_"+type+"_related";
+	target =  "#content_view_"+type+"_related";
+	$(expandButton).bind('click', function () { expandCollapse(type); });
+	$.ajax({
+		beforeSend: function(){
+			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
+		},
+		complete: function(){
+			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
+		},
+		url: "?page=related"+type+"&format=html",
+		success: function(result){
+			$(target).append(result);
+			$(target).slideToggle('normal');
 		}
 	});
+};
 	
-	function ajaxLoad_morefromuser(){
-		$.ajax({
-			beforeSend: function(){
-				$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
-			},
-			complete: function(){
-				plusminus = 2;
-				$(".expand_user_related").attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
-			},
-			url: "?page=morefromuser&format=html",
-			success: function(result){
-				$("#content_view_user_related").append(result);
-				$("#content_view_user_related").slideToggle('normal');
-			}
-		});
-	};
+$(document).ready(function(){
+	$("#content_view_user_related").hide();
+	$(".expand_user_related").one("click",function(){
+		ajaxLoad_moreRelated("user");
+	});
+	$("#content_view_content_related").hide();
+	$(".expand_content_related").one("click",function(){
+		ajaxLoad_moreRelated("content");
+	});	
+
 	
 	$("#content_view_content_info_container").load("?page=content_rating&format=html");
 	//$("#content_view_favourite").load("?page=add_favourite&format=html");
@@ -376,7 +382,7 @@ if (isset($this->parent_siblings[0])) {
                 </div>
             </div>
             <div class="view_content_left_header_btm">
-                <div style="float:left; padding:3px;">
+                <div style="float:left;">
                 	<div id="content_view_content_info_container"></div>
                 </div>  
                 <!--  <div style="float:left; padding:5px;">
@@ -413,6 +419,26 @@ if (isset($this->parent_siblings[0])) {
             <p><?php echo $this->translate('content-modified')." ".$this->modified; ?></p> 
             <?php endif; ?>
             
+
+            
+        </div>
+        <div class="content_view_files">
+        <?php if(!empty($this->files)) : ?>
+        	<div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
+        	 <?php 
+        		echo "<p><b>".$this->translate('content-files').":</b>"; 	
+       			foreach ($this->files as $id_fil => $filename) {
+        			echo "<div class='content_view_file_link'><a href='".$this->baseUrl."/en/file/view/".$id_fil."'>".$filename."</a></div>";
+        		}
+        		echo "</p>";
+        	?>
+        <?php endif;?>
+        </div>
+        
+		<!-- From now on, also ideas are allowed to link to ideas (check was removed) -->
+        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
+
+        <div class="view_content_left_contentlinks">
             <?php
             if ($this->contentData['name_cty'] == "Problems") { ?>
                 <p><b><?php echo $this->translate('content-add-research') .":</b> "
@@ -427,40 +453,6 @@ if (isset($this->parent_siblings[0])) {
                 . stripslashes($this->contentData['threat_cnt']); ?></p>
             <?php } ?>
             
-        </div>
-        <div class="content_view_files">
-        <?php if(!empty($this->files)) : ?>
-        	 <?php 
-        		echo "<p><b>".$this->translate('content-files').":</b>"; 	
-       			foreach ($this->files as $id_fil => $filename) {
-        			echo "<div class='content_view_file_link'><a href='".$this->baseUrl."/en/file/view/".$id_fil."'>".$filename."</a></div>";
-        		}
-        		echo "</p>";
-        	?>
-        <?php endif;?>
-        </div>
-        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
-
-        <div class="content_view_industries">
-            <h3><?php echo $this->translate('content-view-industry-classification')?></h3>
-                <?php if (!empty($this->industries[0])) : ?>
-                <p><?php echo $this->translate('content-add-industry') . ": " . $this->industries[0]; ?></p>
-                <?php endif; ?>
-                <?php if (!empty($this->industries[1])) : ?>
-                <p><?php echo $this->translate('content-add-division') . ": " . $this->industries[1]; ?></p>
-                <?php endif; ?>
-                <?php if (!empty($this->industries[2])) : ?>
-                <p><?php echo $this->translate('content-add-group') . ": " . $this->industries[2]; ?></p>
-                <?php endif; ?>
-                <?php if (!empty($this->industries[3])) : ?>
-                <p><?php echo $this->translate('content-add-class') . ": " . $this->industries[3]; ?></p>
-                <?php endif; ?> 
-        </div>
-        
-		<!-- From now on, also ideas are allowed to link to ideas (check was removed) -->
-        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
-
-        <div class="view_content_left_contentlinks">
             <p style="font-weight: bold; font-size:80%;"><?php echo $this->translate('content-view-solve-'.$this->contentType);?>
             <a href="<?php echo $this->url(array('language' => $this->language,
                                      'contenttype' => 'idea',
@@ -749,8 +741,14 @@ if (isset($this->parent_siblings[0])) {
     <div id="content_view_user_related">
     </div>
     
-    <div class="cotent_view_related_missing" style="padding-top: 10px;">
-        <img src="<?php echo $this->baseUrl('/images/placeholder_related.png');?>" alt="" />
+    <div id="content_view_related_content_header">
+        <div class="pointerCursor" style="float: left;">
+            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>" alt="" />
+            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>" alt="" style="display: none" />
+        </div>
+        <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-related'); ?></span>
+    </div>
+    <div id="content_view_content_related" style="padding-top: 10px;">
     </div>
 </div>
 

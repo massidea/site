@@ -53,6 +53,7 @@
                  ->setDecorators(array('UserListFilterElementDecorator'))
                  ->setValue(isset($formData['username']) ? $formData['username'] : '');
         
+        /*
         // User content amount select
 		$contentSelect = new Zend_Form_Element_Select('counttype');
 		$contentSelect->setLabel($translate->_('userlist-filter-action-label'))
@@ -79,6 +80,7 @@
 				      ->setMultiOptions($formData['countryList'])
                       ->setValue(isset($formData['country']) ? $formData['country'] : '');
                       
+        */
         // User city input
 		$city = new Zend_Form_Element_Text('city');
 		$city->setLabel($translate->_('userlist-filter-city-label'))
@@ -92,6 +94,6 @@
 		$submit->removeDecorator('DtDdWrapper');
 		
 		// Add elements to form
-		$this->addElements(array($username, $contentSelect, $contentAmount, $countrySelect, $city, $submit));
+		$this->addElements(array($username, /*$contentSelect, $contentAmount, $countrySelect,*/ $city, $submit));	
 	}
 }
