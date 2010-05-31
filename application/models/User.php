@@ -474,6 +474,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                       array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
+                                           ->where('cnt.id_cnt != ?', "") // Odd hack
                                            ->order('cnt.id_cty_cnt ASC')
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
