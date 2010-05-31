@@ -58,7 +58,9 @@ $(document).ready(function(){
 				} else {
 					$(obj).append(result);
 				}
+				$('.user_content_row_new').hide();
 				removeDupes_recentPosts(recentpostsdiv);
+				$('.user_content_row_new').removeClass('user_content_row_new');
 				$('.user_content_row').fadeIn('slow');
 			}
 		});
