@@ -125,6 +125,10 @@
 		<tuv xml:lang="en"><seg>Captcha messages did not match</seg></tuv>
 		<tuv xml:lang="fi"><seg>Captcha-viestit eivät vastanneet</seg></tuv>
 	</tu>
+	<tu tuid='username-not-valid'>
+		<tuv xml:lang="en"><seg>Username is not valid</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjänimi ei kelpaa</seg></tuv>
+	</tu>
     <tu tuid='value-not-same'>
 		<tuv xml:lang="en"><seg>Values must match.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kenttien sisältö täytyy olla sama.</seg></tuv>
