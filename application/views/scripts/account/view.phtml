@@ -438,7 +438,7 @@ $printUs = 7;
                                     </a>
                                 </b>
                             </div>
-                    		<?php if ($this->user_edit == true && $content['published_cnt'] == 0): ?>        
+                            <?php if ($this->user_edit == true && $content['published_cnt'] == 0): ?>
                             <div class="account_profile_content_tools_publish">
                                 <b>
                                     <a href="#" onclick="popup('popup_publish_content_<?php echo $content['id_cnt']; ?>')">
@@ -446,7 +446,7 @@ $printUs = 7;
                                     </a>
                                 </b>
                             </div>
-                                <?php endif; ?>
+                            <?php endif; ?>
                             <div class="account_profile_content_tools_delete">
                                 <b>
                                     <a href="#" onclick="popup('popup_delete_content_<?php echo $content['id_cnt']; ?>')">
@@ -454,7 +454,17 @@ $printUs = 7;
                                     </a>
                                 </b>
                             </div>
-                        	
+                        	<?php if ($content['cntHasCntCount'] > 0): ?>
+                        	<div class="account_profile_content_tools_editlinks">
+                                <b>
+                                    <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
+                                                                 'language' => $this->language),
+                                                                 'unlinkcontent', true); ?>">
+                                        <?php echo $this->translate('content-editlinks')." (".$content['cntHasCntCount'].")"?>
+                                    </a>
+                                </b>
+                            </div>
+                            <?php endif; ?>
                         </div>
 	            	<?php endif; ?>
                     </div>

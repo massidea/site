@@ -1,10 +1,8 @@
 <?php
 $language = Zend_Layout::getMvcInstance()->getView()->language;
-$cmpurl = $this->url(array( 'controller' => 'campaign',
-                            'action'     => 'view',
-                            'cmpid'      => $this->id_cmp,
-                            'language'   => $language),
-                            'lang_default', true);
+$cmpurl = $this->url(array('cmpid' => $this->id_cmp,
+                           'language' => $language),
+                     'campaign_view', true);
 
 if ($this->end_time_cmp == '0000-00-00 00:00:00') {
     $date = 'Never';

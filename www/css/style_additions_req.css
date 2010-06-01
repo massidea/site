@@ -463,7 +463,8 @@ form_registration_container dd,
 
 .account_profile_content_tools_edit,
 .account_profile_content_tools_publish,
-.account_profile_content_tools_delete {
+.account_profile_content_tools_delete,
+.account_profile_content_tools_editlinks {
     display: inline;
     margin: 0 0.5em 0 0;
 }
