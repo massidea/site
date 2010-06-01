@@ -6,6 +6,13 @@
             <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
         </ul>
     </div>
+    <div style="text-align: center; margin-top: 10px;">
+        <?php $morecmpsurl = $this->url(array('controller' => 'campaign',
+                                              'action'     => 'list',
+                                              'language'   => $this->language),
+                                          'lang_default', true); ?>
+        <strong><a href="<?php echo $morecmpsurl; ?>">Show more</a></strong>
+    </div>
 </div>
 
 <div id="gacsidebar">
@@ -21,5 +28,13 @@
         <ul>
             <?php echo $this->partialLoop('partials/group_row.phtml', $this->groups); ?>
         </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <?php $moregrpsurl = $this->url(array('controller' => 'group',
+                                              'action'     => 'list',
+                                              'language'   => $this->language),
+                                          'lang_default', true); ?>
+        <strong><a href="<?php echo $moregrpsurl; ?>">Show more</a></strong>
     </div>
 </div>

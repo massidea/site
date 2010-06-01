@@ -2,11 +2,19 @@
 $language = Zend_Layout::getMvcInstance()->getView()->language;
 $grpurl = $this->url(array('groupid' => $this->id_grp,
                            'language' => $language),
-                           'group_shortview', true);
+                     'group_shortview', true);
+$usrurl = $this->url(array('controller' => 'account',
+                           'action' => 'view',
+                           'user' => $this->login_name_admin,
+                           'language' => $language),
+                     'lang_default', true);
 ?>
 
 <li>
     <span>
+        <?php if ((isset($this->login_name_admin)) && (isset($this->id_admin))): ?>
+            <a href="<?php echo $usrurl; ?>"><?php echo $this->login_name_admin; ?></a>:
+        <?php endif; ?>
         <strong><a href="<?php echo $grpurl; ?>"><?php echo $this->escape($this->group_name_grp); ?></a></strong><br />
         <?php echo $this->escape($this->description_grp); ?>
     </span>
