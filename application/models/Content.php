@@ -304,8 +304,80 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 //return $result;
 	 }
 	 */
+	
+	/* getRelatedContents
+	 * 
+	 * gets all contents that share tags with specified content
+	 * 
+	 * @param 			id		content id
+	 * @return	array			array of title_cnt, id_cnt,  viewCount, contentType 
+	 */
+    public function getRelatedContents($id) {
 
-	/**
+    	$tags = $this->getTagIdsByContentId($id);
+
+    	$linkedContents = array();
+    					
+   		$cntHasTagModel = new Default_Model_ContentHasTag();
+    	$select = $cntHasTagModel->select()
+    							 ->from('cnt_has_tag', array('id_cnt'))
+    							 ->where('id_tag IN (?)', $tags);
+   		
+   		$contents = $cntHasTagModel->fetchAll($select)->toArray();
+    	$linkedContents = $this->find($contents);
+ 	
+    	$viewsModel = new Default_Model_ContentViews();
+    	$rows = array();
+    	
+    	foreach ($linkedContents as $row) {
+    		$tempRow = array();
+    		$tempRow['title_cnt']   = $row->title_cnt;
+    		$tempRow['id_cnt']      = $row->id_cnt;
+    		$tempRow['viewCount']   = $viewsModel->getViewsByContentId($row->id_cnt);
+    		$tempRow['contentType'] = $row->findDependentRowset('Default_Model_ContentTypes', 'ContentType')->current()->key_cty;
+    		array_push($rows, $tempRow);
+    	}
+
+    	return $rows;
+    }
+    
+    /* getTagNamesByContentId
+     * gets tag names by content id 
+     * 
+     * @param			id_cnt		content id
+     * @return	array	(name_tag, name_tag, ...) 
+     */
+    public function getTagNamesByContentId($id_cnt) {
+
+    	$content = $this->find($id_cnt)->current();
+    	$contentTagIds = $content->findDependentRowset('Default_Model_ContentHasTag', 'TagContent');
+    	$tagsArray = array();
+    	foreach ($contentTagIds as $tagId) {
+    		$tag = $tagId->findDependentRowset('Default_Model_Tags', 'TagTag')->current();
+    		array_push($tagsArray, $tag->name_tag);
+	    }
+	    return $tagsArray;
+    }
+    
+    /*getTagIdsByContentId
+     * 
+     * Gets all tag ids linked to content
+     * 
+     * @param			id_cnt		content id
+     * @return 	array	(id_tag, id_tag, ...) tag ids
+     */
+    public function getTagIdsByContentId($id_cnt) {
+
+    	$content = $this->find($id_cnt)->current();
+    	$contentTags = $content->findDependentRowset('Default_Model_ContentHasTag', 'TagContent');
+    	$ids = array();
+    	foreach ($contentTags as $tag) {
+    		array_push($ids, $tag->id_tag);
+    	}
+
+	    return $ids;
+    }
+    /**
 	 *   getByName
 	 *
 	 *   Gets content by name from database. This is used in search function.
@@ -571,6 +643,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 $contentHasInnovationType->addInnovationTypeToContent($content->id_cnt, $data['innovation_type']);
             }
         }
+        
+        // Reset and save latest post time hash in cache 
+        $cache = Zend_Registry::get('cache');
+        $cache->remove('LatestPostHash');
+        $cache->save('LatestPostHash', md5(time()));
         
         return $return;
     } // end of addContent

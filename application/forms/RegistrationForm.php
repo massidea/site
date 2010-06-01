@@ -138,6 +138,7 @@ class Default_Form_RegistrationForm extends Zend_Form
 				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
 				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long'))),
                 new Oibs_Validators_UsernameExists('username'),
+                new Oibs_Validators_Username('username')
 				))
 				->setDecorators(array('RegistrationDecorator'));
 		

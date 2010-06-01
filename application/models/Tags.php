@@ -39,6 +39,15 @@ class Default_Model_Tags extends Zend_Db_Table_Abstract
 
     // Table dependet tables
     protected $_dependentTables = array('Default_Model_ContentHasTag');
+    
+    protected $_referenceMap    = array(
+		'TagTag' => array(
+            'columns'           => array('id_tag'),
+            'refTableClass'     => 'Default_Model_ContentHasTag',
+            'refColumns'        => array('id_tag')
+        )
+    );
+	
 /*
     protected $_referenceMap    = array(
         'TagContents' => array(

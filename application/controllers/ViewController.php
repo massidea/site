@@ -57,8 +57,11 @@
         // get requests
         $request = $this->getRequest();
         $params = $request->getParams();
-        
+
         $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
+    						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
+		
         // get content id from params, if not set or invalid, send a message
         $id = (int)$params['content_id'];
                 
@@ -147,24 +150,22 @@
 						$notifications = $notificationsModel->getNotificationsById($ownerId);
 
 	                    if (in_array('comment', $notifications)) {
-	                        $ownerEmail = $user->getUserEmail($ownerId);
-	                        $ownerUsername = $user->getUserNameById($ownerId);
-	
-	      					$bodyText = "Your content has a new comment at Massidea.org\n\n"
-	      								.$comment_sender." commented your content ".$contentData['title_cnt']."\n\n"
-	      								."Comment: ".$formData['comment_message'];
-	      					$bodyHtml = "Your content has a new comment at Massidea.org<br /><br />"
-	      								.'<a href="'.$baseUrl."/".$this->view->language.'/account/view/user/'.$comment_sender.'">'.$comment_sender.'</a>'
-	      								.' commented your content <a href="'.$baseUrl."/".$this->view->language.'/view/'.$id.'">'.$contentData['title_cnt'].'</a><br /><br />'
-	      								.'Comment: '.$formData['comment_message'];
-	
-	      					$mail = new Zend_Mail();
-	    					$mail->setBodyText($bodyText);
-	      					$mail->setBodyHtml($bodyHtml);
-	     					$mail->setFrom('no-reply@massidea.org', 'Massidea.org');
-	      					$mail->addTo($ownerEmail, $ownerUsername);
-	      					$mail->setSubject('Massidea.org: You have a new comment');
-	      					$mail->send();
+	                    	
+	                    	$emailNotification = new Oibs_Controller_Plugin_Email();
+	                    	$emailNotification->setNotificationType('comment')
+	                    					   ->setSenderId($user_id)
+	                    					   ->setReceiverId($ownerId)
+	                    					   ->setParameter('URL', $absoluteBaseUrl."/en")
+	                    					   ->setParameter('SENDER-NAME', $comment_sender)
+	                    					   ->setParameter('CONTENT-ID', $id)
+	                    					   ->setParameter('CONTENT-TITLE', $contentData['title_cnt'])
+	                    					   ->setParameter('COMMENT', $formData['comment_message']);
+	                    					   
+							if ($emailNotification->isValid()) {
+								$emailNotification->send();
+							} else {
+								//echo $emailNotification->getErrorMessage(); die;
+							}
 	                    }
                         
                         $Default_Model_privmsg->addMessage($data);
@@ -191,7 +192,11 @@
 
         // get other content from user.. function needs a looking-over!
         // Also it needs to be separated from this action so the MVC-is correct!
+        
         $moreFromUser = $userModel->getUserContent($ownerId);
+    	
+        // get related contents
+        $relatedContents = $contentModel->getRelatedContents($id);
 
         // get (VIEWED) content views (returns a string directly)
         $contentViewsModel = new Default_Model_ContentViews();
@@ -355,7 +360,7 @@
         $industriesArray = $industriesModel->getAllContentIndustryIds($hasIndustry);
         
         // roll values to an array
-        $industries = array();
+        /*$industries = array();
         foreach ($industriesArray as $industry) {
             $value = $industriesModel->getNameById($industry);
             // $industriesModel->getNameById($industry);
@@ -363,7 +368,7 @@
            if (!empty($value)) {
                 $industries[] = $value;
             }
-        }
+        }*/
         
         // Check if and when the content is modified and if its more than 10minutes ago add for the view
         $dateCreated = strtotime( $contentData['created_cnt'] );
@@ -376,7 +381,6 @@
         // Inject data to view
         $this->view->files 				= $files;
         $this->view->id					= $id;
-        $this->view->industries         = $industries;
         $this->view->userImage          = $userImage;
         $this->view->commentPaginator   = $paginator;
         $this->view->commentData        = $commentsSorted;
@@ -385,6 +389,7 @@
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;
         $this->view->moreFromUser       = $moreFromUser;
+        $this->view->relatedContents    = $relatedContents;
         $this->view->views              = $views;
         $this->view->rating             = $rating;
         $this->view->tags               = $tags;

@@ -17,10 +17,9 @@
 ?>
 
 <?php // If requested "more from user" ?>
-<?php if ($getData == "morefromuser") {?>
+<?php if ($getData == "relateduser") {?>
 	<?php $loopround = 0; ?>
 	<?php foreach($this->moreFromUser as $user_cnt): ?>
-	
 		<div id="content_view_user_related_entry_<?php echo $user_cnt['id_cnt']; ?>" class="content_view_user_related_entry_<?php echo $user_cnt['key_cty'];?>">
 			<span><a href="<?php echo $this->url(array('content_id' => $user_cnt['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>"><?php echo stripslashes($user_cnt['title_cnt']); ?></a></span><br />
 			<span><?php echo $this->translate('content-view-user-related-views'); echo $user_cnt['views']; ?></span>
@@ -33,13 +32,27 @@
 		?>
 	
 	<?php endforeach; ?>
-	
+
+<?php } elseif ($getData == "relatedcontent") { ?>
+	<?php $loopround = 0; ?>
+	<?php foreach($this->relatedContents as $cnt) : ?>
+		<div id="content_view_content_related_entry_<?php echo $cnt['id_cnt']; ?>" class="content_view_content_related_entry_<?php echo $cnt['contentType'];?>">
+			<span><a href="<?php echo $this->url(array('content_id' => $cnt['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>"><?php echo stripslashes($cnt['title_cnt']); ?></a></span><br />
+			<span><?php echo $this->translate('content-view-user-related-views'); echo $cnt['viewCount']; ?></span>
+		</div>
+		
+		<?php
+		$loopround++;
+		if ($loopround == 10) // limit view to 10 items
+			break;
+		?>
+	<?php endforeach;?>
 <?php // If requested "content rating" ?>
 <?php } elseif ($getData == "content_rating") { ?>
 		<div id="content_view_content_rating">
 			<span id="current_rating">
                 <?php //echo " " . $this->translate('content-rating'); ?>
-                <div id="content_view_content_rating_positive">
+                <div class="content_rating_positive">
             	<?php print_r($this->rating['positive_percentage']); echo '%'; ?>
             	</div>
 		        <?php if($this->user_can_comment) { // if can comment, can also rate ?>
@@ -53,7 +66,7 @@
 							<img src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_down.png" alt="Vote down" />
 					</div>
 				<?php } ?>
-				<div id="content_view_content_rating_negative">
+				<div class="content_rating_negative">
 				<?php print_r($this->rating['negative_percentage']); echo '%'; ?>
 				</div>
 				<div id="content_view_content_rating_total">
