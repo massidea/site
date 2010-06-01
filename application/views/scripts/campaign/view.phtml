@@ -1,42 +1,84 @@
-<h3>
-<?php echo $this->campaign['name_cmp']; ?>
-    campaign by
-<?php echo $this->grpname; ?>
-</h3>
-
-<h4>Ingress</h4>
-<p><?php echo $this->campaign['ingress_cmp']; ?></p>
-
-<h4>Description</h4>
-<p><?php echo $this->campaign['description_cmp']; ?></p>
-
-<?php $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601); ?>
-<h4>Campaign has started</h4>
-<p> <?php echo $cmpstart->toString('dd MMM, yyyy'); ?> </p>
-
-<?php $cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601); ?>
-<h4>Campaign is ending</h4>
-<p><?php echo $cmpend->toString('dd MMM, yyyy'); ?></p>
-
-
-<h3>Linked contents:</h3>
-<p>
-<?php foreach ($this->cmpcnts as $content): ?>
 <?php
-$url_post = $this->url(array('content_id' => $content['id_cnt'],
-                             'language' => $this->language ),
-                             'content_shortview', true);
-?>
-    <a href="<?php echo $url_post; ?>"><?php echo $content['title_cnt']?></a>
-    <?php echo "<br />\n"; ?>
-<?php endforeach; ?>
-</p>
-
-<?php
+Zend_Layout::getMvcInstance()->setLayout('layout_new');
+$cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
+$cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
 $linkurl = $this->url(array('controller' => 'campaign',
                             'action'     => 'link',
                             'cmpid'      => $this->campaign['id_cmp'],
                             'language'   => $this->language),
                         'lang_default', true);
 ?>
-<p><a href="<?php echo $linkurl; ?>">Link more content to campaign</a></p>
+<div id="campaign-page">
+    <h2>
+        <?php echo $this->campaign['name_cmp']; ?>
+        campaign by
+        <?php echo $this->grpname; ?>
+    </h2>
+    <div id="profile-meta">
+        <img class="avatar" alt="" src="" />
+        <p><?php echo $this->campaign['ingress_cmp']; ?></p>
+        <p>
+            <strong><a href="<?php echo $this->url(array('controller' => 'tag',
+                                                        'action' => 'index',
+                                                        'language' => $this->language),
+                                                        'lang_default', true); ?>">
+                  <?php echo $this->translate('content-view-tags'); ?>
+                  </a>
+            </strong><?php // tägit tähän väliin ?>
+        </p>
+        <p>
+            <strong>Campaign has started: </strong>
+            <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
+        </p>
+        <p>
+            <strong>Campaign is ending: </strong>
+            <?php echo $cmpend->toString('dd MMM, yyyy'); ?>
+        </p>
+        <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
+        <ul>
+        <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
+        </ul>
+        <p>
+            <strong>Group: </strong>
+            <br />
+            Ryhmän nimi tähän
+            <br />
+        </p>
+        <div id="members">
+            <h4><?php echo $this->translate('group-members'); ?></h4>
+            <span class="more"><strong><a href="">Show all</a></strong></span>
+            <div class="clear"></div>
+            <ul>
+                <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
+            </ul>
+            <span class="more"><strong><a href="">Show all</a></strong></span>
+            <div class="clear dot-line-200"></div>
+        </div>
+    </div>
+    <div id="activity" class="right">
+        <div class="left">
+            <div id="campaign-info">
+                <p><?php echo $this->campaign['description_cmp']; ?></p>
+            </div>
+            <div class="clear"></div>
+            <div id="contribute">
+                <h2>I want to contribute:</h2>
+                <div class="right">
+                    <a href="<?php echo $linkurl; ?>">Link more content to campaign</a>
+                </div>
+                <div class="clear"></div>
+                <div id="current-posts">
+                    <div id="head">
+                        <h2>Current posts</h2>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="scroll-box">
+                        <ul>
+                            <?php echo $this->partialLoop('partials/content-row.phtml', $this->cmpcnts); ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
