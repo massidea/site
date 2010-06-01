@@ -19,11 +19,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                   </a>
             </strong><?php // tägit tähän väliin ?></p>
 
-        <p><strong><?php echo $this->translate('group-founded') . ':'; ?></strong> ' <?php echo $date_founded->toString('dd MMM, yyyy'); ?></p>
+        <p><strong><?php echo $this->translate('group-founded') . ': '; ?></strong><?php echo $date_founded->toString('dd MMM, yyyy'); ?></p>
 
 
 
         <strong><?php echo $this->translate('group-admins') . ':'; ?></strong>
+
         <ul>
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
         </ul>
