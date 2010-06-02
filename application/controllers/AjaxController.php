@@ -20,7 +20,7 @@
  *  AjaxController - class
  *
  *  @package     controllers
- *  @author      Jaakko Paukamainen  
+ *  @author      Jaakko Paukamainen & Jari Korpela
  *  @copyright   2010 Jaakko Paukamainen 
  *  @license     GPL v2
  *  @version     1.0
@@ -95,6 +95,38 @@ class AjaxController extends Oibs_Controller_CustomController
             $output = $result;
         }
 
+		$this->view->output = $output;
+	}
+	
+	public function getuserlocationsAction() {
+
+		$output = "";
+		// Get requests
+		$params = $this->getRequest()->getParams();
+		$search = isset($params['search']) ? $params['search'] : null;
+		//if(strlen($search) <= 1) $search = null;
+
+		if($search) {
+			// Get cache from registry
+			$cache = Zend_Registry::get('cache');
+
+			// Load user locations from cache
+			if(!$resultList = $cache->load('UserLocationsList')) {
+				$userModel = new Default_Model_User();
+				$locations = $userModel->getAllUsersLocations();
+				$cache->save($locations, 'UserLocationsList');
+
+			} else {
+				$locations = $resultList;
+			}
+			
+			if($search == "cities") {
+				$output = json_encode($locations['cities']);
+			}
+			elseif($search == "countries") {
+				$output = json_encode($locations['countries']);
+			}
+		}
 		$this->view->output = $output;
 	}
 }
