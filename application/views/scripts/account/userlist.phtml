@@ -5,18 +5,75 @@ $url_getUserLocations = $this->url(array('controller' => 'ajax',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
+$url_getUserContents = $this->url(array('controller' => 'ajax',
+							 'action' => 'getusercontents',
+							 'language' => $this->language), 
+							 'lang_default', true);
+
+$url_contentView = $this->url(array('controller' => 'view',
+							 'language' => $this->language), 
+							 'lang_default', true);
+
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete');
+//$this->headLink()->appendStylesheet($this->baseUrl . '/css/style_additions_req.css');
 $this->headScript()->captureStart();
 
 ?>
 
 $(document).ready(function(){
-	jsonSearch("cities");
+	jsonSearchLocations("cities");
+	var json_users = '<?php echo json_encode($this->userList); ?>';
+	var obj = jQuery.parseJSON(json_users);
+	$.each(obj, function() {
+		jsonSearchContents(this);
+		$("input#user_"+this+"_content").focus(function() {
+			$(this).click();
+		});
+	});
+	
 });
 
-function jsonSearch(method,list){
+function jsonSearchContents(user_id){
+	$.getJSON("<?php echo $url_getUserContents ?>/search/"+user_id, function(data) {
+	  complete_user_content_search(user_id,data);	  
+	});
+};
+
+function complete_user_content_search(user_id,result){
+
+		var green = "smallsize_idea_border";
+		var red = "smallsize_problem_border";
+		var yellow = "smallsize_finfo_border";
+		
+		$("#user_"+user_id+"_content").autocomplete(result, {
+		minChars: 0,
+		width:347,
+		delay:400,
+		scrollHeight:200,
+		matchContains: true,
+		autoFill: false,
+		selectFirst:true,
+		max:result.length,
+		formatItem: function(row, i, max) {
+			if (row.id_cty_cnt == 1) var type = red;
+			if (row.id_cty_cnt == 2) var type = green;
+			if (row.id_cty_cnt == 3) var type = yellow;
+			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right\"> [" + row.created_cnt + "]</span></span>";
+		},
+		formatMatch: function(row, i, max) {
+			return row.title_cnt;
+		},
+		formatResult: function(row) {
+			return row.title_cnt;
+		}
+	});
+
+};
+
+function jsonSearchLocations(method){
 	$.getJSON("<?php echo $url_getUserLocations ?>/search/"+method, function(data) {
-	  complete_city(data);
+	  if (method == "cities") complete_city(data);
+	  else return;
 	});
 };
 
@@ -97,6 +154,12 @@ function complete_city(result){
                             <div id="user_<?php echo $user['id_usr']; ?>_info_content" class="user_list_user_info_data">
                                 <?php echo $this->translate(('account-userlist-user-content-added'), $user['contentCount']); ?>
                             </div>
+                        </div>
+                        <div class="user_list_user_info_second">
+                        <div class="user_list_content_search">
+                        Content search:
+                        <input id="user_<?php echo $user['id_usr']; ?>_content"></input>
+                        </div>
                         </div>
                         
                     </div>

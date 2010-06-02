@@ -1516,6 +1516,12 @@ form #uploadedFiles_div .form_element_input label {
     display: table-cell;
     vertical-align: top;
 }
+
+.user_list_user_info_second {
+    display: table-cell;
+    vertical-align: bottom;
+    width: 60%;
+}
  
 .user_list_user_image {
     display: table-cell;

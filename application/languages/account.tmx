@@ -445,7 +445,7 @@
 	</tu>	
 	
 	<tu tuid='account-userlist-search-instructions'>
-		<tuv xml:lang="en"><seg>You can use % or * as a wildcard in the search fields and _ or ? as one character match. Search uses wildcards automatically in the both ends of the search word.</seg></tuv>
+		<tuv xml:lang="en"><seg>Use "%" or "*" characters as a wildcard in the search fields and "_" or "?" characters as one character wildcard. Search uses wildcards automatically in the both ends of the search word. Wildcard character is a character that may be substituted for any of a defined subset of all possible characters.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Voit käyttää haussa % tai * jokerimerkkinä ja _ tai ? merkkiä yhden merkin korvausmerkkinä. Haku käyttää automaattisesti jokerimerkkejä tekstin molemmin puolin.</seg></tuv>
 	</tu>
 	<tu tuid='account-userlist-user-content-added'>
@@ -497,8 +497,8 @@
 		<tuv xml:lang="fi"><seg>Kaupunki</seg></tuv>
 	</tu>
 	<tu tuid='userlist-filter-submit'>
-		<tuv xml:lang="en"><seg>Filter</seg></tuv>
-		<tuv xml:lang="fi"><seg>Suodata</seg></tuv>
+		<tuv xml:lang="en"><seg>Search</seg></tuv>
+		<tuv xml:lang="fi"><seg>Etsi</seg></tuv>
 	</tu>
 	<tu tuid='account-login-via-openid'>
 		<tuv xml:lang="en"><seg>Login via OpenID</seg></tuv>

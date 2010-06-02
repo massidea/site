@@ -1059,7 +1059,11 @@ class AccountController extends Oibs_Controller_CustomController
         // Get user listing
         $user = new Default_Model_User();
         $userListing = $user->getUserListing($formData, $page, $count);
-        
+
+        $userIdList = array();
+        foreach($userListing as $u) {
+        	array_push($userIdList,$u['id_usr']); 
+        }
         // Get total content count
         $userCount = $user->getUserCountBySearch($formData);
         
@@ -1113,6 +1117,7 @@ class AccountController extends Oibs_Controller_CustomController
         // Set to view
         $this->view->userPaginator = $paginator;
         $this->view->userListData = $userListing;
+        $this->view->userList = $userIdList;
         $this->view->count = $count;
         $this->view->userCount = $userCount;
         $this->view->page = $page;
