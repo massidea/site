@@ -4,7 +4,7 @@ $cmpurl = $this->url(array('cmpid' => $this->id_cmp,
                            'language' => $language),
                      'campaign_view', true);
 
-if ($this->end_time_cmp == '0000-00-00 00:00:00') {
+if ($this->end_time_cmp == '0000-00-00') {
     $date = 'Never';
 } else {
     $date = new Zend_Date($this->end_time_cmp, Zend_Date::ISO_8601);
@@ -12,7 +12,7 @@ if ($this->end_time_cmp == '0000-00-00 00:00:00') {
 }
 // TODO: muokkailua :D
 ?>
-<li class="ideas">
+<li class="deepblue">
     <div>
         <p>
             <a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a>

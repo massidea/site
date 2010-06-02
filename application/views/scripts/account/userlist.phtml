@@ -1,3 +1,49 @@
+<?php 
+
+$url_getUserLocations = $this->url(array('controller' => 'ajax',
+							 'action' => 'getuserlocations',
+							 'language' => $this->language), 
+							 'lang_default', true);
+
+$this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete');
+$this->headScript()->captureStart();
+
+?>
+
+$(document).ready(function(){
+	jsonSearch("cities");
+});
+
+function jsonSearch(method,list){
+	$.getJSON("<?php echo $url_getUserLocations ?>/search/"+method, function(data) {
+	  complete_city(data);
+	});
+};
+
+function complete_city(result){
+	
+		$("#city").autocomplete(result, {
+		minChars: 1,
+		width:247,
+		delay:400,
+		scrollHeight:200,
+		matchContains: true,
+		autoFill: false,
+		selectFirst:false,
+		formatItem: function(row, i, max) {
+			return row.name + "<span style=\"float:right\"> [" + row.amount + "]</span>";
+		},
+		formatMatch: function(row, i, max) {
+			return row.name;
+		},
+		formatResult: function(row) {
+			return row.name;
+		}
+	});
+	
+};
+<?php $this->headScript()->captureEnd(); ?>
+
 <div id="user_list">
 
     <div id="user_list_top" class="clear">
