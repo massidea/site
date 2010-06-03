@@ -1246,7 +1246,10 @@ class ContentController extends Oibs_Controller_CustomController
 
 					$languages = New Default_Model_Languages();
 					$idLngInd = $languages->getLangIdByLangName($this->view->language);
-					 
+					
+					// Getting language of the content
+					$formData['content_language'] = $languages->getLangIdByLangName($data['language_cnt']);
+
 					// Getting the industry of the content
 					$modelCntHasInd = new Default_Model_ContentHasIndustries();
 					$cntInd = $modelCntHasInd->getIndustryIdOfContent($data['id_cnt']);
@@ -1337,6 +1340,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 
 												// Form for content adding
                                                 $form = new Default_Form_EditContentForm(null, $formData, $contentId, $contentType, $this->view->language);
+                                                $form->populate($formData);
                                                 $this->view->form = $form;
                                                 $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                         'action' => 'index', 
