@@ -68,10 +68,14 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     	$hash = hash_hmac_file('sha1', $uploadedFile['tmp_name'], $id_cnt.$uploadedFile['name']);
 		$dir = "files/".$id_usr."/";
     	if (! file_exists($dir)) {
-    		mkdir($dir, 0700, true);
+    		mkdir($dir, 0777, true);
     	} 
-    	move_uploaded_file($uploadedFile['tmp_name'], $dir.$hash);
     	
+    	if ( file_exists($dir.$hash)) {
+    		return false;
+    	}
+    	
+    	move_uploaded_file($uploadedFile['tmp_name'], $dir.$hash);
     	$file = $this->createRow();
     	$file->id_cnt_fil = $id_cnt;
     	$file->id_usr_fil = $id_usr;
