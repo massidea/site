@@ -35,9 +35,25 @@ $(document).ready(function(){
 
 function jsonSearchContents(user_id){
 	$.getJSON("<?php echo $url_getUserContents ?>/search/"+user_id, function(data) {
-	  complete_user_content_search(user_id,data);	  
+	  complete_user_content_search(user_id,data);
+	  complete_user_latest_contents(user_id,data);
 	});
 };
+
+function complete_user_latest_contents(user_id,result){
+	var green = "smallsize_idea_border";
+	var red = "smallsize_problem_border";
+	var yellow = "smallsize_finfo_border";
+	var i = 0;
+	$.each(result, function() {
+		if (this.id_cty_cnt == 1) var type = yellow;
+		if (this.id_cty_cnt == 2) var type = green;
+		if (this.id_cty_cnt == 3) var type = red;
+		$("#user_"+user_id+"_latest_content").append("<div style=\"padding-bottom:2px;\"><span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+this.id_cnt+"\">" + this.title_cnt + "</a>: "+this.lead_cnt+"</span></span></div>");
+		i++;
+		if (i == 3) return false;
+	});
+}
 
 function complete_user_content_search(user_id,result){
 
@@ -50,14 +66,15 @@ function complete_user_content_search(user_id,result){
 		width:347,
 		delay:400,
 		scrollHeight:200,
+		cacheLength:20,
 		matchContains: true,
 		autoFill: false,
 		selectFirst:true,
 		max:result.length,
 		formatItem: function(row, i, max) {
-			if (row.id_cty_cnt == 1) var type = red;
+			if (row.id_cty_cnt == 1) var type = yellow;
 			if (row.id_cty_cnt == 2) var type = green;
-			if (row.id_cty_cnt == 3) var type = yellow;
+			if (row.id_cty_cnt == 3) var type = red;
 			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right\"> [" + row.created_cnt + "]</span></span>";
 		},
 		formatMatch: function(row, i, max) {
@@ -156,6 +173,7 @@ function complete_city(result){
                             </div>
                         </div>
                         <div class="user_list_user_info_second">
+                        <div id="user_<?php echo $user['id_usr']; ?>_latest_content"><div style="padding:2px;"><strong><?php echo $this->translate('account-userlist-user-latest-contents');?></strong></div></div>
                         <div class="user_list_content_search">
                         Content search:
                         <input id="user_<?php echo $user['id_usr']; ?>_content"></input>

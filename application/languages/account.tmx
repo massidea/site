@@ -452,6 +452,10 @@
 		<tuv xml:lang="en"><seg>User has added %s content.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjä on lisännyt %s sisältöä.</seg></tuv>
 	</tu>
+	<tu tuid='account-userlist-user-latest-contents'>
+		<tuv xml:lang="en"><seg>Users latest contents: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjän uusimmat sisällöt: </seg></tuv>
+	</tu>
 	<tu tuid='account-userlist-user-joined'>
 		<tuv xml:lang="en"><seg>Joined: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Liittynyt: </seg></tuv>

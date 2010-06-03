@@ -1008,7 +1008,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	return $result;
     }
     
-   public function getUserContentList($author_id = 0, $type = 0) {
+   public function getUserContentList($author_id = 0, $sort = 0, $type = 0) {
         $result = array();  // container for final results array
         
         $whereType = 1;
@@ -1046,7 +1046,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
-                                           ->order('cnt.id_cty_cnt ASC')
+                                           //->order('cnt.id_cty_cnt ASC')
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
                 ;
