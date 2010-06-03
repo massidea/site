@@ -30,7 +30,7 @@ class Oibs_Controller_Plugin_GTranslate {
 	
 	private $_langFrom;
 	private $_langTo;
-	private $_string;
+	private $_queryString;
 	private $_error;
 	
 	public function __construct()
@@ -43,8 +43,8 @@ class Oibs_Controller_Plugin_GTranslate {
 	 * 
 	 * Sets language pair
 	 * 
-	 * @param	from	Translate language from
-	 * @param	to		Translate language to
+	 * @param	string	from	Translate language from
+	 * @param	string	to		Translate language to
 	 */
 	public function setLangPair($from, $to)
 	{
@@ -57,8 +57,6 @@ class Oibs_Controller_Plugin_GTranslate {
 	 * public function switchLang()
 	 * 
 	 * Switches language pair places (from -> to, to -> from)
-	 * 
-	 * @param	none	none
 	 */
 	public function switchLang()
 	{
@@ -72,42 +70,61 @@ class Oibs_Controller_Plugin_GTranslate {
 	 * 
 	 * Executes the translation and returns the result
 	 * 
-	 * @param	query	String to translate
-	 * @return	string	Translated string
+	 * @param	queryString	string	String to translate
+	 * @return				string	Translated string
 	 */
-	public function translate($query) {
+	public function translate($string) {
+		$this->_queryString = $string;
 		if ($this->_isValid()) {
-			$client = new Zend_Http_Client('http://ajax.googleapis.com/ajax/services/language/translate', array(
-                        'maxredirects' => 0,
-                        'timeout'      => 30));
-
-			$client->setParameterGet(array(
-                        'v' => '1.0',
-                        'q' => $query,
-                        'langpair' => $this->_langFrom."|".$this->_langTo
-			));
-
-			$response = $client->request();
-
-			$data = $response->getBody();
-
-			$server_result = json_decode($data);
-
-			$status = $server_result->responseStatus; // should be 200
-			$details = $server_result->responseDetails;
-
-			$result = $server_result->responseData->translatedText;
+			$cache = Zend_Registry::get('cache');
+			$hash = $this->_generateHash();
+			$cacheName = 'GTranslate_'.$hash;
+			if(!($result = $cache->load($cacheName)))
+			{
+				$client = new Zend_Http_Client('http://ajax.googleapis.com/ajax/services/language/translate', array(
+	                        'maxredirects' => 0,
+	                        'timeout'      => 30));
+	
+				$client->setParameterGet(array(
+	                        'v' => '1.0',
+	                        'q' => $this->_queryString,
+	                        'langpair' => $this->_langFrom."|".$this->_langTo
+				));
+	
+				$response = $client->request();
+				$data = $response->getBody();
+				$server_result = json_decode($data);
+	
+				//$status = $server_result->responseStatus; // should be 200
+				
+				//$details = $server_result->responseDetails;
+				
+				$result = $server_result->responseData->translatedText;
+				// If translation fails (incompatible language pair), return original string
+				if(!isset($result)) $result = $this->_queryString;
+				$cache->save($result, $cacheName);
+			}
 			return $result;
 
 		} else {
-			return "Translation error";
+			return "GTranslation error";
 		}
 	}
 	
-	/* isValid
+	/*
+	 * private function _generateHash()
 	 * 
-	 * checks if all data is valid and no errors have been put up. 
-	 * REQUIRED to be ran before send()
+	 * Generates a md5-hash for identifying a cached translation
+	 */
+	private function _generateHash()
+	{
+		$rawHash = $this->_langFrom . $this->_langTo . $this->_queryString;
+		return md5($rawHash);
+	}
+	
+	/* private function _isValid()
+	 * 
+	 * Checks if all data is valid and no errors have been put up. 
 	 */
 	private function _isValid() {
 		if($this->_langFrom == null) $this->_error = true;
@@ -115,37 +132,6 @@ class Oibs_Controller_Plugin_GTranslate {
 		
 		return !$this->_error;
 	}
-	
-//	/* getErrorMessage
-//	 * 
-//	 * returns possible errormessage
-//	 * 
-//	 * @return string	errormessage
-//	 */
-//	public function getErrorMessage() {
-//		return $this->_errorMessage;
-//	}
-//	
-//	/* _loadMessage
-//	 * 
-//	 * private method to handle loading of message from template
-//	 */
-//	private function _loadMessage() {
-//		//
-//		//$this->_subject = "uus kommentti";
-//		$templateDir = "../library/Oibs/Emails/"; 
-//		$file = $templateDir."notification_email_".$this->_notificationType.".txt";
-//		
-//		$message = split("\n", @file_get_contents($file), 2);
-//
-//		$this->_subject = $message[0];
-//		
-//		$this->_message = nl2br($message[1]);
-//		 
-//		if ($this->_message == "") {
-//			$this->_errorMessage = "Error when opening file";
-//		}
-//	}
 
 }
 ?>
