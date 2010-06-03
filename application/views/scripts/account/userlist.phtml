@@ -25,6 +25,10 @@ $(document).ready(function(){
 	var json_users = '<?php echo json_encode($this->userList); ?>';
 	var obj = jQuery.parseJSON(json_users);
 	$.each(obj, function() {
+		$("#user_"+this+"_latest_content").html(
+		'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
+		'Please wait...</h3>'
+	);
 		jsonSearchContents(this);
 		$("input#user_"+this+"_content").focus(function() {
 			$(this).click();
@@ -34,10 +38,17 @@ $(document).ready(function(){
 });
 
 function jsonSearchContents(user_id){
-	$.getJSON("<?php echo $url_getUserContents ?>/search/"+user_id, function(data) {
+
+$.ajax({
+  url: "<?php echo $url_getUserContents ?>/search/"+user_id,
+  dataType: 'json',
+  success: function(data) {
 	  complete_user_content_search(user_id,data);
 	  complete_user_latest_contents(user_id,data);
-	});
+	}	
+});
+
+
 };
 
 function complete_user_latest_contents(user_id,result){
@@ -45,11 +56,16 @@ function complete_user_latest_contents(user_id,result){
 	var red = "smallsize_problem_border";
 	var yellow = "smallsize_finfo_border";
 	var i = 0;
+	$("#user_"+user_id+"_latest_content").html("<strong><?php echo $this->translate('account-userlist-user-latest-contents');?></strong>");
 	$.each(result, function() {
 		if (this.id_cty_cnt == 1) var type = yellow;
 		if (this.id_cty_cnt == 2) var type = green;
 		if (this.id_cty_cnt == 3) var type = red;
-		$("#user_"+user_id+"_latest_content").append("<div style=\"padding-bottom:2px;\"><span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+this.id_cnt+"\">" + this.title_cnt + "</a>: "+this.lead_cnt+"</span></span></div>");
+		if (this.lead_cnt.length + this.title_cnt.length > 120) var lead = this.lead_cnt.substr(0,120-this.title_cnt.length)+"...";
+		else var lead = this.lead_cnt;
+		var createtime = "<span style=\"padding-right:10px; float:right\"> [" + this.created_cnt + "]</span>";
+		var title = "<a href=\"<?php echo $url_contentView ?>/"+this.id_cnt+"\">" + this.title_cnt + "</a>";
+		$("#user_"+user_id+"_latest_content").append("<div style=\"padding-bottom:2px;\"><span class=\""+type+"\"><span style=\"padding-left:2px;\">"+title+": "+lead+"</span>"+createtime+"</span></div>");
 		i++;
 		if (i == 3) return false;
 	});
@@ -78,7 +94,7 @@ function complete_user_content_search(user_id,result){
 			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right\"> [" + row.created_cnt + "]</span></span>";
 		},
 		formatMatch: function(row, i, max) {
-			return row.title_cnt;
+			return row.title_cnt+" "+row.lead_cnt;
 		},
 		formatResult: function(row) {
 			return row.title_cnt;
@@ -173,7 +189,7 @@ function complete_city(result){
                             </div>
                         </div>
                         <div class="user_list_user_info_second">
-                        <div id="user_<?php echo $user['id_usr']; ?>_latest_content"><div style="padding:2px;"><strong><?php echo $this->translate('account-userlist-user-latest-contents');?></strong></div></div>
+                        <div id="user_<?php echo $user['id_usr']; ?>_latest_content"><div style="padding:2px;"></div></div>
                         <div class="user_list_content_search">
                         Content search:
                         <input id="user_<?php echo $user['id_usr']; ?>_content"></input>
