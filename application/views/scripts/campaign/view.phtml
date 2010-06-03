@@ -22,7 +22,7 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                                                         'lang_default', true); ?>">
                   <?php echo $this->translate('content-view-tags'); ?>
                   </a>
-            </strong><?php // tägit tähän väliin ?>
+            </strong><?php // tï¿½git tï¿½hï¿½n vï¿½liin ?>
         </p>
         <p>
             <strong>Campaign has started: </strong>
@@ -39,7 +39,7 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
         <p>
             <strong>Group: </strong>
             <br />
-            Ryhmän nimi tähän
+            <?php echo $this->grpname; ?>
             <br />
         </p>
         <div id="members">
@@ -72,7 +72,7 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                     <div class="clear"></div>
                     <div class="scroll-box">
                         <ul>
-                            <?php echo $this->partialLoop('partials/content-row.phtml', $this->cmpcnts); ?>
+                            <?php echo $this->partialLoop('partials/content_row.phtml', $this->cmpcnts); ?>
                         </ul>
                     </div>
                 </div>
