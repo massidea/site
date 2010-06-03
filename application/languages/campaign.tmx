@@ -51,4 +51,8 @@
 		<tuv xml:lang="en"><seg>Remove link</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista linkki</seg></tuv>
 	</tu>
+        <tu tuid='campaign-admins'>
+		<tuv xml:lang="en"><seg>Admin(s)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ylläpitäjä(t)</seg></tuv>
+	</tu>
 </body>

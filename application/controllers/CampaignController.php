@@ -195,20 +195,9 @@ class CampaignController extends Oibs_Controller_CustomController
                 $model_content_types = new Default_Model_ContentTypes();
                 $model_cmp_has_cnt = new Default_Model_CampaignHasContent();
 
-                $id_usr = $auth->getIdentity()->user_id;
-                $contenttype = $model_content_types->getTypeById($relatestoid);
-                $id_cty = $model_content_types->getIdByType($contenttype);
+                $contenttype = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
 
                 $contentCampaigns = $model_cmp_has_cnt->getContentCampaigns($relatestoid);
-
-                /*
-                $model_groups = new Default_Model_Groups();
-                foreach($contentCampaigns as $key1 => $campaigns) {
-                    foreach ($campaigns as $key2 => $campaign) {
-                        $contentCampaigns[$key1][$key2]['group'] = $model_groups->//get($content['id_cmp']);
-                    }
-                }
-                */
             }
             $this->view->contentexists = $contentexists;
             $this->view->relatesToId = $relatestoid;
