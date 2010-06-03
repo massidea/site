@@ -1057,9 +1057,13 @@
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
 	</tu>
-    <tu tuid='content-editlinks'>
-		<tuv xml:lang="en"><seg>Edit links</seg></tuv>
-		<tuv xml:lang="fi"><seg>Muokkaa linkkejä</seg></tuv>
+    <tu tuid='content-edit-content-links'>
+		<tuv xml:lang="en"><seg>Edit content links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa sisällön linkkejä</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-campaign-links'>
+		<tuv xml:lang="en"><seg>Edit campaign links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa kampanjan linkkejä</seg></tuv>
 	</tu>
 	<tu tuid='content-cancel'>
 		<tuv xml:lang="en"><seg>Cancel</seg></tuv>

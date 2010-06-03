@@ -2,11 +2,9 @@
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
 $cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
-$linkurl = $this->url(array('controller' => 'campaign',
-                            'action'     => 'link',
-                            'cmpid'      => $this->campaign['id_cmp'],
+$linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                             'language'   => $this->language),
-                        'lang_default', true);
+                            'linkcampaign', true);
 ?>
 <div id="campaign-page">
     <h2>
@@ -24,7 +22,7 @@ $linkurl = $this->url(array('controller' => 'campaign',
                                                         'lang_default', true); ?>">
                   <?php echo $this->translate('content-view-tags'); ?>
                   </a>
-            </strong><?php // t√§git t√§h√§n v√§liin ?>
+            </strong><?php // t‰git t‰h‰n v‰liin ?>
         </p>
         <p>
             <strong>Campaign has started: </strong>
@@ -41,7 +39,7 @@ $linkurl = $this->url(array('controller' => 'campaign',
         <p>
             <strong>Group: </strong>
             <br />
-            Ryhm√§n nimi t√§h√§n
+            Ryhm‰n nimi t‰h‰n
             <br />
         </p>
         <div id="members">

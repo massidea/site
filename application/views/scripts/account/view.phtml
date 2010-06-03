@@ -454,13 +454,26 @@ $printUs = 7;
                                     </a>
                                 </b>
                             </div>
-                        	<?php if ($content['cntHasCntCount'] > 0): ?>
+                        	<?php if ($content['cntHasCntCountParent'] > 0 || $content['cntHasCntCountChild'] > 0): ?>
                         	<div class="account_profile_content_tools_editlinks">
                                 <b>
                                     <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
                                                                  'language' => $this->language),
                                                                  'unlinkcontent', true); ?>">
-                                        <?php echo $this->translate('content-editlinks')." (".$content['cntHasCntCount'].")"?>
+                                        <?php echo $this->translate('content-edit-content-links')." ("
+                                                .($content['cntHasCntCountParent'] + $content['cntHasCntCountChild']).")"?>
+                                    </a>
+                                </b>
+                            </div>
+                            <?php endif; ?>
+                            <?php if ($content['cmpHasCntCount'] > 0): ?>
+                        	<div class="account_profile_content_tools_editlinks">
+                                <b>
+                                    <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
+                                                                 'language' => $this->language),
+                                                                 'unlinkcampaign', true); ?>">
+                                        <?php echo $this->translate('content-edit-campaign-links')." ("
+                                                .$content['cmpHasCntCount'].")"?>
                                     </a>
                                 </b>
                             </div>

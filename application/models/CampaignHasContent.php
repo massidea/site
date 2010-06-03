@@ -107,5 +107,35 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
 
         return isset($result[0]);
     }
+
+    /**
+     * Get all campaigns where content is linked.
+     *
+     * @author Mikko Aatola
+     * @param id_cnt content id
+     * @return true if the content is linked to the campaign, false if not
+     */
+    public function getContentCampaigns($id_cnt)
+    {
+        $result = array();
+
+        $select = $this->_db->select()
+                            ->from(array('chc' => 'cmp_has_cnt'),
+                                   array('id_cmp', 'id_cnt'))
+                            ->joinLeft(array('cmp' => 'campaigns_cmp'),
+                                   'cmp.id_cmp = chc.id_cmp',
+                                   array('id_cmp', 'id_grp_cmp', 'name_cmp',
+                                         'ingress_cmp', 'description_cmp', 'created_cmp'))
+                            ->joinLeft(array('grp' => 'usr_groups_grp'),
+                                             'grp.id_grp = cmp.id_grp_cmp',
+                                             array('id_grp'))
+                            ->where('chc.id_cnt = ?', $id_cnt)
+                            ->group('chc.id_cmp');
+
+        $result = $this->_db->fetchAll($select);
+
+        return $result;
+    }
+
 } // end of class
 ?>

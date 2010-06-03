@@ -469,9 +469,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
-                                           ->joinLeft(array('chc' => 'cnt_has_cnt'),
-                                                      'cnt.id_cnt = chc.id_parent_cnt',
-                                                      array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
+                                           ->joinLeft(array('chc1' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc1.id_parent_cnt',
+                                                      array('cntHasCntCountParent' => 'COUNT(DISTINCT chc1.id_child_cnt)'))
+                                           ->joinLeft(array('chc2' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc2.id_child_cnt',
+                                                      array('cntHasCntCountChild' => 'COUNT(DISTINCT chc2.id_parent_cnt)'))
+                                           ->joinLeft(array('cmpHasCnt' => 'cmp_has_cnt'),
+                                                      'cnt.id_cnt = cmpHasCnt.id_cnt',
+                                                      array('cmpHasCntCount' => 'COUNT(DISTINCT cmpHasCnt.id_cmp)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
@@ -966,36 +972,5 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         } 
         return $result;
     } // end of getUserFavouriteContent
-    
-   
-    /*
-     * getAllUsersLocations
-     * 
-     * Gets all location info from users (Countries not yet done because they dont exist yet :p)
-     * 
-     * array(
-     * 	cities => array(
-     * 		cityindex => array(name, amount)),
-     * 	countries => array(
-     * 		countryindex => array(name, amount))
-     * )
-     * 
-     * @author Jari Korpela
-     * @return Array
-     */
-    public function getAllUsersLocations() {
-    	$result = array();
-    	$city = 'city';
-    	$select = $this->_db->select()
-    				->from('usr_profiles_usp', array('profile_value_usp AS name','COUNT(*) AS amount'))
-    				->distinct()
-    				->where('profile_key_usp = ?' ,$city)
-    				->order('profile_value_usp')
-    				->group('name');
-    	$result = $this->_db->fetchAll($select);
-    	$result = array('cities' => $result);
-    	
-    	return $result;
-    }
         
 } // end of class

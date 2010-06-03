@@ -164,13 +164,17 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function unlinkAction()
     {
-        $auth = Zend_Auth::getInstance();
+        // Get authentication
+		$auth = Zend_Auth::getInstance();
+		// If user has identity
+		if ($auth->hasIdentity())
+		{
+			// Get requests
+			$params = $this->getRequest()->getParams();
 
-        if ($auth->hasIdentity()) {
-            $usrId = $auth->getIdentity()->user_id;
+			$relatestoid = $params['relatestoid'];
 
-            $cmpId = $this->_request->getParam('cmpid');
-            if (!isset($cmpId)) {
+            if (!isset($relatestoid)) {
                 $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
@@ -178,36 +182,37 @@ class CampaignController extends Oibs_Controller_CustomController
                 $this->_redirector($redirectUrl);
             }
 
-            $this->view->cmpid = $cmpId;
+            $contenttype = '';
+            $campaigns = array();
 
-            $cmpmodel = new Default_Model_Campaigns();
-            $campaignexists = $cmpmodel->campaignExists($cmpId);
-            if ($campaignexists) {
-                $cmp = $cmpmodel->getCampaignById($cmpId);
+            $model_content = new Default_Model_Content();
+            $contentexists = $model_content->checkIfContentExists($relatestoid);
 
-                $cmpcontents = $cmpmodel->getAllContentsInCampaign($cmpId);
+            if ($contentexists) {
+                $relatesToContent = $model_content->getDataAsSimpleArray($relatestoid);
+                $this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
 
-                if (!empty($cmpcontents)) {
-                    $cnt = array();
-                    foreach ($cmpcontents as $cmpcontent) {
-                        $cnt[] = $cmpcontent;
-                    }
-                }
+                $model_content_types = new Default_Model_ContentTypes();
+                $model_cmp_has_cnt = new Default_Model_CampaignHasContent();
+
+                $contenttype = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
+
+                $contentCampaigns = $model_cmp_has_cnt->getContentCampaigns($relatestoid);
             }
-
-            $this->view->cmp = $cmp;
-            $this->view->cmpcnts = $cnt;
-            $this->view->campaignexists = $campaignexists;
-        } else {
-            // If not logged, redirecting to system message page
-			$message = 'campaign-link-not-logged';
+            $this->view->contentexists = $contentexists;
+            $this->view->relatesToId = $relatestoid;
+            $this->view->linkingContentType = $contenttype;
+            $this->view->campaigns = $contentCampaigns;
+		} else {
+			// If not logged, redirecting to system message page
+			$message = 'content-link-not-logged';
 
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
 			$this->flash($message, $url);
-        }
+		}
     }
 
     public function makelinkAction()
@@ -246,7 +251,7 @@ class CampaignController extends Oibs_Controller_CustomController
      *
      * @author Mikko Korpinen
      */
-    public function removelinkAction()
+    public function removelinksAction()
     {
         $cmpId = $this->_request->getParam('cmpid');
         $this->view->cmpid = $cmpId;

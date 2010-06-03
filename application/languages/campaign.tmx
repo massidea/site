@@ -44,7 +44,7 @@
 		<tuv xml:lang="fi"><seg>Linkin poiston kohde</seg></tuv>
 	</tu>
     <tu tuid='campaign-unlink-helptext'>
-		<tuv xml:lang="en"><seg>Select the content which link will be removed</seg></tuv>
+		<tuv xml:lang="en"><seg>Select the campaign which link will be removed</seg></tuv>
 		<tuv xml:lang="fi"><seg>Valitse sisältö minkä linkki poistetaan</seg></tuv>
 	</tu>
     <tu tuid='campaign-unlink'>
