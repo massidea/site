@@ -1,7 +1,13 @@
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
-$cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
+if ($this->campaign['end_time_cmp'] == '0000-00-00') {
+    $cmpend = 'Never';
+} else {
+    $cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
+    $cmpend = $cmpend->toString('dd MMM, yyyy');
+}
+
 $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                             'language'   => $this->language),
                             'linkcampaign', true);
@@ -30,12 +36,14 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
         </p>
         <p>
             <strong>Campaign is ending: </strong>
-            <?php echo $cmpend->toString('dd MMM, yyyy'); ?>
+            <?php echo $cmpend; ?>
         </p>
         <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
-        <ul>
-        <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
-        </ul>
+        <?php if (is_array($this->cmpAdmins)): ?>
+            <ul>
+            <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
+            </ul>
+        <?php endif; ?>
         <p>
             <strong>Group: </strong>
             <br />
@@ -44,12 +52,14 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
         </p>
         <div id="members">
             <h4><?php echo $this->translate('group-members'); ?></h4>
+            <?php if (is_array($this->grpUsers)): ?>
             <span class="more"><strong><a href="">Show all</a></strong></span>
             <div class="clear"></div>
             <ul>
                 <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
             </ul>
             <span class="more"><strong><a href="">Show all</a></strong></span>
+            <?php endif; ?>
             <div class="clear dot-line-200"></div>
         </div>
     </div>
