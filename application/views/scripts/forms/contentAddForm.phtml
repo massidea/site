@@ -12,6 +12,7 @@ $content_threat = $this->element->content_threat;
 $content_solution = $this->element->content_solution;
 $content_campaigns = $this->element->content_campaigns;
 $content_file_upload = $this->element->content_file_upload;
+$content_files = $this->element->uploadedFiles;
 $content_references = $this->element->content_references;
 $content_language = $this->element->content_language;
 /*
@@ -65,16 +66,13 @@ $preview = $this->element->preview;
 		
 	    <?php echo $content_relatesto_id; ?>
 	    	    
-		<div id="form_helptext_optional" class="form_helptext" >
-			<?php echo $this->translate('content-add-helptext-optional'); ?>
-		</div>
-		<div class="form_helptext_line"></div>		
-		
 	    <?php echo $content_campaigns; ?>
 	    
 	    <?php echo $content_references; ?>
 	    
 		<?php echo $content_file_upload; ?>
+		
+		<?php echo $content_files; ?>
 		
 	    <?php /*
 	      

@@ -112,46 +112,31 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 				$order = 'cnt.created_cnt DESC';
 		}
 
-		/*
-		 $industry = 1;
-		 if ($ind > 0) {
-		 $industry = $this->_db->quoteInto('chi.id_ind = ?', $ind);
-		 }
-		 */
-
 		// Needs more optimization
-		$select = $this->_db->select()->from(array('cty' => 'content_types_cty'),
-		array('cty.id_cty', 'cty.key_cty'))
-		->join(array('cnt' => 'contents_cnt'),
-                                            'cnt.id_cty_cnt = cty.id_cty',
-		array('cnt.id_cnt',
-                                                  'cnt.title_cnt',
-                                                  'cnt.lead_cnt',
-                                                  'cnt.created_cnt',
-                                                  'cnt.language_cnt'))
-		->joinLeft(array('chu' => 'cnt_has_usr'),
-                                            'chu.id_cnt = cnt.id_cnt',
-		array())
-		->joinLeft(array('usr' => 'users_usr'),
-                                            'usr.id_usr = chu.id_usr',
-		array('usr.id_usr',
-                                                  'usr.login_name_usr'))
-		/*
-		 ->joinLeft(array('chi' => 'cnt_has_ind'),
-		 'chi.id_cnt = cnt.id_cnt',
-		 array())
-
-		 ->joinLeft(array('vws' => 'cnt_views_vws'),
-		 'vws.id_cnt_vws = cnt.id_cnt',
-		 array('viewCount' => 'COUNT(vws.id_usr_vws)'))
-
-		 ->joinLeft(array('ind' => 'industries_ind'),
-		 'ind.id_ind = chi.id_ind',
-		 array())*/
-		->group('cnt.id_cnt')
-		->where('cnt.published_cnt = 1')
-		//->where('cnt.language_cnt = ?', $lang)
-		->order($order);
+		$select = $this->_db->select()->from(
+			array('cty' => 'content_types_cty'),
+			array('cty.id_cty', 'cty.key_cty'))
+				->join( array('cnt' => 'contents_cnt'),
+                    	'cnt.id_cty_cnt = cty.id_cty',
+						array('cnt.id_cnt',
+                              'cnt.title_cnt',
+                              'cnt.lead_cnt',
+                              'cnt.created_cnt',
+                              'cnt.language_cnt'))
+				->joinLeft(array('chu' => 'cnt_has_usr'),
+                           'chu.id_cnt = cnt.id_cnt',
+							array())
+				->joinLeft(array('usr' => 'users_usr'),
+                           'usr.id_usr = chu.id_usr',
+							array('usr.id_usr', 'usr.login_name_usr'))
+			    // Users postcount
+				->joinLeft('cnt_has_usr',   
+						   'cnt_has_usr.id_usr = chu.id_usr',
+						   array('count' => 'count(*)'))
+				->group('cnt.id_cnt')
+				->where('cnt.published_cnt = 1')
+				//->where('cnt.language_cnt = ?', $lang)
+				->order($order);
 
 		if ($cty != 'all' && $cty != 'All') {
 			$select->where('cty.key_cty = ?', $cty);
@@ -165,7 +150,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		// Content data
 		$data = $this->_db->fetchAll($select);
-
 		return $data;
 	}
 

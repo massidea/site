@@ -137,7 +137,6 @@ class Default_Form_EditContentForm extends Zend_Form
 		// Content text input form element
 		$text = new Zend_Form_Element_Textarea('content_text');
 		$text->setValue($data['content_text'])
-                ->setRequired(true)
                 ->setAttrib('class', 'textbody')
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -159,7 +158,7 @@ class Default_Form_EditContentForm extends Zend_Form
                                )
                 ->setLabel($translate->_("content-add-text"))
                 ->setDescription($translate->_('content-add-' . $contentType . '-textbody-help-text'))
-                ->setDecorators(array('FormElementDecorator'));
+                ->setDecorators(array('FormOptionalElementDecorator'));
         
         // Content keywords input form element
 		$related_companies = new Zend_Form_Element_Text('content_related_companies');
@@ -302,14 +301,10 @@ class Default_Form_EditContentForm extends Zend_Form
         
         $uploadedFilesBoxes = new Zend_Form_Element_MultiCheckbox('uploadedFiles');
         $uploadedFilesBoxes->setMultiOptions($data['filenames'])
+        				   ->setRequired(false)
         				   ->setDecorators(array('FormElementDecorator'))
         				   ->setLabel($translate->_('content-add-file-delete-files-label'));
-        				   
         				   //->setDecorators(array('SettingsCheckboxDecorator'));
-        /*$uploadedFiles = $data['filenames'];
-        Zend_Debug::dump($uploadedFiles);
-        die;*/  
-        
         
         // References
 		$references = new Zend_Form_Element_Textarea('content_references');
