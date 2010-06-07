@@ -1,635 +1,466 @@
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
 <?php
-// lets gather data! WHEE
-$printUs = 7;
-
-// tähän kerätän data tollaseen kivaan arrayhyn niin että printtaus on sitten vaan 1 foreach.
-// vähän selkeempi systeemi..
+// User page has new layout but still WIP because edit profile form is not ready.
+// Todo:
+//      My groups
+//      Delete and publish confirm
+//      Country and city links ??
+//      PartialLoops for contents and order
 ?>
-<?php 
+
+<?php $this->headScript()->captureStart() ?>
+function publishconfirmation(url) {
+    var answer = confirm("Publish content?");
+    if (answer) {
+        alert("Content published");
+        window.location = url;
+    } else {
+        //alert("");
+    }
+}
+function deleteconfirmation(url) {
+    var answer = confirm("Delete content?");
+    if (answer) {
+        alert("Content deleted");
+        window.location = url;
+    } else {
+        //alert("");
+    }
+}
+<?php $this->headScript()->captureEnd(); ?>
+
+<?php
+Zend_Layout::getMvcInstance()->setLayout('layout_new');
+//$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
+<?php
     $admin = false;
-    if(in_array("admin", $this->logged_user_roles)): 
+    if(in_array("admin", $this->logged_user_roles)):
         $admin = true;
 ?>
-        <div id="admin_tools">
-            <?php $this->translate("admin-administrative-tools"); ?>
-            <a href="<?php echo $this->url(array('controller' => 'admin',
-                                                 'action' => 'editroles',
-                                                 'user' => $this->user['login_name_usr'],
-                                                 'language' => $this->language),
-                                           'lang_default', true); ?>">
-                <?php echo $this->translate('admin-administrative-tools-edit-user-roles'); ?>
-            </a>
-        </div>
-    <?php endif; ?>
-    
-<div id="account_view_left">
-    <div id="account_profile_user_image">
+<div id="admin_tools">
+    <a href="<?php echo $this->url(array('controller' => 'admin',
+                                         'action' => 'editroles',
+                                         'user' => $this->user['login_name_usr'],
+                                         'language' => $this->language),
+                                   'lang_default', true); ?>">
+        Edit roles of this user
+    </a>
+</div>
+<?php endif; ?>
+
+<div id="user-page" class="wide">
+    <div id="profile-meta">
         <img src="<?php echo $this->url(array('controller' => 'account',
                                               'action' => 'profilethumb',
                                               'id' => $this->user['id_usr'],
         									  'thumb' => 'true',
                                               'language' => $this->language),
-											  'lang_default', true); ?>" alt="User Image" class="profile_image_nativesize" />
+											  'lang_default', true); ?>" alt="User Image" class="avatar" width="200" />
+        <ul>
+            <li><strong>Joined:</strong> <?php echo date("d.m.Y H:i", strtotime($this->user['created_usr'])); ?></li>
+            <li><strong>Last login:</strong> <?php echo $this->user['last_login_usr'] != null ?
+                                date("d.m.Y H:i", strtotime($this->user['last_login_usr'])) :
+                                'Never logged in'; ?></li>
+            <!-- <li><strong>Page views:</strong> 1,200</li> -->
+        </ul>
     </div>
-</div>
-
-<div id="account_view_right">
-    <h3><?php echo $this->user['login_name_usr']; 
-        if ($admin): ?>
-            <span style="color:#500050;">(admin)</span>
-        <?php endif; ?>
-    </h3>
-    
-        <?php if (isset($this->userprofile['category'])) : ?>
-            <?php if ($user_category = $this->userprofile['category']): ?>
-            <div id="account_profile_category" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-category'); ?>
+    <div id="profile-info">
+        <div id="user-info">
+            <div id="connect" class="right">
+                <?php if($this->user_edit): ?>
+                <div>
+                    <a href="<?php echo $this->url(array('controller' => 'account',
+                                                         'action' => 'settings',
+                                                         'language' => $this->language),
+                                                   'lang_default', true); ?>">
+                        Edit profile
+                    </a>
                 </div>
-                <div class="account_profile_content_right">
-                    <?php echo $user_category;?>
+                <div>
+                    <a href="<?php echo $this->url(array('controller' => 'account',
+                                                         'action' => 'images',
+                                                         'language' => $this->language),
+                                                   'lang_default', true); ?>">
+                        Change profile image
+                        </a>
                 </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>
-		
-        <div id="account_profile_created" class="account_profile_user_info">
-            <div class="account_profile_content_left">
-                <?php echo $this->translate('account-profile-joined'); ?>
-            </div>
-            <div class="account_profile_content_right">
-                <?php echo date("d.m.Y H:i", strtotime($this->user['created_usr'])); ?>
-            </div>
-        </div>
-		
-        <div id="account_profile_logged_in" class="account_profile_user_info">
-            <div class="account_profile_content_left">
-                <?php echo $this->translate('account-profile-last_login'); ?>
-            </div>
-            <div class="account_profile_content_right">
-                <?php echo $this->user['last_login_usr'] != null ? 
-                                date("d.m.Y H:i", strtotime($this->user['last_login_usr'])) : 
-                                $this->translate('account-profile-never-logged-in'); ?>
-            </div>
-        </div>
-		
-        <div id="account_profile_email" class="account_profile_user_info">
-            <div class="account_profile_content_left">
-                <?php //echo $this->translate('account-register-email'); ?>
-            </div>
-            <div class="account_profile_content_right">
-                <?php //echo $this->user['email_usr']; ?>
-            </div>
-        </div>		
-
-		<?php 
-        // This is always set, so here is needed to check if it is empty
-        if(isset($this->userprofile['surname']) && $this->userprofile['surname'] !== ""): ?>
-		<div id="account_profile_surname" class="account_profile_user_info">
-            <div class="account_profile_content_left">
-                <?php echo $this->translate('account-profile-surname'); ?>
-            </div>
-            <div class="account_profile_content_right">
-                <?php echo $this->userprofile['surname']; ?>
-            </div>
-        </div> 
-        <?php endif; ?>
-        
-        <?php 
-        // This is always set, so here is needed to check if it is empty
-        if(isset($this->userprofile['firstname']) && $this->userprofile['firstname'] !== ""): ?>
-            <div id="account_profile_firstname" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-first-name'); ?>
+                <div>
+                    <a href="<?php echo $this->url(array('controller' => 'privmsg',
+                                                         'action' => 'index',
+                                                         'language' => $this->language),
+                                                   'lang_default', true); ?>">
+                        Private messages
+                        <?php
+                        if($this->unread_privmsgs > 0) {
+                            echo "(".$this->unread_privmsgs.")";
+                        }
+                        ?>
+                    </a>
                 </div>
-                <div class="account_profile_content_right">
-                    <?php echo $this->userprofile['firstname']; ?>
-                </div>
-            </div>
-            <?php //endif; ?>
-        <?php endif; ?>
-		
-        <?php 
-        $gender = '-k.-,-.';    // again, works
-        if (isset($this->userprofile['gender']['profile_value_usp'])): 
-            $gender = $this->userprofile['gender']['profile_value_usp'];
-        endif;
-		
-        if ($gender!='-k.-,-.') : ?>
-        <div id="account_profile_gender" class="account_profile_user_info">
-            <div class="account_profile_content_left">
-                <?php echo $this->translate('account-register-gender'); ?>
-            </div>
-            <div class="account_profile_content_right"><?php
-					if ($this->userprofile['gender'] == 1) echo "Male";
-					if ($this->userprofile['gender'] == 2) echo "Female"; ?>
-			</div>
-        </div>
-        <?php endif; ?>
-		
-        <?php if (isset($this->userprofile['birthday'])) : ?>
-            <?php if ($birth = $this->userprofile['birthday']): ?>
-            <div id="account_profile_birth" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-birth'); ?>
-                </div>
-                <div class="account_profile_content_right">
-                    <?php echo $birth;?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>
-		
-        <?php if (isset($this->userprofile['phone'])) : ?>
-            <?php if ($phone = $this->userprofile['phone']): ?>
-            <div id="account_profile_phone" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-phone'); ?>
-                </div>
-                <div class="account_profile_content_right">
-                    <?php echo $phone;?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>
-		
-		<?php //display country
-            if (isset($this->userprofile['country'])) :
-                $country = $this->userprofile['country']; 
-                if (($country !='None') && ($country != NULL) && (!$country)):
-            ?>		
-            <div id="account_profile_country" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-country'); ?>
-                </div>
-                <div class="account_profile_content_right"><?php 
-                    if ($this->translate($country))
-                        echo $this->translate($country);
-                    else
-                        echo $country;
-                    ?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>
-		
-        <?php if (isset($this->userprofile['city'])): ?>	
-            <?php if ($city = $this->userprofile['city']): ?>		
-            <div id="account_profile_city" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-city'); ?>
-                </div>
-                <div class="account_profile_content_right">
-                    <?php echo $city;?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>
-		
-		<?php if (isset($this->userprofile['profession'])): ?>
-            <?php if ($prof = $this->userprofile['profession']): ?>
-            <div id="account_profile_profession" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-profession'); ?>
-                </div>
-                <div class="account_profile_content_right">
-                    <?php echo $prof;?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>
-		
-        <?php if (isset($this->userprofile['company'])): ?>
-            <?php if ($com = $this->userprofile['company']): ?>
-            <div id="account_profile_company" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-company'); ?>
-                </div>
-                <div class="account_profile_content_right">
-                    <?php echo $com;?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>
-		
-        <?php if (isset($this->userprofile['biography'])): ?>
-            <?php if ($bio = $this->userprofile['biography']): ?>
-            <div id="account_profile_biography" class="account_profile_user_info">
-                <div class="account_profile_content_left">
-                    <?php echo $this->translate('account-profile-biography'); ?>
-                </div>
-                <div class="account_profile_content_right">
-                    <?php echo $bio;?>
-                </div>
-            </div>
-            <?php endif; ?>
-        <?php endif; ?>	
-		
-        <?php if (isset($this->userprofile['contentCounts']['totalCount'])) { ?>
-		<div id="account_profile_total" class="account_profile_user_info">
-            <div class="account_profile_content_left">
-                <?php echo $this->translate('account-profile-total'); ?>
-            </div>
-            <div class="account_profile_content_right">
-                <?php echo $this->userprofile['contentCounts']['totalCount']; ?>
-            </div> 
-        </div>
-        <?php } ?>
-				
-        <?php if($this->user_edit): ?>
-        <div id="account_profile_edit">
-            <a href="<?php echo $this->url(array('controller' => 'account',
-                                                 'action' => 'settings',
-                                                 'language' => $this->language),
-                                           'lang_default', true); ?>">
-                <?php echo $this->translate('account-edit-profile'); ?>
-            </a>
-            <br />
-            <a href="<?php echo $this->url(array('controller' => 'account',
-                                                 'action' => 'images',
-                                                 'language' => $this->language),
-                                           'lang_default', true); ?>">
-                <?php echo $this->translate('account-edit-images'); ?>
-                </a>
-                <br />
-            <a href="<?php echo $this->url(array('controller' => 'privmsg', 
-                                                 'action' => 'index', 
-                                                 'language' => $this->language), 
-                                           'lang_default', true); ?>">
-                <?php echo $this->translate('privmsg-messages'); 
-                if($this->unread_privmsgs > 0) {
-                    echo " (" . $this->unread_privmsgs . ")";
-                }
-                ?>
-            </a>
-        </div>
-        <?php else:
-            if($this->authenticated) :
-            ?>
-            <div id="account_send_privmsg">
-                <a href="<?php echo $this->url(array('controller' => 'privmsg',
+                <?php else:
+                    if($this->authenticated): ?>
+                <?php $privatemessage = $this->url(array('controller' => 'privmsg',
                                                      'action' => 'send',
                                                      'language' => $this->language),
-                                               'lang_default', true); ?>/<?php echo $this->user['login_name_usr']; ?>">
-                    <?php echo $this->translate('account-profile-send-private-message'); ?>
-                </a>
+                                               'lang_default', true)."/".$this->user['login_name_usr'];
+                ?>
+                <form><input type="button" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" onClick="location.href='<?php echo $privatemessage; ?>'"></form>
+                <!--<input type="submit" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" />-->
+                <?php endif; endif; ?>
             </div>
-            <?php
-            endif;
-        endif;
-        ?>
-    </div>
-    
-<div style="clear:both"></div>
-
-<div id="account_view_full">
-    <?php if (!empty($this->authorContents )): ?>
-    <div id="account_profile_content_container">
-        <?php /*
-        <div id="account_profile_content_header">
-            <h3>
-                printf($this->translate('account-user-content'), 
-                                              $this->count); 
-            </h3>
+            <h2><?php echo $this->user['login_name_usr']; ?></h2>
+            <ul>
+                <?php if((isset($this->userprofile['firstname']) && $this->userprofile['firstname'] !== "") ||
+                         (isset($this->userprofile['surname']) && $this->userprofile['surname'] !== "")) : ?>
+                <li>
+                    <strong>Full name:</strong>
+                    <?php
+                    // This is always set, so here is needed to check if it is empty
+                    if(isset($this->userprofile['firstname']) && $this->userprofile['firstname'] !== "")
+                        echo $this->userprofile['firstname']." ";
+                    // This is always set, so here is needed to check if it is empty
+                    if(isset($this->userprofile['surname']) && $this->userprofile['surname'] !== "")
+                              echo $this->userprofile['surname'];
+                    ?>
+                </li>
+                <?php endif; ?>
+                <?php //display country TODO: link
+                if (isset($this->userprofile['country']) && $this->userprofile['country'] != NULL) :
+                ?>
+                <li><strong>Country:</strong> <a href="#"><?php echo $this->userprofile['country']; ?></a></li>
+                <?php endif; ?>
+                <?php //display city TODO: link
+                if (isset($this->userprofile['city']) && $this->userprofile['city'] != NULL):
+                ?>
+                <li><strong>Homecity:</strong> <a href="#"><?php echo $this->userprofile['city']; ?></a></li>
+                <?php endif; ?>
+                <?php
+                if (isset($this->userprofile['birthday']) && $this->userprofile['birthday'] != NULL):
+                ?>
+                <li><strong>Birthday:</strong> <?php echo $this->userprofile['birthday']; ?></li>
+                <?php endif; ?>
+                <?php
+                if (isset($this->userprofile['phone']) && $this->userprofile['phone'] != NULL):
+                ?>
+                <li><strong>Phone:</strong> <?php echo $this->userprofile['phone']; ?></li>
+                <?php endif; ?>
+                <?php
+                if (isset($this->userprofile['profession']) && $this->userprofile['profession'] != NULL):
+                ?>
+                <li><strong>Profession:</strong> <?php echo $this->userprofile['profession']; ?></li>
+                <?php endif; ?>
+                <?php
+                if (isset($this->userprofile['company']) && $this->userprofile['company'] != NULL):
+                ?>
+                <li><strong>Company:</strong> <?php echo $this->userprofile['company']; ?></li>
+                <?php endif; ?>
+                <!-- <li><strong>I am:</strong> <a href="#">Working in a private sector</a></li> -->
+            </ul>
         </div>
-        */?>
-        <div id="account_profile_user_content_container">
-            <div id="account_profile_user_content_tab_bar">
-                <ul id="account_profile_user_content_type">
-                    <li id="account_profile_user_content_type_all" <?php if($this->type === 0): ?> class="selected" <?php endif; ?>>
-                        <a href="<?php echo $this->url(array('controller' => 'account', 
+        <?php if (isset($this->userprofile['biography']) && $this->userprofile['biography'] != NULL && $this->userprofile['biography'] != "") : ?>
+        <div id="user-bio">
+            <h5>Bio:</h5>
+            <p><?php echo $this->userprofile['biography'];?></p>
+            <!--<p><a href="#">(read more)</a></p>-->
+
+            <!--<p class="my-links"><strong>My links:</strong> <a href="#">Facebook</a>, <a href="#">LinkedIN</a>, <a href="#">Blogger</a>, <a href="#">Youtube</a>, <a href="#">Myspace</a></p>-->
+        </div>
+        <?php endif; ?>
+    </div>
+    <div class="clear"></div>
+    <div id="activity">
+        <div id="my-posts" class="left">
+            <h3>My posts</h3>
+            <div id="content_type">
+                <ul>
+                    <li class="all<?php if ($this->type === 0) echo " selected"; ?>">
+                        <a href="<?php echo $this->url(array('controller' => 'account',
                                                              'action' => 'view',
                                                              'language' => $this->language,
-                                                             'user' => $this->user['login_name_usr']), 
+                                                             'user' => $this->user['login_name_usr']),
                                                        'lang_default', true); ?>">
-                            <?php echo $this->translate('account-list-user-content-all'); ?> 
+                            <strong>All</strong>
                             (<?php echo $this->userprofile['contentCounts']['totalCount']; ?>)
                         </a>
                     </li>
-                    
-                    <li id="account_profile_user_content_type_challenges" <?php if($this->type === 'problem'): ?> class="selected" <?php endif; ?>>
-                        <a href="<?php echo $this->url(array('controller' => 'account', 
+                    <li class="challenges<?php if ($this->type === "problem") echo " selected"; ?>">
+                        <a href="<?php echo $this->url(array('controller' => 'account',
                                                              'action' => 'view',
                                                              'language' => $this->language,
                                                              'user' => $this->user['login_name_usr'],
-                                                             'type' => 'problem'), 
+                                                             'type' => 'problem'),
                                                        'lang_default', true); ?>">
-                            <?php echo $this->translate('account-list-user-content-problems'); ?> 
+                            <strong>Challenges</strong>
                             (<?php echo $this->userprofile['contentCounts']['problem']; ?>)
                         </a>
                     </li>
-                    
-                    <li id="account_profile_user_content_type_ideas" <?php if($this->type === 'idea'): ?> class="selected" <?php endif; ?>>
-                        <a href="<?php echo $this->url(array('controller' => 'account', 
+                    <li class="ideas<?php if ($this->type === "idea") echo " selected"; ?>">
+                        <a href="<?php echo $this->url(array('controller' => 'account',
                                                              'action' => 'view',
                                                              'language' => $this->language,
                                                              'user' => $this->user['login_name_usr'],
-                                                             'type' => 'idea'), 
+                                                             'type' => 'idea'),
                                                        'lang_default', true); ?>">
-                            <?php echo $this->translate('account-list-user-content-ideas'); ?> 
+                            <strong>Ideas</strong>
                             (<?php echo $this->userprofile['contentCounts']['idea']; ?>)
                         </a>
                     </li>
-                    
-                    <li id="account_profile_user_content_type_visions" <?php if($this->type === 'finfo'): ?> class="selected" <?php endif; ?>>
-                        <a href="<?php echo $this->url(array('controller' => 'account', 
+                    <li class="visions<?php if ($this->type === "finfo") echo " selected"; ?>">
+                        <a href="<?php echo $this->url(array('controller' => 'account',
                                                              'action' => 'view',
                                                              'language' => $this->language,
                                                              'user' => $this->user['login_name_usr'],
-                                                             'type' => 'finfo'), 
+                                                             'type' => 'finfo'),
                                                        'lang_default', true); ?>">
-                            <?php echo $this->translate('account-list-user-content-visions'); ?> 
+                            <strong>Visions</strong>
                             (<?php echo $this->userprofile['contentCounts']['finfo']; ?>)
                         </a>
                     </li>
-                    
                     <?php if($this->user_edit) : ?>
-                    <li id="account_profile_user_content_type_saved" <?php if($this->type === 'saved'): ?> class="selected" <?php endif; ?>>
+                    <!-- saved is not in style_new.css so we use all -->
+                    <li class="all<?php if ($this->type === "saved") echo " selected"; ?>">
                         <a href="<?php echo $this->url(array('controller' => 'account',
                                                              'action' => 'view',
                                                              'language' => $this->language,
                                                              'user' => $this->user['login_name_usr'],
                                                              'type' => 'saved'),
                                                        'lang_default', true); ?>">
-                            <?php echo $this->translate('account-list-user-content-saved'); ?> 
+                            <strong>Saved</strong>
                             (<?php echo $this->userprofile['contentCounts']['savedCount']; ?>)
                         </a>
                     </li>
                     <?php endif; ?>
                 </ul>
             </div>
-            
-            <div id="account_profile_user_content_list">
-            <?php $i = 0; ?>
-            
-            <?php foreach($this->authorContents as $content): ?>
-                <?php if($this->type === "saved" && $this->user_edit) {
-                      	if($content['published_cnt'] != 0) { continue; }
-                	  } else { 
-                      	if($this->type !== 0 && $content['key_cty'] !== $this->type) { continue; }
-                	  } 
-                if ($i != 0) { ?>
-                <div class="user_content_spacer" style="clear:both;">
-                    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
-                </div>
-                <?php }
-                
-                $i++; ?>
-                
-                <div id="<?php echo $content['key_cty'] . '_' . $content['id_cnt']; ?>_container" 
-                    class="account_profile_user_content_<?php echo $content['key_cty']; ?>_container">
-                    
-                    <div class="account_profile_content_view">
-                        <div id="content_profile_user_content_header_<?php echo $content['id_cnt']; ?>"
-                            class="account_profile_user_content_header">
-                            
-                            <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'],
-                                                                 'language' => $this->language),
-                                                           'content_shortview', true); ?>">
-                                <?php echo $content['title_cnt']; ?>
-                            </a>
-                        </div>
-                        
-                        <div id="content_profile_user_content_lead_<?php echo $content['id_cnt']; ?>"
-                            class="account_profile_user_content_lead">
-                            <?php echo $content['lead_cnt']; ?>
-                       	</div>
-                    </div>
-                    
-                    <div class="account_profile_content_view_stats">
-                        <div class="account_profile_content_view_stats_posted">
-                            <b><?php echo $this->translate('account-profile-content-posted'); ?></b>
-                            <?php echo date("d.m.Y", strtotime($content['created_cnt'])); ?>
-                        </div>
-                        
-                        |&nbsp;&nbsp;
-                        
-                        <div class="account_profile_content_view_stats_ratings">
-                            <b><?php echo $this->translate('account-profile-content-ratings'); ?></b>
-                            <?php echo $content['ratings']; ?>
-                        </div>
-                        
-                        |&nbsp;&nbsp;
-                        
-                        <div class="account_profile_content_view_stats_views">
-                            <b><?php echo $this->translate('account-profile-content-views'); ?></b>
-                            <?php echo $content['views']; ?>
-                        </div>
-                    <?php 
-                        /*
-                        <div class="account_profile_content_view_stats_comments">
-                            <b><?php echo $this->translate('account-profile-content-comments'); ?></b>
-                            <?php echo $content['comments']; ?>
-                        </div>
-                        */ 
+            <div class="clear"></div>
+            <div class="scroll-box">
+                <?php if (!empty($this->authorContents )): ?>
+                <ul>
+                    <?php foreach($this->authorContents as $content): ?>
+                    <?php if($this->type === "saved" && $this->user_edit) {
+                              if($content['published_cnt'] != 0)
+                                  { continue; }
+                          } else {
+                              if($this->type !== 0 && $content['key_cty'] !== $this->type)
+                                  { continue; }
+                          }
                     ?>
-                    </div>
-                    
-                    <div class="account_profile_content_tools">
-                    <?php if ($this->user_edit == true): ?>
-                        <div id="account_profile_user_content_<?php echo $content['key_cty']; ?>_tools_<?php echo $content['id_cnt']; ?>">
-                            <div class="account_profile_content_tools_edit">
+                    <?php
+
+                    $contentclass = '';
+                    if ($content['key_cty'] === "idea") {
+                        $contentclass = "ideas";
+                    } elseif ($content['key_cty'] === "problem") {
+                        $contentclass = "challenges";
+                    } elseif ($content['key_cty'] === "finfo") {
+                        $contentclass = "visions";
+                    }
+                    ?>
+                    <li class="<?php echo $contentclass; ?>">
+                        <div>
+                            <p>
+                                <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'],
+                                                                     'language' => $this->language),
+                                                               'content_shortview', true); ?>">
+                                    <?php echo $content['title_cnt']; ?>
+                                </a>
+                            </p>
+                            <p>
+                                <?php echo $content['lead_cnt']; ?>
+                            </p>
+                            <p><strong>Posted</strong>
+                               <?php echo date("d.m.Y", strtotime($content['created_cnt'])); ?>
+                                <!-- |  <strong>Rating</strong> -->
+                               | <strong>Views</strong> <?php echo $content['views']; ?>
+                            </p>
+                            <?php if ($this->user_edit == true): ?>
+                            <p>
                                 <b>
                                     <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'],
                                                                          'language' => $this->language),
                                                                    'content_edit', true); ?>">
-                                        <?php echo $this->translate('content-edit'); ?>
+                                        Edit
                                     </a>
                                 </b>
-                            </div>
-                            <?php if ($this->user_edit == true && $content['published_cnt'] == 0): ?>
-                            <div class="account_profile_content_tools_publish">
-                                <b>
-                                    <a href="#" onclick="popup('popup_publish_content_<?php echo $content['id_cnt']; ?>')">
-                                        <?php echo $this->translate('content-publish'); ?>
+                                <?php if ($this->user_edit == true && $content['published_cnt'] == 0): ?>
+                                | <b>
+                                    <a href="#" onclick="publishconfirmation('<?php
+                                                    echo $this->url(array('language' => $this->language,
+                                                                          'content_id' => $content['id_cnt']),
+                                                                    'content_publish', true); ?>')">
+                                        Publish
+                                    </a>
+                                </b> |
+                                <?php endif; ?>
+                                | <b>
+                                    <a href="#" onclick="deleteconfirmation('<?php
+                                                    echo $this->url(array('language' => $this->language,
+                                                                          'content_id' => $content['id_cnt']),
+                                                                    'content_remove', true); ?>')">
+                                        Delete
                                     </a>
                                 </b>
-                            </div>
-                            <?php endif; ?>
-                            <div class="account_profile_content_tools_delete">
-                                <b>
-                                    <a href="#" onclick="popup('popup_delete_content_<?php echo $content['id_cnt']; ?>')">
-                                        <?php echo $this->translate('content-delete'); ?>
-                                    </a>
-                                </b>
-                            </div>
-                        	<?php if ($content['cntHasCntCountParent'] > 0 || $content['cntHasCntCountChild'] > 0): ?>
-                        	<div class="account_profile_content_tools_editlinks">
-                                <b>
+                                <?php if ($content['cntHasCntCountParent'] > 0 || $content['cntHasCntCountChild'] > 0): ?>
+                                | <b>
                                     <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
-                                                                 'language' => $this->language),
-                                                                 'unlinkcontent', true); ?>">
-                                        <?php echo $this->translate('content-edit-content-links')." ("
-                                                .($content['cntHasCntCountParent'] + $content['cntHasCntCountChild']).")"?>
+                                                                         'language' => $this->language),
+                                                                   'unlinkcontent', true); ?>">
+                                        Edit content links (<?php echo ($content['cntHasCntCountParent'] + $content['cntHasCntCountChild']); ?>)
                                     </a>
                                 </b>
-                            </div>
-                            <?php endif; ?>
-                            <?php if ($content['cmpHasCntCount'] > 0): ?>
-                        	<div class="account_profile_content_tools_editlinks">
-                                <b>
+                                <?php endif; ?>
+                                <?php if ($content['cmpHasCntCount'] > 0): ?>
+                                | <b>
                                     <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
                                                                  'language' => $this->language),
                                                                  'unlinkcampaign', true); ?>">
-                                        <?php echo $this->translate('content-edit-campaign-links')." ("
-                                                .$content['cmpHasCntCount'].")"?>
+                                        Edit campaign links (<?php echo $content['cmpHasCntCount']; ?>)
                                     </a>
                                 </b>
-                            </div>
+                                <?php endif; ?>
+                            </p>
                             <?php endif; ?>
                         </div>
-	            	<?php endif; ?>
-                    </div>
-                </div>
-                
-                <div id="popup_publish_content_<?php echo $content['id_cnt']; ?>" 
-                    class="popup" style="display:none;">
-                    <?php echo $this->translate('content-publish-confirm'); ?>
-                    
-                    <br />
-                    <br />
+                    </li>
+                    <li id="popup_publish_content_<?php echo $content['id_cnt']; ?>"
+                            class="popup" style="display:none;">
+                        <!-- Tämä pitää tehdä vielä paremmin -->
+                            <?php echo $this->translate('content-publish-confirm'); ?>
 
-                    <a href="<?php echo $this->url(array('language' => $this->language,
-                                                         'content_id' => $content['id_cnt']),
-                                                   'content_publish', true); ?>" class="button">
-                        <?php echo $this->translate('content-publish'); ?>
-                    </a>
-                    
-                    <a href="#" style="text-decoration: none;" class="button" 
-                        onclick="popup_close()">
-                        <?php echo $this->translate('content-cancel'); ?>
-                    </a>
-                </div>
-                
-                <div id="popup_delete_content_<?php echo $content['id_cnt']; ?>" 
-                    class="popup" style="display:none;">
-                    <?php echo $this->translate('content-delete-confirm'); ?>
-                    
-                    <br />
-                    <br />
+                            <br />
+                            <br />
 
-                    <a href="<?php echo $this->url(array('language' => $this->language,
-                                                         'content_id' => $content['id_cnt']), 
-                                                   'content_remove', true); ?>" class="button">
-                        <?php echo $this->translate('content-delete'); ?>
-                    </a>
-                    <a href="#" style="text-decoration: none;" class="button" 
-                        onclick="popup_close()">
-                        <?php echo $this->translate('content-cancel'); ?>
-                    </a>
-                </div>
-                
-            <?php endforeach; ?>
-            </div>
-        </div>
-        
-        <?php /*foreach($this->authorContents as $k => $v):?>
-            <h4><?php echo $this->translate($v[0]['name_cty']); ?> (<?php echo $this->userprofile['contentCounts'][$v[0]['key_cty']]; ?>)</h4>
-            <div id="account_profile_user_<?php echo $k; ?>_container">
-            <?php $i = 0; ?>
-            <?php foreach($v as $content): ?>
-                <?php if ($i != 0): ?>
-                <div class="user_content_spacer" style="clear:both;"><img src="/images/gray_dot_line_500.png" alt="Massidea.org" /></div>
-                <?php endif;
-                $i++; ?>
-                <div id="<?php echo $k . '_' . $content['id_cnt']; ?>_container" 
-                    class="account_profile_user_content_<?php echo $k; ?>_container">
-                    
-                    <div class="account_profile_content_view">
-                        <div id="content_profile_user_content_header_<?php $content['id_cnt']; ?>"
-                            class="account_profile_user_content_header">
-                            
-                            <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'],
-                                                                 'language' => $this->language),
-                                                           'content_shortview', true); ?>">
-                            <?php echo $content['title_cnt']; ?>
+                            <a href="<?php echo $this->url(array('language' => $this->language,
+                                                                 'content_id' => $content['id_cnt']),
+                                                           'content_publish', true); ?>" class="button">
+                                <?php echo $this->translate('content-publish'); ?>
                             </a>
-                        </div>
-                        <div id="content_profile_user_content_lead_<?php $content['id_cnt']; ?>"
-                            class="account_profile_user_content_lead">
-                            <?php echo $content['lead_cnt']; ?>
-                       	</div>
-                    </div>
-                    <div class="account_profile_content_view_stats">
-                        <div class="account_profile_content_view_stats_views">
-                            <b><?php echo $this->translate('account-profile-content-views'); ?></b>
-                            <?php echo $content['views']; ?>
-                        </div>
-                        <div class="account_profile_content_view_stats_ratings">
-                            <b><?php echo $this->translate('account-profile-content-ratings'); ?></b>
-                            <?php echo $content['ratings']; ?>
-                        </div>
-                        <div class="account_profile_content_view_stats_comments">
-                            <b><?php echo $this->translate('account-profile-content-comments'); ?></b>
-                            <?php echo $content['comments']; ?>
-                        </div>
-                    </div>
-                    <div class="account_profile_content_tools">
-                    <?php if ($this->user_edit == true && $content['published_cnt'] == 0): ?>
-                        <div id="account_profile_user_content_<?php echo $k; ?>_tools">
-                            <div class="account_profile_content_tools_edit">
-                                <b>
-                                    <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'],
-                                                                         'language' => $this->language),
-                                                                   'content_edit', true); ?>">
-                                        <?php echo $this->translate('content-edit'); ?>
-                                    </a>
-                                </b>
-                            </div>
-                            <div class="account_profile_content_tools_publish">
-                                <b>
-                                    <a href="#" onclick="popup('popup_publish_content_<?php echo $content['id_cnt']; ?>')">
-                                        <?php echo $this->translate('content-publish'); ?>
-                                    </a>
-                                </b>
-                            </div>
-                            <div class="account_profile_content_tools_delete">
-                                <b>
-                                    <a href="#" onclick="popup('popup_delete_content_<?php echo $content['id_cnt']; ?>')">
-                                        <?php echo $this->translate('content-delete'); ?>
-                                    </a>
-                                </b>
-                            </div>
-                        </div>
-		            <?php endif; ?>            
-                    </div>
-                </div>
-                <div id="popup_publish_content_<?php echo $content['id_cnt']; ?>" 
-                    class="popup" style="display:none;">
-                    <?php echo $this->translate('content-publish-confirm'); ?>
-                    <br />
-                    <br />
 
-                    <a href="<?php echo $this->url(array('language' => $this->language,
-                                                         'content_id' => $content['id_cnt']),
-                                                   'content_publish', true); ?>" class="button">
-                        <?php echo $this->translate('content-publish'); ?>
-                    </a>
-                    <a href="#" style="text-decoration: none;" class="button" 
-                        onclick="popup_close()">
-                        <?php echo $this->translate('content-cancel'); ?>
-                    </a>
-                </div>
-                <div id="popup_delete_content_<?php echo $content['id_cnt']; ?>" 
-                    class="popup" style="display:none;">
-                    <?php echo $this->translate('content-delete-confirm'); ?>
-                    <br />
-                    <br />
+                            <a href="#" style="text-decoration: none;" class="button"
+                                onclick="popup_close()">
+                                <?php echo $this->translate('content-cancel'); ?>
+                            </a>
+                    </li>
+                    <li id="popup_delete_content_<?php echo $content['id_cnt']; ?>"
+                            class="popup" style="display:none;">
+                            <?php echo $this->translate('content-delete-confirm'); ?>
 
-                    <a href="<?php echo $this->url(array('language' => $this->language,
-                                                         'content_id' => $content['id_cnt']), 
-                                                   'content_remove', true); ?>" class="button">
-                        <?php echo $this->translate('content-delete'); ?>
-                    </a>
-                    <a href="#" style="text-decoration: none;" class="button" 
-                        onclick="popup_close()">
-                        <?php echo $this->translate('content-cancel'); ?>
-                    </a>
-                </div>
-            <?php endforeach; ?>
+                            <br />
+                            <br />
+
+                            <a href="<?php echo $this->url(array('language' => $this->language,
+                                                                 'content_id' => $content['id_cnt']),
+                                                           'content_remove', true); ?>" class="button">
+                                <?php echo $this->translate('content-delete'); ?>
+                            </a>
+                            <a href="#" style="text-decoration: none;" class="button"
+                                onclick="popup_close()">
+                                <?php echo $this->translate('content-cancel'); ?>
+                            </a>
+                        <!-- Loppuu tähän -->
+
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php endif; ?>
             </div>
-        <?php endforeach;*/ ?>
+            <!--
+            <div id="comments">
+                <h4>Comments</h4>
+                <p><strong><a href="#">Login</a> or <a href="#">Sign Up</a> to post a comment</strong></p>
+
+                <div class="comment">
+                    <div class="comment-head">
+                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
+                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="comment-context">
+                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
+                    </div>
+                </div>
+
+                <div class="comment">
+                    <div class="comment-head">
+                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
+                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="comment-context">
+                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
+                    </div>
+                </div>
+
+                <div class="comment">
+                    <div class="comment-head">
+                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
+                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="comment-context">
+                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
+                    </div>
+                </div>
+
+                <div class="comment reply">
+                    <div class="comment-head">
+                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
+                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="comment-context">
+                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
+                    </div>
+                </div>
+
+                <div class="comment reply">
+                    <div class="comment-head">
+                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
+                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="comment-context">
+                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
+                    </div>
+                </div>
+
+                <div class="comment">
+                    <div class="comment-head">
+                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
+                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="comment-context">
+                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
+                    </div>
+                </div>
+
+                <div id="add-comment">
+                    <h4>Would you like to comment? <a href="#">Login</a> or <a href="#">Sign Up</a></h4>
+                </div>
+            </div>
+            -->
+        </div>
+        <div class="right">
+            <?php
+            /*
+            <div id="my_groups">
+                <h3>My groups</h3>
+                <strong>All</strong> | <strong><a href="#">Member</a></strong> | <strong><a href="#">Admin</a></strong>
+                <div class="scroll-box">
+                    <ul>
+                        <?php foreach($this->usergroups as $usergroup): ?>
+                        <?php $groupurl = $this->url(array('groupid' => $usergroup["id_grp"],
+                                                           'language' => $this->language),
+                                                     'group_shortview', true); ?>
+                        <li><a href="<?php echo $groupurl; ?>"><?php echo $usergroup['group_name_grp']; ?></a> <br />
+                        <!--154 views--></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <!--<p><strong><a href="#">See all 23</a></strong></p>-->
+                </div>
+            </div>
+            */
+            ?>
+        </div>
     </div>
-    <?php endif; ?>
 </div>
