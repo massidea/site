@@ -462,7 +462,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                   array('key_cty'))
                                            ->joinLeft(array('vws' => 'cnt_views_vws'),
                                                       'vws.id_cnt_vws = cnt.id_cnt',
-                                                      array('views' => 'COUNT(DISTINCT vws.views_vws)'))
+                                                      array('views' => 'SUM(DISTINCT vws.views_vws)'))
                                            ->joinLeft(array('crt' => 'content_ratings_crt'),
                                                       'cnt.id_cnt = crt.id_cnt_crt',
                                                       array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
@@ -972,5 +972,40 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         } 
         return $result;
     } // end of getUserFavouriteContent
+    
+   
+    /*
+     * getAllUsersLocations
+     * 
+     * Gets all location info from users (Countries not yet done because they dont exist yet :p)
+     * 
+     * array(
+     * 	cities => array(
+     * 		cityindex => array(name, amount)),
+     * 	countries => array(
+     * 		countryindex => array(name, amount))
+     * )
+     * 
+     * @author Jari Korpela
+     * @return Array
+     */
+    public function getAllUsersLocations() {
+    	$result = array();
+    	$city = 'city';
+    	$select = $this->_db->select()
+    				->from('usr_profiles_usp', array('profile_value_usp AS name','COUNT(*) AS amount'))
+    				->distinct()
+    				->where('profile_key_usp = ?' ,$city)
+    				->order('profile_value_usp')
+    				->group('name');
+    	$result = $this->_db->fetchAll($select);
+    	$result = array('cities' => $result);
+    	
+    	return $result;
+    }
+    
+    public function getPostcountById() {
+    	
+    }
         
 } // end of class
