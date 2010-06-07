@@ -346,16 +346,16 @@
 		<tuv xml:lang="fi"><seg>Avainsanat</seg></tuv>
 	</tu>
 	<tu tuid='content-add-textlead'>
-		<tuv xml:lang="en"><seg>Textlead</seg></tuv>
+		<tuv xml:lang="en"><seg>Lead chapter</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ingressi</seg></tuv>
 	</tu>
 	<tu tuid='content-add-text'>
-		<tuv xml:lang="en"><seg>Text</seg></tuv>
+		<tuv xml:lang="en"><seg>Body text</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
 	</tu>
 	<tu tuid='content-add-related_companies'>
-		<tuv xml:lang="en"><seg>Related companies</seg></tuv>
-		<tuv xml:lang="fi"><seg>Liittyvät yritykset</seg></tuv>
+		<tuv xml:lang="en"><seg>Related companies and organizations</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liittyvät yritykset ja organisaatiot</seg></tuv>
 	</tu>
 	<tu tuid='content-add-research'>
 		<tuv xml:lang="en"><seg>Research question</seg></tuv>
@@ -433,6 +433,9 @@
 		<tuv xml:lang="en"><seg>The header should be concise and it should describe the subject as well as possible (max. length 100 marks)</seg></tuv>
 		<tuv xml:lang="fi"><seg>Mahdollisimman hyvin aihetta kuvaava, tiivis otsikko (maksimipituus 100 merkkiä).</seg></tuv>
 	</tu>
+	<tu tuid='content-add-headline-help-text'>
+		<tuv xml:lang="en"><seg>(Explain in one sentence the whole story)</seg></tuv>
+	</tu>
 	<tu tuid='content-add-keywords-help-text'>
 		<tuv xml:lang="en"><seg>(Use commas to separate tags)</seg></tuv>
 		<tuv xml:lang="fi"><seg>(Erota avainsanat pilkulla)</seg></tuv>
@@ -442,7 +445,7 @@
 		<tuv xml:lang="fi"><seg>(Tämä teksti näkyy hakutuloslistoissa)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-problem-textbody-help-text'>
-		<tuv xml:lang="en"><seg>(What is challenge and why it is important)</seg></tuv>
+		<tuv xml:lang="en"><seg>(Answer what, why, who, when and where questions)</seg></tuv>
 		<tuv xml:lang="fi"><seg>(Mikä haaste on ja miksi se on tärkeä)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-finfo-textbody-help-text'>
@@ -454,8 +457,8 @@
 		<tuv xml:lang="fi"><seg>(Mikä idea on ja miksi se on tärkeä)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-related_companies-help-text'>
-		<tuv xml:lang="en"><seg>(Use commas to separate companies)</seg></tuv>
-		<tuv xml:lang="fi"><seg>(Erota yritykset pilkulla)</seg></tuv>
+		<tuv xml:lang="en"><seg>(Use commas to separate)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Erota pilkulla)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-campaigns-help-text'>
 		<tuv xml:lang="en"><seg>(Use commas to separate campaigns)</seg></tuv>
