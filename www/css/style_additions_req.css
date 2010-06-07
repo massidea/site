@@ -515,7 +515,7 @@ form_registration_container dd,
 }
 
 #content_view_user_related, #content_view_content_related {
-	height: 145px;
+	height: 200px;
 	overflow: auto;
 }
 
@@ -551,6 +551,7 @@ form_registration_container dd,
 	height: 20px;
 	padding: 0.3em 1em 0 1em;
 	font-weight: bold;
+	font-size: 14px;
 }
 
 .content_rating_positive {

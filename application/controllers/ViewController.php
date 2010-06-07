@@ -200,7 +200,9 @@
 
         // get (VIEWED) content views (returns a string directly)
         $contentViewsModel = new Default_Model_ContentViews();
-        $contentViewsModel->increaseViewCount($id);
+        if (! $this->alreadyViewed($id)) {
+			$contentViewsModel->increaseViewCount($id);
+        }
         $views = $contentViewsModel->getViewsByContentId($id);
 
         // get content rating (returns a string directly)
