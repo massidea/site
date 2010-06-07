@@ -147,6 +147,24 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     {
         return $this->fetchAll();
     } // end of getAll
+
+    /**
+     * getRecent
+     *
+     * Gets the specified number of the most recently created campaigns.
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getRecent($limit)
+    {
+        if (!isset($limit)) $limit = 10;
+
+        $select = $this->select()
+                ->order('id_cmp DESC')
+                ->limit($limit);
+        return $this->fetchAll($select)->toArray();
+    }
     
     /** 
     *   removeCampaign

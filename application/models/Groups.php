@@ -67,6 +67,24 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         
         return $result;
     }
+
+    /**
+     * getRecent
+     *
+     * Gets the specified number of the most recently created groups.
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getRecent($limit)
+    {
+        if (!isset($limit)) $limit = 10;
+
+        $select = $this->select()
+                ->order('id_grp DESC')
+                ->limit($limit);
+        return $this->fetchAll($select)->toArray();
+    }
     
     /**
      * Adds a new group to the db.
