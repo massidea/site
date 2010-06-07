@@ -105,28 +105,109 @@ class CampaignController extends Oibs_Controller_CustomController
     public function linkAction()
     {
         $auth = Zend_Auth::getInstance();
-        $usrId = $auth->getIdentity()->user_id;
 
-        $cmpId = $this->_request->getParam('cmpid');
-        // TODO:
-        // if (!isset($cmpId))
-        //     redirect_to_campaigns_page();
-        $this->view->cmpid = $cmpId;
+        if ($auth->hasIdentity()) {
+            $usrId = $auth->getIdentity()->user_id;
 
-        $usrmodel = new Default_Model_User();
-        $usrcnt = $usrmodel->getUserContent($usrId);
-
-        $cmpmodel = new Default_Model_Campaigns();
-        $cmpcnt = $cmpmodel->getAllContentsInCampaign($cmpId);
-
-        $cnt = array();
-        foreach ($usrcnt as $usercontent) {
-            if (!$this->checkIfArrayHasKeyWithValue($cmpcnt, 'id_cnt', $usercontent['id_cnt'])) {
-                $cnt[] = $usercontent;
+            $cmpId = $this->_request->getParam('cmpid');
+            if (!isset($cmpId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector($redirectUrl);
             }
-        }
+            
+            $this->view->cmpid = $cmpId;
 
-        $this->view->usrcnt = $cnt;
+            $cmpmodel = new Default_Model_Campaigns();
+            $cmp = $cmpmodel->getCampaignById($cmpId);
+
+            $usrmodel = new Default_Model_User();
+            $usrcnt = $usrmodel->getUserContent($usrId);
+
+            if (!empty($usrcnt)) {
+                $cmpcnt = $cmpmodel->getAllContentsInCampaign($cmpId);
+
+                $cnt = array();
+                foreach ($usrcnt as $usercontent) {
+                    if (!$this->checkIfArrayHasKeyWithValue($cmpcnt, 'id_cnt', $usercontent['id_cnt'])) {
+                        $cnt[] = $usercontent;
+                    }
+                }
+                $hasUserContents = true;
+            } else {
+                $hasUserContents = false;
+            }
+
+            $this->view->cmp = $cmp;
+            $this->view->usrcnt = $cnt;
+            $this->view->hasUserContents = $hasUserContents;
+        } else {
+            // If not logged, redirecting to system message page
+			$message = 'campaign-link-not-logged';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+        }
+    }
+
+    /**
+     * unlinkAction
+     *
+     * Shows user contents which are linket to campaign. User can select and remove link.
+     *
+     * @author Mikko Korpinen
+     */
+    public function unlinkAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $usrId = $auth->getIdentity()->user_id;
+
+            $cmpId = $this->_request->getParam('cmpid');
+            if (!isset($cmpId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector($redirectUrl);
+            }
+
+            $this->view->cmpid = $cmpId;
+
+            $cmpmodel = new Default_Model_Campaigns();
+            $campaignexists = $cmpmodel->campaignExists($cmpId);
+            if ($campaignexists) {
+                $cmp = $cmpmodel->getCampaignById($cmpId);
+
+                $cmpcontents = $cmpmodel->getAllContentsInCampaign($cmpId);
+
+                if (!empty($cmpcontents)) {
+                    $cnt = array();
+                    foreach ($cmpcontents as $cmpcontent) {
+                        $cnt[] = $cmpcontent;
+                    }
+                }
+            }
+
+            $this->view->cmp = $cmp;
+            $this->view->cmpcnts = $cnt;
+            $this->view->campaignexists = $campaignexists;
+        } else {
+            // If not logged, redirecting to system message page
+			$message = 'campaign-link-not-logged';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+        }
     }
 
     public function makelinkAction()
@@ -137,9 +218,13 @@ class CampaignController extends Oibs_Controller_CustomController
         $cntId = $this->_request->getParam('cntid');
         $this->view->cntid = $cntId;
 
-        // TODO:
-        // if ( !((isset($cmpId)) && (isset($cntId))) )
-        //     redirect_to_campaigns_page();
+        if (!((isset($cmpId)) && (isset($cntId)))) {
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                        'action' => 'index',
+                                                        'language' => $this->view->language),
+                                                  'lang_default', true);
+            $this->_redirector($redirectUrl);
+        }
 
         $cmphascntmodel = new Default_Model_CampaignHasContent();
         $cmphascntmodel->addContentToCampaign($cmpId, $cntId);
@@ -148,11 +233,45 @@ class CampaignController extends Oibs_Controller_CustomController
         // Tell the user that the link was created.
 
         // Redirect back to the current campaign's page.
-        $target = $this->_urlHelper->url(array('controller' => 'campaign',
-                                   'action'     => 'view',
-                                   'cmpid'      => $cmpId,
-                                   'language'   => $this->language),
-                              'lang_default', true);
+        $target = $this->_urlHelper->url(array('cmpid' => $cmpId,
+                                               'language' => $this->view->language),
+                                         'campaign_view', true);
+        $this->_redirector->gotoUrl($target);
+    }
+
+    /**
+     * removelinkAction
+     *
+     * Remove link to content from campaign
+     *
+     * @author Mikko Korpinen
+     */
+    public function removelinkAction()
+    {
+        $cmpId = $this->_request->getParam('cmpid');
+        $this->view->cmpid = $cmpId;
+
+        $cntId = $this->_request->getParam('cntid');
+        $this->view->cntid = $cntId;
+
+        if (!((isset($cmpId)) && (isset($cntId)))) {
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                        'action' => 'index',
+                                                        'language' => $this->view->language),
+                                                  'lang_default', true);
+            $this->_redirector($redirectUrl);
+        }
+
+        $cmphascntmodel = new Default_Model_CampaignHasContent();
+        $cmphascntmodel->removeContentFromCampaign($cmpId, $cntId);
+
+        // TODO:
+        // Tell the user that the link was created.
+
+        // Redirect back to the current campaign's page.
+        $target = $this->_urlHelper->url(array('cmpid' => $cmpId,
+                                               'language' => $this->view->language),
+                                         'campaign_view', true);
         $this->_redirector->gotoUrl($target);
     }
 }

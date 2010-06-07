@@ -1484,8 +1484,25 @@ form #uploadedFiles_div .form_element_input label {
     clear: left;
 }
 
+#user_list_top {
+	display:inline-block;
+	width:100%;
+	padding-top:2px;
+}
+
+#user_list_search_form {
+	float:left;
+	width:50%;
+}
+
 #account_user_list_container {
     margin: 2em 0 0 0;
+}
+
+
+#user_list_search_instructions {
+	float:right;
+	width:50%;
 }
 
 .user_list_user_container {
@@ -1700,4 +1717,57 @@ form #uploadedFiles_div .form_element_input label {
 
 .finfoLine {
 	background: #FFC726;
+}
+
+.ac_results {
+	padding: 0px;
+	border: 1px solid black;
+	background-color: white;
+	overflow: hidden;
+	z-index: 99999;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	/* 
+	if width will be 100% horizontal scrollbar will apear 
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font: menu;
+	font-size: 12px;
+	/* 
+	it is very important, if line-height not setted or setted 
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+}
+
+.ac_results strong {
+	color: red;
+}
+
+.ac_loading {
+	background: white right center no-repeat;
+}
+
+.ac_odd {
+	background-color: #eee;
+}
+
+.ac_over {
+	background-color: #0A246A;
+	color: white;
 }

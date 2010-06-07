@@ -1,7 +1,11 @@
 <?php
 // dirty fix to use language variable from view
 $language = Zend_Layout::getMvcInstance()->getView()->language;
-$url_tag_cloud = Zend_Layout::getMvcInstance()->getView()->url_tag_cloud;
+//$url_tag_cloud = Zend_Layout::getMvcInstance()->getView()->url_tag_cloud;
+$url_tag_cloud = $this->url(array('controller' => 'tag',
+                             	 'action' => 'index',
+                             	 'language' => $language),
+                             	 'lang_default', true);
 $url_post = $this->url(array('content_id' => $this->id_cnt,
                              'language' => $language ),
                              'content_shortview', true);
@@ -18,7 +22,7 @@ $url_img = $this->url(array('controller' => 'account',
                             'thumb' => 'true'),
                             'lang_default', true)
 ?>
-<div class="user_content_row">
+<div class="user_content_row user_content_row_new" id="postid_<?php echo $this->id_cnt; ?>">
     <div class="user_image_list">
         <img src="<?php echo $url_img; ?>"
         alt="User image" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
@@ -28,6 +32,7 @@ $url_img = $this->url(array('controller' => 'account',
         <span class="summary_topic">
             <a href="<?php echo $url_user; ?>">
                 <?php echo $this->login_name_usr; ?>
+                <?php echo "(".$this->count.")"; ?>
             </a>
             :
             <b>
@@ -55,6 +60,6 @@ $url_img = $this->url(array('controller' => 'account',
        </span>
     </div>
 
-    <div style="clear: both;"></div>
+    <div class="clear"></div>
 
 </div>

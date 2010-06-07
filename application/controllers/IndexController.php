@@ -47,6 +47,7 @@ class IndexController extends Oibs_Controller_CustomController
         // $contentTypesModel = new Default_Model_ContentTypes();
         // $userModel = new Default_Model_User();
         
+        /*
         // Load recent posts from cache
         $cachePosts = 'IndexPosts_' . $this->view->language;
         
@@ -78,6 +79,7 @@ class IndexController extends Oibs_Controller_CustomController
         } else {
             $recentposts = $result;
         }
+        */
         
         // Load most popular tags from cache
         if(!$result = $cache->load('IndexTags')) {

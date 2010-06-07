@@ -12,14 +12,17 @@ $content_threat = $this->element->content_threat;
 $content_solution = $this->element->content_solution;
 $content_campaigns = $this->element->content_campaigns;
 $content_file_upload = $this->element->content_file_upload;
+$content_files = $this->element->uploadedFiles;
 $content_references = $this->element->content_references;
 $content_language = $this->element->content_language;
+/*
 $content_finfo_class = $this->element->content_finfo_class;
 $content_industry = $this->element->content_industry;
 $content_division = $this->element->content_division;
 $content_group = $this->element->content_group;
 $content_class = $this->element->content_class;
 $innovation_type = $this->element->innovation_type;
+*/
 $content_publish = $this->element->content_publish;
 $content_save = $this->element->content_save;
 $preview = $this->element->preview;
@@ -38,41 +41,40 @@ $preview = $this->element->preview;
         </div>
         
         <div class="form_helptext_line"></div>
+        
+	    <?php echo $content_language; ?>
 		
 		<?php echo $content_header; ?>
 		
-	    <?php echo $content_keywords; ?>
-	          
-		<?php echo $content_type; ?>
-		
-	    <?php echo $content_relatesto_id; ?>
-
 		<?php echo $content_textlead; ?>
-		
-	    <?php echo $content_text; ?>
-	    
-		<?php echo $content_related_companies; ?>
-		
-	    <?php echo $content_research; ?>
+				
+	 	<?php echo $content_research; ?>
 	      
 		<?php echo $content_opportunity; ?>
 		
 	    <?php echo $content_threat; ?>
 	      
 		<?php echo $content_solution; ?>
-	    	    
-		<div id="form_helptext_optional" class="form_helptext" >
-			<?php echo $this->translate('content-add-helptext-optional'); ?>
-		</div>
-		<div class="form_helptext_line"></div>		
 		
+	    <?php echo $content_keywords; ?>
+	    
+	    <?php echo $content_related_companies; ?>
+	    		
+	    <?php echo $content_text; ?>
+	          
+		<?php echo $content_type; ?>
+		
+	    <?php echo $content_relatesto_id; ?>
+	    	    
 	    <?php echo $content_campaigns; ?>
+	    
+	    <?php echo $content_references; ?>
 	    
 		<?php echo $content_file_upload; ?>
 		
-	    <?php echo $content_references; ?>
-	    
-	    <?php echo $content_language; ?>
+		<?php echo $content_files; ?>
+		
+	    <?php /*
 	      
 		<?php echo $content_finfo_class; ?>
 		
@@ -85,6 +87,8 @@ $preview = $this->element->preview;
 	    <?php echo $content_class; ?>
            
         <?php echo $innovation_type; ?>
+        
+        */?>
         
         <?php echo $content_publish; ?>     
            

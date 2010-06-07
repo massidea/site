@@ -140,6 +140,38 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
     }
 
     /**
+    *   getContentContents
+    *   Get all content contents
+    *
+    *   @author Mikko Korpinen
+    *   @param int id_parent_cnt Id of content
+    *   @return array
+    */
+    public function getContentContents($id_parent_cnt) {
+
+        $result = array();  // container for final results array
+
+        $contentSelect = $this->_db->select()
+                                   ->from(array('chc' => 'cnt_has_cnt'),
+                                          array('id_parent_cnt', 'id_child_cnt'))
+                                   ->joinLeft(array('cnt' => 'contents_cnt'),
+                                          'cnt.id_cnt = chc.id_child_cnt',
+                                          array('id_cnt', 'id_cty_cnt', 'title_cnt',
+                                                'lead_cnt', 'published_cnt', 'created_cnt'))
+                                   ->joinLeft(array('cty' => 'content_types_cty'),
+                                          'cty.id_cty = cnt.id_cty_cnt',
+                                          array('key_cty'))
+                                   ->where('chc.id_parent_cnt = ?', $id_parent_cnt)
+                                   ->order('cnt.id_cty_cnt ASC')
+                                   ->order('cnt.created_cnt DESC')
+                                   ->group('cnt.id_cnt');
+
+        $result = $this->_db->fetchAll($contentSelect);
+
+        return $result;
+    }
+
+    /**
     *   removeContentFromContents
     *   Removes specified content from contents (child or parent)
     *
@@ -151,6 +183,26 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
         $parent = $this->getAdapter()->quoteInto('id_parent_cnt = ?', (int)$id_cnt);
         $child = $this->getAdapter()->quoteInto('id_child_cnt = ?', (int)$id_cnt);
         $where = "$parent OR $child";
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+    *   removeContentFromContent
+    *   Removes specified content from content
+    *
+    *   @param int id_parent_cnt Id of content
+    *   @param int id_child_cnt Id of content
+    *   @author Mikko Korpinen
+    */
+    public function removeContentFromContent($id_parent_cnt = 0, $id_child_cnt = 0)
+    {
+        $parent = $this->getAdapter()->quoteInto('id_parent_cnt = ?', (int)$id_parent_cnt);
+        $child = $this->getAdapter()->quoteInto('id_child_cnt = ?', (int)$id_child_cnt);
+        $where = "$parent AND $child";
         if ($this->delete($where)) {
             return true;
         } else {

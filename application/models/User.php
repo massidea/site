@@ -421,6 +421,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * when this function was used, and that data caused unnecessary empty row
     * to user's content row, so the check if user hasn't got any contents failed.
     *
+    * Edited 19.5.2010 by Mikko Korpinen
+    * For edit links in user pages array need cntHasCntCount (edit links will be
+    * showing if content has any content.
+    *
     * @author Pekka Piispanen
     * @author Joel Peltonen
     * @author Mikko Aatola
@@ -462,21 +466,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('crt' => 'content_ratings_crt'),
                                                       'cnt.id_cnt = crt.id_cnt_crt',
                                                       array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
-                                            ->joinLeft(array('cmt' => 'comments_cmt'),
+                                           ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
-                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))                     
+                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
+                                           ->joinLeft(array('chc' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc.id_parent_cnt',
+                                                      array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
-                                           
-                                           /* Below where statement is just a hack for my own database,
-                                              there was somehow an invisible content with id_cnt "", and
-                                              because it was invisible, I couldn't delete it and I wasn't
-                                              able to test content linking. And there was no time to clean
-                                              up my database and create a new one with new contents. 
-                                              
-                                              - Pekka Piispanen
-                                           */
-                                           ->where('cnt.id_cnt != ?', "")
+                                           ->where('cnt.id_cnt != ?', "") // Odd hack
                                            ->order('cnt.id_cty_cnt ASC')
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
@@ -507,7 +505,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         return $result;
     } // end of getUserContent
-    
+
     public function getSimpleUserDataById($id = -1) 
     {
         $data = array();
@@ -978,5 +976,36 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         } 
         return $result;
     } // end of getUserFavouriteContent
+    
+   
+    /*
+     * getAllUsersLocations
+     * 
+     * Gets all location info from users (Countries not yet done because they dont exist yet :p)
+     * 
+     * array(
+     * 	cities => array(
+     * 		cityindex => array(name, amount)),
+     * 	countries => array(
+     * 		countryindex => array(name, amount))
+     * )
+     * 
+     * @author Jari Korpela
+     * @return Array
+     */
+    public function getAllUsersLocations() {
+    	$result = array();
+    	$city = 'city';
+    	$select = $this->_db->select()
+    				->from('usr_profiles_usp', array('profile_value_usp AS name','COUNT(*) AS amount'))
+    				->distinct()
+    				->where('profile_key_usp = ?' ,$city)
+    				->order('profile_value_usp')
+    				->group('name');
+    	$result = $this->_db->fetchAll($select);
+    	$result = array('cities' => $result);
+    	
+    	return $result;
+    }
         
 } // end of class

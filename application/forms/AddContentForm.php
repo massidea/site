@@ -60,10 +60,18 @@ class Default_Form_AddContentForm extends Zend_Form
         * 
         */
         
+        // Language, Select
+        $language = new Zend_Form_Element_Select('content_language');
+                $language->addFilter('StringtoLower')
+                ->setLabel($translate->_("content-add-language"))
+                				->setRequired(true)
+                                ->setDecorators(array('FormElementDecorator'))
+                                ->setMultiOptions($data['languages']);
+
+
 		// Header, input
 		$header = new Zend_Form_Element_Text('content_header');
-		$header->addFilter('StringtoLower')
-                ->setRequired(true)
+		$header->setRequired(true)
                 ->addValidators(array(
                                       array('NotEmpty', 
                                             true, 
@@ -84,8 +92,8 @@ class Default_Form_AddContentForm extends Zend_Form
 				
 		// Keywords, input
 		$keywords = new Zend_Form_Element_Text('content_keywords');
-		$keywords->addFilter('StringtoLower')			
-                ->setRequired(true)
+		$keywords->addFilter('StringToLower')
+				->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
                                             array('messages' => 
@@ -120,8 +128,7 @@ class Default_Form_AddContentForm extends Zend_Form
 		
 		// Lead, Textarea
 		$textlead = new Zend_Form_Element_Textarea('content_textlead');
-		$textlead->addFilter('StringtoLower')
-                ->setRequired(true)
+		$textlead->setRequired(true)
                 ->setAttrib('class', 'textlead')
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
@@ -147,19 +154,11 @@ class Default_Form_AddContentForm extends Zend_Form
 		        
 		// Body, Textarea
 		$text = new Zend_Form_Element_Textarea('content_text');
-		$text->addFilter('StringtoLower')
-                ->setRequired(true)
+		$text->setAllowEmpty(true)
                 ->setAttrib('class', 'textbody')
-                ->addValidators(array(array('NotEmpty', 
-                                            true, 
-                                            array('messages' => 
-                                                array('isEmpty' => 
-                                                    'content-add-field-empty')
-                                                 )
-                                           ),
-                                        array('StringLength', 
+                ->addValidators(array(array('StringLength', 
                                               true, 
-                                              array(1, 
+                                              array(0, 
                                                     4000,
                                                     'messages' => 
                                                         array('stringLengthTooShort' => 
@@ -170,12 +169,11 @@ class Default_Form_AddContentForm extends Zend_Form
                                )
                 ->setLabel($translate->_("content-add-text"))
                 ->setDescription($translate->_('content-add-' . $contentType . '-textbody-help-text'))
-                ->setDecorators(array('FormElementDecorator'));
+                ->setDecorators(array('FormOptionalElementDecorator'));
         
         // Related companies, Input
 		$related_companies = new Zend_Form_Element_Text('content_related_companies');
-		$related_companies->addFilter('StringtoLower')			
-                ->setRequired(true)
+		$related_companies->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
                                             array('messages' => 
@@ -200,8 +198,7 @@ class Default_Form_AddContentForm extends Zend_Form
         
         // Problem research question, Input
 		$research = new Zend_Form_Element_Text('content_research');
-		$research->addFilter('StringtoLower')
-                ->setRequired(true)
+		$research->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
                                             array('messages' => 
@@ -212,7 +209,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                             true, 
                                             array(1, 
-                                                  120,
+                                                  140,
                                                   'messages' => 
                                                     array('stringLengthTooLong' => 
                                                         'field-too-long')))
@@ -224,8 +221,7 @@ class Default_Form_AddContentForm extends Zend_Form
         
         // Future info opportunity, Input
 		$opportunity = new Zend_Form_Element_Text('content_opportunity');
-		$opportunity->addFilter('StringtoLower')
-                ->setRequired(true)
+		$opportunity->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
                                             array('messages' => 
@@ -236,7 +232,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                               true, 
                                               array(1, 
-                                                    120,
+                                                    140,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -250,8 +246,7 @@ class Default_Form_AddContentForm extends Zend_Form
 
         // Future info threat, Input
 		$threat = new Zend_Form_Element_Text('content_threat');
-		$threat->addFilter('StringtoLower')
-                ->setRequired(true)
+		$threat->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
                                             array('messages' => 
@@ -262,7 +257,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                               true, 
                                               array(1,
-                                                    120,
+                                                    140,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -276,8 +271,7 @@ class Default_Form_AddContentForm extends Zend_Form
         
         // Idea/solution in one sentence, Input
 		$solution = new Zend_Form_Element_Text('content_solution');
-		$solution->addFilter('StringtoLower')
-                ->setRequired(true)
+		$solution->setRequired(true)
                 ->addValidators(array(array('NotEmpty', 
                                             true, 
                                             array('messages' => 
@@ -288,7 +282,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                               true, 
                                               array(1,
-                                                    120,
+                                                    140,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -313,8 +307,7 @@ class Default_Form_AddContentForm extends Zend_Form
         
         // References, Textarea
 		$references = new Zend_Form_Element_Textarea('content_references');
-		$references->addFilter('StringtoLower')
-                ->setAttrib('class', 'textlead')
+		$references->setAttrib('class', 'textlead')
                 ->addValidators(array(array('StringLength', 
                                               true, 
                                               array(0,
@@ -330,13 +323,6 @@ class Default_Form_AddContentForm extends Zend_Form
                 ->setDescription($translate->_("content-add-references-help-text"))
 				->setDecorators(array('FormOptionalElementDecorator'));
         
-        // Language, Select
-        $language = new Zend_Form_Element_Select('content_language');
-		$language->addFilter('StringtoLower')
-                ->setLabel($translate->_("content-add-language"))
-				->setDecorators(array('FormElementDecorator'))
-				->setMultiOptions($data['languages']);
-		
 		/*
         
         // Future info classification, Select
@@ -396,10 +382,10 @@ class Default_Form_AddContentForm extends Zend_Form
         $save->setLabel($translate->_("content-add-save"))
              ->removeDecorator('DtDdWrapper');
         
-        $preview = new Zend_Form_Element_Button('preview');
+        $preview = new Zend_Form_Element_Submit('preview');
         $preview->setLabel($translate->_("content-add-preview"))
-                ->removeDecorator('DtDdWrapper')
-                ->setAttrib('onclick',"populatePreview(); previewRoll('open')");
+                ->removeDecorator('DtDdWrapper');
+                //->setAttrib('onclick',"populatePreview(); previewRoll('open')");
         
         // Set custom form layout
         $this->setDecorators(array(array('ViewScript', array(
@@ -407,9 +393,10 @@ class Default_Form_AddContentForm extends Zend_Form
             'placement' => false
         ))));
 
-        // Add generic elements to form
+	// Add generic elements to form
         $this->addElements(array(
-            $header,
+            $language,
+	    	$header,
             $keywords,
             $content_type,
             $content_relatesto_id,
@@ -418,7 +405,6 @@ class Default_Form_AddContentForm extends Zend_Form
             $related_companies,
             $file,
             $references,
-            $language,
             //$industry,
             //$division,
             //$group,

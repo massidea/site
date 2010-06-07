@@ -1,23 +1,9 @@
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
 
 <?php $this->headScript()->captureStart()?>
-
 var language = '<?php echo $this->language;?>';
-function previewRoll(action) {
-	if(action == 'open') {
-		$("#form_content_realcontent").fadeOut(function(){
-			$("#form_preview_content").fadeIn();
-		});
-	} else if(action == 'close') {
-		$("#form_preview_content").fadeOut(function(){
-			$("#form_content_realcontent").fadeIn();
-		});
-	}
-}
-
-//setTimeout("preCheck('<?php echo $this->language; ?>')", 30);
-
 <?php $this->headScript()->captureEnd()?>
+
 <?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
 
 <?php 
@@ -42,78 +28,6 @@ if($this->short_contenttype == "problem") {
 } ?>
 
 <div id="form_content_add_container" style="float: left;">
-
-	<div id="form_preview_content">
-
-            <div style="float: right; margin-right: 60px;">
-                <div>
-                    <a href="#" onclick="previewRoll('close');">
-                        <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>"
-                            alt="" style="position: absolute;" />
-                    </a>
-                </div>
-                <div>
-                    <a href="#" onclick="previewRoll('close');"
-                       style="position: absolute; margin-top: 50px; margin-left: -15px;">
-                        <?php echo $this->translate('content-add-preview-close'); ?>
-                    </a>
-                </div>
-            </div>
-
-            <h3 style="padding-top: 10px;"><?php echo $this->translate('content-add-preview-header'); ?></h3>
-
-            <div style="clear:both; padding-top: 30px;">
-
-                <div id="content_view_left_p">
-
-                    <div id="content_view_content_p">
-
-                        <div id="content_view_content_container_p" style="padding-top: 10px;">
-                            <div class="content_view_texttitle_finfo_p">
-                                <h3 style="margin: 0px; padding: 0px; font-weight: bold;" id="preview_header">
-                                    Header goes here
-                                </h3>
-                                <p style="margin: 0px; padding: 0px; font-style: italic;" id="content_view_textlead_item_p">
-                                    Textlead goes here
-                                </p>
-                            </div>
-
-                            <div id="content_view_tags_p" style="padding-top: 7px;">
-                                <span class="content_view_bold_p" style="float: left;">
-                                    <a href="#">Tags: </a>
-                                </span>
-
-                                <div id="content_view_tags_items_p">
-                                    <a href="#">Tag</a>
-                                </div>
-                            </div>
-
-                            <div id="content_view_textbody_p">
-                                <p>Textbody goes here</p>
-                            </div>
-                        </div>
-
-                        <div class="user_content_spacer">
-                            <img alt="Massidea.org" src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>"/>
-                        </div>
-
-                        <div class="content_view_industries_p" id="content_view_industries_p">
-                            <h3>Industry classification</h3>
-                            <p id="content_view_industries_item_p">Industry goes here</p>
-                            <p id="content_view_division_item_p">Division goes here</p>
-                            <p id="content_view_group_item_p">Group goes here</p>
-                            <p id="content_view_class_item_p">Class goes here</p>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="clear_p"></div>
-
-            </div>
-        
-	</div>
 	
 	<div id="form_content_realcontent">
         <h2>

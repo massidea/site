@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
 <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
@@ -617,11 +617,15 @@
 		<tuv xml:lang="en"><seg>Preview</seg></tuv>
 		<tuv xml:lang="fi"><seg>Esikatselu</seg></tuv>
 	</tu>
-        <tu tuid='content-add-preview-header'>
+	<tu tuid='content-add-edit'>
+		<tuv xml:lang="en"><seg>Edit</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa</seg></tuv>
+	</tu>
+    <tu tuid='content-add-preview-header'>
 		<tuv xml:lang="en"><seg>This is a preview</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tämä on esikatselu</seg></tuv>
 	</tu>
-        <tu tuid='content-add-preview-close'>
+    <tu tuid='content-add-preview-close'>
 		<tuv xml:lang="en"><seg>Close preview</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sulje esikatselu</seg></tuv>
 	</tu>
@@ -1052,7 +1056,11 @@
 	<tu tuid='content-delete'>
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
-	</tu>    
+	</tu>
+    <tu tuid='content-editlinks'>
+		<tuv xml:lang="en"><seg>Edit links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa linkkejä</seg></tuv>
+	</tu>
 	<tu tuid='content-cancel'>
 		<tuv xml:lang="en"><seg>Cancel</seg></tuv>
 		<tuv xml:lang="fi"><seg>Peruuta</seg></tuv>
@@ -1262,8 +1270,12 @@
 		<tuv xml:lang="fi"><seg>Sisältösi</seg></tuv>
 	</tu>
 	<tu tuid='content-link-helptext'>
-		<tuv xml:lang="en"><seg>is going to be linked with</seg></tuv>
-		<tuv xml:lang="fi"><seg>tullaan linkittämään alla olevan kanssa</seg></tuv>
+		<tuv xml:lang="en"><seg>Select the content which will be linked.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse sisältö mikä linkitetään.</seg></tuv>
+	</tu>
+    <tu tuid='content-link-not-content-this-type'>
+		<tuv xml:lang="en"><seg>You don't have any content with this content type.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sinulla ei ole tämän tyyppistä sisältöä.</seg></tuv>
 	</tu>
 	<tu tuid='content-link'>
 		<tuv xml:lang="en"><seg>Add link</seg></tuv>
@@ -1284,6 +1296,10 @@
 	<tu tuid='content-link-successful'>
 		<tuv xml:lang="en"><seg>Content linked succesfully!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö linkitettiin onnistuneesti!</seg></tuv>
+	</tu>
+    <tu tuid='content-link-themselves'>
+		<tuv xml:lang="en"><seg>You can't link to content themselves!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Et voi linkittää sisältöä itseensä!</seg></tuv>
 	</tu>
 	<tu tuid='content-link-not-content-owner'>
 		<tuv xml:lang="en"><seg>You can only link you're own content!</seg></tuv>
@@ -1312,6 +1328,38 @@
 	<tu tuid='content-link-linking-to-idea'>
 		<tuv xml:lang="en"><seg>You can't link content to an idea!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ideaan ei voi linkittää!</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-from-challenge'>
+		<tuv xml:lang="en"><seg>Remove linking from challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys haasteesta</seg></tuv>
+	</tu>
+	<tu tuid='content-unlink-from-vision'>
+		<tuv xml:lang="en"><seg>Remove linking from vision</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys näkymästä</seg></tuv>
+	</tu>
+	<tu tuid='content-unlink-from-idea'>
+		<tuv xml:lang="en"><seg>Remove linking from idea</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys ideasta</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-invalid-relatestoid'>
+		<tuv xml:lang="en"><seg>Content to what you're trying to see doesn't exist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä, jonka yritit nähdä, ei ole olemassa!</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-target'>
+		<tuv xml:lang="en"><seg>Remove link target</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkin poiston kohde</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-helptext'>
+		<tuv xml:lang="en"><seg>Select the content which link will be removed</seg></tuv>
+		<tuv xml:lang="fi"><seg>Valitse sisältö minkä linkki poistetaan</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink'>
+		<tuv xml:lang="en"><seg>Remove link</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkki</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-successful'>
+		<tuv xml:lang="en"><seg>Content link removed succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitys poistettu onnistuneesti!</seg></tuv>
 	</tu>
 	<tu tuid='content-index-authenticated-text'>
 		<tuv xml:lang="en"><seg>
@@ -1529,5 +1577,9 @@
             Massidea database. In other words, ideas are answers or solutions
             to current challenges or visions of the future.
         </seg></tuv>
+	</tu>
+	<tu tuid='content-preview-not-logged-in'>
+		<tuv xml:lang="en"><seg>Your session has timed out, please log in again.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Istunto on vanhentunut, kirjaudu uudestaan sisään.</seg></tuv>
 	</tu>    
 </body>

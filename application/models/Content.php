@@ -112,46 +112,31 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 				$order = 'cnt.created_cnt DESC';
 		}
 
-		/*
-		 $industry = 1;
-		 if ($ind > 0) {
-		 $industry = $this->_db->quoteInto('chi.id_ind = ?', $ind);
-		 }
-		 */
-
 		// Needs more optimization
-		$select = $this->_db->select()->from(array('cty' => 'content_types_cty'),
-		array('cty.id_cty', 'cty.key_cty'))
-		->join(array('cnt' => 'contents_cnt'),
-                                            'cnt.id_cty_cnt = cty.id_cty',
-		array('cnt.id_cnt',
-                                                  'cnt.title_cnt',
-                                                  'cnt.lead_cnt',
-                                                  'cnt.created_cnt',
-                                                  'cnt.language_cnt'))
-		->joinLeft(array('chu' => 'cnt_has_usr'),
-                                            'chu.id_cnt = cnt.id_cnt',
-		array())
-		->joinLeft(array('usr' => 'users_usr'),
-                                            'usr.id_usr = chu.id_usr',
-		array('usr.id_usr',
-                                                  'usr.login_name_usr'))
-		/*
-		 ->joinLeft(array('chi' => 'cnt_has_ind'),
-		 'chi.id_cnt = cnt.id_cnt',
-		 array())
-
-		 ->joinLeft(array('vws' => 'cnt_views_vws'),
-		 'vws.id_cnt_vws = cnt.id_cnt',
-		 array('viewCount' => 'COUNT(vws.id_usr_vws)'))
-
-		 ->joinLeft(array('ind' => 'industries_ind'),
-		 'ind.id_ind = chi.id_ind',
-		 array())*/
-		->group('cnt.id_cnt')
-		->where('cnt.published_cnt = 1')
-		//->where('cnt.language_cnt = ?', $lang)
-		->order($order);
+		$select = $this->_db->select()->from(
+			array('cty' => 'content_types_cty'),
+			array('cty.id_cty', 'cty.key_cty'))
+				->join( array('cnt' => 'contents_cnt'),
+                    	'cnt.id_cty_cnt = cty.id_cty',
+						array('cnt.id_cnt',
+                              'cnt.title_cnt',
+                              'cnt.lead_cnt',
+                              'cnt.created_cnt',
+                              'cnt.language_cnt'))
+				->joinLeft(array('chu' => 'cnt_has_usr'),
+                           'chu.id_cnt = cnt.id_cnt',
+							array())
+				->joinLeft(array('usr' => 'users_usr'),
+                           'usr.id_usr = chu.id_usr',
+							array('usr.id_usr', 'usr.login_name_usr'))
+			    // Users postcount
+				->joinLeft('cnt_has_usr',   
+						   'cnt_has_usr.id_usr = chu.id_usr',
+						   array('count' => 'count(*)'))
+				->group('cnt.id_cnt')
+				->where('cnt.published_cnt = 1')
+				//->where('cnt.language_cnt = ?', $lang)
+				->order($order);
 
 		if ($cty != 'all' && $cty != 'All') {
 			$select->where('cty.key_cty = ?', $cty);
@@ -165,7 +150,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		// Content data
 		$data = $this->_db->fetchAll($select);
-
 		return $data;
 	}
 
@@ -304,8 +288,80 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 //return $result;
 	 }
 	 */
+	
+	/* getRelatedContents
+	 * 
+	 * gets all contents that share tags with specified content
+	 * 
+	 * @param 			id		content id
+	 * @return	array			array of title_cnt, id_cnt,  viewCount, contentType 
+	 */
+    public function getRelatedContents($id) {
 
-	/**
+    	$tags = $this->getTagIdsByContentId($id);
+
+    	$linkedContents = array();
+    					
+   		$cntHasTagModel = new Default_Model_ContentHasTag();
+    	$select = $cntHasTagModel->select()
+    							 ->from('cnt_has_tag', array('id_cnt'))
+    							 ->where('id_tag IN (?)', $tags);
+   		
+   		$contents = $cntHasTagModel->fetchAll($select)->toArray();
+    	$linkedContents = $this->find($contents);
+ 	
+    	$viewsModel = new Default_Model_ContentViews();
+    	$rows = array();
+    	
+    	foreach ($linkedContents as $row) {
+    		$tempRow = array();
+    		$tempRow['title_cnt']   = $row->title_cnt;
+    		$tempRow['id_cnt']      = $row->id_cnt;
+    		$tempRow['viewCount']   = $viewsModel->getViewsByContentId($row->id_cnt);
+    		$tempRow['contentType'] = $row->findDependentRowset('Default_Model_ContentTypes', 'ContentType')->current()->key_cty;
+    		array_push($rows, $tempRow);
+    	}
+
+    	return $rows;
+    }
+    
+    /* getTagNamesByContentId
+     * gets tag names by content id 
+     * 
+     * @param			id_cnt		content id
+     * @return	array	(name_tag, name_tag, ...) 
+     */
+    public function getTagNamesByContentId($id_cnt) {
+
+    	$content = $this->find($id_cnt)->current();
+    	$contentTagIds = $content->findDependentRowset('Default_Model_ContentHasTag', 'TagContent');
+    	$tagsArray = array();
+    	foreach ($contentTagIds as $tagId) {
+    		$tag = $tagId->findDependentRowset('Default_Model_Tags', 'TagTag')->current();
+    		array_push($tagsArray, $tag->name_tag);
+	    }
+	    return $tagsArray;
+    }
+    
+    /*getTagIdsByContentId
+     * 
+     * Gets all tag ids linked to content
+     * 
+     * @param			id_cnt		content id
+     * @return 	array	(id_tag, id_tag, ...) tag ids
+     */
+    public function getTagIdsByContentId($id_cnt) {
+
+    	$content = $this->find($id_cnt)->current();
+    	$contentTags = $content->findDependentRowset('Default_Model_ContentHasTag', 'TagContent');
+    	$ids = array();
+    	foreach ($contentTags as $tag) {
+    		array_push($ids, $tag->id_tag);
+    	}
+
+	    return $ids;
+    }
+    /**
 	 *   getByName
 	 *
 	 *   Gets content by name from database. This is used in search function.
@@ -571,6 +627,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 $contentHasInnovationType->addInnovationTypeToContent($content->id_cnt, $data['innovation_type']);
             }
         }
+        
+        // Reset and save latest post time hash in cache 
+        $cache = Zend_Registry::get('cache');
+        $cache->remove('LatestPostHash');
+        $cache->save('LatestPostHash', md5(time()));
         
         return $return;
     } // end of addContent

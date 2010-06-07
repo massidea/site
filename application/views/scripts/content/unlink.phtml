@@ -1,57 +1,38 @@
 <?php
 
+$title = '';
+
 if($this->linkingContentType == "problem") {
-    $title = $this->translate('content-link-challenge-to');
+    $title = $this->translate('content-unlink-from-challenge');
     $linkedColor = "red";
 }
 elseif($this->linkingContentType == "finfo") {
-    $title = $this->translate('content-link-vision-to');
+    $title = $this->translate('content-unlink-from-vision');
     $linkedColor = "yellow";
 }
 elseif($this->linkingContentType == "idea") {
-    $title = $this->translate('content-link-idea-to');
+    $title = $this->translate('content-unlink-from-idea');
     $linkedColor = "green";
-}
-
-if($this->relatesToContentContentTypeId == "problem") {
-    $title2 = $this->translate('content-link-challenge');
-}
-elseif($this->relatesToContentContentTypeId == "finfo") {
-    $title2 = $this->translate('content-link-vision');
-}
-elseif($this->relatesToContentContentTypeId == "idea") {
-    $title2 = $this->translate('content-link-idea');
 }
 ?>
 <div class="linking_content">
 <?php
-echo "<h3 class=\"recent_posts\">".$title." ".$title2."</h3>";
+echo "<h3 class=\"recent_posts\">".$title."</h3>";
 
-if($this->relatesToId != 0 && $this->hasUserContents == true) {
+if($this->contentexists) {
 ?>
     <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
         <p class="linkedtotext">
-            <?php echo $this->translate('content-link-target', 
+            <?php echo $this->translate('content-unlink-target',
                                                     $this->language);
             ?>
         </p>
-        <?php 
-        if($this->relatesToContentContentTypeId == "problem") { 
-            $color = "red";
-        }
-        elseif($this->relatesToContentContentTypeId == "finfo") {
-            $color = "yellow";
-        }
-        elseif($this->relatesToContentContentTypeId == "idea") {
-            $color = "green";
-        }
-        ?>
-        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" />
+        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" />
         
         <p style="padding-top: 9px;">
             <a href="<?php echo $this->url(array('content_id' => $this->relatesToId, 
-                                                 'language' => $this->language), 
-                                           'content_shortview', true); ?>">
+                                                     'language' => $this->language), 
+                                                     'content_shortview', true); ?>">
                 <?php
                     if(strlen($this->relatesToContentTitle) > 68) {
                         $this->relatesToContentTitle = substr($this->relatesToContentTitle, 0, 68) . "...";
@@ -62,7 +43,7 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
         </p>
     </div>
 
-    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('content-link-helptext'); ?></p>
+    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('content-unlink-helptext'); ?></p>
     <?php
     if($this->contents) {
         foreach($this->contents as $content) {
@@ -70,8 +51,19 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
                 ?>
                 <div class="form_helptext_line"></div>
                 <div style="height: 20px;">
-                    <div style="float: left; width: 450px;">
-                        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" height="15" width="4"/>
+                    <div style="float: left; width: 420px;">
+                        <?php
+                        if($content['key_cty'] == "problem") {
+                            $color = "red";
+                        }
+                        elseif($content['key_cty'] == "finfo") {
+                            $color = "yellow";
+                        }
+                        elseif($content['key_cty'] == "idea") {
+                            $color = "green";
+                        }
+                        ?>
+                        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
                         <?php
                         $linkurl = $this->url(array('content_id' => $content['id_cnt'],
                                                     'language' => $this->language),
@@ -83,12 +75,12 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
                     <div style="margin-top: 4px;">
                         <?php
                         $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
-                                                    'parentid'    => $this->relatesToId,
                                                     'childid'     => $content['id_cnt'],
+                                                    'parentid'    => $this->relatesToId,
                                                     'language' => $this->language),
-                                              'makecontentlinks', true);
+                                              'removecontentlinks', true);
                         ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-link'); ?></a>
+                        <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-unlink'); ?></a>
                     </div>
                 </div>
                 <div style="clear: both;"></div>
@@ -98,7 +90,7 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
     }
 } else {
     ?>
-    <p><?php echo $this->translate('content-link-not-content-this-type'); ?></p>
+    <p><?php echo $this->translate('content-unlink-invalid-relatestoid'); ?></p>
     <?php
 }
 ?>
