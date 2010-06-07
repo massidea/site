@@ -111,6 +111,28 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
         
         return $result;
     }
+
+    /**
+     * Returns user groups from the user group table.
+     *
+     * @author Mikko Korpinen
+     * @param id_usr user id
+     * @return array of data of every group from user
+     */
+    public function getGroupsByUserId($id_usr)
+    {
+        $data = $this->_db->select()
+            ->from(array('uhg' => 'usr_has_grp'),
+                   array('id_grp'))
+            ->join(array('ugg' =>'usr_groups_grp'),
+                   'uhg.id_grp = ugg.id_grp',
+                   array('*'))
+            ->where('id_usr = ?', $id_usr);
+
+        $result = $this->_db->fetchAll($data);
+
+        return $result;
+    }
     
     /**
      * Checks if a user is in a group.
