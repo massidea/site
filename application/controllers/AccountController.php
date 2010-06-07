@@ -181,37 +181,40 @@ class AccountController extends Oibs_Controller_CustomController
 	*    Gets user profile information, users content and comments.
     */
     public function viewAction() {
+        // View is WIP because user profile edit form is not ready
+// WIP START
+
         // Get user identity
         $auth = Zend_Auth::getInstance();
-        
+
         // Disable edit profile by default
-        $userEdit = false;                              
-        
+        $userEdit = false;
+
         // Get params
         $params = $this->getRequest()->getParams();
         // Get username from params
-        $username = $params['user'];				    
-        
+        $username = $params['user'];
+
         // Get content types
-        $contentTypes = new Default_Model_ContentTypes();        
+        $contentTypes = new Default_Model_ContentTypes();
         $this->view->content_types = $contentTypes->getAllNamesAndIds();
-        
+
         // Get user data from User Model
-        $user = new Default_Model_User();        
+        $user = new Default_Model_User();
         $data = $user->getUserByName($username);
-        
+
         $this->view->user = $data;
 		$id = $data['id_usr'];
-	
+
         // Get public user data from UserProfiles Model
 		$userProfile = new Default_Model_UserProfiles();
         $dataa = $userProfile->getPublicData($id);
-        
+
         // $dataa is an array with key=>val like firstname => "Joel Peeloten"
 
         // This was replaced with get public data and the foreach above
         // Kept here just in case for the future
-        /* 
+        /*
         $dataa['gender'] 		= $userprofile->getUserProfileValue($id, 'gender');
 		$dataa['surname'] 		= $userprofile->getUserProfileValue($id, 'surname');
 		$dataa['firstname'] 	= $userprofile->getUserProfileValue($id, 'firstname');
@@ -223,27 +226,27 @@ class AccountController extends Oibs_Controller_CustomController
 		$dataa['phone'] 		= $userprofile->getUserProfileValue($id, 'phone');
 		$dataa['birthday'] 		= $userprofile->getUserProfileValue($id, 'birthday');
         */
-        
+
 		$dataa['country'] = $userProfile->getUserProfileValue($id, 'country');
-        
+
         $userCountry = new Default_Model_UserCountry();
 		$dataa['country'] = $userCountry->getCountryNameById(
             $dataa['country']['profile_value_usp']
         );
-        
+
         // Get content user has released
         $type = isset($params['type']) ? $params['type'] : 0 ;
         $contentList = $user->getUserContent($data['id_usr']);
         $temp = array();
-        
+
         // Initialize content counts
         $dataa['contentCounts']['totalCount'] = 0;
         $dataa['contentCounts']['savedCount'] = 0;
-        
+
         $dataa['contentCounts']['problem'] = 0;
         $dataa['contentCounts']['finfo'] = 0;
         $dataa['contentCounts']['idea'] = 0;
-        
+
         // Count amount of content user has published
         // and check unpublished so only owner can see it.
         foreach ($contentList as $k => $c) {
@@ -253,8 +256,8 @@ class AccountController extends Oibs_Controller_CustomController
                 unset($contentList[$k]);
             // Else if user logged in and not owner of unpublished content,
             // remove content from list
-            } else if ($auth->hasIdentity() && 
-                       $c['id_usr'] != $auth->getIdentity()->user_id && 
+            } else if ($auth->hasIdentity() &&
+                       $c['id_usr'] != $auth->getIdentity()->user_id &&
                        $c['published_cnt'] == 0) {
                 unset($contentList[$k]);
             // Else increase content counts and sort content by content type
@@ -263,34 +266,34 @@ class AccountController extends Oibs_Controller_CustomController
                     // Set content to array by its content type
                     //$temp[$c['key_cty']][] = $c;
                     //$temp[] = $c;
-                    
+
                     // Increase total count
                     $dataa['contentCounts']['totalCount']++;
-                    
+
                     // Set content type count to 0 if count is not set
                     if (!isset($dataa['contentCounts'][$c['key_cty']] )) {
                         $dataa['contentCounts'][$c['key_cty']] = 0;
                     }
-                    
+
                     // Increase content type count
                     $dataa['contentCounts'][$c['key_cty']]++;
                 }
             }
-            
+
             if($c['published_cnt'] == 0) {
                 $dataa['contentCounts']['savedCount']++;
             }
         } // end foreach
-        
+
         // If user is logged in, and viewing self; allow edit
         if ($auth->hasIdentity()) {
             $identity = $auth->getIdentity();
-            
+
             if ($data['id_usr'] == $identity->user_id) {
                 $userEdit = true;
             }
         }
-         
+
         if ($auth->hasIdentity() && $data['id_usr'] == $auth->getIdentity()->user_id) {
         	$favouriteModel = new Default_Model_UserHasFavourites();
         	$favouriteType = isset($params['favourite']) ? $params['favourite'] : 0;
@@ -313,21 +316,21 @@ class AccountController extends Oibs_Controller_CustomController
                 	unset($favouriteList[$k]);
                 	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
             	}
-            	
+
         	    if (isset($favourite['key_cty'])) {
-                    
+
                     // Increase total count
                     $dataa['favouriteCounts']['totalCount']++;
-                    
+
                     // Set content type count to 0 if count is not set
                     if (!isset($dataa['favouriteCounts'][$favourite['key_cty']] )) {
                         $dataa['favouriteCounts'][$favourite['key_cty']] = 0;
                     }
-                    
+
                     // Increase content type count
                     $dataa['favouriteCounts'][$favourite['key_cty']]++;
                 }
-        	}	
+        	}
         	//print_r($dataa);print_r($favouriteList);die;
         }
 
@@ -335,9 +338,16 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
         $this->view->authorContents = $contentList;/*$temp*/
-        $this->view->authorFavourites = $favouriteList;
+        //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
+
+// WIP END
+
+        //$group_model = new Default_Model_UserHasGroup();
+        //$usergroups = $group_model->getGroupsByUserId($id);
+
+        //$this->view->usergroups = $usergroups;
     }
     
     /**
