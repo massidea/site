@@ -445,7 +445,12 @@
 	</tu>	
 	
 	<tu tuid='account-userlist-search-instructions'>
-		<tuv xml:lang="en"><seg>Use "%" or "*" characters as a wildcard in the search fields and "_" or "?" characters as one character wildcard. Search uses wildcards automatically in the both ends of the search word. Wildcard character is a character that may be substituted for any of a defined subset of all possible characters.</seg></tuv>
+		<tuv xml:lang="en"><seg>
+		Multiple character wildcards: % and * <br />
+		Single character wildcards: _ and ? <br />
+		Search uses multiple character wildcards automatically in the both ends of the search word. <br />
+		Wildcard character is a character that may be substituted for any of a defined subset of all possible characters.
+		</seg></tuv>
 		<tuv xml:lang="fi"><seg>Voit käyttää haussa % tai * jokerimerkkinä ja _ tai ? merkkiä yhden merkin korvausmerkkinä. Haku käyttää automaattisesti jokerimerkkejä tekstin molemmin puolin.</seg></tuv>
 	</tu>
 	<tu tuid='account-userlist-user-content-added'>

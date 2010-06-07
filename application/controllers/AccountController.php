@@ -1037,6 +1037,21 @@ class AccountController extends Oibs_Controller_CustomController
         // Get page nummber and items per page
         $page = isset($params['page']) ? $params['page'] : 1;
         $count = isset($params['count']) ? $params['count'] : 10;
+        $order = isset($params['order']) ? $params['order'] : null;
+        $list = isset($params['list']) ? $params['list'] : null;
+        
+        if($order == "username") $order = "usr.login_name_usr"; 
+        elseif($order == "joined") $order = "usr.created_usr";
+        elseif($order == "login") $order = "usr.last_login_usr";
+        elseif($order == "content") $order = "contentCount";
+        else $order = null;
+
+        if($list != "asc" && $list != "desc") $list = null;
+        
+        if(isset($order) && isset($list)) {
+        	$sort = $order." ".$list;
+        	$sentParams = "/order/".$params['order']."/list/".$params['list'];
+        }
         
         // Filter form data
         $formData['username'] = isset($params['username']) ? $params['username'] : '';
@@ -1068,7 +1083,7 @@ class AccountController extends Oibs_Controller_CustomController
         
         // Get user listing
         $user = new Default_Model_User();
-        $userListing = $user->getUserListing($formData, $page, $count);
+        $userListing = $user->getUserListing($formData, $page, $count, $sort);
 
         $userIdList = array();
         foreach($userListing as $u) {
@@ -1131,6 +1146,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->count = $count;
         $this->view->userCount = $userCount;
         $this->view->page = $page;
+        $this->view->sentParams = $sentParams;
 
     } // end of userListingAction
     

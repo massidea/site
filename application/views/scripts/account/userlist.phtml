@@ -14,6 +14,8 @@ $url_contentView = $this->url(array('controller' => 'view',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
+$url_this = str_replace($this->sentParams,"",$this->url());
+
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete');
 //$this->headLink()->appendStylesheet($this->baseUrl . '/css/style_additions_req.css');
 $this->headScript()->captureStart();
@@ -21,18 +23,30 @@ $this->headScript()->captureStart();
 ?>
 
 $(document).ready(function(){
-	jsonSearchLocations("cities");
-	var json_users = '<?php echo json_encode($this->userList); ?>';
-	var obj = jQuery.parseJSON(json_users);
-	$.each(obj, function() {
-		$("#user_"+this+"_latest_content").html(
+
+	$(".users_latest_content_list").html(
 		'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
 		'Please wait...</h3>'
 	);
+
+	jsonSearchLocations("cities");
+	var json_users = '<?php echo json_encode($this->userList); ?>';
+	var obj = jQuery.parseJSON(json_users);
+	
+	$.each(obj, function() {
+	
 		jsonSearchContents(this);
+
 		$("input#user_"+this+"_content").focus(function() {
 			$(this).click();
 		});
+		
+		$("input#user_"+this+"_content").result(function(event, data, formatted) {
+			 $("#user_"+data.id_usr+"_content_link").attr('action', function() {
+			 	return '<?php echo $url_contentView ?>/'+data.id_cnt;
+			 });
+		});
+		
 	});
 	
 });
@@ -61,10 +75,20 @@ function complete_user_latest_contents(user_id,result){
 		if (this.id_cty_cnt == 1) var type = yellow;
 		if (this.id_cty_cnt == 2) var type = green;
 		if (this.id_cty_cnt == 3) var type = red;
-		if (this.lead_cnt.length + this.title_cnt.length > 120) var lead = this.lead_cnt.substr(0,120-this.title_cnt.length)+"...";
-		else var lead = this.lead_cnt;
+		var maxlen = 100;
+		if (this.lead_cnt.length + this.title_cnt.length > maxlen) {
+			if (this.title_cnt.length > maxlen) 
+				var titletext = this.title_cnt.substr(0,maxlen);
+			else var titletext = this.title_cnt;
+			var lead = this.lead_cnt.substr(0,maxlen-this.title_cnt.length)+"...";
+			
+		}
+		else { 
+			var lead = this.lead_cnt;
+			var titletext = this.title_cnt;
+		}
 		var createtime = "<span style=\"padding-right:10px; float:right\"> [" + this.created_cnt + "]</span>";
-		var title = "<a href=\"<?php echo $url_contentView ?>/"+this.id_cnt+"\">" + this.title_cnt + "</a>";
+		var title = "<a href=\"<?php echo $url_contentView ?>/"+this.id_cnt+"\">" + titletext + "</a>";
 		$("#user_"+user_id+"_latest_content").append("<div style=\"padding-bottom:2px;\"><span class=\""+type+"\"><span style=\"padding-left:2px;\">"+title+": "+lead+"</span>"+createtime+"</span></div>");
 		i++;
 		if (i == 3) return false;
@@ -91,7 +115,11 @@ function complete_user_content_search(user_id,result){
 			if (row.id_cty_cnt == 1) var type = yellow;
 			if (row.id_cty_cnt == 2) var type = green;
 			if (row.id_cty_cnt == 3) var type = red;
-			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right\"> [" + row.created_cnt + "]</span></span>";
+			
+			var rating = Math.round(((row.rating_sum / row.ratings) + 1) * 50);
+			var rating = "Rate: "+rating+"%";
+			if (!row.rating_sum) var rating = "Not rated"
+			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right\">"+rating+" [" + row.created_cnt + "]</span></span>";
 		},
 		formatMatch: function(row, i, max) {
 			return row.title_cnt+" "+row.lead_cnt;
@@ -141,11 +169,27 @@ function complete_city(result){
 	<div id="user_list_search_form">
 		<?php echo $this->userSearch; ?>
 	</div>
-	
-	    <div id="user_list_search_instructions">
+    <div id="user_list_search_instructions">
     	<?php echo $this->translate('account-userlist-search-instructions'); ?>
     </div>
     </div>
+    <div style="block; padding-bottom:1em">
+	<strong>Sort by: |</strong>
+	<?php 
+	$list = "/list/";
+	$order = "/order/";
+	$list_desc = $list."desc";
+	$list_asc = $list."asc";
+	$order_username = $order."username";
+	$order_content = $order."content";
+	$order_login = $order."login";
+	$order_joined = $order."joined";
+	?>
+	<a href="<?php echo $url_this . $order_username . $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Username <a href="<?php echo $url_this . $order_username . $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	<a href="<?php echo $url_this . $order_content. $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Content <a href="<?php echo $url_this . $order_content. $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	<a href="<?php echo $url_this . $order_login. $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Login <a href="<?php echo $url_this . $order_login. $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	<a href="<?php echo $url_this . $order_joined. $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Joined <a href="<?php echo $url_this . $order_joined. $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	</div>
 
     <?php if (!empty($this->userListData)):?>
             <?php if ($this->userCount > $this->count): ?>
@@ -189,10 +233,9 @@ function complete_city(result){
                             </div>
                         </div>
                         <div class="user_list_user_info_second">
-                        <div id="user_<?php echo $user['id_usr']; ?>_latest_content"><div style="padding:2px;"></div></div>
+                        <div id="user_<?php echo $user['id_usr']; ?>_latest_content" class="users_latest_content_list"><div style="padding:2px;"></div></div>
                         <div class="user_list_content_search">
-                        Content search:
-                        <input id="user_<?php echo $user['id_usr']; ?>_content"></input>
+                        <form action="#" id="user_<?php echo $user['id_usr']; ?>_content_link">Content search: <input id="user_<?php echo $user['id_usr']; ?>_content"></input><input type="submit" value="Go"></input></form>
                         </div>
                         </div>
                         
