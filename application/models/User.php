@@ -462,7 +462,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                   array('key_cty'))
                                            ->joinLeft(array('vws' => 'cnt_views_vws'),
                                                       'vws.id_cnt_vws = cnt.id_cnt',
-                                                      array('views' => 'COUNT(DISTINCT vws.views_vws)'))
+                                                      array('views' => 'SUM(DISTINCT vws.views_vws)'))
                                            ->joinLeft(array('crt' => 'content_ratings_crt'),
                                                       'cnt.id_cnt = crt.id_cnt_crt',
                                                       array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
@@ -1008,6 +1008,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	return $result;
     }
     
+
    public function getUserContentList($author_id = 0, $sort = 0, $type = 0) {
         $result = array();  // container for final results array
         
@@ -1017,7 +1018,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         } else {
             $whereType = '1 = 1';
         }
-        
+
         // If author id is set get users content
         if ($author_id != 0) {
             //if($count == -1) {

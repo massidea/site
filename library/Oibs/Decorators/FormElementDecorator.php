@@ -44,7 +44,7 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
 		}
         */
         
-		if($element->isrequired() && $errors == "")
+		if( $element->isrequired()  && $errors == "" || $element instanceof Zend_Form_Element_Select )
 		{
             $text = '<div id="progressbar_' .  $name . '" class="progress"></div>';
 		}

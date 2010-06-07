@@ -64,6 +64,7 @@ class Default_Form_AddContentForm extends Zend_Form
         $language = new Zend_Form_Element_Select('content_language');
                 $language->addFilter('StringtoLower')
                 ->setLabel($translate->_("content-add-language"))
+                				->setRequired(true)
                                 ->setDecorators(array('FormElementDecorator'))
                                 ->setMultiOptions($data['languages']);
 
@@ -153,16 +154,9 @@ class Default_Form_AddContentForm extends Zend_Form
 		        
 		// Body, Textarea
 		$text = new Zend_Form_Element_Textarea('content_text');
-		$text->setRequired(true)
+		$text->setAllowEmpty(true)
                 ->setAttrib('class', 'textbody')
-                ->addValidators(array(array('NotEmpty', 
-                                            true, 
-                                            array('messages' => 
-                                                array('isEmpty' => 
-                                                    'content-add-field-empty')
-                                                 )
-                                           ),
-                                        array('StringLength', 
+                ->addValidators(array(array('StringLength', 
                                               true, 
                                               array(0, 
                                                     4000,
@@ -175,7 +169,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                )
                 ->setLabel($translate->_("content-add-text"))
                 ->setDescription($translate->_('content-add-' . $contentType . '-textbody-help-text'))
-                ->setDecorators(array('FormElementDecorator'));
+                ->setDecorators(array('FormOptionalElementDecorator'));
         
         // Related companies, Input
 		$related_companies = new Zend_Form_Element_Text('content_related_companies');
@@ -215,7 +209,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                             true, 
                                             array(1, 
-                                                  120,
+                                                  140,
                                                   'messages' => 
                                                     array('stringLengthTooLong' => 
                                                         'field-too-long')))
@@ -238,7 +232,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                               true, 
                                               array(1, 
-                                                    120,
+                                                    140,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -263,7 +257,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                               true, 
                                               array(1,
-                                                    120,
+                                                    140,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -288,7 +282,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                         array('StringLength', 
                                               true, 
                                               array(1,
-                                                    120,
+                                                    140,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')

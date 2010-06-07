@@ -59,7 +59,7 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
         $return = 0;
 
 		// Find rating
-		$select = $this->select()->from($this, array('viewCount' => 'COUNT(id_cnt_vws)'))
+		$select = $this->select()->from($this, array('viewCount' => 'SUM(views_vws)'))
                                  ->where('id_cnt_vws = ?', $id)
                                  ->group('id_cnt_vws');
                                  

@@ -29,6 +29,7 @@ function ajaxLoad_moreRelated(type){
 	target =  "#content_view_"+type+"_related";
 	$(expandButton).bind('click', function () { expandCollapse(type); });
 	$.ajax({
+		async: false,
 		beforeSend: function(){
 			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 		},
@@ -38,20 +39,14 @@ function ajaxLoad_moreRelated(type){
 		url: "?page=related"+type+"&format=html",
 		success: function(result){
 			$(target).append(result);
-			$(target).slideToggle('normal');
+			//$(target).slideToggle('normal');
 		}
 	});
 };
 	
 $(document).ready(function(){
-	$("#content_view_user_related").hide();
-	$(".expand_user_related").one("click",function(){
 		ajaxLoad_moreRelated("user");
-	});
-	$("#content_view_content_related").hide();
-	$(".expand_content_related").one("click",function(){
 		ajaxLoad_moreRelated("content");
-	});	
 	
 	$("#content_view_content_info_container").load("?page=content_rating&format=html");
 	//$("#content_view_favourite").load("?page=add_favourite&format=html");
