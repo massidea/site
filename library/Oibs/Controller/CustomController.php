@@ -71,6 +71,13 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         
         // bbCode plugin
         $this->view->BBCode = new Oibs_Controller_Plugin_BBCode();
+        
+        // Set up GTranslate plugin
+        $this->gtranslate = new Oibs_Controller_Plugin_GTranslate();
+        $translateSession = new Zend_Session_Namespace('translate');
+        // If no session exist, set default translation language to english
+        if(!isset($translateSession->translateTo)) $translateSession->translateTo = 'en';
+        $this->gtranslate->setLangTo($translateSession->translateTo);
 		
 		// Add the root step to breadcrumbs
 		$this->breadcrumbs->addStep('Massidea.org Home', '/');
