@@ -31,11 +31,32 @@ class Oibs_Controller_Plugin_GTranslate {
 	private $_langFrom;
 	private $_langTo;
 	private $_queryString;
-	private $_error;
+	private $_response;
 	
-	public function __construct()
+	/*
+	 * public function setLangFrom()
+	 * 
+	 * Sets language to translate from
+	 * 
+	 * @param	string	from	Translate language from
+	 */
+	public function setLangFrom($from = null)
 	{
-		$this->_error = false;
+		if($from != null) $this->_langFrom = $from;
+		return $this;
+	}
+	
+	/*
+	 * public function setLangTo()
+	 * 
+	 * Sets language to translate into
+	 * 
+	 * @param	string	from	Translate language to
+	 */
+	public function setLangTo($to = null)
+	{
+		if($to != null) $this->_langTo = $to;
+		return $this;
 	}
 	
 	/*
@@ -46,10 +67,10 @@ class Oibs_Controller_Plugin_GTranslate {
 	 * @param	string	from	Translate language from
 	 * @param	string	to		Translate language to
 	 */
-	public function setLangPair($from, $to)
+	public function setLangPair($from = null, $to = null)
 	{
-		$this->_langFrom = $from;
-		$this->_langTo = $to;
+		if($from != null)	$this->_langFrom = $from;
+		if($to != null) 	$this->_langTo = $to;
 		return $this;
 	}
 	
@@ -74,13 +95,17 @@ class Oibs_Controller_Plugin_GTranslate {
 	 * @return				string	Translated string
 	 */
 	public function translate($string) {
-		$this->_queryString = $string;
+		// Reformat string for maintaining all newlines (\n -> <newrow />)
+		$this->_queryString = str_replace("\n", "<newrow />", $string);
+
 		if ($this->_isValid()) {
+			// Use cache for translated strings
 			$cache = Zend_Registry::get('cache');
 			$hash = $this->_generateHash();
 			$cacheName = 'GTranslate_'.$hash;
 			if(!($result = $cache->load($cacheName)))
 			{
+				$langpair = $this->_langFrom."|".$this->_langTo;
 				$client = new Zend_Http_Client('http://ajax.googleapis.com/ajax/services/language/translate', array(
 	                        'maxredirects' => 0,
 	                        'timeout'      => 30));
@@ -88,18 +113,23 @@ class Oibs_Controller_Plugin_GTranslate {
 				$client->setParameterGet(array(
 	                        'v' => '1.0',
 	                        'q' => $this->_queryString,
-	                        'langpair' => $this->_langFrom."|".$this->_langTo
+	                        'langpair' => $langpair
 				));
-	
+				
 				$response = $client->request();
 				$data = $response->getBody();
 				$server_result = json_decode($data);
 	
-				//$status = $server_result->responseStatus; // should be 200
-				
-				//$details = $server_result->responseDetails;
+				$this->_response[] = array(	'string'	=> $this->_queryString,
+											'langpair'	=> $langpair,
+											'status' 	=> $server_result->responseStatus,
+											'details' 	=> $server_result->responseDetails);
 				
 				$result = $server_result->responseData->translatedText;
+				
+				// Reformat string back to original
+				$result = str_replace("<newrow />","\n", $result);
+
 				// If translation fails (incompatible language pair), return original string
 				if(!isset($result)) $result = $this->_queryString;
 				$cache->save($result, $cacheName);
@@ -107,14 +137,61 @@ class Oibs_Controller_Plugin_GTranslate {
 			return $result;
 
 		} else {
-			return "GTranslation error";
+			// If translation query is invalid
+			return $string;
 		}
+	}
+	
+	/*
+	 * public function translateArray()
+	 * 
+	 * Translates arrays (values only)
+	 * 
+	 * @param	array	array	Array to translate
+	 * @return			array	Translated array
+	 */
+	public function translateArray($array)
+	{
+		$returnArray = array();
+		foreach($array as $key => $value)
+			$returnArray[$key] = $this->translate($value);
+		return $returnArray;
+	}
+	
+	/*
+	 * public function translateContent()
+	 * 
+	 * Translates content data arrays (values only).
+	 * Excludes keys which are not defined in $includeList.
+	 * 
+	 * @param	array	array	Array to translate
+	 * @return			array	Translated array
+	 */
+	public function translateContent($array)
+	{
+		$includeList = array('title_cnt', 
+							 'lead_cnt', 
+							 'body_cnt', 
+							 'research_question_cnt',
+							 'opportunity_cnt', 
+							 'threat_cnt', 
+							 'solution_cnt', 
+							 'references_cnt');
+		
+		foreach($array as $key => $value)
+		{
+			if(in_array($key, $includeList)) $array[$key] = $this->translate($value);
+		}
+		
+		return $array;
 	}
 	
 	/*
 	 * private function _generateHash()
 	 * 
-	 * Generates a md5-hash for identifying a cached translation
+	 * Generates a MD5-hash for identifying a cached translation
+	 * 
+	 * @return		string	MD5-hash
 	 */
 	private function _generateHash()
 	{
@@ -124,13 +201,28 @@ class Oibs_Controller_Plugin_GTranslate {
 	
 	/* private function _isValid()
 	 * 
-	 * Checks if all data is valid and no errors have been put up. 
+	 * Checks if all data is valid.
+	 * 
+	 * @return		boolean	
 	 */
-	private function _isValid() {
-		if($this->_langFrom == null) $this->_error = true;
-		if($this->_langTo == null) $this->_error = true;
-		
-		return !$this->_error;
+	private function _isValid()
+	{
+		return  isset($this->_queryString) && 
+				isset($this->_langFrom) && 
+				isset($this->_langTo) && 
+				($this->_langFrom != $this->_langTo);
+	}
+	
+	/*
+	 * public function getDebugHelp()
+	 * 
+	 * Return relevant data for debugging translation requests.
+	 * 
+	 * @return		array	Response data
+	 */
+	public function getDebugHelp()
+	{
+		return $this->_response;
 	}
 
 }
