@@ -3,10 +3,13 @@
 Massidea.org is a free open innovation community where users are uploading their ideas, visions of the future and today's challenges and linking them with other user.s brainchildren.
 The mixed outcome - lucky insight - is boosting individual.s creativity and enabling the birth of smashing idea.
 
+## Git and GitHub - Guideline ##
+
+** PLEASE DON'T USE FORK QUEUE. HOWTO MERGE LATEST CHANGES FROM UPSTREAM, READ: [http://help.github.com/forking/#pulling_in_upstream_changes](http://help.github.com/forking/#pulling_in_upstream_changes) **
+
 ## Migration notes (Old Migration notes.txt)
- -----------------------------------------------------------
 | Zend FW 1.7.4 to 1.9.0 Migration notes by Tuomas Valtanen |  
- -----------------------------------------------------------
+
 
 Briefing
 --------
