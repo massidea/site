@@ -1,22 +1,15 @@
-<p><b>User's contents:</b></p>
+<?php
 
-<?php foreach ($this->usrcnt as $content): ?>
-    <p><?php echo $content['title_cnt']; ?></p>
-    <?php
-        $linkurl = $this->url(array('controller' => 'campaign',
-                                    'action'     => 'makelink',
-                                    'cmpid'      => $this->cmpid,
-                                    'cntid'      => $content['id_cnt'],
-                                    'language'   => $this->language),
-                              'lang_default', true);
-    ?>
-    <p><a href="<?php echo $linkurl; ?>">Link this content</a></p>
-    <pre><?php var_dump($content); ?></pre>
-<?php endforeach; ?>
-
-
-
-
+if($this->linkingContentType == "problem") {
+    $linkedColor = "red";
+}
+elseif($this->linkingContentType == "finfo") {
+    $linkedColor = "yellow";
+}
+elseif($this->linkingContentType == "idea") {
+    $linkedColor = "green";
+}
+?>
 <div class="linking_content">
 <h3 class="recent_posts"><?php echo $this->translate('campaign-unlink-content-from-campaign'); ?></h3>
 <?php
@@ -24,25 +17,21 @@ if($this->contentexists) {
 ?>
     <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
         <p class="linkedtotext">
-            <?php echo $this->translate('campaign-unlink-target',
+            <?php echo $this->translate('content-unlink-target',
                                                     $this->language);
             ?>
         </p>
-        <?php
-        // This should be campaign color
-        $color = "red";
-        ?>
-        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" />
+        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" />
 
         <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('cmpid' => $this->cmpid,
-                                                 'language' => $this->language),
-                                           'campaign_view', true); ?>">
+            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
+                                                     'language' => $this->language),
+                                                     'content_shortview', true); ?>">
                 <?php
-                    if(strlen($this->cmp['name_cmp']) > 68) {
-                        $this->cmp['name_cmp'] = substr($this->cmp['name_cmp'], 0, 68) . "...";
+                    if(strlen($this->relatesToContentTitle) > 68) {
+                        $this->relatesToContentTitle = substr($this->relatesToContentTitle, 0, 68) . "...";
                     }
-                    echo $this->cmp['name_cmp'];
+                    echo $this->relatesToContentTitle;
                 ?>
             </a>
         </p>
@@ -50,47 +39,42 @@ if($this->contentexists) {
 
     <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('campaign-unlink-helptext'); ?></p>
     <?php
-    if($this->contents) {
-        foreach($this->contents as $content) {
-            if($content['published_cnt'] != 0) {
-                ?>
-                <div class="form_helptext_line"></div>
-                <div style="height: 20px;">
-                    <div style="float: left; width: 420px;">
-                        <?php
-                        if($content['key_cty'] == "problem") {
-                            $color = "red";
-                        }
-                        elseif($content['key_cty'] == "finfo") {
-                            $color = "yellow";
-                        }
-                        elseif($content['key_cty'] == "idea") {
-                            $color = "green";
-                        }
-                        ?>
-                        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
-                        <?php
-                        $linkurl = $this->url(array('content_id' => $content['id_cnt'],
-                                                    'language' => $this->language),
-                                              'content_shortview', true);
-                        ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a>
-                        <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
-                    </div>
-                    <div style="margin-top: 4px;">
-                        <?php
-                        $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
-                                                    'childid'     => $content['id_cnt'],
-                                                    'parentid'    => $this->relatesToId,
-                                                    'language' => $this->language),
-                                              'removecampaignlinks', true);
-                        ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('campaign-unlink'); ?></a>
-                    </div>
+    if($this->campaigns) {
+        foreach($this->campaigns as $campaign) {
+            ?>
+            <div class="form_helptext_line"></div>
+            <div style="height: 20px;">
+                <div style="float: left; width: 420px;">
+                    <?php
+                    // This should be campaign color
+                    $color = "green";
+                    ?>
+                    <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
+                    <?php
+                    $groupurl = $this->url(array('groupid' => $campaign['id_grp'],
+                                                'language' => $this->language),
+                                          'group_shortview', true);
+                    $campaignurl = $this->url(array('cmpid' => $campaign['id_cmp'],
+                                                'language' => $this->language),
+                                          'campaign_view', true);
+                    ?>
+                    <a href="<?php echo $groupurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
+                    <strong><a href="<?php echo $campaignurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
+                    <p style="margin: 4px 0 4px 20px;"><?php echo $campaign['ingress_cmp']; ?></p>
                 </div>
-                <div style="clear: both;"></div>
-                <?php
-            }
+                <div style="margin-top: 4px;">
+                    <?php
+                    $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
+                                                'cmpid'     => $campaign['id_cmp'],
+                                                'cntid'    => $this->relatesToId,
+                                                'language' => $this->language),
+                                          'removecampaignlinks', true);
+                    ?>
+                    <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('campaign-unlink'); ?></a>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <?php
         }
     }
 } else {

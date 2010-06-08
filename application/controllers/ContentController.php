@@ -667,47 +667,6 @@ class ContentController extends Oibs_Controller_CustomController
 
             $message = 'content-unlink-successful';
 
-            // Send email to owner of content about a new link
-            // if user allows linking notifications
-
-            $userModel = new Default_Model_User();
-            $owner = $userModel->getContentOwner($relatestoid);
-
-            $notificationsModel = new Default_Model_Notifications();
-            $notifications = $notificationsModel->getNotificationsById($owner['id_usr']);
-            /*
-            if (in_array('link', $notifications)) {
-
-                $linker = $userModel->getContentOwner($linkedcontentid);
-
-                $cntModel = new Default_Model_Content();
-                $originalHeader = $cntModel->getContentHeaderByContentId($relatestoid);
-                $linkedHeader =  $cntModel->getContentHeaderByContentId($linkedcontentid);
-
-                $receiverEmail = $owner['email_usr'];
-                $receiverUsername = $linker['email_usr'];
-
-                $senderUsername = $linker['login_name_usr'];
-
-                $bodyText = "Your content has been linked with another content at Massidea.org\n\n"
-                            .$senderUsername." linked his content, ".$linkedHeader.", with yours, ".$originalHeader.".";
-                $linkedUrl = $this->baseUrl."/".$this->view->language."/view/".$linkedcontentid;
-                $originalUrl = $this->baseUrl."/".$this->view->language."/view/".$relatestoid;
-                $bodyHtml = "Your content has been linked with another content at ".'<a href="'.$baseUrl.'/">Massidea.org</a><br /><br />'
-                            .'<a href="'.$this->baseUrl."/".$this->view->language.'/account/view/user/'.$senderUsername.'">'.$senderUsername.'</a>'
-                            .' linked his content, <a href="'.$linkedUrl.'">'.$linkedHeader."</a>, with yours, "
-                            .'<a href="'.$originalUrl.'">'.$originalHeader.'</a>.';
-
-                $mail = new Zend_Mail();
-                $mail->setBodyText($bodyText);
-                $mail->setBodyHtml($bodyHtml);
-                $mail->setFrom('no-reply@massidea.org', 'Massidea.org');
-                $mail->addTo($receiverEmail, $receiverUsername);
-                $mail->setSubject('Massidea.org: Your content has been linked');
-                $mail->send();
-            }
-            */
-
             $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
@@ -772,7 +731,8 @@ class ContentController extends Oibs_Controller_CustomController
 					$hasUserContents = false;
 				} else {
 					foreach($userContents as $content) {
-						if(!$model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt'])) {
+						if(!$model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt']) &&
+                           !$model_cnt_has_cnt->checkIfContentHasContent($content['id_cnt'], $relatestoid)) {
 							if($content['id_cty_cnt'] == $id_cty && $content['id_cnt'] != $relatestoid) {
 								$contents[] = $content;
 							}
@@ -791,7 +751,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
+                                          'lang_default', true);
 			$this->flash($message, $url);
 		}
 	}
@@ -829,19 +789,11 @@ class ContentController extends Oibs_Controller_CustomController
                 $model_content_types = new Default_Model_ContentTypes();
                 $model_cnt_has_cnt = new Default_Model_ContentHasContent();
 
-                $id_usr = $auth->getIdentity()->user_id;
-                $contenttype = $model_content_types->getTypeById($relatestoid);
-                $id_cty = $model_content_types->getIdByType($contenttype);
+                $contenttype = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
 
                 $contentContents = $model_cnt_has_cnt->getContentContents($relatestoid);
 
-                $contents = array();
-
-                foreach($contentContents as $content) {
-                    if($model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt'])) {
-                        $contents[] = $content;
-                    }
-                }
+                $id_usr = $auth->getIdentity()->user_id;
             }
             $this->view->contentexists = $contentexists;
             $this->view->relatesToId = $relatestoid;

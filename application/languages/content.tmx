@@ -260,7 +260,7 @@
 	<tu tuid='content-view-user-related-views'>
 		<tuv xml:lang="en"><seg>Views: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Katsottu: </seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='content-view-related'>
 		<tuv xml:lang="en"><seg>Related content</seg></tuv>
 		<tuv xml:lang="fi"><seg>Liittyvää sisältöä</seg></tuv>
@@ -700,15 +700,15 @@
 	<tu tuid='content-add-problem-right-box-p5'>
 		<tuv xml:lang="en">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
@@ -846,15 +846,15 @@
 	<tu tuid='content-add-finfo-right-box-p6'>
 		<tuv xml:lang="en">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
@@ -960,15 +960,15 @@
 	<tu tuid='content-add-idea-right-box-p5'>
 		<tuv xml:lang="en">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
@@ -1057,9 +1057,13 @@
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
 	</tu>
-    <tu tuid='content-editlinks'>
-		<tuv xml:lang="en"><seg>Edit links</seg></tuv>
-		<tuv xml:lang="fi"><seg>Muokkaa linkkejä</seg></tuv>
+    <tu tuid='content-edit-content-links'>
+		<tuv xml:lang="en"><seg>Edit content links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa sisällön linkkejä</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-campaign-links'>
+		<tuv xml:lang="en"><seg>Edit campaign links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa kampanjan linkkejä</seg></tuv>
 	</tu>
 	<tu tuid='content-cancel'>
 		<tuv xml:lang="en"><seg>Cancel</seg></tuv>
@@ -1136,7 +1140,7 @@
 	<tu tuid='content-rating'>
 		<tuv xml:lang="en"><seg>Ratings</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ääntä</seg></tuv>
-	</tu>    
+	</tu>
 	<tu tuid='rating-succesful'>
 		<tuv xml:lang="en"><seg>Rating succesful! </seg></tuv>
 		<tuv xml:lang="fi"><seg>Arvosana tallennettu!</seg></tuv>
@@ -1156,27 +1160,27 @@
 	<tu tuid='content-torate'>
 		<tuv xml:lang="en"><seg>to rate!</seg></tuv>
 		<tuv xml:lang="fi"><seg>äänestääksesi!</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-favourites'>
 		<tuv xml:lang="en"><seg>Favourited</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosikkina</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-favourite-add'>
 		<tuv xml:lang="en"><seg>Add</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-favourite-remove'>
 		<tuv xml:lang="en"><seg>Remove</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='favourite-adding-failed'>
 		<tuv xml:lang="en"><seg>Adding the favourite failed for some odd reason...</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosikin lisääminen epäonnistui jostain eriskummallisesta syystä...</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='favourite-removing-failed'>
 		<tuv xml:lang="en"><seg>Removing the favourite failed for some odd reason...</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosikin poistaminen epäonnistui jostain eriskummallisesta syystä...</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-box-add-header'>
 		<tuv xml:lang="en"><seg>Add content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää sisältöä!</seg></tuv>
@@ -1367,11 +1371,11 @@
 
             <ul>
                 <li>
-                    OIBS content is short descriptions of today’s challenges, 
+                    OIBS content is short descriptions of today’s challenges,
                     visions of the future and the related ideas and solutions.
                 </li>
                 <li>
-                    All content is in the form of an A4 sheet, with the min. 
+                    All content is in the form of an A4 sheet, with the min.
                     length of 1500 marks.
                 </li>
                 <li>
@@ -1381,18 +1385,18 @@
                     Include references in your writing
                 </li>
                 <li>
-                    All content is open and public. Therefore, ideas planned to 
-                    be patented are not recommended to be added into the 
+                    All content is open and public. Therefore, ideas planned to
+                    be patented are not recommended to be added into the
                     database.
                 </li>
                 <li>
-                    The current OIBS is a demo version. Thus, when adding new 
-                    content we recommend to save a copy of the material for the 
+                    The current OIBS is a demo version. Thus, when adding new
+                    content we recommend to save a copy of the material for the
                     possible re-adding process into the new version.
                 </li>
                 <li>
                     To add an idea, it has to relate to the content found in the
-                    OIBS database. In other words, there has to be a challenge 
+                    OIBS database. In other words, there has to be a challenge
                     or vision what the idea is for.
                 </li>
             </ul></seg></tuv>
@@ -1401,12 +1405,12 @@
 
             <ul>
                 <li>
-                    OIBS:in aineisto on lyhyitä kuvauksia tämän päivän 
-                    haasteista, tulevaisuuden näkymistä sekä niihin 
+                    OIBS:in aineisto on lyhyitä kuvauksia tämän päivän
+                    haasteista, tulevaisuuden näkymistä sekä niihin
                     tarjotuista ideoista.
                 </li>
                 <li>
-                    Kaikki aineisto on A4-arkin muodossa, min. pituus on 1500 
+                    Kaikki aineisto on A4-arkin muodossa, min. pituus on 1500
                     merkkiä.
                 </li>
                 <li>
@@ -1416,20 +1420,20 @@
                     Sisällytä lähteet kirjoitukseesi.
                 </li>
                 <li>
-                    Kaikki OIBS:n sisältö on avointa ja julkista. 
-                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
+                    Kaikki OIBS:n sisältö on avointa ja julkista.
+                    Patentoitavaksi suunniteltuja ideoita ei siis kannata
                     tallentaa järjestelmään.
                 </li>
                 <li>
-                    Sivusto on demoversio. Säilytä kopio tallentamastasi 
+                    Sivusto on demoversio. Säilytä kopio tallentamastasi
                     materiaalista, jotta mahdollinen uudelleentalletus sivuston
                     uuteen versioon onnistuu vaivattomasti.
                 </li>
                 <li>
-                    Lisätäksesi jonkin uuden idean, sen on liityttävä 
+                    Lisätäksesi jonkin uuden idean, sen on liityttävä
                     tietokannasta jo löytyvään aineistoon. Toisin sanoen ideat
-                    (ratkaisut) ovat vastauksia tietokannasta löytyviin 
-                    ongelmiin tai tulevaisuuden visioihin. 
+                    (ratkaisut) ovat vastauksia tietokannasta löytyviin
+                    ongelmiin tai tulevaisuuden visioihin.
                 </li>
             </ul>
         </seg></tuv>
@@ -1440,29 +1444,29 @@
 
             <ul>
                 <li>
-                    In order to add new content into OIBS, 
-                    <a href="%s">register</a> or 
+                    In order to add new content into OIBS,
+                    <a href="%s">register</a> or
                     <a href="%s">log in</a> with your account.
                 </li>
                 <li>
-                    Start by browsing the content or by adding a new challenge 
+                    Start by browsing the content or by adding a new challenge
                     or a new vision.
                 </li>
                 <li>
-                    Ideas can be added only when they relate to the content 
-                    found in the database. In other words, there has to be a 
+                    Ideas can be added only when they relate to the content
+                    found in the database. In other words, there has to be a
                     challenge or a vision, what the solution if for.
                 </li>
                 <li>
-                    All content is open and public. Therefore, ideas planned to 
-                    be patented are not recommended to be added into the 
+                    All content is open and public. Therefore, ideas planned to
+                    be patented are not recommended to be added into the
                     database.
                 </li>
                 <li>
-                    The current OIBS website is a demo version. When adding new 
+                    The current OIBS website is a demo version. When adding new
                     content, it’s recommended to save a copy of the material for
-                    the possible re-adding process into the new version of the 
-                    website. 
+                    the possible re-adding process into the new version of the
+                    website.
                 </li>
             </ul>
           </seg></tuv>
@@ -1471,28 +1475,28 @@
 
             <ul>
                 <li>
-                    <a href="%s">Rekisteröidy</a> tai 
-                    <a href="%s">kirjaudu sisään</a> 
+                    <a href="%s">Rekisteröidy</a> tai
+                    <a href="%s">kirjaudu sisään</a>
                     tunnuksillasi lisätäksesi tietokantaan uutta aineistoa.
                 </li>
                 <li>
-                    Aloita joko selaamalla sivuston aineistoa tai lisäämällä 
-                    tietokantaan jokin tämän päivän ongelma tai tulevaisuuden 
+                    Aloita joko selaamalla sivuston aineistoa tai lisäämällä
+                    tietokantaan jokin tämän päivän ongelma tai tulevaisuuden
                     visio.
                 </li>
                 <li>
-                    Ideoita voidaan ainoastaan lisätä tietokannasta löytyvään 
-                    aineistoon. Toisin sanoen ideat (ratkaisut) ovat vastauksia 
+                    Ideoita voidaan ainoastaan lisätä tietokannasta löytyvään
+                    aineistoon. Toisin sanoen ideat (ratkaisut) ovat vastauksia
                     kuvailtuihin ongelmiin tai tulevaisuuden visioihin.
                 </li>
                 <li>
-                    Kaikki OIBS:n sisältö on avointa ja julkista. 
-                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
+                    Kaikki OIBS:n sisältö on avointa ja julkista.
+                    Patentoitavaksi suunniteltuja ideoita ei siis kannata
                     tallentaa järjestelmään.
                 </li>
                 <li>
-                    Sivusto on demoversio. Pidä itselläsi kopio tallentamastasi 
-                    materiaalista, jotta mahdollinen uudelleentalletus sivuston 
+                    Sivusto on demoversio. Pidä itselläsi kopio tallentamastasi
+                    materiaalista, jotta mahdollinen uudelleentalletus sivuston
                     uuteen versioon onnistuu vaivattomasti.
                 </li>
             </ul>
@@ -1522,13 +1526,13 @@
 		<tuv xml:lang="en"><seg>
             Problems and obstacles are stopping us from achieving our goals.
             Whether it's a question of business or personal life related
-            issues, we can turn problems into challenges and start solving 
+            issues, we can turn problems into challenges and start solving
             them.
         </seg></tuv>
 		<tuv xml:lang="fi"><seg>
             Problems and obstacles are stopping us from achieving our goals.
             Whether it's a question of business or personal life related
-            issues, we can turn problems into challenges and start solving 
+            issues, we can turn problems into challenges and start solving
             them.
         </seg></tuv>
 	</tu>
@@ -1581,5 +1585,5 @@
 	<tu tuid='content-preview-not-logged-in'>
 		<tuv xml:lang="en"><seg>Your session has timed out, please log in again.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Istunto on vanhentunut, kirjaudu uudestaan sisään.</seg></tuv>
-	</tu>    
+	</tu>
 </body>

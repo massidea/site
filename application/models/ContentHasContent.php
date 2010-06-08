@@ -147,11 +147,11 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
     *   @param int id_parent_cnt Id of content
     *   @return array
     */
-    public function getContentContents($id_parent_cnt) {
+    public function getContentContents($id_cnt) {
 
         $result = array();  // container for final results array
 
-        $contentSelect = $this->_db->select()
+        $contentSelectParents = $this->_db->select()
                                    ->from(array('chc' => 'cnt_has_cnt'),
                                           array('id_parent_cnt', 'id_child_cnt'))
                                    ->joinLeft(array('cnt' => 'contents_cnt'),
@@ -161,12 +161,36 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
                                    ->joinLeft(array('cty' => 'content_types_cty'),
                                           'cty.id_cty = cnt.id_cty_cnt',
                                           array('key_cty'))
-                                   ->where('chc.id_parent_cnt = ?', $id_parent_cnt)
-                                   ->order('cnt.id_cty_cnt ASC')
-                                   ->order('cnt.created_cnt DESC')
+                                   ->joinLeft(array('chu' => 'cnt_has_usr'),
+                                          'chu.id_cnt = cnt.id_cnt',
+                                          array('id_usr'))
+                                   ->joinLeft(array('usr' => 'users_usr'),
+                                          'usr.id_usr = chu.id_usr',
+                                          array('login_name_usr'))
+                                   ->where('chc.id_parent_cnt = ?', $id_cnt)
                                    ->group('cnt.id_cnt');
 
-        $result = $this->_db->fetchAll($contentSelect);
+        $contentSelectChilds = $this->_db->select()
+                                   ->from(array('chc' => 'cnt_has_cnt'),
+                                          array('id_parent_cnt', 'id_child_cnt'))
+                                   ->joinLeft(array('cnt' => 'contents_cnt'),
+                                          'cnt.id_cnt = chc.id_parent_cnt',
+                                          array('id_cnt', 'id_cty_cnt', 'title_cnt',
+                                                'lead_cnt', 'published_cnt', 'created_cnt'))
+                                   ->joinLeft(array('cty' => 'content_types_cty'),
+                                          'cty.id_cty = cnt.id_cty_cnt',
+                                          array('key_cty'))
+                                   ->joinLeft(array('chu' => 'cnt_has_usr'),
+                                          'chu.id_cnt = cnt.id_cnt',
+                                          array('id_usr'))
+                                   ->joinLeft(array('usr' => 'users_usr'),
+                                          'usr.id_usr = chu.id_usr',
+                                          array('login_name_usr'))
+                                   ->where('chc.id_child_cnt = ?', $id_cnt)
+                                   ->group('cnt.id_cnt');
+
+        $result['parents'] = $this->_db->fetchAll($contentSelectParents);
+        $result['childs'] = $this->_db->fetchAll($contentSelectChilds);
 
         return $result;
     }

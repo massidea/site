@@ -344,6 +344,15 @@ class AccountController extends Oibs_Controller_CustomController
 
 // WIP END
 
+        /* Waiting for layout that is maybe coming 
+        // MyViews
+        $viewsModel = new Default_Model_ContentViews();
+        Zend_Debug::dump($viewsModel->getUserViewedContents($data['id_usr']));
+        
+        // MyReaders
+        Zend_Debug::dump($user->getUsersViewers($data['id_usr']));
+        die;*/
+        
         //$group_model = new Default_Model_UserHasGroup();
         //$usergroups = $group_model->getGroupsByUserId($id);
 
