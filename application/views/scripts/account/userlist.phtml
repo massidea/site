@@ -14,8 +14,6 @@ $url_contentView = $this->url(array('controller' => 'view',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
-$url_this = str_replace($this->sentParams,"",$this->url());
-
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete');
 //$this->headLink()->appendStylesheet($this->baseUrl . '/css/style_additions_req.css');
 $this->headScript()->captureStart();
@@ -25,6 +23,10 @@ $this->headScript()->captureStart();
 $(document).ready(function(){
 
 	$(".users_latest_content_list").html(
+		'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
+		'Please wait...</h3>'
+	);
+	$(".user_list_user_info_ajax").html(
 		'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
 		'Please wait...</h3>'
 	);
@@ -59,11 +61,44 @@ $.ajax({
   success: function(data) {
 	  complete_user_content_search(user_id,data);
 	  complete_user_latest_contents(user_id,data);
+	  complete_user_average_rating(user_id,data);
 	}	
 });
 
 
 };
+
+
+function complete_user_average_rating(user_id,result) {
+	var rating_sum = 0;
+	var ratings = 0;
+	var content_rating_sum = 0;
+	var content_ratings = 0;
+	
+	$.each(result, function() {
+		if ((this.rating_sum) && (this.ratings)) {	
+		rating_sum = rating_sum + parseInt(this.rating_sum);
+		ratings = ratings + parseInt(this.ratings);
+		content_rating_sum = content_rating_sum + (parseInt(this.rating_sum) / parseInt(this.ratings));
+		content_ratings++;
+		}
+	});
+	var rating_positive = Math.ceil(((rating_sum / ratings) + 1) * 50);
+	var rating_negative = Math.floor(100-((rating_sum / ratings) + 1) * 50);
+	
+	var content_rating_positive = Math.ceil(((content_rating_sum / content_ratings) + 1) * 50);
+	var content_rating_negative = Math.floor(100-((content_rating_sum / content_ratings) + 1) * 50);
+	
+	var rating = "<div id=\"user_"+user_id+"_info_rating_ratio\"><?php echo $this->translate('account-userlist-user-ratings-ratio');?> <span style=\"color:green;\"> "+rating_positive+"% </span><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><span style=\"color:red;\"> "+rating_negative+"%</span></div> ";
+	if (!rating_positive && !rating_negative) rating = "<?php echo $this->translate('account-userlist-user-has-no-latest-content');?>";
+	
+	var content_rating = "<div id=\"user_"+user_id+"_info_rating_average\"><?php echo $this->translate('account-userlist-user-ratings-average');?> <span style=\"color:green;\">"+content_rating_positive+"% </span><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><span style=\"color:red;\"> "+content_rating_negative+"%</span></div> ";
+	if (!content_rating_positive && !content_rating_negative) content_rating = "";
+	
+	$("#user_"+user_id+"_info_rating").html("");
+	$("#user_"+user_id+"_info_rating").append(rating);
+	$("#user_"+user_id+"_info_rating").append(content_rating);
+}
 
 function complete_user_latest_contents(user_id,result){
 	var green = "smallsize_idea_border";
@@ -116,10 +151,13 @@ function complete_user_content_search(user_id,result){
 			if (row.id_cty_cnt == 2) var type = green;
 			if (row.id_cty_cnt == 3) var type = red;
 			
-			var rating = Math.round(((row.rating_sum / row.ratings) + 1) * 50);
-			var rating = "Rate: "+rating+"%";
+			var rating_positive = Math.ceil(((row.rating_sum / row.ratings) + 1) * 50);
+			var rating_negative = Math.floor(100-((row.rating_sum / row.ratings) + 1) * 50);
+
+			var rating = "<span style=\"color:green;\">"+rating_positive+"% </span><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><span style=\"color:red;\"> "+rating_negative+"%</span> ";
+			
 			if (!row.rating_sum) var rating = "Not rated"
-			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right\">"+rating+" [" + row.created_cnt + "]</span></span>";
+			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right;font-weight:bold;\">"+rating+" [" + row.created_cnt + "]</span></span>";
 		},
 		formatMatch: function(row, i, max) {
 			return row.title_cnt+" "+row.lead_cnt;
@@ -175,20 +213,21 @@ function complete_city(result){
     </div>
     <div style="block; padding-bottom:1em">
 	<strong>Sort by: |</strong>
-	<?php 
-	$list = "/list/";
-	$order = "/order/";
-	$list_desc = $list."desc";
-	$list_asc = $list."asc";
-	$order_username = $order."username";
-	$order_content = $order."content";
-	$order_login = $order."login";
-	$order_joined = $order."joined";
+	<?php
+	$order = array(
+		"username"  => "username",
+		"content" => "content",
+		"login" => "login",
+		"joined" => "joined",
+		"asc" => "asc",
+		"desc" => "desc"
+	);
+
 	?>
-	<a href="<?php echo $url_this . $order_username . $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Username <a href="<?php echo $url_this . $order_username . $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
-	<a href="<?php echo $url_this . $order_content. $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Content <a href="<?php echo $url_this . $order_content. $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
-	<a href="<?php echo $url_this . $order_login. $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Login <a href="<?php echo $url_this . $order_login. $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
-	<a href="<?php echo $url_this . $order_joined. $list_desc; ?>"><span style="font-size: 16px;">ʌ</span></a> Joined <a href="<?php echo $url_this . $order_joined. $list_asc; ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	<a href="<?php echo $this->url(array("order" => $order['username'],"list" => $order['desc'])); ?>"><span style="font-size: 16px;">ʌ</span></a> Username <a href="<?php echo $this->url(array("order" => $order['username'],"list" => $order['asc'])); ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	<a href="<?php echo $this->url(array("order" => $order['content'],"list" => $order['desc'])); ?>"><span style="font-size: 16px;">ʌ</span></a> Content <a href="<?php echo $this->url(array("order" => $order['content'],"list" => $order['asc'])); ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	<a href="<?php echo $this->url(array("order" => $order['login'],"list" => $order['desc'])); ?>"><span style="font-size: 16px;">ʌ</span></a> Login <a href="<?php echo $this->url(array("order" => $order['login'],"list" => $order['asc'])); ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
+	<a href="<?php echo $this->url(array("order" => $order['joined'],"list" => $order['desc'])); ?>"><span style="font-size: 16px;">ʌ</span></a> Joined <a href="<?php echo $this->url(array("order" => $order['joined'],"list" => $order['asc'])); ?>"><span style="font-size: 16px;">v</span></a><strong> |</strong>
 	</div>
 
     <?php if (!empty($this->userListData)):?>
@@ -230,6 +269,9 @@ function complete_city(result){
                             
                             <div id="user_<?php echo $user['id_usr']; ?>_info_content" class="user_list_user_info_data">
                                 <?php echo $this->translate(('account-userlist-user-content-added'), $user['contentCount']); ?>
+                            </div>
+                            
+                            <div id="user_<?php echo $user['id_usr']; ?>_info_rating" class="user_list_user_info_ajax">
                             </div>
                         </div>
                         <div class="user_list_user_info_second">
