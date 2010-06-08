@@ -5,12 +5,11 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 
 ## Git and GitHub - Guideline ##
 
-** PLEASE DON'T USE FORK QUEUE. HOWTO MERGE LATEST CHANGES FROM UPSTREAM, READ: http://help.github.com/forking/#pulling_in_upstream_changes **
+** PLEASE DON'T USE FORK QUEUE. HOWTO MERGE LATEST CHANGES FROM UPSTREAM, READ: [http://help.github.com/forking/#pulling_in_upstream_changes](http://help.github.com/forking/#pulling_in_upstream_changes) **
 
 ## Migration notes (Old Migration notes.txt)
- -----------------------------------------------------------
 | Zend FW 1.7.4 to 1.9.0 Migration notes by Tuomas Valtanen |  
- -----------------------------------------------------------
+
 
 Briefing
 --------
