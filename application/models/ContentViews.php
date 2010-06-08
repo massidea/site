@@ -187,5 +187,14 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
         }
     } // end of removeContentViews
     
+    public function getUserViewedContents($id_usr, $limit = 10) {
+    	$select = $this->select()->from('cnt_views_vws', 'id_cnt_vws')
+    							 ->where('id_usr_vws = ?', $id_usr)
+    							 ->order('views_vws DESC')
+    							 ->limit($limit);
+    	$rowset = $this->fetchAll($select);
+    	
+		return $rowset->toArray();
+    }
 } // end of class
 ?>

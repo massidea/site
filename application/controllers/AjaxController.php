@@ -129,4 +129,30 @@ class AjaxController extends Oibs_Controller_CustomController
 		}
 		$this->view->output = $output;
 	}
+	
+	public function getusercontentsAction() {
+		$output = "";
+		// Get requests
+		$params = $this->getRequest()->getParams();
+		$search = isset($params['search']) ? $params['search'] : null;
+		$search = (int)$search;
+		if(is_int($search) && $search != 0) {
+			
+			// Get cache from registry
+			$cache = Zend_Registry::get('cache');
+
+			// Load user locations from cache
+			if(!$resultList = $cache->load('UserContentsList_'.$search)) {
+				$userModel = new Default_Model_User();
+				$contentList = $userModel->getUserContentList($search);
+				$cache->save($contentList, 'UserContentsList_'.$search);
+
+			} else {
+				$contentList = $resultList;
+			}
+			$output = json_encode($contentList);
+			//$output = $contentList;
+		}
+		$this->view->output = $output;
+	}
 }

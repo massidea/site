@@ -469,9 +469,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
-                                           ->joinLeft(array('chc' => 'cnt_has_cnt'),
-                                                      'cnt.id_cnt = chc.id_parent_cnt',
-                                                      array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
+                                           ->joinLeft(array('chc1' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc1.id_parent_cnt',
+                                                      array('cntHasCntCountParent' => 'COUNT(DISTINCT chc1.id_child_cnt)'))
+                                           ->joinLeft(array('chc2' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc2.id_child_cnt',
+                                                      array('cntHasCntCountChild' => 'COUNT(DISTINCT chc2.id_parent_cnt)'))
+                                           ->joinLeft(array('cmpHasCnt' => 'cmp_has_cnt'),
+                                                      'cnt.id_cnt = cmpHasCnt.id_cnt',
+                                                      array('cmpHasCntCount' => 'COUNT(DISTINCT cmpHasCnt.id_cmp)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
@@ -536,7 +542,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *   @params array $filter Filtering options
     *   @return array
     */
-    public function getUserListing(&$filter = null, $page = 1, $count = 10)
+    public function getUserListing(&$filter = null, $page = 1, $count = 10, $sort = 'usr.last_login_usr DESC')
     {
 
 
@@ -598,7 +604,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                       // TODO: Filter by join date
                                       //->where($joinDate)
                                       ->group('usr.id_usr')
-                                      ->order('usr.last_login_usr DESC')
+                                      ->order($sort)
                                       ->limitPage($page, $count);
         
         // Fetch all results from database
@@ -1008,8 +1014,78 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	return $result;
     }
     
-    public function getPostcountById() {
-    	
-    }
+
+      public function getUserContentList($author_id = 0, $sort = 0, $type = 0) {
+        $result = array();  // container for final results array
         
+        $whereType = 1;
+        if($type !== 0) {
+            $whereType = $this->_db->quoteInto('cty.key_cty = ?', $type);
+        } else {
+            $whereType = '1 = 1';
+        }
+        
+        // If author id is set get users content
+        if ($author_id != 0) {
+            //if($count == -1) {
+                
+               $contentSelect = $this->_db->select()
+                                           ->from(array('chu' => 'cnt_has_usr'), 
+                                                  array('id_usr', 'id_cnt'))
+                                           ->joinLeft(array('crt' => 'content_ratings_crt'),
+                                                      'chu.id_cnt = crt.id_cnt_crt',
+                                                      array('rating_sum' => 'SUM(crt.rating_crt)',
+                                                      		'ratings' => 'COUNT(crt.id_cnt_crt)'))
+                                           ->joinLeft(array('cnt' => 'contents_cnt'),         
+                                                  'cnt.id_cnt = chu.id_cnt',
+                                                  array('id_cnt', 'id_cty_cnt', 'title_cnt', 
+                                                        'lead_cnt', 'created_cnt'))
+                                           ->joinLeft(array('cmt' => 'comments_cmt'),
+                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
+                                           ->joinLeft(array('chc' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc.id_parent_cnt',
+                                                      array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
+                                           ->joinLeft(array('cty' => 'content_types_cty'),    
+                                                  'cty.id_cty = cnt.id_cty_cnt',  
+                                                  array('key_cty'))
+                                           ->joinLeft(array('vws' => 'cnt_views_vws'),
+                                                      'cnt.id_cnt = vws.id_cnt_vws AND vws.id_usr_vws = '.$author_id,
+                                                      array('views' => 'COUNT(vws.views_vws)'))
+                                            ->where('chu.id_usr = ?', $author_id)
+                                            ->order('cnt.created_cnt DESC')
+                                            ->group('chu.id_cnt')
+                ;
+                
+                $result = $this->_db->fetchAll($contentSelect);
+ 
+
+        } // end if        
+
+        return $result;
+    } // end of getUserContentList
+    
+    /*
+     * getUsersViewers
+     * 
+     * gets list of users who has read users content, sorted by amount of views
+     * 
+     * @param 	id 			users id
+     * @param 	limit		limit of users, default 10
+     * @return 	array		array (views => viewcount, id_usr_vws => viewers user id)
+     */
+    public function getUsersViewers($id, $limit = 10) {
+    	//select id_usr_vws, sum(views_vws) FROM cnt_views_vws JOIN (cnt_has_usr) on (cnt_has_usr.id_cnt = cnt_views_vws.id_cnt_vws) 
+    	//	where id_usr=2 group by id_usr_vws order by sum(views_vws) desc;
+		$select = $this->_db->select()
+					   		 ->from('cnt_has_usr', array())
+					   		 ->where('id_usr = ?', $id)
+					   		 ->join('cnt_views_vws', 'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt', array('views' => 'sum(views_vws)' , 'id_usr_vws'))
+					   		 ->group('id_usr_vws')
+					   		 ->order('views desc')
+					   		 ->limit($limit);
+
+		$result = $this->_db->fetchAll($select);
+		return $result;		   		 
+    }
 } // end of class
