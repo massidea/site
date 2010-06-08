@@ -5,7 +5,13 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 
 ## Git and GitHub - Guideline ##
 
+### Fork Queue (FQ)
 ** PLEASE DON'T USE FORK QUEUE. HOWTO MERGE LATEST CHANGES FROM UPSTREAM, READ: [http://help.github.com/forking/#pulling_in_upstream_changes](http://help.github.com/forking/#pulling_in_upstream_changes) **
+
+### Push note
+** AFTER YOU PUSH OUR CHANGES TO GITHUB. SEND PULL REQUEST TO ACCOUNT: iiuusit **
+![GitHub - Pull request](http://www.oibs.fi/wiki/images/e/ec/Pull_request.png "")
+
 
 ## Migration notes (Old Migration notes.txt)
 | Zend FW 1.7.4 to 1.9.0 Migration notes by Tuomas Valtanen |  
