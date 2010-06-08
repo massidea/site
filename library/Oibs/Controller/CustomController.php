@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 /**
  *  ContentController -> Viewing content
