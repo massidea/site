@@ -469,9 +469,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
-                                           ->joinLeft(array('chc' => 'cnt_has_cnt'),
-                                                      'cnt.id_cnt = chc.id_parent_cnt',
-                                                      array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
+                                           ->joinLeft(array('chc1' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc1.id_parent_cnt',
+                                                      array('cntHasCntCountParent' => 'COUNT(DISTINCT chc1.id_child_cnt)'))
+                                           ->joinLeft(array('chc2' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc2.id_child_cnt',
+                                                      array('cntHasCntCountChild' => 'COUNT(DISTINCT chc2.id_parent_cnt)'))
+                                           ->joinLeft(array('cmpHasCnt' => 'cmp_has_cnt'),
+                                                      'cnt.id_cnt = cmpHasCnt.id_cnt',
+                                                      array('cmpHasCntCount' => 'COUNT(DISTINCT cmpHasCnt.id_cmp)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
