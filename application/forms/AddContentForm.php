@@ -87,6 +87,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                                         'content-add-field-too-long')))
                                      )
                                )
+		->setDescription($translate->_("content-add-headline-help-text"))
                 ->setLabel($translate->_("content-add-header"))
 				->setDecorators(array('FormElementDecorator'));
 				
