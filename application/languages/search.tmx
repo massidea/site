@@ -6,7 +6,13 @@
 </header>
 <body>	
 	<tu tuid='search-nothing-found'>
-		<tuv xml:lang="en"><seg>Nothing found</seg></tuv>
+		<tuv xml:lang="en"><seg>
+		<h3>Nothing found.</h3>
+		<p>Suggestions:</p>
+		<div>* Make sure all words are spelled correctly.<br />
+		* Try searching with shorter keywords.<br />
+		* Try using more wildcards.<br /></div>
+		</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ei hakutuloksia</seg></tuv>
 	</tu>
 	<tu tuid='search-title'>
