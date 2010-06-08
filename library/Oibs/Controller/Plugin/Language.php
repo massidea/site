@@ -20,11 +20,11 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 		Zend_Translate::setCache($cache);
 		$translate = @new Zend_Translate('tmx', APPLICATION_PATH . '/languages/', 'auto', $options);
 
-		// 
 		$params = $this->getRequest()->getParams();
 		
-		$language = false;
-		
+		$language = 'en';
+
+		/*
 		if(isset($params['language']))
 		{
 			$language = $params['language'];
@@ -40,18 +40,18 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 			$language = 'en';
 			//throw new Zend_Controller_Action_Exception('This page does not exist', 404);
 		}
+		*/
 		//else
 		//{
 			$locale->setLocale($language);
 			$translate->setLocale($locale);
-			
 			Zend_Form::setDefaultTranslator($translate);
 			
 			//setcookie('lang', $locale->getLanguage(), null, '/');
 			
 			Zend_Registry::set('Zend_Locale', $locale);
 			Zend_Registry::set('Zend_Translate', $translate);
-			Zend_Registry::set('Available_Translations', $translate->getList());	
+			Zend_Registry::set('Available_Translations', $translate->getList());
 		//}
 	}
 }
