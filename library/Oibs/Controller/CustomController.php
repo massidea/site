@@ -279,4 +279,3 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
     	
     } 
 } // end of class
-?>
