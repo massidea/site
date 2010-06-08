@@ -461,6 +461,18 @@
 		<tuv xml:lang="en"><seg>Users latest contents: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjän uusimmat sisällöt: </seg></tuv>
 	</tu>
+	<tu tuid='account-userlist-user-has-no-latest-content'>
+		<tuv xml:lang="en"><seg>User contents have not been rated. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjällä ei ole arvosteltuja sisältöjä: </seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-ratings-ratio'>
+		<tuv xml:lang="en"><seg>Ratings ratio: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Arvostelujen suhde: </seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-ratings-average'>
+		<tuv xml:lang="en"><seg>Ratings avg.: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Arvostelujen keskiarvo: </seg></tuv>
+	</tu>
 	<tu tuid='account-userlist-user-joined'>
 		<tuv xml:lang="en"><seg>Joined: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Liittynyt: </seg></tuv>

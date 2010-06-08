@@ -63,9 +63,11 @@
 	</tu>
     <tu tuid='index-what-is-long'>
 		<tuv xml:lang="en"><seg>
-            <p style="padding: 5px;">Massidea.org is a free open innovation community where users are uploading their ideas, visions of the future and today's challenges and linking them with other user’s brainchildren.</p>
-            <p style="padding: 5px;">The mixed outcome - lucky insight - is boosting individual’s creativity and enabling the birth of smashing idea. <a href="#">Learn more</a></p>
-        </seg></tuv>
+			<span>Massidea.org is an open innovation community for sharing challenges, ideas and visions.</span>
+			<span>It boosts individual and communal creativity by intelligently connectiong people and their insights.</span>
+			<span>Massidea.org is free open source solution and it is publicly available for use and modifications.</span>
+			<span>Learn more from our <a href="http://massidea.org/blog"><strong>blog</strong></a>.</span>
+		</seg></tuv>
 		<tuv xml:lang="fi"><seg>
             <p style="padding: 5px;">Massidea.org on ilmainen ja avoin innovaatioyhteisö, jonka jäsenet lisäävät ideoitaan, tulevaisuuden visioitaan ja tämän päivän haasteita sekä linkittävät niitä toisten käyttäjien vastaaviin.</p>
             <p style="padding: 5px;">Sekoituksen lopputulos voimistaa yksilön luomiskykyä ja auttaa mahtavan idean synnyssä. <a href="#">Lue lisää</a></p>
