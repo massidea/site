@@ -27,59 +27,64 @@
  */
 class AjaxController extends Oibs_Controller_CustomController
 {
-	public function init()
-	{
-		parent::init();
-		$this->_helper->layout->disableLayout();
-	}
-	
-	function indexAction()
-	{
-	}
+ 	public function init()
+ 	{
+ 		parent::init();
+
+		// For debugging purposes set to true
+		$this->debug = true;
+		$ajaxRequest = $this->debug ? true : $this->_request->isXmlHttpRequest();
+		
+		// If requested via ajax
+		if($ajaxRequest)
+		{
+			// Disable layout to be rendered
+			$this->_helper->layout->disableLayout();
+			
+			// Set variables available for access in all actions in this class.
+			$this->params = $this->getRequest()->getParams(); 
+	        $this->id = isset($this->params['id']) ? (int)$this->params['id'] : 0;
+		}
+		// if not
+		else
+		{
+			echo "No go :(";
+			die;
+		}
+ 	}
+ 	
+ 	function indexAction()
+ 	{
+		echo "Move along people, there's nothing to see here! <br />";
+ 	}
 	
 	function getrecentcontentAction()
 	{
+		// Get requests
+        $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
 
-	// Use sleep() function for debugging ajax requests     
-    	//sleep(1);
+        // Get models
+    	$contentModel = new Default_Model_Content();
+    	$contentHasTagModel = new Default_Model_ContentHasTag();
+	
+    	// Get recent post data
+    	$recentposts_raw = $contentModel->listRecent(
+			'all', $offset, 12, 'created', $this->view->language, -1
+    	);
 
-        // Get requests
-        $params = $this->getRequest()->getParams(); 
-        $offset = isset($params['offset']) ? $params['offset'] : 0;
-        //$check  = isset($params['check']) ? $params['check'] : 0;
-        
+    	$recentposts = array();
 
-	    	// Get cache from registry
-	    	//$cache = Zend_Registry::get('cache');
-	    	 
-	    	// Load recent posts from cache
-	    	//$cachePosts = 'IndexPosts_' . $this->view->language;
-	
-	    	//if(!$result = $cache->load($cachePosts)) {
-	    	$contentModel = new Default_Model_Content();
-	    	$contentHasTagModel = new Default_Model_ContentHasTag();
-	
-	    	// get data
-	    	$recentposts_raw = $contentModel->listRecent(
-				'all', $offset, 12, 'created', $this->view->language, -1
-	    	);
-	
-	    	$recentposts = array();
-	
-	    	$i = 0;
-	    	// gather data for recent posts
-	    	foreach ($recentposts_raw as $post) {
-		    	$recentposts[$i] = $post;
-		    	$recentposts[$i]['tags'] = $contentHasTagModel->getContentTags($post['id_cnt']);
-		    	$i++;
-	    	}
-	
-	    	// Save recent posts data to cache
-	    	//$cache->save($recentposts, $cachePosts);
-	    	//} else {
-	    		//$recentposts = $result;
-	    	//}
-	    	$this->view->recentposts = $recentposts;
+    	// Gather data for recent posts
+    	$i = 0;
+    	foreach ($recentposts_raw as $post) {
+	    	$recentposts[$i] = $post;
+	    	$this->gtranslate->setLangFrom($post['language_cnt']);
+	    	$recentposts[$i] = $this->gtranslate->translateContent($post);
+	    	$recentposts[$i]['tags'] = $contentHasTagModel->getContentTags($post['id_cnt']);
+	    	$i++;
+    	}
+
+    	$this->view->recentposts = $recentposts;
 	}
 	
 	function checkrecentcontentAction()
