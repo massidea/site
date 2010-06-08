@@ -1065,4 +1065,27 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } // end of getUserContentList
     
+    /*
+     * getUsersViewers
+     * 
+     * gets list of users who has read users content, sorted by amount of views
+     * 
+     * @param 	id 			users id
+     * @param 	limit		limit of users, default 10
+     * @return 	array		array (views => viewcount, id_usr_vws => viewers user id)
+     */
+    public function getUsersViewers($id, $limit = 10) {
+    	//select id_usr_vws, sum(views_vws) FROM cnt_views_vws JOIN (cnt_has_usr) on (cnt_has_usr.id_cnt = cnt_views_vws.id_cnt_vws) 
+    	//	where id_usr=2 group by id_usr_vws order by sum(views_vws) desc;
+		$select = $this->_db->select()
+					   		 ->from('cnt_has_usr', array())
+					   		 ->where('id_usr = ?', $id)
+					   		 ->join('cnt_views_vws', 'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt', array('views' => 'sum(views_vws)' , 'id_usr_vws'))
+					   		 ->group('id_usr_vws')
+					   		 ->order('views desc')
+					   		 ->limit($limit);
+
+		$result = $this->_db->fetchAll($select);
+		return $result;		   		 
+    }
 } // end of class
