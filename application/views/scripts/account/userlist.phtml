@@ -65,7 +65,6 @@ $.ajax({
 	}	
 });
 
-
 };
 
 
@@ -83,6 +82,7 @@ function complete_user_average_rating(user_id,result) {
 		content_ratings++;
 		}
 	});
+	
 	var rating_positive = Math.ceil(((rating_sum / ratings) + 1) * 50);
 	var rating_negative = Math.floor(100-((rating_sum / ratings) + 1) * 50);
 	
