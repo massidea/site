@@ -668,15 +668,19 @@ form_registration_container dd,
 }
 
 .search_result_details_left {
-    margin-top: 10px;  
-    /*float:left;*/
+    margin-top: 10px; 
+    display:inline-block;
 }
 
 .search_result_details_right {
     margin-top: 10px;
+    display:inline-block;
     float:right;
 }
 
+.search_result_details {
+	display:inline;
+}
 /*  acc settings */
 
 #account_settings_form_container {

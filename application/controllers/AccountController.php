@@ -1059,7 +1059,6 @@ class AccountController extends Oibs_Controller_CustomController
         
         if(isset($order) && isset($list)) {
         	$sort = $order." ".$list;
-        	$sentParams = "/order/".$params['order']."/list/".$params['list'];
         }
         
         // Filter form data
@@ -1155,7 +1154,6 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->count = $count;
         $this->view->userCount = $userCount;
         $this->view->page = $page;
-        $this->view->sentParams = $sentParams;
 
     } // end of userListingAction
     
