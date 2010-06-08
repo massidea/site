@@ -445,12 +445,21 @@
 	</tu>	
 	
 	<tu tuid='account-userlist-search-instructions'>
-		<tuv xml:lang="en"><seg>You can use % or * as a wildcard in the search fields and _ or ? as one character match. Search uses wildcards automatically in the both ends of the search word.</seg></tuv>
+		<tuv xml:lang="en"><seg>
+		Multiple character wildcards: % and * <br />
+		Single character wildcards: _ and ? <br />
+		Search uses multiple character wildcards automatically in the both ends of the search word. <br />
+		Wildcard character is a character that may be substituted for any of a defined subset of all possible characters.
+		</seg></tuv>
 		<tuv xml:lang="fi"><seg>Voit käyttää haussa % tai * jokerimerkkinä ja _ tai ? merkkiä yhden merkin korvausmerkkinä. Haku käyttää automaattisesti jokerimerkkejä tekstin molemmin puolin.</seg></tuv>
 	</tu>
 	<tu tuid='account-userlist-user-content-added'>
 		<tuv xml:lang="en"><seg>User has added %s content.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjä on lisännyt %s sisältöä.</seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-latest-contents'>
+		<tuv xml:lang="en"><seg>Users latest contents: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjän uusimmat sisällöt: </seg></tuv>
 	</tu>
 	<tu tuid='account-userlist-user-joined'>
 		<tuv xml:lang="en"><seg>Joined: </seg></tuv>
@@ -497,8 +506,8 @@
 		<tuv xml:lang="fi"><seg>Kaupunki</seg></tuv>
 	</tu>
 	<tu tuid='userlist-filter-submit'>
-		<tuv xml:lang="en"><seg>Filter</seg></tuv>
-		<tuv xml:lang="fi"><seg>Suodata</seg></tuv>
+		<tuv xml:lang="en"><seg>Search</seg></tuv>
+		<tuv xml:lang="fi"><seg>Etsi</seg></tuv>
 	</tu>
 	<tu tuid='account-login-via-openid'>
 		<tuv xml:lang="en"><seg>Login via OpenID</seg></tuv>
