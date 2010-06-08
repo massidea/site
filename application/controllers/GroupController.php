@@ -52,6 +52,29 @@
     }
 
     /**
+     * listAction - shows a list of all groups
+     */
+    function listAction()
+    {
+        $grpmodel = new Default_Model_Groups();
+        $cmpmodel = new Default_Model_Campaigns();
+        $grpadm = new Default_Model_GroupAdmins();
+
+        // If you find a better way to do this, be my guest.
+        // ...and also fix it to GroupsAndCampaignsController.
+        $grps = $grpmodel->getAllGroups();
+        $grps_new = array();
+        foreach ($grps as $grp) {
+            $adm = $grpadm->getGroupAdmins($grp['id_grp']);
+            $grp['id_admin'] = $adm[0]['id_usr'];
+            $grp['login_name_admin'] = $adm[0]['login_name_usr'];
+            $grps_new[] = $grp;
+        }
+
+        $this->view->groups = $grps_new;
+    }
+
+    /**
      * viewAction - shows an individual group's page
      *
      * @author Mikko Aatola

@@ -51,11 +51,15 @@ if($this->contentexists) {
                     ?>
                     <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
                     <?php
-                    $linkurl = $this->url(array('cmpid' => $campaign['id_cmp'],
+                    $groupurl = $this->url(array('groupid' => $campaign['id_grp'],
+                                                'language' => $this->language),
+                                          'group_shortview', true);
+                    $campaignurl = $this->url(array('cmpid' => $campaign['id_cmp'],
                                                 'language' => $this->language),
                                           'campaign_view', true);
                     ?>
-                    <a href="<?php echo $linkurl; ?>"><?php echo $campaign['name_cmp']; ?></a>
+                    <a href="<?php echo $groupurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
+                    <strong><a href="<?php echo $campaignurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
                     <p style="margin: 4px 0 4px 20px;"><?php echo $campaign['ingress_cmp']; ?></p>
                 </div>
                 <div style="margin-top: 4px;">

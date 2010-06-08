@@ -111,9 +111,9 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
     /**
      * Get all campaigns where content is linked.
      *
-     * @author Mikko Aatola
+     * @author Mikko Korpinen
      * @param id_cnt content id
-     * @return true if the content is linked to the campaign, false if not
+     * @return array
      */
     public function getContentCampaigns($id_cnt)
     {
@@ -128,7 +128,7 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
                                          'ingress_cmp', 'description_cmp', 'created_cmp'))
                             ->joinLeft(array('grp' => 'usr_groups_grp'),
                                              'grp.id_grp = cmp.id_grp_cmp',
-                                             array('id_grp'))
+                                             array('id_grp', 'group_name_grp'))
                             ->where('chc.id_cnt = ?', $id_cnt)
                             ->group('chc.id_cmp');
 

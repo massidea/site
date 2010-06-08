@@ -164,6 +164,9 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
                                    ->joinLeft(array('chu' => 'cnt_has_usr'),
                                           'chu.id_cnt = cnt.id_cnt',
                                           array('id_usr'))
+                                   ->joinLeft(array('usr' => 'users_usr'),
+                                          'usr.id_usr = chu.id_usr',
+                                          array('login_name_usr'))
                                    ->where('chc.id_parent_cnt = ?', $id_cnt)
                                    ->group('cnt.id_cnt');
 
@@ -180,6 +183,9 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
                                    ->joinLeft(array('chu' => 'cnt_has_usr'),
                                           'chu.id_cnt = cnt.id_cnt',
                                           array('id_usr'))
+                                   ->joinLeft(array('usr' => 'users_usr'),
+                                          'usr.id_usr = chu.id_usr',
+                                          array('login_name_usr'))
                                    ->where('chc.id_child_cnt = ?', $id_cnt)
                                    ->group('cnt.id_cnt');
 

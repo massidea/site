@@ -28,10 +28,10 @@ if($this->contentexists) {
             ?>
         </p>
         <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" />
-        
+
         <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId, 
-                                                     'language' => $this->language), 
+            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
+                                                     'language' => $this->language),
                                                      'content_shortview', true); ?>">
                 <?php
                     if(strlen($this->relatesToContentTitle) > 68) {
@@ -68,15 +68,15 @@ if($this->contentexists) {
                             <?php
                             $linkusr = $this->url(array('controller' => 'account',
                                                         'action' => 'view',
-                                                        'user' => $content['username'],
+                                                        'user' => $content['login_name_usr'],
                                                         'language' => $this->language),
                                                   'lang_default', true);
-                            $linkurl = $this->url(array('content_id' => $content['id_usr'],
+                            $linkurl = $this->url(array('content_id' => $content['id_cnt'],
                                                         'language' => $this->language),
                                                   'content_shortview', true);
                             ?>
-                            <a href="<?php echo $linkusr; ?>"><?php echo $content['username']; ?></a> : 
-                            <a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a>
+                            <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
+                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
                             <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
                         </div>
                         <div style="margin-top: 4px;">
