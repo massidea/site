@@ -159,7 +159,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     public function getRecent($limit)
     {
         if (!isset($limit)) $limit = 10;
-        
+
         $select = $this->select()
                 ->order('id_cmp DESC')
                 ->limit($limit);
