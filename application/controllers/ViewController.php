@@ -73,6 +73,10 @@
         $contentModel = new Default_Model_Content();
         $contentData = $contentModel->getDataAsSimpleArray($id);
         
+        // Translate content data
+		$this->gtranslate->setLangFrom($contentData['language_cnt']);
+		$contentData = $this->gtranslate->translateContent($contentData);
+        
         $filesModel = new Default_Model_Files();
         $files = $filesModel->getFilenamesByCntId($id);
         
