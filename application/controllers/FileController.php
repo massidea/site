@@ -72,4 +72,19 @@ class FileController extends Oibs_Controller_CustomController
             $this->flash($message, $url);
         }
     }
+    
+    /* convertAction
+     * 
+     * converts files from database format, old_files table to new filesystem structure
+     *  
+     */
+    public function convertAction() {
+        $this->_helper->layout()->setLayout('empty');
+    	$params = $this->getRequest()->getParams();
+        $convert = $params['convert'];
+        if ($convert == "yes") {
+        	$filesModel = new Default_Model_Files();
+        	$filesModel->convertFiles();
+        }
+    }
 }
