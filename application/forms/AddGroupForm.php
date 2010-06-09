@@ -2,7 +2,7 @@
 /**
  *  AddGroupForm -> Form for adding groups.
  *
- * 	Copyright (c) <2009>, Mikko Aatola
+ * 	Copyright (c) <2010>, Mikko Aatola
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -21,8 +21,8 @@
  *  AddGroupForm - class
  *
  *  @package 	Forms
- *  @author 		Mikko Aatola
- *  @copyright 	2009 Mikko Aatola
+ *  @author 	Mikko Aatola
+ *  @copyright 	2010 Mikko Aatola
  *  @license 	GPL v2
  *  @version 	1.0
  */
@@ -54,22 +54,26 @@ class Default_Form_AddGroupForm extends Zend_Form
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
                 new Oibs_Validators_GroupExists('groupname')
             ))
-            ->setDecorators(array('SettingsTextDecorator'));
+            ->setDecorators(array(
+                'ViewHelper',
+                array('secondColumn' => 'HtmlTag', array('tag' => 'div',
+                                       'class'  => 'input-column2',
+                                       'placement' => 'REPLACE')),
+                array('Label', array('tag' => 'div')),
+            ));
 
         // Description.
         $groupdesc = new Zend_Form_Element_Text('groupdesc');
         $groupdesc
             ->setLabel($translate->_('groups-new_group_description'))
             ->setRequired(true)
-            ->setFilters(array('StringTrim'))
-            ->setDecorators(array('SettingsTextDecorator'));
+            ->setFilters(array('StringTrim'));
 
         // Body text.
         $groupbody = new Zend_Form_Element_Text('groupbody');
         $groupbody
             ->setLabel('Body text')
-            ->setFilters(array('StringTrim'))
-            ->setDecorators(array('SettingsTextDecorator'));
+            ->setFilters(array('StringTrim'));
 
         // Submit button.
         $submit = new Zend_Form_Element_Submit('submit');

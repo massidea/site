@@ -28,6 +28,9 @@ border-left:5px solid #0089CF;}
     padding:5px 0px 5px 2px;
     list-style:none;}
 #gacsidebar #groups ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
+
+#content #create-group-page .input-column1 { width:144px; float:left; text-align:right; margin-right:10px; margin-bottom:8px; }
+#content #create-group-page .input-column2 { width:254px; float:left;  margin-right:20px;  margin-bottom:8px; }
 /* ************ */
 /* </copypasta> */
 /* ************ */

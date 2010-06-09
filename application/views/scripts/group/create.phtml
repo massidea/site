@@ -1,4 +1,6 @@
-<h4><?php echo $this->translate('groups-create_new_group'); ?></h4>
-<?php
-    echo $this->form;
-?>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+
+<div id="create-group-page">
+    <h4><?php echo $this->translate('groups-create_new_group'); ?></h4>
+    <?php echo $this->form; ?>
+</div>
