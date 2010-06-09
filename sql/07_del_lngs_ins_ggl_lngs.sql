@@ -1,4 +1,4 @@
---Deleting old language database and replace it with google language code languages.
+-- Deleting old language database and replace it with google language code languages.
 
 USE `oibs`;
 

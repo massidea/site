@@ -3,6 +3,7 @@ $language = Zend_Layout::getMvcInstance()->getView()->language;
 $grpurl = $this->url(array('groupid' => $this->id_grp,
                            'language' => $language),
                        'group_shortview', true);
+
 $usrurl = $this->url(array('controller' => 'account',
                            'action' => 'view',
                            'user' => $this->login_name_admin,
