@@ -1198,7 +1198,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 					$languages = New Default_Model_Languages();
 					$idLngInd = $languages->getLangIdByLangName($this->view->language);
-					
+
 					// Getting language of the content
 					$formData['content_language'] = $languages->getLangIdByLangName($data['language_cnt']);
 
