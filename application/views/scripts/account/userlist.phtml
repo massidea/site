@@ -156,8 +156,14 @@ function complete_user_content_search(user_id,result){
 
 			var rating = "<span style=\"color:green;\">"+rating_positive+"% </span><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><span style=\"color:red;\"> "+rating_negative+"%</span> ";
 			
+			if (row.views)
+				var views = row.views;
+			else var views = "Not viewed";
+			
+			var created_cnt = "Created: "+row.created_cnt.split(" ")[0];
+			
 			if (!row.rating_sum) var rating = "Not rated"
-			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><span style=\"float:right;font-weight:bold;\">"+rating+" [" + row.created_cnt + "]</span></span>";
+			return "<span class=\""+type+"\"><span style=\"padding-left:2px;\"><a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">" + row.title_cnt + "</a></span><br /><span style=\"margin-left:0.5em;padding-left:2px;\">"+row.lead_cnt+"</span><br /><span style=\"float:right;font-weight:bold;\">"+rating+" | Views: "+views+ " | " + created_cnt + "</span></span>";
 		},
 		formatMatch: function(row, i, max) {
 			return row.title_cnt+" "+row.lead_cnt;
