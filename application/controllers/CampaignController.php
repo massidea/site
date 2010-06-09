@@ -251,7 +251,7 @@ class CampaignController extends Oibs_Controller_CustomController
      *
      * @author Mikko Korpinen
      */
-    public function removelinkAction()
+    public function removelinksAction()
     {
         $cmpId = $this->_request->getParam('cmpid');
         $this->view->cmpid = $cmpId;

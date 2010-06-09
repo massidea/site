@@ -338,8 +338,10 @@ echo $this->doctype();
                 onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
                 class="sub_menu_item_blue"
             >
-                <a href="<?php echo $this->url(array('language' => $this->language),
-                                                	'lang_default', true); ?>">
+                <a href="<?php echo $this->url(array('language'   => $this->language,
+                                                     'controller' => 'groupsandcampaigns',
+                                                     'action'     => 'index',
+                                               ), 'lang_default', true); ?>">
                     <?php echo $this->translate('index-groups-campaigns');?>
                 </a>
             </div>
