@@ -215,11 +215,8 @@ class ContentController extends Oibs_Controller_CustomController
 			}
 
 			// Get content type
-			$contentType = isset($params['contenttype'])
-			? $params['contenttype']
-			: '';
-			$relatesToId = isset($params['relatestoid'])
-			? $params['relatestoid'] : 0;
+			$contentType = isset($params['contenttype']) ? $params['contenttype'] : '';
+			$relatesToId = isset($params['relatestoid']) ? $params['relatestoid'] : 0;
 
 			// Get all content types from the database
 			$modelContentTypes = new Default_Model_ContentTypes();
@@ -249,7 +246,7 @@ class ContentController extends Oibs_Controller_CustomController
 				$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
+                                         		'lang_default', true); 
 
 				$this->flash($message, $url);
 			} elseif($relatesToId != 0) {
@@ -274,11 +271,9 @@ class ContentController extends Oibs_Controller_CustomController
 					$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
-                                                  'lang_default', true); 
+                                                  		'lang_default', true); 
 
-					$this->flash(
-					$message, $url
-					);
+					$this->flash($message, $url);
 				}
 			}
 
@@ -299,7 +294,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$cache = Zend_Registry::get('cache');
 			$formDataCacheTag = 'formData_'.$contentType.'_'.$this->view->language;
 			 
-			if (! ($formData = $cache->load($formDataCacheTag) )) {
+			if (!($formData = $cache->load($formDataCacheTag) )) {
 				// Creating array for form data
 				$formData = array();
 
@@ -399,9 +394,7 @@ class ContentController extends Oibs_Controller_CustomController
 									}
 									 
 									elseif ( ! ($form = $cache->load($formCacheTag))  ) {
-										$form = new Default_Form_AddContentForm(
-										null, $formData, $this->view->language, $contentType
-										);
+										$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
 										 
 										$cache->save($form, $formCacheTag);
 									}
@@ -410,6 +403,7 @@ class ContentController extends Oibs_Controller_CustomController
                                         
                                         // Get requests
                                         if($this->getRequest()->isPost()) {
+                                        	
                                         	// Get content data
                                         	$data = $this->getRequest()->getPost();
 
@@ -461,6 +455,7 @@ class ContentController extends Oibs_Controller_CustomController
                                         		} elseif($data['content_class'] != 0) {
                                         			$data['content_industry_id'] = $data['content_class'];
                                         		}
+                                        		
 												$languages = new Default_Model_Languages();
 												
                                         		if($data['content_language'] == 0) {
@@ -482,15 +477,15 @@ class ContentController extends Oibs_Controller_CustomController
                                         		} // end if
 
                                         		$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                        'action' => 'index',
-                                                        'language' => $this->view->language),
-                                                  'lang_default', true);
+                                                       								'action' => 'index',
+                                                        							'language' => $this->view->language),
+                                                  									'lang_default', true);
 
                                         		if($add_successful) {
                                         			if($data['publish'] == 1) {
                                         				$url = $this->_urlHelper->url(array('content_id' => $add,
-                                         'language' => $this->view->language), 
-                                         'content_shortview', true);
+                                         													'language' => $this->view->language), 
+                                         													'content_shortview', true);
                                         				$this->_redirect($url);
                                         			}
                                         			else {
@@ -945,7 +940,7 @@ class ContentController extends Oibs_Controller_CustomController
 			// Get preview data from session
 			$previewSession = new Zend_Session_Namespace('contentpreview');
 			$postSession = $previewSession->previewData;
-			
+
 			// Get requests
 			if($this->getRequest()->isPost())
 			{
@@ -980,23 +975,23 @@ class ContentController extends Oibs_Controller_CustomController
 			// Reformat preview data
 			$contentData = 
 				array('id_cnt' 					=> 'preview',
-					  'id_cty_cnt' 				=> $postSession['content_type'],
-					  'title_cnt' 				=> $postSession['content_header'],
-					  'lead_cnt' 				=> $postSession['content_textlead'],
-					  'language_cnt' 			=> $postSession['content_language'],
-					  'body_cnt' 				=> $postSession['content_text'],
-					  'research_question_cnt' 	=> $postSession['content_research'],
-					  'opportunity_cnt' 		=> $postSession['content_opportunity'],
-					  'threat_cnt' 				=> $postSession['content_threat'],
-					  'solution_cnt' 			=> $postSession['content_solution'],
-					  'references_cnt' 			=> $postSession['content_references'],
+					  'id_cty_cnt' 				=> htmlentities($postSession['content_type']),
+					  'title_cnt' 				=> htmlentities($postSession['content_header']),
+					  'lead_cnt' 				=> htmlentities($postSession['content_textlead']),
+					  'language_cnt' 			=> htmlentities($postSession['content_language']),
+					  'body_cnt' 				=> htmlentities($postSession['content_text']),
+					  'research_question_cnt' 	=> htmlentities($postSession['content_research']),
+					  'opportunity_cnt' 		=> htmlentities($postSession['content_opportunity']),
+					  'threat_cnt' 				=> htmlentities($postSession['content_threat']),
+					  'solution_cnt' 			=> htmlentities($postSession['content_solution']),
+					  'references_cnt' 			=> htmlentities($postSession['content_references']),
 					  'views_cnt' 				=> 0,
 					  'published_cnt' 			=> 1,
 					  'created_cnt' 			=> $today,
 					  'modified_cnt' 			=> $today,
 					  'id_usr' 					=> $userId,
 					  'login_name_usr' 			=> $userName,
-					  'key_cty' 				=> $postSession['content_type'],
+					  'key_cty' 				=> htmlentities($postSession['content_type']),
 					  'name_cty'				=> $contentType
 			);
 			
