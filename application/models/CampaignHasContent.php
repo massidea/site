@@ -136,6 +136,6 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
 
         return $result;
     }
-    
+
 } // end of class
 ?>
