@@ -1,6 +1,6 @@
 <?php
-Zend_Layout::getMvcInstance()->setLayout('layout_new');
-$this->headScript()->appendFile($this->baseUrl . '/js/CheckForm.js');
+//Zend_Layout::getMvcInstance()->setLayout('layout_new');
+//$this->headScript()->appendFile($this->baseUrl . '/js/CheckForm.js');
 ?>
 
 <?php $this->headScript()->captureStart()?>
@@ -9,7 +9,7 @@ $this->headScript()->appendFile($this->baseUrl . '/js/CheckForm.js');
 		'biography': 				[1,  300, 1]
 	};
 <?php $this->headScript()->captureEnd()?>
-
+<!--
 <div id="edit-user-page" class="narrow">
 
 	<h2>Edit your profile</h2>
@@ -19,7 +19,17 @@ $this->headScript()->appendFile($this->baseUrl . '/js/CheckForm.js');
     <div class="clear"></div>
 
 	<?php
-		echo $this->form;
+		//echo $this->form;
 	?>
 
+</div>-->
+
+
+<?php $this->headLink()->appendStylesheet($this->baseUrl.'/css/style_additions_req.css'); ?>
+<div id="account_settings_form_container">
+	<h1><?php echo $this->translate('account-edit-title'); ?></h1>
+    <p><?php print_r($this->messages); ?></p>
+	<?php
+		echo $this->form;
+	?>
 </div>

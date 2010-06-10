@@ -86,8 +86,8 @@ class Oibs_Form_Decorator_InputDecorator extends Zend_Form_Decorator_Abstract
                 . '<div class="input-column2">'
                 . $input
                 . $desc
-                . '</div>'
-                . $errors;
+                . $errors
+                . '</div>';
 
         switch ($placement) {
             case (self::PREPEND):
