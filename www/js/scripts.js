@@ -4,7 +4,9 @@
 
 function changeBack(color)
 {
-	document.body.style.background = color;
+	$('body').ready(function () {
+		$('body').css('background-color', color);
+	});	
 }
 
 function focusMenu(target, color, baseurl)
