@@ -31,3 +31,36 @@ border-left:5px solid #0089CF;}
 /* ************ */
 /* </copypasta> */
 /* ************ */
+
+/* *********************** */
+/* <Progressbar for forms> */
+/* *********************** */
+.progress {
+	width: 240px;
+    #width: 238px; /* IE HACK :( */
+    height: 18px;
+    padding-left: 19px;
+	font-size: 12px;
+	overflow: hidden;
+    background: #FFCFCF;
+    background-image: url('../images/icon_thumb_down.png');
+    background-position: left;
+    background-repeat: no-repeat;
+    border: 1px solid #7F9DB9;
+}
+.progress_ok {
+    width: 240px;
+    #width: 238px; /* IE HACK :( */
+    height: 18px;
+    padding-left: 19px;
+	font-size: 12px;
+	overflow: hidden;
+    background: white;
+    background-image: url('../images/icon_thumb_up.png');
+    background-position: left;
+    background-repeat: no-repeat;
+    border: 1px solid #7F9DB9;
+}
+/* ************* */
+/* </Progressbar> */
+/* ************* */

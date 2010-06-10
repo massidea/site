@@ -184,6 +184,15 @@ class AccountController extends Oibs_Controller_CustomController
         // View is WIP because user profile edit form is not ready
 // WIP START
 
+        if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+            $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+        }
+
+        $hometargeturl = $this->_urlHelper->url(array('controller' => 'index',
+                                                      'action' => 'index',
+                                                      'language' => $this->view->language),
+                                                'lang_default', true);
+
         // Get user identity
         $auth = Zend_Auth::getInstance();
 
@@ -192,8 +201,12 @@ class AccountController extends Oibs_Controller_CustomController
 
         // Get params
         $params = $this->getRequest()->getParams();
-        // Get username from params
-        $username = $params['user'];
+        if (isset($params['user'])) {
+            // Get username from params
+            $username = $params['user'];
+        } else {
+            $redirector->gotoUrl($hometargeturl);
+        }
 
         // Get content types
         $contentTypes = new Default_Model_ContentTypes();
@@ -202,6 +215,10 @@ class AccountController extends Oibs_Controller_CustomController
         // Get user data from User Model
         $user = new Default_Model_User();
         $data = $user->getUserByName($username);
+
+        if ($data == null) {
+            $redirector->gotoUrl($hometargeturl);
+        }
 
         $this->view->user = $data;
 		$id = $data['id_usr'];
@@ -934,7 +951,7 @@ class AccountController extends Oibs_Controller_CustomController
 			// get user data
 			$userInfos = new Default_Model_UserProfiles();
 			$settingsData = $userInfos->getUserInfoById($id);
-			//var_dump($settingsData);	
+			//var_dump($settingsData);
 
             // get user email and push to settingsData
             $userModel = new Default_Model_User($id);
@@ -942,6 +959,7 @@ class AccountController extends Oibs_Controller_CustomController
             
             $settingsData['email'] = $email;
             $settingsData['confirm_email'] = $email;
+            $settingsData['username'] = $identity->username;
             
             // Get users email notifications and push to settingsdata in correct form
             $notificationsModel = new Default_Model_Notifications(); 
