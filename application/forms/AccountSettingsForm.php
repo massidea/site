@@ -281,41 +281,41 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $locationInformation->setDecorators(array('ViewHelper'));
         $employmentInformation->setDecorators(array('ViewHelper'));
 
-        $username->setDecorators(array('InputColumn1And2Decorator'));
-        $usernamepublic->setDecorators(array('InputColumn3Decorator'));
-        $openid->setDecorators(array('InputColumn1And2Decorator'));
-        $password->setDecorators(array('InputColumn1And2Decorator'));
-        $confirmpassword->setDecorators(array('InputColumn1And2Decorator'));
-        $email->setDecorators(array('InputColumn1And2Decorator'));
-        $firstname->setDecorators(array('InputColumn1And2Decorator'));
-        $firstnamepublic->setDecorators(array('InputColumn3Decorator'));
-        $lastname->setDecorators(array('InputColumn1And2Decorator'));
-        $lastnamepublic->setDecorators(array('InputColumn3Decorator'));
-        $gender->setDecorators(array('InputColumn1And2Decorator'));
-        $genderpublic->setDecorators(array('InputColumn3Decorator'));
-        $birthday->setDecorators(array('InputColumn1And2NoEndTagDecorator'));
+        $username->setDecorators(array('InputDecorator'));
+        $usernamepublic->setDecorators(array('PublicDecorator'));
+        $openid->setDecorators(array('InputDecorator'));
+        $password->setDecorators(array('InputDecorator'));
+        $confirmpassword->setDecorators(array('InputDecorator'));
+        $email->setDecorators(array('InputDecorator'));
+        $firstname->setDecorators(array('InputDecorator'));
+        $firstnamepublic->setDecorators(array('PublicDecorator'));
+        $lastname->setDecorators(array('InputDecorator'));
+        $lastnamepublic->setDecorators(array('PublicDecorator'));
+        $gender->setDecorators(array('InputDecorator'));
+        $genderpublic->setDecorators(array('PublicDecorator'));
+        $birthday->setDecorators(array('InputNoEndTagDecorator'));
         $birthmonth->setDecorators(array('ViewHelper'));
         $birthyear->setDecorators(array(
             'ViewHelper',
             array('HtmlTag', array('tag' => 'div', 'closeOnly' => true)),
             ));
-        $birthdaypublic->setDecorators(array('InputColumn3Decorator'));
-        $biography->setDecorators(array('InputColumn1And2Decorator'));
+        $birthdaypublic->setDecorators(array('PublicDecorator'));
+        $biography->setDecorators(array('InputDecorator'));
         $intereststext->setDecorators(array('ViewHelper'));
-        $interests->setDecorators(array('InputColumn1And2Decorator'));
-        $language->setDecorators(array('InputColumn1And2Decorator'));
-        $hometown->setDecorators(array('InputColumn1And2Decorator'));
-        $hometownpublic->setDecorators(array('InputColumn3Decorator'));
-        $country->setDecorators(array('InputColumn1And2Decorator'));
-        $countrypublic->setDecorators(array('InputColumn3Decorator'));
-        $timezone->setDecorators(array('InputColumn1And2Decorator'));
-        $timezonepublic->setDecorators(array('InputColumn3Decorator'));
-        $status->setDecorators(array('InputColumn1And2Decorator'));
-        $statuspublic->setDecorators(array('InputColumn3Decorator'));
-        $position->setDecorators(array('InputColumn1And2Decorator'));
-        $positionpublic->setDecorators(array('InputColumn3Decorator'));
-        $employer_organization->setDecorators(array('InputColumn1And2Decorator'));
-        $employer_organizationpublic->setDecorators(array('InputColumn3Decorator'));
+        $interests->setDecorators(array('InputDecorator'));
+        $language->setDecorators(array('InputDecorator'));
+        $hometown->setDecorators(array('InputDecorator'));
+        $hometownpublic->setDecorators(array('PublicDecorator'));
+        $country->setDecorators(array('InputDecorator'));
+        $countrypublic->setDecorators(array('PublicDecorator'));
+        $timezone->setDecorators(array('InputDecorator'));
+        $timezonepublic->setDecorators(array('PublicDecorator'));
+        $status->setDecorators(array('InputDecorator'));
+        $statuspublic->setDecorators(array('PublicDecorator'));
+        $position->setDecorators(array('InputDecorator'));
+        $positionpublic->setDecorators(array('PublicDecorator'));
+        $employer_organization->setDecorators(array('InputDecorator'));
+        $employer_organizationpublic->setDecorators(array('PublicDecorator'));
         $save->setDecorators(array(
             'ViewHelper',
             array('HtmlTag', array('tag' => 'div', 'openOnly' => true, 'id' => 'save_changes')),

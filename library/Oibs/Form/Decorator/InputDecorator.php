@@ -4,7 +4,7 @@
  *
  * @author Mikko Korpinen
  */
-class Oibs_Form_Decorator_InputColumn1And2Decorator extends Zend_Form_Decorator_Abstract
+class Oibs_Form_Decorator_InputDecorator extends Zend_Form_Decorator_Abstract
 {
 
     public function buildLabel()
