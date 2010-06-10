@@ -74,7 +74,20 @@ class RssController extends Oibs_Controller_CustomController
     {
     	// Set an empty layout for view
 		$this->_helper->layout()->setLayout('empty');
-
+		
+		// Set custom RSS cache (lifetime 10 minutes)
+		$cacheFrontend = array('lifetime' => 600,
+                              'automatic_serialization' => true
+                              );
+            
+		$cacheBackend = array('cache_dir' => '../tmp/',);
+            
+		$cache = Zend_Cache::factory('core',
+                                         'File',
+                                         $cacheFrontend,
+                                         $cacheBackend
+                                         );
+                                         
 		// Make baseurl absolute URL
 		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
     						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -96,7 +109,9 @@ class RssController extends Oibs_Controller_CustomController
         $content = new Default_Model_Content();
         $data = $content->listRecent($cty, 1, $count, null, $this->view->language, null);
         
-        // Set to view      
+        // Set to view
+        $this->view->cache = $cache;
+        $this->view->cacheIdentifier = 'RSS_' . md5($params['type'].$params['count']);
         $this->view->contentData = $data;
 		
     } // end of indexAction()
