@@ -74,6 +74,11 @@ class ContentController extends Oibs_Controller_CustomController
 	 */
 	public function listAction()
 	{
+		
+		$url = $this->_urlHelper->url(array('controller' => 'index',
+                                            'language' => $this->view->language), 
+                                            'lang_default', true); 
+
 		// Get cache from registry
 		$cache = Zend_Registry::get('cache');
 
@@ -82,13 +87,14 @@ class ContentController extends Oibs_Controller_CustomController
 
 		// Get requests
 		$params = $this->getRequest()->getParams();
-		 
+
 		// Get content type
 		$cty = isset($params['type']) ? $params['type'] : 'all';
-
+		if($cty != "idea" && $cty != "finfo" && $cty != "problem") $this->_redirect($url);
+		
 		// Get page nummber and items per page
 		$page = isset($params['page']) ? $params['page'] : 1;
-		$count = isset($params['count']) ? $params['count'] : 10;
+		$count = isset($params['count']) ? $params['count'] : 15;
 		 
 		// Get list oreder value
 		$order = isset($params['order']) ? $params['order'] : 'created';
