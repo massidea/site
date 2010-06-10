@@ -1,12 +1,16 @@
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
-$cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
-$linkurl = $this->url(array('controller' => 'campaign',
-                            'action'     => 'link',
-                            'cmpid'      => $this->campaign['id_cmp'],
+if ($this->campaign['end_time_cmp'] == '0000-00-00') {
+    $cmpend = 'Never';
+} else {
+    $cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
+    $cmpend = $cmpend->toString('dd MMM, yyyy');
+}
+
+$linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                             'language'   => $this->language),
-                        'lang_default', true);
+                            'linkcampaign', true);
 ?>
 <div id="campaign-page">
     <h2>
@@ -24,7 +28,7 @@ $linkurl = $this->url(array('controller' => 'campaign',
                                                         'lang_default', true); ?>">
                   <?php echo $this->translate('content-view-tags'); ?>
                   </a>
-            </strong><?php // tägit tähän väliin ?>
+            </strong><?php // t�git t�h�n v�liin ?>
         </p>
         <p>
             <strong>Campaign has started: </strong>
@@ -32,26 +36,30 @@ $linkurl = $this->url(array('controller' => 'campaign',
         </p>
         <p>
             <strong>Campaign is ending: </strong>
-            <?php echo $cmpend->toString('dd MMM, yyyy'); ?>
+            <?php echo $cmpend; ?>
         </p>
         <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
-        <ul>
-        <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
-        </ul>
+        <?php if (is_array($this->cmpAdmins)): ?>
+            <ul>
+            <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
+            </ul>
+        <?php endif; ?>
         <p>
             <strong>Group: </strong>
             <br />
-            Ryhmän nimi tähän
+            <?php echo $this->grpname; ?>
             <br />
         </p>
         <div id="members">
             <h4><?php echo $this->translate('group-members'); ?></h4>
+            <?php if (is_array($this->grpUsers)): ?>
             <span class="more"><strong><a href="">Show all</a></strong></span>
             <div class="clear"></div>
             <ul>
                 <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
             </ul>
             <span class="more"><strong><a href="">Show all</a></strong></span>
+            <?php endif; ?>
             <div class="clear dot-line-200"></div>
         </div>
     </div>
@@ -74,7 +82,7 @@ $linkurl = $this->url(array('controller' => 'campaign',
                     <div class="clear"></div>
                     <div class="scroll-box">
                         <ul>
-                            <?php echo $this->partialLoop('partials/content-row.phtml', $this->cmpcnts); ?>
+                            <?php echo $this->partialLoop('partials/content_row.phtml', $this->cmpcnts); ?>
                         </ul>
                     </div>
                 </div>

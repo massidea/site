@@ -87,6 +87,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                                         'content-add-field-too-long')))
                                      )
                                )
+		->setDescription($translate->_("content-add-headline-help-text"))
                 ->setLabel($translate->_("content-add-header"))
 				->setDecorators(array('FormElementDecorator'));
 				
@@ -121,6 +122,13 @@ class Default_Form_AddContentForm extends Zend_Form
 		$content_type->setValue($data['content_type'])
                      ->setDecorators(array('FormHiddenElementDecorator'));
         
+		// Used for track button clicks
+        $hidden_content_publish = new Zend_Form_Element_Hidden('content_publish');
+		$hidden_content_publish->setDecorators(array('FormHiddenElementDecorator'));
+		
+		$hidden_content_save = new Zend_Form_Element_Hidden('content_save');
+		$hidden_content_save->setDecorators(array('FormHiddenElementDecorator'));
+		
         // Related content, Hidden
 		$content_relatesto_id = new Zend_Form_Element_Hidden('content_relatesto_id');
 		$content_relatesto_id->setValue($data['content_relatesto_id'])
@@ -371,21 +379,22 @@ class Default_Form_AddContentForm extends Zend_Form
                 ->setMultiOptions($data['InnovationTypes']);
                 
         */
-        
-        // Form buttons
-        
-        $publish = new Zend_Form_Element_Submit('content_publish');
+
+	    // Form buttons
+        $publish = new Zend_Form_Element_Button('content_publish_button');
         $publish->setLabel($translate->_("content-add-publish"))
-                ->removeDecorator('DtDdWrapper');
+                ->removeDecorator('DtDdWrapper')
+                ->setAttrib('class', 'content_manage_button');
         
-        $save = new Zend_Form_Element_Submit('content_save');
+        $save = new Zend_Form_Element_Button('content_save_button');
         $save->setLabel($translate->_("content-add-save"))
-             ->removeDecorator('DtDdWrapper');
+                ->removeDecorator('DtDdWrapper')
+                ->setAttrib('class', 'content_manage_button');
         
-        $preview = new Zend_Form_Element_Submit('preview');
+        $preview = new Zend_Form_Element_Button('content_preview_button');
         $preview->setLabel($translate->_("content-add-preview"))
-                ->removeDecorator('DtDdWrapper');
-                //->setAttrib('onclick',"populatePreview(); previewRoll('open')");
+                ->removeDecorator('DtDdWrapper')
+                ->setAttrib('class', 'content_manage_button');
         
         // Set custom form layout
         $this->setDecorators(array(array('ViewScript', array(
@@ -409,6 +418,8 @@ class Default_Form_AddContentForm extends Zend_Form
             //$division,
             //$group,
             //$class,
+            $hidden_content_publish,
+            $hidden_content_save,
             $publish,
             $save,
             $preview

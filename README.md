@@ -5,6 +5,11 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 
 ## Git and GitHub - Guideline ##
 
+### General notes
+
+** Switch core.autocrlf to auto! **
+    $ git config --global core.autocrlf true
+
 ### Fork Queue (FQ)
 ** PLEASE DON'T USE FORK QUEUE. HOWTO MERGE LATEST CHANGES FROM UPSTREAM, READ: [http://help.github.com/forking/#pulling_in_upstream_changes](http://help.github.com/forking/#pulling_in_upstream_changes) **
 

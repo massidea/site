@@ -74,7 +74,9 @@
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel($translate->_("submit"));
 		
+		$parent_username = new Zend_Form_Element_Hidden('parent_username');
 		
-		$this->addElements(array(/*$comment_subject, */$comment_message, $comment_parent, $submit));
+		
+		$this->addElements(array(/*$comment_subject, */$comment_message, $comment_parent, $submit, $parent_username));
 	}
 }

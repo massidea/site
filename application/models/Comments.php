@@ -195,6 +195,11 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             // Create a new row
             $comment = $this->createRow();
             
+            // Remove line breaks from the beginning of the message
+            while (substr($data['comment_message'], 0, strlen(PHP_EOL)) == PHP_EOL) {
+                $data['comment_message'] = substr($data['comment_message'], 2);
+            }
+            
             // Set columns values
             $comment->id_cnt_cmt = $content_id;
             $comment->id_usr_cmt = $user_id;
@@ -202,11 +207,14 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             $comment->title_cmt = '';//strip_tags($data['comment_subject']);
             $comment->body_cmt = strip_tags($data['comment_message']);
             
-            $comment->created_cmt = new Zend_Db_Expr('NOW()');
-            $comment->modified_cmt = new Zend_Db_Expr('NOW()');
-            
-            // Save row
-            $comment->save();
+            // Check if there's still characters left in the message
+            if (strlen($comment->body_cmt) > 0) {
+                $comment->created_cmt = new Zend_Db_Expr('NOW()');
+                $comment->modified_cmt = new Zend_Db_Expr('NOW()');
+                
+                // Save row
+                $comment->save();
+            }
         } // end if
     } // end of addComment
 

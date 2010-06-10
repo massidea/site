@@ -236,5 +236,33 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
         }
     }
 
+    public function convertFiles() {
+    	$select = $this->_db->select()
+    						->from("files_fil_old");
+    	$rs = $this->_db->fetchAll($select);
+    	foreach ($rs as $row) {
+    		$hash = hash_hmac('sha1', $row['data_fil'], $row['id_cnt_fil'].$row['filename_fil'] );
+    		$dir = "files/".$row["id_usr_fil"]."/";
+    		if (! file_exists($dir)) {
+    			mkdir($dir, 0777, true);
+    		}
+    		if (! file_exists($dir.$hash)) {
+	    		if (($fh = fopen($dir.$hash, "w"))) {
+	    			fwrite($fh, $row['data_fil']);
+	    			fclose($fh);
+	    			
+	    			$file = $this->createRow();
+	    			$file->id_cnt_fil = $row['id_cnt_fil'];
+	    			$file->id_usr_fil = $row['id_usr_fil'];
+	    			$file->filetype_fil = $row['filetype_fil'];
+	    			$file->filename_fil = $row['filename_fil'];
+	    			$file->hash_fil = $hash;
+			 	    $file->created_fil = new Zend_Db_Expr('NOW()');
+			        $file->modified_fil = new Zend_Db_Expr('NOW()');
+			        $file->save();
+	    		}
+    		}
+    	}
+	}
 } // end of class
 ?>

@@ -77,7 +77,7 @@ $(document).ready(function() {
 	}
 	
 	function selectCheck(obj) {
-		if($(obj).attr('id') != "project_groups") {
+		if(inputDefinitions[obj.name]) {
 			var thisReq = inputDefinitions[obj.name][2];
 			var thisProgress = $('#progressbar_' + obj.name);
 			if ( $(obj).attr('value') != 0 || thisReq == 0) {

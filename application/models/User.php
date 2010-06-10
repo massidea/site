@@ -428,12 +428,12 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * @author Pekka Piispanen
     * @author Joel Peltonen
     * @author Mikko Aatola
-    * @todo pagination 
+    * @todo pagination
     * @todo ignore parameter / functionality to leave out a content
     * @todo splitting model-specific selects to their own models
-    * @todo moving the logic to controller instead of model
     * @todo the functionality where this is used should be ajaxified
     * @param integer $author_id id of whose content to get
+    * @param string $type limit search to a specific content type
     * @return array
     */    
     public function getUserContent($author_id = 0, $type = 0)
@@ -462,7 +462,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                   array('key_cty'))
                                            ->joinLeft(array('vws' => 'cnt_views_vws'),
                                                       'vws.id_cnt_vws = cnt.id_cnt',
-                                                      array('views' => 'SUM(DISTINCT vws.views_vws)'))
+                                                      array('views' => 'SUM(vws.views_vws)'))
                                            ->joinLeft(array('crt' => 'content_ratings_crt'),
                                                       'cnt.id_cnt = crt.id_cnt_crt',
                                                       array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
@@ -494,17 +494,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             //                             ->order('id_cty_cnt ASC')
             //                             ->order('created_cnt DESC');
             //}
-            //try{
             
-            /*}catch(Zend_Exception $e){
-                echo '<pre>';
-                print_r($e);
-                echo '</pre>';
-            }
-            echo '<pre>';
-            print_r($result);
-            echo '</pre>';
-            die();*/
             //$row = $this->find((int)$author_id)->current();
             //$result = $row->findDefault_Model_ContentViaDefault_Model_ContentHasUser($select);
         } // end if        
@@ -1049,17 +1039,31 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('cty' => 'content_types_cty'),    
                                                   'cty.id_cty = cnt.id_cty_cnt',  
                                                   array('key_cty'))
-                                           ->joinLeft(array('vws' => 'cnt_views_vws'),
-                                                      'cnt.id_cnt = vws.id_cnt_vws AND vws.id_usr_vws = '.$author_id,
-                                                      array('views' => 'COUNT(vws.views_vws)'))
                                             ->where('chu.id_usr = ?', $author_id)
                                             ->order('cnt.created_cnt DESC')
                                             ->group('chu.id_cnt')
                 ;
                 
                 $result = $this->_db->fetchAll($contentSelect);
- 
-
+                //TODO: If you have skills, combine queries in one query :D
+                //The challenge is having ratings and views in same query
+                $contentSelect = $this->_db->select()
+                							->from(array('chu' => 'cnt_has_usr'), 
+                                                  array('id_usr', 'id_cnt'))
+                                           ->joinLeft(array('vws' => 'cnt_views_vws'),
+                                                      'chu.id_cnt = vws.id_cnt_vws',
+                                                      array('views' => 'SUM(vws.views_vws)'))
+                                            ->where('chu.id_usr = ?', $author_id)
+                                            ->order('chu.id_cnt DESC')
+                                            ->group('chu.id_cnt')
+ 				;
+ 				
+ 				$result2 = $this->_db->fetchAll($contentSelect);
+ 				
+ 				foreach($result as $key => $res) {
+ 						$result[$key] = array_merge($res,$result2[$key]);
+ 				}
+ 				
         } // end if        
 
         return $result;
