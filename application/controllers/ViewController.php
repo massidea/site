@@ -107,6 +107,9 @@
         
         // turn commenting off by default
         $user_can_comment = false;
+        
+        // turn rating off by default
+        $user_can_rate = false;
 
         // Comment model
         $comment = new Default_Model_Comments();
@@ -115,8 +118,14 @@
         
         // If user has identity
         if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) {
-            // enable comment form, also used as rating permission
+            // enable comment form
             $user_can_comment = true;
+            
+            // enable rating if the content was not published by the user
+            // (also used for flagging)
+            if ($ownerId != $auth->getIdentity()->user_id) {
+                $user_can_rate = true;
+            }
             
             // generate comment form
             $comment_form = new Default_Form_CommentForm($parentId);
@@ -391,6 +400,7 @@
         $this->view->commentPaginator   = $paginator;
         $this->view->commentData        = $commentsSorted;
 		$this->view->user_can_comment   = $user_can_comment;
+		$this->view->user_can_rate      = $user_can_rate;
         $this->view->contentData        = $contentData;
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;

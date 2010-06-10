@@ -115,10 +115,20 @@ replyTo = function (replyId, username)
 {
     // Quote is not necessary
     // var source = $('#unmodified_' + replyId/* + '_textbody'*/).html();
-    var text = '@' + username + ':\n\n'; //'[quote=' + username + ']' + trimmer(source) + '[/quote]\n';
+    //var text = '@' + username + ':\n\n'; //'[quote=' + username + ']' + trimmer(source) + '[/quote]\n';
     
-    $('textarea#comment_message').val(text);
+    // Include old text into the textarea after the username
+    //text += $('textarea#comment_message').val();
+    
+    // Apply values
+    //$('textarea#comment_message').val(text);
     $('#comment_parent').val(replyId);
+    $('#parent_username').val(username);
+    $('p#replying_to').html('<?php echo $this->translate('content-view-comment-replying-to'); ?> <b>' + username + '</b>');
+    
+    // Show "Replying to..." text and "Cancel reply" -link
+    $('p#replying_to').show();
+    $('a#cancel_reply_link').show();
     
     return false;
 }
@@ -132,6 +142,38 @@ trimmer = function (str)
     
     return str.slice(0, i + 1);
 
+}
+
+/**
+*   cancelReply
+*   
+*   Basic function for canceling replying
+*/
+cancelReply = function ()
+{
+    var message = $('textarea#comment_message').val();
+    
+    /*
+	// Remove the "@username:"
+    var lookFor = '@' + $('#parent_username').val() + ':';
+    message = message.replace(lookFor, "");
+    
+    // Remove any extra line breaks from the beginning
+    while (message.charAt(0) == '\n') {
+    	message = message.substring(1, message.length);
+    }
+    */
+    
+    // Apply values
+    //$('textarea#comment_message').val(message);
+    $('#comment_parent').val(0);
+    $('#parent_username').val('');
+    
+    // Hide "Replying to..." text and "Cancel reply" -link
+    $('p#replying_to').hide();
+    $('a#cancel_reply_link').hide();
+    
+    return false;
 }
 
 /**
@@ -301,7 +343,9 @@ if (isset($this->parent_siblings[0])) {
                 </div>
                 <!-- AddThis Button END -->
                 
-                <div style="float:right;"><a href="#" id="flagContentLink" onclick="javascript:flagContent(); return false;"><?php echo $this->translate('content-view-flagcontent'); ?></a></div>
+                <?php if ($this->user_can_rate) { // also used to enable/disable flagging ?>
+                	<div style="float:right;"><a href="#" id="flagContentLink" onclick="javascript:flagContent(); return false;"><?php echo $this->translate('content-view-flagcontent'); ?></a></div>
+            	<?php } ?>
             </div>
             <div style="clear:both;"></div>
             <div class="box_468_light">
@@ -578,8 +622,10 @@ if (isset($this->parent_siblings[0])) {
 		<?php } if($this->user_can_comment) { ?>
         <div style="clear:both;"></div>
 		<div id="content_view_comment_form_container">
-			<h3><?php echo $this->translate('content-view-comment-add'); ?></h3>
-			<?php echo $this->comment_form; ?>
+			<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
+			<a href="#" id="cancel_reply_link" style="float: right; padding: 3px 0px 0px 0px; display: none;" onclick="javascript:cancelReply();return false;"><?php echo $this->translate('content-view-comment-cancel'); ?></a>
+			<p id="replying_to" style="float: right; padding: 3px 20px 0px 0px; display: none;">Replying to [username]</p>
+		    <?php echo $this->comment_form; ?>
 		</div>
 		<?php } ?>
         <?php if ($this->comments > 0) { echo'</div>'; } ?>
