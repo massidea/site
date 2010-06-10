@@ -23,9 +23,9 @@ $content_group = $this->element->content_group;
 $content_class = $this->element->content_class;
 $innovation_type = $this->element->innovation_type;
 */
-$content_publish = $this->element->content_publish;
-$content_save = $this->element->content_save;
-$preview = $this->element->preview;
+$publish_button = $this->element->content_publish_button;
+$save_button = $this->element->content_save_button;
+$preview_button = $this->element->content_preview_button;
 ?>
 
 
@@ -96,12 +96,16 @@ $preview = $this->element->preview;
         <?php echo $innovation_type; ?>
         
         */?>
+
+        <?php echo $this->element->content_save; ?>
         
-        <?php echo $content_publish; ?>     
+        <?php echo $this->element->content_publish; ?>
+        
+        <?php echo $publish_button; ?>     
            
-        <?php echo $content_save; ?>
+        <?php echo $save_button; ?>
         
-        <?php echo $preview; ?>     
+        <?php echo $preview_button; ?>     
 
     
     </div>
