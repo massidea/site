@@ -55,7 +55,7 @@
                 <div class="content_rating_positive">
             	<?php print_r($this->rating['positive_percentage']); echo '%'; ?>
             	</div>
-		        <?php if($this->user_can_comment) { // if can comment, can also rate ?>
+		        <?php if($this->user_can_rate) { ?>
 					<div class="content_view_content_vote">
 							<img id="voteup" onclick="ajaxLoad_vote('1');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_up.png" alt="Vote up" />
 							<img id="votedown" onclick="ajaxLoad_vote('-1');" src="<?php echo Zend_Controller_Front::getInstance()->getBaseUrl(); ?>/images/icon_thumb_down.png" alt="Vote down" />

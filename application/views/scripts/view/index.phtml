@@ -115,10 +115,17 @@ replyTo = function (replyId, username)
 {
     // Quote is not necessary
     // var source = $('#unmodified_' + replyId/* + '_textbody'*/).html();
-    var text = '@' + username + ':\n\n'; //'[quote=' + username + ']' + trimmer(source) + '[/quote]\n';
+    //var text = '@' + username + ':\n\n'; //'[quote=' + username + ']' + trimmer(source) + '[/quote]\n';
     
-    $('textarea#comment_message').val(text);
+    // Apply values
+    //$('textarea#comment_message').val(text);
     $('#comment_parent').val(replyId);
+    $('#parent_username').val(username);
+    $('p#replying_to').html('<?php echo $this->translate('content-view-comment-replying-to'); ?> <b>' + username + '</b>');
+    
+    // Show "Replying to..." text and "Cancel reply" -link
+    $('p#replying_to').show();
+    $('a#cancel_reply_link').show();
     
     return false;
 }
@@ -132,6 +139,24 @@ trimmer = function (str)
     
     return str.slice(0, i + 1);
 
+}
+
+/**
+*   cancelReply
+*   
+*   Basic function for canceling replying
+*/
+cancelReply = function ()
+{
+    // Apply values
+    $('#comment_parent').val(0);
+    $('#parent_username').val('');
+    
+    // Hide "Replying to..." text and "Cancel reply" -link
+    $('p#replying_to').hide();
+    $('a#cancel_reply_link').hide();
+    
+    return false;
 }
 
 /**
@@ -283,6 +308,7 @@ if (isset($this->parent_siblings[0])) {
             <h1><?php echo $this->translate('content-view-unpublished'); ?></h1>
         <?php endif; ?>
 		<?php echo $this->partial('partials/content_view.phtml', $this);?>
+
 <div class="right_side" style="float:left; padding: 0px; margin: 0px; margin-top: 0px;">
     <p class="right_side_title_small" style="padding-top: 11px; padding-bottom:3px;"><?php echo $this->translate('content-view-author'); ?></p>
     <div class="top_right_box" style="margin-bottom:10px;">

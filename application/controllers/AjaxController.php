@@ -69,7 +69,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	
     	// Get recent post data
     	$recentposts_raw = $contentModel->listRecent(
-			'all', $offset, 12, 'created', $this->view->language, -1
+			'all', $offset, 15, 'created', $this->view->language, -1
     	);
 
     	$recentposts = array();

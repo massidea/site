@@ -18,8 +18,10 @@
                     <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4b12c6f671039279"></script>
                 </div>
                 <!-- AddThis Button END -->
-                
-                <div style="float:right;"><a href="#" id="flagContentLink" onclick="javascript:flagContent(); return false;"><?php echo $this->translate('content-view-flagcontent'); ?></a></div>
+               
+				<?php if ($this->user_can_rate) { // also used to enable/disable flagging ?>
+				<div style="float:right;"><a href="#" id="flagContentLink" onclick="javascript:flagContent(); return false;"><?php echo $this->translate('content-view-flagcontent'); ?></a></div>
+				<?php } ?>
             </div>
             <div style="clear:both;"></div>
             <div class="box_468_light">
@@ -295,7 +297,9 @@
 		<?php } if($this->user_can_comment) { ?>
         <div style="clear:both;"></div>
 		<div id="content_view_comment_form_container">
-			<h3><?php echo $this->translate('content-view-comment-add'); ?></h3>
+			<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
+			<a href="#" id="cancel_reply_link" style="float: right; padding: 3px 0px 0px 0px; display: none;" onclick="javascript:cancelReply();return false;"><?php echo $this->translate('content-view-comment-cancel'); ?></a>
+			<p id="replying_to" style="float: right; padding: 3px 20px 0px 0px; display: none;">Replying to [username]</p>
 			<?php echo $this->comment_form; ?>
 		</div>
 		<?php } ?>

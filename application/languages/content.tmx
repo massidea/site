@@ -221,6 +221,14 @@
 		<tuv xml:lang="en"><seg>Reply</seg></tuv>
 		<tuv xml:lang="fi"><seg>Vastaa</seg></tuv>
 	</tu>
+	<tu tuid='content-view-comment-replying-to'>
+		<tuv xml:lang="en"><seg>Replying to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vastaamassa käyttäjälle</seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-cancel'>
+		<tuv xml:lang="en"><seg>Cancel reply</seg></tuv>
+		<tuv xml:lang="fi"><seg>Peru vastaus</seg></tuv>
+	</tu>
 	<tu tuid='content-view-tags'>
 		<tuv xml:lang="en"><seg>Tags: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Avainsanat: </seg></tuv>
