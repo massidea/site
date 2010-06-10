@@ -117,9 +117,6 @@ replyTo = function (replyId, username)
     // var source = $('#unmodified_' + replyId/* + '_textbody'*/).html();
     //var text = '@' + username + ':\n\n'; //'[quote=' + username + ']' + trimmer(source) + '[/quote]\n';
     
-    // Include old text into the textarea after the username
-    //text += $('textarea#comment_message').val();
-    
     // Apply values
     //$('textarea#comment_message').val(text);
     $('#comment_parent').val(replyId);
@@ -151,21 +148,7 @@ trimmer = function (str)
 */
 cancelReply = function ()
 {
-    var message = $('textarea#comment_message').val();
-    
-    /*
-	// Remove the "@username:"
-    var lookFor = '@' + $('#parent_username').val() + ':';
-    message = message.replace(lookFor, "");
-    
-    // Remove any extra line breaks from the beginning
-    while (message.charAt(0) == '\n') {
-    	message = message.substring(1, message.length);
-    }
-    */
-    
     // Apply values
-    //$('textarea#comment_message').val(message);
     $('#comment_parent').val(0);
     $('#parent_username').val('');
     

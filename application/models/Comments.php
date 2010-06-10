@@ -195,13 +195,6 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             // Create a new row
             $comment = $this->createRow();
             
-            /*// Remove comment parent's username from the message
-            if (isset($data['parent_username'])) {
-                if (substr($data['comment_message'], 0, (2+strlen($data['parent_username']))) == '@' . $data['parent_username'] . ':') {
-                    $data['comment_message'] = substr($data['comment_message'], (2+strlen($data['parent_username'])));
-                }
-            }*/
-            
             // Remove line breaks from the beginning of the message
             while (substr($data['comment_message'], 0, strlen(PHP_EOL)) == PHP_EOL) {
                 $data['comment_message'] = substr($data['comment_message'], 2);
