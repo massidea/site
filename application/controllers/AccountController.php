@@ -81,7 +81,7 @@ class AccountController extends Oibs_Controller_CustomController
 				$imagedata = $user->getUserImageData($userid, $thumb);
 	            		
 	            if($imagedata == null) {
-	                $filename = '../www/images/no_profile_img_placeholder.gif';
+	                $filename = '../www/images/no_profile_img_placeholder.png';
 	                $handle = fopen($filename, "r");
 	                $imagedata[$thumbnail] = fread($handle, filesize($filename));
 	            } 
