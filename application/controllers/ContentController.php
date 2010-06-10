@@ -60,7 +60,7 @@ class ContentController extends Oibs_Controller_CustomController
                                             'action' => 'guidelines',
                                             'language' => $this->view->language), 
                                             'lang_default', true); 
-		 
+			
 		$this->_redirect($url);
 
 		//}
@@ -95,7 +95,7 @@ class ContentController extends Oibs_Controller_CustomController
 		// Get page nummber and items per page
 		$page = isset($params['page']) ? $params['page'] : 1;
 		$count = isset($params['count']) ? $params['count'] : 15;
-		 
+
 		// Get list oreder value
 		$order = isset($params['order']) ? $params['order'] : 'created';
 		$ind = isset($params['ind']) ? $params['ind'] : 0;
@@ -181,7 +181,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 		// RSS type for the layout
 		$this->view->rsstype = $cty;
-		 
+			
 	} // end of listAction()
 
 	/**
@@ -194,15 +194,15 @@ class ContentController extends Oibs_Controller_CustomController
 	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-		
+
 		// If user has identity
 		if ($auth->hasIdentity()) {
 			// Get requests
 			$params = $this->getRequest()->getParams();
-			
+
 			// Get session data
 			$previewSession = new Zend_Session_Namespace('contentpreview');
-			
+
 			// If preview
 			$backFromPreview = isset($previewSession->backFromPreview) ? $previewSession->backFromPreview : 0;
 			$preview = isset($params['preview']) ? 1:0;
@@ -212,7 +212,7 @@ class ContentController extends Oibs_Controller_CustomController
 				$previewSession->previewData = $params;
 				$backToUrl = $this->getRequest()->getRequestUri();
 				$previewSession->backToUrl = $backToUrl;
-				
+
 				$url = $this->_urlHelper->url(array('controller' => 'content',
 													'action' => 'preview',
 													'language' => $this->view->language),
@@ -268,9 +268,7 @@ class ContentController extends Oibs_Controller_CustomController
 				 } */
 
 				// Checking if the content that idea is related to exists
-				$contentExists = $content->checkIfContentExists(
-				$relatesToId
-				);
+				$contentExists = $content->checkIfContentExists($relatesToId);
 
 				if(!$contentExists) {
 					$message = 'content-add-invalid-related-content';
@@ -299,7 +297,7 @@ class ContentController extends Oibs_Controller_CustomController
 			// Cacheing of formData
 			$cache = Zend_Registry::get('cache');
 			$formDataCacheTag = 'formData_'.$contentType.'_'.$this->view->language;
-			 
+
 			if (!($formData = $cache->load($formDataCacheTag) )) {
 				// Creating array for form data
 				$formData = array();
@@ -313,8 +311,7 @@ class ContentController extends Oibs_Controller_CustomController
 				$futureinfoClasses = $modelFutureinfoClasses->getAllNamesAndIds();
 
 				$formData['FutureinfoClasses'] = array();
-				$formData['FutureinfoClasses'][0] =
-				$this->view->translate("content-add-select-finfo-classification");
+				$formData['FutureinfoClasses'][0] = $this->view->translate("content-add-select-finfo-classification");
 
 				foreach($futureinfoClasses as $fic) {
 					$formData['FutureinfoClasses'][$fic['id_fic']] = $fic['name_fic'];
@@ -373,167 +370,160 @@ class ContentController extends Oibs_Controller_CustomController
 				);
 
 				$formData['Divisions'] = array();
-				$formData['Divisions'][0] = $this->view->translate(
-                                    "content-add-select-division-no-industry"
-                                    );
+				$formData['Divisions'][0] = $this->view->translate("content-add-select-division-no-industry");
 
-                                    $formData['Groups'] = array();
-                                    $formData['Groups'][0] = $this->view->translate(
-                                        "content-add-select-group-no-division"
-                                        );
+				$formData['Groups'] = array();
+				$formData['Groups'][0] = $this->view->translate("content-add-select-group-no-division");
 
-                                        $formData['Classes'] = array();
-                                        $formData['Classes'][0] = $this->view->translate(
-                                        "content-add-select-class-no-group"
-                                        );
-                                    $cache->save($formData, $formDataCacheTag);
-									} 
+				$formData['Classes'] = array();
+				$formData['Classes'][0] = $this->view->translate("content-add-select-class-no-group");
+				
+				$cache->save($formData, $formDataCacheTag);
+			}
 
-								
-									$formCacheTag = 'form_'.$contentType.'_'.$this->view->language;
-									// Form for content adding, cacheing if not cached.
-									// Generate new form if is post because cache will save post parameters and fail  
-									if ($this->getRequest()->isPost()) {
-										$form = new Default_Form_AddContentForm(
-										null, $formData, $this->view->language, $contentType
-										);
-									}
-									 
-									elseif ( ! ($form = $cache->load($formCacheTag))  ) {
-										$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
-										 
-										$cache->save($form, $formCacheTag);
-									}
-									 
-                                    $this->view->form = $form;
-                                        
-                                        // Get requests
-                                        if($this->getRequest()->isPost()) {
-                                        	
-                                        	// Get content data
-                                        	$data = $this->getRequest()->getPost();
 
-                                        	// If form data is valid, handle database insertions
-                                        	if ($form->isValid($data)) {
+			$formCacheTag = 'form_'.$contentType.'_'.$this->view->language;
+			// Form for content adding, cacheing if not cached.
+			// Generate new form if is post because cache will save post parameters and fail
+			if ($this->getRequest()->isPost()) {
+				$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
+			}
 
-                                        		// If form data is going to be published
-                                        		if(isset($data['content_publish'])) {
-                                        			$data['publish'] = 1;
-                                        			$message_error = 'content-publish-not-successful';
-                                        		}
-                                        		// If form data is going to be saved
-                                        		elseif(isset($data['content_save'])) {
-                                        			$data['publish'] = 0;
-                                        			$message_error = 'content-save-not-successful';
-                                        		}
+			elseif (!($form = $cache->load($formCacheTag))  ) {
+				$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
+					
+				$cache->save($form, $formCacheTag);
+			}
+			
+			$this->view->form = $form;
 
-                                        		// Content keywords
-                                        		/* FIXED: split() is deprecated in PHP 5.3.0 -> and removed in
-                                        		 * PHP 6.0, so changed to explode(). Also trim(array) doesn't
-                                        		 * trim array values, so this is done with foreach now.
-                                        		 */
-                                        		$keywords = array();
-                                        		foreach(explode(',', $data['content_keywords']) as $keyword) {
-                                        			if(trim($keyword) != "") {
-                                        				$keywords[] = strip_tags(trim($keyword));
-                                        			}
-                                        		}
-                                        		$data['content_keywords'] = array_unique($keywords);
+			// Get requests
+			if($this->getRequest()->isPost()) {
+					
+				// Get content data
+				$data = $this->getRequest()->getPost();
 
-                                        		// Related companies
-                                        		$relatedCompanies = array();
-                                        		foreach(explode(',', $data['content_related_companies']) as $relatedCompany) {
-                                        			if(trim($relatedCompany) != "") {
-                                        				$relatedCompanies[] = strip_tags(trim($relatedCompany));
-                                        			}
-                                        		}
-                                        		$data['content_related_companies'] = array_unique($relatedCompanies);
+				// If form data is valid, handle database insertions
+				if ($form->isValid($data)) {
 
-                                        		// Get user id
-                                        		$data['User']['id_usr'] = $auth->getIdentity()->user_id;
+					// If form data is going to be published
+					if(isset($data['content_publish'])) {
+						$data['publish'] = 1;
+						$message_error = 'content-publish-not-successful';
+					}
+					// If form data is going to be saved
+					elseif(isset($data['content_save'])) {
+						$data['publish'] = 0;
+						$message_error = 'content-save-not-successful';
+					}
 
-                                        		if($data['content_division'] == 0) {
-                                        			$data['content_industry_id'] = $data['content_industry'];
-                                        		} elseif($data['content_group'] == 0) {
-                                        			$data['content_industry_id'] = $data['content_division'];
-                                        		} elseif($data['content_class'] == 0) {
-                                        			$data['content_industry_id'] = $data['content_group'];
-                                        		} elseif($data['content_class'] != 0) {
-                                        			$data['content_industry_id'] = $data['content_class'];
-                                        		}
-                                        		
-												$languages = new Default_Model_Languages();
-												
-                                        		if($data['content_language'] == 0) {
-                                        			$data['content_language'] = $this->view->language;
-                                        		}
-                                        		else {
-                                        			$data['content_language'] = $languages->getLangNameByLangId($data['content_language']);
-                                        		}
+					// Content keywords
+					/* FIXED: split() is deprecated in PHP 5.3.0 -> and removed in
+					 * PHP 6.0, so changed to explode(). Also trim(array) doesn't
+					 * trim array values, so this is done with foreach now.
+					 */
+					$keywords = array();
+					foreach(explode(',', $data['content_keywords']) as $keyword) {
+						if(trim($keyword) != "") {
+							$keywords[] = strip_tags(trim($keyword));
+						}
+					}
+					$data['content_keywords'] = array_unique($keywords);
 
-                                        		$data['files'] = $_FILES['content_file_upload']; 												
-                                        		// Add a new content
-                                        		$content = new Default_Model_Content();
-                                        		$add = $content->addContent($data);
+					// Related companies
+					$relatedCompanies = array();
+					foreach(explode(',', $data['content_related_companies']) as $relatedCompany) {
+						if(trim($relatedCompany) != "") {
+							$relatedCompanies[] = strip_tags(trim($relatedCompany));
+						}
+					}
+					$data['content_related_companies'] = array_unique($relatedCompanies);
 
-                                        		if(!$add) {
-                                        			$add_successful = false;
-                                        		} else {
-                                        			$add_successful = true;
-                                        		} // end if
+					// Get user id
+					$data['User']['id_usr'] = $auth->getIdentity()->user_id;
 
-                                        		$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                       								'action' => 'index',
-                                                        							'language' => $this->view->language),
-                                                  									'lang_default', true);
+					if($data['content_division'] == 0) {
+						$data['content_industry_id'] = $data['content_industry'];
+					} elseif($data['content_group'] == 0) {
+						$data['content_industry_id'] = $data['content_division'];
+					} elseif($data['content_class'] == 0) {
+						$data['content_industry_id'] = $data['content_group'];
+					} elseif($data['content_class'] != 0) {
+						$data['content_industry_id'] = $data['content_class'];
+					}
 
-                                        		if($add_successful) {
-                                        			if($data['publish'] == 1) {
-                                        				$url = $this->_urlHelper->url(array('content_id' => $add,
-                                         													'language' => $this->view->language), 
-                                         													'content_shortview', true);
-                                        				$this->_redirect($url);
-                                        			}
-                                        			else {
-                                        				$userpage = $this->_urlHelper->url(array('controller' => 'account',
-                                                         'action' => 'view', 
-                                                         'user' => $auth->getIdentity()->username, 
-                                                         'language' =>  $this->view->language), 
-                                                         'lang_default', true);
-                                        				$savedTab = $this->_urlHelper->url(array('controller' => 'account',
-                                                         'action' => 'view', 
-                                                         'user' => $auth->getIdentity()->username,
-                                                         'type' => 'saved',
-                                                         'language' =>  $this->view->language), 
-                                                         'lang_default', true);
+					$languages = new Default_Model_Languages();
 
-                                        				$message_ok = $this->view->translate('content-save-successful');
-                                        				$message_ok .= ' ('.$content->getContentHeaderByContentId($add).')';
-                                        				$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
-                                        				$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
-                                        				$message_ok .= ' ' . $this->view->translate('content-save-successful4');
-                                        				$message_ok .= ' <a href="'.$savedTab.'">'.$this->view->translate('content-save-successful5').'</a>.';
-                                        				$this->flash($message_ok, $url);
-                                        			}
-                                        		}
-                                        		else {
-                                        			$this->flash($message_error, $url);
-                                        		}
-                                        	}
-                                        } // end if
-                                        
-								    // populate form
-									if($backFromPreview)
-									{
-										// Get previewdata and populate it to form
-										$previewData = $previewSession->previewData;
-										$form->populate($previewData);
-										
-										// Delete session data
-										$previewSession->unsetAll();
-									}
+					if($data['content_language'] == 0) {
+						$data['content_language'] = $this->view->language;
+					}
+					else {
+						$data['content_language'] = $languages->getLangNameByLangId($data['content_language']);
+					}
 
-									
+					$data['files'] = $_FILES['content_file_upload'];
+					// Add a new content
+					$content = new Default_Model_Content();
+					$add = $content->addContent($data);
+
+					if(!$add) {
+						$add_successful = false;
+					} else {
+						$add_successful = true;
+					} // end if
+
+					$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                       	'action' => 'index',
+                                                        'language' => $this->view->language),
+                                                  		'lang_default', true);
+
+					if($add_successful) {
+						if($data['publish'] == 1) {
+							$url = $this->_urlHelper->url(array('content_id' => $add,
+                                         						'language' => $this->view->language), 
+                                         						'content_shortview', true);
+							$this->_redirect($url);
+						}
+						else {
+							$userpage = $this->_urlHelper->url(array('controller' => 'account',
+                                                         			 'action' => 'view', 
+                                                         			 'user' => $auth->getIdentity()->username, 
+			                                                         'language' =>  $this->view->language), 
+            			                                             'lang_default', true);
+							$savedTab = $this->_urlHelper->url(array('controller' => 'account',
+                                                   				     'action' => 'view', 
+                                                         			 'user' => $auth->getIdentity()->username,
+                                                         			 'type' => 'saved',
+                                                         			 'language' =>  $this->view->language), 
+                                                         			 'lang_default', true);
+
+							$message_ok = $this->view->translate('content-save-successful');
+							$message_ok .= ' ('.$content->getContentHeaderByContentId($add).')';
+							$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
+							$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
+							$message_ok .= ' ' . $this->view->translate('content-save-successful4');
+							$message_ok .= ' <a href="'.$savedTab.'">'.$this->view->translate('content-save-successful5').'</a>.';
+							$this->flash($message_ok, $url);
+						}
+					}
+					else {
+						$this->flash($message_error, $url);
+					}
+				}
+			} // end if
+
+			// populate form
+			if($backFromPreview)
+			{
+				// Get previewdata and populate it to form
+				$previewData = $previewSession->previewData;
+				$form->populate($previewData);
+
+				// Delete session data
+				$previewSession->unsetAll();
+			}
+
+
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-add-not-logged';
@@ -547,7 +537,7 @@ class ContentController extends Oibs_Controller_CustomController
 		} // end if
 	} // end of addAction()
 
-    /**
+	/**
 	 *   makelinksAction
 	 *
 	 *   Make content link to content.
@@ -556,9 +546,9 @@ class ContentController extends Oibs_Controller_CustomController
 	public function makelinksAction() {
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
+		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) .
     						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
-		
+
 		// If user has identity
 		if ($auth->hasIdentity())
 		{
@@ -586,33 +576,33 @@ class ContentController extends Oibs_Controller_CustomController
 
 				$userModel = new Default_Model_User();
 				$owner = $userModel->getContentOwner($relatestoid);
-				
+
 				$notificationsModel = new Default_Model_Notifications();
 				$notifications = $notificationsModel->getNotificationsById($owner['id_usr']);
-				
+
 				if (in_array('link', $notifications)) {
 					$cntModel = new Default_Model_Content();
 					$originalHeader = $cntModel->getContentHeaderByContentId($relatestoid);
 					$linkedHeader =  $cntModel->getContentHeaderByContentId($linkedcontentid);
-					
+
 					$senderId = $auth->getIdentity()->user_id;
-					$senderName = $auth->getIdentity()->username; 
+					$senderName = $auth->getIdentity()->username;
 					$emailNotification = new Oibs_Controller_Plugin_Email();
-	                $emailNotification->setNotificationType('link')
-	                    			   ->setSenderId($auth->getIdentity()->user_id)
-	                    			   ->setReceiverId($owner['id_usr'])
-	                    			   ->setParameter('URL', $absoluteBaseUrl."/en")
-	                    			   ->setParameter('SENDER-NAME', $senderName)
-	                    			   ->setParameter('LINKED-ID', $linkedcontentid)
-	                    			   ->setParameter('LINKED-TITLE', $linkedHeader)
-	                    			   ->setParameter('ORIGINAL-ID', $relatestoid)
-	                    			   ->setParameter('ORIGINAL-TITLE', $originalHeader);
-	                    			   
-	            	if ($emailNotification->isValid()) {
-	            		$emailNotification->send();
-	            	} else {
-	            		//echo $emailNotification->getErrorMessage(); die;
-	            	}
+					$emailNotification->setNotificationType('link')
+					->setSenderId($auth->getIdentity()->user_id)
+					->setReceiverId($owner['id_usr'])
+					->setParameter('URL', $absoluteBaseUrl."/en")
+					->setParameter('SENDER-NAME', $senderName)
+					->setParameter('LINKED-ID', $linkedcontentid)
+					->setParameter('LINKED-TITLE', $linkedHeader)
+					->setParameter('ORIGINAL-ID', $relatestoid)
+					->setParameter('ORIGINAL-TITLE', $originalHeader);
+
+					if ($emailNotification->isValid()) {
+						$emailNotification->send();
+					} else {
+						//echo $emailNotification->getErrorMessage(); die;
+					}
 				}
 
 
@@ -637,12 +627,12 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 
-    /**
+	/**
 	 *   removelinksAction
 	 *
 	 *   Remove content link from content.
 	 *
-     *   @author Mikko Korpinen
+	 *   @author Mikko Korpinen
 	 */
 	public function removelinksAction() {
 		// Get authentication
@@ -663,17 +653,17 @@ class ContentController extends Oibs_Controller_CustomController
 			$linkedcontentid = isset($params['childid'])
 			? $params['childid'] : '';
 
-            $model_cnt_has_cnt = new Default_Model_ContentHasContent();
-            $model_cnt_has_cnt->removeContentFromContent($relatestoid, $linkedcontentid);
+			$model_cnt_has_cnt = new Default_Model_ContentHasContent();
+			$model_cnt_has_cnt->removeContentFromContent($relatestoid, $linkedcontentid);
 
-            $message = 'content-unlink-successful';
+			$message = 'content-unlink-successful';
 
-            $url = $this->_urlHelper->url(array('controller' => 'msg',
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                                 'lang_default', true);
 
-            $this->flash($message, $url);
+			$this->flash($message, $url);
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -691,9 +681,9 @@ class ContentController extends Oibs_Controller_CustomController
 	 *   linkAction
 	 *
 	 *   Get user contents which are related to particular content type
-     *
-     *   @author ???
-     *   @author 2010 Mikko Korpinen
+	 *
+	 *   @author ???
+	 *   @author 2010 Mikko Korpinen
 	 *
 	 */
 	public function linkAction() {
@@ -724,8 +714,8 @@ class ContentController extends Oibs_Controller_CustomController
 
 				$contents = array();
 
-                // If user have not this types content then set false
-                $hasUserContents = true;
+				// If user have not this types content then set false
+				$hasUserContents = true;
 
 				if(!$this->checkIfArrayHasKeyWithValue($userContents, "id_cty_cnt", $id_cty)) {
 					$this->view->linkingContentType = $contenttype;
@@ -733,7 +723,7 @@ class ContentController extends Oibs_Controller_CustomController
 				} else {
 					foreach($userContents as $content) {
 						if(!$model_cnt_has_cnt->checkIfContentHasContent($relatestoid, $content['id_cnt']) &&
-                           !$model_cnt_has_cnt->checkIfContentHasContent($content['id_cnt'], $relatestoid)) {
+						!$model_cnt_has_cnt->checkIfContentHasContent($content['id_cnt'], $relatestoid)) {
 							if($content['id_cty_cnt'] == $id_cty && $content['id_cnt'] != $relatestoid) {
 								$contents[] = $content;
 							}
@@ -742,7 +732,7 @@ class ContentController extends Oibs_Controller_CustomController
 					$this->view->relatesToId = $relatestoid;
 					$this->view->linkingContentType = $contenttype;
 					$this->view->contents = $contents;
-                    $this->view->hasUserContents = $hasUserContents;
+					$this->view->hasUserContents = $hasUserContents;
 				}
 			}
 		} else {
@@ -757,15 +747,15 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 
-    /**
+	/**
 	 *   unlinkAction
 	 *
 	 *   Get user contents which are related to particular content
-     *
-     *   @author 2010 Mikko Korpinen
+	 *
+	 *   @author 2010 Mikko Korpinen
 	 *
 	 */
-    public function unlinkAction() {
+	public function unlinkAction() {
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
 		// If user has identity
@@ -777,29 +767,29 @@ class ContentController extends Oibs_Controller_CustomController
 			$relatestoid = isset($params['relatestoid'])
 			? $params['relatestoid'] : '';
 
-            $contenttype = '';
-            $contents = array();
+			$contenttype = '';
+			$contents = array();
 
-            $model_content = new Default_Model_Content();
-            $contentexists = $model_content->checkIfContentExists($relatestoid);
+			$model_content = new Default_Model_Content();
+			$contentexists = $model_content->checkIfContentExists($relatestoid);
 
-            if ($contentexists) {
-                $relatesToContent = $model_content->getDataAsSimpleArray($relatestoid);
-                $this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
+			if ($contentexists) {
+				$relatesToContent = $model_content->getDataAsSimpleArray($relatestoid);
+				$this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
 
-                $model_content_types = new Default_Model_ContentTypes();
-                $model_cnt_has_cnt = new Default_Model_ContentHasContent();
+				$model_content_types = new Default_Model_ContentTypes();
+				$model_cnt_has_cnt = new Default_Model_ContentHasContent();
 
-                $contenttype = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
+				$contenttype = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
 
-                $contentContents = $model_cnt_has_cnt->getContentContents($relatestoid);
+				$contentContents = $model_cnt_has_cnt->getContentContents($relatestoid);
 
-                $id_usr = $auth->getIdentity()->user_id;
-            }
-            $this->view->contentexists = $contentexists;
-            $this->view->relatesToId = $relatestoid;
-            $this->view->linkingContentType = $contenttype;
-            $this->view->contents = $contentContents;
+				$id_usr = $auth->getIdentity()->user_id;
+			}
+			$this->view->contentexists = $contentexists;
+			$this->view->relatesToId = $relatestoid;
+			$this->view->linkingContentType = $contenttype;
+			$this->view->contents = $contentContents;
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -821,7 +811,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$model_content_types = new Default_Model_ContentTypes();
 		$model_content = new Default_Model_Content();
 		$model_cnt_has_usr = new Default_Model_ContentHasUser();
-        $model_cnt_has_cnt = new Default_Model_contentHasContent();
+		$model_cnt_has_cnt = new Default_Model_contentHasContent();
 
 		$content_types = $model_content_types->getAllNamesAndIds();
 
@@ -857,9 +847,9 @@ class ContentController extends Oibs_Controller_CustomController
 				$linkedContent = $model_content->getContentRow($linkedcontentid);
 				if($linkedContent['published_cnt'] != 0) {
 					if($model_content->checkIfContentExists($linkedcontentid)) {
-                        // User can not link content with themselves
-                        if ($relatestoid == $linkedcontentid) {
-                            $message = 'content-link-themselves';
+						// User can not link content with themselves
+						if ($relatestoid == $linkedcontentid) {
+							$message = 'content-link-themselves';
 
 							$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                                 'action' => 'index',
@@ -867,8 +857,8 @@ class ContentController extends Oibs_Controller_CustomController
                                                           'lang_default', true);
 
 							$this->flash($message, $url);
-                        }
-                        
+						}
+
 						$auth = Zend_Auth::getInstance();
 						$id_usr = $auth->getIdentity()->user_id;
 
@@ -899,9 +889,9 @@ class ContentController extends Oibs_Controller_CustomController
 					$message = 'content-link-not-published';
 
 					$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    'action' => 'index', 
-                                                    'language' => $this->view->language), 
-                                              'lang_default', true);
+                                                    	'action' => 'index', 
+                                                   	 	'language' => $this->view->language), 
+                                              			'lang_default', true);
 
 					$this->flash($message, $url);
 				}
@@ -913,7 +903,7 @@ class ContentController extends Oibs_Controller_CustomController
 				$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                     'action' => 'index', 
                                                     'language' => $this->view->language), 
-                                              'lang_default', true);
+                                              		'lang_default', true);
 
 				$this->flash($message, $url);
 			} elseif($invalid_relatestoid) {
@@ -922,7 +912,7 @@ class ContentController extends Oibs_Controller_CustomController
 				$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                     'action' => 'index', 
                                                     'language' => $this->view->language), 
-                                              'lang_default', true);
+                                              		'lang_default', true);
 
 				$this->flash($message, $url);
 			}
@@ -933,16 +923,16 @@ class ContentController extends Oibs_Controller_CustomController
 	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-		
+
 		// If user has authenticated
 		if($auth->hasIdentity())
-		{			
+		{
 			// Get user data
 			$userId = $auth->getIdentity()->user_id;
 			$userName = $auth->getIdentity()->username;
-	        $userModel = new Default_Model_User();
-	        $userData = $userModel->getSimpleUserDataById($userId);
-			
+			$userModel = new Default_Model_User();
+			$userData = $userModel->getSimpleUserDataById($userId);
+
 			// Get preview data from session
 			$previewSession = new Zend_Session_Namespace('contentpreview');
 			$postSession = $previewSession->previewData;
@@ -952,7 +942,7 @@ class ContentController extends Oibs_Controller_CustomController
 			{
 				// Get POST data
 				$postData = $this->getRequest()->getPost();
-				
+
 				// If "edit" button was pushed
 				$editMode = isset($postData['content_edit']) ? 1:0;
 				if($editMode) {
@@ -960,27 +950,27 @@ class ContentController extends Oibs_Controller_CustomController
 					//$contentModel = new Default_Model_ContentTypes();
 					//$contentType = $contentModel->getTypeById($postSession['content_type']);
 					$backToUrl = $previewSession->backToUrl;
-					
+
 					/*
-					$url = $this->_urlHelper->url(array('contenttype' => $contentType,
-                                                  		'language' => $this->view->language),
-                                                  		'addcnttype', true);
-					//Zend_Debug::dump($url);
-					*/
+					 $url = $this->_urlHelper->url(array('contenttype' => $contentType,
+					 'language' => $this->view->language),
+					 'addcnttype', true);
+					 //Zend_Debug::dump($url);
+					 */
 					$this->_redirect($backToUrl);
 				}
 			}
-			
+
 			// Set today's date and time
 			$today = date('Y-m-d H:i:m');
-			
-	        // Get content type of the specific content viewed
-	        $contentTypesModel = New Default_Model_ContentTypes();
-	        $contentType = $contentTypesModel->getTypeById($postSession['content_type']);
-			
+
+			// Get content type of the specific content viewed
+			$contentTypesModel = New Default_Model_ContentTypes();
+			$contentType = $contentTypesModel->getTypeById($postSession['content_type']);
+
 			// Reformat preview data
-			$contentData = 
-				array('id_cnt' 					=> 'preview',
+			$contentData =
+			array('id_cnt' 					=> 'preview',
 					  'id_cty_cnt' 				=> htmlentities($postSession['content_type']),
 					  'title_cnt' 				=> htmlentities($postSession['content_header']),
 					  'lead_cnt' 				=> htmlentities($postSession['content_textlead']),
@@ -1000,56 +990,56 @@ class ContentController extends Oibs_Controller_CustomController
 					  'key_cty' 				=> htmlentities($postSession['content_type']),
 					  'name_cty'				=> $contentType
 			);
-			
+
 			// Reformat tags
 			$rawtags = explode(",", $postSession['content_keywords']);
 			foreach($rawtags as $rawtag)
-				$tags[count($tags)]['name_tag'] = $rawtag;
-	        
+			$tags[count($tags)]['name_tag'] = $rawtag;
+
 			// Get form
-	        $form = new Default_Form_PreviewContentForm();
-			
-	        // Inject previewdata to view
-	        $this->view->previewMode		= 1;
-	        $this->view->files 				= null;
-	        $this->view->id					= 'preview';
-	        //$this->view->industries         = $industries;
-	        //$this->view->userImage          = $userImage;
-	        //$this->view->commentPaginator   = $paginator;
-	        //$this->view->commentData        = $commentsSorted;
+			$form = new Default_Form_PreviewContentForm();
+
+			// Inject previewdata to view
+			$this->view->previewMode		= 1;
+			$this->view->files 				= null;
+			$this->view->id					= 'preview';
+			//$this->view->industries         = $industries;
+			//$this->view->userImage          = $userImage;
+			//$this->view->commentPaginator   = $paginator;
+			//$this->view->commentData        = $commentsSorted;
 			//$this->view->user_can_comment   = $user_can_comment;
-	        $this->view->contentData        = $contentData;
-	        //$this->view->modified			= $contentData['modified_cnt'];
-	        $this->view->userData           = $userData;
-	        //$this->view->moreFromUser       = $moreFromUser;
-	        $this->view->views              = $contentData['views_cnt'];
-	        //$this->view->rating             = $rating;
-	        $this->view->tags               = $tags;
-	        //$this->view->links              = $links;
-	        //$this->view->parents            = $parents;
-	        //$this->view->parent_siblings    = $parent_siblings;
-	        //$this->view->children           = $children;
-	        //$this->view->children_siblings  = $children_siblings;
-	        //$this->view->rivals             = $rivals;
-	        //$this->view->comments           = $commentCount;
-	        $this->view->contentType        = $contentType;
-	        //$this->view->count              = $count;
-	        $this->view->form				= $form;
-	        //$this->view->favourite			= $favourite;
-	        
-	        // Inject title to view
-	        $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
-	        //$this->renderScript('view/index.phtml');
+			$this->view->contentData        = $contentData;
+			//$this->view->modified			= $contentData['modified_cnt'];
+			$this->view->userData           = $userData;
+			//$this->view->moreFromUser       = $moreFromUser;
+			$this->view->views              = $contentData['views_cnt'];
+			//$this->view->rating             = $rating;
+			$this->view->tags               = $tags;
+			//$this->view->links              = $links;
+			//$this->view->parents            = $parents;
+			//$this->view->parent_siblings    = $parent_siblings;
+			//$this->view->children           = $children;
+			//$this->view->children_siblings  = $children_siblings;
+			//$this->view->rivals             = $rivals;
+			//$this->view->comments           = $commentCount;
+			$this->view->contentType        = $contentType;
+			//$this->view->count              = $count;
+			$this->view->form				= $form;
+			//$this->view->favourite			= $favourite;
+
+			// Inject title to view
+			$this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
+
 		}
 		else
 		{
 			$message = 'content-preview-not-logged-in';
-	
+
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
 	                                            'action' => 'index', 
 	                                            'language' => $this->view->language), 
 	                                            'lang_default', true);
-	
+
 			$this->flash($message, $url);
 		}
 	}
@@ -1072,7 +1062,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 			// Get session data
 			$previewSession = new Zend_Session_Namespace('contentpreview');
-			
+
 			// If preview
 			$backFromPreview = isset($previewSession->backFromPreview) ? $previewSession->backFromPreview : 0;
 			$preview = isset($params['preview']) ? 1:0;
@@ -1082,14 +1072,14 @@ class ContentController extends Oibs_Controller_CustomController
 				$previewSession->previewData = $params;
 				$backToUrl = $this->getRequest()->getRequestUri();
 				$previewSession->backToUrl = $backToUrl;
-				
+
 				$url = $this->_urlHelper->url(array('controller' => 'content',
 													'action' => 'preview',
 													'language' => $this->view->language),
 													'lang_default', true);
 				$this->_redirect($url);
 			}
-			
+
 			// Get content type
 			$contentId = isset($params['content_id'])
 			? $params['content_id'] : 0;
@@ -1098,7 +1088,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 			$cntHasUsr = New Default_Model_ContentHasUser();
 			$userIsOwner = $cntHasUsr->contentHasOwner($userId, $contentId);
-			
+
 			if($userIsOwner) {
 				if($contentId != 0) {
 					$content = New Default_Model_Content();
@@ -1120,7 +1110,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 					$tags = "";
 					$tagCount = count($keywords);
-					 
+
 					for($i = 0; $i < $tagCount; $i++) {
 						$tags .= $keywords[$i]['name_tag'];
 						if ($i != $tagCount - 1) {
@@ -1236,210 +1226,202 @@ class ContentController extends Oibs_Controller_CustomController
 
 					// Adding all divisions to form
 					$formData['Divisions'] = array();
-					$formData['Divisions'][0] = $this->view->translate(
-                                                "content-add-select-division-no-industry"
-                                                );
+					$formData['Divisions'][0] = $this->view->translate("content-add-select-division-no-industry");
 
-                                                if($industryIds[0] != 0) {
-                                                	$divisions = $modelIndustries
-                                                	->getNamesAndIdsById($industryIds[0], $idLngInd);
+					if($industryIds[0] != 0) {
+						$divisions = $modelIndustries
+						->getNamesAndIdsById($industryIds[0], $idLngInd);
 
-                                                	foreach($divisions as $div) {
-                                                		$formData['Divisions'][$div['id_ind']] = $div['name_ind'];
-                                                	} // end foreach
-                                                }
+						foreach($divisions as $div) {
+							$formData['Divisions'][$div['id_ind']] = $div['name_ind'];
+						} // end foreach
+					}
 
-                                                // Adding all groups to form
-                                                $formData['Groups'] = array();
-                                                $formData['Groups'][0] = $this->view->translate(
-                                                "content-add-select-group-no-division"
-                                                );
-                                                if($industryIds[1] != 0) {
-                                                	$groups = $modelIndustries
-                                                	->getNamesAndIdsById($industryIds[1], $idLngInd);
+					// Adding all groups to form
+					$formData['Groups'] = array();
+					$formData['Groups'][0] = $this->view->translate("content-add-select-group-no-division");
+					if($industryIds[1] != 0) {
+						$groups = $modelIndustries->getNamesAndIdsById($industryIds[1], $idLngInd);
 
-                                                	foreach($groups as $grp) {
-                                                		$formData['Groups'][$grp['id_ind']] = $grp['name_ind'];
-                                                	} // end foreach
-                                                }
+						foreach($groups as $grp) {
+							$formData['Groups'][$grp['id_ind']] = $grp['name_ind'];
+						} // end foreach
+					}
 
-                                                $formData['Classes'] = array();
-                                                $formData['Classes'][0] = $this->view->translate(
-                                                "content-add-select-class-no-group"
-                                                );
+					$formData['Classes'] = array();
+					$formData['Classes'][0] = $this->view->translate("content-add-select-class-no-group");
 
-                                                // If there's no group selected
-                                                if($industryIds[2] != 0) {
-                                                	$classes = $modelIndustries
-                                                	->getNamesAndIdsById($industryIds[2], $idLngInd);
+					// If there's no group selected
+					if($industryIds[2] != 0) {
+						$classes = $modelIndustries->getNamesAndIdsById($industryIds[2], $idLngInd);
 
-                                                	foreach($classes as $class) {
-                                                		$formData['Classes'][$class['id_ind']] = $class['name_ind'];
-                                                	} // end foreach
-                                                }
+						foreach($classes as $class) {
+							$formData['Classes'][$class['id_ind']] = $class['name_ind'];
+						} // end foreach
+					}
 
-                                                $modelContentTypes = new Default_Model_ContentTypes();
-                                                $contentType = $modelContentTypes->getTypeById($data['id_cty_cnt']);
-                                                $this->view->short_contenttype = $contentType;
+					$modelContentTypes = new Default_Model_ContentTypes();
+					$contentType = $modelContentTypes->getTypeById($data['id_cty_cnt']);
+					$this->view->short_contenttype = $contentType;
 
-                                                $title_cnt = $content->getContentHeaderByContentId($data['id_cnt']);
+					$title_cnt = $content->getContentHeaderByContentId($data['id_cnt']);
 
-                                                $this->view->contentHeader = $title_cnt;
-                                                
-                                                // Get contents filenames from database
-												$filesModel = new Default_Model_Files();
-												$filenames = $filesModel->getFilenamesByCntId($contentId);
-                                                $formData['filenames'] = $filenames;
-                                                
-												// Form for content adding
-                                                $form = new Default_Form_EditContentForm(null, $formData, $contentId, $contentType, $this->view->language);
-                                                $form->populate($formData);
-                                                $this->view->form = $form;
-                                                $url = $this->_urlHelper->url(array('controller' => 'msg',
+					$this->view->contentHeader = $title_cnt;
+
+					// Get contents filenames from database
+					$filesModel = new Default_Model_Files();
+					$filenames = $filesModel->getFilenamesByCntId($contentId);
+					$formData['filenames'] = $filenames;
+
+					// Form for content adding
+					$form = new Default_Form_EditContentForm(null, $formData, $contentId, $contentType, $this->view->language);
+					$form->populate($formData);
+					$this->view->form = $form;
+					$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                         'action' => 'index', 
                                                         'language' => $this->view->language),
-                                                  'lang_default', true);
-                                                
-												// populate form
-												if($backFromPreview)
-												{
-													// Get previewdata and populate it to form
-													$previewData = $previewSession->previewData;
-													$form->populate($previewData);
-													
-													// Delete session data
-													$previewSession->unsetAll();
-												}
+                                                  		'lang_default', true);
 
-                                                // If posted
-                                                if($this->getRequest()->isPost()) {
-                                                	// Get content data
-                                                	$data = $this->getRequest()->getPost();
-                                                	// Content id
-                                                	$data['content_id'] = $contentId;
+					// populate form
+					if($backFromPreview)
+					{
+						// Get previewdata and populate it to form
+						$previewData = $previewSession->previewData;
+						$form->populate($previewData);
 
-                                                	// If form data is valid, handle database insertions
-                                                	if($form->isValid($data)) {
-                                                		// If form data is going to be published
+						// Delete session data
+						$previewSession->unsetAll();
+					}
 
-                                                		if(isset($data['content_publish'])) {
-                                                			$data['publish'] = 1;
-                                                			$message_error = 'content-publish-not-successful';
-                                                		}
-                                                		// If form data is going to be saved
-                                                		elseif(isset($data['content_save'])) {
-                                                			$data['publish'] = 0;
-                                                			$message_error = 'content-save-not-successful';
-                                                		}
+					// If posted
+					if($this->getRequest()->isPost()) {
+						// Get content data
+						$data = $this->getRequest()->getPost();
+						// Content id
+						$data['content_id'] = $contentId;
 
-                                                		// Content keywords
-                                                		/* FIXED: split() is deprecated in PHP 5.3.0 -> and removed in
-                                                		 * PHP 6.0, so changed to explode(). Also trim(array) doesn't
-                                                		 * trim array values, so this is done with foreach now.
-                                                		 */
-                                                		$keywords = array();
-                                                		foreach(explode(',', $data['content_keywords']) as $keyword) {
-                                                			if(trim($keyword) != "") {
-                                                				$keywords[] = strip_tags(trim($keyword));
-                                                			}
-                                                		}
+						// If form data is valid, handle database insertions
+						if($form->isValid($data)) {
+							// If form data is going to be published
 
-                                                		$data['content_keywords'] = array_unique($keywords);
+							if(isset($data['content_publish'])) {
+								$data['publish'] = 1;
+								$message_error = 'content-publish-not-successful';
+							}
+							// If form data is going to be saved
+							elseif(isset($data['content_save'])) {
+								$data['publish'] = 0;
+								$message_error = 'content-save-not-successful';
+							}
 
-                                                		// Related companies
-                                                		$relatedCompanies = array();
-                                                		foreach(explode(',', $data['content_related_companies']) as $relatedCompany) {
-                                                			if(trim($relatedCompany) != "") {
-                                                				$relatedCompanies[] = strip_tags(trim($relatedCompany));
-                                                			}
-                                                		}
+							// Content keywords
+							/* FIXED: split() is deprecated in PHP 5.3.0 -> and removed in
+							 * PHP 6.0, so changed to explode(). Also trim(array) doesn't
+							 * trim array values, so this is done with foreach now.
+							 */
+							$keywords = array();
+							foreach(explode(',', $data['content_keywords']) as $keyword) {
+								if(trim($keyword) != "") {
+									$keywords[] = strip_tags(trim($keyword));
+								}
+							}
 
-                                                		$data['content_related_companies'] = array_unique($relatedCompanies);
+							$data['content_keywords'] = array_unique($keywords);
 
-                                                		// Get user id
-                                                		$data['User']['id_usr'] = $auth->getIdentity()->user_id;
+							// Related companies
+							$relatedCompanies = array();
+							foreach(explode(',', $data['content_related_companies']) as $relatedCompany) {
+								if(trim($relatedCompany) != "") {
+									$relatedCompanies[] = strip_tags(trim($relatedCompany));
+								}
+							}
 
-                                                		if($data['content_division'] == 0) {
-                                                			$data['content_industry_id'] = $data['content_industry'];
-                                                		} elseif($data['content_group'] == 0) {
-                                                			$data['content_industry_id'] = $data['content_division'];
-                                                		} elseif($data['content_class'] == 0) {
-                                                			$data['content_industry_id'] = $data['content_group'];
-                                                		} elseif($data['content_class'] != 0) {
-                                                			$data['content_industry_id'] = $data['content_class'];
-                                                		}
+							$data['content_related_companies'] = array_unique($relatedCompanies);
 
-                                                		if($data['content_language'] == 0) {
-                                                			$data['content_language'] = $this->view->language;
-                                                		} else {
-                                                			$data['content_language'] = $languages->getLangNameByLangId($data['content_language']);
-                                                		}
+							// Get user id
+							$data['User']['id_usr'] = $auth->getIdentity()->user_id;
 
-                                                		//echo "<pre>"; print_r($data); echo "</pre>"; die();
+							if($data['content_division'] == 0) {
+								$data['content_industry_id'] = $data['content_industry'];
+							} elseif($data['content_group'] == 0) {
+								$data['content_industry_id'] = $data['content_division'];
+							} elseif($data['content_class'] == 0) {
+								$data['content_industry_id'] = $data['content_group'];
+							} elseif($data['content_class'] != 0) {
+								$data['content_industry_id'] = $data['content_class'];
+							}
 
-                                                		$data['files'] = $_FILES['content_file_upload'];
-                                                		
-                                                		// Edit content
-                                                		$content = new Default_Model_Content();
-                                                		$edit = $content->editContent($data);
-														
-                                                		$url = $this->_urlHelper->url(array('controller' => 'msg',
+							if($data['content_language'] == 0) {
+								$data['content_language'] = $this->view->language;
+							} else {
+								$data['content_language'] = $languages->getLangNameByLangId($data['content_language']);
+							}
+
+							//echo "<pre>"; print_r($data); echo "</pre>"; die();
+
+							$data['files'] = $_FILES['content_file_upload'];
+
+							// Edit content
+							$content = new Default_Model_Content();
+							$edit = $content->editContent($data);
+
+							$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                                 'action' => 'index',
                                                                 'language' => $this->view->language),
                                                           		'lang_default', true);
 
-                                                		if($edit) {
-                                                			$favourite = new Default_Model_UserHasFavourites();
-                                                			$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
-                                                			
-                                                			if($data['publish'] == 1) {
-                                                				$url = $this->_urlHelper->url(array('content_id' => $edit,
+							if($edit) {
+								$favourite = new Default_Model_UserHasFavourites();
+								$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
+
+								if($data['publish'] == 1) {
+									$url = $this->_urlHelper->url(array('content_id' => $edit,
                                                                         'language' => $this->view->language), 
                                                                   'content_shortview', true);
-                                                				$this->_redirect($url);
-                                                			} else {
-                                                				$message_ok = $this->view->translate('content-save-successful');
-                                                				$message_ok .= ' ('.$content->getContentHeaderByContentId($edit).')';
-                                                				$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
-                                                				$userpage = $this->_urlHelper->url(array('controller' => 'account',
+									$this->_redirect($url);
+								} else {
+									$message_ok = $this->view->translate('content-save-successful');
+									$message_ok .= ' ('.$content->getContentHeaderByContentId($edit).')';
+									$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
+									$userpage = $this->_urlHelper->url(array('controller' => 'account',
                                                                              'action' => 'view', 
                                                                              'user' => $auth->getIdentity()->username, 
                                                                              'language' =>  $this->view->language), 
                                                                        'lang_default', true);
-                                                				$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
-                                                				$message_ok .= ' ' . $this->view->translate('content-save-successful4');
-                                                				$this->flash($message_ok, $url);
-                                                			}
-                                                		} else {
-                                                			$this->flash($message_error, $url);
-                                                		}
-                                                	} else {
-                                                		// What is this?
-                                                		//Zend_Debug::dump($form); die;
-                                                	}
+									$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
+									$message_ok .= ' ' . $this->view->translate('content-save-successful4');
+									$this->flash($message_ok, $url);
+								}
+							} else {
+								$this->flash($message_error, $url);
+							}
+						} else {
+							// What is this?
+							//Zend_Debug::dump($form); die;
+						}
 
-                                                	/*
-                                                	 // Content keywords
-                                                	 $keywords = split(', ', trim($data['content_keywords']));
-                                                	 $data['content_keywords'] = array_unique($keywords);
+						/*
+						 // Content keywords
+						 $keywords = split(', ', trim($data['content_keywords']));
+						 $data['content_keywords'] = array_unique($keywords);
 
-                                                	 if($data['content_group'] == 0) {
-                                                	 $data['content_industry_id'] = $data['content_division'];
-                                                	 } elseif($data['content_class'] == 0) {
-                                                	 $data['content_industry_id'] = $data['content_group'];
-                                                	 } elseif($data['content_class'] != 0) {
-                                                	 $data['content_industry_id'] = $data['content_class'];
-                                                	 }
+						 if($data['content_group'] == 0) {
+						 $data['content_industry_id'] = $data['content_division'];
+						 } elseif($data['content_class'] == 0) {
+						 $data['content_industry_id'] = $data['content_group'];
+						 } elseif($data['content_class'] != 0) {
+						 $data['content_industry_id'] = $data['content_class'];
+						 }
 
-                                                	 // Update the edited content to database
-                                                	 $content = new Default_Model_Content();
-                                                	 if($content->editContent($data)) {
-                                                	 $message = 'content-edit-successful';
-                                                	 } else {
-                                                	 $message = 'content-edit-not-successful';
-                                                	 }
-                                                	 $this->flash($message, $url);*/
-                                                }
+						 // Update the edited content to database
+						 $content = new Default_Model_Content();
+						 if($content->editContent($data)) {
+						 $message = 'content-edit-successful';
+						 } else {
+						 $message = 'content-edit-not-successful';
+						 }
+						 $this->flash($message, $url);*/
+					}
 				} else {
 					$message = 'content-edit-no-id';
 					$this->flash($message, $url);
@@ -1461,92 +1443,92 @@ class ContentController extends Oibs_Controller_CustomController
 	 *   Remove content
 	 *   @author ???? ? ? & 2010 Mikko Korpinen
 	 */
-    public function removeAction()
-    {
-        $params = $this->getRequest()->getParams();
-        $contentId = (int)$params['content_id'];
+	public function removeAction()
+	{
+		$params = $this->getRequest()->getParams();
+		$contentId = (int)$params['content_id'];
 
-        $auth = Zend_Auth::getInstance();
+		$auth = Zend_Auth::getInstance();
 
-        // Get cache from registry
-        $cache = Zend_Registry::get('cache');
-        // Recent posts id
-        $cachePosts = 'IndexPosts_' . $this->view->language;
+		// Get cache from registry
+		$cache = Zend_Registry::get('cache');
+		// Recent posts id
+		$cachePosts = 'IndexPosts_' . $this->view->language;
 
-        if ($auth->hasIdentity()) {
-            $userId = $auth->getIdentity()->user_id;
+		if ($auth->hasIdentity()) {
+			$userId = $auth->getIdentity()->user_id;
 
-            $content = new Default_Model_Content();
-            $url = $this->_urlHelper->url(array('controller' => 'msg',
+			$content = new Default_Model_Content();
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                                 'lang_default', true);
 
-            if($content->checkIfContentExists($contentId)) {
-                $cntHasUsr = new Default_Model_ContentHasUser();
-                $userIsOwner = $cntHasUsr->contentHasOwner($userId, $contentId);
+			if($content->checkIfContentExists($contentId)) {
+				$cntHasUsr = new Default_Model_ContentHasUser();
+				$userIsOwner = $cntHasUsr->contentHasOwner($userId, $contentId);
 
-                if($userIsOwner) {
+				if($userIsOwner) {
 
-                    $contentRemoveSuccessful = true;
+					$contentRemoveSuccessful = true;
 
-                    // Remove content and all dependign stuff
-                    $content = new Default_Model_Content();
-                    $contentRemoveChecker = $content->removeContentAndDepending($contentId);
+					// Remove content and all dependign stuff
+					$content = new Default_Model_Content();
+					$contentRemoveChecker = $content->removeContentAndDepending($contentId);
 
-                    // Remove recent post cache
-                    $cache->remove($cachePosts);
+					// Remove recent post cache
+					$cache->remove($cachePosts);
 
 
-                    foreach($contentRemoveChecker as $crc) {
-                        if (!crc) {
-                            $contentRemoveSuccessful = false;
-                            break;
-                        }
-                    }
+					foreach($contentRemoveChecker as $crc) {
+						if (!crc) {
+							$contentRemoveSuccessful = false;
+							break;
+						}
+					}
 
-                    if($contentRemoveSuccessful == true) {
-                        $message = 'content-remove-successful';
-                        $this->flash($message, $url);
-                    } else {
-                        $message = $this->view->translate('content-remove-not-successful') . '<br />';
-                        // User don't have to see these explanations
-                        /*
-                        if(!$contentRemoveChecker['removeContentFromCampaign']) $message .= $this->view->translate('content-remove-removeContentFromCampaign') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFromContent']) $message .= $this->view->translate('content-remove-removeContentFromContent-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFromFutureinfoClasses']) $message .= $this->view->translate('content-remove-removeContentFromFutureinfoClasses-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFromIndustries']) $message .= $this->view->translate('content-remove-removeContentFromIndustries-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFromInnovationTypes']) $message .= $this->view->translate('content-remove-removeContentFromInnovationTypes-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFromRelatedCompanies']) $message .= $this->view->translate('content-remove-removeContentFromRelatedCompanies-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentRelatedCompanies']) $message .= $this->view->translate('content-remove-removeContentRelatedCompanies-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFromTags']) $message .= $this->view->translate('content-remove-removeContentFromTags-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentTags']) $message .= $this->view->translate('content-remove-removeContentTags-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFromUser']) $message .= $this->view->translate('content-remove-removeContentFromUser-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentViews']) $message .= $this->view->translate('content-remove-removeContentViews-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFlags']) $message .= $this->view->translate('content-remove-removeContentFlags-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentCommentFlags']) $message .= $this->view->translate('content-remove-removeContentCommentFlags-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentRatings']) $message .= $this->view->translate('content-remove-removeContentRatings-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentFiles']) $message .= $this->view->translate('content-remove-removeContentFiles-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeUserHasFavorites']) $message .= $this->view->translate('content-remove-removeUserHasFavorites-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContent']) $message .= $this->view->translate('content-remove-removeContent-content-not-successful') . '<br />';
-                        if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';
-                         */
+					if($contentRemoveSuccessful == true) {
+						$message = 'content-remove-successful';
+						$this->flash($message, $url);
+					} else {
+						$message = $this->view->translate('content-remove-not-successful') . '<br />';
+						// User don't have to see these explanations
+						/*
+						 if(!$contentRemoveChecker['removeContentFromCampaign']) $message .= $this->view->translate('content-remove-removeContentFromCampaign') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFromContent']) $message .= $this->view->translate('content-remove-removeContentFromContent-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFromFutureinfoClasses']) $message .= $this->view->translate('content-remove-removeContentFromFutureinfoClasses-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFromIndustries']) $message .= $this->view->translate('content-remove-removeContentFromIndustries-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFromInnovationTypes']) $message .= $this->view->translate('content-remove-removeContentFromInnovationTypes-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFromRelatedCompanies']) $message .= $this->view->translate('content-remove-removeContentFromRelatedCompanies-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentRelatedCompanies']) $message .= $this->view->translate('content-remove-removeContentRelatedCompanies-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFromTags']) $message .= $this->view->translate('content-remove-removeContentFromTags-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentTags']) $message .= $this->view->translate('content-remove-removeContentTags-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFromUser']) $message .= $this->view->translate('content-remove-removeContentFromUser-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentViews']) $message .= $this->view->translate('content-remove-removeContentViews-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFlags']) $message .= $this->view->translate('content-remove-removeContentFlags-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentCommentFlags']) $message .= $this->view->translate('content-remove-removeContentCommentFlags-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentRatings']) $message .= $this->view->translate('content-remove-removeContentRatings-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentFiles']) $message .= $this->view->translate('content-remove-removeContentFiles-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeUserHasFavorites']) $message .= $this->view->translate('content-remove-removeUserHasFavorites-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContent']) $message .= $this->view->translate('content-remove-removeContent-content-not-successful') . '<br />';
+						 if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';
+						 */
 
-                        $this->flash($message, $url);
-                    }
-                } else {
-                    $message = 'content-remove-not-owner';
-                    $this->flash($message, $url);
-                }
-            } else {
-                $message = 'content-remove-invalid-content-id';
-                $this->flash($message, $url);
-            }
-        } else {
-            $message = 'content-remove-not-authed';
-            $this->flash($message, $url);
-        }
-    } // end of removeAction
+						$this->flash($message, $url);
+					}
+				} else {
+					$message = 'content-remove-not-owner';
+					$this->flash($message, $url);
+				}
+			} else {
+				$message = 'content-remove-invalid-content-id';
+				$this->flash($message, $url);
+			}
+		} else {
+			$message = 'content-remove-not-authed';
+			$this->flash($message, $url);
+		}
+	} // end of removeAction
 
 	/**
 	 *   publishAction
@@ -1576,13 +1558,13 @@ class ContentController extends Oibs_Controller_CustomController
                                           'lang_default', true);
 
 			if($content->checkIfContentExists($contentId)) {
-				
+
 				//$contentUrl = $this->baseUrl ."/". $this->view->language ."/view/".$contentId;
 				$contentUrl = $this->_urlHelper->url(array('controller' => 'view',
                                                 'action' => $contentId, 
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-				
+
 				$cntHasUsr = new Default_Model_ContentHasUser();
 				$userIsOwner = $cntHasUsr->contentHasOwner($userId, $contentId);
 
