@@ -66,7 +66,7 @@
         $id = (int)$params['content_id'];
                 
         if ($id == 0) {
-            $this->flash('content-not-found', '/'.$this->view->language.'/msg/');   
+            $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');   
         }
         
         // Get specific content data -- this could fail? Needs check?
@@ -92,7 +92,7 @@
         	$auth->getIdentity()->user_id != $ownerId &&
         	!in_array("admin", $this->view->logged_user_roles))
         {
-            $this->flash('content-not-found', '/'.$this->view->language.'/msg/');  
+            $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');  
         }
    
         // get rating from params (if set)
@@ -224,7 +224,7 @@
                 //$rating = $contentRatingsModel->getById($id);
                 $rating = $contentRatingsModel->getPercentagesById($id);
             } else {
-                $this->flash('rating-failed-msg', '/en/msg/');
+                $this->flash('rating-failed-msg', $baseUrl.'/en/msg/');
             }
         }
 
@@ -249,14 +249,14 @@
         		{
         		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
         			$this->view->favouriteMethod = $favouriteMethod;
-        		} else $this->flash('favourite-adding-failed','/en/msg');
+        		} else $this->flash('favourite-adding-failed',$baseUrl.'/en/msg');
         	} 
         	//If favourite method was "remove" then remove content from user favourites.
         	elseif ($favouriteMethod == "remove" && $isFavourite)
         		{
         		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
         			$this->view->favouriteMethod = $favouriteMethod;
-        		} else $this->flash('favourite-removing-failed','/en/msg');
+        		} else $this->flash('favourite-removing-failed',$baseUrl.'/en/msg');
         	} else unset($favouriteMethod);
         }
         
