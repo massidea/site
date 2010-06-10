@@ -107,6 +107,7 @@ function complete_user_latest_contents(user_id,result){
 	var i = 0;
 	$("#user_"+user_id+"_latest_content").html("<strong><?php echo $this->translate('account-userlist-user-latest-contents');?></strong>");
 	$.each(result, function() {
+	if(this.title_cnt && this.lead_cnt) {
 		if (this.id_cty_cnt == 1) var type = yellow;
 		if (this.id_cty_cnt == 2) var type = green;
 		if (this.id_cty_cnt == 3) var type = red;
@@ -127,7 +128,7 @@ function complete_user_latest_contents(user_id,result){
 		$("#user_"+user_id+"_latest_content").append("<div style=\"padding-bottom:2px;\"><span class=\""+type+"\"><span style=\"padding-left:2px;\">"+title+": "+lead+"</span>"+createtime+"</span></div>");
 		i++;
 		if (i == 3) return false;
-	});
+	}});
 }
 
 function complete_user_content_search(user_id,result){
