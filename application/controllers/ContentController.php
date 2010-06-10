@@ -1033,7 +1033,7 @@ class ContentController extends Oibs_Controller_CustomController
 	        
 	        // Inject title to view
 	        $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
-	        $this->renderScript('view/index.phtml');
+	        //$this->renderScript('view/index.phtml');
 		}
 		else
 		{
