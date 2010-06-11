@@ -20,6 +20,11 @@ $url_checkRecentContent = $this->url(array('controller' => 'ajax',
 										   'action' => 'checkrecentcontent',
 										   'language' => $this->language), 
 										   'lang_default', true);
+$url_tag_cloud = $this->url(array('controller' => 'tag',
+                             	  'action' => 'index',
+								  'list_type' => 'index',
+                             	  'language' => $language),
+                             	  'lang_default', true);
 ?>
 <?php $this->headScript()->captureStart()?>
 
