@@ -650,7 +650,7 @@ class AccountController extends Oibs_Controller_CustomController
         if ($this->_request->isPost()) {
         
             $formData = $this->_request->getPost();
-
+            
             // If form is valid, handle database insertions 
             // Else form population (automatic)
             if ($form->isValid($formData)) {
@@ -736,6 +736,9 @@ class AccountController extends Oibs_Controller_CustomController
                         'account-login-not-successful'
                     );
                 }      
+            } else {
+                $formData['captcha_text'] = '';
+                $form->populate($formData);
             }
         }
     }
