@@ -3,19 +3,15 @@
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css'));  
 
     // change background color
-    if ($this->type == "Problems" || $this->type == "problem") {
-        $this->headScript()->captureStart();
-        ?>setTimeout("changeBack('#d21034')", 300); <?php
-        $this->headScript()->captureEnd();
-    } else if ($this->type == "Ideas" || $this->type == "idea") {
-        $this->headScript()->captureStart();
-        ?>setTimeout("changeBack('#4b9b07')", 300);<?php 
-        $this->headScript()->captureEnd();
-    } else if ($this->type == "Future info" || $this->type == "finfo") {
-        $this->headScript()->captureStart();
-        ?>setTimeout("changeBack('#ffc726')", 300);<?php 
-        $this->headScript()->captureEnd();
-    } 
+    $color = array( 'problem' => '#d21034',
+    				'idea' => '#4b9b07',
+    				'finfo' => '#ffc726');
+    
+    if (isset($color[$this->type])) {
+	    $this->headScript()->captureStart(); 
+	    ?> changeBack('<?php echo $color[$this->type]; ?>'); <?php
+	    $this->headScript()->captureEnd(); 
+    }
             
     // some variable initiation
     $url_tag_cloud = $this->url(array('controller' => 'tag',

@@ -131,7 +131,14 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 <?php //display city TODO: link
                 if (isset($this->userprofile['city']) && $this->userprofile['city'] != NULL):
                 ?>
-                <li><strong>Homecity:</strong> <a href="#"><?php echo $this->userprofile['city']; ?></a></li>
+                <li><strong>Homecity:</strong> <a href="<?php echo $this->url(array('controller' => 'account',
+                                                             'action' => 'userlist',
+                											 'order' => 'username',
+                											 'list' => 'asc',
+                											 'city' => $this->userprofile['city'],
+                                                             'language' => $this->language,
+                                                             ),
+                                                       'lang_default', true); ?>"><?php echo $this->userprofile['city']; ?></a></li>
                 <?php endif; ?>
                 <?php
                 if (isset($this->userprofile['birthday']) && $this->userprofile['birthday'] != NULL):

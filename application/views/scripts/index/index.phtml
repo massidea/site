@@ -161,7 +161,12 @@ Commented to fix temporary problem, will be researched further later
     
     <h3 style="margin-top: 5px; margin-bottom: 0; padding: 0;">
         <?php echo $this->translate('index-most-popular')?>
-        <a href="<?php echo $url_tag_cloud; ?>">
+        <a href="<?php echo $this->url(array('controller' => 'tag',
+                                             'action' => 'index',
+        									 'order' => 'popularity',
+        									 'direction' => 'desc',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
             <?php echo $this->translate('index-tags')?>
         </a>
     </h3>
@@ -173,7 +178,9 @@ Commented to fix temporary problem, will be researched further later
         <?php echo $this->partialLoop('partials/tag.phtml', $this->poptags); ?>
         
         <p id="show_all_tags" style="padding: 0px; margin-top: 10px;" class="top_right_box_links">
-            <a href="<?php echo $url_tag_cloud; ?>">
+            <a href="<?php echo $this->url(array('controller' => 'tag',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
                 <?php echo $this->translate('index-show-all')?>
             </a>
         </p>
@@ -185,6 +192,8 @@ Commented to fix temporary problem, will be researched further later
         <?php echo $this->translate('index-most-active')?>
         <a href="<?php echo $this->url(array('controller' => 'account',
                                              'action' => 'userlist',
+        									 'order' => 'content',
+        									 'list' => 'desc',
                                              'language' => $this->language),
                                              'lang_default', true); ?>">
             <?php echo $this->translate('index-users')?>
