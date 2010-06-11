@@ -52,7 +52,7 @@ class AccountController extends Oibs_Controller_CustomController
     *    Gets users profile thumbnail image from database. Sets image to view with empty layout. 
     *
     */
-    public function profilethumbAction()
+	public function profilethumbAction()
     {
         // Set an empty layout for view
         $this->_helper->layout()->setLayout('empty');
@@ -66,34 +66,54 @@ class AccountController extends Oibs_Controller_CustomController
         $image = null;
         
         if (isset($params['id'])) {
-		$userid = $params['id'];
+			$userid = $params['id'];
+			$user = new Default_Model_User($userid);
+			
+			$gravatar = $user->getGravatarStatus($userid);
 
-	        // Get cache from registry
-        	$cache = Zend_Registry::get('cache');
-        	
-        	$mimeType = "image/jpeg";
-        
-        	// Load recent posts from cache
-        	$cacheImages = 'ProfileThumbs_' . $userid . '_' . $thumbnail;
-        
-        	if(!$result = $cache->load($cacheImages)) {
-				$user = new Default_Model_User($userid);
-				$imagedata = $user->getUserImageData($userid, $thumb);
-	            		
-	            if($imagedata == null) {
-	                $filename = '../www/images/no_profile_img_placeholder.png';
-	                $handle = fopen($filename, "r");
-	                $imagedata[$thumbnail] = fread($handle, filesize($filename));
-	            } 
-
-        		// Save recent posts data to cache
-        		$cache->save($imagedata, $cacheImages);          
-        	} else {
-				$imagedata = $result;
-        	}
-        	
-	        $this->view->mime = $mimeType;
-        	$this->view->img = $imagedata[$thumbnail];
+			if($gravatar == 0) {
+	
+		        // Get cache from registry
+	        	$cache = Zend_Registry::get('cache');
+	        	
+	        	$mimeType = "image/jpeg";
+	        
+	        	// Load recent posts from cache
+	        	$cacheImages = 'ProfileThumbs_' . $userid . '_' . $thumbnail;
+	        
+	        	if(!$result = $cache->load($cacheImages)) {
+					
+					$imagedata = $user->getUserImageData($userid, $thumb);
+		            		
+		            if($imagedata == null) {
+		                $filename = '../www/images/no_profile_img_placeholder.png';
+		                $handle = fopen($filename, "r");
+		                $imagedata[$thumbnail] = fread($handle, filesize($filename));
+		            } 
+	
+	        		// Save recent posts data to cache
+	        		$cache->save($imagedata, $cacheImages);          
+	        	} else {
+					$imagedata = $result;
+	        	}
+	        	
+		        $this->view->mime = $mimeType;
+	        	$this->view->img = $imagedata[$thumbnail];
+	        }
+	        
+	        elseif ($gravatar == 1) {
+	        	$gravatarUrl = "http://www.gravatar.com/avatar/".md5($user->getUserEmail($userid))."?s=200";
+	        	$this->_redirect($gravatarUrl);
+	        }
+	        else { 
+                $filename = '../www/images/no_profile_img_placeholder.png';
+                $handle = fopen($filename, "r");
+                $imagedata[$thumbnail] = fread($handle, filesize($filename));
+                $mimeType = "image/jpeg";
+                $this->view->mime = $mimeType;
+	        	$this->view->img = $imagedata[$thumbnail];
+	         }
+	        
         }
     }
     
@@ -957,6 +977,7 @@ class AccountController extends Oibs_Controller_CustomController
             $userModel = new Default_Model_User($id);
             $email = $userModel->getUserEmail($id);
             
+            $settingsData['gravatar'] = $userModel->getGravatarStatus($id);
             $settingsData['email'] = $email;
             $settingsData['confirm_email'] = $email;
             $settingsData['username'] = $identity->username;
@@ -1000,7 +1021,7 @@ class AccountController extends Oibs_Controller_CustomController
 						if(strlen($formData['email']) != 0) {
 							$user->changeUserEmail($id, $formData['email']);
 						}
-
+						$user->changeGravatarStatus($id, $formData['gravatar']); 
 						// Updates the password
 						if(strlen($formData['password']) != 0) {
 							$user->changeUserPassword($id, $formData['password']);

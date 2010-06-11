@@ -1092,4 +1092,37 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		$result = $this->_db->fetchAll($select);
 		return $result;		   		 
     }
+    
+    /*
+     * getGravatarStatus
+     * @return 1 or 0 (true, false)
+     * @param user id
+     */
+    public function getGravatarStatus($id = 0) {
+        $select = $this->select()
+                            ->from($this, array('gravatar_usr'))
+                            ->where('id_usr = ?', $id);
+
+        // Fetch data from database
+        $result = $this->_db->fetchRow($select); 
+        
+        return $result['gravatar_usr'];
+    }
+    
+    /*
+     * changeGravatarStatus
+     * @return true, false
+     * @param user id
+     */
+    public function changeGravatarStatus($id = 0,$status = -1) {
+    	if($status != false && $status != true) return false;
+    	if($status == -1) return false;
+
+    	$status == false ? $status = 0 : $status = 1;
+    	
+    	$data = array('gravatar_usr' => $status);			
+		$where = $this->getAdapter()->quoteInto('id_usr = ?', $id);
+		if ($this->update($data, $where)) return true;
+		return false;
+    }
 } // end of class
