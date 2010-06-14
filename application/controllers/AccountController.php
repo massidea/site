@@ -102,7 +102,7 @@ class AccountController extends Oibs_Controller_CustomController
 	        }
 	        
 	        elseif ($gravatar == 1) {
-	        	$gravatarUrl = "http://www.gravatar.com/avatar/".md5($user->getUserEmail($userid))."?s=200";
+	        	$gravatarUrl = "http://www.gravatar.com/avatar/".md5(strtolower($user->getUserEmail($userid)))."?s=200";
 	        	$this->_redirect($gravatarUrl);
 	        }
 	        else { 
