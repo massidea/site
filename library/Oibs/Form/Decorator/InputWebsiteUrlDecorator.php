@@ -1,33 +1,15 @@
 <?php
 /**
- * Label into input-column1 and input into input-column2. No end div tag.
+ * Input into input-column-website3.
  *
  * @author Mikko Korpinen
  */
-class Oibs_Form_Decorator_InputNoEndTagDecorator extends Zend_Form_Decorator_Abstract
+class Oibs_Form_Decorator_InputWebsiteUrlDecorator extends Zend_Form_Decorator_Abstract
 {
 
     public function buildLabel()
     {
-        $element = $this->getElement();
-        $label = $element->getLabel();
-        $temp = '';
-
-        if ($translator = $element->getTranslator()) {
-            $label = $translator->translate($label);
-        }
-        if ($element->isRequired()) {
-            $temp = '<strong><span class="required">*) </span>'.$label.': </strong>';
-        } else {
-            $temp = '<strong>'.$label.': </strong>';
-        }
-        $label = $temp;
-
-        return '<label>'.$label.'</label>';
-
-        // This is right way to do this but it will mess up html tags. Better solutions for that?
-        //return $element->getView()
-        //               ->formLabel($element->getName(), $label);
+        return;
     }
 
     public function buildInput()
@@ -75,18 +57,16 @@ class Oibs_Form_Decorator_InputNoEndTagDecorator extends Zend_Form_Decorator_Abs
 
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
-        $label     = $this->buildLabel();
         $input     = $this->buildInput();
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
 
-        $output = '<div class="input-column1">'
-                . $label
-                . '</div>'
-                . '<div class="input-column2">'
+        $output = '<div class="input-column-website3">'
                 . $input
                 . $desc
-                . $errors;
+                . $errors
+                . '</div>'
+                . '<div class="clear"></div>';
 
         switch ($placement) {
             case (self::PREPEND):

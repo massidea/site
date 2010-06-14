@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of InputColumn1And2Decorator
+ * Input and label into input-column3.
  *
  * @author Mikko Korpinen
  */
@@ -15,11 +15,8 @@ class Oibs_Form_Decorator_PublicDecorator extends Zend_Form_Decorator_Abstract
         if ($translator = $element->getTranslator()) {
             $label = $translator->translate($label);
         }
-        if ($element->isRequired()) {
-            $label .= '*';
-        }
-        $label .= ':';
 
+        return '<span class="public">'.$label.'</span>';
         return $element->getView()
                        ->formLabel($element->getName(), $label);
     }
@@ -52,10 +49,10 @@ class Oibs_Form_Decorator_PublicDecorator extends Zend_Form_Decorator_Abstract
     {
         $element = $this->getElement();
         $desc    = $element->getDescription();
-        if (!$desc) {
+        if (empty($desc)) {
             return '';
         }
-        return '<span class="public">Public</span>';
+        return $desc;
     }
 
     public function render($content)
@@ -77,8 +74,9 @@ class Oibs_Form_Decorator_PublicDecorator extends Zend_Form_Decorator_Abstract
 
         $output = '<div class="input-column3"> '
                 . $input
-                . $desc
+                . $label
                 . '</div>'
+                . '<div class="clear"></div>'
                 . $errors;
 
         switch ($placement) {

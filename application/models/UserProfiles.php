@@ -52,18 +52,26 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     *   @see setValue
     *   @see setPublicity
     */
-    public function setProfileData($id = -1, $formData){
+    public function setProfileData($id, $formdata){
         // check params, return false if failure
-        if ($id == -1 || !is_array($formData)) {
+        if ($id < 0 || !is_array($formdata)) {
             return false;
         } 
 
+        if (isset($formdata['username']))
+            unset($formdata['username']);
+        if (isset($formdata['username_publicity']))
+            unset($formdata['username_publicity']);
+        if (isset($formdata['confirm_password']))
+            unset($formdata['confirm_password']);
+        if (isset($formdata['save']))
+            unset($formdata['save']);
+        if (isset($formdata['cancel']))
+            unset($formdata['cancel']);
+
         // needs replacing to single setValue($id, $key, $val, $pub)!
-        foreach ($formData as $key => $val) {                                   // go through data
-            echo "setProfileData processing: ".$key." => ".$val."<br>";
-            if ($key != "submit" && $key != "current_password" &&               // ignore certain keys...   
-                $key != "email" && $key != "password"                           // ignore certain keys...   
-                && $key != "confirm_password" && $key != "confirm_email"        // ignore certain keys...   
+        foreach ($formdata as $key => $val) {                                   // go through data
+            if ($key != "email" && $key != "password"                           // ignore certain keys...   
                 && $key != "notifications")										// ignore 
             {
                 $publicity = strpos($key,'_publicity');							// returns true if publicitied
@@ -90,11 +98,7 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     {
         if ($id == -1) {
             return false;    // panic and die
-            //echo "setValue params failed for: " . $key . "<br>";
         }
-        
-        //echo "setValue processing userid: " . $id . "<br>";
-        //echo $key."-".$value;
         
         // get old values
         $select = $this->select()
@@ -108,6 +112,15 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
                 'profile_key_usp' => $key,
                 'profile_value_usp' => $value,
                 'public_usp' => $pub,
+                'created_usp' => new Zend_Db_Expr('NOW()'),
+                'modified_usp' => new Zend_Db_Expr('NOW()')
+        );
+
+        $update = array(
+                'id_usr_usp' => $id,
+                'profile_key_usp' => $key,
+                'profile_value_usp' => $value,
+                'public_usp' => $pub,
                 'modified_usp' => new Zend_Db_Expr('NOW()')
         );
         
@@ -115,7 +128,6 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
 		if(isset($result[0]['profile_value_usp'])) {
             if ($result[0]['profile_value_usp'] == $value 
             && $result[0]['public_usp'] == $pub) {
-                //echo "setValue update matched old value for: " . $key . "<br>";
                 return true;    // dont set the same values
             }
         
@@ -124,17 +136,14 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             $where[] = $this->getAdapter()->quoteInto('id_usr_usp = ?', $id);
             
             
-			if($this->update($new, $where)) {
-                //echo "setValue updated: " . $key . "<br>";
+			if($this->update($update, $where)) {
                 return true;
             } else {
-                //echo "setValue updated failed for: " . $key . "<br>";
                 return false;
             }
         // if no old values (insert new data)
 		} else {	
             // insert new values
-            //echo "setValue inserted: " . $key . "<br>";
 			$this->insert($new);
         }
     }
@@ -911,6 +920,33 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             return null;
         }
 	}
+
+    /**
+     * getUserEmployment
+     *
+     * Get user employment (status)
+     *
+     * @param id_usr User id
+     * @return string
+     *
+     * @author Mikko Korpinen
+     */
+	public function getUserEmployment($usr_id=-1)
+	{
+		$where = $this->select()
+							->from($this, array('profile_key_usp', 'profile_value_usp'))
+							->where('id_usr_usp = ?', $usr_id)
+							->where('profile_key_usp = ?','employment');
+
+
+        $result = $this->fetchAll($where)->current();
+		if (!empty($result)) {
+            return $result;
+        }
+        else {
+            return null;
+        }
+	}
 	
 	//Get user category
 	public function getUsercate($id=-1)
@@ -1150,6 +1186,26 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             return 1;
         }
 
+    }
+
+    /**
+     * getEmployments
+     *
+     * Employments
+     *
+     * @return array
+     * @author Mikko Korpinen
+     */
+    public function getEmployments()
+    {
+        return array(
+                    'private_sector' => 'Private sector',
+                    'public_sector' => 'Public sector',
+                    'education_sector' => 'Education sector',
+                    'student' => 'Student',
+                    'pentioner' => 'Pentioner',
+                    'other' => 'Other',
+               );
     }
     
 } // end of class

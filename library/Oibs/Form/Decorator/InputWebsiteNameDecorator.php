@@ -1,10 +1,10 @@
 <?php
 /**
- * Label into input-column1 and input into input-column2. No end div tag.
+ * Label into input-column-website1 and input into input-column-website2.
  *
  * @author Mikko Korpinen
  */
-class Oibs_Form_Decorator_InputNoEndTagDecorator extends Zend_Form_Decorator_Abstract
+class Oibs_Form_Decorator_InputWebsiteNameDecorator extends Zend_Form_Decorator_Abstract
 {
 
     public function buildLabel()
@@ -80,13 +80,14 @@ class Oibs_Form_Decorator_InputNoEndTagDecorator extends Zend_Form_Decorator_Abs
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
 
-        $output = '<div class="input-column1">'
+        $output = '<div class="input-column-website1">'
                 . $label
                 . '</div>'
-                . '<div class="input-column2">'
+                . '<div class="input-column-website2">'
                 . $input
                 . $desc
-                . $errors;
+                . $errors
+                . '</div>';
 
         switch ($placement) {
             case (self::PREPEND):

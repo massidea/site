@@ -951,7 +951,6 @@ class AccountController extends Oibs_Controller_CustomController
 			// get user data
 			$userInfos = new Default_Model_UserProfiles();
 			$settingsData = $userInfos->getUserInfoById($id);
-			//var_dump($settingsData);
 
             // get user email and push to settingsData
             $userModel = new Default_Model_User($id);
@@ -971,6 +970,7 @@ class AccountController extends Oibs_Controller_CustomController
             
             // populate form
 			if(isset($settingsData)) {
+                //echo '<pre>'; var_dump($settingsData);
 				$form->populate($settingsData);
 			}
 			
@@ -979,40 +979,36 @@ class AccountController extends Oibs_Controller_CustomController
 			if($this->_request->isPost()) {
        
                 // get form data
-				$formData = $this->_request->getPost();
+				$formdata = $this->_request->getPost();
                 
-				if($form->isValid($formData)) {
+				if($form->isValid($formdata)) {
                     // if form is valid
-					//$auth = Zend_Auth::getInstance();
-					
-					// If user is logged in -- double check? why? -joel
-					//if ($auth->hasIdentity()) {
-						// Updates checked notifications  
-					
-						$notificationsModel->setUserNotifications($id, $formData['notifications']);						
-		
-						$userProfile = new Default_Model_UserProfiles();
-                        $userProfile->setProfileData($id, $formData); 
+                    // Updates checked notifications
 
-						$user = new Default_Model_User($id);
-						
-						// Updates email
-						if(strlen($formData['email']) != 0) {
-							$user->changeUserEmail($id, $formData['email']);
-						}
+                    //echo "<pre>"; var_dump($formdata);
+                    $notificationsModel->setUserNotifications($id, $formdata['notifications']);
 
-						// Updates the password
-						if(strlen($formData['password']) != 0) {
-							$user->changeUserPassword($id, $formData['password']);
-						}
-						
-                        // Redirects the user to a page that shows the update complete
-                        $redirect = $this->_urlHelper->url(array('controller' => 'account', 
-                                                                 'action' => 'settings', 
-                                                                 'language' => $this->view->language), 
-                                                           'lang_default', true);
-						$this->flash('Information has been changed.', $redirect);
-					//}
+                    $userProfile = new Default_Model_UserProfiles();
+                    $userProfile->setProfileData($id, $formdata);
+
+                    $user = new Default_Model_User($id);
+
+                    // Updates email
+                    if(strlen($formdata['email']) != 0) {
+                        $user->changeUserEmail($id, $formdata['email']);
+                    }
+
+                    // Updates the password
+                    if(strlen($formdata['password']) != 0) {
+                        $user->changeUserPassword($id, $formdata['password']);
+                    }
+
+                    // Redirects the user to a page that shows the update complete
+                    $redirect = $this->_urlHelper->url(array('controller' => 'account',
+                                                             'action' => 'settings',
+                                                             'language' => $this->view->language),
+                                                       'lang_default', true);
+                    $this->flash('Information has been changed.', $redirect);
 				} else {
                     // Formdata is not valid, do nothing -- here for possible debugging
 					// echo $form->getErrors();
