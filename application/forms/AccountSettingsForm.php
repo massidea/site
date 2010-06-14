@@ -551,9 +551,12 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                         array(6, 50, 'messages' => array('stringLengthTooShort' => 'E-MAIL TOO SHORT'))
                     ),
 				))
-				->setDecorators(array('CustomDecorator'));
+				->setDecorators(array('SettingsTextDecorator'));
 				// ->removeDecorator('errors');
-
+		$gravatar = new Zend_Form_Element_Checkbox('gravatar');
+		$gravatar->setDecorators(array('SettingsCheckboxDecorator'))
+                ->setDescription("Enable gravatar");
+                
         $email_publicity = new Zend_Form_Element_Checkbox('email_publicity');
 		$email_publicity->setDecorators(array('SettingsCheckboxDecorator'))
                 ->setDescription($description);
@@ -635,7 +638,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                                     // $openID, $openid_publicity,
                                     $openID, /*$openid_publicity,*/
                                     $password, $password_confirm,
-                                    $email,
+                                    $email, $gravatar,
                                     $confirm_email,
                                     $current_password,
                                     $notifications,
