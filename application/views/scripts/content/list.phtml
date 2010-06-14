@@ -23,96 +23,119 @@
         'action' => 'register',
         'language' => $this->language), 
         'lang_default', true);
+    
+	$url_getRecentContent = $this->url(array('controller' => 'ajax',
+											 'action' => 'getrecentcontent',
+											 'type' => $this->type,
+											 'language' => $this->language), 
+											 'lang_default', true);
+	
+	$url_checkRecentContent = $this->url(array('controller' => 'ajax',
+											   'action' => 'checkrecentcontent',
+											   'language' => $this->language), 
+											   'lang_default', true);
 ?>
 
+<?php $this->headScript()->captureStart()?>
+
+$(document).ready(function(){
+	recentpostsdiv  = '#content_list_ajax';
+	recentpostslink = '#content_list_ajax_link';
+	recentpostslink_orig = $(recentpostslink).html();
+	pagecount = 1;
+	previousresult = "";
+
+	$(recentpostslink+' a').live('click', function(){
+		pagecount = pagecount + 1;
+		ajaxLoad_getRecentPosts(recentpostsdiv, pagecount);
+	});
+
+	ajaxLoad_checkRecentPosts();
+	//ajaxLoad_getRecentPosts(recentpostsdiv, pagecount);
+	
+});
+
+	function ajaxLoad_getRecentPosts(obj, offset, prepend){
+		$.ajax({
+			beforeSend: function(){
+				$(recentpostslink).html(
+					'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
+					'Please wait...</h3>'
+				);
+			},
+			complete: function(){
+				$(recentpostslink).html(recentpostslink_orig);
+			},
+			url: "<?php echo $url_getRecentContent; ?>/offset/"+offset,
+			success: function(result){
+				if(prepend == 1) {
+					$(obj).prepend(result);
+				} else {
+					$(obj).append(result);
+				}
+				$('.user_content_row_new').hide();
+				removeDupes_recentPosts(recentpostsdiv);
+				$('.user_content_row_new').removeClass('user_content_row_new');
+				$('.user_content_row').fadeIn('slow');
+			}
+		});
+	};
+	
+	function removeDupes_recentPosts(obj){
+		$(recentpostsdiv + ' [id]').each(function(){
+			var ids = $('[id='+this.id+']');
+			if(ids.length > 1 && ids[0]!=this){
+				console.warn('Multiple IDs #'+this.id);
+				$(this).remove();
+			}
+		});
+	}
+
+	function ajaxLoad_checkRecentPosts(){
+		$.ajax({
+			url: "<?php echo $url_checkRecentContent; ?>/check/",
+			success: function(result){
+				//alert(result + " | " + previousresult);
+				if(result != previousresult) {
+					ajaxLoad_getRecentPosts(recentpostsdiv, 1, 1);
+				}
+				previousresult = result;
+				setTimeout("ajaxLoad_checkRecentPosts()", 30000);
+			}
+		});
+	}
+
+<?php $this->headScript()->captureEnd()?>
+
 <div class="content_list_recent">
-    <?php if (!empty($this->contentData)): ?>
-    <div id="search_result">
-    
-        <h3 class="content_list_header_<?php echo $this->type; ?>">
-            <?php echo $this->translate('content-list-'.$this->type); ?>
-            
-            <a href="<?php echo $this->url(array('controller' => 'rss',
-                                                 'action' => 'generate',
-                                                 'type' => $this->type,
-                                                 'language' => $this->language),
-                                           'lang_default', true); ?>">
-                                           
-                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" />
-            </a>
-            <a href="<?php echo $this->url(array('controller' => 'voice',
-                                                 'action' => 'generate',
-                                                 'type' => $this->type,
-                                                 'language' => $this->language),
-                                           'lang_default', true); ?>">
-                                           
-                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" />
-            </a>
-        </h3>
-    
-        <?php /*if ($this->contentCount > $this->count): ?>
-        <div id="content_list_content_pagination_top">
-            <?php echo $this->contentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
-        </div>
-        <?php endif;*/ ?>
-        
-        <?php /*<div id="content_list_content_order">
-            <span><?php echo $this->translate('content-list-order-by'); ?></span>
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'author'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-author'); ?>
-            </a> | 
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'created'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-date'); ?>
-            </a> |
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'header'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-header'); ?>
-            </a> | 
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'views'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-views'); ?>
-            </a>
-        </div>
-        */ ?>
-        
-       <?php echo $this->partialLoop('partials/content_row.phtml', $this->contentData); ?>
-        
-        <div class="clear"></div> 
-        
-        <?php if ($this->contentCount > $this->count): ?>
-        <div id="content_list_content_pagination_bottom">
-            <?php echo $this->contentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
-        </div>
-        <?php endif; ?>
-           
-        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="------------" />
-    </div>
-    
-    <?php else: ?>
-    
-    <div style="float:left; width: 490px;">
-        <?php echo $this->translate('search-nothing-found'); ?>
-    </div>
-    
-    <?php endif; ?>
+	<h3 class="recent_posts"><?php echo $this->translate('content-list-'.$this->type); ?>
+		<a href="<?php echo $this->url(array('controller' => 'rss',
+                                             'action' => 'generate',
+											 'type' => $this->type,
+                                             'language' => $this->language),
+                                           	 'lang_default', true); ?>">
+			<img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" />
+		</a>
+        <a href="<?php echo $this->url(array('controller' => 'voice',
+                                             'action' => 'generate',
+        									 'type' => $this->type,
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
+			<img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" />
+		</a>
+	</h3>
+	<div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
+		<div id="content_list_ajax" style="width: 500px;"></div>
+	    <div class="user_content_spacer">
+	        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
+	    </div>
+	    
+	    <div id="content_list_ajax_link" style="margin-top: 10px; margin-left: 220px;">
+	        <h3>
+	            <a href="#" onclick="return false;"><?php echo $this->translate('index-view-more'); ?></a>
+	        </h3>
+	    </div>
+	</div>
     
     <div class="right_side" style="padding: 0px; margin: 0px; margin-top: 0px;">
         <p class="right_side_title_small" style="padding-top: 0px; padding-bottom:3px;">
