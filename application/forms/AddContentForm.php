@@ -110,7 +110,8 @@ class Default_Form_AddContentForm extends Zend_Form
                                                         array('stringLengthTooLong' => 
                                                             'content-add-field-too-long')
                                                    )
-                                             )
+                                             ),
+                                        array('Regex', true, array('/^[\\p{L}0-9, ]*$/'))
                                      )
                                )
                 ->setLabel($translate->_("content-add-keywords"))

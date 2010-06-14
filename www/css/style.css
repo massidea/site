@@ -1254,7 +1254,10 @@ form #uploadedFiles_div .form_element_input label {
 #tag_cloud_container_tags a {
 	padding: 3px;
 	text-decoration: none;
-} 
+}
+#tag_cloud_container_tags a:nth-child(odd) {
+	color:#003581;
+}
 
 #tag_cloud_container_tags a:hover {
 	 background-color: #D9F2FF;
