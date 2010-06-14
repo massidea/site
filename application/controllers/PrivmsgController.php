@@ -74,6 +74,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 
 	public function sendAction()
 	{
+
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
 		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
@@ -123,42 +124,44 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			if($this->getRequest()->isPost()) {
 				// Get private message data
 				$data = $this->getRequest()->getPost();
-
-				// Add a private message
-				$Default_Model_privmsg = new Default_Model_PrivateMessages();
-
-				if($Default_Model_privmsg->addMessage($data) && $data['sender_id'] != $data['receiver_id']){
-					$message = 'privmsg-add-successful';
-				} else {
-					$message = 'privmsg-add-not-successful';
+				 
+				if ($form->isValid($data)) {
+					// Add a private message
+					$Default_Model_privmsg = new Default_Model_PrivateMessages();
+	
+					if($Default_Model_privmsg->addMessage($data) && $data['sender_id'] != $data['receiver_id']){
+						$message = 'privmsg-add-successful';
+					} else {
+						$message = 'privmsg-add-not-successful';
+					}
+	
+					// Send email to user about new private message
+					// if user allows private message notifications
+					$receiverId = $data['privmsg_receiver_id'];
+					$notificationsModel = new Default_Model_Notifications();
+					$notifications = $notificationsModel->getNotificationsById($receiverId);
+	
+					if (in_array('privmsg', $notifications)) {
+						
+						$senderName = $auth->getIdentity()->username; 
+						$receiverUsername = $model_user->getUserNameById($receiverId);
+						
+						$emailNotification = new Oibs_Controller_Plugin_Email();
+		                $emailNotification->setNotificationType('privmsg')
+		                    			   ->setSenderId($auth->getIdentity()->user_id)
+		                    			   ->setReceiverId($receiverId)
+		                    			   ->setParameter('URL', $absoluteBaseUrl."/en")
+		                    			   ->setParameter('SENDER-NAME', $senderName)
+		                    			   ->setParameter('MESSAGE-TITLE', $data['privmsg_header'])
+		                    			   ->setParameter('MESSAGE-BODY', nl2br($data['privmsg_message']));
+			           	if ($emailNotification->isValid()) {
+		            		$emailNotification->send();
+		            	} else {
+							//echo $emailNotification->getErrorMessage(); die;
+		            	}
+					}	
+					$this->flash($message, $url);
 				}
-
-				// Send email to user about new private message
-				// if user allows private message notifications
-				$receiverId = $data['privmsg_receiver_id'];
-				$notificationsModel = new Default_Model_Notifications();
-				$notifications = $notificationsModel->getNotificationsById($receiverId);
-
-				if (in_array('privmsg', $notifications)) {
-					
-					$senderName = $auth->getIdentity()->username; 
-					$receiverUsername = $model_user->getUserNameById($receiverId);
-					
-					$emailNotification = new Oibs_Controller_Plugin_Email();
-	                $emailNotification->setNotificationType('privmsg')
-	                    			   ->setSenderId($auth->getIdentity()->user_id)
-	                    			   ->setReceiverId($receiverId)
-	                    			   ->setParameter('URL', $absoluteBaseUrl."/en")
-	                    			   ->setParameter('SENDER-NAME', $senderName)
-	                    			   ->setParameter('MESSAGE-TITLE', $data['privmsg_header'])
-	                    			   ->setParameter('MESSAGE-BODY', nl2br($data['privmsg_message']));
-		           	if ($emailNotification->isValid()) {
-	            		$emailNotification->send();
-	            	} else {
-	            		echo $emailNotification->getErrorMessage(); die;
-	            	}					
-				}
-				$this->flash($message, $url);
 			} // end if
 		} else {
 			// If not logged, redirecting to system message page
