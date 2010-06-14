@@ -206,6 +206,7 @@ class ContentController extends Oibs_Controller_CustomController
 			// If preview
 			$backFromPreview = isset($previewSession->backFromPreview) ? $previewSession->backFromPreview : 0;
 			$preview = isset($params['preview']) ? 1:0;
+			
 			if($preview)
 			{
 				$previewSession->unsetAll();
@@ -556,20 +557,15 @@ class ContentController extends Oibs_Controller_CustomController
 			$params = $this->getRequest()->getParams();
 
 			// Get content type
-			$contenttype = isset($params['contenttype'])
-			? $params['contenttype'] : '';
+			$contenttype = isset($params['contenttype']) ? $params['contenttype'] : '';
 
-			$relatestoid = isset($params['parentid'])
-			? $params['parentid'] : '';
+			$relatestoid = isset($params['parentid']) ? $params['parentid'] : '';
 
-			$linkedcontentid = isset($params['childid'])
-			? $params['childid'] : '';
+			$linkedcontentid = isset($params['childid']) ? $params['childid'] : '';
 
 			if($this->validateLinking($contenttype, $relatestoid, $linkedcontentid)) {
 				$model_cnt_has_cnt = new Default_Model_ContentHasContent();
 				$model_cnt_has_cnt->addContentToContent($relatestoid, $linkedcontentid);
-
-				$message = 'content-link-successful';
 
 				// Send email to owner of content about a new link
 				// if user allows linking notifications
@@ -606,8 +602,8 @@ class ContentController extends Oibs_Controller_CustomController
 				}
 
 
-				$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    'action' => 'index', 
+				$url = $this->_urlHelper->url(array('controller' => 'view',
+                                                    'action' => $relatestoid, 
                                                     'language' => $this->view->language), 
                                               		'lang_default', true);
 
@@ -696,11 +692,8 @@ class ContentController extends Oibs_Controller_CustomController
 			$params = $this->getRequest()->getParams();
 
 			// Get content type
-			$contenttype = isset($params['contenttype'])
-			? $params['contenttype'] : '';
-
-			$relatestoid = isset($params['relatestoid'])
-			? $params['relatestoid'] : '';
+			$contenttype = isset($params['contenttype']) ? $params['contenttype'] : '';
+			$relatestoid = isset($params['relatestoid']) ? $params['relatestoid'] : '';
 
 			if($this->validateLinking($contenttype, $relatestoid, -1)) {
 				$model_content_types = new Default_Model_ContentTypes();
@@ -742,7 +735,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true);
+                                          		'lang_default', true);
 			$this->flash($message, $url);
 		}
 	}
@@ -811,7 +804,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$model_content_types = new Default_Model_ContentTypes();
 		$model_content = new Default_Model_Content();
 		$model_cnt_has_usr = new Default_Model_ContentHasUser();
-		$model_cnt_has_cnt = new Default_Model_contentHasContent();
+		$model_cnt_has_cnt = new Default_Model_ContentHasContent();
 
 		$content_types = $model_content_types->getAllNamesAndIds();
 
@@ -854,7 +847,7 @@ class ContentController extends Oibs_Controller_CustomController
 							$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                                 'action' => 'index',
                                                                 'language' => $this->view->language),
-                                                          'lang_default', true);
+                                                          		'lang_default', true);
 
 							$this->flash($message, $url);
 						}
@@ -871,7 +864,7 @@ class ContentController extends Oibs_Controller_CustomController
 							$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                                 'action' => 'index', 
                                                                 'language' => $this->view->language), 
-                                                          'lang_default', true);
+                                                          		'lang_default', true);
 
 							$this->flash($message, $url);
 						}
@@ -881,7 +874,7 @@ class ContentController extends Oibs_Controller_CustomController
 						$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                             'action' => 'index', 
                                                             'language' => $this->view->language), 
-                                                      'lang_default', true);
+                                                      		'lang_default', true);
 
 						$this->flash($message, $url);
 					}
