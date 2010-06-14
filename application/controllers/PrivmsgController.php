@@ -165,7 +165,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index', 
                                                 'language' => $this->view->language), 
-                                          'lang_default', true);
+                                          	 	'lang_default', true);
 
 			$this->flash($message, $url);
 		}
