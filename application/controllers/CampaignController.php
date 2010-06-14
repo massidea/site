@@ -98,6 +98,26 @@ class CampaignController extends Oibs_Controller_CustomController
     }
 
     /**
+     * listAction - shows a list of all campaigns
+     */
+    function listAction()
+    {
+        $grpmodel = new Default_Model_Groups();
+        $cmpmodel = new Default_Model_Campaigns();
+
+        // If you find a better way to do this, be my guest.
+        $cmps = $cmpmodel->getAll()->toArray();
+        $cmps_new = array();
+        foreach ($cmps as $cmp) {
+            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+            $cmp['group_name_grp'] = $grp['group_name_grp'];
+            $cmps_new[] = $cmp;
+        }
+
+        $this->view->campaigns = $cmps_new;
+    }
+
+    /**
      * linkAction
      *
      * Link content to campaign.

@@ -40,51 +40,94 @@ class Default_Form_AddGroupForm extends Zend_Form
         $translate = Zend_Registry::get('Zend_Translate'); 
         
         $this->setName('add_group_form');
-        $this->addElementPrefixPath('Oibs_Decorators', 
-                    'Oibs/Decorators/',
+        $this->addElementPrefixPath('Oibs_Form_Decorator',
+                    'Oibs/Form/Decorator/',
                     'decorator');
+
+        // Clear div
+        $clear = '<div class="clear"></div>';
 
         // Group name (must be unique).
         $groupname = new Zend_Form_Element_Text('groupname');
         $groupname
-            ->setLabel($translate->_('groups-new_group_name'))
-            ->setRequired(true)
+            //->setLabel($translate->_('groups-new_group_name'))
+            ->setLabel('Name')
+            //->setRequired(true)
             ->setFilters(array('StringTrim'))
             ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
                 new Oibs_Validators_GroupExists('groupname')
             ))
-            ->setDecorators(array(
-                'ViewHelper',
-                array('secondColumn' => 'HtmlTag', array('tag' => 'div',
-                                       'class'  => 'input-column2',
-                                       'placement' => 'REPLACE')),
-                array('Label', array('tag' => 'div')),
-            ));
+            ->setDescription(
+                '<div id="progressbar_groupname" class="progress"></div>');
+
+        $groupname_clear = new Oibs_Form_Element_Note('groupname_clear');
+        $groupname_clear->setValue($clear);
 
         // Description.
-        $groupdesc = new Zend_Form_Element_Text('groupdesc');
+        $groupdesc = new Zend_Form_Element_Textarea('groupdesc');
         $groupdesc
-            ->setLabel($translate->_('groups-new_group_description'))
-            ->setRequired(true)
-            ->setFilters(array('StringTrim'));
+            ->setAttrib('cols', '45')
+            ->setAttrib('rows', '30')
+            ->setLabel('Lead paragraph')
+            //->setRequired(true)
+            ->setFilters(array('StringTrim'))
+            ->setValidators(array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'viesti'))),
+            ))
+            ->setDescription(
+                '<div id="progressbar_groupdesc" class="progress"></div>');
+
+        $groupdesc_clear = new Oibs_Form_Element_Note('groupdesc_clear');
+        $groupdesc_clear->setValue($clear);
 
         // Body text.
-        $groupbody = new Zend_Form_Element_Text('groupbody');
+        $groupbody = new Zend_Form_Element_Textarea('groupbody');
         $groupbody
-            ->setLabel('Body text')
+            ->setAttrib('cols', '45')
+            ->setAttrib('rows', '30')
+            ->setLabel('Body')
             ->setFilters(array('StringTrim'));
 
-        // Submit button.
-        $submit = new Zend_Form_Element_Submit('submit');
-        $submit
-            ->setIgnore(true)
-            ->setLabel($translate->_('groups-btn_create'));
+        $groupbody_clear = new Oibs_Form_Element_Note('groupbody_clear');
+        $groupbody_clear->setValue($clear);
+
+        $save = new Zend_Form_Element_Submit('save');
+        $save->setLabel($translate->_('groups-btn_create'))
+             ->setAttrib('id', 'save-group')
+             ->setAttrib('class', 'submit-button');
+
+        $cancel = new Zend_Form_Element_Submit('cancel');
+        $cancel->setLabel('Cancel')
+              ->setAttrib('id', 'cancel')
+              ->setAttrib('class', 'submit-button');
 
         $this->addElements(array(
             $groupname,
+            $groupname_clear,
             $groupdesc,
+            $groupdesc_clear,
             $groupbody,
-            $submit));
+            $groupbody_clear,
+            $save,
+            $cancel
+        ));
+
+        $groupname->setDecorators(array('InputDecorator'));
+        $groupname_clear->setDecorators(array('ViewHelper'));
+        $groupdesc->setDecorators(array('InputDecorator'));
+        $groupdesc_clear->setDecorators(array('ViewHelper'));
+        $groupbody->setDecorators(array('InputDecorator'));
+        $groupbody_clear->setDecorators(array('ViewHelper'));
+
+
+        $save->setDecorators(array(
+            'ViewHelper',
+            array('HtmlTag', array('tag' => 'div', 'openOnly' => true, 'id' => 'save_changes')),
+        ));
+        $cancel->setDecorators(array(
+            'ViewHelper',
+            array('HtmlTag', array('tag' => 'div', 'closeOnly' => true)),
+        ));
     }
 }

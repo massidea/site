@@ -141,12 +141,10 @@
                 $groupAdminModel->addAdminToGroup(
                     $newGroupId, $this->view->userid);
 
-                // Redirect back to groups page.
                 $target = $this->_urlHelper->url(array(
-                    'controller' => 'group',
-                    'action'     => 'index',
-                    'language'   => $this->view->language
-                    ), 'lang_default', true);
+                    'groupid' => $newGroupId,
+                    'language' => $this->view->language),
+                     'group_shortview', true);
                 $this->_redirector->gotoUrl($target);
             }
         }

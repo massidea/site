@@ -1,6 +1,41 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckForm.js'); ?>
 
-<div id="create-group-page">
-    <h4><?php echo $this->translate('groups-create_new_group'); ?></h4>
+<?php $this->headScript()->captureStart()?>
+// Definitions for input boxes ([0] = minimum, [1] = maximum, [2] = required (1 true/0 false)
+var inputDefinitions = {
+    'groupname': [1,  140, 1],
+    'groupdesc': [1,  320, 1]
+};
+<?php $this->headScript()->captureEnd()?>
+
+<div id="create-group-page" style="float:left; width:500px;">
+    <h3 style="float:left;"><?php echo $this->translate('groups-create_new_group'); ?></h3>
+    <div style="float:left; padding-left:15px; margin-top:10px;">
+        Groups help like-minded people to join their forces. You can create as many groups as you want.
+        Once you have created a group you can create group campaigns.
+        <p></p>
+        All fields are mandatory
+    </div>
+    <div class="clear"></div>
     <?php echo $this->form; ?>
+</div>
+
+<div id="gacsidebar">
+    <div class="box">
+        <h2>How to create a group?</h2>
+        <div class="box-content">
+            <strong>Name</strong><br />
+            A good name grabs the reader's attention and summarizes the meaning of the group.
+
+            <p></p>
+            <strong>Lead paragraph</strong><br />
+            Lead paragraph sums up the whole meaning of your group.
+
+            <p></p>
+            <strong>Body</strong><br />
+            The further body content is elaborating the headline and lead paragraph,
+            and justifies in more detail, why you should join the group.
+        </div>
+    </div>
 </div>

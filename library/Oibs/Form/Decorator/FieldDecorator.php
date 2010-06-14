@@ -4,31 +4,31 @@
  *
  * @author Mikko Korpinen
  */
-class Oibs_Form_Decorator_PublicDecorator extends Zend_Form_Decorator_Abstract
+class Oibs_Form_Decorator_FieldDecorator extends Zend_Form_Decorator_Abstract
 {
 
     public function buildLabel()
     {
         $element = $this->getElement();
         $label = $element->getLabel();
+        $temp = '';
 
         if ($translator = $element->getTranslator()) {
             $label = $translator->translate($label);
         }
-        if ($element->isRequired()) {
-            $label .= '*';
-        }
-        $label .= ':';
+        $label = '<strong>'.$label.': </strong>';
 
-        return $element->getView()
-                       ->formLabel($element->getName(), $label);
+        return '<label>'.$label.'</label>';
+
+        // This is right way to do this but it will mess up html tags. Better solutions for that?
+        //return $element->getView()
+        //               ->formLabel($element->getName(), $label);
     }
 
     public function buildInput()
     {
         $element = $this->getElement();
         $helper  = $element->helper;
-        $element->setAttrib('class', 'checkbox');
         return $element->getView()->$helper(
             $element->getName(),
             $element->getValue(),
@@ -52,10 +52,10 @@ class Oibs_Form_Decorator_PublicDecorator extends Zend_Form_Decorator_Abstract
     {
         $element = $this->getElement();
         $desc    = $element->getDescription();
-        if (!$desc) {
+        if (empty($desc)) {
             return '';
         }
-        return '<span class="public">Public</span>';
+        return $desc;
     }
 
     public function render($content)
@@ -75,12 +75,16 @@ class Oibs_Form_Decorator_PublicDecorator extends Zend_Form_Decorator_Abstract
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
 
-        $output = '<div class="input-column3"> '
-                . $input
-                . $desc
+        $output =  '<div class="row">'
+                . '<div class="field-label">'
+                . $label
                 . '</div>'
-                . '<div class="clear"></div>'
-                . $errors;
+                . '<div class="field">'
+                . $input
+                . $errors
+                . '</div>'
+                . $desc
+                . '</div>';
 
         switch ($placement) {
             case (self::PREPEND):
