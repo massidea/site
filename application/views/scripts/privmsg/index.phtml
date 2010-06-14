@@ -35,12 +35,18 @@ if($this->privmsgs):
 		<div class="privmsg">
 			<div class="privmsg_userinfo">
                     <center>
-                    <a href="<?php echo $this->url(array('controller' => 'account',
-                                                         'action' => 'view',
-                                                         'user' => $privmsg['username_pmg'],
-                                                         'language' => $this->language),
-                                                   'lang_default', true); ?>">
-                                                   
+                    <?php 
+                    if($privmsg['username_pmg'] != 'privmsg-message-sender-system') 
+                    {
+                    ?>
+	                    <a href="<?php echo $this->url(array('controller' => 'account',
+	                                                         'action' => 'view',
+	                                                         'user' => $privmsg['username_pmg'],
+	                                                         'language' => $this->language),
+	                                                   		 'lang_default', true); ?>">
+	                    <?php 
+                    }
+                    ?>
                         <?php if($privmsg['user_has_image']): ?>
                         
                             <img src="<?php echo $this->url(array('controller' => 'account', 
@@ -74,7 +80,7 @@ if($this->privmsgs):
                     <?php echo $this->translate('privmsg-message-from'); ?>
                     <b>
                         <?php echo $this->translate($privmsg['username_pmg']); ?>
-                    </b>;
+                    </b>
                 <?php endif; ?>
                 
 				<br />

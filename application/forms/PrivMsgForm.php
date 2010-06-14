@@ -63,14 +63,6 @@ class Default_Form_PrivMsgForm extends Zend_Form
 				))
 				->setDecorators(array('PrivMsgMessageDecorator'));
                 
-        $email = new Zend_Form_Element_Text('privmsg_email');
-        $email->setLabel($translate->_("privmsg-email"))
-              ->setAttrib('size', 53)
-              ->addValidators(array(
-                array('StringLength', false, array(6, 50,'messages' => array('stringLengthTooShort' => 'field-too-short')))
-              ))
-              ->setDecorators(array('PrivMsgTextFieldDecorator'));
-        
         $sender_id = new Zend_Form_Element_Hidden('privmsg_sender_id');
 		$sender_id->setValue($data['sender_id'])
                   ->removeDecorator('DtDdWrapper');
@@ -84,7 +76,7 @@ class Default_Form_PrivMsgForm extends Zend_Form
 		$submit->setLabel($translate->_("privmsg-send"))
                ->removeDecorator('DtDdWrapper');
         
-        $this->addElements(array($header, $message, $email, $sender_id, $receiver_id, $submit));
+        $this->addElements(array($header, $message, $sender_id, $receiver_id, $submit));
 	
     }
 }
