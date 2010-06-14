@@ -1308,10 +1308,6 @@
 		<tuv xml:lang="en"><seg>No</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ei</seg></tuv>
 	</tu>
-	<tu tuid='content-link-successful'>
-		<tuv xml:lang="en"><seg>Content linked succesfully!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisältö linkitettiin onnistuneesti!</seg></tuv>
-	</tu>
     <tu tuid='content-link-themselves'>
 		<tuv xml:lang="en"><seg>You can't link to content themselves!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Et voi linkittää sisältöä itseensä!</seg></tuv>
