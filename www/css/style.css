@@ -1255,6 +1255,7 @@ form #uploadedFiles_div .form_element_input label {
 	padding: 3px;
 	text-decoration: none;
 }
+
 #tag_cloud_container_tags a:nth-child(odd) {
 	color:#003581;
 }
@@ -1508,6 +1509,18 @@ form #uploadedFiles_div .form_element_input label {
 	width:50%;
 }
 
+.user_list_input_box_meta {
+	font-weight: bold;
+	float:right;
+}
+
+.user_list_input_box_lead {
+	margin-left:0.5em;
+	padding-left:2px;
+}
+.user_list_input_box_title {
+	padding-left:2px;
+}
 .user_list_user_container {
     display: table;
     margin: 0 0 2em 0;
@@ -1769,7 +1782,8 @@ form #uploadedFiles_div .form_element_input label {
 	overflow: hidden;
 }
 
-.ac_results strong {
+.ac_results .user_list_input_box_title strong,
+.ac_results .user_list_input_box_lead strong {
 	color: red;
 }
 
