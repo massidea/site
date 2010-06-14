@@ -39,5 +39,15 @@ class MsgController extends Oibs_Controller_CustomController
 		// Message-format has been moved to postDispatch in CustomController. 
         // Now it formats the message in every controller!
 		// $this->_flashMessenger->addMessage("");
+		
+		
+		// if empty message redirect to index
+		if(empty($message)) {
+			$url = $this->_urlHelper->url(array('controller' => 'index',
+                                                'action' => 'index', 
+                                                'language' => $this->view->language), 
+                                          		'lang_default', true);
+			$this->_redirector->gotoUrl($url);
+		}
 	}
 }
