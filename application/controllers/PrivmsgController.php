@@ -86,19 +86,21 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$params = $this->getRequest()->getParams();
 
 			// Get content type
-			$receiver = isset($params['username'])
-			? $params['username'] : '';
+			$receiver = isset($params['username']) ? $params['username'] : '';
 
 			$model_user = New Default_Model_User();
 
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index', 
                                                 'language' => $this->view->language), 
-                                          'lang_default', true);
+                                          		'lang_default', true);
 
 			if(!$model_user->usernameExists($receiver)) {
 				// If not logged, redirecting to system message page
 				$message = 'privmsg-send-invalid-receiver';
+				$this->flash($message, $url);
+			} else if($model_user->getIdByUsername($receiver) == $auth->getIdentity()->user_id) {
+				$message = 'privmsg-send-own-account';
 				$this->flash($message, $url);
 			}
 
@@ -125,7 +127,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 				// Add a private message
 				$Default_Model_privmsg = new Default_Model_PrivateMessages();
 
-				if($Default_Model_privmsg->addMessage($data)) {
+				if($Default_Model_privmsg->addMessage($data) && $data['sender_id'] != $data['receiver_id']){
 					$message = 'privmsg-add-successful';
 				} else {
 					$message = 'privmsg-add-not-successful';

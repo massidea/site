@@ -45,6 +45,10 @@
 		<tuv xml:lang="en"><seg>Given private message receiver doesn't exist!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Yksityisviestin vastaanottajaa ei ole olemassa!</seg></tuv>
 	</tu>
+    <tu tuid='privmsg-send-own-account'>
+		<tuv xml:lang="en"><seg>Can't send private message to your self!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Et voi lähettää itselle sähköpostia!</seg></tuv>
+	</tu>
     <tu tuid='privmsg-send-not-logged'>
 		<tuv xml:lang="en"><seg>You must login in order to send private messages!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sinun pitää olla kirjautuneena lähettääksesi yksityisviestejä!</seg></tuv>
