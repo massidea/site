@@ -42,7 +42,7 @@ class MsgController extends Oibs_Controller_CustomController
 		
 		
 		// if empty message redirect to index
-		if(empty($message)) {
+		if(empty($this->view->messages)) {
 			$url = $this->_urlHelper->url(array('controller' => 'index',
                                                 'action' => 'index', 
                                                 'language' => $this->view->language), 
