@@ -496,24 +496,24 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		// Set data to row
 		$content->id_cty_cnt = $data['content_type'];
-		$content->title_cnt = htmlentities($data['content_header']);
-		$content->lead_cnt = htmlentities($data['content_textlead']);
-		$content->body_cnt = htmlentities($data['content_text']);
+		$content->title_cnt = htmlspecialchars($data['content_header']);
+		$content->lead_cnt = htmlspecialchars($data['content_textlead']);
+		$content->body_cnt = htmlspecialchars($data['content_text']);
 
 		if(isset($data['content_research'])) {
-			$content->research_question_cnt = htmlentities($data['content_research']);
+			$content->research_question_cnt = htmlspecialchars($data['content_research']);
 		}
 
 		if(isset($data['content_opportunity'])) {
-			$content->opportunity_cnt = htmlentities($data['content_opportunity']);
+			$content->opportunity_cnt = htmlspecialchars($data['content_opportunity']);
 		}
 
 		if(isset($data['content_threat'])) {
-			$content->threat_cnt = htmlentities($data['content_threat']);
+			$content->threat_cnt = htmlspecialchars($data['content_threat']);
 		}
 
 		if(isset($data['content_solution'])) {
-			$content->solution_cnt = htmlentities($data['content_solution']);
+			$content->solution_cnt = htmlspecialchars($data['content_solution']);
 		}
 
 		$content->references_cnt = $data['content_references'];
@@ -660,10 +660,10 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		unset($content['views_cnt']);
 		unset($content['created_cnt']);
 
-		$content['title_cnt'] = htmlentities($data['content_header']);
-		$content['lead_cnt'] = htmlentities($data['content_textlead']);
+		$content['title_cnt'] = htmlspecialchars($data['content_header']);
+		$content['lead_cnt'] = htmlspecialchars($data['content_textlead']);
 		$content['language_cnt'] = $data['content_language'];
-		$content['body_cnt'] = htmlentities($data['content_text']);
+		$content['body_cnt'] = htmlspecialchars($data['content_text']);
 
 		if(!isset($data['content_research'])) {
 			$data['content_research'] = "";
@@ -681,11 +681,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			$data['content_solution'] = "";
 		}
 
-		$content['research_question_cnt'] = htmlentities($data['content_research']);
-		$content['opportunity_cnt'] = htmlentities($data['content_opportunity']);
-		$content['threat_cnt'] = htmlentities($data['content_threat']);
-		$content['solution_cnt'] = htmlentities($data['content_solution']);
-		$content['references_cnt'] = htmlentities($data['content_references']);
+		$content['research_question_cnt'] = htmlspecialchars($data['content_research']);
+		$content['opportunity_cnt'] = htmlspecialchars($data['content_opportunity']);
+		$content['threat_cnt'] = htmlspecialchars($data['content_threat']);
+		$content['solution_cnt'] = htmlspecialchars($data['content_solution']);
+		$content['references_cnt'] = htmlspecialchars($data['content_references']);
 		//$content['published_cnt'] = $data['publish']; //it defaults to 0 so let it be 1 if data is already published�
 		$content['modified_cnt'] = new Zend_Db_Expr('NOW()');
 
