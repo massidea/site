@@ -1514,6 +1514,19 @@ form #uploadedFiles_div .form_element_input label {
 	float:right;
 }
 
+.user_list_input_box_meta img,
+.user_list_profile_rating img {
+	vertical-align: middle;
+}
+
+.user_list_positive_icon {
+	color: green;
+}
+
+.user_list_negative_icon {
+	color: red;
+}
+
 .user_list_input_box_lead {
 	margin-left:0.5em;
 	padding-left:2px;
@@ -1521,6 +1534,20 @@ form #uploadedFiles_div .form_element_input label {
 .user_list_input_box_title {
 	padding-left:2px;
 }
+
+.user_list_users_latest_content {
+	padding-bottom:2px;	
+}
+
+.user_list_users_latest_content span span {
+	padding-left:2px;	
+}
+
+.user_list_users_latest_content_created {
+	padding-right:10px;
+	float:right;
+}
+
 .user_list_user_container {
     display: table;
     margin: 0 0 2em 0;
@@ -1641,6 +1668,7 @@ form #uploadedFiles_div .form_element_input label {
 .smallsize_finfo_border {
     border-left: 6px solid #FFC726;
 }
+
 /*
  * RSS decorations
  *
