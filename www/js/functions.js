@@ -476,6 +476,10 @@ $(document).ready(function() {
 			$("#content_save").val('1');
 			$('.content_manage_button').attr('disabled', 'disabled');
 			$('#add_content_form').submit();
+		} else if($(this).attr('id') == "content_preview_button") {
+			$("#add_content_form").attr("action", $("#add_content_form").attr('action')+"/preview/1");
+			$('.content_manage_button').attr('disabled', 'disabled');
+			$('#add_content_form').submit();
 		}
 	});
 });
