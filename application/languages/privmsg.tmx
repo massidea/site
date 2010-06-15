@@ -100,4 +100,11 @@
             </seg>
         </tuv>
 	</tu>
+	<tu tuid='message-sent-too-fast'>
+		<tuv xml:lang="en">
+			<seg>
+				Trying to send message too fast
+			</seg>
+		</tuv>
+	</tu>
 </body>
