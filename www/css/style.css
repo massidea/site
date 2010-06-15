@@ -1514,7 +1514,8 @@ form #uploadedFiles_div .form_element_input label {
 	float:right;
 }
 
-.user_list_input_box_meta img {
+.user_list_input_box_meta img,
+.user_list_profile_rating img {
 	vertical-align: middle;
 }
 
