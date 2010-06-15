@@ -123,9 +123,9 @@ function complete_user_latest_contents(user_id,result){
 			var lead = this.lead_cnt;
 			var titletext = this.title_cnt;
 		}
-		var createtime = "<span style=\"padding-right:10px; float:right\"> [" + this.created_cnt + "]</span>";
+		var createtime = "<span class=\"user_list_users_latest_content_created\"> [" + this.created_cnt + "]</span>";
 		var title = "<a href=\"<?php echo $url_contentView ?>/"+this.id_cnt+"\">" + titletext + "</a>";
-		$("#user_"+user_id+"_latest_content").append("<div style=\"padding-bottom:2px;\"><span class=\""+type+"\"><span style=\"padding-left:2px;\">"+title+": "+lead+"</span>"+createtime+"</span></div>");
+		$("#user_"+user_id+"_latest_content").append("<div class=\"user_list_users_latest_content\"><span class=\""+type+"\"><span>"+title+": "+lead+"</span>"+createtime+"</span></div>");
 		i++;
 		if (i == 3) return false;
 	}});
@@ -155,7 +155,10 @@ function complete_user_content_search(user_id,result){
 			var rating_positive = Math.ceil(((row.rating_sum / row.ratings) + 1) * 50);
 			var rating_negative = Math.floor(100-((row.rating_sum / row.ratings) + 1) * 50);
 
-			var rating = "<span style=\"color:green;\">"+rating_positive+"% </span><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><img src=\"<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>\" alt=\"\" style=\"vertical-align: middle;\" /><span style=\"color:red;\"> "+rating_negative+"%</span> ";
+			var rating = "<span class=\"user_list_positive_icon\">"+rating_positive+"% </span>"+
+						"<img src=\"<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>\" alt=\"\" />"+
+						"<img src=\"<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>\" alt=\"\" />"+
+						"<span class=\"user_list_negative_icon\"> "+rating_negative+"%</span>";
 			
 			if (row.views)
 				var views = row.views;
