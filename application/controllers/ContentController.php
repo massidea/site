@@ -163,15 +163,17 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 
 		// Custom pagination to fix memory error on large amount of data
+		/*
 		$paginator = new Zend_View();
 		$paginator->setScriptPath('../application/views/scripts');
 		$paginator->pageCount = $pageCount;
 		$paginator->currentPage = $page;
 		$paginator->pagesInRange = 10;
+		*/
 
 		// Send to view
 		$this->view->tags = $tags;
-		$this->view->contentPaginator = $paginator;
+		//$this->view->contentPaginator = $paginator;
 		$this->view->contentData = $results;
 		$this->view->type = $cty;
 		$this->view->count = $count;

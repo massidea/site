@@ -470,12 +470,17 @@ $(document).ready(function() {
 	$('.content_manage_button').click(function() {	
 		if($(this).attr('id') == "content_publish_button") {
 			$("#content_publish").val('1');
+			$('.content_manage_button').attr('disabled', 'disabled');
+			$('#add_content_form').submit();
 		} else if($(this).attr('id') == "content_save_button") {
 			$("#content_save").val('1');
+			$('.content_manage_button').attr('disabled', 'disabled');
+			$('#add_content_form').submit();
+		} else if($(this).attr('id') == "content_preview_button") {
+			$("#add_content_form").attr("action", $("#add_content_form").attr('action')+"/preview/1");
+			$('.content_manage_button').attr('disabled', 'disabled');
+			$('#add_content_form').submit();
 		}
-		
-		$('.content_manage_button').attr('disabled', 'disabled');
-		$('#add_content_form').submit();
 	});
 });
 

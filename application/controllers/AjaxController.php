@@ -62,6 +62,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	{
 		// Get requests
         $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
+        $contentType = isset($this->params['type']) ? $this->params['type'] : 'all';
 
         // Get models
     	$contentModel = new Default_Model_Content();
@@ -69,7 +70,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	
     	// Get recent post data
     	$recentposts_raw = $contentModel->listRecent(
-			'all', $offset, 15, 'created', $this->view->language, -1
+			$contentType, $offset, 15, 'created', $this->view->language, -1
     	);
 
     	$recentposts = array();

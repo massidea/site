@@ -1,4 +1,6 @@
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-min.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-unicode-base.js'); ?>
 
 <?php $this->headScript()->captureStart()?>
 var language = '<?php echo $this->language;?>';
