@@ -555,7 +555,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 				// ->removeDecorator('errors');
 		$gravatar = new Zend_Form_Element_Checkbox('gravatar');
 		$gravatar->setDecorators(array('SettingsCheckboxDecorator'))
-                ->setDescription("Enable gravatar");
+                ->setDescription("Enable <a href=\"http://www.gravatar.com\">gravatar</a>");
                 
         $email_publicity = new Zend_Form_Element_Checkbox('email_publicity');
 		$email_publicity->setDecorators(array('SettingsCheckboxDecorator'))
