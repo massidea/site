@@ -1267,6 +1267,13 @@ form #uploadedFiles_div .form_element_input label {
 }
 
 
+.content_view_references span,
+.content_view_files span,
+.content_view_core_content span
+{ font-weight: bold; font-size: 14px; }
+
+.content_view_content_modified p { font-style: italic; }
+
 /** comment stuff **/
 #content_view_comment_form_container {
     margin: 1em 0 0 0;
