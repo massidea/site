@@ -64,6 +64,8 @@ class Default_Form_PreviewContentForm extends Zend_Form
         
         $edit = new Zend_Form_Element_Submit('content_edit');
         $edit->setLabel($translate->_("content-add-edit"))
+        		->setAttrib('style', 'margin-left: 10px;')
+        		->setAttrib('onclick', 'generatePreview(); return false;')
                 ->removeDecorator('DtDdWrapper');
         
         // Set custom form layout
