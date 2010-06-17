@@ -103,8 +103,7 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                                                      'language' => $this->language),
                                                'lang_default', true)."/".$this->user['login_name_usr'];
                 ?>
-                <form><input type="button" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" onClick="location.href='<?php echo $privatemessage; ?>'"></form>
-                <!--<input type="submit" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" />-->
+                <input type="button" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" onClick="location.href='<?php echo $privatemessage; ?>'">
                 <?php endif; endif; ?>
             </div>
             <h2><?php echo $this->user['login_name_usr']; ?></h2>
@@ -123,6 +122,7 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                     ?>
                 </li>
                 <?php endif; ?>
+
                 <?php //display country TODO: link
                 if (isset($this->userprofile['country']) && $this->userprofile['country'] != NULL) :
                 ?>
@@ -151,14 +151,9 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 <li><strong>Phone:</strong> <?php echo $this->userprofile['phone']; ?></li>
                 <?php endif; ?>
                 <?php
-                if (isset($this->userprofile['profession']) && $this->userprofile['profession'] != NULL):
-                ?>
-                <li><strong>Profession:</strong> <?php echo $this->userprofile['profession']; ?></li>
-                <?php endif; ?>
-                <?php
                 if (isset($this->userprofile['company']) && $this->userprofile['company'] != NULL):
                 ?>
-                <li><strong>Company:</strong> <?php echo $this->userprofile['company']; ?></li>
+                <li><strong>Employer / Organization:</strong> <?php echo $this->userprofile['company']; ?></li>
                 <?php endif; ?>
                 <!-- <li><strong>I am:</strong> <a href="#">Working in a private sector</a></li> -->
             </ul>

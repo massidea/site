@@ -69,12 +69,15 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         if (isset($formdata['cancel']))
             unset($formdata['cancel']);
 
+        // Birthday
+        
+
         // needs replacing to single setValue($id, $key, $val, $pub)!
         foreach ($formdata as $key => $val) {                                   // go through data
-            if ($key != "email" && $key != "password"                           // ignore certain keys...   
-                && $key != "notifications")										// ignore 
+            if ($key != "email" && $key != "password"                           // ignore certain keys...
+                && $key != "notifications" && $val != "")                       // ignore
             {
-                $publicity = strpos($key,'_publicity');							// returns true if publicitied
+                $publicity = strpos($key,'_publicity');                         // returns true if publicitied
                 if($publicity !== false) {                                      // note the use of !== (not !=), this operator must be used since strpos can return boolean and integer values
                     $key_to_set = array_shift(explode('_publicity',$key,2));    // get key for which the public value is for (strstr replacement from php.net)
                     $this->setPublicity($id, $key_to_set, $val);                // set publicity (whose, what key, what value)
@@ -94,12 +97,8 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     * @param value
     * @param pub int (1/0) 
     */
-    public function setValue($id = -1, $key, $value, $pub = 0) 
+    public function setValue($id, $key, $value, $pub = 0) 
     {
-        if ($id == -1) {
-            return false;    // panic and die
-        }
-        
         // get old values
         $select = $this->select()
             ->from($this, array('profile_key_usp', 'profile_value_usp', 'public_usp'))

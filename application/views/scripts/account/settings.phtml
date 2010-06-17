@@ -1,13 +1,20 @@
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
-$this->headScript()->appendFile($this->baseUrl . '/js/CheckForm.js');
+//$this->headScript()->appendFile($this->baseUrl . '/js/CheckForm.js');
 ?>
 
 <?php $this->headScript()->captureStart()?>
     // Definitions for input boxes ([0] = minimum, [1] = maximum, [2] = required (1 true/0 false)
 	var inputDefinitions = {
-		'biography': 				[1,  300, 1]
+		'biography':    [0,  4000, 0]
 	};
+
+    $(function() {
+        $('#birthday').datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
 <?php $this->headScript()->captureEnd()?>
 
 <div id="edit-user-page" class="narrow">
