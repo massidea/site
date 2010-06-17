@@ -1,4 +1,15 @@
-<?php
+<?php 
+
+$url_register = $this->url(array('controller' => 'account',
+                                 'action' => 'register',
+                                 'language' => $this->language),
+                                 'lang_default', true);
+
+$url_login = $this->url(array('controller' => 'account',
+                                 'action' => 'login',
+                                 'language' => $this->language),
+                                 'lang_default', true); 
+
 // dirty fix to use language variable from view
 //$this->language = Zend_Layout::getMvcInstance()->getView()->language;
 ?>
@@ -136,16 +147,24 @@
             <p><?php echo stripslashes(nl2br($this->contentData['body_cnt'])); ?></p>
             
             <?php if ($this->modified) : ?>
-            <p><?php echo $this->translate('content-modified')." ".$this->modified; ?></p> 
+            <div class="content_view_content_modified"><p><?php echo $this->translate('content-modified')." ".$this->modified; ?></p></div>
             <?php endif; ?>
             
         </div>
         
-        <div class="content_view_files">
+        <?php if(!empty($this->contentData['references_cnt'])) : ?>
+        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
+        <div class="content_view_references">
+        <span>References: </span>
+        <p><?php echo $this->contentData['references_cnt']; ?></p>
+        </div>
+        <?php endif;?>
+  
+          <div class="content_view_files">
 	        <?php if(!empty($this->files)) : ?>
 	        	<div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
 	        	 <?php 
-	        		echo "<p><b>".$this->translate('content-files').":</b>"; 	
+	        		echo "<p><span>".$this->translate('content-files').":</span>"; 	
 	       			foreach ($this->files as $id_fil => $filename) {
 	        			echo "<div class='content_view_file_link'><a href='".$this->baseUrl."/en/file/view/".$id_fil."'>".$filename."</a></div>";
 	        		}
@@ -156,22 +175,23 @@
         
 		<!-- From now on, also ideas are allowed to link to ideas (check was removed) -->
         <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
-
-        <div class="view_content_left_contentlinks">
+  
+        <div class="content_view_core_content">
             <?php
             if ($this->contentType == "problem") { ?>
-                <p><b><?php echo $this->translate('content-add-research') .":</b> "
+                <p><span><?php echo $this->translate('content-add-research') .":</span> "
                 . stripslashes($this->contentData['research_question_cnt']); ?></p>
             <?php } elseif($this->contentType == "idea") { ?>
-                <p><b><?php echo $this->translate('content-add-solution') .":</b> "
+                <p><span><?php echo $this->translate('content-add-solution') .":</span> "
                 . stripslashes($this->contentData['solution_cnt']); ?></p>
             <?php } elseif($this->contentType == "finfo") { ?>
-                <p><b><?php echo $this->translate('content-add-opportunity') .":</b> "
+                <p><span><?php echo $this->translate('content-add-opportunity') .":</span> "
                 . stripslashes($this->contentData['opportunity_cnt']); ?></p>
-                <p><b><?php echo $this->translate('content-add-threat') .":</b> "
+                <p><span><?php echo $this->translate('content-add-threat') .":</span> "
                 . stripslashes($this->contentData['threat_cnt']); ?></p>
             <?php } ?>
-            
+         </div> 
+         <div class="view_content_left_contentlinks">
             <p style="font-weight: bold; font-size:80%;"><?php echo $this->translate('content-view-solve-'.$this->contentType);?>
             <a href="<?php echo $this->url(array('language' => $this->language,
                                      'contenttype' => 'idea',
@@ -305,14 +325,9 @@
 		<?php } ?>
         <?php if ($this->comments > 0) { echo'</div>'; } ?>
         <?php if (!$this->user_can_comment) { ?>
-            <?php
-            $url_register = $this->url(array('controller' => 'account',
-                                             'action' => 'register',
-                                             'language' => $this->language),
-                                             'lang_default', true); 
-            ?>
+
             <p style="margin: 0px; padding: 0px;">Would you like to comment?</p>
-            <p style="margin: 0px; padding: 0px;"><a href="#">Log in</a> or <a href="<?php echo $url_register; ?>">Sign up</a></p>
+            <p style="margin: 0px; padding: 0px;"><a href="<?php echo $url_login; ?>">Log in</a> or <a href="<?php echo $url_register; ?>">Sign up</a></p>
         <?php } ?>        
                 <?php if (isset($this->parents[0])) : ?>
                 <div class="success">
