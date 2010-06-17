@@ -85,6 +85,13 @@ if($this->privmsgs):
                 
 				<br />
 				<?php echo $sent; ?>
+				<br />
+                <form name="delete_privmsg_<?php echo $privmsg['id_pmg']; ?>" action="#" method="post">
+                    <input type="hidden" name="delete_privmsg" value="delete_<?php echo $privmsg['id_pmg']; ?>" />
+                	<a href="javascript: void(0)" onclick="document.delete_privmsg_<?php echo $privmsg['id_pmg']; ?>.submit(); return false">
+                		<?php echo $this->translate('privmsg-delete'); ?>
+                	</a>
+                </form>
 			</div><!-- end of privmsg_userinfo -->
 			<div class="privmsg_content">
 

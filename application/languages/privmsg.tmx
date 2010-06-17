@@ -25,6 +25,10 @@
 		<tuv xml:lang="en"><seg>From:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Keneltä:</seg></tuv>
 	</tu>
+    <tu tuid='privmsg-delete'>
+		<tuv xml:lang="en"><seg>Delete</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
+	</tu>
     <tu tuid='privmsg-header'>
 		<tuv xml:lang="en"><seg>Header:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Otsikko:</seg></tuv>
