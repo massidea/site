@@ -510,8 +510,7 @@ div.right_side{
 }
 
 div.right_side p{
-	padding: 12px;
-    padding-bottom: 0px;
+	padding: 5px 0;
 	margin: 0px;
 }
 
@@ -954,9 +953,16 @@ div.privmsg_userinfo {
 }
 
 #form_content_add_container input[type="text"],
-#form_content_add_container textarea,
-#form_content_add_container select {
+#form_content_add_container textarea {
 	width: 390px;
+    float: left;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #7F9DB9;
+}
+
+#form_content_add_container select {
+	width: 393px;
     float: left;
     margin: 0;
     padding: 0;

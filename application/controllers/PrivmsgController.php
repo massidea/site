@@ -140,8 +140,8 @@ class PrivmsgController extends Oibs_Controller_CustomController
 				if ($form->isValid($data)) {
 					// Add a private message
 					$Default_Model_privmsg = new Default_Model_PrivateMessages();
-	
-					if($Default_Model_privmsg->addMessage($data) && $data['sender_id'] != $data['receiver_id']){
+
+					if(($Default_Model_privmsg->addMessage($data)) && $data['privmsg_sender_id'] != $data['privmsg_receiver_id']){
 						$message = 'privmsg-add-successful';
 					} else {
 						$message = 'privmsg-add-not-successful';
