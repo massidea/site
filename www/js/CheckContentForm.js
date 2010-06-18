@@ -29,7 +29,7 @@ $(document).ready(function() {
 		'content_textlead': 			[1,  320, 1],
 		'content_text': 				[0, 4000, 0],
 		'content_header': 				[1,  140, 1],
-		'content_related_companies':	[1,  120, 1],		
+		'content_related_companies':	[0,  120, 0],		
 		'content_research': 			[1,  140, 1],
 		'content_opportunity': 			[1,  140, 1],
 		'content_threat': 				[1,  140, 1],

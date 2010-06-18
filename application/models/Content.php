@@ -811,9 +811,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		$content = new Default_Model_Content();
 
-		$where = $this->getAdapter()->quoteInto('id_cnt = ?', (int)$id_cnt);
-
-		if($this->delete($where)) {
+		if($this->delete("id_cnt = ".$id_cnt)) {
 			$return = true;
 		}
 

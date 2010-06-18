@@ -1425,7 +1425,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 
 					foreach($contentRemoveChecker as $crc) {
-						if (!crc) {
+						if (!$crc) {
 							$contentRemoveSuccessful = false;
 							break;
 						}

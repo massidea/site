@@ -82,6 +82,18 @@ class Oibs_Controller_Plugin_GTranslate {
 	}
 	
 	/*
+	 * public function getLangPair()
+	 * 
+	 * Get language pair
+	 * 
+	 * @return	array	langpair	Language pair in an array
+	 */
+	public function getLangPair()
+	{
+		return array('from' => $this->_langFrom, 'to' => $this->_langTo);
+	}
+	
+	/*
 	 * public function switchLangs()
 	 * 
 	 * Switches language pair places (from -> to, to -> from)

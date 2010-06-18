@@ -1,0 +1,23 @@
+        <div id="<?php echo $this->box->getName(); ?>" class="left">
+            <h3><?php echo $this->box->getHeader(); ?></h3>
+			<!-- Box tabs -->
+            <div id="content_type">
+                <ul>
+                	<?php foreach ($this->box->getTabs() as $tab): ?>
+						<li class="<?php echo $tab['class'];?>">
+							<a>
+								<strong><?php echo $tab['header']; ?></strong>
+								<?php if($tab['extraText'] !== ""):?>
+									(<?php echo $tab['extraText']; ?>)
+								<?php endif;?>
+							</a>
+						</li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+			<div class="clear"></div>
+            <!-- Box Contents -->
+            <div class="scroll-box">
+            <?php echo $this->partial($this->box->getPartial(), $this); ?>
+            </div>
+        </div>

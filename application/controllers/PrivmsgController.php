@@ -44,13 +44,33 @@ class PrivmsgController extends Oibs_Controller_CustomController
 		if ($auth->hasIdentity()) {
 			$Default_Model_privmsg = New Default_Model_PrivateMessages();
 			
-			// Delete button was presser
-			if (isset($action) && $action != null && $action != '') {
-				// Separate the id from the value of 'delete_privmsg'
-				$deleteMsgId = (int)substr($action, 7);
-				
-				// Delete the pointed message
-				$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = '.$deleteMsgId);
+			// Delete button was pressed
+			if (isset($action)) {
+				if (substr($action, 0, 11) == 'delete_one_') {
+					// Separate the id from the value of 'delete_privmsg'
+					$deleteMsgId = (int)substr($action, 11);
+					
+					// Delete the pointed message
+					$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = '.$deleteMsgId);
+				}
+				else if ($action == 'delete_selected') {
+					// Get the IDs of the first and last selected message
+					$firstMsgId = $this->getRequest()->getPost('delete_first');
+					$lastMsgId = $this->getRequest()->getPost('delete_last');
+					
+					// Gather an array of all the selected message IDs
+					$selectedMsgs = array();
+        			for ($i = $firstMsgId; $i > ($firstMsgId - $lastMsgId); $i--) {
+        				if ($this->getRequest()->getPost('select_'.$i) == 'on') {
+        					$selectedMsgs[] = $i;
+        				}
+        			}
+        			
+					// Go through the messages and delete them
+					for ($i = 0; $i < count($selectedMsgs); $i++) {
+						$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = '.$selectedMsgs[$i]);
+					}
+				}
 			}
 
 			$privmsgs = $Default_Model_privmsg->getPrivateMessagesByUserId($auth->getIdentity()->user_id);
@@ -140,8 +160,8 @@ class PrivmsgController extends Oibs_Controller_CustomController
 				if ($form->isValid($data)) {
 					// Add a private message
 					$Default_Model_privmsg = new Default_Model_PrivateMessages();
-	
-					if($Default_Model_privmsg->addMessage($data) && $data['sender_id'] != $data['receiver_id']){
+
+					if(($Default_Model_privmsg->addMessage($data)) && $data['privmsg_sender_id'] != $data['privmsg_receiver_id']){
 						$message = 'privmsg-add-successful';
 					} else {
 						$message = 'privmsg-add-not-successful';

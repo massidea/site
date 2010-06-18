@@ -182,17 +182,10 @@ class Default_Form_AddContentForm extends Zend_Form
         
         // Related companies, Input
 		$related_companies = new Zend_Form_Element_Text('content_related_companies');
-		$related_companies->setRequired(true)
-                ->addValidators(array(array('NotEmpty', 
-                                            true, 
-                                            array('messages' => 
-                                                array('isEmpty' => 
-                                                    'content-add-field-empty')
-                                                 )
-                                           ),
-                                        array('StringLength', 
+		$related_companies->setRequired(false)
+                ->addValidators(array(array('StringLength', 
                                               true, 
-                                              array(1, 
+                                              array(0, 
                                                     120,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
@@ -203,7 +196,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                )
                 ->setLabel($translate->_("content-add-related_companies"))
                 ->setDescription($translate->_("content-add-related_companies-help-text"))
-				->setDecorators(array('FormElementDecorator')); 
+				->setDecorators(array('FormOptionalElementDecorator')); 
         
         // Problem research question, Input
 		$research = new Zend_Form_Element_Text('content_research');

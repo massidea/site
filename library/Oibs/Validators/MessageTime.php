@@ -49,6 +49,7 @@ class Oibs_Validators_MessageTime extends Zend_Validate_Abstract
     		$session->lastMessage = time();
     		return true;
     	} else if (time() - $session->lastMessage > 5) {
+    		$session->lastMessage = time();
     		return true;
     	}
 		$this->_error(self::NOT_VALID);

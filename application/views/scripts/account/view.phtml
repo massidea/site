@@ -30,8 +30,10 @@ function deleteconfirmation(url) {
 
 // Bio: show 750; max 4000
 var biographyBody = new Array();
-$(document).ready(function(){
-	var previewChars = 750;
+
+$(document).ready(function() {
+    // Bio
+    var previewChars = 750;
 	$(".biographyrow").each(function(key, value){
 		biographyBody[key] = $(value).children().html();
 		var biographylength = $(value).children().html().length;
@@ -44,7 +46,31 @@ $(document).ready(function(){
 	$('#checkallrows').click(function(){
 		$("INPUT[type='checkbox']").attr('checked', $('#checkallrows').is(':checked'));
 	});
-});
+    // Endof Bio
+
+	$("#activity > .left > #content_type > ul > li > a").mouseover(function () {
+		$(this).parent().css('cursor', 'pointer');
+	});
+	
+	$("#activity > .left > #content_type > ul > li > a").click(function (event) {		
+		event.preventDefault();
+
+		$(this).parent().siblings().removeClass('selected');
+		$(this).parent().removeClass('selected');
+				class = $(this).parent().attr('class'); 
+		$(this).parent().addClass('selected');
+		box = $(this).parent().parent().parent().parent().attr('id');
+		$("#" + box + " > .scroll-box > ul > li").each(function() {
+			curClass =$(this).attr('class');
+			if( !$(this).hasClass(class) && !$(this).hasClass('popup')) {
+				$(this).hide();
+			} else if ($(this).hasClass(class) && !$(this).hasClass('popup')) {
+				$(this).show();
+				$(this).scrollTop();
+			}
+		}); // endof li.each
+	}); // Endof a.click
+}); // Endof document ready
 
 function expandText(key)
 {
@@ -225,201 +251,10 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
     </div>
     <div class="clear"></div>
     <div id="activity">
-        <div id="my-posts" class="left">
-            <h3>My posts</h3>
-            <div id="content_type">
-                <ul>
-                    <li class="all<?php if ($this->type === 0) echo " selected"; ?>">
-                        <a href="<?php echo $this->url(array('controller' => 'account',
-                                                             'action' => 'view',
-                                                             'language' => $this->language,
-                                                             'user' => $this->user['login_name_usr']),
-                                                       'lang_default', true); ?>">
-                            <strong>All</strong>
-                            (<?php echo $this->userprofile['contentCounts']['totalCount']; ?>)
-                        </a>
-                    </li>
-                    <li class="challenges<?php if ($this->type === "problem") echo " selected"; ?>">
-                        <a href="<?php echo $this->url(array('controller' => 'account',
-                                                             'action' => 'view',
-                                                             'language' => $this->language,
-                                                             'user' => $this->user['login_name_usr'],
-                                                             'type' => 'problem'),
-                                                       'lang_default', true); ?>">
-                            <strong>Challenges</strong>
-                            (<?php echo $this->userprofile['contentCounts']['problem']; ?>)
-                        </a>
-                    </li>
-                    <li class="ideas<?php if ($this->type === "idea") echo " selected"; ?>">
-                        <a href="<?php echo $this->url(array('controller' => 'account',
-                                                             'action' => 'view',
-                                                             'language' => $this->language,
-                                                             'user' => $this->user['login_name_usr'],
-                                                             'type' => 'idea'),
-                                                       'lang_default', true); ?>">
-                            <strong>Ideas</strong>
-                            (<?php echo $this->userprofile['contentCounts']['idea']; ?>)
-                        </a>
-                    </li>
-                    <li class="visions<?php if ($this->type === "finfo") echo " selected"; ?>">
-                        <a href="<?php echo $this->url(array('controller' => 'account',
-                                                             'action' => 'view',
-                                                             'language' => $this->language,
-                                                             'user' => $this->user['login_name_usr'],
-                                                             'type' => 'finfo'),
-                                                       'lang_default', true); ?>">
-                            <strong>Visions</strong>
-                            (<?php echo $this->userprofile['contentCounts']['finfo']; ?>)
-                        </a>
-                    </li>
-                    <?php if($this->user_edit) : ?>
-                    <!-- saved is not in style_new.css so we use all -->
-                    <li class="all<?php if ($this->type === "saved") echo " selected"; ?>">
-                        <a href="<?php echo $this->url(array('controller' => 'account',
-                                                             'action' => 'view',
-                                                             'language' => $this->language,
-                                                             'user' => $this->user['login_name_usr'],
-                                                             'type' => 'saved'),
-                                                       'lang_default', true); ?>">
-                            <strong>Saved</strong>
-                            (<?php echo $this->userprofile['contentCounts']['savedCount']; ?>)
-                        </a>
-                    </li>
-                    <?php endif; ?>
-                </ul>
-            </div>
-            <div class="clear"></div>
-            <div class="scroll-box">
-                <?php if (!empty($this->authorContents )): ?>
-                <ul>
-                    <?php foreach($this->authorContents as $content): ?>
-                    <?php if($this->type === "saved" && $this->user_edit) {
-                              if($content['published_cnt'] != 0)
-                                  { continue; }
-                          } else {
-                              if($this->type !== 0 && $content['key_cty'] !== $this->type)
-                                  { continue; }
-                          }
-                    ?>
-                    <?php
-
-                    $contentclass = '';
-                    if ($content['key_cty'] === "idea") {
-                        $contentclass = "ideas";
-                    } elseif ($content['key_cty'] === "problem") {
-                        $contentclass = "challenges";
-                    } elseif ($content['key_cty'] === "finfo") {
-                        $contentclass = "visions";
-                    }
-                    ?>
-                    <li class="<?php echo $contentclass; ?>">
-                        <div>
-                            <p>
-                                <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'],
-                                                                     'language' => $this->language),
-                                                               'content_shortview', true); ?>">
-                                    <?php echo $content['title_cnt']; ?>
-                                </a>
-                            </p>
-                            <p>
-                                <?php echo $content['lead_cnt']; ?>
-                            </p>
-                            <p><strong>Posted</strong>
-                               <?php echo date("d.m.Y", strtotime($content['created_cnt'])); ?>
-                                <!-- |  <strong>Rating</strong> -->
-                               | <strong>Views</strong> <?php echo $content['views']; ?>
-                            </p>
-                            <?php if ($this->user_edit == true): ?>
-                            <p>
-                                <b>
-                                    <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'],
-                                                                         'language' => $this->language),
-                                                                   'content_edit', true); ?>">
-                                        Edit
-                                    </a>
-                                </b>
-                                <?php if ($this->user_edit == true && $content['published_cnt'] == 0): ?>
-                                | <b>
-                                    <a href="#" onclick="publishconfirmation('<?php
-                                                    echo $this->url(array('language' => $this->language,
-                                                                          'content_id' => $content['id_cnt']),
-                                                                    'content_publish', true); ?>')">
-                                        Publish
-                                    </a>
-                                </b> |
-                                <?php endif; ?>
-                                | <b>
-                                    <a href="#" onclick="deleteconfirmation('<?php
-                                                    echo $this->url(array('language' => $this->language,
-                                                                          'content_id' => $content['id_cnt']),
-                                                                    'content_remove', true); ?>')">
-                                        Delete
-                                    </a>
-                                </b>
-                                <?php if ($content['cntHasCntCountParent'] > 0 || $content['cntHasCntCountChild'] > 0): ?>
-                                | <b>
-                                    <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
-                                                                         'language' => $this->language),
-                                                                   'unlinkcontent', true); ?>">
-                                        Edit content links (<?php echo ($content['cntHasCntCountParent'] + $content['cntHasCntCountChild']); ?>)
-                                    </a>
-                                </b>
-                                <?php endif; ?>
-                                <?php if ($content['cmpHasCntCount'] > 0): ?>
-                                | <b>
-                                    <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
-                                                                 'language' => $this->language),
-                                                                 'unlinkcampaign', true); ?>">
-                                        Edit campaign links (<?php echo $content['cmpHasCntCount']; ?>)
-                                    </a>
-                                </b>
-                                <?php endif; ?>
-                            </p>
-                            <?php endif; ?>
-                        </div>
-                    </li>
-                    <li id="popup_publish_content_<?php echo $content['id_cnt']; ?>"
-                            class="popup" style="display:none;">
-                        <!-- Tämä pitää tehdä vielä paremmin -->
-                            <?php echo $this->translate('content-publish-confirm'); ?>
-
-                            <br />
-                            <br />
-
-                            <a href="<?php echo $this->url(array('language' => $this->language,
-                                                                 'content_id' => $content['id_cnt']),
-                                                           'content_publish', true); ?>" class="button">
-                                <?php echo $this->translate('content-publish'); ?>
-                            </a>
-
-                            <a href="#" style="text-decoration: none;" class="button"
-                                onclick="popup_close()">
-                                <?php echo $this->translate('content-cancel'); ?>
-                            </a>
-                    </li>
-                    <li id="popup_delete_content_<?php echo $content['id_cnt']; ?>"
-                            class="popup" style="display:none;">
-                            <?php echo $this->translate('content-delete-confirm'); ?>
-
-                            <br />
-                            <br />
-
-                            <a href="<?php echo $this->url(array('language' => $this->language,
-                                                                 'content_id' => $content['id_cnt']),
-                                                           'content_remove', true); ?>" class="button">
-                                <?php echo $this->translate('content-delete'); ?>
-                            </a>
-                            <a href="#" style="text-decoration: none;" class="button"
-                                onclick="popup_close()">
-                                <?php echo $this->translate('content-cancel'); ?>
-                            </a>
-                        <!-- Loppuu tähän -->
-
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-                <?php endif; ?>
-            </div>
+    	<?php foreach($this->boxes as $this->box): ?>
+			<?php echo $this->partial("partials/account_view_user_box.phtml", $this); ?>
+		<?php endforeach; ?>
+		
             <!--
             <div id="comments">
                 <h4>Comments</h4>
@@ -496,7 +331,6 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 </div>
             </div>
             -->
-        </div>
         <div class="right">
             <?php
             /*
