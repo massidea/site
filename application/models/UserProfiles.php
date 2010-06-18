@@ -227,6 +227,17 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         {
         	$collection[$result->profile_key_usp] = htmlentities($result->profile_value_usp);
         }
+        // Change gender to M or N
+        if ($collection['gender'] == 1)
+            $collection['gender'] = 'Male';
+        else
+            $collection['gender'] = 'Female';
+        // Change employment "code" to text
+        $collection['employment'] = $this->getEmploymentByEmployment($collection['employment']);
+        // User timezone
+        $timezone_model = new Default_Model_Timezones();
+        $collection['usertimezone'] = $timezone_model->getTimezoneTextById($collection['usertimezone']);
+
         return $collection;
     }
     
@@ -1205,6 +1216,41 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
                     'pentioner' => 'Pentioner',
                     'other' => 'Other',
                );
+    }
+
+    /**
+     * getEmploymentByEmployment
+     *
+     * Employment by employment code
+     *
+     * @return String
+     * @param String
+     * @author Mikko Korpinen
+     */
+    public function getEmploymentByEmployment($employment)
+    {
+        Switch ($employment) {
+            case 'private_sector':
+                return 'Private sector';
+                break;
+            case 'public_sector':
+                return 'Public sector';
+                break;
+            case 'education_sector':
+                return 'Education sector';
+                break;
+            case 'student':
+                return 'Student';
+                break;
+            case 'pentioner':
+                return 'Pentioner';
+                break;
+            case 'other':
+                return 'Other';
+                break;
+            default:
+                return '';
+        }
     }
     
 } // end of class

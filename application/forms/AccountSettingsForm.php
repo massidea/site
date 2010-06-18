@@ -33,7 +33,10 @@
 class Default_Form_AccountSettingsForm extends Zend_Form
 {
 
-    // WIP 10.6.2010
+    // WIP 18.6.2010
+    // TODO: Error messages, filters? validations?
+    //       Avatar image, country list?
+
     /* To usr_profiles_usp:
      * openid
      * phone
@@ -177,6 +180,12 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $emailclear = new Oibs_Form_Element_Note('emailclear');
         $emailclear->setValue($clear);
 
+        $gravatar = new Oibs_Form_Element_Note('gravatartext');
+        $gravatar->setValue(
+                '<div class="input-column1"></div>'
+                . '<div class="input-column2" style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
+        $gravatarcheck = new Zend_Form_Element_Checkbox('gravatar');
+
         $phone = new Zend_Form_Element_Text('phone');
         $phone->setLabel('Phone')
               ->setAttrib('id', 'phone');
@@ -219,15 +228,16 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                           false,
                           array(0, 4000, 'messages' => array('stringLengthTooShort' => 'Biography too long'))
                       ),
-                  ));;
-                  //->setDescription('<div id="progressbar_biography" class="progress_ok"></div>');
-        $biographyclear = new Oibs_Form_Element_Note('biographyclear');
-        $biographyclear->setValue($clear);
+                  ))
+                  ->setErrorMessages(Array('Biography too long'));
+                   //->setDescription('<div id="progressbar_biography" class="progress_ok"></div>');
+        $biographypublic = new Zend_Form_Element_CheckBox('biography_publicity');
+        $biographypublic->setLabel($publictext);
 
         $intereststext = new Oibs_Form_Element_Note('intereststext');
         $intereststext->setValue(
                 '<div class="input-column1"></div>'
-                . '<div class="input-column2 help">(Use commas to seperate tags)</div>');
+                . '<div class="input-column2 help">(Use commas to seperate tags)</div><div class="clear"></div>');
         $interests = new Zend_Form_Element_Text('interests');
         $interests->setLabel('My interest (tags)')
                    ->setAttrib('id', 'interests');
@@ -283,6 +293,13 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $userlanguageclear = new Oibs_Form_Element_Note('userlanguageclear');
         $userlanguageclear->setValue($clear);
 
+        /*
+        $avatar = new Zend_Form_Element_File('avatar');
+        $avatar->setLabel('Avatar image');
+
+        
+        */
+
         // DB: city
         $hometown = new Zend_Form_Element_Text('city');
         $hometown->setLabel('Hometown')
@@ -291,14 +308,18 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                  ->addValidators(array(
                             array('NotEmpty', true, array('messages' => array('isEmpty' => 'Empty')))
                  ));
-        $hometownpublic = new Zend_Form_Element_Hidden('city_publicity');
+        $hometownpublic = new Zend_Form_Element_CheckBox('city_publicity');
         $hometownpublic->setLabel($publictext);
+        $hometownpublic->helper = 'FormHidden';
 
         $address = new Zend_Form_Element_Text('address');
         $address->setLabel('Address')
                 ->setAttrib('id', 'address');
-        $addresspublic = new Zend_Form_Element_Hidden('address_publicity');
-        $addresspublic->setLabel($publictext);
+        $addresspublic = new Zend_Form_Element_CheckBox('address_publicity');
+        $addresspublic->setLabel($publictext)
+                      ->setAttrib('checked', 'checked')
+                      ->setValue(1);
+        $addresspublic->helper = 'FormHidden';
 
         $country = new Zend_Form_Element_Text('country');
         $country->setLabel('Country of Residence')
@@ -360,6 +381,8 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             $personalInformation,
                             $email,
                             $emailclear,
+                            $gravatar,
+                            $gravatarcheck,
                             $phone,
                             $phonepublic,
                             $firstname,
@@ -371,7 +394,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             $birthday,
                             $birthdaypublic,
                             $biography,
-                            $biographyclear,
+                            $biographypublic,
                             $intereststext,
                             $interests,
                             $interestsclear,
@@ -423,6 +446,8 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $confirmpasswordclear->setDecorators(array('ViewHelper'));
         $email->setDecorators(array('InputDecorator'));
         $emailclear->setDecorators(array('ViewHelper'));
+        $gravatar->setDecorators(array('ViewHelper'));
+        $gravatarcheck->setDecorators(array('PublicDecorator'));
         $phone->setDecorators(array('InputDecorator'));
         $phonepublic->setDecorators(array('PublicDecorator'));
         $firstname->setDecorators(array('InputDecorator'));
@@ -434,7 +459,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $birthday->setDecorators(array('InputDecorator'));
         $birthdaypublic->setDecorators(array('PublicDecorator'));
         $biography->setDecorators(array('InputDecorator'));
-        $biographyclear->setDecorators(array('ViewHelper'));
+        $biographypublic->setDecorators(array('PublicDecorator'));
         $intereststext->setDecorators(array('ViewHelper'));
         $interests->setDecorators(array('InputDecorator'));
         $interestsclear->setDecorators(array('ViewHelper'));

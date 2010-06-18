@@ -54,6 +54,26 @@ class Default_Model_Timezones extends Zend_Db_Table_Abstract
     }
 
     /**
+	*	getTimezoneTextById
+	*
+	*	Gets timezone text by id.
+	*
+    *   @author Mikko Korpinen
+    *   @param id_tmz timezone id
+	*	@return String
+	*/
+    public function getTimezoneTextById($id_tmz)
+    {
+        $select = $this->select()
+				->from($this, array('*'))
+				->where('id_tmz = ?', $id_tmz);
+
+		$result = $this->fetchAll($select)->toArray();
+
+        return $result[0]['gmt_tmz'].' '.$result[0]['timezone_location_tmz'];
+    }
+
+    /**
 	*	getTimezoneByLocation
 	*
 	*	Gets timezone by id.

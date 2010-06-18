@@ -201,8 +201,6 @@ class AccountController extends Oibs_Controller_CustomController
 	*    Gets user profile information, users content and comments.
     */
     public function viewAction() {
-        // View is WIP because user profile edit form is not ready
-// WIP START
 
         if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
@@ -264,13 +262,16 @@ class AccountController extends Oibs_Controller_CustomController
 		$dataa['birthday'] 		= $userprofile->getUserProfileValue($id, 'birthday');
         */
 
+        // No countries in countries_ctr and not very good table at all?
+        // This would be better: http://snipplr.com/view/6636/mysql-table--iso-country-list-with-abbreviations/
+        /*
 		$dataa['country'] = $userProfile->getUserProfileValue($id, 'country');
 
         $userCountry = new Default_Model_UserCountry();
 		$dataa['country'] = $userCountry->getCountryNameById(
             $dataa['country']['profile_value_usp']
         );
-
+        */
         // Get content user has released
         $type = isset($params['type']) ? $params['type'] : 0 ;
         $contentList = $user->getUserContent($data['id_usr']);
@@ -378,8 +379,6 @@ class AccountController extends Oibs_Controller_CustomController
         //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
-
-// WIP END
 
         /* Waiting for layout that is maybe coming 
         // MyViews
