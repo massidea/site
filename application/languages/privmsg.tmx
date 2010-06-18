@@ -29,10 +29,6 @@
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
 	</tu>
-	<tu tuid='privmsg-delete-all'>
-		<tuv xml:lang="en"><seg>Delete all</seg></tuv>
-		<tuv xml:lang="fi"><seg>Poista kaikki</seg></tuv>
-	</tu>
 	<tu tuid='privmsg-delete-selected'>
 		<tuv xml:lang="en"><seg>Delete selected</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista valitut</seg></tuv>

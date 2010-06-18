@@ -535,7 +535,9 @@ $(document).ready(function() {
  * 
  * function to create new file input for each file chosen, hides the old one. Also makes a button to make 
  * it possible to remove a chosen file
- * 
+ *
+ * @param   obj      file input object
+ * @param  message    translated text for remove file button
  */
 function multiFile(obj, message) {
 	var file = obj.value;

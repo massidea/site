@@ -53,7 +53,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 					// Delete the pointed message
 					$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = '.$deleteMsgId);
 				}
-				else if (substr($action, 0, 15) == 'delete_selected') {
+				else if ($action == 'delete_selected') {
 					// Get the IDs of the first and last selected message
 					$firstMsgId = $this->getRequest()->getPost('delete_first');
 					$lastMsgId = $this->getRequest()->getPost('delete_last');
