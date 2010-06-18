@@ -10,8 +10,45 @@ $url_login = $this->url(array('controller' => 'account',
                                  'language' => $this->language),
                                  'lang_default', true); 
 
-// dirty fix to use language variable from view
-//$this->language = Zend_Layout::getMvcInstance()->getView()->language;
+//some pre-generation stuff..
+$authenticated = $this->authenticated;
+
+$pi = 0;    // keeps track of problem cells
+$fi = 0;    // keeps track of finfo cells
+$ii = 0;    // keeps track of idea cells
+
+// roll children_siblings to separate arrays
+if (isset($this->children_siblings[0])) {
+    foreach ($this->children_siblings as $children_sibling) {
+        if ($children_sibling['name_cty'] == 'Problems') {
+            $linked_problems[$pi] = $children_sibling;
+            $pi++;
+        } else if ($children_sibling['name_cty'] == 'Ideas') {
+            $linked_ideas[$ii] = $children_sibling;
+            $ii++;
+        } else if ($children_sibling['name_cty'] == 'Future info') {
+            $linked_futures[$fi] = $children_sibling;
+            $fi++;
+        }
+    }
+}
+
+
+// roll parent_siblings to separate arrays
+if (isset($this->parent_siblings[0])) {
+    foreach ($this->parent_siblings as $parent_sibling) {
+        if ($parent_sibling['name_cty'] == 'Problems') {
+            $linked_problems[$pi] = $parent_sibling;
+            $pi++;
+        } else if ($parent_sibling['name_cty'] == 'Ideas') {
+            $linked_ideas[$ii] = $parent_sibling;
+            $ii++;
+        } else if ($parent_sibling['name_cty'] == 'Future info') {
+            $linked_futures[$fi] = $parent_sibling;
+            $fi++;
+        }
+    }
+}
 ?>
 <div class="user_content_row" style="float: left;">
     <div style="padding: 10px;">
