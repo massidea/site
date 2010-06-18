@@ -1083,8 +1083,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	//	where id_usr=2 group by id_usr_vws order by sum(views_vws) desc;
 		$select = $this->_db->select()
 					   		 ->from('cnt_has_usr', array())
-					   		 ->where('id_usr = ?', $id)
+					   		 ->where('cnt_has_usr.id_usr = ?', $id)
 					   		 ->join('cnt_views_vws', 'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt', array('views' => 'sum(views_vws)' , 'id_usr_vws'))
+					   		 ->join('users_usr', 'id_usr_vws = users_usr.id_usr', array('login_name_usr'))
 					   		 ->group('id_usr_vws')
 					   		 ->order('views desc')
 					   		 ->limit($limit);
