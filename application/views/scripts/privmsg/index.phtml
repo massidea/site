@@ -2,8 +2,34 @@
 <br />
 
 <?php
+if ($this->privmsgs) {
+	foreach ($this->privmsgs as $privmsg) {
+?>
+<!-- One form for every message for deleting only that message -->
+<form name="delete_privmsg_<?php echo $privmsg['id_pmg']; ?>" action="#" method="post">
+	<input type="hidden" name="delete_privmsg" value="delete_one_<?php echo $privmsg['id_pmg']; ?>" />
+</form>
+<?php
+	}
+	
+	reset($this->privmsgs);
+?>
+<!-- A form for deleting the selected messages -->
+<form name="delete_privmsg_selected" id="delete_privmsg_selected" action="#" method="post">
+	<input type="hidden" name="delete_privmsg" value="delete_selected" />
+	<input type="hidden" name="delete_first" value="<?php echo $this->privmsgs[0]['id_pmg']; ?>" />
+	<input type="hidden" name="delete_last" value="<?php echo $this->privmsgs[count($this->privmsgs)-1]['id_pmg']; ?>" />
+	<div style="padding: 0px 0px 5px 0px;">
+		<input type="checkbox" name="select_all" id="select_all" onclick="selectAllPrivmsgs(); return true;" />
+		<a href="javascript: void(0)" onclick="document.delete_privmsg_selected.submit(); return false;">
+			<?php echo $this->translate('privmsg-delete-selected'); ?>
+		</a>
+	</div>
+<?php
+}
 
 if($this->privmsgs):
+
 	foreach($this->privmsgs as $privmsg):
 		$sent = strtotime($privmsg['created_pmg']);
 		$elapsed = time() - $sent;
@@ -31,9 +57,18 @@ if($this->privmsgs):
 			$sent = "(" . $years . " " . $this->translate('years-ago') . ")";
 		}
         ?>
-        
+		
 		<div class="privmsg">
 			<div class="privmsg_userinfo">
+				
+				<!-- Delete-button for every message -->
+				<div style="padding: 0px 0px 3px 0px;">
+					<input type="checkbox" name="select_<?php echo $privmsg['id_pmg']; ?>" id="select_<?php echo $privmsg['id_pmg']; ?>" />
+					<a href="javascript: void(0)" onclick="document.delete_privmsg_<?php echo $privmsg['id_pmg']; ?>.submit(); return false">
+						<?php echo $this->translate('privmsg-delete'); ?>
+					</a>
+				</div>
+					
                     <center>
                     <?php 
                     if($privmsg['username_pmg'] != 'privmsg-message-sender-system') 
@@ -85,13 +120,6 @@ if($this->privmsgs):
                 
 				<br />
 				<?php echo $sent; ?>
-				<br />
-                <form name="delete_privmsg_<?php echo $privmsg['id_pmg']; ?>" action="#" method="post">
-                    <input type="hidden" name="delete_privmsg" value="delete_<?php echo $privmsg['id_pmg']; ?>" />
-                	<a href="javascript: void(0)" onclick="document.delete_privmsg_<?php echo $privmsg['id_pmg']; ?>.submit(); return false">
-                		<?php echo $this->translate('privmsg-delete'); ?>
-                	</a>
-                </form>
 			</div><!-- end of privmsg_userinfo -->
 			<div class="privmsg_content">
 
@@ -111,3 +139,5 @@ if($this->privmsgs):
 		</div><!-- end of privmsg -->
     <?php endforeach; ?>
 <?php endif; ?>
+</form> <!-- end of 'Delete selected'-form -->
+
