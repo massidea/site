@@ -202,27 +202,6 @@ class ContentController extends Oibs_Controller_CustomController
 			// Get requests
 			$params = $this->getRequest()->getParams();
 
-			// Get session data
-			$previewSession = new Zend_Session_Namespace('contentpreview');
-
-			// If preview
-			$backFromPreview = isset($previewSession->backFromPreview) ? $previewSession->backFromPreview : 0;
-			$preview = isset($params['preview']) ? 1:0;
-			
-			if($preview)
-			{
-				$previewSession->unsetAll();
-				$previewSession->previewData = $params;
-				$backToUrl = $this->getRequest()->getRequestUri();
-				$previewSession->backToUrl = $backToUrl;
-
-				$url = $this->_urlHelper->url(array('controller' => 'content',
-													'action' => 'preview',
-													'language' => $this->view->language),
-													'lang_default', true);
-				$this->_redirect($url);
-			}
-
 			// Get content type
 			$contentType = isset($params['contenttype']) ? $params['contenttype'] : '';
 			$relatesToId = isset($params['relatestoid']) ? $params['relatestoid'] : 0;
@@ -410,12 +389,12 @@ class ContentController extends Oibs_Controller_CustomController
 				if ($form->isValid($data)) {
 
 					// If form data is going to be published
-					if(isset($data['content_publish'])) {
+					if(isset($data['content_publish']) && $data['content_publish'] != '') {
 						$data['publish'] = 1;
 						$message_error = 'content-publish-not-successful';
 					}
 					// If form data is going to be saved
-					elseif(isset($data['content_save'])) {
+					elseif(isset($data['content_save']) && $data['content_save'] != '') {
 						$data['publish'] = 0;
 						$message_error = 'content-save-not-successful';
 					}
@@ -514,18 +493,6 @@ class ContentController extends Oibs_Controller_CustomController
 					}
 				}
 			} // end if
-
-			// populate form
-			if($backFromPreview)
-			{
-				// Get previewdata and populate it to form
-				$previewData = $previewSession->previewData;
-				$form->populate($previewData);
-
-				// Delete session data
-				$previewSession->unsetAll();
-			}
-
 
 		} else {
 			// If not logged, redirecting to system message page
@@ -918,7 +885,10 @@ class ContentController extends Oibs_Controller_CustomController
 	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-
+		
+		// Disable layout to be rendered
+		$this->_helper->layout->disableLayout();
+		
 		// If user has authenticated
 		if($auth->hasIdentity())
 		{
@@ -927,104 +897,83 @@ class ContentController extends Oibs_Controller_CustomController
 			$userName = $auth->getIdentity()->username;
 			$userModel = new Default_Model_User();
 			$userData = $userModel->getSimpleUserDataById($userId);
-
-			// Get preview data from session
-			$previewSession = new Zend_Session_Namespace('contentpreview');
-			$postSession = $previewSession->previewData;
-
+			
 			// Get requests
 			if($this->getRequest()->isPost())
 			{
 				// Get POST data
 				$postData = $this->getRequest()->getPost();
 
-				// If "edit" button was pushed
-				$editMode = isset($postData['content_edit']) ? 1:0;
-				if($editMode) {
-					$previewSession->backFromPreview = 1;
-					//$contentModel = new Default_Model_ContentTypes();
-					//$contentType = $contentModel->getTypeById($postSession['content_type']);
-					$backToUrl = $previewSession->backToUrl;
+				// Set today's date and time
+				$today = date('Y-m-d H:i:m');
+	
+				// Get content type of the specific content viewed
+				$contentTypesModel = New Default_Model_ContentTypes();
+				//Zend_Debug::dump($previewSession->previewData); die;
+				$contentType = $contentTypesModel->getTypeById($postData['content_type']);
+	
+				// Reformat preview data
+				$contentData =
+				array('id_cnt' 					=> 'preview',
+						  'id_cty_cnt' 				=> htmlentities($postData['content_type']),
+						  'title_cnt' 				=> htmlentities($postData['content_header']),
+						  'lead_cnt' 				=> htmlentities($postData['content_textlead']),
+						  'language_cnt' 			=> htmlentities($postData['content_language']),
+						  'body_cnt' 				=> htmlentities($postData['content_text']),
+						  'research_question_cnt' 	=> htmlentities($postData['content_research']),
+						  'opportunity_cnt' 		=> htmlentities($postData['content_opportunity']),
+						  'threat_cnt' 				=> htmlentities($postData['content_threat']),
+						  'solution_cnt' 			=> htmlentities($postData['content_solution']),
+						  'references_cnt' 			=> htmlentities($postData['content_references']),
+						  'views_cnt' 				=> 0,
+						  'published_cnt' 			=> 1,
+						  'created_cnt' 			=> $today,
+						  'modified_cnt' 			=> $today,
+						  'id_usr' 					=> $userId,
+						  'login_name_usr' 			=> $userName,
+						  'key_cty' 				=> htmlentities($postData['content_type']),
+						  'name_cty'				=> $contentType
+				);
 
-					/*
-					 $url = $this->_urlHelper->url(array('contenttype' => $contentType,
-					 'language' => $this->view->language),
-					 'addcnttype', true);
-					 //Zend_Debug::dump($url);
-					 */
-					$this->_redirect($backToUrl);
-				}
+				// Reformat tags
+				$rawtags = explode(",", $postSession['content_keywords']);
+				foreach($rawtags as $rawtag)
+				$tags[count($tags)]['name_tag'] = $rawtag;
+	
+				// Get form
+				$form = new Default_Form_PreviewContentForm();
+	
+				// Inject previewdata to view
+				$this->view->previewMode		= 1;
+				$this->view->files 				= null;
+				$this->view->id					= 'preview';
+				//$this->view->industries         = $industries;
+				//$this->view->userImage          = $userImage;
+				//$this->view->commentPaginator   = $paginator;
+				//$this->view->commentData        = $commentsSorted;
+				//$this->view->user_can_comment   = $user_can_comment;
+				$this->view->contentData        = $contentData;
+				//$this->view->modified			= $contentData['modified_cnt'];
+				$this->view->userData           = $userData;
+				//$this->view->moreFromUser       = $moreFromUser;
+				$this->view->views              = $contentData['views_cnt'];
+				//$this->view->rating             = $rating;
+				$this->view->tags               = $tags;
+				//$this->view->links              = $links;
+				//$this->view->parents            = $parents;
+				//$this->view->parent_siblings    = $parent_siblings;
+				//$this->view->children           = $children;
+				//$this->view->children_siblings  = $children_siblings;
+				//$this->view->rivals             = $rivals;
+				//$this->view->comments           = $commentCount;
+				$this->view->contentType        = $contentType;
+				//$this->view->count              = $count;
+				$this->view->form				= $form;
+				//$this->view->favourite			= $favourite;
+	
+				// Inject title to view
+				$this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
 			}
-
-			// Set today's date and time
-			$today = date('Y-m-d H:i:m');
-
-			// Get content type of the specific content viewed
-			$contentTypesModel = New Default_Model_ContentTypes();
-			$contentType = $contentTypesModel->getTypeById($postSession['content_type']);
-
-			// Reformat preview data
-			$contentData =
-			array('id_cnt' 					=> 'preview',
-					  'id_cty_cnt' 				=> htmlentities($postSession['content_type']),
-					  'title_cnt' 				=> htmlentities($postSession['content_header']),
-					  'lead_cnt' 				=> htmlentities($postSession['content_textlead']),
-					  'language_cnt' 			=> htmlentities($postSession['content_language']),
-					  'body_cnt' 				=> htmlentities($postSession['content_text']),
-					  'research_question_cnt' 	=> htmlentities($postSession['content_research']),
-					  'opportunity_cnt' 		=> htmlentities($postSession['content_opportunity']),
-					  'threat_cnt' 				=> htmlentities($postSession['content_threat']),
-					  'solution_cnt' 			=> htmlentities($postSession['content_solution']),
-					  'references_cnt' 			=> htmlentities($postSession['content_references']),
-					  'views_cnt' 				=> 0,
-					  'published_cnt' 			=> 1,
-					  'created_cnt' 			=> $today,
-					  'modified_cnt' 			=> $today,
-					  'id_usr' 					=> $userId,
-					  'login_name_usr' 			=> $userName,
-					  'key_cty' 				=> htmlentities($postSession['content_type']),
-					  'name_cty'				=> $contentType
-			);
-
-			// Reformat tags
-			$rawtags = explode(",", $postSession['content_keywords']);
-			foreach($rawtags as $rawtag)
-			$tags[count($tags)]['name_tag'] = $rawtag;
-
-			// Get form
-			$form = new Default_Form_PreviewContentForm();
-
-			// Inject previewdata to view
-			$this->view->previewMode		= 1;
-			$this->view->files 				= null;
-			$this->view->id					= 'preview';
-			//$this->view->industries         = $industries;
-			//$this->view->userImage          = $userImage;
-			//$this->view->commentPaginator   = $paginator;
-			//$this->view->commentData        = $commentsSorted;
-			//$this->view->user_can_comment   = $user_can_comment;
-			$this->view->contentData        = $contentData;
-			//$this->view->modified			= $contentData['modified_cnt'];
-			$this->view->userData           = $userData;
-			//$this->view->moreFromUser       = $moreFromUser;
-			$this->view->views              = $contentData['views_cnt'];
-			//$this->view->rating             = $rating;
-			$this->view->tags               = $tags;
-			//$this->view->links              = $links;
-			//$this->view->parents            = $parents;
-			//$this->view->parent_siblings    = $parent_siblings;
-			//$this->view->children           = $children;
-			//$this->view->children_siblings  = $children_siblings;
-			//$this->view->rivals             = $rivals;
-			//$this->view->comments           = $commentCount;
-			$this->view->contentType        = $contentType;
-			//$this->view->count              = $count;
-			$this->view->form				= $form;
-			//$this->view->favourite			= $favourite;
-
-			// Inject title to view
-			$this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
-
 		}
 		else
 		{

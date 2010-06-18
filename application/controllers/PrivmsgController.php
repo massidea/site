@@ -36,11 +36,22 @@ class PrivmsgController extends Oibs_Controller_CustomController
 
 	public function indexAction()
 	{
+        $action = $this->getRequest()->getPost('delete_privmsg');
+        
 		// Get user identity
 		$auth = Zend_Auth::getInstance();
 		
 		if ($auth->hasIdentity()) {
 			$Default_Model_privmsg = New Default_Model_PrivateMessages();
+			
+			// Delete button was presser
+			if (isset($action) && $action != null && $action != '') {
+				// Separate the id from the value of 'delete_privmsg'
+				$deleteMsgId = (int)substr($action, 7);
+				
+				// Delete the pointed message
+				$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = '.$deleteMsgId);
+			}
 
 			$privmsgs = $Default_Model_privmsg->getPrivateMessagesByUserId($auth->getIdentity()->user_id);
 
@@ -59,7 +70,8 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$this->view->privmsgs = $privmsgs;
 
 			$Default_Model_privmsg->markUnreadMessagesAsRead($auth->getIdentity()->user_id);
-		} else {
+		}
+		else {
 			// If not logged, redirecting to system message page
 			$message = 'privmsg-view-not-logged';
 
