@@ -305,7 +305,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
    		$cntHasTagModel = new Default_Model_ContentHasTag();
     	$select = $cntHasTagModel->select()
     							 ->from('cnt_has_tag', array('id_cnt'))
-    							 ->where('id_tag IN (?)', $tags);
+    							 ->where('id_tag IN (?)', $tags)
+    							 ->where('id_cnt != ?', $id);
    		
    		$contents = $cntHasTagModel->fetchAll($select)->toArray();
     	$linkedContents = $this->find($contents);
