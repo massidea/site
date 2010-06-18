@@ -274,6 +274,10 @@
         	'is_favourite'		=> $isFavourite,
         );
         
+        $languagesModel = new Default_Model_Languages();
+        $languageName = $languagesModel->getLanguageByLangCode($contentData['language_cnt']);
+        $gtranslateLangPair = $this->gtranslate->getLangPair();
+        
         // get content tags - functions returns names as well
         // needs updating to proper MVC?
         $contentHasTagModel = new Default_Model_ContentHasTag();
@@ -408,6 +412,8 @@
         $this->view->relatedContents    = $relatedContents;
         $this->view->views              = $views;
         $this->view->rating             = $rating;
+        $this->view->languageName		= $languageName;
+        $this->view->gtranslateLangPair	= $gtranslateLangPair;
         $this->view->tags               = $tags;
         $this->view->links              = $links;
         $this->view->parents            = $parents;
