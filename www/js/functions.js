@@ -536,8 +536,6 @@ $(document).ready(function() {
  * function to create new file input for each file chosen, hides the old one. Also makes a button to make 
  * it possible to remove a chosen file
  * 
- * @param 	obj			file input object
- * @param	message		translated text for remove file button
  */
 function multiFile(obj, message) {
 	var file = obj.value;
@@ -565,3 +563,17 @@ $(document).ready(function() {
     });
 });*/
 
+/**
+* selectAllPrivmsgs
+* 
+* function to select or unselect all private messages for deletion
+*/
+function selectAllPrivmsgs()
+{
+	var boxes = document.getElementById('delete_privmsg_selected');
+	var checked = document.delete_privmsg_selected.select_all.checked;
+
+	for (var i = 1; i < boxes.elements.length; i++) {
+		boxes.elements[i].checked = checked;
+	}
+}
