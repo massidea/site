@@ -383,7 +383,7 @@ class AccountController extends Oibs_Controller_CustomController
 			->addTab("Ideas", "idea", "ideas", $dataa['contentCounts']['idea'])
 			->addTab("Visions", "finfo", "visions", $dataa['contentCounts']['finfo']);
 			
-		if ($dataa['contentCounts']['user_edit']) {
+		if ($dataa['contentCounts']['user_edit'] && $userEdit) {
 			$box->addTab("Saved", "user_edit", "saved", $dataa['contentCounts']['user_edit']);
 		}
 		$boxes[] = $box;
