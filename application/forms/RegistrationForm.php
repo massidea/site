@@ -94,11 +94,11 @@ class Default_Form_RegistrationForm extends Zend_Form
 				->setRequired(true)
 				->addFilter('StringtoLower')
 				->addValidators(array(
-					$mailvalid,
-					array('NotEmpty', 
+					$mailvalid
+					/*array('NotEmpty', 
                         true, 
                         array('messages' => array('isEmpty' => 'field-empty'))
-                    ), 
+                    ),
 					array('StringLength', 
                         true, 
                         array(6, 50,
@@ -107,7 +107,7 @@ class Default_Form_RegistrationForm extends Zend_Form
                                 'stringLengthTooLong' => 'field-too-long'
                             )
                         )
-                    ),
+                    ),*/
 				))
                 ->addErrorMessage('email-invalid')
 				->setDecorators(array('RegistrationDecorator'));
