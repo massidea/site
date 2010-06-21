@@ -534,60 +534,45 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *   @params array $filter Filtering options
     *   @return array
     */
-    public function getUserListing(&$filter = null, $page = 1, $count = 10, $sort = 'usr.last_login_usr DESC')
+	public function getUserListing(&$filter = null, $page = 1, $count = 10, $sort = 'usr.last_login_usr DESC')
     {
 
-
-        
         // TODO: Filter by join date between selected times
         // $joinDate = 1;
         // if(!empty($filter['pv1']) && !empty($filter['pv2'])) {
         //  $joinDate = $this->_db->quoteInto('usr.created_usr BETWEEN ?', $pv1);
         //  $joinDate .= $this->_db->quoteInto(' AND ?', $pv2));
         // }
+
+        $city = "'city'";
+        $country = "'country'";
         
-        // Subquery to get users latest profile picture.
-        // Should fix bug in userlisting where wrong user profile
-        // picture is shown. Ugly and inefficient fix. 
-        // Current user picture should be added to user table
-        // or make users only have one profile picture.
-        // Increases load on database server.
-        // - Removed to increase efficiency on user listing.
-        /*
-        $subQuery = $this->_db->select()
-                              ->from(array('usi2' => 'usr_images_usi'),
-                                     array('usi2.id_usi'))
-                              ->order('usi2.created_usi DESC')
-                              ->where('usi2.id_usr_usi = usr.id_usr')
-                              ->limit(1);
-        */
-        
-        // Added subquery to usr_image_usi join to get
-        // only the latest user profile picture.
-        // This query will become a bottleneck on large user counts
         $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
                                              array('id_usr',
                                                    'login_name_usr',
-                                                   'email_usr',
                                                    'last_login_usr',
                                                    'created_usr'))
                                       ->joinLeft(array('chu' => 'cnt_has_usr'), 
                                                  'chu.id_usr = usr.id_usr', 
                                                  array('contentCount' => 'COUNT(DISTINCT chu.id_cnt)'))
-                                      //->joinLeft(array('usi' => 'usr_images_usi'), 
-                                      //      'usr.id_usr = usi.id_usr_usi', 
-                                      //      array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)', 
-                                      //            'usi.id_usi'))
-                                      // Join on result column of subquery
-                                      // This more than doubles loading time
-                                      // - Removed to increase efficiency.
-                                      //->joinLeft(array('usi' => 'usr_images_usi'),
-                                      //           'usi.id_usi = ' . ' (' . $subQuery . ') ',
-                                      //           array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)',
-                                      //                 'usi.id_usi'))
-                                      ->joinLeft(array('usp' => 'usr_profiles_usp'), 
-                                                 'usr.id_usr = usp.id_usr_usp', 
-                                                 array())
+                                      ->joinLeft(array('crt' => 'content_ratings_crt'),
+                                                      'chu.id_cnt = crt.id_cnt_crt',
+                                                      array('RatingAveragePositive' => 'CEIL(((SUM(crt.rating_crt) / COUNT(DISTINCT crt.id_cnt_crt))+1)*50)',
+                                                      		'RatingAverageNegative' => 'FLOOR(100-((SUM(crt.rating_crt) / COUNT(DISTINCT crt.id_cnt_crt))+1)*50)',
+                                                      		'RatingRatioPositive' => 'CEIL((SUM(crt.rating_crt) / COUNT(crt.id_cnt_crt)+1)*50)',
+                                                      		'RatingRatioNegative' => 'FLOOR(100-(SUM(crt.rating_crt) / COUNT(crt.id_cnt_crt)+1)*50)',
+                                                      		'ratingAmount' => 'COUNT(crt.id_cnt_crt)',
+                                                      		'ratedContents' => 'COUNT(DISTINCT crt.id_cnt_crt)'))
+                                      ->joinLeft(array('usp' => 'usr_profiles_usp'),
+                                      			"usr.id_usr = usp.id_usr_usp AND usp.profile_key_usp = $city",
+                                      			array('city' => 'usp.profile_value_usp'))
+                                      ->joinLeft(array('usp2' => 'usr_profiles_usp'),
+                                      			"usr.id_usr = usp2.id_usr_usp AND usp2.profile_key_usp = $country",
+                                      			array('countryId' => 'usp2.profile_value_usp'))
+                                      ->joinLeft(array('usc' => 'countries_ctr'),
+                                      			'usc.id_ctr = usp2.profile_value_usp',
+                                      			array('countryName' => 'usc.name_ctr'))
+                                      
                                       ->where($this->getUserSearchUsernameFilter($filter['username']))
                                       ->where($this->getUserSearchCountryFilter($filter['country']))
                                       ->where($this->getUserSearchCityFilter($filter['city']))
@@ -597,47 +582,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                       //->where($joinDate)
                                       ->group('usr.id_usr')
                                       ->order($sort)
-                                      ->limitPage($page, $count);
+                                      ->limitPage($page, $count)
+                                      ;
         
         // Fetch all results from database
         $result = $this->_db->fetchAll($select);
         
-        // Go through users in result, and find their profile images.
-        // Replaces subquery, and increases efficiency considerably.
-        // Increases database query count by the cell count of result array.
-        $size = count($result);
-        for ($i = 0; $i < $size; $i++) {
-            $imageQuery = $this->_db->select()
-                                    ->from(array('usi' => 'usr_images_usi'),
-                                           array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)', 
-                                                 'usi.id_usi'))
-                                    ->where('usi.id_usr_usi = ?', $result[$i]['id_usr'])
-                                    ->order('usi.created_usi DESC')
-                                    ->limit(1);
-            
-            $image = $this->_db->fetchAll($imageQuery);
-        
-            $result[$i]['hasImage'] = 0;
-            
-            if (!empty($image)) {
-                $result[$i]['hasImage'] = $image[0]['hasImage'];
-                $result[$i]['id_usi'] = $image[0]['id_usi'];
-            }
-        }
-        
-        // Check content count filtering and remove
-        // users that do not satisfy given parameters.
-        // Possible to do more efficiently.
-        /*
-        if(isset($result) && isset($filter['contentlimit'])) {
-            foreach ($result as $k => $res) {
-                if (!$this->checkContentCount($filter['counttype'], 
-                                              $filter['contentlimit'],
-                                              $res['contentCount'])) {
-                    unset($result[$k]);
-                }
-            }
-        }*/
+        //$userProfile = new Default_Model_UserProfiles();
+        //$userProfile->getUserCountry();
+        //print_r($result);die;
         
         return $result;
     }

@@ -201,8 +201,6 @@ class AccountController extends Oibs_Controller_CustomController
 	*    Gets user profile information, users content and comments.
     */
     public function viewAction() {
-        // View is WIP because user profile edit form is not ready
-// WIP START
 
         if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
@@ -264,13 +262,16 @@ class AccountController extends Oibs_Controller_CustomController
 		$dataa['birthday'] 		= $userprofile->getUserProfileValue($id, 'birthday');
         */
 
+        // No countries in countries_ctr and not very good table at all?
+        // This would be better: http://snipplr.com/view/6636/mysql-table--iso-country-list-with-abbreviations/
+        /*
 		$dataa['country'] = $userProfile->getUserProfileValue($id, 'country');
 
         $userCountry = new Default_Model_UserCountry();
 		$dataa['country'] = $userCountry->getCountryNameById(
             $dataa['country']['profile_value_usp']
         );
-
+        */
         // Get content user has released
         $type = isset($params['type']) ? $params['type'] : 0 ;
         $contentList = $user->getUserContent($data['id_usr']);
@@ -415,8 +416,6 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
 
-// WIP END
-
         /* Waiting for layout that is maybe coming 
         // MyViews
         $viewsModel = new Default_Model_ContentViews();
@@ -426,10 +425,10 @@ class AccountController extends Oibs_Controller_CustomController
         Zend_Debug::dump($user->getUsersViewers($data['id_usr']));
         die;*/
         
-        //$group_model = new Default_Model_UserHasGroup();
-        //$usergroups = $group_model->getGroupsByUserId($id);
+        $group_model = new Default_Model_UserHasGroup();
+        $usergroups = $group_model->getGroupsByUserId($id);
 
-        //$this->view->usergroups = $usergroups;
+        $this->view->usergroups = $usergroups;
     }
     
     /**
@@ -1010,7 +1009,6 @@ class AccountController extends Oibs_Controller_CustomController
 			// get user data
 			$userInfos = new Default_Model_UserProfiles();
 			$settingsData = $userInfos->getUserInfoById($id);
-			//var_dump($settingsData);
 
             // get user email and push to settingsData
             $userModel = new Default_Model_User($id);
@@ -1031,6 +1029,7 @@ class AccountController extends Oibs_Controller_CustomController
             
             // populate form
 			if(isset($settingsData)) {
+                //echo '<pre>'; var_dump($settingsData);
 				$form->populate($settingsData);
 			}
 			
@@ -1039,40 +1038,36 @@ class AccountController extends Oibs_Controller_CustomController
 			if($this->_request->isPost()) {
        
                 // get form data
-				$formData = $this->_request->getPost();
+				$formdata = $this->_request->getPost();
                 
-				if($form->isValid($formData)) {
+				if($form->isValid($formdata)) {
                     // if form is valid
-					//$auth = Zend_Auth::getInstance();
-					
-					// If user is logged in -- double check? why? -joel
-					//if ($auth->hasIdentity()) {
-						// Updates checked notifications  
-					
-						$notificationsModel->setUserNotifications($id, $formData['notifications']);						
-		
-						$userProfile = new Default_Model_UserProfiles();
-                        $userProfile->setProfileData($id, $formData); 
+                    // Updates checked notifications
 
-						$user = new Default_Model_User($id);
-						
-						// Updates email
-						if(strlen($formData['email']) != 0) {
-							$user->changeUserEmail($id, $formData['email']);
-						}
-						$user->changeGravatarStatus($id, $formData['gravatar']); 
-						// Updates the password
-						if(strlen($formData['password']) != 0) {
-							$user->changeUserPassword($id, $formData['password']);
-						}
-						
-                        // Redirects the user to a page that shows the update complete
-                        $redirect = $this->_urlHelper->url(array('controller' => 'account', 
-                                                                 'action' => 'settings', 
-                                                                 'language' => $this->view->language), 
-                                                           'lang_default', true);
-						$this->flash('Information has been changed.', $redirect);
-					//}
+                    //echo "<pre>"; var_dump($formdata);
+                    $notificationsModel->setUserNotifications($id, $formdata['notifications']);
+
+                    $userProfile = new Default_Model_UserProfiles();
+                    $userProfile->setProfileData($id, $formdata);
+
+                    $user = new Default_Model_User($id);
+
+                    // Updates email
+                    if(strlen($formdata['email']) != 0) {
+                        $user->changeUserEmail($id, $formdata['email']);
+                    }
+
+                    // Updates the password
+                    if(strlen($formdata['password']) != 0) {
+                        $user->changeUserPassword($id, $formdata['password']);
+                    }
+
+                    // Redirects the user to a page that shows the update complete
+                    $redirect = $this->_urlHelper->url(array('controller' => 'account',
+                                                             'action' => 'settings',
+                                                             'language' => $this->view->language),
+                                                       'lang_default', true);
+                    $this->flash('Information has been changed.', $redirect);
 				} else {
                     // Formdata is not valid, do nothing -- here for possible debugging
 					// echo $form->getErrors();

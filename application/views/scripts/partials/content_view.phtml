@@ -172,7 +172,30 @@ if (isset($this->parent_siblings[0])) {
         <div class="view_content_left_main" id="view_content_left_main" style="clear:both; padding-top: 10px;">
             <h3 style="padding: 0px; margin: 0px; font-weight: bold;"><?php echo stripslashes($this->contentData['title_cnt']); ?></h3>
             <p style="font-style:italic; padding: 0px; margin: 0px;"><?php echo stripslashes($this->contentData['lead_cnt']); ?></p>
-            <div id="content_view_tags" style="padding-top:7px;">
+            <div id="content_view_campaigns" style="padding-top:7px;">
+                <span class="content_view_bold">
+                	<a href="<?php echo $this->url(array('controller' => 'campaign',
+                                                         'action' => 'index',
+                                                         'language' => $this->language),
+                                                         'lang_default', true); ?>">
+                		<?php echo $this->translate('content-view-campaigns'); ?>
+                	</a>
+                </span>
+                <?php if (count($this->campaigns) == 0) : ?>
+                    <?php echo $this->translate('content-view-has-no-campaigns'); ?>
+                <?php else : ?>
+                    <?php $i = count($this->campaigns) - 1; ?>
+                    <?php foreach($this->campaigns as $campaign): ?>
+                        <a href="<?php echo $this->url(array('cmpid' => $campaign['id_cmp'],
+                                                             'language' => $this->language),
+                                                       'campaign_view', true); ?>">
+                            <?php echo stripslashes($campaign['name_cmp']); ?>
+                        </a>
+                        <?php echo $i-- > 0 ? ', ' : ''; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+            <div id="content_view_tags" style="padding-top:7px; padding-bottom:7px;">
                 <span class="content_view_bold">
                 	<a href="<?php echo $this->url(array('controller' => 'tag',
                                                          'action' => 'index',
