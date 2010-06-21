@@ -33,9 +33,28 @@
 class Default_Form_AccountSettingsForm extends Zend_Form
 {
 
-    // WIP 10.6.2010
-    /*
-     public function init()
+    // WIP 18.6.2010
+    // TODO: Email error messages, filters? validations?
+    //       Avatar image, country list?
+
+    /* To usr_profiles_usp:
+     * openid
+     * phone
+     * fistname
+     * surname (lastname)
+     * gender - 1=Male, 2=Female
+     * birthday - dd/mm/yyyy
+     * biography - max 4000
+     * userlanguage - language id from languages_lng
+     * city
+     * address
+     * country
+     * timezone - timezone id from timezones_tmz
+     * employment (I am currently status) - ie. private_status
+     * company (employer / organization)
+     */
+    
+    public function init()
     {
         $this->setMethod('post');
         $this->setEnctype('multipart/form-data');
@@ -45,162 +64,307 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                                 'Oibs/Form/Decorator/',
                                 'decorator');
 
+        $mailvalid = new Zend_Validate_EmailAddress();
+		$mailvalid->setMessage(
+			'email-invalid',
+			Zend_Validate_EmailAddress::INVALID);
+		$mailvalid->setMessage(
+			'email-invalid-hostname',
+			Zend_Validate_EmailAddress::INVALID_HOSTNAME);
+		$mailvalid->setMessage(
+			'email-invalid-mx-record',
+			Zend_Validate_EmailAddress::INVALID_MX_RECORD);
+		$mailvalid->setMessage(
+			'email-dot-atom',
+			Zend_Validate_EmailAddress::DOT_ATOM);
+		$mailvalid->setMessage(
+			'email-quoted-string',
+			Zend_Validate_EmailAddress::QUOTED_STRING);
+		$mailvalid->setMessage(
+			'email-invalid-local-part',
+			Zend_Validate_EmailAddress::INVALID_LOCAL_PART);
+		$mailvalid->setMessage(
+			'email-length-exceeded',
+			Zend_Validate_EmailAddress::LENGTH_EXCEEDED);
+		$mailvalid->hostnameValidator->setMessage(
+			'hostname-invalid-hostname',
+			Zend_Validate_Hostname::INVALID_HOSTNAME);
+		$mailvalid->hostnameValidator->setMessage(
+			'hostname-local-name-not-allowed',
+			Zend_Validate_Hostname::LOCAL_NAME_NOT_ALLOWED);
+		$mailvalid->hostnameValidator->setMessage(
+			'hostname-unknown-tld',
+			Zend_Validate_Hostname::UNKNOWN_TLD);
+		$mailvalid->hostnameValidator->setMessage(
+			'hostname-invalid-local-name',
+			Zend_Validate_Hostname::INVALID_LOCAL_NAME);
+		$mailvalid->hostnameValidator->setMessage(
+			'hostname-undecipherable-tld',
+			Zend_Validate_Hostname::UNDECIPHERABLE_TLD);
+
         // Headers
         $accountInformation = new Oibs_Form_Element_Note('accountinformation');
-        $accountInformation->setValue('<h3>Account information</h3>')
-                           ->setDecorators(array(
-                               array('ViewHelper')
-                           ));
+        $accountInformation->setValue('<div class="clear"></div><h3>Account information</h3><div class="clear"></div>');
+
         $personalInformation = new Oibs_Form_Element_Note('personalinformation');
-        $personalInformation->setValue('<h3>Personal Information</h3>')
-                            ->setDecorators(array(
-                                array('ViewHelper')
-                            ));
+        $personalInformation->setValue('<h3>Personal Information</h3><div class="clear"></div>');
+
         $locationInformation = new Oibs_Form_Element_Note('locationinformation');
-        $locationInformation->setValue('<h3>Location Information</h3>')
-                            ->setDecorators(array(
-                                array('ViewHelper')
-                            ));
+        $locationInformation->setValue('<h3>Location Information</h3><div class="clear"></div>');
+
         $employmentInformation = new Oibs_Form_Element_Note('employmentinformation');
-        $employmentInformation->setValue('<h3>Employment Information</h3>')
-                              ->setDecorators(array(
-                                  array('ViewHelper')
-                              ));
+        $employmentInformation->setValue('<h3>Employment Information</h3><div class="clear"></div>');
 
-        // Array for div clear elements (30)
-        $clear = array();
-        for ($i=0; $i<30; $i++) {
-            $clear[$i] = new Oibs_Form_Element_Note('clear'.$i);
-            $clear[$i]->setValue('<div class="clear"></div>')
-                      ->setDecorators(array(
-                          array('ViewHelper')
-                      ));
-        }
+        // Public text
+        $publictext = 'Public';
 
-        // Username for description, I tried to getValue() but it will return NULL
+        // Clear div
+        $clear = '<div class="clear"></div>';
+
+        // Username for description
         $auth = Zend_Auth::getInstance();
         $identity = $auth->getIdentity();
         $usernametext = $identity->username;
-        $username = new Zend_Form_Element_Text('username');
+        $username = new Zend_Form_Element_Hidden('username');
         $username->setLabel('Username')
                  ->setDescription($usernametext);
-        $username->helper = 'formHidden';
-        $usernamepublic = new Zend_Form_Element_CheckBox('usernamepublic');
-        $usernamepublic->setDescription(true);
-        $usernamepublic->helper = 'formHidden';
+        $usernamepublic = new Zend_Form_Element_Hidden('username_publicity');
+        $usernamepublic->setLabel($publictext);
 
         $openid = new Zend_Form_Element_Text('openid');
         $openid->setLabel('Open-ID')
-               ->setAttrib('id', 'open-ID');
+               ->setAttrib('id', 'open-ID')
+               ->addValidators(array(
+                   new Oibs_Validators_OpenidExists(),  // Not working?
+               ));
+        $openidclear = new Oibs_Form_Element_Note('openidclear');
+        $openidclear->setValue($clear);
 
         $password = new Zend_Form_Element_Password('password');
         $password->setLabel('Password')
-                 ->setAttrib('id', 'password');
+                 ->setAttrib('id', 'password')
+                 ->addValidators(array(
+                    new Oibs_Validators_RepeatValidator('confirm_password'),
+                    array('NotEmpty', true, array('messages' => array('isEmpty' => 'Empty'))),
+                    array('StringLength', false, array(4, 22,
+                        'messages' => array('stringLengthTooShort' => 'Password too short (4-22 characters)',
+                                            'stringLengthTooLong' => 'Password too long (4-22 characters)'))),
+				 ));
+                 //->setErrorMessages(Array('Password too short'));
+        $passwordclear = new Oibs_Form_Element_Note('passwordclear');
+        $passwordclear->setValue($clear);
 
-        $confirmpassword = new Zend_Form_Element_Password('confirmpassword');
+        $confirmpassword = new Zend_Form_Element_Password('confirm_password');
         $confirmpassword->setLabel('Confirm password')
-                        ->setAttrib('id', 'confirm-password');
+                        ->setAttrib('id', 'confirm-password')
+                        ->addValidators(array(
+                            array('NotEmpty', true, array('messages' => array('isEmpty' => 'Empty'))),
+                            array('StringLength', false, array(4, 22,
+                                'messages' =>array('stringLengthTooShort' => 'Password too short (4-22 characters)',
+                                                   'stringLengthTooLong' => 'Password too long (4-22 characters)'))),
+                        ));
+        $confirmpasswordclear = new Oibs_Form_Element_Note('confirm_passwordclear');
+        $confirmpasswordclear->setValue($clear);
 
         $email = new Zend_Form_Element_Text('email');
         $email->setLabel('Email')
               ->setAttrib('id', 'email')
-              ->setRequired(true);
+              ->setRequired(true)
+              ->addFilter('StringtoLower')
+              ->addValidators(array(
+                  $mailvalid,
+                  array('NotEmpty',
+                      true,
+                      array('messages' => array('isEmpty' => 'Email empty'))
+                  ),
+                  array('StringLength',
+                      false,
+                      array(6, 50, 'messages' => array('stringLengthTooShort' => 'Email too short (6-50 characters)',
+                                                       'stringLengthTooLong' => 'Email too long (6-50 characters)'))
+                  ),
+              ));
+        $emailclear = new Oibs_Form_Element_Note('emailclear');
+        $emailclear->setValue($clear);
+
+        //$gravatar = new Oibs_Form_Element_Note('gravatartext');
+        //$gravatar->setValue(
+        //        '<div class="input-column1"></div>'
+        //        . '<div class="input-column2" style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
+        $gravatar = new Zend_Form_Element_Hidden('gravatartext');
+        $gravatar->setLabel('Gravatar')
+                 ->setDescription('<div style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
+        $gravatarcheck = new Zend_Form_Element_Checkbox('gravatar');
+
+        $phone = new Zend_Form_Element_Text('phone');
+        $phone->setLabel('Phone')
+              ->setAttrib('id', 'phone');
+        $phonepublic = new Zend_Form_Element_CheckBox('phone_publicity');
+        $phonepublic->setLabel($publictext);
 
         $firstname = new Zend_Form_Element_Text('firstname');
         $firstname->setLabel('First name')
                   ->setAttrib('id', 'first-name');
-        $firstnamepublic = new Zend_Form_Element_CheckBox('firstnamepublic');
-        $firstnamepublic->setDescription(true);
-        //$fnamepublic->helper = 'formHidden';
+        $firstnamepublic = new Zend_Form_Element_CheckBox('firstname_publicity');
+        $firstnamepublic->setLabel($publictext);
 
-        $lastname = new Zend_Form_Element_Text('lastname');
+        // DB: surname
+        $lastname = new Zend_Form_Element_Text('surname');
         $lastname->setLabel('Last name')
                  ->setAttrib('id', 'last-name');
-        $lastnamepublic = new Zend_Form_Element_CheckBox('lastnamepublic');
-        $lastnamepublic->setDescription(true);
+        $lastnamepublic = new Zend_Form_Element_CheckBox('surname_publicity');
+        $lastnamepublic->setLabel($publictext);
 
         $gender = new Zend_Form_Element_Select('gender');
         $gender->setLabel('Gender')
                ->setAttrib('id', 'gender')
                ->addMultiOptions(array('Select', 'Male', 'Female'));
-        $genderpublic = new Zend_Form_Element_CheckBox('genderpublic');
-        $genderpublic->setDescription(true);
+        $genderpublic = new Zend_Form_Element_CheckBox('gender_publicity');
+        $genderpublic->setLabel($publictext);
 
-        $birthday = new Zend_Form_Element_Select('birthday');
+        $birthday = new Zend_Form_Element_Text('birthday');
         $birthday->setLabel('Date of Birth')
-                 ->setAttrib('id', 'dob-day')
-                 ->addMultiOptions(array('1', '1', '1'));
-        $birthmonth = new Zend_Form_Element_Select('birthmonth');
-        $birthmonth->setAttrib('id', 'dob-month')
-                   ->addMultiOptions(array('1', '1', '1'));
-        $birthyear = new Zend_Form_Element_Select('birthyear');
-        $birthyear->setAttrib('id', 'dob-year')
-                  ->addMultiOptions(array('1', '1', '1'));
-        $birthdaypublic = new Zend_Form_Element_CheckBox('birthdaypublic');
-        $birthdaypublic->setDescription(true);
+                 ->setAttrib('id', 'birthday');
+        $birthdaypublic = new Zend_Form_Element_CheckBox('birthday_publicity');
+        $birthdaypublic->setLabel($publictext);
 
         $biography = new Zend_Form_Element_Textarea('biography');
         $biography->setLabel('Biography')
                   ->setAttrib('id', 'biography')
                   ->setAttrib('rows', 30)
                   ->setAttrib('cols', 45)
-                  ->setDescription('<div id="progressbar_biography" class="progress"></div>');
+                  ->addValidators(array(
+                      array('StringLength',
+                          false,
+                          array(0, 4000, 'messages' => array('stringLengthTooLong' => 'Biography too long'))
+                      ),
+                  ));
+                   //->setDescription('<div id="progressbar_biography" class="progress_ok"></div>');
+        $biographypublic = new Zend_Form_Element_CheckBox('biography_publicity');
+        $biographypublic->setLabel($publictext);
 
         $intereststext = new Oibs_Form_Element_Note('intereststext');
         $intereststext->setValue(
                 '<div class="input-column1"></div>'
-                . '<div class="input-column2 help">(Use commas to seperate tags)</div>');
+                . '<div class="input-column2 help">(Use commas to seperate tags)</div><div class="clear"></div>');
         $interests = new Zend_Form_Element_Text('interests');
         $interests->setLabel('My interest (tags)')
                    ->setAttrib('id', 'interests');
+        $interestsclear = new Oibs_Form_Element_Note('interestsclear');
+        $interestsclear->setValue($clear);
 
-        $language = new Zend_Form_Element_Select('language');
-        $language->setLabel('User interface language')
-                 ->setAttrib('id', 'user-interface-language')
-                 ->addMultiOptions(array('Select', '1', '1'));
+        $links_websites = new Oibs_Form_Element_Note('links_websites');
+        $links_websites->setValue('<div class="input-column-website1"><label><strong>Links to my websites:</strong></label></div>');
+        $links_name = new Oibs_Form_Element_Note('links_name');
+        $links_name->setValue('<div class="input-column-website2">Name</div>');
+        $links_url = new Oibs_Form_Element_Note('links_url');
+        $links_url->setValue('<div class="input-column-website3">Url</div><div class="clear"></div>');
 
-        $hometown = new Zend_Form_Element_Text('hometown');
+        $links_name_site1 = new Zend_Form_Element_Text('links_name_site1');
+        $links_name_site1->setLabel('Web site 1')
+                         ->setAttrib('id', 'website1-name');
+        $links_url_site1 = new Zend_Form_Element_Text('links_url_site1');
+        $links_url_site1->setAttrib('id', 'website1-url');
+
+        $links_name_site2 = new Zend_Form_Element_Text('links_name_site2');
+        $links_name_site2->setLabel('Web site 2')
+                         ->setAttrib('id', 'website2-name');
+        $links_url_site2 = new Zend_Form_Element_Text('links_url_site2');
+        $links_url_site2->setAttrib('id', 'website2-url');
+
+        $links_name_site3 = new Zend_Form_Element_Text('links_name_site3');
+        $links_name_site3->setLabel('Web site 3')
+                         ->setAttrib('id', 'website3-name');
+        $links_url_site3 = new Zend_Form_Element_Text('links_url_site3');
+        $links_url_site3->setAttrib('id', 'website3-url');
+
+        $links_name_site4 = new Zend_Form_Element_Text('links_name_site4');
+        $links_name_site4->setLabel('Web site 4')
+                         ->setAttrib('id', 'website4-name');
+        $links_url_site4 = new Zend_Form_Element_Text('links_url_site4');
+        $links_url_site4->setAttrib('id', 'website4-url');
+
+        $links_name_site5 = new Zend_Form_Element_Text('links_name_site5');
+        $links_name_site5->setLabel('Web site 5')
+                         ->setAttrib('id', 'website5-name');
+        $links_url_site5 = new Zend_Form_Element_Text('links_url_site5');
+        $links_url_site5->setAttrib('id', 'website5-url');
+
+        $languages = New Default_Model_Languages();
+        $allLanguages = $languages->getAllNamesAndIds();
+        $userlanguage = new Zend_Form_Element_Select('userlanguage');
+        $userlanguage->setLabel('User interface language')
+                     ->setAttrib('id', 'user-interface-language')
+                     ->addMultiOption('', 'Select');
+        foreach ($allLanguages as $language) {
+            $userlanguage->addMultiOption($language['id_lng'], $language['name_lng']);
+        }
+        $userlanguageclear = new Oibs_Form_Element_Note('userlanguageclear');
+        $userlanguageclear->setValue($clear);
+
+        /*
+        $avatar = new Zend_Form_Element_File('avatar');
+        $avatar->setLabel('Avatar image');
+
+        
+        */
+
+        // DB: city
+        $hometown = new Zend_Form_Element_Text('city');
         $hometown->setLabel('Hometown')
                  ->setAttrib('id', 'hometown')
-                 ->setRequired(true);
-        $hometownpublic = new Zend_Form_Element_CheckBox('hometownpublic');
-        $hometownpublic->helper = 'formHidden';
-        $hometownpublic->setDescription(true);
+                 ->setRequired(true)
+                 ->addValidators(array(
+                            array('NotEmpty', true, array('messages' => array('isEmpty' => 'Hometown empty')))
+                 ));
+        $hometownpublic = new Zend_Form_Element_CheckBox('city_publicity');
+        $hometownpublic->setLabel($publictext);
+        $hometownpublic->helper = 'FormHidden';
 
-        $country = new Zend_Form_Element_Select('country');
+        $address = new Zend_Form_Element_Text('address');
+        $address->setLabel('Address')
+                ->setAttrib('id', 'address');
+        $addresspublic = new Zend_Form_Element_CheckBox('address_publicity');
+        $addresspublic->setLabel($publictext)
+                      ->setAttrib('checked', 'checked')
+                      ->setValue(1);
+        $addresspublic->helper = 'FormHidden';
+
+        $country = new Zend_Form_Element_Text('country');
         $country->setLabel('Country of Residence')
-                ->setAttrib('id', 'country-of-residence')
-                ->addMultiOptions(array('Select', '1', '1'));
-        $countrypublic = new Zend_Form_Element_CheckBox('countrypublic');
-        $countrypublic->setDescription(true);
+                ->setAttrib('id', 'country');
+        $countrypublic = new Zend_Form_Element_CheckBox('country_publicity');
+        $countrypublic->setLabel($publictext);
 
-        $timezone = new Zend_Form_Element_Select('timezone');
-        $timezone->setLabel('Time Zone')
+        $timezone_model = new Default_Model_Timezones();
+        $allTimezones = $timezone_model->getAllTimezones();
+        $usertimezone = new Zend_Form_Element_Select('usertimezone');
+        $usertimezone->setLabel('Time Zone')
                  ->setAttrib('id', 'time-zone')
-                 ->addMultiOptions(array('Select', '1', '1'));
-        $timezonepublic = new Zend_Form_Element_CheckBox('timezonepublic');
-        $timezonepublic->setDescription(true);
+                 ->addMultiOption('', 'Select');
+        foreach ($allTimezones as $timezone) {
+            $usertimezone->addMultiOption($timezone['id_tmz'], $timezone['gmt_tmz'].' '.$timezone['timezone_location_tmz']);
+        }
+        $usertimezonepublic = new Zend_Form_Element_CheckBox('usertimezone_publicity');
+        $usertimezonepublic->setLabel($publictext);
 
-        $status = new Zend_Form_Element_Select('status');
-        $status->setLabel('I am currently')
-               ->setAttrib('id', 'status')
-               ->setRequired(true)
-               ->addMultiOptions(array('Select', '1', '1'));
-        $statuspublic = new Zend_Form_Element_CheckBox('statuspublic');
-        $statuspublic->setDescription(true);
+        $userProfilesModel = new Default_Model_UserProfiles();
+        $employments = $userProfilesModel->getEmployments();
+        $employments = array_merge(array('' => 'Select'), $employments);
+        $employment = new Zend_Form_Element_Select('employment');
+        $employment->setLabel('I am currently')
+                   ->setAttrib('id', 'status')
+                   ->setRequired(true)
+                   ->addMultiOptions($employments)
+                   ->setErrorMessages(array('Select status'));
+        $employmentpublic = new Zend_Form_Element_CheckBox('employment_publicity');
+        $employmentpublic->setLabel($publictext);
 
-        $employer_organization = new Zend_Form_Element_Text('employer_organization');
-        $employer_organization->setLabel('EmployerOrganization')
+        // DB: company
+        $employer_organization = new Zend_Form_Element_Text('company');
+        $employer_organization->setLabel('Employer / Organization')
                               ->setAttrib('id', 'employer-organization');
-        $employer_organizationpublic = new Zend_Form_Element_CheckBox('employer_organizationpublic');
-        $employer_organizationpublic->setDescription(true);
-
-        $position = new Zend_Form_Element_Select('position');
-        $position->setLabel('Position')
-                 ->setAttrib('id', 'status')
-                 ->addMultiOptions(array('Select', '1', '1'));
-        $positionpublic = new Zend_Form_Element_CheckBox('positionpublic');
-        $positionpublic->setDescription(true);
+        $employer_organizationpublic = new Zend_Form_Element_CheckBox('company_publicity');
+        $employer_organizationpublic->setLabel($publictext);
 
         $save = new Zend_Form_Element_Submit('save');
         $save->setLabel('Save profile')
@@ -214,66 +378,64 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         
         
         $this->addElements(array(
-                            next($clear),
                             $accountInformation,
-                            next($clear),
                             $username,
                             $usernamepublic,
-                            next($clear),
                             $openid,
-                            next($clear),
+                            $openidclear,
                             $password,
-                            next($clear),
+                            $passwordclear,
                             $confirmpassword,
-                            next($clear),
+                            $confirmpasswordclear,
                             $personalInformation,
-                            next($clear),
                             $email,
-                            next($clear),
+                            $emailclear,
+                            $gravatar,
+                            $gravatarcheck,
+                            $phone,
+                            $phonepublic,
                             $firstname,
                             $firstnamepublic,
-                            next($clear),
                             $lastname,
                             $lastnamepublic,
-                            next($clear),
                             $gender,
                             $genderpublic,
-                            next($clear),
                             $birthday,
-                            $birthmonth,
-                            $birthyear,
                             $birthdaypublic,
-                            next($clear),
                             $biography,
-                            next($clear),
+                            $biographypublic,
                             $intereststext,
-                            next($clear),
                             $interests,
-                            next($clear),
-                            $language,
-                            next($clear),
+                            $interestsclear,
+                            $links_websites,
+                            $links_name,
+                            $links_url,
+                            $links_name_site1,
+                            $links_url_site1,
+                            $links_name_site2,
+                            $links_url_site2,
+                            $links_name_site3,
+                            $links_url_site3,
+                            $links_name_site4,
+                            $links_url_site4,
+                            $links_name_site5,
+                            $links_url_site5,
+                            $userlanguage,
+                            $userlanguageclear,
                             $locationInformation,
-                            next($clear),
                             $hometown,
                             $hometownpublic,
-                            next($clear),
+                            $address,
+                            $addresspublic,
                             $country,
                             $countrypublic,
-                            next($clear),
-                            $timezone,
-                            $timezonepublic,
-                            next($clear),
+                            $usertimezone,
+                            $usertimezonepublic,
                             $employmentInformation,
-                            next($clear),
-                            $status,
-                            $statuspublic,
-                            next($clear),
+                            $employment,
+                            $employmentpublic,
                             $employer_organization,
                             $employer_organizationpublic,
-                            next($clear),
-                            $position,
-                            $positionpublic,
-                            next($clear),
                             $save,
                             $cancel,
                            ));
@@ -286,36 +448,55 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $username->setDecorators(array('InputDecorator'));
         $usernamepublic->setDecorators(array('PublicDecorator'));
         $openid->setDecorators(array('InputDecorator'));
+        $openidclear->setDecorators(array('ViewHelper'));
         $password->setDecorators(array('InputDecorator'));
+        $passwordclear->setDecorators(array('ViewHelper'));
         $confirmpassword->setDecorators(array('InputDecorator'));
+        $confirmpasswordclear->setDecorators(array('ViewHelper'));
         $email->setDecorators(array('InputDecorator'));
+        $emailclear->setDecorators(array('ViewHelper'));
+        $gravatar->setDecorators(array('InputDecorator'));
+        $gravatarcheck->setDecorators(array('PublicDecorator'));
+        $phone->setDecorators(array('InputDecorator'));
+        $phonepublic->setDecorators(array('PublicDecorator'));
         $firstname->setDecorators(array('InputDecorator'));
         $firstnamepublic->setDecorators(array('PublicDecorator'));
         $lastname->setDecorators(array('InputDecorator'));
         $lastnamepublic->setDecorators(array('PublicDecorator'));
         $gender->setDecorators(array('InputDecorator'));
         $genderpublic->setDecorators(array('PublicDecorator'));
-        $birthday->setDecorators(array('InputNoEndTagDecorator'));
-        $birthmonth->setDecorators(array('ViewHelper'));
-        $birthyear->setDecorators(array(
-            'ViewHelper',
-            array('HtmlTag', array('tag' => 'div', 'closeOnly' => true)),
-            ));
+        $birthday->setDecorators(array('InputDecorator'));
         $birthdaypublic->setDecorators(array('PublicDecorator'));
         $biography->setDecorators(array('InputDecorator'));
+        $biographypublic->setDecorators(array('PublicDecorator'));
         $intereststext->setDecorators(array('ViewHelper'));
         $interests->setDecorators(array('InputDecorator'));
-        $language->setDecorators(array('InputDecorator'));
+        $interestsclear->setDecorators(array('ViewHelper'));
+        $links_websites->setDecorators(array('ViewHelper'));
+        $links_name->setDecorators(array('ViewHelper'));
+        $links_url->setDecorators(array('ViewHelper'));
+        $links_name_site1->setDecorators(array('InputWebsiteNameDecorator'));
+        $links_url_site1->setDecorators(array('InputWebsiteUrlDecorator'));
+        $links_name_site2->setDecorators(array('InputWebsiteNameDecorator'));
+        $links_url_site2->setDecorators(array('InputWebsiteUrlDecorator'));
+        $links_name_site3->setDecorators(array('InputWebsiteNameDecorator'));
+        $links_url_site3->setDecorators(array('InputWebsiteUrlDecorator'));
+        $links_name_site4->setDecorators(array('InputWebsiteNameDecorator'));
+        $links_url_site4->setDecorators(array('InputWebsiteUrlDecorator'));
+        $links_name_site5->setDecorators(array('InputWebsiteNameDecorator'));
+        $links_url_site5->setDecorators(array('InputWebsiteUrlDecorator'));
+        $userlanguage->setDecorators(array('InputDecorator'));
+        $userlanguageclear->setDecorators(array('ViewHelper'));
         $hometown->setDecorators(array('InputDecorator'));
         $hometownpublic->setDecorators(array('PublicDecorator'));
+        $address->setDecorators(array('InputDecorator'));
+        $addresspublic->setDecorators(array('PublicDecorator'));
         $country->setDecorators(array('InputDecorator'));
         $countrypublic->setDecorators(array('PublicDecorator'));
-        $timezone->setDecorators(array('InputDecorator'));
-        $timezonepublic->setDecorators(array('PublicDecorator'));
-        $status->setDecorators(array('InputDecorator'));
-        $statuspublic->setDecorators(array('PublicDecorator'));
-        $position->setDecorators(array('InputDecorator'));
-        $positionpublic->setDecorators(array('PublicDecorator'));
+        $usertimezone->setDecorators(array('InputDecorator'));
+        $usertimezonepublic->setDecorators(array('PublicDecorator'));
+        $employment->setDecorators(array('InputDecorator'));
+        $employmentpublic->setDecorators(array('PublicDecorator'));
         $employer_organization->setDecorators(array('InputDecorator'));
         $employer_organizationpublic->setDecorators(array('PublicDecorator'));
         $save->setDecorators(array(
@@ -332,7 +513,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
             'Form'
         ));
     }
-*/
+/*
     public function __construct($options = null)
     { 
         parent::__construct($options);
@@ -636,7 +817,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                                     $bio, $bio_publicity,
                                     $phone, $phone_publicity,
                                     // $openID, $openid_publicity,
-                                    $openID, /*$openid_publicity,*/
+                                    $openID, //$openid_publicity,
                                     $password, $password_confirm,
                                     $email, $gravatar,
                                     $confirm_email,
@@ -648,7 +829,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 
         // if you use try..catch Don't echo e!!
         }catch(Zend_Exception $e){echo '<pre>General error occurred! Please try again.';echo '</pre>';}
-    }
+    }*/
 
     /*  What is this? Why is this here? Do we need it? Filename?? -Joel
 	public function formRename($filename)

@@ -287,6 +287,10 @@
         // get content links, to be implemented
         $links = array();
 
+        // Get all content campaigns
+        $campaignHasContentModel = new Default_Model_CampaignHasContent();
+        $campaigns = $campaignHasContentModel->getContentCampaigns($id);
+
         // This functionality needs looking over (code and general idea)
         // get content family (array of children, parents and siblings)
         $contentHasContentModel = new Default_Model_ContentHasContent();
@@ -424,6 +428,7 @@
         $this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
         $this->view->count              = $count;
+        $this->view->campaigns          = $campaigns;
         //$this->view->favourite			= $favourite;
         
         // Inject title to view

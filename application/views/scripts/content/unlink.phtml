@@ -1,17 +1,14 @@
 <?php
 
-$title = '';
+$title = $this->translate('content-unlink-title', $this->language);
 
 if($this->linkingContentType == "problem") {
-    $title = $this->translate('content-unlink-from-challenge');
     $linkedColor = "red";
 }
 elseif($this->linkingContentType == "finfo") {
-    $title = $this->translate('content-unlink-from-vision');
     $linkedColor = "yellow";
 }
 elseif($this->linkingContentType == "idea") {
-    $title = $this->translate('content-unlink-from-idea');
     $linkedColor = "green";
 }
 ?>
@@ -103,6 +100,7 @@ if($this->contentexists) {
                 }
             }
         }
+        ?> <div class="form_helptext_line"></div> <?php
     }
 } else {
     ?>

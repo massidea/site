@@ -688,7 +688,7 @@ background:transparent url("/images/gray_dot_line_500.png") bottom no-repeat; }
 #content #edit-user-page #time-zone,
 #content #edit-user-page #status,
 #content #edit-user-page #position-title,
-#content #edit-user-page #avatar { width:145px; }
+#content #edit-user-page #avatar { width:261px; } /* 145px */
 
 #content #edit-user-page #dob-day { width:40px; }
 #content #edit-user-page #dob-month { width:100px; }

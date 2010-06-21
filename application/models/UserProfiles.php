@@ -52,21 +52,32 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     *   @see setValue
     *   @see setPublicity
     */
-    public function setProfileData($id = -1, $formData){
+    public function setProfileData($id, $formdata){
         // check params, return false if failure
-        if ($id == -1 || !is_array($formData)) {
+        if ($id < 0 || !is_array($formdata)) {
             return false;
         } 
 
-        // needs replacing to single setValue($id, $key, $val, $pub)!
-        foreach ($formData as $key => $val) {                                   // go through data
-            echo "setProfileData processing: ".$key." => ".$val."<br>";
-            if ($key != "submit" && $key != "current_password" &&               // ignore certain keys...   
-                $key != "email" && $key != "password"                           // ignore certain keys...   
-                && $key != "confirm_password" && $key != "confirm_email"        // ignore certain keys...   
-                && $key != "notifications")										// ignore 
+        if (isset($formdata['username']))
+            unset($formdata['username']);
+        if (isset($formdata['username_publicity']))
+            unset($formdata['username_publicity']);
+        if (isset($formdata['confirm_password']))
+            unset($formdata['confirm_password']);
+        if (isset($formdata['gravatartext']))
+            unset($formdata['gravatartext']);
+        if (isset($formdata['save']))
+            unset($formdata['save']);
+        if (isset($formdata['cancel']))
+            unset($formdata['cancel']);
+        
+
+        // needs replacing to single setValue($id, $key, $val, $pub)! <--- Is this some old comment?
+        foreach ($formdata as $key => $val) {                                   // go through data
+            if ($key != "email" && $key != "password"                           // ignore certain keys...
+                && $key != "notifications" && $val != "")                       // ignore
             {
-                $publicity = strpos($key,'_publicity');							// returns true if publicitied
+                $publicity = strpos($key,'_publicity');                         // returns true if publicitied
                 if($publicity !== false) {                                      // note the use of !== (not !=), this operator must be used since strpos can return boolean and integer values
                     $key_to_set = array_shift(explode('_publicity',$key,2));    // get key for which the public value is for (strstr replacement from php.net)
                     $this->setPublicity($id, $key_to_set, $val);                // set publicity (whose, what key, what value)
@@ -86,16 +97,8 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     * @param value
     * @param pub int (1/0) 
     */
-    public function setValue($id = -1, $key, $value, $pub = 0) 
+    public function setValue($id, $key, $value, $pub = 0) 
     {
-        if ($id == -1) {
-            return false;    // panic and die
-            //echo "setValue params failed for: " . $key . "<br>";
-        }
-        
-        //echo "setValue processing userid: " . $id . "<br>";
-        //echo $key."-".$value;
-        
         // get old values
         $select = $this->select()
             ->from($this, array('profile_key_usp', 'profile_value_usp', 'public_usp'))
@@ -108,6 +111,15 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
                 'profile_key_usp' => $key,
                 'profile_value_usp' => $value,
                 'public_usp' => $pub,
+                'created_usp' => new Zend_Db_Expr('NOW()'),
+                'modified_usp' => new Zend_Db_Expr('NOW()')
+        );
+
+        $update = array(
+                'id_usr_usp' => $id,
+                'profile_key_usp' => $key,
+                'profile_value_usp' => $value,
+                'public_usp' => $pub,
                 'modified_usp' => new Zend_Db_Expr('NOW()')
         );
         
@@ -115,7 +127,6 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
 		if(isset($result[0]['profile_value_usp'])) {
             if ($result[0]['profile_value_usp'] == $value 
             && $result[0]['public_usp'] == $pub) {
-                //echo "setValue update matched old value for: " . $key . "<br>";
                 return true;    // dont set the same values
             }
         
@@ -124,17 +135,14 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             $where[] = $this->getAdapter()->quoteInto('id_usr_usp = ?', $id);
             
             
-			if($this->update($new, $where)) {
-                //echo "setValue updated: " . $key . "<br>";
+			if($this->update($update, $where)) {
                 return true;
             } else {
-                //echo "setValue updated failed for: " . $key . "<br>";
                 return false;
             }
         // if no old values (insert new data)
 		} else {	
             // insert new values
-            //echo "setValue inserted: " . $key . "<br>";
 			$this->insert($new);
         }
     }
@@ -219,6 +227,20 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         {
         	$collection[$result->profile_key_usp] = htmlentities($result->profile_value_usp);
         }
+        // Change gender to M or N
+        if (isset($collection['gender']) && $collection['gender'] == 1)
+            $collection['gender'] = 'Male';
+        else if (isset($collection['gender']) && $collection['gender'] == 2)
+            $collection['gender'] = 'Female';
+        // Change employment "code" to text
+        if (isset($collection['employment']))
+            $collection['employment'] = $this->getEmploymentByEmployment($collection['employment']);
+        // User timezone
+        if (isset($collection['usertimezone'])) {
+            $timezone_model = new Default_Model_Timezones();
+            $collection['usertimezone'] = $timezone_model->getTimezoneTextById($collection['usertimezone']);
+        }
+
         return $collection;
     }
     
@@ -911,6 +933,33 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             return null;
         }
 	}
+
+    /**
+     * getUserEmployment
+     *
+     * Get user employment (status)
+     *
+     * @param id_usr User id
+     * @return string
+     *
+     * @author Mikko Korpinen
+     */
+	public function getUserEmployment($usr_id=-1)
+	{
+		$where = $this->select()
+							->from($this, array('profile_key_usp', 'profile_value_usp'))
+							->where('id_usr_usp = ?', $usr_id)
+							->where('profile_key_usp = ?','employment');
+
+
+        $result = $this->fetchAll($where)->current();
+		if (!empty($result)) {
+            return $result;
+        }
+        else {
+            return null;
+        }
+	}
 	
 	//Get user category
 	public function getUsercate($id=-1)
@@ -1150,6 +1199,61 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             return 1;
         }
 
+    }
+
+    /**
+     * getEmployments
+     *
+     * Employments
+     *
+     * @return array
+     * @author Mikko Korpinen
+     */
+    public function getEmployments()
+    {
+        return array(
+                    'private_sector' => 'Private sector',
+                    'public_sector' => 'Public sector',
+                    'education_sector' => 'Education sector',
+                    'student' => 'Student',
+                    'pentioner' => 'Pentioner',
+                    'other' => 'Other',
+               );
+    }
+
+    /**
+     * getEmploymentByEmployment
+     *
+     * Employment by employment code
+     *
+     * @return String
+     * @param String
+     * @author Mikko Korpinen
+     */
+    public function getEmploymentByEmployment($employment)
+    {
+        Switch ($employment) {
+            case 'private_sector':
+                return 'Private sector';
+                break;
+            case 'public_sector':
+                return 'Public sector';
+                break;
+            case 'education_sector':
+                return 'Education sector';
+                break;
+            case 'student':
+                return 'Student';
+                break;
+            case 'pentioner':
+                return 'Pentioner';
+                break;
+            case 'other':
+                return 'Other';
+                break;
+            default:
+                return '';
+        }
     }
     
 } // end of class
