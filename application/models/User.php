@@ -590,7 +590,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         
         //$userProfile = new Default_Model_UserProfiles();
         //$userProfile->getUserCountry();
-        print_r($result);die;
+        //print_r($result);die;
         
         return $result;
     }
