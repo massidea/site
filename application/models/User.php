@@ -582,7 +582,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                       //->where($joinDate)
                                       ->group('usr.id_usr')
                                       ->order($sort)
-                                      //->limitPage($page, $count)
+                                      ->limitPage($page, $count)
                                       ;
         
         // Fetch all results from database
