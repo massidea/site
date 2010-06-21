@@ -22,11 +22,14 @@ $url_img = $this->url(array('controller' => 'account',
                             'thumb' => 'true'),
                             'lang_default', true)
 ?>
-<div class="user_image_list">
-	<img src="<?php echo $url_img; ?>" alt="" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
-</div>
+    <div class="user_image_list">
+        <a href="<?php echo $url_user; ?>">
+            <img src="<?php echo $url_img; ?>"
+            alt="" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
+        </a>
+    </div>
 
-<div class="user_summary_list_without_stats">
+    <div class="user_summary_list_without_stats">
 	<span class="summary_topic">
 		<a href="<?php echo $url_user; ?>">
 			<?php echo $this->login_name_usr; ?>

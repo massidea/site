@@ -58,6 +58,16 @@ a:active {text-decoration: none; color: #0089CF;}
 #add_content_menu a:hover {text-decoration: none; color: #333333;}
 #add_content_menu a:active {text-decoration: none; color: #333333;}
 
+#content_list_ajax_link a:link {text-decoration: none; color: #0089CF;}
+#content_list_ajax_link a:visited {text-decoration: none; color: #0089CF;}
+#content_list_ajax_link a:hover {text-decoration: none; color: #0089CF;}
+#content_list_ajax_link a:active {text-decoration: none; color: #0089CF;}
+
+#recent_posts_ajax_link a:link {text-decoration: none; color: #0089CF;}
+#recent_posts_ajax_link a:visited {text-decoration: none; color: #0089CF;}
+#recent_posts_ajax_link a:hover {text-decoration: none; color: #0089CF;}
+#recent_posts_ajax_link a:active {text-decoration: none; color: #0089CF;}
+
 div.top_row_center_right_login a:link {text-decoration: underline; color: white;}
 div.top_row_center_right_login a:visited {text-decoration: underline; color: white;}
 div.top_row_center_right_login a:active {text-decoration: underline; color: white;}
@@ -860,8 +870,18 @@ div.privmsg_userinfo {
 
 .privmsg_content {
 	padding: 5px;
+	float: left; 
+	position: relative; 
+	height: 140px; 
+	width:590px;
 }
 
+.privmsg_content .reply {
+	position: absolute; 
+	right:0px; 
+	top: 5px;	
+}
+	
 /** LOGIN **/
 
 #login_form_container dt {

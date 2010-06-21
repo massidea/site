@@ -1,35 +1,30 @@
 <h1><?php echo $this->translate('privmsg-messages'); ?></h1>
 <br />
+<?php $this->headScript()->captureStart() ?>
+$(document).ready(function() {
+	$("input[type=button][value=Reply]").click(function() {
+		url = "<?php echo $this->baseUrl("/".$this->language."/privmsg/send/")?>" + $(this).attr('id').replace(/replyto-/, "");
+		location.href = url;
+	});
+});
+<?php $this->headScript()->captureEnd() ?>
+<?php
+if($this->privmsgs):
+?>
 
-<?php
-if ($this->privmsgs) {
-	foreach ($this->privmsgs as $privmsg) {
-?>
-<!-- One form for every message for deleting only that message -->
-<form name="delete_privmsg_<?php echo $privmsg['id_pmg']; ?>" action="#" method="post">
-	<input type="hidden" name="delete_privmsg" value="delete_one_<?php echo $privmsg['id_pmg']; ?>" />
-</form>
-<?php
-	}
-	
-	reset($this->privmsgs);
-?>
 <!-- A form for deleting the selected messages -->
-<form name="delete_privmsg_selected" id="delete_privmsg_selected" action="#" method="post">
-	<input type="hidden" name="delete_privmsg" value="delete_selected" />
+<form name="delete_privmsgs" id="delete_privmsgs" action="#" method="post">
+	<input type="hidden" name="delete_action" value="1" />
 	<input type="hidden" name="delete_first" value="<?php echo $this->privmsgs[0]['id_pmg']; ?>" />
 	<input type="hidden" name="delete_last" value="<?php echo $this->privmsgs[count($this->privmsgs)-1]['id_pmg']; ?>" />
 	<div style="padding: 0px 0px 5px 0px;">
 		<input type="checkbox" name="select_all" id="select_all" onclick="selectAllPrivmsgs(); return true;" />
-		<a href="javascript: void(0)" onclick="document.delete_privmsg_selected.submit(); return false;">
+		<a href="javascript: void(0)" onclick="document.delete_privmsgs.submit(); return false;">
 			<?php echo $this->translate('privmsg-delete-selected'); ?>
 		</a>
 	</div>
+	
 <?php
-}
-
-if($this->privmsgs):
-
 	foreach($this->privmsgs as $privmsg):
 		$sent = strtotime($privmsg['created_pmg']);
 		$elapsed = time() - $sent;
@@ -61,10 +56,10 @@ if($this->privmsgs):
 		<div class="privmsg">
 			<div class="privmsg_userinfo">
 				
-				<!-- Delete-button for every message -->
+				<!-- Checkbox and Delete-button for every message -->
 				<div style="padding: 0px 0px 3px 0px;">
 					<input type="checkbox" name="select_<?php echo $privmsg['id_pmg']; ?>" id="select_<?php echo $privmsg['id_pmg']; ?>" />
-					<a href="javascript: void(0)" onclick="document.delete_privmsg_<?php echo $privmsg['id_pmg']; ?>.submit(); return false">
+					<a href="javascript: void(0)" onclick="selectOnlyThisMsg(<?php echo $privmsg['id_pmg']; ?>); document.delete_privmsgs.submit(); return false">
 						<?php echo $this->translate('privmsg-delete'); ?>
 					</a>
 				</div>
@@ -122,7 +117,6 @@ if($this->privmsgs):
 				<?php echo $sent; ?>
 			</div><!-- end of privmsg_userinfo -->
 			<div class="privmsg_content">
-
                 <?php if($privmsg['read_pmg'] == 0): ?>
                     <span style="color: red;">
                         <b>NEW!</b>
@@ -135,6 +129,9 @@ if($this->privmsgs):
                 <p>
                     <?php echo stripslashes($privmsg['message_body_pmg']); ?>
                 </p>
+                <?php if($privmsg['username_pmg'] != "privmsg-message-sender-system"): ?>
+					<input type="button" class="reply" id="replyto-<?php echo $privmsg['username_pmg']; ?>" value="Reply"/>
+				<?php endif; ?>
 			</div><!-- end of privmsg_content -->
 		</div><!-- end of privmsg -->
     <?php endforeach; ?>

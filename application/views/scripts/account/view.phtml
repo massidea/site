@@ -8,6 +8,7 @@
 ?>
 
 <?php $this->headScript()->captureStart() ?>
+
 function publishconfirmation(url) {
     var answer = confirm("Publish content?");
     if (answer) {
@@ -27,7 +28,26 @@ function deleteconfirmation(url) {
     }
 }
 
+// Bio: show 750; max 4000
+var biographyBody = new Array();
+
 $(document).ready(function() {
+    // Bio
+    var previewChars = 750;
+	$(".biographyrow").each(function(key, value){
+		biographyBody[key] = $(value).children().html();
+		var biographylength = $(value).children().html().length;
+		if(biographylength >= previewChars) {
+			var biographyshort = biographyBody[key].substring(0,previewChars);
+			var expandLink = '<a href="#" onclick="javascript:expandText('+key+');return false;">... more</a>';
+			$(value).children().html(biographyshort + expandLink);
+		};
+	});
+	$('#checkallrows').click(function(){
+		$("INPUT[type='checkbox']").attr('checked', $('#checkallrows').is(':checked'));
+	});
+    // Endof Bio
+
 	$("#activity > .left > #content_type > ul > li > a").mouseover(function () {
 		$(this).parent().css('cursor', 'pointer');
 	});
@@ -51,6 +71,11 @@ $(document).ready(function() {
 		}); // endof li.each
 	}); // Endof a.click
 }); // Endof document ready
+
+function expandText(key)
+{
+	$(".biographyrow:eq("+key+")").html("<span>"+ biographyBody +"</span>");
+}
 
 <?php $this->headScript()->captureEnd(); ?>
 
@@ -129,25 +154,41 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                                                      'language' => $this->language),
                                                'lang_default', true)."/".$this->user['login_name_usr'];
                 ?>
-                <form><input type="button" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" onClick="location.href='<?php echo $privatemessage; ?>'"></form>
-                <!--<input type="submit" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" />-->
+                <input type="button" value="Send a message" id="send-message" class="submit-button" name="send-message" alt="Send a message" onClick="location.href='<?php echo $privatemessage; ?>'">
                 <?php endif; endif; ?>
             </div>
             <h2><?php echo $this->user['login_name_usr']; ?></h2>
+
+            <?php //echo '<pre>'; var_dump($this->userprofile); ?>
+
             <ul>
-                <?php if((isset($this->userprofile['firstname']) && $this->userprofile['firstname'] !== "") ||
+                <?php if((isset($this->userprofile['firstname']) && $this->userprofile['firstname'] !== "") &&
                          (isset($this->userprofile['surname']) && $this->userprofile['surname'] !== "")) : ?>
                 <li>
                     <strong>Full name:</strong>
                     <?php
-                    // This is always set, so here is needed to check if it is empty
-                    if(isset($this->userprofile['firstname']) && $this->userprofile['firstname'] !== "")
-                        echo $this->userprofile['firstname']." ";
-                    // This is always set, so here is needed to check if it is empty
-                    if(isset($this->userprofile['surname']) && $this->userprofile['surname'] !== "")
-                              echo $this->userprofile['surname'];
+                    echo $this->userprofile['firstname']." ".$this->userprofile['surname'];
                     ?>
                 </li>
+                <?php elseif (isset($this->userprofile['firstname']) && $this->userprofile['firstname'] !== "") : ?>
+                <li>
+                    <strong>First name:</strong>
+                    <?php
+                    echo $this->userprofile['firstname'];
+                    ?>
+                </li>
+                <?php elseif (isset($this->userprofile['surname']) && $this->userprofile['surname'] !== "") : ?>
+                <li>
+                    <strong>Last name:</strong>
+                    <?php
+                    echo $this->userprofile['surname'];
+                    ?>
+                </li>
+                <?php endif; ?>
+                <?php
+                if (isset($this->userprofile['gender']) && $this->userprofile['gender'] != NULL) :
+                ?>
+                <li><strong>Gender:</strong> <?php echo $this->userprofile['gender']; ?></li>
                 <?php endif; ?>
                 <?php //display country TODO: link
                 if (isset($this->userprofile['country']) && $this->userprofile['country'] != NULL) :
@@ -167,6 +208,16 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                                                        'lang_default', true); ?>"><?php echo $this->userprofile['city']; ?></a></li>
                 <?php endif; ?>
                 <?php
+                if (isset($this->userprofile['address']) && $this->userprofile['address'] != NULL):
+                ?>
+                <li><strong>Address:</strong> <?php echo $this->userprofile['address']; ?></li>
+                <?php endif; ?>
+                <?php
+                if (isset($this->userprofile['usertimezone']) && $this->userprofile['usertimezone'] != NULL):
+                ?>
+                <li><strong>Timezone:</strong> <?php echo $this->userprofile['usertimezone']; ?></li>
+                <?php endif; ?>
+                <?php
                 if (isset($this->userprofile['birthday']) && $this->userprofile['birthday'] != NULL):
                 ?>
                 <li><strong>Birthday:</strong> <?php echo $this->userprofile['birthday']; ?></li>
@@ -177,22 +228,21 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 <li><strong>Phone:</strong> <?php echo $this->userprofile['phone']; ?></li>
                 <?php endif; ?>
                 <?php
-                if (isset($this->userprofile['profession']) && $this->userprofile['profession'] != NULL):
-                ?>
-                <li><strong>Profession:</strong> <?php echo $this->userprofile['profession']; ?></li>
-                <?php endif; ?>
-                <?php
                 if (isset($this->userprofile['company']) && $this->userprofile['company'] != NULL):
                 ?>
-                <li><strong>Company:</strong> <?php echo $this->userprofile['company']; ?></li>
+                <li><strong>Employer / Organization:</strong> <?php echo $this->userprofile['company']; ?></li>
                 <?php endif; ?>
-                <!-- <li><strong>I am:</strong> <a href="#">Working in a private sector</a></li> -->
+                <?php
+                if (isset($this->userprofile['employment']) && $this->userprofile['employment'] != NULL):
+                ?>
+                <li><strong>I am:</strong> <?php echo $this->userprofile['employment']; ?></li>
+                <?php endif; ?>
             </ul>
         </div>
         <?php if (isset($this->userprofile['biography']) && $this->userprofile['biography'] != NULL && $this->userprofile['biography'] != "") : ?>
         <div id="user-bio">
             <h5>Bio:</h5>
-            <p><?php echo $this->userprofile['biography'];?></p>
+            <p class="biographyrow"><span><?php echo $this->userprofile['biography']; ?></span></p>
             <!--<p><a href="#">(read more)</a></p>-->
 
             <!--<p class="my-links"><strong>My links:</strong> <a href="#">Facebook</a>, <a href="#">LinkedIN</a>, <a href="#">Blogger</a>, <a href="#">Youtube</a>, <a href="#">Myspace</a></p>-->
@@ -281,12 +331,10 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 </div>
             </div>
             -->
-        <div class="right">
-            <?php
-            /*
+        <div class="left">
             <div id="my_groups">
                 <h3>My groups</h3>
-                <strong>All</strong> | <strong><a href="#">Member</a></strong> | <strong><a href="#">Admin</a></strong>
+                <strong>All</strong><!-- | <strong><a href="#">Member</a></strong> | <strong><a href="#">Admin</a></strong>-->
                 <div class="scroll-box">
                     <ul>
                         <?php foreach($this->usergroups as $usergroup): ?>
@@ -300,8 +348,7 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                     <!--<p><strong><a href="#">See all 23</a></strong></p>-->
                 </div>
             </div>
-            */
-            ?>
         </div>
+        <div class="clear"></div>
     </div>
 </div>
