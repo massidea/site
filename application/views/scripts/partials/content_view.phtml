@@ -317,9 +317,14 @@ if (isset($this->parent_siblings[0])) {
             </div>
         </div>
         <?php endif; ?>
-
-        
-        <div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" /></div>
+		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
+			<div class="user_content_spacer">
+        		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
+        	</div>
+        	<div class="user_content_edit">
+				<input type="button" value="Edit" onclick="location.href='<?php echo $this->baseUrl("/".$this->language."/content/edit/".$this->contentData['id_cnt']); ?>';" />
+			</div>
+		<?php endif; ?>
         
         <div class="view_content_comments">
         	<?php if ($this->comments > 0): ?>
