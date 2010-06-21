@@ -1,6 +1,13 @@
 <h1><?php echo $this->translate('privmsg-messages'); ?></h1>
 <br />
-	
+<?php $this->headScript()->captureStart() ?>
+$(document).ready(function() {
+	$("input[type=button][value=Reply]").click(function() {
+		url = "<?php echo $this->baseUrl("/".$this->language."/privmsg/send/")?>" + $(this).attr('id').replace(/replyto-/, "");
+		location.href = url;
+	});
+});
+<?php $this->headScript()->captureEnd() ?>
 <?php
 if($this->privmsgs):
 ?>
@@ -110,7 +117,6 @@ if($this->privmsgs):
 				<?php echo $sent; ?>
 			</div><!-- end of privmsg_userinfo -->
 			<div class="privmsg_content">
-
                 <?php if($privmsg['read_pmg'] == 0): ?>
                     <span style="color: red;">
                         <b>NEW!</b>
@@ -123,6 +129,9 @@ if($this->privmsgs):
                 <p>
                     <?php echo stripslashes($privmsg['message_body_pmg']); ?>
                 </p>
+                <?php if($privmsg['username_pmg'] != "privmsg-message-sender-system"): ?>
+					<input type="button" class="reply" id="replyto-<?php echo $privmsg['username_pmg']; ?>" value="Reply"/>
+				<?php endif; ?>
 			</div><!-- end of privmsg_content -->
 		</div><!-- end of privmsg -->
     <?php endforeach; ?>
