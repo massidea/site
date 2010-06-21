@@ -64,15 +64,15 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             unset($formdata['username_publicity']);
         if (isset($formdata['confirm_password']))
             unset($formdata['confirm_password']);
+        if (isset($formdata['gravatartext']))
+            unset($formdata['gravatartext']);
         if (isset($formdata['save']))
             unset($formdata['save']);
         if (isset($formdata['cancel']))
             unset($formdata['cancel']);
-
-        // Birthday
         
 
-        // needs replacing to single setValue($id, $key, $val, $pub)!
+        // needs replacing to single setValue($id, $key, $val, $pub)! <--- Is this some old comment?
         foreach ($formdata as $key => $val) {                                   // go through data
             if ($key != "email" && $key != "password"                           // ignore certain keys...
                 && $key != "notifications" && $val != "")                       // ignore
@@ -228,15 +228,18 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         	$collection[$result->profile_key_usp] = htmlentities($result->profile_value_usp);
         }
         // Change gender to M or N
-        if ($collection['gender'] == 1)
+        if (isset($collection['gender']) && $collection['gender'] == 1)
             $collection['gender'] = 'Male';
-        else
+        else if (isset($collection['gender']) && $collection['gender'] == 2)
             $collection['gender'] = 'Female';
         // Change employment "code" to text
-        $collection['employment'] = $this->getEmploymentByEmployment($collection['employment']);
+        if (isset($collection['employment']))
+            $collection['employment'] = $this->getEmploymentByEmployment($collection['employment']);
         // User timezone
-        $timezone_model = new Default_Model_Timezones();
-        $collection['usertimezone'] = $timezone_model->getTimezoneTextById($collection['usertimezone']);
+        if (isset($collection['usertimezone'])) {
+            $timezone_model = new Default_Model_Timezones();
+            $collection['usertimezone'] = $timezone_model->getTimezoneTextById($collection['usertimezone']);
+        }
 
         return $collection;
     }

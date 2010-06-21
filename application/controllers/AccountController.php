@@ -425,10 +425,10 @@ class AccountController extends Oibs_Controller_CustomController
         Zend_Debug::dump($user->getUsersViewers($data['id_usr']));
         die;*/
         
-        //$group_model = new Default_Model_UserHasGroup();
-        //$usergroups = $group_model->getGroupsByUserId($id);
+        $group_model = new Default_Model_UserHasGroup();
+        $usergroups = $group_model->getGroupsByUserId($id);
 
-        //$this->view->usergroups = $usergroups;
+        $this->view->usergroups = $usergroups;
     }
     
     /**

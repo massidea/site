@@ -34,7 +34,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 {
 
     // WIP 18.6.2010
-    // TODO: Error messages, filters? validations?
+    // TODO: Email error messages, filters? validations?
     //       Avatar image, country list?
 
     /* To usr_profiles_usp:
@@ -146,8 +146,11 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                  ->addValidators(array(
                     new Oibs_Validators_RepeatValidator('confirm_password'),
                     array('NotEmpty', true, array('messages' => array('isEmpty' => 'Empty'))),
-                    array('StringLength', false, array(4, 22, 'messages' => array('stringLengthTooShort' => 'PASSWORD TOO SHORT'))),
+                    array('StringLength', false, array(4, 22,
+                        'messages' => array('stringLengthTooShort' => 'Password too short (4-22 characters)',
+                                            'stringLengthTooLong' => 'Password too long (4-22 characters)'))),
 				 ));
+                 //->setErrorMessages(Array('Password too short'));
         $passwordclear = new Oibs_Form_Element_Note('passwordclear');
         $passwordclear->setValue($clear);
 
@@ -156,7 +159,9 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                         ->setAttrib('id', 'confirm-password')
                         ->addValidators(array(
                             array('NotEmpty', true, array('messages' => array('isEmpty' => 'Empty'))),
-                            array('StringLength', false, array(4, 22, 'messages' => array('stringLengthTooShort' => 'PASSWORD TOO SHORT'))),
+                            array('StringLength', false, array(4, 22,
+                                'messages' =>array('stringLengthTooShort' => 'Password too short (4-22 characters)',
+                                                   'stringLengthTooLong' => 'Password too long (4-22 characters)'))),
                         ));
         $confirmpasswordclear = new Oibs_Form_Element_Note('confirm_passwordclear');
         $confirmpasswordclear->setValue($clear);
@@ -170,20 +175,24 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                   $mailvalid,
                   array('NotEmpty',
                       true,
-                      array('messages' => array('isEmpty' => 'Empty'))
+                      array('messages' => array('isEmpty' => 'Email empty'))
                   ),
                   array('StringLength',
                       false,
-                      array(6, 50, 'messages' => array('stringLengthTooShort' => 'E-MAIL TOO SHORT'))
+                      array(6, 50, 'messages' => array('stringLengthTooShort' => 'Email too short (6-50 characters)',
+                                                       'stringLengthTooLong' => 'Email too long (6-50 characters)'))
                   ),
               ));
         $emailclear = new Oibs_Form_Element_Note('emailclear');
         $emailclear->setValue($clear);
 
-        $gravatar = new Oibs_Form_Element_Note('gravatartext');
-        $gravatar->setValue(
-                '<div class="input-column1"></div>'
-                . '<div class="input-column2" style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
+        //$gravatar = new Oibs_Form_Element_Note('gravatartext');
+        //$gravatar->setValue(
+        //        '<div class="input-column1"></div>'
+        //        . '<div class="input-column2" style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
+        $gravatar = new Zend_Form_Element_Hidden('gravatartext');
+        $gravatar->setLabel('Gravatar')
+                 ->setDescription('<div style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
         $gravatarcheck = new Zend_Form_Element_Checkbox('gravatar');
 
         $phone = new Zend_Form_Element_Text('phone');
@@ -226,10 +235,9 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                   ->addValidators(array(
                       array('StringLength',
                           false,
-                          array(0, 4000, 'messages' => array('stringLengthTooShort' => 'Biography too long'))
+                          array(0, 4000, 'messages' => array('stringLengthTooLong' => 'Biography too long'))
                       ),
-                  ))
-                  ->setErrorMessages(Array('Biography too long'));
+                  ));
                    //->setDescription('<div id="progressbar_biography" class="progress_ok"></div>');
         $biographypublic = new Zend_Form_Element_CheckBox('biography_publicity');
         $biographypublic->setLabel($publictext);
@@ -306,7 +314,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                  ->setAttrib('id', 'hometown')
                  ->setRequired(true)
                  ->addValidators(array(
-                            array('NotEmpty', true, array('messages' => array('isEmpty' => 'Empty')))
+                            array('NotEmpty', true, array('messages' => array('isEmpty' => 'Hometown empty')))
                  ));
         $hometownpublic = new Zend_Form_Element_CheckBox('city_publicity');
         $hometownpublic->setLabel($publictext);
@@ -341,12 +349,13 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 
         $userProfilesModel = new Default_Model_UserProfiles();
         $employments = $userProfilesModel->getEmployments();
-        $employments = array_merge(array('Select'), $employments);
+        $employments = array_merge(array('' => 'Select'), $employments);
         $employment = new Zend_Form_Element_Select('employment');
         $employment->setLabel('I am currently')
                    ->setAttrib('id', 'status')
                    ->setRequired(true)
-                   ->addMultiOptions($employments);
+                   ->addMultiOptions($employments)
+                   ->setErrorMessages(array('Select status'));
         $employmentpublic = new Zend_Form_Element_CheckBox('employment_publicity');
         $employmentpublic->setLabel($publictext);
 
@@ -446,7 +455,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $confirmpasswordclear->setDecorators(array('ViewHelper'));
         $email->setDecorators(array('InputDecorator'));
         $emailclear->setDecorators(array('ViewHelper'));
-        $gravatar->setDecorators(array('ViewHelper'));
+        $gravatar->setDecorators(array('InputDecorator'));
         $gravatarcheck->setDecorators(array('PublicDecorator'));
         $phone->setDecorators(array('InputDecorator'));
         $phonepublic->setDecorators(array('PublicDecorator'));
