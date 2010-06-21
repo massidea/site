@@ -1,0 +1,72 @@
+<?php
+// dirty fix to use language variable from view
+$language = Zend_Layout::getMvcInstance()->getView()->language;
+//$url_tag_cloud = Zend_Layout::getMvcInstance()->getView()->url_tag_cloud;
+$url_tag_cloud = $this->url(array('controller' => 'tag',
+                             	 'action' => 'index',
+                             	 'language' => $language),
+                             	 'lang_default', true);
+$url_post = $this->url(array('content_id' => $this->id_cnt,
+                             'language' => $language ),
+                             'content_shortview', true);
+
+$url_user = $this->url(array('controller' => 'account',
+                             'action' => 'view',
+                             'user' => $this->login_name_usr,
+                             'language' => $language),
+                             'lang_default', true);
+$url_img = $this->url(array('controller' => 'account',
+                            'action' => 'profilethumb',
+                            'id' => $this->id_usr,
+                            'language' => $language,
+                            'thumb' => 'true'),
+                            'lang_default', true)
+?>
+<div class="user_image_list">
+	<img src="<?php echo $url_img; ?>" alt="" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
+</div>
+
+<div class="user_summary_list_without_stats">
+	<span class="summary_topic">
+		<a href="<?php echo $url_user; ?>">
+			<?php echo $this->login_name_usr; ?>
+			<?php echo "(".$this->count.")"; ?>
+		</a>:
+		<b>
+			<a href="<?php echo $url_post;?>">
+				<?php echo $this->title_cnt;?>
+			</a>
+		</b>
+	</span>
+
+	<br />
+
+	<span class="summary_leadtext">
+		<?php echo $this->lead_cnt; ?>
+	</span>
+
+	<br />
+
+	<span class="summary_tags">
+		<b>
+			<a href="<?php echo $url_tag_cloud; ?>">
+				Tags
+			</a>:
+		</b>
+		<?php echo $this->partialLoop('partials/tag.phtml', $this->tags);?>
+	</span>
+	
+	<?php if($this->translang['from'] != $this->translang['to']): ?>
+		<?php $translangModel = new Default_Model_Languages();?>
+		<?php $translangName = $translangModel->getLanguageByLangCode($this->language_cnt);?>
+		<span class="summary_translatelink">
+			<span class="summary_translatelink_meta" style="display: none;">
+				<?php echo json_encode(array('id' => $this->id_cnt,
+											 'language_name' => $translangName)); ?>
+			</span>
+			<span class="summary_translatelink_text"></span>
+		</span>
+	<?php endif;?>
+</div>
+
+<div class="clear"></div>
