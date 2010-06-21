@@ -29,7 +29,7 @@ $(document).ready(function() {
 		'content_textlead': 			[1,  320, 1],
 		'content_text': 				[0, 4000, 0],
 		'content_header': 				[1,  140, 1],
-		'content_related_companies':	[1,  120, 1],		
+		'content_related_companies':	[0,  120, 0],		
 		'content_research': 			[1,  140, 1],
 		'content_opportunity': 			[1,  140, 1],
 		'content_threat': 				[1,  140, 1],
@@ -37,16 +37,35 @@ $(document).ready(function() {
 		'content_references': 			[0, 2000, 0],
 		'content_language':				[0,    0, 1]
 	};
-
-	$(allInputs).live('keydown keyup', function(){
+	
+	var inputValidations = { 
+		'content_keywords':				XRegExp("^[\\p{L}0-9, ]*$")		
+	}; 
+	                 
+	$(allInputs).live('keydown', function(){
 		textCount(this);
+	});
+	
+	$(allInputs).live('keyup', function(){
+		textCount(this);
+		if (this.name == "content_keywords") textValidation(this);
 	});
 
 	$('select').live('change keyup', function() {
 		selectCheck(this);
-		
 	});
 
+	function textValidation(obj) {
+		var thisProgress = $('#progressbar_'+obj.name);
+		var regex = inputValidations[obj.name];
+		if (regex.test($(obj).val())) { }
+		else {
+			progressText = "Tag not valid!";
+			$(thisProgress).attr('class','progress');
+			$(thisProgress).html(progressText);
+		}
+	}
+	
 	function textCount(obj) {
 		var thisMin = inputDefinitions[obj.name][0];
 		var thisMax = inputDefinitions[obj.name][1];
@@ -93,7 +112,10 @@ $(document).ready(function() {
 	
 	// Precheck on page load
 	$(allInputs).each(function(){
-		if(this.name != "q") textCount(this);
+		if(this.name != "q") { 
+			textCount(this);
+			if (this.name == "content_keywords") textValidation(this);
+		}
 	});
 	
 	$('select').each(function() {

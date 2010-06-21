@@ -434,9 +434,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * @todo the functionality where this is used should be ajaxified
     * @param integer $author_id id of whose content to get
     * @param string $type limit search to a specific content type
+    * @param integer $id_cnt 	id to be skipped
     * @return array
     */    
-    public function getUserContent($author_id = 0, $type = 0)
+    public function getUserContent($author_id = 0, $type = 0, $id_cnt = 0)
     {
         $result = array();  // container for final results array
         
@@ -481,6 +482,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
+                                           ->where('cnt.id_cnt != ?', $id_cnt)
                                            ->order('cnt.id_cty_cnt ASC')
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
@@ -1083,8 +1085,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	//	where id_usr=2 group by id_usr_vws order by sum(views_vws) desc;
 		$select = $this->_db->select()
 					   		 ->from('cnt_has_usr', array())
-					   		 ->where('id_usr = ?', $id)
+					   		 ->where('cnt_has_usr.id_usr = ?', $id)
 					   		 ->join('cnt_views_vws', 'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt', array('views' => 'sum(views_vws)' , 'id_usr_vws'))
+					   		 ->join('users_usr', 'id_usr_vws = users_usr.id_usr', array('login_name_usr'))
 					   		 ->group('id_usr_vws')
 					   		 ->order('views desc')
 					   		 ->limit($limit);

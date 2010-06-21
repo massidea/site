@@ -1,6 +1,7 @@
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
-
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-min.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-unicode-base.js'); ?>
 <?php 
     // change background color
     $color = array( 'problem' => '#d21034',

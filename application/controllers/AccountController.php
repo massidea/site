@@ -277,8 +277,8 @@ class AccountController extends Oibs_Controller_CustomController
         $temp = array();
 
         // Initialize content counts
-        $dataa['contentCounts']['totalCount'] = 0;
-        $dataa['contentCounts']['savedCount'] = 0;
+        $dataa['contentCounts']['all'] = 0;
+        $dataa['contentCounts']['user_edit'] = 0;
 
         $dataa['contentCounts']['problem'] = 0;
         $dataa['contentCounts']['finfo'] = 0;
@@ -305,7 +305,7 @@ class AccountController extends Oibs_Controller_CustomController
                     //$temp[] = $c;
 
                     // Increase total count
-                    $dataa['contentCounts']['totalCount']++;
+                    $dataa['contentCounts']['all']++;
 
                     // Set content type count to 0 if count is not set
                     if (!isset($dataa['contentCounts'][$c['key_cty']] )) {
@@ -318,7 +318,7 @@ class AccountController extends Oibs_Controller_CustomController
             }
 
             if($c['published_cnt'] == 0) {
-                $dataa['contentCounts']['savedCount']++;
+                $dataa['contentCounts']['user_edit']++;
             }
         } // end foreach
 
@@ -370,11 +370,47 @@ class AccountController extends Oibs_Controller_CustomController
         	}
         	//print_r($dataa);print_r($favouriteList);die;
         }
-
+        //Zend_Debug::dump("" === null);
+		//Zend_Debug::dump($dataa['contentCounts']['idea']);
+		//Zend_Debug::dump($dataa['contentCounts']['idea'] == "");
+		//die;
+        //	My Posts box data
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("My Posts")
+			->setName("my-posts")
+			->addTab("All", "all", "all selected", $dataa['contentCounts']['all']) //Header, type, calss, extra
+			->addTab("Challenges", "problem", "challenges", $dataa['contentCounts']['problem'])
+			->addTab("Ideas", "idea", "ideas", $dataa['contentCounts']['idea'])
+			->addTab("Visions", "finfo", "visions", $dataa['contentCounts']['finfo']);
+			
+		if ($dataa['contentCounts']['user_edit'] && $userEdit) {
+			$box->addTab("Saved", "user_edit", "saved", $dataa['contentCounts']['user_edit']);
+		}
+		$boxes[] = $box;
+		
+		$views = new Default_Model_ContentViews();
+		$myViews = $views->getUserViewedContents($data['id_usr']);
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box	->setHeader("My Views")
+				->setName("my-views")
+				->addTab("Views", "views", "all selected");			
+		//$boxes[] = $box;
+		
+		$myReaders = $user->getUsersViewers($data['id_usr']);
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("My Reads")
+			->setName("my-reads")
+			->addTab("Readers", "readers", "all selected");
+			
+		//$boxes[] = $box;
+			
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
         $this->view->authorContents = $contentList;/*$temp*/
+        $this->view->boxes = $boxes;
+        $this->view->myViews = $myViews;
+        $this->view->myReaders = $myReaders;
         //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;

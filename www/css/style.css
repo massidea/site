@@ -58,6 +58,16 @@ a:active {text-decoration: none; color: #0089CF;}
 #add_content_menu a:hover {text-decoration: none; color: #333333;}
 #add_content_menu a:active {text-decoration: none; color: #333333;}
 
+#content_list_ajax_link a:link {text-decoration: none; color: #0089CF;}
+#content_list_ajax_link a:visited {text-decoration: none; color: #0089CF;}
+#content_list_ajax_link a:hover {text-decoration: none; color: #0089CF;}
+#content_list_ajax_link a:active {text-decoration: none; color: #0089CF;}
+
+#recent_posts_ajax_link a:link {text-decoration: none; color: #0089CF;}
+#recent_posts_ajax_link a:visited {text-decoration: none; color: #0089CF;}
+#recent_posts_ajax_link a:hover {text-decoration: none; color: #0089CF;}
+#recent_posts_ajax_link a:active {text-decoration: none; color: #0089CF;}
+
 div.top_row_center_right_login a:link {text-decoration: underline; color: white;}
 div.top_row_center_right_login a:visited {text-decoration: underline; color: white;}
 div.top_row_center_right_login a:active {text-decoration: underline; color: white;}
@@ -510,8 +520,7 @@ div.right_side{
 }
 
 div.right_side p{
-	padding: 12px;
-    padding-bottom: 0px;
+	padding: 5px 0;
 	margin: 0px;
 }
 
@@ -954,9 +963,16 @@ div.privmsg_userinfo {
 }
 
 #form_content_add_container input[type="text"],
-#form_content_add_container textarea,
-#form_content_add_container select {
+#form_content_add_container textarea {
 	width: 390px;
+    float: left;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #7F9DB9;
+}
+
+#form_content_add_container select {
+	width: 393px;
     float: left;
     margin: 0;
     padding: 0;
@@ -1254,7 +1270,11 @@ form #uploadedFiles_div .form_element_input label {
 #tag_cloud_container_tags a {
 	padding: 3px;
 	text-decoration: none;
-} 
+}
+
+#tag_cloud_container_tags a:nth-child(odd) {
+	color:#003581;
+}
 
 #tag_cloud_container_tags a:hover {
 	 background-color: #D9F2FF;
@@ -1262,6 +1282,13 @@ form #uploadedFiles_div .form_element_input label {
 	 padding: 3px;
 }
 
+
+.content_view_references span,
+.content_view_files span,
+.content_view_core_content span
+{ font-weight: bold; font-size: 14px; }
+
+.content_view_content_modified p { font-style: italic; }
 
 /** comment stuff **/
 #content_view_comment_form_container {
@@ -1505,6 +1532,45 @@ form #uploadedFiles_div .form_element_input label {
 	width:50%;
 }
 
+.user_list_input_box_meta {
+	font-weight: bold;
+	float:right;
+}
+
+.user_list_input_box_meta img,
+.user_list_profile_rating img {
+	vertical-align: middle;
+}
+
+.user_list_positive_icon {
+	color: green;
+}
+
+.user_list_negative_icon {
+	color: red;
+}
+
+.user_list_input_box_lead {
+	margin-left:0.5em;
+	padding-left:2px;
+}
+.user_list_input_box_title {
+	padding-left:2px;
+}
+
+.user_list_users_latest_content {
+	padding-bottom:2px;	
+}
+
+.user_list_users_latest_content span span {
+	padding-left:2px;	
+}
+
+.user_list_users_latest_content_created {
+	padding-right:10px;
+	float:right;
+}
+
 .user_list_user_container {
     display: table;
     margin: 0 0 2em 0;
@@ -1625,6 +1691,7 @@ form #uploadedFiles_div .form_element_input label {
 .smallsize_finfo_border {
     border-left: 6px solid #FFC726;
 }
+
 /*
  * RSS decorations
  *
@@ -1766,7 +1833,8 @@ form #uploadedFiles_div .form_element_input label {
 	overflow: hidden;
 }
 
-.ac_results strong {
+.ac_results .user_list_input_box_title strong,
+.ac_results .user_list_input_box_lead strong {
 	color: red;
 }
 

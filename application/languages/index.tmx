@@ -18,7 +18,7 @@
 		<tuv xml:lang="fi"><seg>Näytä lisää</seg></tuv>
 	</tu>    
 	<tu tuid='index-opensource'>
-		<tuv xml:lang="en"><seg>Massidea.org is also an open source project. <a href="http://www.oibs.fi/wiki/">Join the development team.</a></seg></tuv>
+		<tuv xml:lang="en"><seg>Massidea.org is also an open source project. <a href="http://www.massidea.org/blog/?page_id=74">Join the development team.</a></seg></tuv>
 		<tuv xml:lang="fi"><seg>Massidea.org on myös open source-projekti. <a href="http://www.oibs.fi/wiki/">Liity kehitystiimiin.</a></seg></tuv>
 	</tu>
 	<tu tuid='index-users'>
@@ -63,10 +63,10 @@
 	</tu>
     <tu tuid='index-what-is-long'>
 		<tuv xml:lang="en"><seg>
-			<span>Massidea.org is an open innovation community for sharing challenges, ideas and visions.</span>
-			<span>It boosts individual and communal creativity by intelligently connectiong people and their insights.</span>
-			<span>Massidea.org is free open source solution and it is publicly available for use and modifications.</span>
-			<span>Learn more from our <a href="http://massidea.org/blog"><strong>blog</strong></a>.</span>
+			<p>Massidea.org is an open innovation community for sharing challenges, ideas and visions.</p>
+			<p>It boosts individual and communal creativity by intelligently connectiong people and their insights.</p>
+			<p>Massidea.org is free open source solution and it is publicly available for use and modifications.</p>
+			<p>Learn more from our <a href="http://massidea.org/blog"><strong>blog</strong></a>.</p>
 		</seg></tuv>
 		<tuv xml:lang="fi"><seg>
             <p style="padding: 5px;">Massidea.org on ilmainen ja avoin innovaatioyhteisö, jonka jäsenet lisäävät ideoitaan, tulevaisuuden visioitaan ja tämän päivän haasteita sekä linkittävät niitä toisten käyttäjien vastaaviin.</p>

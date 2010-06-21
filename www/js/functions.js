@@ -470,12 +470,13 @@ $(document).ready(function() {
 	$('.content_manage_button').click(function() {	
 		if($(this).attr('id') == "content_publish_button") {
 			$("#content_publish").val('1');
+			$('.content_manage_button').attr('disabled', 'disabled');
+			$('#add_content_form').submit();
 		} else if($(this).attr('id') == "content_save_button") {
 			$("#content_save").val('1');
+			$('.content_manage_button').attr('disabled', 'disabled');
+			$('#add_content_form').submit();
 		}
-		
-		$('.content_manage_button').attr('disabled', 'disabled');
-		$('#add_content_form').submit();
 	});
 });
 
@@ -534,9 +535,9 @@ $(document).ready(function() {
  * 
  * function to create new file input for each file chosen, hides the old one. Also makes a button to make 
  * it possible to remove a chosen file
- * 
- * @param 	obj			file input object
- * @param	message		translated text for remove file button
+ *
+ * @param   obj      file input object
+ * @param  message    translated text for remove file button
  */
 function multiFile(obj, message) {
 	var file = obj.value;
@@ -563,4 +564,41 @@ $(document).ready(function() {
         });
     });
 });*/
+
+/**
+* selectAllPrivmsgs
+* 
+* function to select or unselect all private messages for deletion
+*/
+function selectAllPrivmsgs()
+{
+	// Get the form elements
+	var elems = document.getElementById('delete_privmsgs');
+	var checked = document.delete_privmsgs.select_all.checked;
+
+	// Change values according to the "select_all" checkbox
+	for (var i = 1; i < elems.elements.length; i++) {
+		elems.elements[i].checked = checked;
+	}
+}
+
+/**
+* selectAllPrivmsgs
+* 
+* function to select only one message (used when a message's "Delete"-link is pressed)
+*/
+function selectOnlyThisMsg(id)
+{
+	// Get the form elements
+	var elems = document.getElementById('delete_privmsgs');
+	
+	// Set everything unchecked
+	document.delete_privmsgs.select_all.checked = false;
+	for (var i = 1; i < elems.elements.length; i++) {
+		elems.elements[i].checked = false;
+	}
+	
+	// Mark as checked only the message that is going to be deleted
+	document.getElementById('select_' + id).checked = true;
+}
 

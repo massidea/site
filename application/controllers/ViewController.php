@@ -206,7 +206,7 @@
         // get other content from user.. function needs a looking-over!
         // Also it needs to be separated from this action so the MVC-is correct!
         
-        $moreFromUser = $userModel->getUserContent($ownerId);
+        $moreFromUser = $userModel->getUserContent($ownerId, 0, $id);
     	
         // get related contents
         $relatedContents = $contentModel->getRelatedContents($id);
@@ -273,6 +273,10 @@
         	'total_favourites' 	=> $totalFavourites,
         	'is_favourite'		=> $isFavourite,
         );
+        
+        $languagesModel = new Default_Model_Languages();
+        $languageName = $languagesModel->getLanguageByLangCode($contentData['language_cnt']);
+        $gtranslateLangPair = $this->gtranslate->getLangPair();
         
         // get content tags - functions returns names as well
         // needs updating to proper MVC?
@@ -408,6 +412,8 @@
         $this->view->relatedContents    = $relatedContents;
         $this->view->views              = $views;
         $this->view->rating             = $rating;
+        $this->view->languageName		= $languageName;
+        $this->view->gtranslateLangPair	= $gtranslateLangPair;
         $this->view->tags               = $tags;
         $this->view->links              = $links;
         $this->view->parents            = $parents;

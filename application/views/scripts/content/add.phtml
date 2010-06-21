@@ -1,7 +1,17 @@
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/ContentPreview.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-min.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-unicode-base.js'); ?>
+
+<?php $previewUrl = $this->url(array('controller' => 'content',
+									 'action' => 'preview',
+									 'language' => $this->language),
+									 'lang_default', true);?>
 
 <?php $this->headScript()->captureStart()?>
+// Set javascript variables for accessible in external .js files
 var language = '<?php echo $this->language;?>';
+var previewUrl = '<?php echo $previewUrl; ?>';
 <?php $this->headScript()->captureEnd()?>
 
 <?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
@@ -21,7 +31,7 @@ var language = '<?php echo $this->language;?>';
 
 <div id="form_content_add_container" style="float: left;">
 	
-	<div id="form_content_realcontent">
+	<div id="form_content_realcontent" style="display: block">
         <h2>
             <?php echo $this->translate('content-add-'
                                 . $this->short_contenttype
@@ -89,6 +99,8 @@ var language = '<?php echo $this->language;?>';
         <?php echo $this->form; ?>
         
     </div>
+    
+    <div id="form_content_previewcontent" style="display: none"></div>
     
     <div class="IAmABufferHearMeRoar" style="clear:both; height:100px;"></div>
     

@@ -31,6 +31,8 @@ class Oibs_Controller_Plugin_GTranslate {
 	private $_googleApiTranslateUrl = 'http://ajax.googleapis.com/ajax/services/language/translate';
 	private $_googleApiDetectUrl = 'http://ajax.googleapis.com/ajax/services/language/detect';
 	private $_googleApiVersion = '1.0';
+	private $_getParamMaxLength = 1000;
+	//private $_postParamMaxLength = 2000;
 	private $_langFrom;
 	private $_langTo;
 	private $_translateString;
@@ -80,6 +82,18 @@ class Oibs_Controller_Plugin_GTranslate {
 	}
 	
 	/*
+	 * public function getLangPair()
+	 * 
+	 * Get language pair
+	 * 
+	 * @return	array	langpair	Language pair in an array
+	 */
+	public function getLangPair()
+	{
+		return array('from' => $this->_langFrom, 'to' => $this->_langTo);
+	}
+	
+	/*
 	 * public function switchLangs()
 	 * 
 	 * Switches language pair places (from -> to, to -> from)
@@ -94,66 +108,89 @@ class Oibs_Controller_Plugin_GTranslate {
 	/*
 	 * public function translate()
 	 * 
-	 * Executes the translation and returns the result
+	 * Returns translation from given string
 	 * 
 	 * @param	queryString	string	String to translate
 	 * @return				string	Translated string
 	 */
-	public function translate($string) {
-		// Reformat string for maintaining all newlines (\n -> <newrow />)
-		$this->_translateString = str_replace("\n", "<newrow />", $string);
-		if ($this->_isValid()) {
+	public function translate($string)
+	{
+		$this->_translateString = $string;
+		if($this->_isValid())
+		{
 			// Use cache for translated strings
 			$cache = Zend_Registry::get('cache');
 			$hash = $this->_generateHash();
 			$cacheName = 'GTranslate_'.$hash;
 			if(!($result = $cache->load($cacheName)))
 			{
-				$langpair = $this->_langFrom."|".$this->_langTo;
-				$client = new Zend_Http_Client($this->_googleApiTranslateUrl, array(
-	                        'maxredirects' => 0,
-	                        'timeout'      => 30));
-	
-				$client->setParameterGet(array(
-	                        'v' => $this->_googleApiVersion,
-	                        'q' => $this->_translateString,
-	                        'langpair' => $langpair
-				));
-				
-				$response = $client->request();
-				$data = $response->getBody();
-				$server_result = json_decode($data);
-				
-				$responseCode = $server_result->responseStatus;
-				$responseDetails = $server_result->responseDetails;
-
-				if($responseCode == 200)
-				{
-					$this->_debugLog[] = array( 'sentString'	=> $this->_translateString,
-												'receiveString'	=> $server_result->responseData->translatedText);
-					
-					$result = $server_result->responseData->translatedText;
-				
-					// Reformat string back to original
-					$result = str_replace("<newrow />","\n", $result);
-				}
-				else
-				{
-					$this->_errorLog[] = array( 'string' 			=> $string,
-												'responseStatus'	=> $responseCode,
-												'responseDetails'	=> $responseDetails);
-				}
-
-				// If translation fails (incompatible language pair), return original string
-				if(!isset($result)) $result = $this->_translateString;
+				// Split given string into smaller pieces
+				$stringArray = explode("\n", $this->_translateString);
+				foreach($stringArray as $stringBlip)
+					$imploded[] = $this->_getTranslation($stringBlip);
+		
+				$result = implode("\n", $imploded);
 				$cache->save($result, $cacheName);
 			}
-			return $result;
-
-		} else {
-			// If translation query is invalid
-			return $string;
+			
+			$return = $result;
+		} 
+		else
+		{
+			$return = $string;
 		}
+		return $return;
+	}
+	
+	/*
+	 * private function _getTranslation()
+	 * 
+	 * Executes the translation and returns the result
+	 * 
+	 * @param	queryString	string	String to translate
+	 * @return				string	Translated string
+	 */
+	private function _getTranslation($string)
+	{
+		$langpair = $this->_langFrom."|".$this->_langTo;
+		$client = new Zend_Http_Client($this->_googleApiTranslateUrl, array(
+                        'maxredirects' => 0,
+                        'timeout'      => 30));
+
+		$client->setParameterPost(array(
+                        'v' => $this->_googleApiVersion,
+                        'q' => $string,
+                        'langpair' => $langpair
+		));
+		
+		$response = $client->request('POST');
+		$httpResponseCode = $response->getStatus();
+		$data = $response->getBody();
+		$server_result = json_decode($data);
+		
+		$responseCode = $server_result->responseStatus;
+		$responseDetails = $server_result->responseDetails;
+
+		if($responseCode == 200 && $httpResponseCode == 200)
+		{
+			$this->_response[] = array( 'sentString'	=> $string,
+										'receiveString'	=> $server_result->responseData->translatedText);
+			
+			$result = $server_result->responseData->translatedText;
+		}
+		else
+		{
+			$this->_errorLog[] = array( 'http_headers'		=> $response->getHeaders(),
+										'http_response'		=> $response->responseCodeAsText($response->getStatus()),
+										'input_string' 		=> $string,
+										'g_responseStatus'	=> $responseCode,
+										'g_responseDetails'	=> $responseDetails);
+			
+			// If translation fails, return original string
+			$result = $string;
+		}
+
+		return $result;
 	}
 	
 	/*
@@ -166,39 +203,47 @@ class Oibs_Controller_Plugin_GTranslate {
 	 */
 	public function detectLanguage($string)
 	{
-			// Reformat string for maintaining all newlines (\n -> <newrow />)
-			$this->_detectString = str_replace("\n", "<newrow />", $string);
-			
-			$client = new Zend_Http_Client($this->_googleApiDetectUrl, array(
+		// Limit query to max length
+		$this->_detectString = substr($string,0,$this->_getParamMaxLength);
+		
+		$client = new Zend_Http_Client($this->_googleApiDetectUrl, array(
                         'maxredirects' => 0,
                         'timeout'      => 30));
 
-			$client->setParameterGet(array(
+		$client->setParameterGet(array(
                         'v' => $this->_googleApiVersion,
                         'q' => $this->_detectString
-			));
-			
-			$response = $client->request();
-			$data = $response->getBody();
-			$server_result = json_decode($data);
-			$responseCode = $server_result->responseStatus;
-			$responseDetails = $server_result->responseDetails;
-			
-			if($responseCode == 200)
-			{
-				$this->_response[] = array( 'string'		=> $this->_detectString,
-											'language'		=> $server_result->responseData->language,
-											'isReliable'	=> $server_result->responseData->isReliable,
-											'confidence'	=> $server_result->responseData->confidence);
-			}
-			else
-			{
-				$this->_errorLog[] = array( 'responseStatus'	=> $responseCode,
-											'responseDetails'	=> $responseDetails);
-			}
+		));
+		
+		$response = $client->request();
+		$httpResponseCode = $response->getStatus();
+		$data = $response->getBody();
+		$server_result = json_decode($data);
+		$responseCode = $server_result->responseStatus;
+		$responseDetails = $server_result->responseDetails;
+
+		if($responseCode == 200 && $httpResponseCode == 200)
+		{
+			$this->_response[] = array( 'string'		=> $this->_detectString,
+										'language'		=> $server_result->responseData->language,
+										'isReliable'	=> $server_result->responseData->isReliable,
+										'confidence'	=> $server_result->responseData->confidence);
 			
 			$detected = $server_result->responseData->language;
-			return $detected;
+		}
+		else
+		{
+			$this->_errorLog[] = array( 'http_headers'		=> $response->getHeaders(),
+										'http_response'		=> $response->responseCodeAsText($response->getStatus()),
+										'input_string' 		=> $string,
+										'g_responseStatus'	=> $responseCode,
+										'g_responseDetails'	=> $responseDetails);
+			
+			$detected = "Detection failed";
+		}
+		
+		
+		return $detected;
 	}
 	
 	/*

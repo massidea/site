@@ -24,8 +24,10 @@ $url_img = $this->url(array('controller' => 'account',
 ?>
 <div class="user_content_row user_content_row_new" id="postid_<?php echo $this->id_cnt; ?>">
     <div class="user_image_list">
-        <img src="<?php echo $url_img; ?>"
-        alt="" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
+        <a href="<?php echo $url_user; ?>">
+            <img src="<?php echo $url_img; ?>"
+            alt="" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
+        </a>
     </div>
 
     <div class="user_summary_list_without_stats">
