@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of InputColumn1And2Decorator
+ * Label into input-column1 and input into input-column2
  *
  * @author Mikko Korpinen
  */

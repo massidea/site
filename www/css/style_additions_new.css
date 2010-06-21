@@ -64,3 +64,8 @@ border-left:5px solid #0089CF;}
 /* ************* */
 /* </Progressbar> */
 /* ************* */
+
+/* <User page> */
+#content #user-page #activity .left { width:200px; float:left !important; }
+#content #user-page #activity .right { width:500px; float:right; }
+/* </User page> */
