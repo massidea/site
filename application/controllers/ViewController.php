@@ -206,7 +206,7 @@
         // get other content from user.. function needs a looking-over!
         // Also it needs to be separated from this action so the MVC-is correct!
         
-        $moreFromUser = $userModel->getUserContent($ownerId);
+        $moreFromUser = $userModel->getUserContent($ownerId, 0, $id);
     	
         // get related contents
         $relatedContents = $contentModel->getRelatedContents($id);

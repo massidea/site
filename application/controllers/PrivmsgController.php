@@ -36,7 +36,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 
 	public function indexAction()
 	{
-        $action = $this->getRequest()->getPost('delete_privmsg');
+        $deletePrivmsgs = $this->getRequest()->getPost('delete_action');
         
 		// Get user identity
 		$auth = Zend_Auth::getInstance();
@@ -45,32 +45,17 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$Default_Model_privmsg = New Default_Model_PrivateMessages();
 			
 			// Delete button was pressed
-			if (isset($action)) {
-				if (substr($action, 0, 11) == 'delete_one_') {
-					// Separate the id from the value of 'delete_privmsg'
-					$deleteMsgId = (int)substr($action, 11);
-					
-					// Delete the pointed message
-					$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = '.$deleteMsgId);
-				}
-				else if ($action == 'delete_selected') {
-					// Get the IDs of the first and last selected message
-					$firstMsgId = $this->getRequest()->getPost('delete_first');
-					$lastMsgId = $this->getRequest()->getPost('delete_last');
-					
-					// Gather an array of all the selected message IDs
-					$selectedMsgs = array();
-        			for ($i = $firstMsgId; $i > ($firstMsgId - $lastMsgId); $i--) {
-        				if ($this->getRequest()->getPost('select_'.$i) == 'on') {
-        					$selectedMsgs[] = $i;
-        				}
+			if (isset($deletePrivmsgs)) {
+				// Get the IDs of the first and last selected message
+				$firstMsgId = $this->getRequest()->getPost('delete_first');
+				$lastMsgId = $this->getRequest()->getPost('delete_last');
+				
+				// Delete selected messages
+        		for ($i = $firstMsgId; $i > ($firstMsgId - $lastMsgId); $i--) {
+        			if ($this->getRequest()->getPost('select_'.$i) == 'on') {
+        				$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = ' . $i);
         			}
-        			
-					// Go through the messages and delete them
-					for ($i = 0; $i < count($selectedMsgs); $i++) {
-						$Default_Model_privmsg->getAdapter()->delete('private_messages_pmg', 'id_pmg = '.$selectedMsgs[$i]);
-					}
-				}
+        		}
 			}
 
 			$privmsgs = $Default_Model_privmsg->getPrivateMessagesByUserId($auth->getIdentity()->user_id);

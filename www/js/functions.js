@@ -572,10 +572,33 @@ $(document).ready(function() {
 */
 function selectAllPrivmsgs()
 {
-	var boxes = document.getElementById('delete_privmsg_selected');
-	var checked = document.delete_privmsg_selected.select_all.checked;
+	// Get the form elements
+	var elems = document.getElementById('delete_privmsgs');
+	var checked = document.delete_privmsgs.select_all.checked;
 
-	for (var i = 1; i < boxes.elements.length; i++) {
-		boxes.elements[i].checked = checked;
+	// Change values according to the "select_all" checkbox
+	for (var i = 1; i < elems.elements.length; i++) {
+		elems.elements[i].checked = checked;
 	}
 }
+
+/**
+* selectAllPrivmsgs
+* 
+* function to select only one message (used when a message's "Delete"-link is pressed)
+*/
+function selectOnlyThisMsg(id)
+{
+	// Get the form elements
+	var elems = document.getElementById('delete_privmsgs');
+	
+	// Set everything unchecked
+	document.delete_privmsgs.select_all.checked = false;
+	for (var i = 1; i < elems.elements.length; i++) {
+		elems.elements[i].checked = false;
+	}
+	
+	// Mark as checked only the message that is going to be deleted
+	document.getElementById('select_' + id).checked = true;
+}
+
