@@ -869,8 +869,18 @@ div.privmsg_userinfo {
 
 .privmsg_content {
 	padding: 5px;
+	float: left; 
+	position: relative; 
+	height: 140px; 
+	width:590px;
 }
 
+.privmsg_content .reply {
+	position: absolute; 
+	right:0px; 
+	top: 5px;	
+}
+	
 /** LOGIN **/
 
 #login_form_container dt {

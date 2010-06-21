@@ -63,6 +63,7 @@ class Oibs_Decorators_FormOptionalElementDecorator extends Zend_Form_Decorator_A
     {
         $element  = $this->getElement();
         $messages = $element->getMessages();
+        $name = $this->getElement()->getName();
         
         if (empty($messages)) 
 		{
@@ -70,7 +71,7 @@ class Oibs_Decorators_FormOptionalElementDecorator extends Zend_Form_Decorator_A
         }
         //return '<div class="error_messages">' .
         //       $element->getView()->formErrors($messages) . '</div>';
-        return '<div class="progress">' .
+        return '<div id="progressbar_' .  $name . '" class="progress">' .
                $element->getView()->formErrors($messages) . '</div>';
     }
 
