@@ -20,48 +20,35 @@ $url_img = $this->url(array('controller' => 'account',
                             'id' => $this->id_usr,
                             'language' => $language,
                             'thumb' => 'true'),
-                            'lang_default', true)
+                            'lang_default', true);
 ?>
-<div class="user_content_row user_content_row_new" id="postid_<?php echo $this->id_cnt; ?>">
-    <div class="user_image_list">
-        <a href="<?php echo $url_user; ?>">
-            <img src="<?php echo $url_img; ?>"
-            alt="" class="profile_image_smallsize smallsize_<?php echo $this->key_cty;?>_border" />
-        </a>
-    </div>
-
-    <div class="user_summary_list_without_stats">
-        <span class="summary_topic">
-            <a href="<?php echo $url_user; ?>">
-                <?php echo $this->login_name_usr; ?>
-                <?php echo "(".$this->count.")"; ?>
-            </a>
-            :
-            <b>
-                <a href="<?php echo $url_post;?>">
-                    <?php echo $this->title_cnt;?>
+<li class="<?php echo $this->key_cty ?>">
+    <div>
+        <div class="photo <?php echo $this->key_cty; ?>">
+            <a href="#"><img src="<?php echo $url_img; ?>" alt="" /></a>
+        </div>
+        <div>
+            <p>
+                <a href="<?php echo $url_user; ?>" class="username">
+                    <?php echo $this->login_name_usr; ?>
+                    <?php echo "(".$this->count.")"; ?>
                 </a>
-            </b>
-        </span>
-
-        <br />
-
-        <span class="summary_leadtext">
-            <?php echo $this->lead_cnt; ?>
-        </span>
-
-        <br />
-        <?php if(isset($this->tags)):?>
-        <span class="summary_tags">
-            <b>
+                <strong>
+                    <a href="<?php echo $url_post;?>">
+                        <?php echo $this->title_cnt;?>
+                    </a>
+                </strong>
+            </p>
+            <p>
+                <?php echo $this->lead_cnt; ?>
+            </p>
+            <p class="tags">
                 <a href="<?php echo $url_tag_cloud; ?>">
                     Tags
                 </a>:
-            </b>
-            <?php echo $this->partialLoop('partials/tag.phtml', $this->tags);?>
-        </span>
-        <?php endif; ?>
+                <?php echo $this->partialLoop('partials/tag.phtml', $this->tags);?>
+            </p>
+        </div>
     </div>
     <div class="clear"></div>
-
-</div>
+</li>

@@ -229,4 +229,10 @@
             $this->_redirector->gotoUrl($target);
         }
     }
+
+    public function imageAction()
+    {
+        $form = new Default_Form_ProfileImageForm();
+        $this->view->form = $form;
+    }
 }

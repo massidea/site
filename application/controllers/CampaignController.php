@@ -93,8 +93,8 @@ class CampaignController extends Oibs_Controller_CustomController
         $grpname = $grp['group_name_grp'];
 
         $this->view->campaign = $cmp;
-        $this->view->cmpcnts = $cnts;
-        $this->view->grpname = $grpname;
+        $this->view->cmpcnts  = $cnts;
+        $this->view->grpname  = $grpname;
     }
 
     /**

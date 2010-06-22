@@ -2,6 +2,13 @@
 	margin:-45px 0px 42px 0px;
 	padding:0px 0px 8px 0px;
 	background:transparent url("/images/gray_dot_line_500.png") bottom no-repeat; }
+#content #group-page .scroll-box li {
+    border-left:5px solid #0089CF;
+}
+#content #campaign-page p.link {font-size: 1.4em}
+
+#content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
+#content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
 
 /* ************************************** */
 /*  Sweet 'n' tasty copypasta. Omnomnom.  */
@@ -64,8 +71,8 @@ border-left:5px solid #0089CF;}
 /* ************* */
 /* </Progressbar> */
 /* ************* */
-
 /* <User page> */
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
 /* </User page> */
+
