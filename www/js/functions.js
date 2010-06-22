@@ -217,6 +217,7 @@ function replyToComment(id)
 function popup(windowname) {
     $("#backdrop").fadeIn("slow");
     $("#"+windowname).fadeIn("slow");
+    $("#"+windowname).focus();
 }
 
 /**
@@ -601,4 +602,3 @@ function selectOnlyThisMsg(id)
 	// Mark as checked only the message that is going to be deleted
 	document.getElementById('select_' + id).checked = true;
 }
-

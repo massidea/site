@@ -152,11 +152,14 @@ echo $this->doctype();
                                             <input style="margin-right: 6px; width: 70px;" type="submit" 
                                                 value="<?php echo $this->translate('account-login-submit'); ?>" /> 
                                             <span class="top_right_box_links" style="font-size: 12px;">
-                                                <a href="#">
+                                                <a href="<?php echo $this->url(array('controller' => 'account', 
+                                                                                     'action' => 'fetchpassword', 
+                                                                                     'language' => $this->language), 
+                                                                                     'lang_default', true); ?>">
                                                     <?php echo $this->translate('account-login-problems'); ?>
                                                 </a>
                                             </span>
-                                        </div>                                       
+                                        </div>
                                     </form>
                                     
                                     <div style="margin-top: 0px;">
@@ -645,12 +648,10 @@ echo $this->doctype();
     </div>
 
     <div id="popup_privacy_" class="popup_terms" style="display:none;">
-        <div class="popup_close" style="">
-            <div style="float:right;">
-                <a href="#" onclick="popup_terms_close('')">
-                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" />
-                </a>
-            </div>
+        <div class="popup_close">
+            <a href="#" onclick="popup_terms_close('')">
+                <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" style="float:right;" />
+            </a>
         </div>
         
         <div style="clear:both; padding-top: 10px; color: black; font-family: times new roman, arial;">
