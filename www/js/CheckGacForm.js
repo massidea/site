@@ -39,21 +39,21 @@ $(document).ready(function() {
 		var thisProgress = $('#progressbar_'+obj.name);
 
 		if(curLength < thisMax) {
-			progressText = curLeft + " until limit";
-			$(thisProgress).attr('class','progress_ok');
+			progressText = "<span>" + curLeft + " until limit</span>";
+			$(thisProgress).attr('class','limit ok');
 		}
 		if(curLength > thisMax) {
-			progressText = Math.abs(curLeft) + " too many";
-			$(thisProgress).attr('class','progress');
+			progressText = "<span>" + Math.abs(curLeft) + " too many</span>";
+			$(thisProgress).attr('class','limit bad');
 		}
 		if(curLength == thisMax) {
-			progressText = "at the limit";
-			$(thisProgress).attr('class','progress_ok');
+			progressText = "<span>at the limit</span>";
+			$(thisProgress).attr('class','limit ok');
 		}
 		
 		if(curLength == 0 && thisReq) {
-			progressText = "required";
-			$(thisProgress).attr('class','progress');
+			progressText = "<span>required</span>";
+			$(thisProgress).attr('class','limit bad');
 		}
 
 		$(thisProgress).html(progressText);
@@ -65,10 +65,10 @@ $(document).ready(function() {
 			var thisProgress = $('#progressbar_' + obj.name);
 			if ( $(obj).attr('value') != 0 || thisReq == 0) {
 				progressText = "ok";
-				$(thisProgress).attr('class', 'progress_ok');
+				$(thisProgress).attr('class', 'limit ok');
 			} else {
 				progressText = "required";
-				$(thisProgress).attr('class', 'progress');
+				$(thisProgress).attr('class', 'limit bad');
 			}
 			$(thisProgress).html(progressText);
 		}
@@ -77,8 +77,7 @@ $(document).ready(function() {
 	// Precheck on page load
 	$(allInputs).each(function(){
         // Quick & dirty fix.
-		if (this.name != "q" &&
-            this.name != "campaign_start")
+		if (this.name != "q")
         {
             textCount(this);
         }

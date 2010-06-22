@@ -1,6 +1,18 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <div id="gaccampaignlist">
-    <h3>Recent campaigns</h3>
+    <h3 style="float:left;">Recent campaigns</h3>
+
+    <?php
+    $addgrpurl = $this->url(
+        array(
+            'controller' => 'group',
+            'action'     => 'create',
+            'language'   => $this->language
+        ), 'lang_default', true);
+    ?>
+
+    <h3 style="float:right; margin-right:20px;"><a href="<?php echo $addgrpurl; ?>">&gt; Create new group</a></h3>
+    <div class="clear"></div>
     <div class="campaign-list">
         <ul>
             <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
@@ -19,7 +31,15 @@
     <div class="box">
         <h2>What are groups and campaigns?</h2>
         <div class="box-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra nibh non diam cursus a aliquet dui tempus. Phasellus pellentesque mattis elit. Aenean sagittis ultrices lacus, pharetra congue turpis semper sit amet. Vivamus quam diam, elementum viverra dignissim vitae, elementum at dolor. Aliquam sit amet volutpat.
+            <strong><a href="<?php echo $addgrpurl; ?>">Create a group</a></strong><br />
+            Groups help like-minded people to join their forces.
+            You can create as many groups as you want.
+
+            <p>Once you have created a group you can launch group campaigns.</p>
+
+            <strong>Launch a campaign</strong><br />
+            To collect others' opinions, launch a campaign that combines
+            individual contents as an easy-to-navigate unit.
         </div>
     </div>
 
