@@ -77,8 +77,7 @@ $(document).ready(function() {
 	// Precheck on page load
 	$(allInputs).each(function(){
         // Quick & dirty fix.
-		if (this.name != "q" &&
-            this.name != "campaign_start")
+		if (this.name != "q")
         {
             textCount(this);
         }

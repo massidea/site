@@ -118,10 +118,15 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $row->description_cmp = $desc;
 
         // MM/DD/YYYY -> YYYY-MM-DD
-        $start = explode('/', $start);
-        $start = implode('-', array($start[2], $start[0], $start[1]));
+        if (isset($start)) {
+            $start = explode('/', $start);
+            $start = implode('-', array($start[2], $start[0], $start[1]));
+        } else {
+            $start = date("Y-m-d", time());
+        }
         $end = explode('/', $end);
         $end = implode('-', array($end[2], $end[0], $end[1]));
+
 
         $row->start_time_cmp = $start;
         $row->end_time_cmp = $end;

@@ -265,18 +265,12 @@ echo $this->doctype();
                                     <?php echo $this->translate('index-futureinfo');?>
                             </a>
                         </li>
-                        <?php
-                        /*
-                         * Uncomment this when Groups & Campaigns is done.
-                         * 
                         <li class="blue">
                             <a href="<?php echo $this->url(array('language' => $this->language),
                                                 'lang_default', true); ?>">
                                     <?php echo $this->translate('index-groups-campaigns');?>
                             </a>
                         </li>
-                        */
-                        ?>
                         <li id="users" class="blue">
                             <a href="<?php echo $this->url(array('controller' => 'account',
                                                  'action' => 'userlist',

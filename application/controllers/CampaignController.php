@@ -30,6 +30,11 @@ class CampaignController extends Oibs_Controller_CustomController
 {
     public function indexAction() 
     {
+        $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                    'action' => 'list',
+                                                    'language' => $this->view->language),
+                                              'lang_default', true);
+        $this->_redirector->gotoUrl($redirectUrl);
     }
     
     /**
@@ -39,39 +44,57 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function createAction()
     {
-        $grpId = $this->_request->getParam('grpid');
-        // TODO:
-        // if (!userIsAdminInGroup(grpid)) die;
-        $this->view->grpid = $grpId;
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            $usrId = $auth->getIdentity()->user_id;
 
-        // Add the "add new campaign"-form to the view.
-        $form = new Default_Form_AddCampaignForm();
-        $this->view->form = $form;
-
-        // Handle posted form.
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $post = $request->getPost();
-            if ($form->isValid($post)) {
-                $campaignModel = new Default_Model_Campaigns();
-
-                $name = $post['campaign_name'];
-                $ingress = $post['campaign_ingress'];
-                $desc = $post['campaign_desc'];
-                $start = $post['campaign_start'];
-                $end = $post['campaign_end'];
-
-                $newCampaign = $campaignModel->createCampaign(
-                    $name, $ingress, $desc, $start, $end, $grpId);
-
-                // Redirect back to campaigns page.
-                $target = $this->_urlHelper->url(
-                    array(
-                        'groupid'    => $grpId,
-                        'language'   => $this->view->language),
-                    'group_shortview', true);
-                $this->_redirector->gotoUrl($target);
+            $grpId = $this->_request->getParam('grpid');
+            if (!$grpId) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'list',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
             }
+            // TODO:
+            // if (!userIsAdminInGroup(grpid)) die;
+            $this->view->grpid = $grpId;
+
+            // Add the "add new campaign"-form to the view.
+            $form = new Default_Form_AddCampaignForm();
+            $this->view->form = $form;
+
+            // Handle posted form.
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $post = $request->getPost();
+                if ($form->isValid($post)) {
+                    $campaignModel = new Default_Model_Campaigns();
+
+                    $name = $post['campaign_name'];
+                    $ingress = $post['campaign_ingress'];
+                    $desc = $post['campaign_desc'];
+                    $start = $post['campaign_start'];
+                    $end = $post['campaign_end'];
+
+                    $newCampaign = $campaignModel->createCampaign(
+                        $name, $ingress, $desc, $start, $end, $grpId);
+
+                    // Redirect back to campaigns page.
+                    $target = $this->_urlHelper->url(
+                        array(
+                            'groupid'    => $grpId,
+                            'language'   => $this->view->language),
+                        'group_shortview', true);
+                    $this->_redirector->gotoUrl($target);
+                }
+            }
+        } else {
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                        'action' => 'list',
+                                                        'language' => $this->view->language),
+                                                  'lang_default', true);
+            $this->_redirector->gotoUrl($redirectUrl);
         }
     }
     
@@ -135,7 +158,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector($redirectUrl);
+                $this->_redirector->gotoUrl($redirectUrl);
             }
             
             $this->view->cmpid = $cmpId;
@@ -199,7 +222,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector($redirectUrl);
+                $this->_redirector->gotoUrl($redirectUrl);
             }
 
             $contenttype = '';
