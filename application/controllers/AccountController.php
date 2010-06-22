@@ -1477,6 +1477,7 @@ class AccountController extends Oibs_Controller_CustomController
               $model = new Default_Model_UserImages();
               $model->deleteImageById($id);
               
+              $this->resetCache();
               $url = $this->_urlHelper->url(array('controller' => 'account',
                                                   'action' => 'images',
                                                   'language' => $this->language),
@@ -1496,19 +1497,33 @@ class AccountController extends Oibs_Controller_CustomController
         $params = $this->getRequest()->getParams(); 
         $id = $params['img_id'];
         $auth = Zend_Auth::getInstance();
-		
+	
         // If user has identity
         if ($auth->hasIdentity()) {
-              $model = new Default_Model_UserImages();
-              $model->updateModDate($id);
+            $model = new Default_Model_UserImages();
+			$model->updateModDate($id);
+
               
-              $url = $this->_urlHelper->url(array('controller' => 'account',
+			$this->resetCache();
+            $url = $this->_urlHelper->url(array('controller' => 'account',
                                                   'action' => 'images',
                                                   'language' => $this->language),
                                             'lang_default', true);
-              $this->_redirect($url);
+            $this->_redirect($url);
         } else {
             $this->_redirect($this->_baseUrl);
         }
-    }    
+    }
+    
+    public function resetCache() {
+       // Purge cache from old picture
+        $cache = Zend_Registry::get('cache');
+        $auth = Zend_Auth::getInstance();
+		$userid = $auth->getIdentity()->user_id;
+        
+    	$cacheThumb = 'ProfileThumbs_' . $userid . '_thumbnail_usi';
+        $cacheImage = 'ProfileThumbs_' . $userid . '_image_usi';
+        $cache->remove($cacheThumb);
+        $cache->remove($cacheImage);
+    }
 } // end of class
