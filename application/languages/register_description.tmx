@@ -7,6 +7,7 @@
 <body>
 	<tu tuid='register-description'>
 		<tuv xml:lang="en"><seg>
+            <div class="privacy">
             <h1>REGISTER DESCRIPTION</h1>
             <p>Personal Data Act (523/99) 10 §</p>
             <p>Created: 08.09.2009</p>
@@ -77,8 +78,10 @@
 
             <h2>8. Data protection principles</h2>
             <p>Private customer information will not be disclosed to a third party. Private information is password-protected and accessed only by defined persons.</p> 
+            </div>
         </seg></tuv>
 		<tuv xml:lang="fi"><seg>
+            <div class="privacy">
             <h1>REKISTERISELOSTE</h1>
             <p>Henkilötietolaki (523/99) 10 §</p>
             <p>Laatimispvm: 08.09.2009</p>
@@ -147,6 +150,7 @@
 
             <h2>8. Rekisterin suojauksen periaatteet</h2>
             <p>Asiakkaan tietoja ei luovuteta ulkopuoliselle taholle. Tiedot on suojattu salasanalla ja käyttäjätunnuksella ja tietoihin pääsy on vain määritellyillä henkilöillä.</p>
+            </div>
         </seg></tuv>
 	</tu>
  </body>
