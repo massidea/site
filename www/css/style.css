@@ -800,6 +800,7 @@ input.top_search_field{
 span.summary_topic{font-family: Arial; font-size: 14px; color: #0089CF;}
 span.summary_leadtext{font-family: Arial; font-size: 14px;}
 span.summary_tags{font-family: Arial; font-size: 14px; color: #0089CF;}
+span.summary_translatelink{font-family: Arial; font-size: 11px; color: #C0C0CB; display: block; margin-top: 3px;}
 
 /** Private messages **/
 /* ADDITIONAL DEFINITIONS TO VIEWS */
