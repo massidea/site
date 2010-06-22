@@ -483,7 +483,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
                                            ->where('cnt.id_cnt != ?', $id_cnt)
-                                           ->order('cnt.id_cty_cnt ASC')
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
                 ;
