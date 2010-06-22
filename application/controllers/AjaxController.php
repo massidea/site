@@ -78,10 +78,17 @@ class AjaxController extends Oibs_Controller_CustomController
     	// Gather data for recent posts
     	$i = 0;
     	foreach ($recentposts_raw as $post) {
-	    	$recentposts[$i] = $post;
+	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
 	    	$this->gtranslate->setLangFrom($post['language_cnt']);
-	    	$recentposts[$i] = $this->gtranslate->translateContent($post);
-	    	$recentposts[$i]['tags'] = $contentHasTagModel->getContentTags($post['id_cnt']);
+	    	$translang = $this->gtranslate->getLangPair();
+
+	    	$recentposts[$i]['original'] = $post;
+	    	$recentposts[$i]['translated'] = $this->gtranslate->translateContent($post);
+	    	$recentposts[$i]['original']['tags'] = $tags;
+	    	$recentposts[$i]['translated']['tags'] = $tags;
+	    	$recentposts[$i]['original']['translang'] = $translang;
+	    	$recentposts[$i]['translated']['translang'] = $translang;
+	    	
 	    	$i++;
     	}
 

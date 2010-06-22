@@ -129,7 +129,7 @@ if($this->privmsgs):
                 <p>
                     <?php echo stripslashes($privmsg['message_body_pmg']); ?>
                 </p>
-                <?php if($privmsg['username_pmg'] != "privmsg-message-sender-system"): ?>
+                <?php if($privmsg['username_pmg'] != "privmsg-message-sender-system"): ?> <!-- Reply button if sender is not system -->
 					<input type="button" class="reply" id="replyto-<?php echo $privmsg['username_pmg']; ?>" value="Reply"/>
 				<?php endif; ?>
 			</div><!-- end of privmsg_content -->
