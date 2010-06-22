@@ -12,6 +12,7 @@ function generatePreview()
 			data: getPreviewData(),
 			success: function(html){
 				$('#'+previewId).html(html);
+				disableLinks();
 			}
 		});
 	}
@@ -36,4 +37,12 @@ function toggleDiv()
 			$('#'+contentId).fadeIn();
 		});
 	}
+}
+
+function disableLinks()
+{
+	$('#'+previewId+' a').click(function(e){
+		e.preventDefault();
+		alert('blocked');
+	});
 }

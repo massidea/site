@@ -901,44 +901,45 @@ class ContentController extends Oibs_Controller_CustomController
 			// Get requests
 			if($this->getRequest()->isPost())
 			{
-				// Get POST data
-				$postData = $this->getRequest()->getPost();
+				// Get POST data and convert it to UTF-8 compatible html entities
+				$rawpostData = $this->getRequest()->getPost();
+				foreach($rawpostData as $key => $value)
+					$postData[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
 
 				// Set today's date and time
 				$today = date('Y-m-d H:i:m');
 	
 				// Get content type of the specific content viewed
 				$contentTypesModel = New Default_Model_ContentTypes();
-				//Zend_Debug::dump($previewSession->previewData); die;
 				$contentType = $contentTypesModel->getTypeById($postData['content_type']);
 	
 				// Reformat preview data
 				$contentData =
 				array('id_cnt' 					=> 'preview',
-						  'id_cty_cnt' 				=> htmlentities($postData['content_type']),
-						  'title_cnt' 				=> htmlentities($postData['content_header']),
-						  'lead_cnt' 				=> htmlentities($postData['content_textlead']),
-						  'language_cnt' 			=> htmlentities($postData['content_language']),
-						  'body_cnt' 				=> htmlentities($postData['content_text']),
-						  'research_question_cnt' 	=> htmlentities($postData['content_research']),
-						  'opportunity_cnt' 		=> htmlentities($postData['content_opportunity']),
-						  'threat_cnt' 				=> htmlentities($postData['content_threat']),
-						  'solution_cnt' 			=> htmlentities($postData['content_solution']),
-						  'references_cnt' 			=> htmlentities($postData['content_references']),
+						  'id_cty_cnt' 				=> $postData['content_type'],
+						  'title_cnt' 				=> $postData['content_header'],
+						  'lead_cnt' 				=> $postData['content_textlead'],
+						  'language_cnt' 			=> $postData['content_language'],
+						  'body_cnt' 				=> $postData['content_text'],
+						  'research_question_cnt' 	=> $postData['content_research'],
+						  'opportunity_cnt' 		=> $postData['content_opportunity'],
+						  'threat_cnt' 				=> $postData['content_threat'],
+						  'solution_cnt' 			=> $postData['content_solution'],
+						  'references_cnt' 			=> $postData['content_references'],
 						  'views_cnt' 				=> 0,
 						  'published_cnt' 			=> 1,
 						  'created_cnt' 			=> $today,
 						  'modified_cnt' 			=> $today,
 						  'id_usr' 					=> $userId,
 						  'login_name_usr' 			=> $userName,
-						  'key_cty' 				=> htmlentities($postData['content_type']),
+						  'key_cty' 				=> $postData['content_type'],
 						  'name_cty'				=> $contentType
 				);
 
 				// Reformat tags
-				$rawtags = explode(",", $postSession['content_keywords']);
+				$rawtags = explode(",", $postData['content_keywords']);
 				foreach($rawtags as $rawtag)
-				$tags[count($tags)]['name_tag'] = $rawtag;
+					$tags[count($tags)]['name_tag'] = $rawtag;
 	
 				// Get form
 				$form = new Default_Form_PreviewContentForm();
