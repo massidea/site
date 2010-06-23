@@ -2,6 +2,13 @@
 	margin:-45px 0px 42px 0px;
 	padding:0px 0px 8px 0px;
 	background:transparent url("/images/gray_dot_line_500.png") bottom no-repeat; }
+#content #group-page .scroll-box li {
+    border-left:5px solid #0089CF;
+}
+#content #campaign-page p.link {font-size: 1.4em}
+
+#content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
+#content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
 
 /* ************************************** */
 /*  Sweet 'n' tasty copypasta. Omnomnom.  */
@@ -28,6 +35,24 @@ border-left:5px solid #0089CF;}
     padding:5px 0px 5px 2px;
     list-style:none;}
 #gacsidebar #groups ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
+
+#content #create-group-page .input-column1 { width:144px; float:left; text-align:right; margin-right:10px; margin-bottom:8px; }
+#content #create-group-page .input-column2 { width:254px; float:left;  margin-right:20px;  margin-bottom:8px; }
+#content #create-group-page .input-column3 { width:60px; float:left;  margin-bottom:8px; }
+#content #create-group-page textarea,
+#content #create-group-page input {  width:255px; padding:2px; }
+#content #create-group-page textarea { height:177px; }
+
+#content #create-group-page #save_changes {
+	background:transparent url("/images/gray_dot_line_500.png") top no-repeat;
+	text-align:center;
+	padding:10px 0px 20px 0px;
+	margin-top:10px; }
+
+#content #create-group-page #save_changes input#save-group,
+#content #create-group-page #save_changes input#cancel { width:100px; }
+
+#content #create-group-page .required { padding:0px; display:inline; color:red; }
 /* ************ */
 /* </copypasta> */
 /* ************ */
@@ -47,6 +72,7 @@ border-left:5px solid #0089CF;}
     background-position: left;
     background-repeat: no-repeat;
     border: 1px solid #7F9DB9;
+    float:left;
 }
 .progress_ok {
     width: 240px;
@@ -60,12 +86,13 @@ border-left:5px solid #0089CF;}
     background-position: left;
     background-repeat: no-repeat;
     border: 1px solid #7F9DB9;
+    float:left;
 }
 /* ************* */
 /* </Progressbar> */
 /* ************* */
-
 /* <User page> */
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
 /* </User page> */
+

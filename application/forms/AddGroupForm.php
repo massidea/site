@@ -2,7 +2,7 @@
 /**
  *  AddGroupForm -> Form for adding groups.
  *
- * 	Copyright (c) <2009>, Mikko Aatola
+ * 	Copyright (c) <2010>, Mikko Aatola
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -21,8 +21,8 @@
  *  AddGroupForm - class
  *
  *  @package 	Forms
- *  @author 		Mikko Aatola
- *  @copyright 	2009 Mikko Aatola
+ *  @author 	Mikko Aatola
+ *  @copyright 	2010 Mikko Aatola
  *  @license 	GPL v2
  *  @version 	1.0
  */
@@ -40,47 +40,129 @@ class Default_Form_AddGroupForm extends Zend_Form
         $translate = Zend_Registry::get('Zend_Translate'); 
         
         $this->setName('add_group_form');
-        $this->addElementPrefixPath('Oibs_Decorators', 
-                    'Oibs/Decorators/',
+        $this->addElementPrefixPath('Oibs_Form_Decorator',
+                    'Oibs/Form/Decorator/',
                     'decorator');
+
+        $clear = '<div class="clear"></div>';
 
         // Group name (must be unique).
         $groupname = new Zend_Form_Element_Text('groupname');
         $groupname
-            ->setLabel($translate->_('groups-new_group_name'))
+            //->setLabel($translate->_('groups-new_group_name'))
+            ->setLabel('Name')
             ->setRequired(true)
             ->setFilters(array('StringTrim'))
             ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
-                new Oibs_Validators_GroupExists('groupname')
+                new Oibs_Validators_GroupExists('groupname'),
+                array(
+                    'StringLength',
+                    false,
+                    array(
+                        1,
+                        140,
+                        'messages' =>
+                            array('stringLengthTooLong' => 'Name too long.')))
             ))
-            ->setDecorators(array('SettingsTextDecorator'));
+            ->setDescription(
+                '<div id="progressbar_groupname" class="limit ok"></div>')
+            ->setDecorators(array('FieldDecorator'));
 
-        // Description.
-        $groupdesc = new Zend_Form_Element_Text('groupdesc');
+        $groupname_clear = new Oibs_Form_Element_Note('groupname_clear');
+        $groupname_clear
+            ->setValue($clear)
+            ->setDecorators(array('ViewHelper'));
+
+        // Lead paragraph (description)
+        $groupdesc = new Zend_Form_Element_Textarea('groupdesc');
         $groupdesc
-            ->setLabel($translate->_('groups-new_group_description'))
+            ->setAttrib('cols', '45')
+            ->setAttrib('rows', '6')
+            ->setLabel('Lead paragraph')
             ->setRequired(true)
             ->setFilters(array('StringTrim'))
-            ->setDecorators(array('SettingsTextDecorator'));
+            ->setValidators(array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => "Description can't be empty."))),
+                array(
+                    'StringLength',
+                    false,
+                    array(
+                        1,
+                        320,
+                        'messages' =>
+                            array('stringLengthTooLong' => 'Description too long.')))
+            ))
+            ->setDescription(
+                '<div id="progressbar_groupdesc" class="limit ok"></div>')
+            ->setDecorators(array('FieldDecorator'));
+
+        $groupdesc_clear = new Oibs_Form_Element_Note('groupdesc_clear');
+        $groupdesc_clear
+            ->setValue($clear)
+            ->setDecorators(array('ViewHelper'));
 
         // Body text.
-        $groupbody = new Zend_Form_Element_Text('groupbody');
+        $groupbody = new Zend_Form_Element_Textarea('groupbody');
         $groupbody
-            ->setLabel('Body text')
+            ->setAttrib('cols', '45')
+            ->setAttrib('rows', '20')
+            ->setLabel('Body')
             ->setFilters(array('StringTrim'))
-            ->setDecorators(array('SettingsTextDecorator'));
+            ->setValidators(array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => "Body text can't be empty."))),
+                array(
+                    'StringLength',
+                    false,
+                    array(
+                        1,
+                        4000,
+                        'messages' =>
+                            array('stringLengthTooLong' => 'Body text too long.')))
+            ))
+            ->setDescription(
+                '<div id="progressbar_groupbody" class="limit ok"></div>')
+            ->setDecorators(array('FieldDecorator'));
 
-        // Submit button.
-        $submit = new Zend_Form_Element_Submit('submit');
-        $submit
-            ->setIgnore(true)
-            ->setLabel($translate->_('groups-btn_create'));
+        $groupbody_clear = new Oibs_Form_Element_Note('groupbody_clear');
+        $groupbody_clear
+            ->setValue($clear)
+            ->setDecorators(array('ViewHelper'));
+
+        $save = new Zend_Form_Element_Submit('save');
+        $save->setLabel($translate->_('groups-btn_create'))
+            ->setAttrib('id', 'publish')
+            ->setAttrib('class', 'submit-button')
+            ->setAttrib('style', 'float: none;');
+
+        $cancel = new Zend_Form_Element_Submit('cancel');
+        $cancel->setLabel('Cancel')
+            ->setAttrib('id', 'cancel')
+            ->setAttrib('class', 'submit-button');
 
         $this->addElements(array(
             $groupname,
+            $groupname_clear,
             $groupdesc,
+            $groupdesc_clear,
             $groupbody,
-            $submit));
+            $groupbody_clear,
+            $save,
+            //$cancel
+        ));
+
+        $save->setDecorators(array(
+            'ViewHelper',
+            array('HtmlTag', array(
+                'tag' => 'div',
+                'openOnly' => true,
+                'id' => 'submit',
+                'style' => 'clear: both;',
+            )),
+        ));
+        $cancel->setDecorators(array(
+            'ViewHelper',
+            array('HtmlTag', array('tag' => 'div', 'closeOnly' => true)),
+        ));
     }
 }

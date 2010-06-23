@@ -1,0 +1,5 @@
+<?php if (isset($this->recentcampaigns) && $this->recentcampaigns != null && $this->recentcampaigns != ''): ?>
+<ul>
+	<?php echo $this->partialLoop('partials/campaign-row.phtml', $this->recentcampaigns); ?>
+</ul>
+<?php endif; ?>
