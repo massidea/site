@@ -18,13 +18,9 @@ var previewUrl = '<?php echo $previewUrl; ?>';
 
 <?php 
     // change background color
-    $color = array( 'problem' => '#d21034',
-    				'idea' => '#4b9b07',
-    				'finfo' => '#ffc726');
-    
-    if (isset($color[$this->short_contenttype])) {
+    if (isset($this->short_contenttype)) {
 	    $this->headScript()->captureStart(); 
-	    ?> changeBack('<?php echo $color[$this->short_contenttype]; ?>'); <?php
+	    ?> changeBack('<?php echo $this->short_contenttype; ?>'); <?php
 	    $this->headScript()->captureEnd(); 
     }
 ?>

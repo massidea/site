@@ -4,8 +4,12 @@
 
 function changeBack(color)
 {
+	// change background color
 	$('body').ready(function () {
-		$('body').css('background-color', color);
+		 colors = { 'problem': '#d21034',
+				 	'idea': '#4b9b07',
+					'finfo': '#ffc726'};
+		$('body').css('background-color', colors[color]);
 	});	
 }
 

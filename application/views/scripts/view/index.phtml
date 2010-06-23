@@ -202,27 +202,14 @@ function flagContent()
 <?php endif; ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
 <?php 
-if ($this->contentData['name_cty'] == "Problems") {
+    // change background color
+    if (isset($this->contentType)) {
+	    $this->headScript()->captureStart(); 
+	    ?> changeBack('<?php echo $this->contentType; ?>'); <?php
+	    $this->headScript()->captureEnd(); 
+    }
 ?>
-    <?php $this->headScript()->captureStart() ?>
-    setTimeout("changeBack('#d21034')", 300);
-    <?php $this->headScript()->captureEnd() ?>
 <?php
-} else if ($this->contentData['name_cty'] == "Ideas") {
-?>
-    <?php $this->headScript()->captureStart() ?>
-    setTimeout("changeBack('#4b9b07')", 300);
-    <?php $this->headScript()->captureEnd() ?>
-<?php
-} else if ($this->contentData['name_cty'] == "Future info") {
-?>
-   <?php $this->headScript()->captureStart() ?>
-   setTimeout("changeBack('#ffc726')", 300);
-    <?php $this->headScript()->captureEnd() ?>
-<?php
-} ?>
-<?php
-
 
 /*
                 <?php if (isset($this->parent_siblings[0])) : ?>
@@ -309,7 +296,6 @@ if ($this->contentData['name_cty'] == "Problems") {
     </div>
     <div id="content_view_user_related">
     </div>
-    
     <div id="content_view_related_content_header">
         <div class="pointerCursor" style="float: left;">
             <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>" alt="" />
