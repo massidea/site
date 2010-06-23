@@ -78,11 +78,15 @@ if (isset($this->parent_siblings[0])) {
             </div>
             <div style="clear:both;"></div>
             <div class="box_468_light">
-                <div style="width:150px; float:left; color:#d21034; font-weight: bold; overflow:hidden;">
-                    <?php echo $this->translate('content-linked-challenges'); ?>
+                <div style="width:100%; float: left; overflow:hidden;">
+                    <div style="float: left; padding-bottom: 3px;">
+                        <span style="font-weight: bold; color: #d21034;"><?php echo $this->translate('content-linked-challenges'); ?></span>
+                    </div>
                     <?php if ($authenticated): ?>
-                    <br />
-                    <span style="font-size: 80%; color: black;"><?php echo $this->translate('content-box-add'); ?> </span>
+                    <div style="float: right;">
+                        <span style="font-size: 80%; color: black;">
+                            <?php echo $this->translate('content-box-add'); ?>
+                        </span>
                         <span style="font-size: 80%">
                             <a href="<?php echo $this->url(array('language' => $this->language,
                                                                  'contenttype' => 'problem',
@@ -98,14 +102,18 @@ if (isset($this->parent_siblings[0])) {
                                 <?php echo $this->translate('content-box-link-existing'); ?>
                             </a>
                         </span>
+                    </div>
                     <?php endif; ?>
-                </div>
-                <div style="width:300px; float:left; ">
+                </div><br clear="all" />
+                <div style="width:300px;">
                     <?php if (isset($linked_problems)): ?>
                         <?php foreach ($linked_problems as $problem): ?>
+                            <span style="font-weight: bold;">
+                                <a href=""><?php echo $problem['login_name_usr'] . ': '; ?></a>
+                            </span>
                             <a href="<?php echo $this->url(array('content_id' => $problem['id_cnt'], 
                                                                  'language' => $this->language), 
-                                                           'content_shortview', true); ?>">
+                                                                 'content_shortview', true); ?>">
                                 <?php echo $problem['title_cnt']; ?>
                             </a>
                             <br />
@@ -115,12 +123,16 @@ if (isset($this->parent_siblings[0])) {
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="box_468_light" style="border-top: 0;">
-                <div style="width:150px; float:left; color:#ffc726; font-weight: bold; overflow:hidden;">
-                    <?php echo $this->translate('content-linked-visions'); ?>
+            <div class="box_468_medium">
+                <div style="width:100%; float: left; overflow:hidden;">
+                    <div style="float: left; padding-bottom: 3px;">
+                        <span style="font-weight: bold; color: #ffc726"><?php echo $this->translate('content-linked-visions'); ?></span>
+                    </div>
                     <?php if ($authenticated): ?>
-                    <br />
-                    <span style="font-size: 80%; color: black;"><?php echo $this->translate('content-box-add'); ?> </span>
+                    <div style="float: right;">
+                        <span style="font-size: 80%; color: black;">
+                            <?php echo $this->translate('content-box-add'); ?>
+                        </span>
                         <span style="font-size: 80%">
                             <a href="<?php echo $this->url(array('language' => $this->language,
                                                                  'contenttype' => 'finfo',
@@ -136,11 +148,15 @@ if (isset($this->parent_siblings[0])) {
                                 <?php echo $this->translate('content-box-link-existing'); ?>
                             </a>
                         </span>
+                    </div>
                     <?php endif; ?>
-                </div>
-                <div style="width:300px; float:left; ">
+                </div><br clear="all" />
+                <div style="width:300px;">
                     <?php if (isset($linked_futures)): ?>
                         <?php foreach ($linked_futures as $future): ?>
+                            <span style="font-weight: bold;">
+                                <a href=""><?php echo $future['login_name_usr'] . ': '; ?></a>
+                            </span>
                             <a href="<?php echo $this->url(array('content_id' => $future['id_cnt'], 
                                                                  'language' => $this->language), 
                                                            'content_shortview', true); ?>">
