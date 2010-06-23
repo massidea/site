@@ -31,6 +31,7 @@ class Oibs_Controller_Plugin_AccountViewBox {
 	private $_name;
 	private $_header;
 	private $_partial;
+	private $_class;
 	
 	public function __construct() {
 		
@@ -69,5 +70,14 @@ class Oibs_Controller_Plugin_AccountViewBox {
 	
 	public function getName() {
 		return $this->_name;
+	}
+	
+	public function getClass() {
+		return $this->_class;
+	}
+	
+	public function setClass($class) {
+		$this->_class = $class;
+		return $this;
 	}
 }

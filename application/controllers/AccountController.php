@@ -378,6 +378,7 @@ class AccountController extends Oibs_Controller_CustomController
         //	My Posts box data
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box->setHeader("My Posts")
+			->setClass("right")
 			->setName("my-posts")
 			->addTab("All", "all", "all selected", $dataa['contentCounts']['all']) //Header, type, calss, extra
 			->addTab("Challenges", "problem", "challenges", $dataa['contentCounts']['problem'])
@@ -394,12 +395,14 @@ class AccountController extends Oibs_Controller_CustomController
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box	->setHeader("My Views")
 				->setName("my-views")
+				->setClass("right")
 				->addTab("Views", "views", "all selected");			
 		//$boxes[] = $box;
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box->setHeader("My Reads")
+			->setClass("right")
 			->setName("my-reads")
 			->addTab("Readers", "readers", "all selected");
 			
