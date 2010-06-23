@@ -48,11 +48,11 @@ $(document).ready(function() {
 	});
     // Endof Bio
 
-	$("#activity > .left > #content_type > ul > li > a").mouseover(function () {
+	$("#activity > .left,.right > #content_type > ul > li > a").mouseover(function () {
 		$(this).parent().css('cursor', 'pointer');
 	});
 	
-	$("#activity > .left > #content_type > ul > li > a").click(function (event) {		
+	$("#activity > .left,.right > #content_type > ul > li > a").click(function (event) {		
 		event.preventDefault();
 
 		$(this).parent().siblings().removeClass('selected');
