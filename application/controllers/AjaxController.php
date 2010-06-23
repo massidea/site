@@ -66,7 +66,7 @@ class AjaxController extends Oibs_Controller_CustomController
         $campaignModel = new Default_Model_Campaigns();
 
         // If you find (time to think of) a better way to do this, be my guest.
-    	$recentcampaigns = $campaignModel->getRecentFromOffset($offset, 3);
+    	$recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
         $cmps_new = array();
         foreach ($recentcampaigns as $cmp) {
             $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);

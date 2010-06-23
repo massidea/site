@@ -26,7 +26,7 @@
  *  @license        GPL v2
  *  @version        1.0
  */ 
-class GroupsAndCampaignsController extends Oibs_Controller_CustomController
+class GroupsandcampaignsController extends Oibs_Controller_CustomController
 {
     public function indexAction() 
     {
@@ -37,7 +37,7 @@ class GroupsAndCampaignsController extends Oibs_Controller_CustomController
         $cmpmodel = new Default_Model_Campaigns();
         $grpadm = new Default_Model_GroupAdmins();
 
-        $grps = $grpmodel->getRecent(12);
+        $grps = $grpmodel->getRecent(10);
         $grps_new = array();
         foreach ($grps as $grp) {
             $adm = $grpadm->getGroupAdmins($grp['id_grp']);
