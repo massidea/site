@@ -22,7 +22,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
         <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
     </h2>
     <div id="profile-meta">
-        <img src="/images/no_profile_img_placeholder.png" alt="pirustakos näitä tietää" class="avatar" />
+        <img src="<?php echo $this->baseUrl("/images/no_profile_img_placeholder.png"); ?>" alt="avatar" class="avatar" />
         <p><?php echo $this->campaign['ingress_cmp']; ?></p>
         <!--
         <p>
