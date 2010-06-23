@@ -168,4 +168,84 @@ class AjaxController extends Oibs_Controller_CustomController
 		}
 		$this->view->output = $output;
 	}
+	
+	public function morefromuserAction() {
+		// Get content owner data
+        $userModel = new Default_Model_User();
+        //$contents = $userModel->getUserContent(8, 0, 483, 10);
+		$contents = $userModel->getUserContent($this->params['user_id'], 0, $this->params['cnt_id'], 5);
+		$this->view->contents = $contents;
+	}
+	
+	public function relatedcontentAction() {
+        // Get related contents
+        $contentModel = new Default_Model_Content();
+        $relatedContents = $contentModel->getRelatedContents($this->id);
+        $this->view->relatedContents = $relatedContents;
+	}
+	
+	public function contentratingAction() {
+        // Get authentication
+        $auth = Zend_Auth::getInstance();
+        
+        // Get content rating
+        $contentRatingsModel = new Default_Model_ContentRatings();
+        
+		$rate = $this->params['rate'];
+		if ($auth->hasIdentity())
+		{
+			if($rate == 1 || $rate == -1)
+			{
+	            $contentRatingsModel->addRating($this->id, $auth->getIdentity()->user_id, $rate);
+			}
+		}
+		
+        $rating = $contentRatingsModel->getPercentagesById($this->id);
+		$this->view->hasIdentity = $auth->hasIdentity();
+		$this->view->rating = $rating;
+	}
+	
+	public function contentfavouriteAction() {
+        // Get authentication
+        $auth = Zend_Auth::getInstance();
+		
+        // Get contents total favourites
+        $userFavouritesModel = new Default_Model_UserHasFavourites();
+        $totalFavourites = $userFavouritesModel->getUsersCountByFavouriteContent($id);
+        $totalFavourites = $totalFavourites[0]['users_count_fvr'];
+        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$auth->getIdentity()->user_id);
+
+        /*
+         * favouritemethod comes from parameters sent by
+         * ajax function (ajaxLoad_favourite(method)) in index.phtml in /view/.
+         * this function gets parameter "method" (add/remove) from onClick event that is in index.ajax.phtml.
+         * if this onClick event is activated by clicking "heart" (icon_fav_on/off) icon in content view page,
+         * it runs the ajaxLoad_favourite(method) function which sends parameter "favourite" (add/remove) to
+         * this viewController which then handles the adding or removing the content from favourites.
+         */
+        if($favouriteMethod != "NONE" && $auth->hasIdentity()) {
+        	$favouriteUserId = $auth->getIdentity()->user_id;
+        	//If favourite method was "add", then add content to user favourites
+        	if($favouriteMethod == "add" && !$isFavourite) 
+        		{
+        		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
+        			$this->view->favouriteMethod = $favouriteMethod;
+        		} else $this->flash('favourite-adding-failed',$baseUrl.'/en/msg');
+        	} 
+        	//If favourite method was "remove" then remove content from user favourites.
+        	elseif ($favouriteMethod == "remove" && $isFavourite)
+        		{
+        		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
+        			$this->view->favouriteMethod = $favouriteMethod;
+        		} else $this->flash('favourite-removing-failed',$baseUrl.'/en/msg');
+        	} else unset($favouriteMethod);
+        }
+        
+        $favourite = array(
+        	'total_favourites' 	=> $totalFavourites,
+        	'is_favourite'		=> $isFavourite,
+        );
+        
+        $this->view->favourite = $favourite;
+	}
 }
