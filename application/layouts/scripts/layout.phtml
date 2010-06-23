@@ -20,7 +20,7 @@ echo $this->doctype();
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/style.css'));
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix.css'), 'screen', 'IE 6');
-        $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
 	
     $this->headlink()->headLink(array(
         'rel' => 'shortcut icon',
@@ -365,7 +365,14 @@ echo $this->doctype();
                     <?php echo $this->translate('index-users');?>
                 </a>
             </div>
-            
+            <div class="sub_menu_left_space">&nbsp;</div>
+			<div id="blog" 
+                onmouseout="blurMenu(this.id, 'deepblue', '<?php echo $this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'deepblue', '<?php echo $this->baseUrl();?>');" 
+                class="sub_menu_item_deepblue"
+            >
+                <a href="/blog/">Blog</a>
+            </div>            
             <div class="sub_menu_left_space">&nbsp;</div>
 			
 			<!-- RIGHT SIDE OF THE MENU, note that the placement order is reversed -->
@@ -404,49 +411,40 @@ echo $this->doctype();
                 
 				<!-- This menu is hidden, and activated by using jQuery on demand. Check the JS -file for the function -->
 				<div id="add_content_menu">
-					<div onmouseover="highlightContentMenuItem(this.id)" 
-                            onmouseout="dimContentMenuItem(this.id)" 
-                            id="add_content_menu_challenge">
-                            
-						<div class="hidden_menu_red"></div>
-                        
-						<div class="hidden_menu_row">
-                            <a href="<?php echo $url_add_c; ?>">
-                                <?php echo $this->translate('index-addcontent-challenge'); ?>
-                            </a>
-                        </div>
-                        
+					<div id="add_content_menu_challenge">
+						<a class="add_content_button" href="<?php echo $url_add_c; ?>">
+							<span> 
+								<div class="hidden_menu_red"></div>
+								<div class="hidden_menu_row">
+		                                <?php echo $this->translate('index-addcontent-challenge'); ?>
+		                        </div>
+							</span>		
+                        </a>
 						<div style="clear: both;"></div>
 					</div>
                     
-					<div onmouseover="highlightContentMenuItem(this.id)" 
-                            onmouseout="dimContentMenuItem(this.id)"
-                            id="add_content_menu_idea">
-                            
-						<div class="hidden_menu_green"></div>
-                        
-						<div class="hidden_menu_row">
-                            <a href="<?php echo $url_add_i; ?>">
-                                <?php echo $this->translate('index-addcontent-idea'); ?>
-                            </a>
-                        </div>
-                        
+					<div id="add_content_menu_idea">
+						<a class="add_content_button" href="<?php echo $url_add_i; ?>">
+							<span>
+								<div class="hidden_menu_green"></div>
+								<div class="hidden_menu_row">
+		                                <?php echo $this->translate('index-addcontent-idea'); ?>
+		                        </div>
+		                    </span>	
+	                    </a>
 						<div style="clear: both;"></div>
 					</div>
                     
-					<div onmouseover="highlightContentMenuItem(this.id)"
-                            onmouseout="dimContentMenuItem(this.id)"
-                            id="add_content_menu_vision">
-                            
-						<div class="hidden_menu_yellow"></div>
-                        
-						<div class="hidden_menu_row">
-                            <a href="<?php echo $url_add_v; ?>">
-                                <?php echo $this->translate('index-addcontent-vision'); ?>
-                            </a>
-                        </div>
-                        
-						<div style="clear: both;"></div>
+					<div id="add_content_menu_vision">
+                        <a class="add_content_button" href="<?php echo $url_add_v; ?>">
+	                        <span>
+								<div class="hidden_menu_yellow"></div>
+								<div class="hidden_menu_row">
+			    	          		<?php echo $this->translate('index-addcontent-vision'); ?>
+		                        </div>
+								<div style="clear: both;"></div>
+							</span>
+						</a>
 					</div>
 				</div>		
 				
