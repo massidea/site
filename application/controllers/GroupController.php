@@ -115,40 +115,51 @@
 
     function createAction()
     {
-        // Add the "add new group"-form to the view.
-        $form = new Default_Form_AddGroupForm();
-        $this->view->form = $form;
+        $auth = Zend_Auth::getInstance();
 
-        // If the form is posted and valid, add the new group to db.
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $post = $request->getPost();
-            if ($form->isValid($post)) {
-                // Add new group to db.
-                $groupModel = new Default_Model_Groups();
-                $newGroupId = $groupModel->createGroup(
-                    $post['groupname'],
-                    $post['groupdesc'],
-                    $post['groupbody']);
+        if ($auth->hasIdentity()) {
+            // Add the "add new group"-form to the view.
+            $form = new Default_Form_AddGroupForm();
+            $this->view->form = $form;
 
-                // Add the current user to the new group.
-                $userHasGroupModel = new Default_Model_UserHasGroup();
-                $userHasGroupModel->addUserToGroup(
-                    $newGroupId, $this->view->userid);
+            // If the form is posted and valid, add the new group to db.
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $post = $request->getPost();
+                if ($form->isValid($post)) {
+                    // Add new group to db.
+                    $groupModel = new Default_Model_Groups();
+                    $newGroupId = $groupModel->createGroup(
+                        $post['groupname'],
+                        $post['groupdesc'],
+                        $post['groupbody']);
 
-                // Make the current user an admin for the new group.
-                $groupAdminModel = new Default_Model_GroupAdmins();
-                $groupAdminModel->addAdminToGroup(
-                    $newGroupId, $this->view->userid);
+                    // Add the current user to the new group.
+                    $userHasGroupModel = new Default_Model_UserHasGroup();
+                    $userHasGroupModel->addUserToGroup(
+                        $newGroupId, $this->view->userid);
 
-                // Redirect back to groups page.
-                $target = $this->_urlHelper->url(array(
-                    'controller' => 'group',
-                    'action'     => 'index',
-                    'language'   => $this->view->language
-                    ), 'lang_default', true);
-                $this->_redirector->gotoUrl($target);
+                    // Make the current user an admin for the new group.
+                    $groupAdminModel = new Default_Model_GroupAdmins();
+                    $groupAdminModel->addAdminToGroup(
+                        $newGroupId, $this->view->userid);
+
+                    $target = $this->_urlHelper->url(array(
+                        'groupid' => $newGroupId,
+                        'language' => $this->view->language),
+                         'group_shortview', true);
+                    $this->_redirector->gotoUrl($target);
+                }
             }
+        } else {
+            // Not logged in.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
         }
     }
 
@@ -228,5 +239,11 @@
                 'lang_default', true);
             $this->_redirector->gotoUrl($target);
         }
+    }
+
+    public function imageAction()
+    {
+        $form = new Default_Form_ProfileImageForm();
+        $this->view->form = $form;
     }
 }

@@ -26,25 +26,18 @@
  *  @license        GPL v2
  *  @version        1.0
  */ 
-class GroupsAndCampaignsController extends Oibs_Controller_CustomController
+class GroupsandcampaignsController extends Oibs_Controller_CustomController
 {
     public function indexAction() 
     {
+        $auth = Zend_Auth::getInstance();
+        $logged_in = $auth->hasIdentity();
+
         $grpmodel = new Default_Model_Groups();
         $cmpmodel = new Default_Model_Campaigns();
         $grpadm = new Default_Model_GroupAdmins();
 
-        // If you find a better way to do this, be my guest.
-        $cmps = $cmpmodel->getRecent(15);
-        $cmps_new = array();
-        foreach ($cmps as $cmp) {
-            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-            $cmp['group_name_grp'] = $grp['group_name_grp'];
-            $cmps_new[] = $cmp;
-        }
-
-        // See previous comment.
-        $grps = $grpmodel->getRecent(12);
+        $grps = $grpmodel->getRecent(10);
         $grps_new = array();
         foreach ($grps as $grp) {
             $adm = $grpadm->getGroupAdmins($grp['id_grp']);
@@ -53,7 +46,7 @@ class GroupsAndCampaignsController extends Oibs_Controller_CustomController
             $grps_new[] = $grp;
         }
 
-        $this->view->campaigns = $cmps_new;
+        $this->view->logged_in = $logged_in;
         $this->view->groups = $grps_new;
     }
 }
