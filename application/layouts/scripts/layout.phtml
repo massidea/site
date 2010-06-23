@@ -640,19 +640,21 @@ echo $this->doctype();
             </div>       
         </div>
         
-        <div style="clear:both; padding-top: 10px;">
+        <div class="privacy">
             <?php echo $this->translate('network-service-agreement'); ?>
         </div>      
     </div>
 
     <div id="popup_privacy_" class="popup_terms" style="display:none;">
         <div class="popup_close">
-            <a href="#" onclick="popup_terms_close('')">
-                <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" style="float:right;" />
-            </a>
+            <div style="float:right;">
+                <a href="#" onclick="popup_terms_close('')">
+                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" />
+                </a>
+            </div>
         </div>
         
-        <div style="clear:both; padding-top: 10px; color: black; font-family: times new roman, arial;">
+        <div class="privacy">
             <?php echo $this->translate('register-description'); ?>
         </div>
     </div>

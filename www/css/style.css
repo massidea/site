@@ -1864,9 +1864,17 @@ form #uploadedFiles_div .form_element_input label {
 
 /*
  * Privacy - register description
+ * Terms - Network Services Agreement
+ * (used for both popups)
  */
-div.privacy { font-family: Arial; color: #343434; }
+div.privacy {
+    font-family: Arial, Times New Roman;
+    color: #232323;
+    clear: both;
+    padding-top: 10px;
+}
 div.privacy h1 { margin: 0px 0px 9px 0px; font-size: 23px; }
 div.privacy h2 { margin: 20px 0px 6px 0px; font-size: 18px; }
-div.privacy p { margin: 2px 0px 3px 6px; font-size: 13px; line-height: 14px; }
-div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 13px; lin-height: 14px; }
+div.privacy h3 { margin: 12px 0px 4px 0px; font-size: 16px; }
+div.privacy p { margin: 2px 0px 3px 6px; font-size: 14px; line-height: 15px; }
+div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; lin-height: 15px; }
