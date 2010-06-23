@@ -170,6 +170,23 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
                 ->limit($limit);
         return $this->fetchAll($select)->toArray();
     }
+
+    /**
+     * getRecentFromOffset
+     *
+     * Gets a specified number of recent campaigns
+     * starting from a specified offset.
+     *
+     * @param int $page
+     * @param int $count
+     */
+    public function getRecentFromOffset($page, $count)
+    {
+        $select = $this->select()
+                ->order('id_cmp DESC')
+                ->limitPage($page, $count);
+        return $this->fetchAll($select)->toArray();
+    }
     
     /** 
     *   removeCampaign

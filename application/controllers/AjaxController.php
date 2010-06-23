@@ -58,6 +58,25 @@ class AjaxController extends Oibs_Controller_CustomController
 		echo "Move along people, there's nothing to see here! <br />";
  	}
 	
+    function getrecentcampaignsAction()
+    {
+        $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
+
+        $grpmodel = new Default_Model_Groups();
+        $campaignModel = new Default_Model_Campaigns();
+
+        // If you find (time to think of) a better way to do this, be my guest.
+    	$recentcampaigns = $campaignModel->getRecentFromOffset($offset, 3);
+        $cmps_new = array();
+        foreach ($recentcampaigns as $cmp) {
+            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+            $cmp['group_name_grp'] = $grp['group_name_grp'];
+            $cmps_new[] = $cmp;
+        }
+
+    	$this->view->recentcampaigns = $cmps_new;
+    }
+
 	function getrecentcontentAction()
 	{
 		// Get requests

@@ -47,17 +47,29 @@ class CampaignController extends Oibs_Controller_CustomController
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
             $usrId = $auth->getIdentity()->user_id;
-
             $grpId = $this->_request->getParam('grpid');
+
             if (!$grpId) {
-                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
-                                                            'action' => 'list',
-                                                            'language' => $this->view->language),
-                                                      'lang_default', true);
+                $redirectUrl = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'campaign',
+                        'action' => 'list',
+                        'language' => $this->view->language),
+                    'lang_default', true);
                 $this->_redirector->gotoUrl($redirectUrl);
             }
-            // TODO:
-            // if (!userIsAdminInGroup(grpid)) die;
+
+            $grpAdminModel = new Default_Model_GroupAdmins();
+            if (!$grpAdminModel->userIsAdmin($grpId, $usrId)) {
+                // Only group admins can create campaigns.
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid'    => $grpId,
+                        'language'   => $this->view->language),
+                    'group_shortview', true);
+                $this->_redirector->gotoUrl($target);
+            }
+
             $this->view->grpid = $grpId;
 
             // Add the "add new campaign"-form to the view.
@@ -80,7 +92,6 @@ class CampaignController extends Oibs_Controller_CustomController
                     $newCampaign = $campaignModel->createCampaign(
                         $name, $ingress, $desc, $start, $end, $grpId);
 
-                    // Redirect back to campaigns page.
                     $target = $this->_urlHelper->url(
                         array(
                             'groupid'    => $grpId,
