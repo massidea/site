@@ -137,6 +137,9 @@ class TagController extends Oibs_Controller_CustomController
             //$this->changeTagSize($tagList);
             $tagList = $this->_helper->tagsizes->tagCalc($tagList);
             
+            // Action helper for define is tag running number divisible by two
+            $tagList = $this->_helper->tagsizes->isTagDivisibleByTwo($tagList);
+
             $cache->save($tagList, $cacheFile);
         } else {
             $tagList = $result;
