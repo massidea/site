@@ -94,8 +94,8 @@
 		<tuv xml:lang="fi"><seg>Kenttä ei voi olla tyhjä!</seg></tuv>
 	</tu>
 	<tu tuid='account-login-forgot_password'>
-		<tuv xml:lang="en"><seg>I Forgot my password.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Unohdin salasanani.</seg></tuv>
+		<tuv xml:lang="en"><seg>I forgot my password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Unohdin salasanani</seg></tuv>
 	</tu>
     <tu tuid='account-login-not-successful'>
 		<tuv xml:lang="en"><seg>Wrong username and/or password!</seg></tuv>

@@ -258,8 +258,8 @@ function flagContent()
         <?php endif; ?>
 		<?php echo $this->partial('partials/content_view.phtml', $this);?>
 
-<div class="right_side" style="float:left; padding: 0px; margin: 0px; margin-top: 0px;">
-    <p class="right_side_title_small" style="padding-top: 11px; padding-bottom:3px;"><?php echo $this->translate('content-view-author'); ?></p>
+<div class="right_side" style="float: right; padding: 0px; margin: 0px; margin-top: 0px;">
+    <p class="right_side_title_small" style="padding: 11px 0px 3px 10px; font-weight: bold;"><?php echo $this->translate('content-view-author'); ?></p>
     <div class="top_right_box" style="margin-bottom:10px;">
             <img src="<?php echo $this->url(array('controller' => 'account',
                                                   'action' => 'profilethumb',
