@@ -150,7 +150,6 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                         'messages' => array('stringLengthTooShort' => 'Password too short (4-22 characters)',
                                             'stringLengthTooLong' => 'Password too long (4-22 characters)'))),
 				 ));
-                 //->setErrorMessages(Array('Password too short'));
         $passwordclear = new Oibs_Form_Element_Note('passwordclear');
         $passwordclear->setValue($clear);
 
@@ -186,10 +185,6 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $emailclear = new Oibs_Form_Element_Note('emailclear');
         $emailclear->setValue($clear);
 
-        //$gravatar = new Oibs_Form_Element_Note('gravatartext');
-        //$gravatar->setValue(
-        //        '<div class="input-column1"></div>'
-        //        . '<div class="input-column2" style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
         $gravatar = new Zend_Form_Element_Hidden('gravatartext');
         $gravatar->setLabel('Gravatar')
                  ->setDescription('<div style="text-align: right;">Enable <a href="http://www.gravatar.com">gravatar</a></div>');
@@ -223,7 +218,8 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 
         $birthday = new Zend_Form_Element_Text('birthday');
         $birthday->setLabel('Date of Birth')
-                 ->setAttrib('id', 'birthday');
+                 ->setAttrib('id', 'birthday')
+                 ->setValidators(array(new Zend_Validate_Date('birthday')));
         $birthdaypublic = new Zend_Form_Element_CheckBox('birthday_publicity');
         $birthdaypublic->setLabel($publictext);
 
@@ -329,11 +325,17 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                       ->setValue(1);
         $addresspublic->helper = 'FormHidden';
 
-        $country = new Zend_Form_Element_Text('country');
-        $country->setLabel('Country of Residence')
-                ->setAttrib('id', 'country');
-        $countrypublic = new Zend_Form_Element_CheckBox('country_publicity');
-        $countrypublic->setLabel($publictext);
+        $country_model = new Default_Model_Countries();
+        $allCountries = $country_model->getAllCountries();
+        $usercountry = new Zend_Form_Element_Select('country');
+        $usercountry->setLabel('Country of Residence')
+                ->setAttrib('id', 'country')
+                ->addMultiOption('', 'Select');
+        foreach ($allCountries as $country) {
+            $usercountry->addMultiOption($country['iso_ctr'], $country['printable_name_ctr']);
+        }
+        $usercountrypublic = new Zend_Form_Element_CheckBox('country_publicity');
+        $usercountrypublic->setLabel($publictext);
 
         $timezone_model = new Default_Model_Timezones();
         $allTimezones = $timezone_model->getAllTimezones();
@@ -404,22 +406,24 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             $birthdaypublic,
                             $biography,
                             $biographypublic,
-                            $intereststext,
-                            $interests,
-                            $interestsclear,
-                            $links_websites,
-                            $links_name,
-                            $links_url,
-                            $links_name_site1,
-                            $links_url_site1,
-                            $links_name_site2,
-                            $links_url_site2,
-                            $links_name_site3,
-                            $links_url_site3,
-                            $links_name_site4,
-                            $links_url_site4,
-                            $links_name_site5,
-                            $links_url_site5,
+            // User intrests (tag)
+                            //$intereststext,
+                            //$interests,
+                            //$interestsclear,
+            // User links need new db table?
+                            //$links_websites,
+                            //$links_name,
+                            //$links_url,
+                            //$links_name_site1,
+                            //$links_url_site1,
+                            //$links_name_site2,
+                            //$links_url_site2,
+                            //$links_name_site3,
+                            //$links_url_site3,
+                            //$links_name_site4,
+                            //$links_url_site4,
+                            //$links_name_site5,
+                            //$links_url_site5,
                             $userlanguage,
                             $userlanguageclear,
                             $locationInformation,
@@ -427,8 +431,8 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             $hometownpublic,
                             $address,
                             $addresspublic,
-                            $country,
-                            $countrypublic,
+                            $usercountry,
+                            $usercountrypublic,
                             $usertimezone,
                             $usertimezonepublic,
                             $employmentInformation,
@@ -491,8 +495,8 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $hometownpublic->setDecorators(array('PublicDecorator'));
         $address->setDecorators(array('InputDecorator'));
         $addresspublic->setDecorators(array('PublicDecorator'));
-        $country->setDecorators(array('InputDecorator'));
-        $countrypublic->setDecorators(array('PublicDecorator'));
+        $usercountry->setDecorators(array('InputDecorator'));
+        $usercountrypublic->setDecorators(array('PublicDecorator'));
         $usertimezone->setDecorators(array('InputDecorator'));
         $usertimezonepublic->setDecorators(array('PublicDecorator'));
         $employment->setDecorators(array('InputDecorator'));

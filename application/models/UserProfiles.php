@@ -240,6 +240,11 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             $timezone_model = new Default_Model_Timezones();
             $collection['usertimezone'] = $timezone_model->getTimezoneTextById($collection['usertimezone']);
         }
+        // User country
+        if (isset($collection['country'])) {
+            $country_model = new Default_Model_Countries();
+            $collection['country'] = $country_model->getCountryPrintableNameByIso($collection['country']);
+        }
 
         return $collection;
     }
