@@ -1193,4 +1193,24 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		return $result;
 	}
+	
+	public function getRecentByLangAndType($lang, $type, $limit=10) {
+		$order = 'contents_cnt.created_cnt DESC';
+
+		$select = $this->select()
+					->from($this, array("*"))
+					->join('content_types_cty', 'contents_cnt.id_cty_cnt = content_types_cty.id_cty', array())
+					->where('published_cnt = 1')
+					//->where('language_cnt = ?', $lang)
+					->order($order)
+					->limit($limit);
+					
+		if($type != "all") {
+			$select->where('key_cty = ?', $type);
+		}
+
+		// Content data
+		$data = $this->_db->fetchAll($select);
+		return $data;
+	}
 } // end of class
