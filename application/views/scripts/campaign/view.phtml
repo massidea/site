@@ -11,16 +11,20 @@ if ($this->campaign['end_time_cmp'] == '0000-00-00') {
 $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                             'language'   => $this->language),
                             'linkcampaign', true);
+$grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
+                           'language'   => $this->language),
+                     'group_shortview', true);
 ?>
 <div id="campaign-page">
     <h2>
         <?php echo $this->campaign['name_cmp']; ?>
         campaign by
-        <?php echo $this->grpname; ?>
+        <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
     </h2>
     <div id="profile-meta">
-        <img class="avatar" alt="" src="" />
+        <img src="/images/no_profile_img_placeholder.png" alt="pirustakos näitä tietää" class="avatar" />
         <p><?php echo $this->campaign['ingress_cmp']; ?></p>
+        <!--
         <p>
             <strong><a href="<?php echo $this->url(array('controller' => 'tag',
                                                         'action' => 'index',
@@ -30,7 +34,8 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                   </a>
             </strong><?php // t�git t�h�n v�liin ?>
         </p>
-        <p>
+        -->
+       <p>
             <strong>Campaign has started: </strong>
             <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
         </p>
@@ -38,8 +43,8 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
             <strong>Campaign is ending: </strong>
             <?php echo $cmpend; ?>
         </p>
-        <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
         <?php if (is_array($this->cmpAdmins)): ?>
+        <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
             <ul>
             <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
             </ul>
@@ -50,18 +55,19 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
             <?php echo $this->grpname; ?>
             <br />
         </p>
+        <?php if (is_array($this->grpUsers)): ?>
         <div id="members">
+            
             <h4><?php echo $this->translate('group-members'); ?></h4>
-            <?php if (is_array($this->grpUsers)): ?>
             <span class="more"><strong><a href="">Show all</a></strong></span>
             <div class="clear"></div>
             <ul>
                 <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
             </ul>
             <span class="more"><strong><a href="">Show all</a></strong></span>
-            <?php endif; ?>
             <div class="clear dot-line-200"></div>
         </div>
+        <?php endif; ?>
     </div>
     <div id="activity" class="right">
         <div class="left">
@@ -72,18 +78,22 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
             <div id="contribute">
                 <h2>I want to contribute:</h2>
                 <div class="right">
-                    <a href="<?php echo $linkurl; ?>">Link more content to campaign</a>
-                </div>
+                    <p class="link"><a href="<?php echo $linkurl; ?>">&gt; Add content</a></p>
+                    <!--<p>If you add content, you'll become a group member</p> -->
+               </div>
                 <div class="clear"></div>
                 <div id="current-posts">
                     <div id="head">
                         <h2>Current posts</h2>
                     </div>
                     <div class="clear"></div>
+
                     <div class="scroll-box">
+                        <?php if (is_array($this->cmpcnts) && $this->cmpcnts[0]['id_cnt'] != null): ?>
                         <ul>
-                            <?php echo $this->partialLoop('partials/content_row.phtml', $this->cmpcnts); ?>
+                            <?php  echo $this->partialLoop('partials/content_row_new.phtml', $this->cmpcnts); ?>
                         </ul>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
 
         <p><?php echo $this->grpData["description_grp"]; ?></p>
         <?php //TODO:muutä tätä järkevämmäksi? ?>
+        <!--
         <p><strong><a href="<?php echo $this->url(array('controller' => 'tag',
                                                         'action' => 'index',
                                                         'language' => $this->language),
@@ -18,7 +19,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                   <?php echo $this->translate('content-view-tags'); ?>
                   </a>
             </strong><?php // tägit tähän väliin ?></p>
-
+        -->
         <p><strong><?php echo $this->translate('group-founded') . ': '; ?></strong><?php echo $date_founded->toString('dd MMM, yyyy'); ?></p>
         <strong><?php echo $this->translate('group-admins') . ':'; ?></strong>
 		<ul>
@@ -41,6 +42,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             <div class="clear"></div>
             <div id="group-campaigns">
                 <h3>Campaigns</h3>
+                <p>Group's call of contents</p>
             </div>
             <div id="join-group">
                 <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
@@ -55,21 +57,30 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 ?>
 
                 <p class="join">
-                    <a href="<?php echo $joinurl; ?>"><?php echo $this->translate('group-join_group'); ?></a>
+                    <a href="<?php echo $joinurl; ?>">&gt; <?php echo $this->translate('group-join_group'); ?></a>
                 </p>
                 <?php
                 elseif ($this->userIsGroupAdmin):
+                     $editlink = $this->url(
+                         array(
+                            'controller' => 'group',
+                            'action'     => 'edit',
+                            'language'   => $this->language,
+                            'id'         => $this->grpData["id_grp"]
+                         ), 'lang_default', true
+                     );
                      $cmplink = $this->url(
-                        array(
+                         array(
                             'controller' => 'campaign',
                             'action'     => 'create',
                             'language'   => $this->language,
                             'grpid'      => $this->grpData["id_grp"]
-                        ), 'lang_default', true
+                         ), 'lang_default', true
                 );
                 ?>
                 <p class="join">
-                    <a href="<?php echo $cmplink; ?>">Create a campaign</a>
+                    <!-- <a href="#">Edit group</a> | -->
+                    <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a>
                 </p>
                 <?php else:
                     $leaveurl = $this->url(
@@ -81,10 +92,11 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                         ), 'lang_default', true);
                 ?>
                 <p class="join">
-                    <a href="<?php echo $leaveurl; ?>"><?php echo $this->translate('group-leave_group'); ?></a>
+                    <a href="<?php echo $leaveurl; ?>">&gt; <?php echo $this->translate('group-leave_group'); ?></a>
                 </p>
 
                     <?php endif; ?>
+                <p>Only by joining you can add contents to campaigns</p>
             </div>
             <div class="clear"></div>
             <div class="scroll-box">

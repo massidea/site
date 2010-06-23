@@ -216,9 +216,43 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
             ->join(array('cnt' => 'contents_cnt'),
                    'chc.id_cnt = cnt.id_cnt',
                    array('id_cty_cnt', 'title_cnt', 'lead_cnt'))
+            ->join(array('chu' => 'cnt_has_usr'),
+                    'chc.id_cnt = chu.id_cnt',
+                    array('id_usr'))
+            ->join(array('usr' => 'users_usr'),
+                    'usr.id_usr = chu.id_usr',
+                    array('login_name_usr'))
+            ->join(array('cty' => 'content_types_cty'),
+                    'cty.id_cty = cnt.id_cty_cnt')
+            ->joinLeft('cnt_has_usr',
+                    'cnt_has_usr.id_usr = chu.id_usr',
+                    array('count' => 'count(*)'))
+            ->group('cnt.id_cnt')
             ->where('id_cmp = ?', $id_cmp);
+             
         
         $result = $this->_db->fetchAll($data);
+        // this is a horrible way to do this
+        if(is_array($result) && $result[0]['id_cnt'] != NULL) {
+            $data = array();
+            $contentHasTagModel = new Default_Model_ContentHasTag();
+            $i = 0;
+            foreach($result as $content) {
+                $data[$i] = $content;
+                $data[$i]['tags'] = $contentHasTagModel->getContentTags($content['id_cnt']);
+                //Zend_Debug::dump($data[$i]['tags']);
+               if ('finfo' == $content['key_cty']) {
+                    $data[$i]['key_cty'] = 'visions';
+                } elseif ('idea' == $content['key_cty']){
+                    $data[$i]['key_cty'] = 'ideas';
+                } elseif ('problem' == $content['key_cty']) {
+                    $data[$i]['key_cty'] = 'challenge';
+                }
+                $i++;
+            }
+            //Zend_Debug::dump($data);
+            return $data;
+        }
 
         return $result;
     }
