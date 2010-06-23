@@ -17,7 +17,9 @@
 }
 
 .box_468_medium {
-    border: 1px solid #ccc;
+    border-width: 0px 1px 1px 1px;
+    border-color: #ccc;
+    border-style: solid;
     padding: 5px;
     background-color: #F3F3F3;
     width:468px;
