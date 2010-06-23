@@ -67,12 +67,15 @@ class VoiceController extends Oibs_Controller_CustomController
         // Get number of items
         $count = isset($params['count']) ? $params['count'] : 10;
     	
+        //$lang = ($this->view->language == "en" || $this->view->language == "fi") ? $this->view->language : "en"; 
+        //$lang = $this->view->language;
+
         // Set array for content data
         $data = array();
-        
+
         // Get recent content by type
         $content = new Default_Model_Content();
-        $data = $content->listRecent($cty, 1, $count, null, $this->view->language, null);
+        $data = $content->getRecentByLangAndType($lang, $cty, $count);
         
         // Get tags for contents
         $tags_model = new Default_Model_ContentHasTag();

@@ -75,7 +75,7 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setDecorators(array('ViewHelper'));
 
         // Ingress
-        $campaigningress = new Zend_Form_Element_TextArea('campaign_ingress');
+        $campaigningress = new Zend_Form_Element_Textarea('campaign_ingress');
         $campaigningress
             ->setAttrib('cols', '45')
             ->setAttrib('rows', '6')
@@ -103,7 +103,7 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setDecorators(array('ViewHelper'));
 
         // Description
-        $campaigndesc = new Zend_Form_Element_TextArea('campaign_desc');
+        $campaigndesc = new Zend_Form_Element_Textarea('campaign_desc');
         $campaigndesc
             ->setAttrib('cols', '45')
             ->setAttrib('rows', '20')
