@@ -1062,12 +1062,13 @@ class AccountController extends Oibs_Controller_CustomController
                         $user->changeUserPassword($id, $formdata['password']);
                     }
 
-                    // Redirects the user to a page that shows the update complete
+                    // Redirects the user to a user page
                     $redirect = $this->_urlHelper->url(array('controller' => 'account',
-                                                             'action' => 'settings',
+                                                             'action' => 'view',
+                                                             'user' => $identity->username,
                                                              'language' => $this->view->language),
                                                        'lang_default', true);
-                    $this->flash('Information has been changed.', $redirect);
+                    $this->_redirect($redirect);
 				} else {
                     // Formdata is not valid, do nothing -- here for possible debugging
 					// echo $form->getErrors();
