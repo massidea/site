@@ -32,9 +32,6 @@
     public function init()
     {
         parent::init();
-        
-        $ajaxContext = $this->_helper->getHelper('AjaxContext');
-        $ajaxContext->addActionContext('index', 'html')->initContext();
     }
 
     /**
@@ -203,76 +200,12 @@
         // get content owner picture ... to be implemented later
         $userImage = $userModel->getUserImageData($ownerId);
 
-        // get other content from user.. function needs a looking-over!
-        // Also it needs to be separated from this action so the MVC-is correct!
-        
-        $moreFromUser = $userModel->getUserContent($ownerId, 0, $id);
-    	
-        // get related contents
-        $relatedContents = $contentModel->getRelatedContents($id);
-
         // get (VIEWED) content views (returns a string directly)
         $contentViewsModel = new Default_Model_ContentViews();
         if (! $this->alreadyViewed($id)) {
 			$contentViewsModel->increaseViewCount($id);
         }
         $views = $contentViewsModel->getViewsByContentId($id);
-
-        // get content rating (returns a string directly)
-        $contentRatingsModel = new Default_Model_ContentRatings();
-        //$rating = $contentRatingsModel->getById($id);
-        $rating = $contentRatingsModel->getPercentagesById($id);
-        
-        // $rate is gotten from params[], 1 and -1 are the only allowed
-        if ($rate != "NONE"
-            && ($rate == 1 || $rate == -1)
-            && $auth->hasIdentity())
-        { 
-            if($contentRatingsModel->addRating($id, $auth->getIdentity()->user_id, $rate)) {
-                $this->view->savedRating = $rate;
-                //$rating = $contentRatingsModel->getById($id);
-                $rating = $contentRatingsModel->getPercentagesById($id);
-            } else {
-                $this->flash('rating-failed-msg', $baseUrl.'/en/msg/');
-            }
-        }
-
-        // get contents total favourites
-        $userFavouritesModel = new Default_Model_UserHasFavourites();
-        $totalFavourites = $userFavouritesModel->getUsersCountByFavouriteContent($id);
-        $totalFavourites = $totalFavourites[0]['users_count_fvr'];
-        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$auth->getIdentity()->user_id);
-
-        /*
-         * favouritemethod comes from parameters sent by
-         * ajax function (ajaxLoad_favourite(method)) in index.phtml in /view/.
-         * this function gets parameter "method" (add/remove) from onClick event that is in index.ajax.phtml.
-         * if this onClick event is activated by clicking "heart" (icon_fav_on/off) icon in content view page,
-         * it runs the ajaxLoad_favourite(method) function which sends parameter "favourite" (add/remove) to
-         * this viewController which then handles the adding or removing the content from favourites.
-         */
-        if($favouriteMethod != "NONE" && $auth->hasIdentity()) {
-        	$favouriteUserId = $auth->getIdentity()->user_id;
-        	//If favourite method was "add", then add content to user favourites
-        	if($favouriteMethod == "add" && !$isFavourite) 
-        		{
-        		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
-        		} else $this->flash('favourite-adding-failed',$baseUrl.'/en/msg');
-        	} 
-        	//If favourite method was "remove" then remove content from user favourites.
-        	elseif ($favouriteMethod == "remove" && $isFavourite)
-        		{
-        		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
-        		} else $this->flash('favourite-removing-failed',$baseUrl.'/en/msg');
-        	} else unset($favouriteMethod);
-        }
-        
-        $favourite = array(
-        	'total_favourites' 	=> $totalFavourites,
-        	'is_favourite'		=> $isFavourite,
-        );
         
         $languagesModel = new Default_Model_Languages();
         $languageName = $languagesModel->getLanguageByLangCode($contentData['language_cnt']);
@@ -412,10 +345,7 @@
         $this->view->contentData        = $contentData;
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;
-        $this->view->moreFromUser       = $moreFromUser;
-        $this->view->relatedContents    = $relatedContents;
         $this->view->views              = $views;
-        $this->view->rating             = $rating;
         $this->view->languageName		= $languageName;
         $this->view->gtranslateLangPair	= $gtranslateLangPair;
         $this->view->tags               = $tags;
@@ -429,7 +359,6 @@
         $this->view->contentType        = $contentType;
         $this->view->count              = $count;
         $this->view->campaigns          = $campaigns;
-        //$this->view->favourite			= $favourite;
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];

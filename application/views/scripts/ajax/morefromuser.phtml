@@ -1,0 +1,14 @@
+<?php $loopround = 0; ?>
+<?php foreach($this->contents as $user_cnt): ?>
+	<div id="content_view_user_related_entry_<?php echo $user_cnt['id_cnt']; ?>" class="content_view_user_related_entry_<?php echo $user_cnt['key_cty'];?>">
+		<span><a href="<?php echo $this->url(array('content_id' => $user_cnt['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>"><?php echo stripslashes($user_cnt['title_cnt']); ?></a></span><br />
+		<span><?php echo $this->translate('content-view-user-related-views'); echo $user_cnt['views']; ?></span>
+	</div>
+	
+	<?php
+	$loopround++;
+	if ($loopround == 10) // limit view to 10 items
+		break;
+	?>
+
+<?php endforeach; ?>

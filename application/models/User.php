@@ -437,7 +437,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * @param integer $id_cnt 	id to be skipped
     * @return array
     */    
-    public function getUserContent($author_id = 0, $type = 0, $id_cnt = 0)
+    public function getUserContent($author_id = 0, $type = 0, $id_cnt = 0, $limit = -1)
     {
         $result = array();  // container for final results array
         
@@ -485,7 +485,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->where('cnt.id_cnt != ?', $id_cnt)
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
-                ;
+				;
+				if($limit != -1) $contentSelect->limit($limit);
 
                 $result = $this->_db->fetchAll($contentSelect);
                 
