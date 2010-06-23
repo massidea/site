@@ -57,6 +57,21 @@ border-left:5px solid #0089CF;}
 /* </copypasta> */
 /* ************ */
 
+/* **************************************** */
+/*  Sweet 'n' tasty copypasta_2. Omnomnom.  */
+/* **************************************** */
+#campaigns h3 { font-size:1.2em; margin:3px 3px 8px 0px; padding:0px; background:none;}
+#right_side #campaigns p { margin:15px 0px 20px 15px; }
+#right_side #campaigns ul { margin:-8px 0px; padding:0px;}
+#right_side #campaigns ul li {
+    background:transparent url("/images/gray_dot_line_200.png") bottom no-repeat;
+    padding:5px 0px 5px 2px;
+    list-style:none;}
+#right_side #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
+/* ************** */
+/* </copypasta_2> */
+/* ************** */
+
 /* *********************** */
 /* <Progressbar for forms> */
 /* *********************** */
