@@ -10,5 +10,17 @@ if (isset($this->tag_size)) {
 } else {
     $style = '';
 }
-?>
-<a href="<?php echo $tag_url; ?>"<?php echo $style; ?>><?php echo stripslashes($this->name_tag); ?></a> 
+
+if($this->divisible) {
+	?>
+	
+	<a href="<?php echo $tag_url; ?>"<?php echo $style; ?>><div class="first_tag"><?php echo stripslashes($this->name_tag); ?></div></a>
+	
+	<?php
+} else {
+	?>
+	
+	<a href="<?php echo $tag_url; ?>"<?php echo $style; ?>><div class="second_tag"><?php echo stripslashes($this->name_tag); ?></div></a>
+	
+	<?php	
+}

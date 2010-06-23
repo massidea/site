@@ -156,6 +156,9 @@ class ContentController extends Oibs_Controller_CustomController
 			// Action helper for tags
 			$tags = $this->_helper->tagsizes->tagCalc($tags);
 
+			//Action helper for define is tag running number divisible by two
+            $tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+            
 			// Save most popular tags data to cache
 			$cache->save($tags, 'IndexTags');
 		} else {
