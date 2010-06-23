@@ -162,4 +162,21 @@ Commented to fix temporary problem, will be researched further later
     <div class="massidea_dev_info">
         <?php echo $this->translate('index-opensource')?>
     </div>
+
+    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+
+    <div id="campaigns">
+        <h3>Recent campaigns</h3>
+        <ul>
+            <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <?php $cmpurl = $this->url(array('controller' => 'campaign',
+                                         'action' => 'list',
+                                         'language' => $this->language),
+                                   'lang_default', true); ?>
+        <strong><a href="<?php echo $cmpurl; ?>">Show more</a></strong>
+    </div>
 </div>
