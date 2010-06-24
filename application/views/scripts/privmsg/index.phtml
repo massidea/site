@@ -14,14 +14,11 @@ if($this->privmsgs):
 
 <!-- A form for deleting the selected messages -->
 <form name="delete_privmsgs" id="delete_privmsgs" action="#" method="post">
-	<input type="hidden" name="delete_action" value="1" />
 	<input type="hidden" name="delete_first" value="<?php echo $this->privmsgs[0]['id_pmg']; ?>" />
 	<input type="hidden" name="delete_last" value="<?php echo $this->privmsgs[count($this->privmsgs)-1]['id_pmg']; ?>" />
 	<div style="padding: 0px 0px 5px 0px;">
 		<input type="checkbox" name="select_all" id="select_all" onclick="selectAllPrivmsgs(); return true;" />
-		<a href="javascript: void(0)" onclick="document.delete_privmsgs.submit(); return false;">
-			<?php echo $this->translate('privmsg-delete-selected'); ?>
-		</a>
+		<input type="submit" name="delete_selected" value="<?php echo $this->translate('privmsg-delete-selected'); ?>" onclick="document.delete_privmsgs.submit(); return false;" />
 	</div>
 	
 <?php

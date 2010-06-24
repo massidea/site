@@ -584,7 +584,7 @@ function selectAllPrivmsgs()
 }
 
 /**
-* selectAllPrivmsgs
+* selectOnlyThisMsg
 * 
 * function to select only one message (used when a message's "Delete"-link is pressed)
 */
