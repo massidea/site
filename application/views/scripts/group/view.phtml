@@ -79,8 +79,8 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 );
                 ?>
                 <p class="join">
-                    <!-- <a href="#">Edit group</a> | -->
-                    <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a>
+                    <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a> |
+                    <a href="<?php echo $editlink; ?>">Edit group</a>
                 </p>
                 <?php else:
                     $leaveurl = $this->url(

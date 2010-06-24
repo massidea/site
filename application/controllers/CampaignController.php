@@ -116,19 +116,119 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function viewAction()
     {
-        $cmpid = $this->_request->getParam('cmpid');
+        $auth = Zend_Auth::getInstance();
 
-        $cmpmodel = new Default_Model_Campaigns();
-        $cmp = $cmpmodel->getCampaignById($cmpid)->toArray();
-        $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
+        // If user has identity
+        if ($auth->hasIdentity()) {
+            $user = $auth->getIdentity();
+            $cmpid = $this->_request->getParam('cmpid');
 
-        $grpmodel = new Default_Model_Groups();
-        $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-        $grpname = $grp['group_name_grp'];
+            // Get campaign & its contents.
+            $cmpmodel = new Default_Model_Campaigns();
+            $cmp = $cmpmodel->getCampaignById($cmpid)->toArray();
+            $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
 
-        $this->view->campaign = $cmp;
-        $this->view->cmpcnts  = $cnts;
-        $this->view->grpname  = $grpname;
+            // Get group admins.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
+            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+
+            // Get group info.
+            $grpmodel = new Default_Model_Groups();
+            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+            $grpname = $grp['group_name_grp'];
+
+            $this->view->campaign = $cmp;
+            $this->view->cmpcnts  = $cnts;
+            $this->view->grpname  = $grpname;
+        } else {
+            // Campaigns are only visible to registered users.
+        }
+    }
+
+    function editAction() {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $cmpId = $this->_request->getParam('id');
+
+            if (!$cmpId) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'index',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Get group id from campaign info.
+            $cmpModel = new Default_Model_Campaigns();
+            $cmp = $cmpModel->getCampaignById($cmpId)->toArray();
+            $grpId = $cmp['id_grp_cmp'];
+
+            // Only group admins get to edit campaign info.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue(
+                $grpAdmins, 'id_usr', $auth->getIdentity()->user_id);
+            if (!$userIsGroupAdmin) {
+                $redirectUrl = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'campaign',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            // Create & populate the form.
+            $form = new Default_Form_AddCampaignForm($this, 'edit');
+            $formData = array();
+            $formData['campaign_name'] = $cmp['name_cmp'];
+            $formData['campaign_ingress'] = $cmp['ingress_cmp'];
+            $formData['campaign_desc'] = $cmp['description_cmp'];
+            $form->populate($formData);
+
+            $this->view->form = $form;
+
+            $this->view->cmpName = $cmp['name_cmp'];
+
+            // If the form is posted and valid, save the changes to db.
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $post = $request->getPost();
+                if ($form->isValid($post)) {
+                    // Change existing group info.
+                    $cmpModel->editCampaign(
+                        $cmpId,
+                        $post['campaign_name'],
+                        $post['campaign_ingress'],
+                        $post['campaign_desc']
+                    );
+
+                    // Redirect back to the campaign page.
+                    $target = $this->_urlHelper->url(
+                        array(
+                            'cmpid' => $cmpId,
+                            'language' => $this->view->language),
+                        'campaign_view', true
+                    );
+                    $this->_redirector->gotoUrl($target);
+                }
+            }
+        } else {
+            // Not logged in.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
     }
 
     /**
