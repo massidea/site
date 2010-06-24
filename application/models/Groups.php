@@ -110,6 +110,16 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         
         return $row->id_grp;
     }
+
+    public function editGroup($id, $description, $body)
+    {
+		$data = array(
+            'description_grp' => $description,
+            'body_grp' => $body,
+        );
+		$where = $this->getAdapter()->quoteInto('id_grp = ?', $id);
+		$this->update($data, $where);
+    }
     
     /**
      * Checks if a group exists in db.

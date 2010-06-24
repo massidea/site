@@ -77,8 +77,24 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <div class="clear"></div>
             <div id="contribute">
                 <h2>I want to contribute:</h2>
+
                 <div class="right">
-                    <p class="link"><a href="<?php echo $linkurl; ?>">&gt; Add content</a></p>
+                    <p class="link">
+                        <a href="<?php echo $linkurl; ?>">&gt; Add content</a>
+                    <?php
+                    if ($this->userIsGroupAdmin):
+                         $editlink = $this->url(
+                             array(
+                                'controller' => 'campaign',
+                                'action'     => 'edit',
+                                'language'   => $this->language,
+                                'id'         => $this->campaign["id_cmp"]
+                             ), 'lang_default', true
+                         );
+                    ?>
+                        | <a href="<?php echo $editlink; ?>">Edit campaign</a>
+                    <?php endif; ?>
+                    </p>
                     <!--<p>If you add content, you'll become a group member</p> -->
                </div>
                 <div class="clear"></div>

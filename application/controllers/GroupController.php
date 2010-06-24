@@ -31,24 +31,11 @@
 {
     function indexAction()
     {
-        // Get authentication
-        $auth = Zend_Auth::getInstance();
-
-        // If user has identity
-        if ($auth->hasIdentity()) {
-            // Get the names and descriptions of all groups.
-            $groupModel = new Default_Model_Groups();
-            $this->view->groupdata = $groupModel->getAllGroups();
-        } else {
-            // Groups are only visible to registered users.
-            // Redirect to main page.
-            $target = $this->_urlHelper->url(array(
-                'controller' => 'index',
-                'action' => 'index',
-                'language' => $this->view->language),
-                'lang_default', true);
-            $this->_redirector->gotoUrl($target);
-        }
+        $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                    'action' => 'list',
+                                                    'language' => $this->view->language),
+                                              'lang_default', true);
+        $this->_redirector->gotoUrl($redirectUrl);
     }
 
     /**
@@ -108,6 +95,88 @@
                 'controller' => 'index',
                 'action' => 'index',
                 'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+    }
+
+    function editAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $grpId = $this->_request->getParam('id');
+            
+            if (!$grpId) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'index',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Only group admins get to edit group info.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue(
+                $grpAdmins, 'id_usr', $auth->getIdentity()->user_id);
+            if (!$userIsGroupAdmin) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid' => $grpId,
+                        'language' => $this->view->language),
+                    'group_shortview', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Create the form in edit mode.
+            $form = new Default_Form_AddGroupForm($this, 'edit');
+
+            // Populate form with existing group data.
+            $grpModel = new Default_Model_Groups();
+            $grpData = $grpModel->getGroupData($grpId);
+            $formData = array();
+            $formData['groupdesc'] = $grpData['description_grp'];
+            $formData['groupbody'] = $grpData['body_grp'];
+            $form->populate($formData);
+
+            $this->view->form = $form;
+
+            $this->view->grpName = $grpData['group_name_grp'];
+
+            // If the form is posted and valid, save the changes to db.
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $post = $request->getPost();
+                if ($form->isValid($post)) {
+                    // Change existing group info.
+                    $groupModel = new Default_Model_Groups();
+                    $newGroupId = $groupModel->editGroup(
+                        $grpId,
+                        $post['groupdesc'],
+                        $post['groupbody']);
+
+                    // Redirect back to the group page.
+                    $target = $this->_urlHelper->url(
+                        array(
+                            'groupid' => $grpId,
+                            'language' => $this->view->language),
+                         'group_shortview', true
+                    );
+                    $this->_redirector->gotoUrl($target);
+                }
+            }
+        } else {
+            // Not logged in.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
                 'lang_default', true);
             $this->_redirector->gotoUrl($target);
         }
