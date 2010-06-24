@@ -9,10 +9,6 @@
 
 #content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
 #content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
-
-/* ************************************** */
-/*  Sweet 'n' tasty copypasta. Omnomnom.  */
-/* ************************************** */
 #gaccampaignlist { float:left; width:520px; }
 #content .campaign-list p { margin-left:15px; }
 #content .campaign-list ul li {
@@ -53,13 +49,6 @@ border-left:5px solid #0089CF;}
 #content #create-group-page #save_changes input#cancel { width:100px; }
 
 #content #create-group-page .required { padding:0px; display:inline; color:red; }
-/* ************ */
-/* </copypasta> */
-/* ************ */
-
-/* **************************************** */
-/*  Sweet 'n' tasty copypasta_2. Omnomnom.  */
-/* **************************************** */
 #campaigns h3 { font-size:1.2em; margin:3px 3px 8px 0px; padding:0px; background:none;}
 #right_side #campaigns p { margin:15px 0px 20px 15px; }
 #right_side #campaigns ul { margin:-8px 0px; padding:0px;}
@@ -68,13 +57,6 @@ border-left:5px solid #0089CF;}
     padding:5px 0px 5px 2px;
     list-style:none;}
 #right_side #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
-/* ************** */
-/* </copypasta_2> */
-/* ************** */
-
-/* *********************** */
-/* <Progressbar for forms> */
-/* *********************** */
 .progress {
 	width: 240px;
     #width: 238px; /* IE HACK :( */
@@ -103,11 +85,6 @@ border-left:5px solid #0089CF;}
     border: 1px solid #7F9DB9;
     float:left;
 }
-/* ************* */
-/* </Progressbar> */
-/* ************* */
-/* <User page> */
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
-/* </User page> */
 
