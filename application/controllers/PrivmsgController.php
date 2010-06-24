@@ -36,8 +36,6 @@ class PrivmsgController extends Oibs_Controller_CustomController
 
 	public function indexAction()
 	{
-        $deletePrivmsgs = $this->getRequest()->getPost('delete_action');
-        
 		// Get user identity
 		$auth = Zend_Auth::getInstance();
 		
@@ -45,7 +43,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$Default_Model_privmsg = New Default_Model_PrivateMessages();
 			
 			// Delete button was pressed
-			if (isset($deletePrivmsgs)) {
+       		if ($this->getRequest()->isPost()) {
 				// Get the IDs of the first and last selected message
 				$firstMsgId = $this->getRequest()->getPost('delete_first');
 				$lastMsgId = $this->getRequest()->getPost('delete_last');
