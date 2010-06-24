@@ -269,6 +269,62 @@ class CampaignController extends Oibs_Controller_CustomController
 		}
     }
 
+    /**
+     * adminunlinkAction
+     *
+     * Shows contents which are linket to campaign. Campaign(group) admin can select and remove link.
+     *
+     * @author Mikko Korpinen
+     */
+    public function adminunlinkAction()
+    {
+        // Get authentication
+		$auth = Zend_Auth::getInstance();
+		// If user has identity
+		if ($auth->hasIdentity())
+		{
+			// Get requests
+			$params = $this->getRequest()->getParams();
+
+			$relatestoid = $params['relatestoid'];
+            $groupId = $params['groupid'];
+
+            if (!isset($relatestoid) && !isset($groupId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            $groupAdminsModel = new Default_Model_GroupAdmins();
+            $groupAdmins = $groupAdminsModel->getGroupAdmins($groupId);
+            $user = $auth->getIdentity();
+
+            $campaignModel = new Default_Model_Campaigns();
+            $campaignexists = $campaignModel->campaignExists($relatestoid);
+
+            if ($campaignexists) {
+                $relatesToCampaign = $campaignModel->getCampaignById($relatestoid);
+                $this->view->relatesToCampaignName = $relatesToCampaign['name_cmp'];
+				$campaignContents = $campaignModel->getAllContentsInCampaign($relatestoid);
+            }
+            $this->view->campaignexists = $campaignexists;
+            $this->view->relatesToId = $relatestoid;
+            $this->view->contents = $campaignContents;
+            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($groupAdmins, 'id_usr', $user->user_id);
+		} else {
+			// If not logged, redirecting to system message page
+			$message = 'content-link-not-logged';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+		}
+    }
+
     public function makelinkAction()
     {
         $cmpId = $this->_request->getParam('cmpid');
@@ -333,4 +389,6 @@ class CampaignController extends Oibs_Controller_CustomController
                                          'campaign_view', true);
         $this->_redirector->gotoUrl($target);
     }
+
+
 }

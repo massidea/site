@@ -45,11 +45,7 @@ if($this->contentexists) {
             <div class="form_helptext_line"></div>
             <div style="height: 20px;">
                 <div style="float: left; width: 420px;">
-                    <?php
-                    // This should be campaign color
-                    $color = "green";
-                    ?>
-                    <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
+                    <img class="linkedtoimage" src="/images/blue_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
                     <?php
                     $groupurl = $this->url(array('groupid' => $campaign['id_grp'],
                                                 'language' => $this->language),

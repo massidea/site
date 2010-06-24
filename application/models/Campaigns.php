@@ -44,10 +44,10 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     *   @param string $campaign name of campaign to be checked
     *   @return boolean
     */
-    public function campaignExists($campaign)
+    public function campaignExists($id_cmp)
     {
         // Select campaign with given name
-        $select = $this->select()->where('name_cmp = ?', $campaign);
+        $select = $this->select()->where('id_cmp = ?', $id_cmp);
         
         // Find all matching campaigns
         $result = $this->fetchAll($select)->toArray();
