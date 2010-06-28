@@ -504,7 +504,7 @@ form_registration_container dd,
 }
 
 /* more from boxi */
- #content_view_user_related_container, 
+#content_view_user_related_container, 
 #content_view_related_content_container {
 	margin: 0 0 1em 0;
 }
@@ -517,7 +517,7 @@ form_registration_container dd,
 }
 
 #content_view_user_related, #content_view_content_related {
-	height: 200px;
+	max-height: 200px;
 	overflow: auto;
 }
 

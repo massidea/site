@@ -199,7 +199,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function relatedcontentAction() {
         // Get related contents
         $contentModel = new Default_Model_Content();
-        $relatedContents = $contentModel->getRelatedContents($this->id);
+        $relatedContents = $contentModel->getRelatedContents($this->id, 10);
         $this->view->relatedContents = $relatedContents;
 	}
 	

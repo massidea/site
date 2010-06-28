@@ -277,9 +277,17 @@
 		<tuv xml:lang="en"><seg>Views: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Katsottu: </seg></tuv>
 	</tu>
+	<tu tuid='content-view-user-related-nothing'>
+		<tuv xml:lang="en"><seg>No other content available</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei muita käyttäjän sisältöjä</seg></tuv>
+	</tu>
 	<tu tuid='content-view-related'>
 		<tuv xml:lang="en"><seg>Related content</seg></tuv>
 		<tuv xml:lang="fi"><seg>Liittyvää sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-view-content-related-nothing'>
+		<tuv xml:lang="en"><seg>No related content available</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei asiaan liittyviä sisältöjä</seg></tuv>
 	</tu>
 	<tu tuid='content-view-author'>
 		<tuv xml:lang="en"><seg>Corresponding author</seg></tuv>
