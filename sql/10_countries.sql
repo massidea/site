@@ -18,7 +18,7 @@ USE OIBS;
 DROP TABLE IF EXISTS countries_ctr;
   
 CREATE TABLE countries_ctr (
-    iso_ctr CHAR(2) NOT NULL PRIMARY KEY,
+    id_ctr CHAR(2) NOT NULL PRIMARY KEY,
     name_ctr VARCHAR(80) NOT NULL,
     printable_name_ctr VARCHAR(80) NOT NULL,
     iso3_ctr CHAR(3),

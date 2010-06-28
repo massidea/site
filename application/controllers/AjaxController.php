@@ -98,6 +98,10 @@ class AjaxController extends Oibs_Controller_CustomController
     	$i = 0;
     	foreach ($recentposts_raw as $post) {
 	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
+
+	    	// Action helper for define is tag running number divisible by two
+		$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+
 	    	$this->gtranslate->setLangFrom($post['language_cnt']);
 	    	$translang = $this->gtranslate->getLangPair();
 
