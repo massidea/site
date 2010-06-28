@@ -80,8 +80,7 @@ echo $this->doctype();
                                                                          'user' => $this->username,
                                                                          'language' => $this->language),
                                                                    'lang_default', true); ?>">
-                                        <?php echo $this->username; ?>
-                                    </a>
+                                        <?php echo $this->username; ?></a>
                                     <?php
                                     if($this->unread_privmsgs > 0) {
                                         if($this->controller == "privmsg" && $this->action == "index") {
@@ -93,8 +92,7 @@ echo $this->doctype();
                                                                                  'action' => 'index',
                                                                                  'language' => $this->language),
                                                                            'lang_default', true); ?>">
-                                                (<?php echo $this->unread_privmsgs; ?>)
-                                            </a>
+                                                (<?php echo $this->unread_privmsgs; ?>)</a>
                                             <?php
                                         }
                                     } ?>
@@ -119,8 +117,7 @@ echo $this->doctype();
                             
                                 <div style="width: 237px;">
                                     <a id="login_link" href="#">
-                                        <?php echo $this->translate('index-login'); ?>
-                                    </a> 
+                                        <?php echo $this->translate('index-login'); ?></a> 
                                     | 
                                     <a href="<?php echo $url_sign_up; ?>">
                                         <?php echo $this->translate('index-signup'); ?>
