@@ -1070,7 +1070,7 @@ class AccountController extends Oibs_Controller_CustomController
                                                              'action' => 'view',
                                                              'user' => $identity->username,
                                                              'language' => $this->view->language),
-                                                       'lang_default', true);
+                                                       	     'lang_default', true);
                     $this->_redirect($redirect);
 				} else {
                     // Formdata is not valid, do nothing -- here for possible debugging

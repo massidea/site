@@ -555,7 +555,7 @@ div.tag_cloud{
 	padding: 6px; 
 	border: 0px solid silver; 
 	font-size: 11px;
-    overflow: hidden;
+    	overflow: hidden;
 }
 
 div.tag_cloud a {
@@ -1873,8 +1873,8 @@ div.privacy h2 { margin: 20px 0px 6px 0px; font-size: 18px; }
 div.privacy h3 { margin: 12px 0px 4px 0px; font-size: 16px; }
 div.privacy p { margin: 2px 0px 3px 6px; font-size: 14px; line-height: 15px; }
 div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; lin-height: 15px; }
-.first_tag { display: inline; color: #003581; }
-.second_tag { display: inline; }
+.first_tag { display: inline; color: #003581; margin-left: 5px;}
+.second_tag { display: inline; margin-left: 5px;}
 #campaigns h3 { font-size:1.2em; margin:3px 3px 8px 0px; padding:0px; background:none;}
 #campaigns p { margin:15px 0px 20px 15px; }
 #campaigns ul { margin:-8px 0px; padding:0px;}
