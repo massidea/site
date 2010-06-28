@@ -31,6 +31,23 @@ class Oibs_Validators_GroupExists extends Zend_Validate_Abstract
 	protected $_messageTemplates = array(
 		self::NOT_MATCH => 'group-exists'
 	);
+
+    protected $_options = array();
+
+    /**
+     * Source: http://cogo.wordpress.com/2008/04/16/custom-validators-for-zend_form_element/
+     * 
+     * Constructor of this validator
+     *
+     * The argument to this constructor is the third argument to the elements' addValidator
+     * method.
+     *
+     * @param string $options
+     */
+    public function __construct($options = array())
+    {
+        $this->_options = $options;
+    }
 	
     /**
     *   isValid Checks if group exists in db using Groups model's function
@@ -44,12 +61,30 @@ class Oibs_Validators_GroupExists extends Zend_Validate_Abstract
 	    $this->_setValue($value);
 
         $groupModel = new Default_Model_Groups();
-        
-        if ($groupModel->groupExists($value)) {
-            $this->_error(self::NOT_MATCH);
-            return false;   // if the group exists, the form is not valid
+
+        if (is_array($this->_options) && array_key_exists('oldname', $this->_options)) {
+            // Edit mode - name can be the same as 'oldname'.
+            //die('edit mode, oldname = ' . $options['oldname']);
+            if ($value == $this->_options['oldname']) {
+                // Name hasn't changed, so it's still valid.
+                return true;
+            } else {
+                // Name has changed - check if it exists.
+                if ($groupModel->groupExists($value)) {
+                    $this->_error(self::NOT_MATCH);
+                    return false;   // if the group exists, the form is not valid
+                } else {
+                    return true;    // if the group doesn't exist, the form is valid
+                }
+            }
         } else {
-            return true;    // if the group doesn't exist, the form is valid
+            // Create mode - check normally.
+            if ($groupModel->groupExists($value)) {
+                $this->_error(self::NOT_MATCH);
+                return false;   // if the group exists, the form is not valid
+            } else {
+                return true;    // if the group doesn't exist, the form is valid
+            }
         }
 	}
 }

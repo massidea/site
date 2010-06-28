@@ -80,8 +80,12 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
 
                 <div class="right">
                     <p class="link">
+                    <?php
+                    if ($this->userHasGroup):
+                    ?>
                         <a href="<?php echo $linkurl; ?>">&gt; Add content</a>
                     <?php
+                    endif;
                     if ($this->userIsGroupAdmin):
                          $editlink = $this->url(
                              array(

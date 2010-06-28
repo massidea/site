@@ -55,15 +55,14 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setFilters(array('StringTrim'))
             ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
-                new Oibs_Validators_GroupExists('groupname'),
-                array(
-                    'StringLength',
+                array('StringLength',
                     false,
                     array(
                         1,
                         140,
                         'messages' =>
-                            array('stringLengthTooLong' => 'Name too long.')))
+                            array('stringLengthTooLong' => 'Name too long.'))),
+                array(new Oibs_Validators_GroupExists($options), false),
             ))
             ->setDescription(
                 '<div id="progressbar_groupname" class="limit ok"></div>')
@@ -130,7 +129,7 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setDecorators(array('ViewHelper'));
 
         $save = new Zend_Form_Element_Submit('save');
-        if ($options == 'edit')
+        if (is_array($options) && $options['mode'] == 'edit')
             $save->setLabel('Save');
         else
             $save->setLabel('Create');
@@ -138,13 +137,9 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setAttrib('class', 'submit-button')
             ->setAttrib('style', 'float: none;');
 
-        if ($options != 'edit') {
-            $this->addElements(array(
-                $groupname,
-                $groupname_clear
-            ));
-        }
         $this->addElements(array(
+            $groupname,
+            $groupname_clear,
             $groupdesc,
             $groupdesc_clear,
             $groupbody,
