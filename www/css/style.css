@@ -1879,7 +1879,7 @@ div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; 
 #campaigns p { margin:15px 0px 20px 15px; }
 #campaigns ul { margin:-8px 0px; padding:0px;}
 #campaigns ul li {
-    background:transparent url("/images/gray_dot_line_200.png") bottom no-repeat;
+    background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
     padding:5px 0px 5px 2px;
     list-style:none;}
 #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
