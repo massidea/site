@@ -141,6 +141,18 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         return $row;
     } // end of createCampaign
 
+    public function editCampaign($id, $name, $ingress, $desc)
+    {
+		$data = array(
+            'name_cmp' => $name,
+            'ingress_cmp' => $ingress,
+            'description_cmp' => $desc,
+        );
+
+		$where = $this->getAdapter()->quoteInto('id_cmp = ?', $id);
+		$this->update($data, $where);
+    }
+
     /**
     *   getAll
     *

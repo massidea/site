@@ -579,6 +579,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                     'language' => $this->view->language), 
                                               		'lang_default', true);
 
+				$message = "content-linked-successfully";
 				$this->flash($message, $url);
 			}
 		}

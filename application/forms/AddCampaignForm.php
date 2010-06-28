@@ -55,7 +55,6 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setFilters(array('StringTrim'))
             ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
-                new Oibs_Validators_CampaignExists('campaign_name'),
                 array(
                     'StringLength',
                     false,
@@ -164,16 +163,13 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setDecorators(array('ViewHelper'));
 
         $save = new Zend_Form_Element_Submit('save');
-        $save->setLabel('Create')
-             ->setAttrib('id', 'publish')
+        $save->setAttrib('id', 'publish')
              ->setAttrib('class', 'submit-button')
              ->setAttrib('style', 'float: none;');
-
-        $cancel = new Zend_Form_Element_Submit('cancel');
-        $cancel->setLabel('Cancel')
-              ->setAttrib('id', 'preview')
-              ->setAttrib('class', 'submit-button')
-              ->setAttrib('style', 'float: none;');
+        if ($options == 'edit')
+            $save->setLabel('Save');
+        else
+            $save->setLabel('Create');
 
         $this->addElements(array(
             $campaignname,
@@ -187,21 +183,15 @@ class Default_Form_AddCampaignForm extends Zend_Form
 //            $campaignend,
 //            $campaignend_clear,
             $save,
-            //$cancel
         ));
 
         $save->setDecorators(array(
             'ViewHelper',
             array('HtmlTag', array(
                 'tag' => 'div',
-                'openOnly' => true,
                 'id' => 'submit',
                 'style' => 'clear: both;',
             )),
-        ));
-        $cancel->setDecorators(array(
-            'ViewHelper',
-            array('HtmlTag', array('tag' => 'div', 'closeOnly' => true)),
         ));
     }
 }

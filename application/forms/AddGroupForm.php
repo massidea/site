@@ -130,25 +130,26 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setDecorators(array('ViewHelper'));
 
         $save = new Zend_Form_Element_Submit('save');
-        $save->setLabel($translate->_('groups-btn_create'))
-            ->setAttrib('id', 'publish')
+        if ($options == 'edit')
+            $save->setLabel('Save');
+        else
+            $save->setLabel('Create');
+        $save->setAttrib('id', 'publish')
             ->setAttrib('class', 'submit-button')
             ->setAttrib('style', 'float: none;');
 
-        $cancel = new Zend_Form_Element_Submit('cancel');
-        $cancel->setLabel('Cancel')
-            ->setAttrib('id', 'cancel')
-            ->setAttrib('class', 'submit-button');
-
+        if ($options != 'edit') {
+            $this->addElements(array(
+                $groupname,
+                $groupname_clear
+            ));
+        }
         $this->addElements(array(
-            $groupname,
-            $groupname_clear,
             $groupdesc,
             $groupdesc_clear,
             $groupbody,
             $groupbody_clear,
             $save,
-            //$cancel
         ));
 
         $save->setDecorators(array(
@@ -159,10 +160,6 @@ class Default_Form_AddGroupForm extends Zend_Form
                 'id' => 'submit',
                 'style' => 'clear: both;',
             )),
-        ));
-        $cancel->setDecorators(array(
-            'ViewHelper',
-            array('HtmlTag', array('tag' => 'div', 'closeOnly' => true)),
         ));
     }
 }
