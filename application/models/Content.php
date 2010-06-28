@@ -293,10 +293,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 * 
 	 * gets all contents that share tags with specified content
 	 * 
-	 * @param 			id		content id
+	 * @param 	int		id		content id
+	 * @param	int		limit	limit to N contents
 	 * @return	array			array of title_cnt, id_cnt,  viewCount, contentType 
 	 */
-    public function getRelatedContents($id) {
+    public function getRelatedContents($id, $limit = -1) {
 
     	$tags = $this->getTagIdsByContentId($id);
 
@@ -307,6 +308,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
     							 ->from('cnt_has_tag', array('id_cnt'))
     							 ->where('id_tag IN (?)', $tags)
     							 ->where('id_cnt != ?', $id);
+    	if($limit != -1)  $select->limit($limit);
    		
    		$contents = $cntHasTagModel->fetchAll($select)->toArray();
     	$linkedContents = $this->find($contents);
