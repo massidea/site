@@ -119,7 +119,7 @@ class CampaignController extends Oibs_Controller_CustomController
         $auth = Zend_Auth::getInstance();
 
         // If user has identity
-        if ($auth->hasIdentity()) {
+       // if ($auth->hasIdentity()) {
             $user = $auth->getIdentity();
             $cmpid = $this->_request->getParam('cmpid');
 
@@ -141,9 +141,9 @@ class CampaignController extends Oibs_Controller_CustomController
             $this->view->campaign = $cmp;
             $this->view->cmpcnts  = $cnts;
             $this->view->grpname  = $grpname;
-        } else {
+/*        } else {
             // Campaigns are only visible to registered users.
-        }
+        }*/
     }
 
     function editAction() {
