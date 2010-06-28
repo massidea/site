@@ -119,17 +119,11 @@ class CampaignController extends Oibs_Controller_CustomController
         $auth = Zend_Auth::getInstance();
 
         // If user has identity
-<<<<<<< HEAD
         if ($auth->hasIdentity()) {
             $this->view->identity = true;
         } else {
             $this->view->identity = false;
         }
-=======
-       // if ($auth->hasIdentity()) {
-            $user = $auth->getIdentity();
-            $cmpid = $this->_request->getParam('cmpid');
->>>>>>> 27739705fd091c228ad09a30e4468e55087f6a5c
 
         $user = $auth->getIdentity();
         $cmpid = $this->_request->getParam('cmpid');
@@ -146,7 +140,6 @@ class CampaignController extends Oibs_Controller_CustomController
         $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
         $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
 
-<<<<<<< HEAD
         // Get group info.
         $grpmodel = new Default_Model_Groups();
         $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
@@ -155,14 +148,6 @@ class CampaignController extends Oibs_Controller_CustomController
         $this->view->campaign = $cmp;
         $this->view->cmpcnts  = $cnts;
         $this->view->grpname  = $grpname;
-=======
-            $this->view->campaign = $cmp;
-            $this->view->cmpcnts  = $cnts;
-            $this->view->grpname  = $grpname;
-/*        } else {
-            // Campaigns are only visible to registered users.
-        }*/
->>>>>>> 27739705fd091c228ad09a30e4468e55087f6a5c
     }
 
     function editAction() {
@@ -508,10 +493,4 @@ class CampaignController extends Oibs_Controller_CustomController
                                          'campaign_view', true);
         $this->_redirector->gotoUrl($target);
     }
-<<<<<<< HEAD
-
-
 }
-=======
-}
->>>>>>> 27739705fd091c228ad09a30e4468e55087f6a5c
