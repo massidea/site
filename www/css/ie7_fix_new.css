@@ -1,0 +1,74 @@
+#header #search #submitsearch  { position:relative; top:0px; margin:0px 0px 8px 5px; }
+#header #search #search-submit  { float:right; width:50px; margin-left:-35px; }
+#header #search #select { margin-top:-3px; }
+
+#add_content_menu{
+	position: absolute; margin-top: 24px; 
+	overflow: visible;  display: none; 
+	width: 126px; right:37px;
+	border: 1px solid #cccccc; 
+	vertical-align: middle; 
+	font-family: Arial; font-size: 12px; font-weight: bold; 
+	margin-left:35px;}
+
+#login_box{ margin-top:10px; margin-left: 0}
+
+#add_content_button, #send-message { padding-right:0px !important; padding-left:0px !important; }
+.checkbox { border:1px solid #fff !important;}
+
+#content #user-page #profile-info #connect { margin:45px 20px 0px 0px; }
+
+#content #activity #content_type { margin:0px 0px -5px 0px; }
+#content #activity #content_type ul li { list-style:none; float:left; }
+#content #activity #content_type ul li.selected a,
+#content #activity #content_type ul li.selected a:visited{
+	border-bottom:1px solid #fff;
+	display:block;}
+	
+#content #activity #content_type ul li.all a,
+#content #activity #content_type ul li.all a:visited {
+	background:#fff; color:#000;
+	display:block;}
+	
+#content #activity #content_type ul li.challenges a,
+#content #activity #content_type ul li.challenges a:visited {
+	background:#D21034; color:#fff;
+	display:block;}
+
+#content #activity #content_type ul li.ideas a,
+#content #activity #content_type ul li.ideas a:visited {
+	background:#4B9B07; color:#fff;
+	display:block;}
+
+#content #activity #content_type ul li.visions a,
+#content #activity #content_type ul li.visions a:visited {
+	background:#FFC726; color:#fff;
+	display:block;}
+#content #activity #content_type ul li.ended a,
+#content #activity #content_type ul li.ended a:visited {
+	display:block;}
+
+#content #edit-user-page .input-column1, 
+#content #edit-user-page .input-column2,
+#content #edit-user-page .input-column3,
+#content #edit-user-page .input-column-website1,
+#content #edit-user-page .input-column-website2,
+#content #edit-user-page .input-column-website3 { margin-bottom:0px; }
+
+#content .scroll-box { height:300px; border:1px solid #ccc; overflow:auto; margin:5px 0px 15px 0px;  }
+#content .scroll-box p { margin-left:15px;} 
+#content .scroll-box ul li { width:455px;}
+
+#contribute .submit-button { width:130px;}
+
+#content #add-content-page #add-content-form .row { margin-bottom:4px; }
+#content #add-content-page #add-content-form .row.upload { margin:10px 0px 18px 0px; }
+
+#content #sign-up-page .input-column1, 
+#content #sign-up-page .input-column2 { margin-bottom:0px;}
+#content #sign-up-page #upload-3 {width:187px; float:right; margin-left:0px; text-align:right;}
+#content #sign-up-page .error { margin-top:-1px; }
+
+#content #content-page-additional-functions #linking-contents ul li strong { float:right; margin-top:-17px;}
+	
+#my_groups .scroll-box ul li { width:155px;}

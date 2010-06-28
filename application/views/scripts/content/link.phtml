@@ -70,7 +70,7 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
                 ?>
                 <div class="form_helptext_line"></div>
                 <div style="height: 20px;">
-                    <div style="float: left; width: 450px;">
+                    <div style="float: left; width: 445px;">
                         <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" height="15" width="4"/>
                         <?php
                         $linkurl = $this->url(array('content_id' => $content['id_cnt'],
@@ -91,7 +91,7 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
                         <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-link'); ?></a>
                     </div>
                 </div>
-                <div style="clear: both;"></div>
+                <div style="clear: both;">&nbsp;</div>
                 <?php
             }
         }

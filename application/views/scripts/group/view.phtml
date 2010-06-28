@@ -26,12 +26,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
         </ul>
         <h4><?php echo $this->translate('group-members'); ?></h4>
-        <span class="more"><strong><a href="">Show all</a></strong></span>
+        <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
         <div class="clear"></div>
         <ul>
            <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
         </ul>
-        <span class="more"><strong><a href="">Show all</a></strong></span>
+        <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
         <div class="clear dot-line-200"></div>
     </div>
     <div id="activity" class="right">
@@ -44,6 +44,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 <h3>Campaigns</h3>
                 <p>Group's call of contents</p>
             </div>
+            <?php if ($this->identity == true) : ?>
             <div id="join-group">
                 <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
                     $joinurl = $this->url(
@@ -98,6 +99,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                     <?php endif; ?>
                 <p>Only by joining you can add contents to campaigns</p>
             </div>
+            <?php endif; ?>
             <div class="clear"></div>
             <div class="scroll-box">
                 <ul>

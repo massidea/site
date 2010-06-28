@@ -120,30 +120,34 @@ class CampaignController extends Oibs_Controller_CustomController
 
         // If user has identity
         if ($auth->hasIdentity()) {
-            $user = $auth->getIdentity();
-            $cmpid = $this->_request->getParam('cmpid');
-
-            // Get campaign & its contents.
-            $cmpmodel = new Default_Model_Campaigns();
-            $cmp = $cmpmodel->getCampaignById($cmpid)->toArray();
-            $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
-
-            // Get group admins.
-            $grpAdminsModel = new Default_Model_GroupAdmins();
-            $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
-            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
-
-            // Get group info.
-            $grpmodel = new Default_Model_Groups();
-            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-            $grpname = $grp['group_name_grp'];
-
-            $this->view->campaign = $cmp;
-            $this->view->cmpcnts  = $cnts;
-            $this->view->grpname  = $grpname;
+            $this->view->identity = true;
         } else {
-            // Campaigns are only visible to registered users.
+            $this->view->identity = false;
         }
+
+        $user = $auth->getIdentity();
+        $cmpid = $this->_request->getParam('cmpid');
+
+        // Get campaign & its contents.
+        $cmpmodel = new Default_Model_Campaigns();
+        $cmp = $cmpmodel->getCampaignById($cmpid)->toArray();
+        $cmp['ingress_cmp'] = str_replace("\n", '<br>', $cmp['ingress_cmp']);
+        $cmp['description_cmp'] = str_replace("\n", '<br>', $cmp['description_cmp']);
+        $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
+
+        // Get group admins.
+        $grpAdminsModel = new Default_Model_GroupAdmins();
+        $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
+        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+
+        // Get group info.
+        $grpmodel = new Default_Model_Groups();
+        $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+        $grpname = $grp['group_name_grp'];
+
+        $this->view->campaign = $cmp;
+        $this->view->cmpcnts  = $cnts;
+        $this->view->grpname  = $grpname;
     }
 
     function editAction() {
