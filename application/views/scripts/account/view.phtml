@@ -48,12 +48,12 @@ $(document).ready(function() {
 	});
     // Endof Bio
 
-	$("#activity > .left,.right > #content_type > ul > li > a").mouseover(function () {
-		$(this).parent().css('cursor', 'pointer');
+	$("#activity > .left > #content_type > ul > li, #activity > .right > #content_type > ul > li").mouseover(function () {
+		$(this).css('cursor', 'pointer');
 	});
 	
-	$("#activity > .left,.right > #content_type > ul > li > a").click(function (event) {		
-		event.preventDefault();
+	$("#activity > .left > #content_type > ul > li > a, #activity > .right > #content_type > ul > li > a").click(function (event) {		
+		//event.preventDefault();
 
 		$(this).parent().siblings().removeClass('selected');
 		$(this).parent().removeClass('selected');
