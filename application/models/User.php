@@ -570,7 +570,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                       			"usr.id_usr = usp2.id_usr_usp AND usp2.profile_key_usp = $country",
                                       			array('countryId' => 'usp2.profile_value_usp'))
                                       ->joinLeft(array('usc' => 'countries_ctr'),
-                                      			'usc.id_ctr = usp2.profile_value_usp',
+                                      			'usc.iso_ctr = usp2.profile_value_usp',
                                       			array('countryName' => 'usc.name_ctr'))
                                       
                                       ->where($this->getUserSearchUsernameFilter($filter['username']))
