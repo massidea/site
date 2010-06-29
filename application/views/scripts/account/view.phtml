@@ -220,7 +220,17 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 <?php
                 if (isset($this->userprofile['birthday']) && $this->userprofile['birthday'] != NULL):
                 ?>
-                <li><strong>Birthday:</strong> <?php echo $this->userprofile['birthday']; ?></li>
+                <?php
+                $date = date_parse_from_format("n/j/Y", $this->userprofile['birthday']);
+                if ($date['day'] < 10)
+                    $date['day'] = '0'.$date['day'];
+                if ($date['month'] < 10)
+                    $date['month'] = '0'.$date['month'];
+                $birthday = $date['year'].'-'.$date['month'].'-'.$date['day'];
+                $birthday = new Zend_Date($birthday, Zend_Date::ISO_8601);
+                $birthday = $birthday->toString('dd MMM, yyyy');
+                ?>
+                <li><strong>Birthday:</strong> <?php echo $birthday; ?></li>
                 <?php endif; ?>
                 <?php
                 if (isset($this->userprofile['phone']) && $this->userprofile['phone'] != NULL):

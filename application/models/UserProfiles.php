@@ -70,7 +70,16 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             unset($formdata['save']);
         if (isset($formdata['cancel']))
             unset($formdata['cancel']);
-        
+
+        /*
+        if (isset($formdata['birthday'])) {
+            $date = date_parse_from_format("j.n.Y", $formdata['birthday']);
+            if ($date['day'] < 10)
+                $date['day'] = '0'.$date['day'];
+            if ($date['month'] < 10)
+                $date['month'] = '0'.$date['month'];
+            $formdata['birthday'] = $date['year'].'-'.$date['month'].'-'.$date['day'];
+        }*/
 
         // needs replacing to single setValue($id, $key, $val, $pub)! <--- Is this some old comment?
         foreach ($formdata as $key => $val) {                                   // go through data
