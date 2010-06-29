@@ -457,7 +457,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('cnt' => 'contents_cnt'),         
                                                   'cnt.id_cnt = chu.id_cnt',
                                                   array('id_cnt', 'id_cty_cnt', 'title_cnt', 
-                                                        'lead_cnt', 'published_cnt', 'created_cnt'))
+                                                        'lead_cnt', 'language_cnt', 'published_cnt', 'created_cnt'))
                                            ->joinLeft(array('cty' => 'content_types_cty'),    
                                                   'cty.id_cty = cnt.id_cty_cnt',  
                                                   array('key_cty'))
