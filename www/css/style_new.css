@@ -556,8 +556,9 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 #content #user-page #profile-info #user-bio h5 { margin:0px; }
 #content #user-page #profile-info #user-bio p { margin:0px; }
 
-#content #user-page #activity,
-#content #group-page #activity { margin-top:30px; }
+#content #user-page #activity { margin-top:30px; }
+#content #group-page #activity { margin-top:0; }
+#content #group-page #activity p { margin-top:0; }
 
 #content #group-page #activity,
 #content #campaign-page #activity { margin-left:20px; }

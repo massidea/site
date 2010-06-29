@@ -690,8 +690,9 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$content['threat_cnt'] = htmlspecialchars($data['content_threat']);
 		$content['solution_cnt'] = htmlspecialchars($data['content_solution']);
 		$content['references_cnt'] = htmlspecialchars($data['content_references']);
-		//$content['published_cnt'] = $data['publish']; //it defaults to 0 so let it be 1 if data is already published�
 		$content['modified_cnt'] = new Zend_Db_Expr('NOW()');
+		if ($data['publish'] == 1) 
+			$content['published_cnt'] = 1;
 
 		$where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
 

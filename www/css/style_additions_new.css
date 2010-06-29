@@ -1,7 +1,7 @@
 #content #group-page #group-info {
-	margin:-45px 0px 42px 0px;
+	margin:0 0px 42px 0px;
 	padding:0px 0px 8px 0px;
-	background:transparent url("/images/gray_dot_line_500.png") bottom no-repeat; }
+	background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; }
 #content #group-page .scroll-box li {
     border-left:5px solid #0089CF;
 }
@@ -15,7 +15,7 @@
 margin:8px 30px 0px 0px;
 padding:0px 0px 10px 0px;
 list-style:none;
-background:transparent url("/images/gray_dot_line_500.png") no-repeat bottom;
+background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom;
 border-left:5px solid #0089CF;}
 #content .campaign-list ul li p { display:block; padding:2px 2px 2px 10px; margin:0px; }
 #content .campaign-list ul li span.left { width:200px !important; margin:3px 0px 0px 10px; }
@@ -27,7 +27,7 @@ border-left:5px solid #0089CF;}
 #gacsidebar #groups p { margin:15px 0px 20px 15px; }
 #gacsidebar #groups ul { margin:-8px 0px; padding:0px;}
 #gacsidebar #groups ul li {
-    background:transparent url("/images/gray_dot_line_200.png") bottom no-repeat;
+    background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
     padding:5px 0px 5px 2px;
     list-style:none;}
 #gacsidebar #groups ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
@@ -40,7 +40,7 @@ border-left:5px solid #0089CF;}
 #content #create-group-page textarea { height:177px; }
 
 #content #create-group-page #save_changes {
-	background:transparent url("/images/gray_dot_line_500.png") top no-repeat;
+	background:transparent url("../images/gray_dot_line_500.png") top no-repeat;
 	text-align:center;
 	padding:10px 0px 20px 0px;
 	margin-top:10px; }
@@ -53,7 +53,7 @@ border-left:5px solid #0089CF;}
 #right_side #campaigns p { margin:15px 0px 20px 15px; }
 #right_side #campaigns ul { margin:-8px 0px; padding:0px;}
 #right_side #campaigns ul li {
-    background:transparent url("/images/gray_dot_line_200.png") bottom no-repeat;
+    background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
     padding:5px 0px 5px 2px;
     list-style:none;}
 #right_side #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
