@@ -81,7 +81,6 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setAttrib('rows', '6')
             ->setLabel('Lead paragraph')
             ->setRequired(true)
-            ->setFilters(array('StringTrim'))
             ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => "Description can't be empty."))),
                 array(
@@ -108,7 +107,6 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setAttrib('cols', '45')
             ->setAttrib('rows', '20')
             ->setLabel('Body')
-            ->setFilters(array('StringTrim'))
             ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => "Body text can't be empty."))),
                 array(

@@ -8,6 +8,8 @@ echo $this->doctype();
     <?php
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_new.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix_new.css'), 'screen', 'IE 7');
+	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix_new.css'), 'screen', 'IE 6');
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
 
     $this->headLink()->headLink(array(  'rel'   => 'shortcut icon',
