@@ -73,31 +73,31 @@
 
         // If user has identity
         if ($auth->hasIdentity()) {
-            // Get data for this specific group.
-            $grpId = $this->_request->getParam('groupid');
-            $grpModel = new Default_Model_Groups();
-            $usrHasGrpModel = new Default_Model_UserHasGroup();
-            $grpAdminsModel = new Default_Model_GroupAdmins();
-            $campaignModel = new Default_Model_Campaigns();
-            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
-            $user = $auth->getIdentity();
-            // Add data to the view.
-            $this->view->grpId = $grpId;
-            $this->view->grpData = $grpModel->getGroupData($grpId);
-            $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
-            $this->view->grpAdmins = $grpAdmins;
-            $this->view->userHasGroup = $usrHasGrpModel;
-            $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
-            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+            $this->view->identity = true;
         } else {
-            // Groups are only visible to registered users.
-            $target = $this->_urlHelper->url(array(
-                'controller' => 'index',
-                'action' => 'index',
-                'language' => $this->view->language),
-                'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->view->identity = false;
         }
+
+        // Get data for this specific group.
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        $usrHasGrpModel = new Default_Model_UserHasGroup();
+        $grpAdminsModel = new Default_Model_GroupAdmins();
+        $campaignModel = new Default_Model_Campaigns();
+        $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+        $user = $auth->getIdentity();
+        $grpData = $grpModel->getGroupData($grpId);
+        $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
+        $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
+
+        // Add data to the view.
+        $this->view->grpId = $grpId;
+        $this->view->grpData = $grpData;
+        $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
+        $this->view->grpAdmins = $grpAdmins;
+        $this->view->userHasGroup = $usrHasGrpModel;
+        $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
+        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
     }
 
     function editAction()

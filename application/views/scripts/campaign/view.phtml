@@ -35,7 +35,8 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             </strong><?php // t�git t�h�n v�liin ?>
         </p>
         -->
-       <p>
+        <!--
+        <p>
             <strong>Campaign has started: </strong>
             <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
         </p>
@@ -43,6 +44,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <strong>Campaign is ending: </strong>
             <?php echo $cmpend; ?>
         </p>
+        -->
         <?php if (is_array($this->cmpAdmins)): ?>
         <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
             <ul>
@@ -76,6 +78,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             </div>
             <div class="clear"></div>
             <div id="contribute">
+                <?php if ($this->identity == true) : ?>
                 <h2>I want to contribute:</h2>
 
                 <div class="right">
@@ -101,6 +104,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                     </p>
                     <!--<p>If you add content, you'll become a group member</p> -->
                </div>
+               <?php endif; ?>
                 <div class="clear"></div>
                 <div id="current-posts">
                     <div id="head">

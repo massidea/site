@@ -78,11 +78,10 @@ class Default_Form_AddCampaignForm extends Zend_Form
         $campaigningress
             ->setAttrib('cols', '45')
             ->setAttrib('rows', '6')
-            ->setLabel('Ingress')
+            ->setLabel('Lead paragraph')
             ->setRequired(true)
-            ->setFilters(array('StringTrim'))
             ->setValidators(array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => "Ingress can't be empty."))),
+                array('NotEmpty', true, array('messages' => array('isEmpty' => "Lead paragraph can't be empty."))),
                 array(
                     'StringLength',
                     false,
@@ -90,7 +89,7 @@ class Default_Form_AddCampaignForm extends Zend_Form
                         1,
                         320,
                         'messages' =>
-                            array('stringLengthTooLong' => 'Ingress too long.')))
+                            array('stringLengthTooLong' => 'Lead paragraph too long.')))
             ))
             ->setDescription(
                 '<div id="progressbar_campaign_ingress" class="limit ok"></div>')
@@ -108,7 +107,6 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setAttrib('rows', '20')
             ->setLabel('Body text')
             ->setRequired(true)
-            ->setFilters(array('StringTrim'))
             ->setValidators(array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => "Body text can't be empty."))),
                 array(

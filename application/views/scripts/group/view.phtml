@@ -44,6 +44,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 <h3>Campaigns</h3>
                 <p>Group's call of contents</p>
             </div>
+            <?php if ($this->identity == true) : ?>
             <div id="join-group">
                 <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
                     $joinurl = $this->url(
@@ -98,6 +99,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                     <?php endif; ?>
                 <p>Only by joining you can add contents to campaigns</p>
             </div>
+            <?php endif; ?>
             <div class="clear"></div>
             <div class="scroll-box">
                 <ul>
