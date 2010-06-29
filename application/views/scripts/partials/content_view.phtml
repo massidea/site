@@ -177,11 +177,21 @@ if (isset($this->parent_siblings[0])) {
                 	<div id="content_view_favourite"></div>
                 </div>  -->                
                 <div style="float:right; padding:5px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
-                <?php if($this->contentData['language_cnt'] != $this->gtranslateLangPair['to']): ?>
                 <div style="clear: both;">
-                	<?php echo $this->translate('content-view-translated-from') . "<strong>" .$this->languageName . "</strong>"; ?>
+	                <?php if($this->contentData['language_cnt'] != $this->gtranslateLangPair['to']): ?>
+	                	<?php if($this->isTranslated): ?>
+		                	<?php echo $this->translate('content-view-translated-from') . "<strong>" .$this->languageName . "</strong>. "; ?>
+		                	<?php $notranslate = $this->url(array('notranslate' => '1')); ?>
+		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-translated-show-translated'); ?></a>]
+		                <?php elseif(!$this->isTranslated): ?>
+		                	<?php echo $this->translate('content-view-not-translated') . "(<strong>" .$this->languageName . "</strong>). "; ?>
+		                	<?php $notranslate = $this->url(array('content_id' => $this->contentData['id_cnt'], 
+																  'language' => $this->language), 
+																  'content_shortview', true); ?>
+		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-not-translated-show-original'); ?></a>]
+		                <?php endif; ?>
+	                <?php endif;?>
                 </div>
-                <?php endif;?>
             </div>
         </div>
         
@@ -264,7 +274,7 @@ if (isset($this->parent_siblings[0])) {
 	        		<?php $file_i = 0; ?>
        				<?php foreach ($this->files as $id_fil => $filename): ?>
        					<?php $file_i++; ?>
-	        			<a href="<?php echo $this->baseUrl."/en/file/view/".$id_fil; ?>">
+	        			<a href="<?php echo $this->baseUrl('/en/file/view/'.$id_fil); ?>">
 	        				<?php echo $filename; ?>
 	        			</a>
 	        			<?php if($file_i < $filecount) echo ', '; ?>

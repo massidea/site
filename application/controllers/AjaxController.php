@@ -195,16 +195,25 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function morefromuserAction() {
 		// Get content owner data
         $userModel = new Default_Model_User();
-        //$contents = $userModel->getUserContent(8, 0, 483, 10);
-		$contents = $userModel->getUserContent($this->params['user_id'], 0, $this->params['cnt_id'], 5);
+		$rawcontents = $userModel->getUserContent($this->params['user_id'], 0, $this->params['cnt_id'], 5);
+		foreach($rawcontents as $rawcnt)
+		{
+			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
+			$contents[] = $this->gtranslate->translateContent($rawcnt);
+		}
 		$this->view->contents = $contents;
 	}
 	
 	public function relatedcontentAction() {
         // Get related contents
         $contentModel = new Default_Model_Content();
-        $relatedContents = $contentModel->getRelatedContents($this->id, 10);
-        $this->view->relatedContents = $relatedContents;
+        $rawcontents = $contentModel->getRelatedContents($this->id, 10);
+        foreach($rawcontents as $rawcnt)
+        {
+			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
+			$contents[] = $this->gtranslate->translateContent($rawcnt);
+        }
+        $this->view->relatedContents = $contents;
 	}
 	
 	public function contentratingAction() {

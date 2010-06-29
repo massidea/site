@@ -320,6 +320,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
     		$tempRow = array();
     		$tempRow['title_cnt']   = $row->title_cnt;
     		$tempRow['id_cnt']      = $row->id_cnt;
+    		$tempRow['language_cnt']= $row->language_cnt;
     		$tempRow['viewCount']   = $viewsModel->getViewsByContentId($row->id_cnt);
     		$tempRow['contentType'] = $row->findDependentRowset('Default_Model_ContentTypes', 'ContentType')->current()->key_cty;
     		array_push($rows, $tempRow);

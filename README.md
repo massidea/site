@@ -15,7 +15,7 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 
 ### Push note
 ** AFTER YOU PUSH OUR CHANGES TO GITHUB. SEND PULL REQUEST TO ACCOUNT: iiuusit **
-![GitHub - Pull request](http://www.oibs.fi/wiki/images/e/ec/Pull_request.png "")
+![GitHub - Pull request](http://www.massidea.org/wiki/images/e/ec/Pull_request.png "")
 
 
 ## Migration notes (Old Migration notes.txt)
