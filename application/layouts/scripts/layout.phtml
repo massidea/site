@@ -44,9 +44,7 @@ echo $this->doctype();
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
     $this->headScript()->prependFile('http://maps.google.com/jsapi');
-    ?>
-    
-    <?php
+
     echo $this->headLink();
     echo $this->headMeta();
     echo $this->headScript();
@@ -71,17 +69,25 @@ echo $this->doctype();
 					
 						<?php if($this->authenticated) : ?>
                         <div style="float: left; width: 14px;">&nbsp;</div>
-                        
-						<div style="text-align: right; padding-left: 100px; float: left; width: 50px;">
-                                <div style="width: 237px;">
+						<div style="text-align: right; float: left; width: 50px;">
+                                <div style="width: 337px;">
+							            <?php //$auth = Zend_Auth::getInstance(); ?>
+								        <?php if (in_array("admin", $this->logged_user_roles)): ?>
+											<a href="<?php echo $this->url(array('controller' => 'admin',
+																				 'action' => 'index',
+																				 'language' => $this->language),
+																				 'lang_default', true); ?>">
+												<?php echo $this->translate('index-admin-tools');?>
+											</a> | 
+							            <?php endif; ?>
+
                                     <?php echo $this->translate('index-logged_in'); ?>
                                     <a href="<?php echo $this->url(array('controller' => 'account',
                                                                          'action' => 'view',
                                                                          'user' => $this->username,
                                                                          'language' => $this->language),
                                                                    'lang_default', true); ?>">
-                                        <?php echo $this->username; ?>
-                                    </a>
+                                        <?php echo $this->username; ?></a>
                                     <?php
                                     if($this->unread_privmsgs > 0) {
                                         if($this->controller == "privmsg" && $this->action == "index") {
@@ -93,8 +99,7 @@ echo $this->doctype();
                                                                                  'action' => 'index',
                                                                                  'language' => $this->language),
                                                                            'lang_default', true); ?>">
-                                                (<?php echo $this->unread_privmsgs; ?>)
-                                            </a>
+                                                (<?php echo $this->unread_privmsgs; ?>)</a>
                                             <?php
                                         }
                                     } ?>
@@ -119,8 +124,7 @@ echo $this->doctype();
                             
                                 <div style="width: 237px;">
                                     <a id="login_link" href="#">
-                                        <?php echo $this->translate('index-login'); ?>
-                                    </a> 
+                                        <?php echo $this->translate('index-login'); ?></a> 
                                     | 
                                     <a href="<?php echo $url_sign_up; ?>">
                                         <?php echo $this->translate('index-signup'); ?>
@@ -441,33 +445,8 @@ echo $this->doctype();
 						</a>
 					</div>
 				</div>		
-				
 			</div>
-                                    
-            <?php 
-            $auth = Zend_Auth::getInstance();
-	        if ($auth->hasIdentity()):
-	            if(in_array("admin", $this->logged_user_roles)):
-            ?>
-            
-			<div class="sub_menu_right_space" style="width: 0px;">&nbsp;</div>
-            
-			<div id="admintools" 
-                onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')" 
-                onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
-                class="sub_menu_item_blue"
-            >
-                <a href="<?php echo $this->url(array('controller' => 'admin',
-                                                     'action' => 'index',
-                                                     'language' => $this->language),
-                                                'lang_default', true); ?>">
-                    <?php echo $this->translate('index-admin-tools');?>
-                </a>
-            </div>
-            <?php 
-	            endif;
-	        endif;
-	        ?>
+			
 			<div class="sub_menu_right_space" style="width: 0px;">&nbsp;</div>
 			<!-- Resets the floating row -->
 			<div style="clear: both;"></div>
