@@ -445,13 +445,13 @@
 	</tu>	
 	
 	<tu tuid='account-userlist-search-instructions'>
-		<tuv xml:lang="en"><seg>
-		<span><strong>Guidelines to extend your search</strong></span><br />
+		<tuv xml:lang="en"><seg><![CDATA[
+		<span><strong>Guidelines to extend your search</strong></span><br>
 		<p>You can substitute search term characters with any other characters by following these guidelines:</p>
-		<p>Use % or * to replace multiple character,<br />
+		<p>Use % or * to replace multiple character,<br>
 		   Use _ or ? to replace single character. </p>
-		<p><strong>Examples:</strong><br /> *burg will result Saint Petersburg, Hamburg, etc.<br /> *b?rg  will result the same results as above, but it also includes cities like björneborg etc.</p>
-		</seg></tuv>
+		<p><strong>Examples:</strong><br> *burg will result Saint Petersburg, Hamburg, etc.<br> *b?rg  will result the same results as above, but it also includes cities like björneborg etc.</p>
+		]]></seg></tuv>
 		<tuv xml:lang="fi"><seg>Voit käyttää haussa % tai * jokerimerkkinä ja _ tai ? merkkiä yhden merkin korvausmerkkinä. Haku käyttää automaattisesti jokerimerkkejä tekstin molemmin puolin.</seg></tuv>
 	</tu>
 	<tu tuid='account-userlist-user-content-added'>

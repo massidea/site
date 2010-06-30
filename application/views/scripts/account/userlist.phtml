@@ -1,10 +1,5 @@
 <?php 
 
-$url_getUserLocations = $this->url(array('controller' => 'ajax',
-							 'action' => 'getuserlocations',
-							 'language' => $this->language), 
-							 'lang_default', true);
-
 $url_getUserContents = $this->url(array('controller' => 'ajax',
 							 'action' => 'getusercontents',
 							 'language' => $this->language), 
@@ -15,7 +10,7 @@ $url_contentView = $this->url(array('controller' => 'view',
 							 'lang_default', true);
 
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete.js');
-//$this->headLink()->appendStylesheet($this->baseUrl . '/css/style_additions_req.css');
+//$this->headLink()->appendStylesheet($this->baseUrl . '/css/css_reset.css');
 $this->headScript()->captureStart();
 //print_r($this->userContents);die;
 //print_r($this->userListData);die;
@@ -30,6 +25,12 @@ $(document).ready(function(){
 	);
 	*/
 	var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
+	<?php 
+	foreach($this->userListData as $data) {
+		echo "\n\tvar user_".$data['id_usr']." = jQuery.parseJSON('".json_encode($data['contents'])."');";
+	}
+	?>
+	
 	var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 	complete_city(userCities);
 	
@@ -47,6 +48,19 @@ $(document).ready(function(){
 				$("#user_"+id+"_list_more").attr("style",'display: block;');
 				$("#user_list_user_"+id+"_statistics").slideUp(400);
 				$("#user_list_user_"+id+"_search").slideUp(400);
+		});
+		$("#user_list_"+this+"_show_more").click(function() {
+				$(this).hide();
+				$("#user_list_"+id+"_show_more_loading").show();
+		
+				var childs = $("#user_"+id+"_list_user_recent_contents_list").children().length;
+				var listStart = childs+1;
+				var listEnd = listStart+3;
+				var listIndexes = "";
+				for(var i = listStart; i < listEnd; i++) { listIndexes += eval("user_"+id)[i]+"," }
+				listIndexes = listIndexes.substr(0,listIndexes.length-1);
+				json_search_contents(listIndexes,id,this);
+				
 		});
 	});
 	
@@ -72,6 +86,35 @@ $(document).ready(function(){
 	*/
 	
 });
+
+function json_search_contents(listIndexes,id,div) {
+	$.ajax({
+	  url: "<?php echo $url_getUserContents ?>/search/"+listIndexes,
+	  dataType: 'json',
+	  success: function(data) {
+	  		var output = "";
+			$.each(data, function() {
+				if(this.title_cnt.length > 70) { 
+					this.title_cnt.length = 70;
+					this.title_cnt += "...";
+				}
+				output += "<div class=\"user_list_user_line_new\" style=\"display:none\">"+
+							"<span class=\"user_list_content_type_"+this.key_cty+"\">> </span>"+
+							"<a class=\"user_list_content_title\" href=\"<?php echo $url_contentView; ?>/"+this.id_cnt+"\">"+
+							this.title_cnt+"</a></div>"
+							;
+			});
+			
+		  	$("#user_"+id+"_list_user_recent_contents_list").append(output);
+		  	$('.user_list_user_line_new').addClass('user_list_user_line').removeClass('user_list_user_line_new');
+		  	$(".user_list_user_line").slideDown(700,function(){ 
+		  	$("#user_list_"+id+"_show_more_loading").hide();
+		  	$(div).show();
+		  	 });
+
+	  }	
+	});
+};
 
 function jsonSearchContents(user_id){
 
@@ -269,7 +312,8 @@ function complete_city(result){
 		                        <div class="user_list_user_line">
 			                        <span class="user_list_recet_contents_title">Recent posts </span>
 			                        |
-			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#">Show more</a>
+			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="block">Show more</a>
+			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" /><span> Please wait...</span></div>
 		                        </div>
 		                        
 		                        <div class="user_list_statistics" id="user_list_user_<?php echo $user['id_usr']; ?>_search" style="display:none;">
@@ -279,7 +323,7 @@ function complete_city(result){
 	                       				</div>
 		                       		</div>
 	                       		</div>
-		                       		<div class="user_list_user_recent_contents_list">
+		                       		<div class="user_list_user_recent_contents_list" id="user_<?php echo $user['id_usr']; ?>_list_user_recent_contents_list">
 			                        <?php
 			                        
 			                        foreach($this->userContents[$user['id_usr']] as $content) :?>

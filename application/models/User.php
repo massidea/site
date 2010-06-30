@@ -1250,7 +1250,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
       public function getUserContentList($contentIdList, $amount) {
         $result = array();  // container for final results array
-                
         // If author id is set get users content
                 
         $contentSelect = $this->_db->select()
@@ -1260,6 +1259,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                   'cty.id_cty = cnt.id_cty_cnt',  
                                                   array('key_cty'))
                                             ->where('cnt.id_cnt IN (?)', $contentIdList)
+                                            ->where('cnt.published_cnt = 1')
                                             ->order('cnt.created_cnt DESC')
                                             ->limit($amount)
                 ;       

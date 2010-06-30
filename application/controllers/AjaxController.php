@@ -133,61 +133,21 @@ class AjaxController extends Oibs_Controller_CustomController
 
 		$this->view->output = $output;
 	}
-	
-	/*public function getuserlocationsAction() {
-
-		$output = "";
-		// Get requests
-		$params = $this->getRequest()->getParams();
-		$search = isset($params['search']) ? $params['search'] : null;
-		//if(strlen($search) <= 1) $search = null;
-
-		if($search) {
-			// Get cache from registry
-			$cache = Zend_Registry::get('cache');
-
-			// Load user locations from cache
-			if(!$resultList = $cache->load('UserLocationsList')) {
-				$userModel = new Default_Model_User();
-				$locations = $userModel->getAllUsersLocations();
-				$cache->save($locations, 'UserLocationsList');
-
-			} else {
-				$locations = $resultList;
-			}
-			
-			if($search == "cities") {
-				$output = json_encode($locations['cities']);
-			}
-			elseif($search == "countries") {
-				$output = json_encode($locations['countries']);
-			}
-		}
-		$this->view->output = $output;
-	}*/
-	
+		
 	public function getusercontentsAction() {
 		$output = "";
 		// Get requests
 		$params = $this->getRequest()->getParams();
 		$search = isset($params['search']) ? $params['search'] : null;
-		$search = (int)$search;
-		if(is_int($search) && $search != 0) {
-			
-			// Get cache from registry
-			$cache = Zend_Registry::get('cache');
-
-			// Load user locations from cache
-			if(!$resultList = $cache->load('UserContentsList_'.$search)) {
-				$userModel = new Default_Model_User();
-				$contentList = $userModel->getUserContentList($search);
-				$cache->save($contentList, 'UserContentsList_'.$search);
-
-			} else {
-				$contentList = $resultList;
-			}
+		$contentsToSearch = explode(",",$search);
+		foreach($contentsToSearch as $id) {
+			if(!is_numeric($id)) return $output;
+		}
+		
+		if(is_array($contentsToSearch)) {
+			$userModel = new Default_Model_User();
+			$contentList = $userModel->getUserContentList($contentsToSearch,3);
 			$output = json_encode($contentList);
-			//$output = $contentList;
 		}
 		$this->view->output = $output;
 	}
