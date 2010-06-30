@@ -1,0 +1,9 @@
+                    <ul>
+                        <?php foreach($this->usergroups as $usergroup): ?>
+                        <?php $groupurl = $this->url(array('groupid' => $usergroup["id_grp"],
+                                                           'language' => $this->language),
+                                                     'group_shortview', true); ?>
+                        <li class="all group"><a href="<?php echo $groupurl; ?>"><?php echo $usergroup['group_name_grp']; ?></a> <br />
+                        <!--154 views--></li>
+                        <?php endforeach; ?>
+                    </ul>

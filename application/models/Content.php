@@ -98,10 +98,10 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	{
 		switch ($order) {
 			case 'author':
-				$order = 'usr.login_name_usr';
+				$order = 'login_name_usr';
 				break;
 			case 'header':
-				$order = 'cnt.title_cnt';
+				$order = 'title_cnt';
 				break;
 				/*
 				 case 'views':
@@ -109,39 +109,13 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 				 break;
 				 */
 			default:
-				$order = 'cnt.created_cnt DESC';
+				$order = 'created_cnt DESC';
 		}
 
-		// Needs more optimization
-		$select = $this->_db->select()->from(
-			array('cty' => 'content_types_cty'),
-			array('cty.id_cty', 'cty.key_cty'))
-				->join( array('cnt' => 'contents_cnt'),
-                    	'cnt.id_cty_cnt = cty.id_cty',
-						array('cnt.id_cnt',
-                              'cnt.title_cnt',
-                              'cnt.lead_cnt',
-                              'cnt.created_cnt',
-                              'cnt.language_cnt'))
-				->joinLeft(array('chu' => 'cnt_has_usr'),
-                           'chu.id_cnt = cnt.id_cnt',
-							array())
-				->joinLeft(array('usr' => 'users_usr'),
-                           'usr.id_usr = chu.id_usr',
-							array('usr.id_usr', 'usr.login_name_usr'))
-			    // Users postcount
-				->joinLeft('cnt_has_usr',   
-						   'cnt_has_usr.id_usr = chu.id_usr',
-						   array('count' => 'count(*)'))
-				->group('cnt.id_cnt')
-				->where('cnt.published_cnt = 1')
-				//->where('cnt.language_cnt = ?', $lang)
-				->order($order);
-
-		if ($cty != 'all' && $cty != 'All') {
-			$select->where('cty.key_cty = ?', $cty);
-		}
-
+		$select = $this->select()->from($this, "id_cnt")
+								 ->where('published_cnt = 1')
+								 ->order($order);
+			
 		if ($count > 0){
 			$select->limitPage($page, $count);
 		} else {
@@ -149,6 +123,32 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		}
 
 		// Content data
+		//$data = $this->_db->fetchAll($select);
+		$ids = $this->fetchAll($select);
+		$data = $this->getContentRows($ids->toArray());
+		return $data;
+	}
+	
+	public function getContentRows($ids) {
+		$select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
+																	"title_cnt",
+																	"lead_cnt",
+																	"language_cnt"))
+								->joinLeft(	"cnt_has_usr", 
+											"contents_cnt.id_cnt = cnt_has_usr.id_cnt",
+											array())
+								->join(	"users_usr", 
+											"users_usr.id_usr = cnt_has_usr.id_usr",
+											array("login_name_usr", "id_usr"))
+								->joinLeft( "content_types_cty",
+											"content_types_cty.id_cty = contents_cnt.id_cty_cnt",
+											array("id_cty", "key_cty"))
+								->joinLeft(	array("chu" => "cnt_has_usr"),
+											"cnt_has_usr.id_usr = chu.id_usr",
+											array("count" => "count(*)"))
+								->group('contents_cnt.id_cnt')
+								->where('contents_cnt.id_cnt IN (?)', $ids)
+								;
 		$data = $this->_db->fetchAll($select);
 		return $data;
 	}

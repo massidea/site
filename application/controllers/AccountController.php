@@ -377,6 +377,7 @@ class AccountController extends Oibs_Controller_CustomController
 		//die;
         //	My Posts box data
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		
 		$box->setHeader("My Posts")
 			->setClass("right")
 			->setName("my-posts")
@@ -390,23 +391,30 @@ class AccountController extends Oibs_Controller_CustomController
 		}
 		$boxes[] = $box;
 		
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("My Groups")
+			->setClass("left")
+			->setName("my_groups")
+			->addTab("All", "all", "all selected");
+		$boxes[] = $box;
+		
 		$views = new Default_Model_ContentViews();
-		$myViews = $views->getUserViewedContents($data['id_usr']);
+		$myViews = $this->getViewRows($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box	->setHeader("My Views")
 				->setName("my-views")
 				->setClass("right")
 				->addTab("Views", "views", "all selected");			
-		//$boxes[] = $box;
+		$boxes[] = $box;
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box->setHeader("My Reads")
-			->setClass("right")
+			->setClass("left")
 			->setName("my-reads")
 			->addTab("Readers", "readers", "all selected");
 			
-		//$boxes[] = $box;
+		$boxes[] = $box;
 			
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
@@ -1529,5 +1537,38 @@ class AccountController extends Oibs_Controller_CustomController
         $cacheImage = 'ProfileThumbs_' . $userid . '_image_usi';
         $cache->remove($cacheThumb);
         $cache->remove($cacheImage);
+    }
+    
+    private function getViewRows($id_usr) {
+
+    	$viewsModel = new Default_Model_ContentViews();
+    	$contentHasTagModel = new Default_Model_ContentHasTag();
+	
+    	// Get recent post data
+    	$recentposts_raw = $viewsModel->getUserViewedContents($id_usr);
+
+    	$recentposts = array();
+
+    	// Gather data for recent posts
+    	$i = 0;
+    	foreach ($recentposts_raw as $post) {
+	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
+
+	    	// Action helper for define is tag running number divisible by two
+		$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+
+	    	$this->gtranslate->setLangFrom($post['language_cnt']);
+	    	$translang = $this->gtranslate->getLangPair();
+
+	    	$recentposts[$i]['original'] = $post;
+	    	$recentposts[$i]['translated'] = $this->gtranslate->translateContent($post);
+	    	$recentposts[$i]['original']['tags'] = $tags;
+	    	$recentposts[$i]['translated']['tags'] = $tags;
+	    	$recentposts[$i]['original']['translang'] = $translang;
+	    	$recentposts[$i]['translated']['translang'] = $translang;
+	    	
+	    	$i++;
+    	}
+    	return $recentposts;
     }
 } // end of class
