@@ -88,3 +88,76 @@ border-left:5px solid #0089CF;}
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
 
+#my-reads .scroll-box ul li {
+	margin: 5px 5px 5px 5px;
+	padding: 0;
+}
+
+.reader_user .photo {
+	width: 48px;
+	display: inline;
+}
+
+.reader_user .photo img {
+	width: 48px;
+}
+
+.reader_user .context {
+	min-height: 48px;
+	display: inline;
+	vertical-align: top;
+	padding-left: 5px;
+}
+
+
+#my-views .scroll-box {
+	overflow-x: hidden;
+}
+
+div.user_content_row{
+	width: 500px;
+    border-bottom: 1px dotted #DDDDDD;
+    margin: 10px 0 10px 0;
+    padding-left: 5px;
+}
+
+div.user_image_list{
+	padding-left: 0px;
+	padding-top: 8px;
+	float: left; 
+}
+
+div.user_summary_list_with_stats{
+	text-align: left;
+	width: 300px;
+	padding-left: 11px;
+	padding-top: 6px;
+	margin-bottom: -1px;
+	float: left;
+}
+
+div.user_summary_list_without_stats{
+	text-align: left;
+	width: 420px;
+	padding-left: 11px;
+	padding-top: 6px;
+	margin-bottom: -1px;
+	float: left;
+}
+
+.profile_image_smallsize {
+	width: 48px;
+	height: 48px;
+}
+
+.smallsize_problem_border {
+    border-left: 6px solid #D21034;
+}
+
+.smallsize_idea_border {
+    border-left: 6px solid #4B9B07;
+}
+
+.smallsize_finfo_border {
+    border-left: 6px solid #FFC726;
+}
