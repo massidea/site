@@ -666,7 +666,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                       			array('id_usr_usp','profile_key_usp',
                                       			'profile_value_usp'))
                                       ->joinLeft(array('usc' => 'countries_ctr'),
-                                      			 'usc.id_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
                                       			 array('countryName' => 'usc.printable_name_ctr'))
                                       ->where('usp.id_usr_usp IN (?)', $userIdList)
                                       ->where('usp.public_usp = 1')
@@ -1223,7 +1223,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                       	'profile_value_usp',
                                       	'COUNT(profile_value_usp) AS amount'))
                                       ->joinLeft(array('usc' => 'countries_ctr'),
-                                      	 'usc.id_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
                                       	 array('countryName' => 'usc.printable_name_ctr'))
                                       ->where('usp.public_usp = 1')
                                       ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
