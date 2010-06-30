@@ -89,6 +89,7 @@
         $grpData = $grpModel->getGroupData($grpId);
         $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
         $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
+
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;
@@ -132,13 +133,19 @@
                 $this->_redirector->gotoUrl($target);
             }
 
-            // Create the form in edit mode.
-            $form = new Default_Form_AddGroupForm($this, 'edit');
-
-            // Populate form with existing group data.
+            // Get existing group info.
             $grpModel = new Default_Model_Groups();
             $grpData = $grpModel->getGroupData($grpId);
+
+            // Create the form in edit mode.
+            $form = new Default_Form_AddGroupForm($this, array(
+                'mode' => 'edit',
+                'oldname' => $grpData['group_name_grp'],
+            ));
+
+            // Populate the form.
             $formData = array();
+            $formData['groupname'] = $grpData['group_name_grp'];
             $formData['groupdesc'] = $grpData['description_grp'];
             $formData['groupbody'] = $grpData['body_grp'];
             $form->populate($formData);
@@ -156,6 +163,7 @@
                     $groupModel = new Default_Model_Groups();
                     $newGroupId = $groupModel->editGroup(
                         $grpId,
+                        $post['groupname'],
                         $post['groupdesc'],
                         $post['groupbody']);
 

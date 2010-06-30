@@ -135,6 +135,9 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmp['description_cmp'] = str_replace("\n", '<br>', $cmp['description_cmp']);
         $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
 
+        $uhgModel = new Default_Model_UserHasGroup();
+        $this->view->userHasGroup = $uhgModel->userHasGroup($cmp['id_grp_cmp'], $user->user_id);
+
         // Get group admins.
         $grpAdminsModel = new Default_Model_GroupAdmins();
         $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
@@ -280,6 +283,21 @@ class CampaignController extends Oibs_Controller_CustomController
 
             $cmpmodel = new Default_Model_Campaigns();
             $cmp = $cmpmodel->getCampaignById($cmpId);
+
+            // Only members of the group that created the campaign are allowed
+            // to link content.
+            $grpId = $cmp['id_grp_cmp'];
+            $uhgmodel = new Default_Model_UserHasGroup();
+            if (!$uhgmodel->userHasGroup($grpId, $usrId)) {
+                // Redirect back to the campaign page.
+                $target = $this->_urlHelper->url(
+                    array(
+                        'cmpid' => $cmpId,
+                        'language' => $this->view->language),
+                    'campaign_view', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
 
             $usrmodel = new Default_Model_User();
             $usrcnt = $usrmodel->getUserContent($usrId);

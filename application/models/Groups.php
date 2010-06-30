@@ -111,9 +111,10 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         return $row->id_grp;
     }
 
-    public function editGroup($id, $description, $body)
+    public function editGroup($id, $name, $description, $body)
     {
 		$data = array(
+            'group_name_grp' => $name,
             'description_grp' => $description,
             'body_grp' => $body,
         );
