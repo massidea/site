@@ -1134,25 +1134,15 @@ class AccountController extends Oibs_Controller_CustomController
         $order = isset($params['order']) ? $params['order'] : null;
         $list = isset($params['list']) ? $params['list'] : null;
         
-        if($order == "username") $order = "usr.login_name_usr"; 
-        elseif($order == "joined") $order = "usr.created_usr";
-        elseif($order == "login") $order = "usr.last_login_usr";
-        elseif($order == "content") $order = "contentCount";
-        else $order = null;
-
         if($list != "asc" && $list != "desc") $list = null;
-        
-        if(isset($order) && isset($list)) {
-        	$sort = $order." ".$list;
-        }
         
         // Filter form data
         $formData['username'] = isset($params['username']) ? $params['username'] : '';
         $formData['city'] = isset($params['city']) ? $params['city'] : '';
         //$formData['country'] = isset($params['country']) ? $params['country'] : 0;    
-        $formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
-        $formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;
-        
+        //$formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
+        //$formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;
+        /*
         // Get country listing
         $userCountry = new Default_Model_UserCountry();
         $formData['countryList'] = $userCountry->getCountryList();
@@ -1165,29 +1155,28 @@ class AccountController extends Oibs_Controller_CustomController
         }
         
         $formData['countryList'] = $temp;
-        
+        */
         //Set array patterns
         $pat_sql = array("%","_");
         $pat_def = array("*","?");
-        
+
         //Replace * and ? characters  
         $formData['username'] = str_replace($pat_def,$pat_sql,$formData['username']);
         $formData['city'] = str_replace($pat_def,$pat_sql,$formData['city']);
         
+        $listSize = 1;
         // Get user listing
         $user = new Default_Model_User();
-        $userListing = $user->getUserListing($formData, $page, $count, $sort);
+        $userListing = $user->getUserListing($formData, $page, $count, $order, $list, $listSize);
 
         $userIdList = array();
         foreach($userListing as $u) {
-        	array_push($userIdList,$u['id_usr']); 
+        	$userIdList[] = $u['id_usr']; 
         }
-        // Get total content count
-        $userCount = $user->getUserCountBySearch($formData);
         
         // Calculate total page count
-        $pageCount = ceil($userCount / $count);
-                
+        $pageCount = ceil($listSize / $count);
+        //print_r($pageCount);die;
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
         
@@ -1198,9 +1187,23 @@ class AccountController extends Oibs_Controller_CustomController
           
         $userSearch->setAction($url)
                    ->setMethod('get');
+                   
+                   
+        $userLocations = $this->getAllCitiesAndCountries();
+        
+        $userCities = json_encode($userLocations['cities']);
+        $userCountries = json_encode($userLocations['countries']);
+
+        $userContents = array();
+        
+        foreach($userListing as $user) {
+        	$contentsArray = $this->getUserContents($user['id_usr'],$user['contents'],3);
+        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
+        		$userContents[$user['id_usr']] = array();
+        	else $userContents[$user['id_usr']] = $contentsArray;
+        }
         
         $this->view->userSearch = $userSearch;
-        
         // Custom pagination to fix memory error on large amount of data
         $paginator = new Zend_View();
         $paginator->setScriptPath('../application/views/scripts');
@@ -1208,39 +1211,63 @@ class AccountController extends Oibs_Controller_CustomController
         $paginator->currentPage = $page;
         $paginator->pagesInRange = 10;
         
-        /*
-        if (!empty($userListing)) {
-            // Content pagination
-            $paginator = Zend_Paginator::factory($userListing);
-            
-            // Set items per page
-            $paginator->setItemCountPerPage($count);
-            
-            // Get items by page
-            $paginator->getItemsByPage($page);
-            
-            // Set current page number
-            $paginator->setCurrentPageNumber($page);
-            
-            Zend_Paginator::setDefaultScrollingStyle('Sliding');
-            
-            $view = new Zend_View();
-            $paginator->setView($view);
-            
-            // Set paginator for view
-            $this->view->userListPaginator = $paginator;	
-        } // end if
-        */
-        
         // Set to view
         $this->view->userPaginator = $paginator;
         $this->view->userListData = $userListing;
         $this->view->userList = $userIdList;
         $this->view->count = $count;
-        $this->view->userCount = $userCount;
+        $this->view->userCount = $listSize;
         $this->view->page = $page;
+        $this->view->cities = $userCities;
+        $this->view->countries = $userCountries;
+        $this->view->userContents = $userContents;
 
     } // end of userListingAction
+    
+    
+    /*
+     * getAllCitiesAndCountries
+     * 
+     */
+	private function getAllCitiesAndCountries() {
+
+		$cache = Zend_Registry::get('cache');
+
+		// Load user locations from cache
+		if(!$resultList = $cache->load('UserLocationsList')) {
+			$userModel = new Default_Model_User();
+			$locations = $userModel->getAllUsersLocations();
+			$cache->save($locations, 'UserLocationsList');
+
+		} else {
+			$locations = $resultList;
+		}
+		
+		$output = $locations;
+
+		return $output;
+	}
+	
+	private function getUserContents($userId, $contentIdList = 0,$amount = 3) {
+
+		if(is_array($contentIdList) && sizeof($contentIdList) > 0 && $amount > 0) {
+			// Get cache from registry
+			$cache = Zend_Registry::get('cache');
+
+			// Load user locations from cache
+			if(!$resultList = $cache->load('UserContentsList_'.$userId)) {
+				$userModel = new Default_Model_User();
+				$contentList = $userModel->getUserContentList($contentIdList,$amount);
+				$cache->save($contentList, 'UserContentsList_'.$userId);
+
+			} else {
+				$contentList = $resultList;
+			}	
+			$output = $contentList;
+		}
+		return $output;
+	}
+    
     
     /**
     *   imagesAction

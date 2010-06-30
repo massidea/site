@@ -134,7 +134,7 @@ class AjaxController extends Oibs_Controller_CustomController
 		$this->view->output = $output;
 	}
 	
-	public function getuserlocationsAction() {
+	/*public function getuserlocationsAction() {
 
 		$output = "";
 		// Get requests
@@ -164,7 +164,7 @@ class AjaxController extends Oibs_Controller_CustomController
 			}
 		}
 		$this->view->output = $output;
-	}
+	}*/
 	
 	public function getusercontentsAction() {
 		$output = "";
