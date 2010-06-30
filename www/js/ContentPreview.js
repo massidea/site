@@ -1,6 +1,37 @@
 var inPreview = 0;
+var tmpFormData;
 var previewId = 'form_content_previewcontent';
 var contentId = 'form_content_realcontent';
+
+$(document).ready(function(){
+	tmpFormData = getPreviewData();
+});
+
+// Warn user on exit
+window.onbeforeunload = unloadWarning;
+function unloadWarning()
+{
+	if(contentHasChanged()){
+		switch(inPreview){
+		case 0:
+			return "You have made changes to your content that have not yet been saved. Exiting now will abandon them.";
+			break;
+		case 1:
+			return "You are currently in preview mode, exiting now will abandon your changes to your content.";
+			break;
+		}		
+	}
+}
+
+function contentHasChanged()
+{
+	if(tmpFormData == getPreviewData()){
+		return 0;
+	}
+	else if(tmpFormData != getPreviewData()){
+		return 1;
+	}
+}
 
 function generatePreview()
 {
@@ -43,6 +74,5 @@ function disableLinks()
 {
 	$('#'+previewId+' a').click(function(e){
 		e.preventDefault();
-		alert('blocked');
 	});
 }
