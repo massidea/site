@@ -220,7 +220,17 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 <?php
                 if (isset($this->userprofile['birthday']) && $this->userprofile['birthday'] != NULL):
                 ?>
-                <li><strong>Birthday:</strong> <?php echo $this->userprofile['birthday']; ?></li>
+                <?php
+                $date = date_parse_from_format("n/j/Y", $this->userprofile['birthday']);
+                if ($date['day'] < 10)
+                    $date['day'] = '0'.$date['day'];
+                if ($date['month'] < 10)
+                    $date['month'] = '0'.$date['month'];
+                $birthday = $date['year'].'-'.$date['month'].'-'.$date['day'];
+                $birthday = new Zend_Date($birthday, Zend_Date::ISO_8601);
+                $birthday = $birthday->toString('dd MMM, yyyy');
+                ?>
+                <li><strong>Birthday:</strong> <?php echo $birthday; ?></li>
                 <?php endif; ?>
                 <?php
                 if (isset($this->userprofile['phone']) && $this->userprofile['phone'] != NULL):
@@ -331,24 +341,6 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 </div>
             </div>
             -->
-        <div class="left">
-            <div id="my_groups">
-                <h3>My groups</h3>
-                <strong>All</strong><!-- | <strong><a href="#">Member</a></strong> | <strong><a href="#">Admin</a></strong>-->
-                <div class="scroll-box">
-                    <ul>
-                        <?php foreach($this->usergroups as $usergroup): ?>
-                        <?php $groupurl = $this->url(array('groupid' => $usergroup["id_grp"],
-                                                           'language' => $this->language),
-                                                     'group_shortview', true); ?>
-                        <li><a href="<?php echo $groupurl; ?>"><?php echo $usergroup['group_name_grp']; ?></a> <br />
-                        <!--154 views--></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <!--<p><strong><a href="#">See all 23</a></strong></p>-->
-                </div>
-            </div>
-        </div>
         <div class="clear"></div>
     </div>
 </div>

@@ -309,6 +309,18 @@
 		<tuv xml:lang="en"><seg>This content has been translated from </seg></tuv>
 		<tuv xml:lang="fi"><seg>Tämä sisältö on käännetty kielestä </seg></tuv>
 	</tu>
+	<tu tuid='content-view-not-translated'>
+		<tuv xml:lang="en"><seg>This content is in original language </seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä sisältö on alkuperäisessä kielessään </seg></tuv>
+	</tu>
+	<tu tuid='content-view-translated-show-translated'>
+		<tuv xml:lang="en"><seg>Show translated</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näytä käännettynä</seg></tuv>
+	</tu>
+	<tu tuid='content-view-not-translated-show-original'>
+		<tuv xml:lang="en"><seg>Show original</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näytä alkuperäinen</seg></tuv>
+	</tu>
 	<tu tuid='content-view-comment-form-subject'>
 		<tuv xml:lang="en"><seg>Subject: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Aihe: </seg></tuv>

@@ -54,7 +54,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
         <p>
             <strong>Group: </strong>
             <br />
-            <?php echo $this->grpname; ?>
+            <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
             <br />
         </p>
         <?php if (is_array($this->grpUsers)): ?>

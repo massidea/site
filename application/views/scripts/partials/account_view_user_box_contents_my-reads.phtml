@@ -1,25 +1,26 @@
 <ul>
 <?php foreach($this->myReaders as $reader): ?>
-	<li class="<?php echo $reader['class']; ?>">
-			<div class="clear" style="float: left;">
-			<img src="<?php echo $this->url(array('controller' => 'account',
-                            'action' => 'profilethumb',
-                            'id' => $reader['id_usr_vws'],
-                            'language' => $language,
-                            'thumb' => 'true'),
-                            'lang_default', true); ?>" 
-             class="smallphoto" />
+	<?php $url_user = $this->url(array('controller' => 'account',
+		                             'action' => 'view',
+		                             'user' => $reader['login_name_usr'],
+		                             'language' => $language),
+		                             'lang_default', true); ?>
+
+	<li class="all <?php echo $reader['class']; ?>">
+	<div class="reader_user">
+			<div class="photo"><a href="<?php echo $url_user; ?>">
+				<img src="<?php echo $this->url(array('controller' => 'account',
+	                            'action' => 'profilethumb',
+	                            'id' => $reader['id_usr_vws'],
+	                            'language' => $language,
+	                            'thumb' => 'true'),
+	                            'lang_default', true); ?>" /> </a>
         	</div>
-        <div style="float: left;">
-		<span>
-			<a href="<?php echo $url_user = $this->url(array('controller' => 'account',
-                             'action' => 'view',
-                             'user' => $reader['login_name_usr'],
-                             'language' => $language),
-                             'lang_default', true); ?>">
-				<?php echo $reader['login_name_usr']; ?>
-            </a>  
-         </span><br />
+	        <div class="context">
+				<a href="<?php echo $url_user; ?>">
+					<?php echo $reader['login_name_usr']; ?></a>
+	            </p>  
+			</div>
 		</div>
 	</li> 
 	 

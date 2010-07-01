@@ -70,9 +70,14 @@
         $contentModel = new Default_Model_Content();
         $contentData = $contentModel->getDataAsSimpleArray($id);
         
-        // Translate content data
-		$this->gtranslate->setLangFrom($contentData['language_cnt']);
-		$contentData = $this->gtranslate->translateContent($contentData);
+        $isTranslated = isset($params['notranslate']) ? false:true;
+        
+        if($isTranslated)
+        {
+	        // Translate content data
+			$this->gtranslate->setLangFrom($contentData['language_cnt']);
+			$contentData = $this->gtranslate->translateContent($contentData);
+        }
         
         $filesModel = new Default_Model_Files();
         $files = $filesModel->getFilenamesByCntId($id);
@@ -346,6 +351,7 @@
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;
         $this->view->views              = $views;
+        $this->view->isTranslated		= $isTranslated;
         $this->view->languageName		= $languageName;
         $this->view->gtranslateLangPair	= $gtranslateLangPair;
         $this->view->tags               = $tags;

@@ -539,7 +539,7 @@
         </seg></tuv>
 	</tu>
 	<tu tuid='index-admin-tools'>
-		<tuv xml:lang="en"><seg>System administration</seg></tuv>
-		<tuv xml:lang="fi"><seg>Järjestelmän hallinta</seg></tuv>
+		<tuv xml:lang="en"><seg>Admin tools</seg></tuv>
+		<tuv xml:lang="fi"><seg>Hallintatyökalut</seg></tuv>
     </tu>
 </body>

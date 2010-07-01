@@ -1,4 +1,4 @@
-![Massidea.org](http://www.massidea.org/images/massidea_logo.png "Massidea.org")
+![Massidea.org](http://www.massidea.org/wiki/images/0/08/Massidea_logo_varilla.png "Massidea.org")
 
 Massidea.org is a free open innovation community where users are uploading their ideas, visions of the future and today's challenges and linking them with other user.s brainchildren.
 The mixed outcome - lucky insight - is boosting individual.s creativity and enabling the birth of smashing idea.
@@ -15,7 +15,7 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 
 ### Push note
 ** AFTER YOU PUSH OUR CHANGES TO GITHUB. SEND PULL REQUEST TO ACCOUNT: iiuusit **
-![GitHub - Pull request](http://www.oibs.fi/wiki/images/e/ec/Pull_request.png "")
+![GitHub - Pull request](http://www.massidea.org/wiki/images/e/ec/Pull_request.png "")
 
 
 ## Migration notes (Old Migration notes.txt)
