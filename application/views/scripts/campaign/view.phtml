@@ -22,7 +22,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
         <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
     </h2>
     <div id="profile-meta">
-        <img src="<?php echo $this->baseUrl("/images/no_profile_img_placeholder.png"); ?>" alt="avatar" class="avatar" />
+        <!--<img src="<?php echo $this->baseUrl("/images/no_profile_img_placeholder.png"); ?>" alt="avatar" class="avatar" />-->
         <p><?php echo $this->campaign['ingress_cmp']; ?></p>
         <!--
         <p>
@@ -74,6 +74,22 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
     <div id="activity" class="right">
         <div class="left">
             <div id="campaign-info">
+                <?php if ($this->userIsGroupAdmin):
+                    $editlink = $this->url(
+                     array(
+                        'controller' => 'campaign',
+                        'action'     => 'edit',
+                        'language'   => $this->language,
+                        'id'         => $this->campaign["id_cmp"]
+                     ), 'lang_default', true
+                    );
+                ?>
+                <p class="link" style="text-align: right; padding-top: 10px;">
+                    <a href="<?php echo $editlink; ?>">Edit campaign</a> <!--|
+                    <a href="#">Edit campaign links</a> |
+                    <a href="#">Delete campaign</a>-->
+                </p>
+                <?php endif; ?>
                 <p><?php echo $this->campaign['description_cmp']; ?></p>
             </div>
             <div class="clear"></div>
@@ -86,20 +102,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                     <?php
                     if ($this->userHasGroup):
                     ?>
-                        <a href="<?php echo $linkurl; ?>">&gt; Add content</a>
-                    <?php
-                    endif;
-                    if ($this->userIsGroupAdmin):
-                         $editlink = $this->url(
-                             array(
-                                'controller' => 'campaign',
-                                'action'     => 'edit',
-                                'language'   => $this->language,
-                                'id'         => $this->campaign["id_cmp"]
-                             ), 'lang_default', true
-                         );
-                    ?>
-                        | <a href="<?php echo $editlink; ?>">Edit campaign</a>
+                        <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
                     <?php endif; ?>
                     </p>
                     <!--<p>If you add content, you'll become a group member</p> -->
