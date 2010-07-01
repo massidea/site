@@ -1248,23 +1248,19 @@ class AccountController extends Oibs_Controller_CustomController
 		return $output;
 	}
 	
-	private function getUserContents($userId, $contentIdList = 0,$amount = 3) {
+	private function getUserContents($userId, $contentIdList = array(),$amount = 3) {
 
 		if(is_array($contentIdList) && sizeof($contentIdList) > 0 && $amount > 0) {
 			// Get cache from registry
 			$cache = Zend_Registry::get('cache');
 
-			// Load user locations from cache
-			if(!$resultList = $cache->load('UserContentsList_'.$userId)) {
-				$userModel = new Default_Model_User();
-				$contentList = $userModel->getUserContentList($contentIdList,$amount);
-				$cache->save($contentList, 'UserContentsList_'.$userId);
-
-			} else {
-				$contentList = $resultList;
-			}	
+			$userModel = new Default_Model_User();
+			$contentList = $userModel->getUserContentList($contentIdList,$amount);
+			$cache->save($contentIdList, 'UserContentsList_'.$userId);
+				
 			$output = $contentList;
 		}
+
 		return $output;
 	}
     

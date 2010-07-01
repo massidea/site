@@ -25,11 +25,6 @@ $(document).ready(function(){
 	);
 	*/
 	var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
-	<?php 
-	foreach($this->userListData as $data) {
-		echo "\n\tvar user_".$data['id_usr']." = jQuery.parseJSON('".json_encode($data['contents'])."');";
-	}
-	?>
 	
 	var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 	complete_city(userCities);
@@ -52,15 +47,12 @@ $(document).ready(function(){
 		$("#user_list_"+this+"_show_more").click(function() {
 				$(this).hide();
 				$("#user_list_"+id+"_show_more_loading").show();
-		
 				var childs = $("#user_"+id+"_list_user_recent_contents_list").children().length;
-				var listStart = childs+1;
-				var listEnd = listStart+3;
-				var listIndexes = "";
-				for(var i = listStart; i < listEnd; i++) { listIndexes += eval("user_"+id)[i]+"," }
-				listIndexes = listIndexes.substr(0,listIndexes.length-1);
-				json_search_contents(listIndexes,id,this);
+				json_search_contents(childs,id,this);
 				
+		});
+		$("#user_list_"+this+"_hide_new").click(function() {
+				$("#user_"+id+"_list_user_recent_contents_list > .user_list_user_line_new").slideUp(700);
 		});
 	});
 	
@@ -87,9 +79,9 @@ $(document).ready(function(){
 	
 });
 
-function json_search_contents(listIndexes,id,div) {
+function json_search_contents(listStart,id,div) {
 	$.ajax({
-	  url: "<?php echo $url_getUserContents ?>/search/"+listIndexes,
+	  url: "<?php echo $url_getUserContents ?>/search/"+id+"/start/"+listStart,
 	  dataType: 'json',
 	  success: function(data) {
 	  		var output = "";
@@ -106,8 +98,7 @@ function json_search_contents(listIndexes,id,div) {
 			});
 			
 		  	$("#user_"+id+"_list_user_recent_contents_list").append(output);
-		  	$('.user_list_user_line_new').addClass('user_list_user_line').removeClass('user_list_user_line_new');
-		  	$(".user_list_user_line").slideDown(700,function(){ 
+		  	$("#user_"+id+"_list_user_recent_contents_list > .user_list_user_line_new").slideDown(700,function(){ 
 		  	$("#user_list_"+id+"_show_more_loading").hide();
 		  	$(div).show();
 		  	 });
@@ -312,8 +303,10 @@ function complete_city(result){
 		                        <div class="user_list_user_line">
 			                        <span class="user_list_recet_contents_title">Recent posts </span>
 			                        |
-			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="block">Show more</a>
+			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="block">Show more </a>
 			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" /><span> Please wait...</span></div>
+			                        |
+			                        <a id="user_list_<?php echo $user['id_usr']; ?>_hide_new" href="#" onClick="return false;" style="block">Hide</a>
 		                        </div>
 		                        
 		                        <div class="user_list_statistics" id="user_list_user_<?php echo $user['id_usr']; ?>_search" style="display:none;">

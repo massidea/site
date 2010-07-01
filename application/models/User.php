@@ -526,12 +526,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     *   Gets user listing with filtering options.
     *
-    *   Query in this function fetches all users
-    *   from database. This will cause a creation
-    *   of a very large array when user count
-    *   is big.
-    *
-    *   @params array $filter Filtering options
+    *   @params array $filter $page, $count $order $list
     *   @return array
     */
 	public function getUserListing(&$filter = null, $page = 1, $count = 10, $order = 'login', $list = 'DESC', &$listSize = 1)

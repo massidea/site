@@ -138,16 +138,26 @@ class AjaxController extends Oibs_Controller_CustomController
 		$output = "";
 		// Get requests
 		$params = $this->getRequest()->getParams();
-		$search = isset($params['search']) ? $params['search'] : null;
-		$contentsToSearch = explode(",",$search);
-		foreach($contentsToSearch as $id) {
-			if(!is_numeric($id)) return $output;
-		}
+		$userId = isset($params['search']) ? $params['search'] : null;
+		$start = isset($params['start']) ? $params['start'] : null;
 		
-		if(is_array($contentsToSearch)) {
-			$userModel = new Default_Model_User();
-			$contentList = $userModel->getUserContentList($contentsToSearch,3);
+		if(is_numeric($userId) && is_numeric($start)) {
+				
+			// Get cache from registry
+			$cache = Zend_Registry::get('cache');
+			
+			// Load user locations from cache
+			if($resultList = $cache->load('UserContentsList_'.$userId)) {
+				$newContents = array();
+				$userModel = new Default_Model_User();
+				for($i = $start; $i < $start +3; $i++) {
+					if($resultList[$i])
+						$newContents[] = $resultList[$i];
+				}
+				$contentList = $userModel->getUserContentList($newContents,3);
+			}
 			$output = json_encode($contentList);
+	
 		}
 		$this->view->output = $output;
 	}
