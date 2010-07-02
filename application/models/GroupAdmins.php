@@ -65,6 +65,15 @@ class Default_Model_GroupAdmins extends Zend_Db_Table_Abstract
             $row->save();
         }
     }
+
+    public function removeAdminsFromGroup($id_grp = 0)
+    {
+        if (!$id_grp) return false;
+
+        $where = $this->getAdapter()->quoteInto('id_grp = ?', $id_grp);
+
+        return $this->delete($where);
+    }
     
     /*
      * Returns a list of all admins for the specified group.

@@ -1,3 +1,15 @@
+<?php $this->headScript()->captureStart(); ?>
+function deleteconfirmation(url) {
+    var answer = confirm("Delete campaign?");
+    if (answer) {
+        alert("Campaign deleted");
+        window.location = url;
+    } else {
+        //alert("");
+    }
+}
+<?php $this->headScript()->captureEnd(); ?>
+
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
@@ -76,18 +88,26 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <div id="campaign-info">
                 <?php if ($this->userIsGroupAdmin):
                     $editlink = $this->url(
-                     array(
-                        'controller' => 'campaign',
-                        'action'     => 'edit',
-                        'language'   => $this->language,
-                        'id'         => $this->campaign["id_cmp"]
-                     ), 'lang_default', true
+                        array(
+                            'controller' => 'campaign',
+                            'action'     => 'edit',
+                            'language'   => $this->language,
+                            'id'         => $this->campaign["id_cmp"]
+                         ), 'lang_default', true
+                    );
+                    $dellink = $this->url(
+                        array(
+                            'controller' => 'campaign',
+                            'action'     => 'remove',
+                            'language'   => $this->language,
+                            'id'         => $this->campaign["id_cmp"]
+                         ), 'lang_default', true
                     );
                 ?>
                 <p class="link" style="text-align: right; padding-top: 10px;">
-                    <a href="<?php echo $editlink; ?>">Edit campaign</a> <!--|
-                    <a href="#">Edit campaign links</a> |
-                    <a href="#">Delete campaign</a>-->
+                    <a href="<?php echo $editlink; ?>">Edit campaign</a> |
+                    <!--<a href="#">Edit campaign links</a> |-->
+                    <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete campaign</a>
                 </p>
                 <?php endif; ?>
                 <p><?php echo $this->campaign['description_cmp']; ?></p>
