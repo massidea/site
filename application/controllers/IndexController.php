@@ -2,7 +2,7 @@
 /**
  *  IndexController -> main pages
  *
-* 	Copyright (c) <2008>, Matti SÃ¤rkikoski <matti.sarkikoski@cs.tamk.fi>
+* 	Copyright (c) <2008>, Matti Särkikoski <matti.sarkikoski@cs.tamk.fi>
 * 	Copyright (c) <2008>, Jani Palovuori <jani.palovuori@cs.tamk.fi>
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -21,8 +21,8 @@
  *  IndexController - class
  *
  *  @package 	controllers
- *  @author 	Matti SÃ¤rkikoski & Jani Palovuori
- *  @copyright 	2008 Matti SÃ¤rkikoski & Jani Palovuori
+ *  @author 	Matti Särkikoski & Jani Palovuori
+ *  @copyright 	2008 Matti Särkikoski & Jani Palovuori
  *  @license 	GPL v2
  *  @version 	1.0
  */
@@ -38,7 +38,10 @@ class IndexController extends Oibs_Controller_CustomController
 	 *	Show mainpage and list newest and most viewed ideas and problems
 	 */
     function indexAction()
-    {    	
+    {
+    	// Variable for number recent campaigns to be sent to view
+    	$recentCampaignsCount = 0;
+    	
 		$this->view->title = "index-home";
         
         // Get cache from registry
@@ -47,7 +50,6 @@ class IndexController extends Oibs_Controller_CustomController
         // $contentTypesModel = new Default_Model_ContentTypes();
         // $userModel = new Default_Model_User();
         
-        /*
         // Load recent posts from cache
         $cachePosts = 'IndexPosts_' . $this->view->language;
         
@@ -79,7 +81,6 @@ class IndexController extends Oibs_Controller_CustomController
         } else {
             $recentposts = $result;
         }
-        */
         
         // Load most popular tags from cache
         if(!$result = $cache->load('IndexTags')) {
@@ -126,6 +127,7 @@ class IndexController extends Oibs_Controller_CustomController
         
         $this->view->poptags = $tags;
         $this->view->activeusers = $activeusers;
-        $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();        
+        $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();
+        $this->view->recentCampaignsCount = $recentCampaignsCount;        
     }
 }

@@ -6,6 +6,20 @@
         "<?php echo $this->escape($this->tagName); ?>"
     </h3>
     
+    <div class="tag_view_col_hearders">
+    	<?php echo '<div class="tag_index_col_1'.'" style="text-align: left; width: 225px; float:left;">';
+    		echo 'Sarake 1';
+    	echo '</div>';
+    	echo '<div class="tag_index_col_2'.'" style="text-align: left; width: 225px; float:left; margin-left: 15px;">';
+    		echo 'Sarake 2';
+    	echo '</div>';
+    	echo '<div class="tag_index_col_3'.'" style="text-align: left; width: 225px; float:left; margin-left: 15px;">';
+    		echo 'Sarake 3';
+    	echo '</div>';?>
+    </div>
+    
+    <div style="clear:both">
+    
     <div class="tag_view_results">
     <?php $i = 0; ?>
     <?php foreach($this->content as $content): ?>

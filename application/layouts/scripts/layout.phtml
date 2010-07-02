@@ -250,22 +250,22 @@ echo $this->doctype();
                 
                 <!-- Language selector -->
 				<div class="top_row_center_right_language">
-		    <input type="hidden" id="translate-language-code-value" value=<?php
-		    
-                    $languages = New Default_Model_Languages();
-
-                    //get select language code from request url
-                    $subject = str_replace($this->baseUrl(),'',$this->url());
-                     
-                    $pattern = '/^(\/([^\/]+)[\/]?)/';
-                    preg_match($pattern,$subject,$matches);
-                    //Search language code from database and if there is one, allow the code, else force en.
-                    $languageCode = $languages->getLanguageByLangCode($matches[2]);
-                    if($languageCode) $lang = $matches[2];
-                    else $lang = "en";
-                    echo $lang;
-
-		    ?> /> 
+			    	<input type="hidden" id="translate-language-code-value" value=<?php
+			    
+	                    $languages = New Default_Model_Languages();
+	
+	                    //get select language code from request url
+	                    $subject = str_replace($this->baseUrl(),'',$this->url());
+	                     
+	                    $pattern = '/^(\/([^\/]+)[\/]?)/';
+	                    preg_match($pattern,$subject,$matches);
+	                    //Search language code from database and if there is one, allow the code, else force en.
+	                    $languageCode = $languages->getLanguageByLangCode($matches[2]);
+	                    if($languageCode) $lang = $matches[2];
+	                    else $lang = "en";
+	                    echo $lang;
+	
+			    ?> /> 
 
             		<select id="languages" onchange="changeLang('<?php echo $lang; ?>', '<?php echo $this->baseUrl('/');?>')">
                         

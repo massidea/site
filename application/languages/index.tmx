@@ -45,6 +45,18 @@
 		<tuv xml:lang="en"><seg>tags</seg></tuv>
 		<tuv xml:lang="fi"><seg>tagit</seg></tuv>
 	</tu>
+	<tu tuid='index-problem-tags'>
+		<tuv xml:lang="en"><seg>Challenge tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Haaste tagit</seg></tuv>
+	</tu>
+	<tu tuid='index-idea-tags'>
+		<tuv xml:lang="en"><seg>Idea tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Idea tagit</seg></tuv>
+	</tu>
+	<tu tuid='index-finfo-tags'>
+		<tuv xml:lang="en"><seg>Vision tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Visio tagit</seg></tuv>
+	</tu>	
 	<tu tuid='index-most-popular'>
 		<tuv xml:lang="en"><seg>Most popular</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosituimmat</seg></tuv>
@@ -539,5 +551,21 @@
 	<tu tuid='index-admin-tools'>
 		<tuv xml:lang="en"><seg>System administration</seg></tuv>
 		<tuv xml:lang="fi"><seg>Järjestelmän hallinta</seg></tuv>
+    </tu>
+    <tu tuid='index-see-also-problem'>
+		<tuv xml:lang="en"><seg>See also these challenges</seg></tuv>
+		<tuv xml:lang="fi"><seg>Katso myös nämä haasteet</seg></tuv>
+    </tu>
+    <tu tuid='index-see-also-idea'>
+		<tuv xml:lang="en"><seg>See also these ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>Katso myös nämä ideat</seg></tuv>
+    </tu>
+    <tu tuid='index-see-also-finfo'>
+		<tuv xml:lang="en"><seg>See also these visions</seg></tuv>
+		<tuv xml:lang="fi"><seg>Katso myös nämä visiot</seg></tuv>
+    </tu>
+    <tu tuid='index-recent-campaigns'>
+		<tuv xml:lang="en"><seg>Recent campaigns</seg></tuv>
+		<tuv xml:lang="fi"><seg>Viimeisimmät kampanjat</seg></tuv>
     </tu>
 </body>

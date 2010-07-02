@@ -20,6 +20,11 @@ $url_checkRecentContent = $this->url(array('controller' => 'ajax',
 										   'action' => 'checkrecentcontent',
 										   'language' => $this->language), 
 										   'lang_default', true);
+
+$url_tag_cloud = $this->url(array('controller' => 'tag',
+                                  'action' => 'index',
+                                  'language' => $this->language), 
+                            'lang_default', true);
 ?>
 <?php $this->headScript()->captureStart()?>
 
@@ -174,6 +179,19 @@ Commented to fix temporary problem, will be researched further later
         </p>
     </div>
     
+    <div class="recent_campaigns_title">
+    	<a href="#"><?php echo '> '.$this->translate('index-recent-campaigns'); ?> </a>
+	</div>
+	<div>
+		Recent campaigns content rows here. If more than 15 excists, "Show more" -link will appear.
+	</div>
+	
+	<?php if($this->recentCampaignsCount > 15): ?>
+	<div id="show_more_campaign" style="padding-top: 5px;" class="top_right_box_links">
+		<a href="#">Show more</a>
+    </div>
+    <?php endif; ?>
+
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
     
     <p id="most_active_users" style="padding: 0px;" class="top_right_box_links">

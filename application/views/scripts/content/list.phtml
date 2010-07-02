@@ -20,6 +20,7 @@
     // some variable initiation
     $url_tag_cloud = $this->url(array('controller' => 'tag',
         'action' => 'index',
+    	'ctype' => $this->type,
         'language' => $this->language), 
         'lang_default', true);
         
@@ -27,6 +28,11 @@
         'action' => 'register',
         'language' => $this->language), 
         'lang_default', true);
+    
+    $tags_type = 'index-'.$this->type.'-tags';
+    
+    $type = $this->type;
+
 ?>
 
 <div class="content_list_recent">
@@ -118,10 +124,10 @@
     
     <?php endif; ?>
     
-    <div class="right_side" style="padding: 0px; margin: 0px; margin-top: 0px;">
-        <p class="right_side_title_small" style="padding-top: 0px; padding-bottom:3px;">
+    <div class="right_side">
+        <div class="right_side_title_small">
             <?php echo $this->translate('content-list-right-header-'.$this->type); ?>
-        </p>
+        </div>
         
         <div class="top_right_box">
             <div>
@@ -130,11 +136,11 @@
                 <p><?php echo $this->translate('content-list-right-p3'); ?></p>
             </div>
         </div>
-        
+         
         <p id="tags_link" style="margin-top: 1px;" class="top_right_box_links">
             <?php echo $this->translate('index-most-popular')?>
             <a href="<?php echo $url_tag_cloud; ?>">
-                <?php echo $this->translate('index-tags')?>
+                <?php echo $this->translate($tags_type); ?>
             </a>
         </p>
         
@@ -168,13 +174,33 @@
         
         <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
         
-        <h3 style="padding:0; margin-top: 5px;">
-            <?php echo $this->translate('content-list-missing-header'); ?>
-        </h3>
+        <div class="see_also_title">
+        	<?php echo $this->translate('index-see-also-'.$this->type); ?>
+        	<div class="see_also_links">
+        		<a href="<?php echo $this->url(array('controller' => 'search', 
+                                                     'action' => 'result',  
+                                                     'language' => $this->language, 
+                                                     'order' => 'views'), 
+                                               'lang_default', true); ?>">
+        			<?php echo $this->translate('content-most-viewed'); ?>
+				</a>
+        		<?php echo ' | '; ?>
+        		<a href="#"><?php echo $this->translate('content-best-rated'); ?></a>
+        	</div>
+        </div>
         
-        <p style="padding:0; margin:0;">
-            <?php echo $this->translate('index-opensource'); ?>
-        </p>
+        <div id="right_side_content_container">
+        	<?php echo $this->partialLoop('partials/mini_content_row.phtml', $this->mostViewedData); ?>
+        </div>
+        
+        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+        
+        <div class="right_side_title_small"><?php echo $this->translate('content-list-missing-header'); ?></div>
+        <div class="top_right_box">
+	        <p style="padding:0; margin:0;">
+	            <?php echo $this->translate('index-opensource'); ?>
+	        </p>
+        </div>
         
     </div>
 </div>
