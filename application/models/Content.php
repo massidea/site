@@ -129,7 +129,19 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		return $data;
 	}
 	
-	public function getContentRows($ids) {
+	/* getcontentRows
+	 * 
+	 * Function to get data for content_row partial from given id parameters
+	 * 
+	 *  @param ids		array	array of arrays with content_id in it
+	 *  @param id_cnt	string	what is the key of id_cnt in the ids array
+	 *  @param sort		bool	sorts the data according to given id array or not
+	 *  @return 		array	array of all data needed for content_row partial
+	 */
+	public function getContentRows($ids, $id_cnt = 'id_cnt', $sort = false) {
+		if (empty($ids)) {
+			return array();
+		}
 		$select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
 																	"title_cnt",
 																	"lead_cnt",
@@ -150,6 +162,19 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 								->where('contents_cnt.id_cnt IN (?)', $ids)
 								;
 		$data = $this->_db->fetchAll($select);
+		if ($sort) {
+			$idList = array();
+			foreach ($ids as $id) {
+				$idList[] = $id[$id_cnt];
+			}
+			$idList = array_flip($idList);
+			$sortedData = array();
+			foreach ($data as $row) {
+				$sortedData[$idList[$row['id_cnt']]] = $row;
+			}
+			ksort($sortedData);
+			return $sortedData;
+		}
 		return $data;
 	}
 

@@ -140,6 +140,7 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
             $row->id_usr_vws = $userid;
             $row->id_cnt_vws = $id;
             $row->views_vws = 1;
+            $row->modified_vws = new Zend_Db_Expr('NOW()');
             //try {
                 @$row->save();
             /*}
@@ -159,6 +160,7 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
         
             $row = $rowset->current();
             $row->views_vws += 1;
+            $row->modified_vws = new Zend_Db_Expr('NOW()');
             
           //  Zend_Debug::dump($row, $label=null, $echo=true); die;
 
@@ -188,13 +190,18 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     } // end of removeContentViews
     
     public function getUserViewedContents($id_usr, $limit = 10) {
-    	$select = $this->select()->from($this, array('id_cnt' => 'id_cnt_vws'))
+    	$select = $this->select()->from($this, 'id_cnt_vws')
+    				   ->setIntegrityCheck(false)
+    				   ->joinLeft('cnt_has_usr', 'id_cnt_vws = id_cnt')
+    				   ->where('id_usr != ?', $id_usr)
     				   ->where('id_usr_vws = ?', $id_usr)
-    				   ->order('views_vws DESC')
+    				   ->where('modified_vws is not null')
+    				   ->order('modified_vws DESC')
     				   ->limit($limit);
+    				   
     	$rowset = $this->fetchAll($select);
     	$contentModel = new Default_Model_Content();
-    	return $contentModel->getContentRows($rowset->toArray());
+    	return $contentModel->getContentRows($rowset->toArray(), 'id_cnt_vws', true);
     }
 } // end of class
 ?>
