@@ -100,15 +100,13 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setValue($clear)
             ->setDecorators(array('ViewHelper'));
 
-        // Description
+        // Body text
         $campaigndesc = new Zend_Form_Element_Textarea('campaign_desc');
         $campaigndesc
             ->setAttrib('cols', '45')
             ->setAttrib('rows', '20')
             ->setLabel('Body text')
-            ->setRequired(true)
             ->setValidators(array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => "Body text can't be empty."))),
                 array(
                     'StringLength',
                     false,
@@ -118,8 +116,6 @@ class Default_Form_AddCampaignForm extends Zend_Form
                         'messages' =>
                             array('stringLengthTooLong' => 'Body text too long.')))
             ))
-            ->setDescription(
-                '<div id="progressbar_campaign_desc" class="limit ok"></div>')
             ->setDecorators(array('FieldDecorator'));
         
         $campaigndesc_clear = new Oibs_Form_Element_Note('campaigndesc_clear');

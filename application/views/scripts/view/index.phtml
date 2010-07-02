@@ -11,20 +11,20 @@
 ?>
 <?php $contentRatingUrl = $this->url(array('controller' => 'ajax',
 										   'action' => 'contentrating',
-										   'id' => $this->contentData['id_usr'],
+										   'id_cnt' => $this->contentData['id_cnt'],
 										   'language' => $this->language),
 										   'lang_default', true);
 ?>
 <?php $moreFromUserUrl = $this->url(array('controller' => 'ajax',
 										  'action' => 'morefromuser',
-										  'user_id' => $this->contentData['id_usr'],
-										  'cnt_id' => $this->contentData['id_cnt'],
+										  'id_usr' => $this->contentData['id_usr'],
+										  'id_cnt' => $this->contentData['id_cnt'],
 										  'language' => $this->language),
 										  'lang_default', true); 
 ?>
 <?php $relatedContentUrl = $this->url(array('controller' => 'ajax',
 											'action' => 'relatedcontent',
-											'id' => $this->contentData['id_cnt'],
+											'id_cnt' => $this->contentData['id_cnt'],
 											'language' => $this->language),
 											'lang_default', true); 
 ?>

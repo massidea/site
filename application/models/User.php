@@ -1293,24 +1293,29 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     /*
      * getUsersViewers
      * 
-     * gets list of users who has read users content, sorted by amount of views
+     * gets list of users who has read users content, sorted last viewed
      * 
      * @param 	id 			users id
      * @param 	limit		limit of users, default 10
      * @return 	array		array (views => viewcount, id_usr_vws => viewers user id)
      */
     public function getUsersViewers($id, $limit = 10) {
-    	//select id_usr_vws, sum(views_vws) FROM cnt_views_vws JOIN (cnt_has_usr) on (cnt_has_usr.id_cnt = cnt_views_vws.id_cnt_vws) 
-    	//	where id_usr=2 group by id_usr_vws order by sum(views_vws) desc;
-		$select = $this->_db->select()
-					   		 ->from('cnt_has_usr', array())
-					   		 ->where('cnt_has_usr.id_usr = ?', $id)
-					   		 ->join('cnt_views_vws', 'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt', array('views' => 'sum(views_vws)' , 'id_usr_vws'))
-					   		 ->join('users_usr', 'id_usr_vws = users_usr.id_usr', array('login_name_usr'))
-					   		 ->group('id_usr_vws')
-					   		 ->order('views desc')
-					   		 ->limit($limit);
-
+    	// select max(modified_vws), id_usr_vws from cnt_has_usr,cnt_views_vws 
+    	// where id_usr=2 and id_cnt=id_cnt_vws and modified_vws is not null and id_usr_vws != 0 group by id_usr_vws order by modified_vws desc;
+    	$select = $this->select()->setIntegrityCheck(false)
+    							 ->from('cnt_has_usr', array())
+    							 ->where('cnt_has_usr.id_usr = ?', $id)
+    							 ->join('cnt_views_vws', 
+    							 		'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt',
+    							  		array('latest' => 'max(modified_vws)', 'id_usr_vws' ))
+    							 ->join('users_usr', 'id_usr_vws = users_usr.id_usr', array('login_name_usr'))
+    							 ->where('users_usr.id_usr != ?', $id)
+    							 ->where('cnt_has_usr.id_usr != 0')
+    							 ->where('modified_vws is not null')
+    							 ->group('id_usr_vws')
+    							 ->order('modified_vws desc')
+    							 ->limit($limit)
+    							 ;
 		$result = $this->_db->fetchAll($select);
 		return $result;		   		 
     }

@@ -7,7 +7,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
 
     <div id="profile-meta">
         <?php //TODO: tähän tulostetaan ryhmän kuva, ei tätä kiinteää kuvaa ?>
-        <img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" />
+        <!-- <img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" /> -->
 
         <p><?php echo $this->grpData["description_grp"]; ?></p>
         <?php //TODO:muutä tätä järkevämmäksi? ?>
@@ -37,6 +37,25 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
     <div id="activity" class="right">
         <div class="left">
             <div id="group-info">
+                <?php if ($this->userIsGroupAdmin):
+                    $editlink = $this->url(
+                     array(
+                        'controller' => 'group',
+                        'action'     => 'edit',
+                        'language'   => $this->language,
+                        'id'         => $this->grpData["id_grp"]
+                     ), 'lang_default', true
+                    );
+                ?>
+                <div id="join-group">
+                    <p class="join" style="text-align: right; padding-top: 10px;">
+                        <a href="<?php echo $editlink; ?>">Edit group</a> <!--|
+                        <a href="#">Edit group links</a> |
+                        <a href="#">Delete group</a>-->
+                    </p>
+                </div>
+                <?php endif; ?>
+
                 <p><?php echo $this->grpData['body_grp']; ?></p>
             </div>
             <div class="clear"></div>
@@ -62,14 +81,6 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 </p>
                 <?php
                 elseif ($this->userIsGroupAdmin):
-                     $editlink = $this->url(
-                         array(
-                            'controller' => 'group',
-                            'action'     => 'edit',
-                            'language'   => $this->language,
-                            'id'         => $this->grpData["id_grp"]
-                         ), 'lang_default', true
-                     );
                      $cmplink = $this->url(
                          array(
                             'controller' => 'campaign',
@@ -80,8 +91,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 );
                 ?>
                 <p class="join">
-                    <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a> |
-                    <a href="<?php echo $editlink; ?>">Edit group</a>
+                    <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a>
                 </p>
                 <?php else:
                     $leaveurl = $this->url(

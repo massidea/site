@@ -43,7 +43,6 @@ class AjaxController extends Oibs_Controller_CustomController
 			
 			// Set variables available for access in all actions in this class.
 			$this->params = $this->getRequest()->getParams(); 
-	        $this->id = isset($this->params['id']) ? (int)$this->params['id'] : 0;
 		}
 		// if not
 		else
@@ -137,6 +136,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function getusercontentsAction() {
 		$output = "";
 		// Get requests
+
 		$params = $this->getRequest()->getParams();
 		$userId = isset($params['search']) ? $params['search'] : null;
 		$start = isset($params['start']) ? $params['start'] : null;
@@ -174,7 +174,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function morefromuserAction() {
 		// Get content owner data
         $userModel = new Default_Model_User();
-		$rawcontents = $userModel->getUserContent($this->params['user_id'], 0, $this->params['cnt_id'], 5);
+		$rawcontents = $userModel->getUserContent($this->params['id_usr'], 0, $this->params['id_cnt'], 5);
 		foreach($rawcontents as $rawcnt)
 		{
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
@@ -186,7 +186,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function relatedcontentAction() {
         // Get related contents
         $contentModel = new Default_Model_Content();
-        $rawcontents = $contentModel->getRelatedContents($this->id, 10);
+        $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], 10);
         foreach($rawcontents as $rawcnt)
         {
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
@@ -207,11 +207,11 @@ class AjaxController extends Oibs_Controller_CustomController
 		{
 			if($rate == 1 || $rate == -1)
 			{
-	            $contentRatingsModel->addRating($this->id, $auth->getIdentity()->user_id, $rate);
+	            $contentRatingsModel->addRating($this->params['id_cnt'], $auth->getIdentity()->user_id, $rate);
 			}
 		}
 		
-        $rating = $contentRatingsModel->getPercentagesById($this->id);
+        $rating = $contentRatingsModel->getPercentagesById($this->params['id_cnt']);
 		$this->view->hasIdentity = $auth->hasIdentity();
 		$this->view->rating = $rating;
 	}

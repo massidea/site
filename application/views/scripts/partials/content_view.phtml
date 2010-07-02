@@ -182,13 +182,13 @@ if (isset($this->parent_siblings[0])) {
 	                	<?php if($this->isTranslated): ?>
 		                	<?php echo $this->translate('content-view-translated-from') . "<strong>" .$this->languageName . "</strong>. "; ?>
 		                	<?php $notranslate = $this->url(array('notranslate' => '1')); ?>
-		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-translated-show-translated'); ?></a>]
+		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-not-translated-show-original'); ?></a>]
 		                <?php elseif(!$this->isTranslated): ?>
 		                	<?php echo $this->translate('content-view-not-translated') . "(<strong>" .$this->languageName . "</strong>). "; ?>
 		                	<?php $notranslate = $this->url(array('content_id' => $this->contentData['id_cnt'], 
 																  'language' => $this->language), 
 																  'content_shortview', true); ?>
-		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-not-translated-show-original'); ?></a>]
+		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-translated-show-translated'); ?></a>]
 		                <?php endif; ?>
 	                <?php endif;?>
                 </div>

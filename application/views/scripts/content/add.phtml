@@ -1,7 +1,8 @@
-<?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
-<?php $this->headScript()->appendFile($this->baseUrl . '/js/ContentPreview.js'); ?>
-<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-min.js'); ?>
-<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-unicode-base.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/CheckContentForm.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/ContentPreview.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-min.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-unicode-base.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
 
 <?php $previewUrl = $this->url(array('controller' => 'content',
 									 'action' => 'preview',
@@ -14,7 +15,6 @@ var language = '<?php echo $this->language;?>';
 var previewUrl = '<?php echo $previewUrl; ?>';
 <?php $this->headScript()->captureEnd()?>
 
-<?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
 
 <?php 
     // change background color
