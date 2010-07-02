@@ -107,7 +107,6 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setAttrib('rows', '20')
             ->setLabel('Body')
             ->setValidators(array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => "Body text can't be empty."))),
                 array(
                     'StringLength',
                     false,
@@ -117,8 +116,6 @@ class Default_Form_AddGroupForm extends Zend_Form
                         'messages' =>
                             array('stringLengthTooLong' => 'Body text too long.')))
             ))
-            ->setDescription(
-                '<div id="progressbar_groupbody" class="limit ok"></div>')
             ->setDecorators(array('FieldDecorator'));
 
         $groupbody_clear = new Oibs_Form_Element_Note('groupbody_clear');
