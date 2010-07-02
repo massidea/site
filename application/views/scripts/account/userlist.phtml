@@ -18,12 +18,7 @@ $this->headScript()->captureStart();
 ?>
 
 $(document).ready(function(){
-/*
-	$(".users_latest_content_list").html(
-		'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
-		'Please wait...</h3>'
-	);
-	*/
+	var loading = '<img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" /><span> Please wait...</span>';
 	var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
 	
 	var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
@@ -46,7 +41,7 @@ $(document).ready(function(){
 		});
 		$("#user_list_"+this+"_show_more").click(function() {
 				$(this).hide();
-				$("#user_list_"+id+"_show_more_loading").show();
+				$("#user_list_"+id+"_show_more_loading").html(loading).show();
 				var childs = $("#user_"+id+"_list_user_recent_contents_list").children().length;
 				json_search_contents(childs,id,this);
 				
@@ -54,29 +49,25 @@ $(document).ready(function(){
 		$("#user_list_"+this+"_hide_new").click(function() {
 				$("#user_"+id+"_list_user_recent_contents_list > .user_list_user_line_new").slideUp(700);
 		});
-	});
-	
-	//jsonSearchLocations("cities");
-	/*var json_users = '<?php echo json_encode($this->userList); ?>';
-	var obj = jQuery.parseJSON(json_users);
-	
-	$.each(obj, function() {
-	
-		jsonSearchContents(this);
-
-		$("input#user_"+this+"_content").focus(function() {
+		$("input#user_"+this+"_content").click(function() {
+			if($("#user_"+id+"_content_link").attr('name') != 'complete') {
+				var old = $("#user_"+id+"_content_search_text").html();
+				$("#user_"+id+"_content_search_text").html(loading);
+				jsonSearchContents(id,old);
+				$("#user_"+id+"_content_link").attr('name','complete');
+			}
+		});
+		$("input#user_"+id+"_content").focus(function() {
 			$(this).click();
 		});
-		
 		$("input#user_"+this+"_content").result(function(event, data, formatted) {
-			 $("#user_"+data.id_usr+"_content_link").attr('action', function() {
+			 $("#user_"+id+"_content_link").attr('action', function() {
 			 	return '<?php echo $url_contentView ?>/'+data.id_cnt;
 			 });
 		});
 		
 	});
-	*/
-	
+		
 });
 
 function json_search_contents(listStart,id,div) {
@@ -98,7 +89,7 @@ function json_search_contents(listStart,id,div) {
 			});
 			
 		  	$("#user_"+id+"_list_user_recent_contents_list").append(output);
-		  	$("#user_"+id+"_list_user_recent_contents_list > .user_list_user_line_new").slideDown(700,function(){ 
+		  	$("#user_"+id+"_list_user_recent_contents_list .user_list_user_line_new").slideDown(700,function(){ 
 		  	$("#user_list_"+id+"_show_more_loading").hide();
 		  	$(div).show();
 		  	 });
@@ -107,19 +98,17 @@ function json_search_contents(listStart,id,div) {
 	});
 };
 
-function jsonSearchContents(user_id){
-
-$.ajax({
-  url: "<?php echo $url_getUserContents ?>/search/"+user_id,
-  dataType: 'json',
-  success: function(data) {
-	  complete_user_content_search(user_id,data);
-	}	
-});
-
+function jsonSearchContents(user_id,old){
+	$.ajax({
+	  url: "<?php echo $url_getUserContents ?>/search/"+user_id,
+	  dataType: 'json',
+	  success: function(data) {
+		  complete_user_content_search(user_id,data,old);
+		}	
+	});
 };
 
-function complete_user_content_search(user_id,result){
+function complete_user_content_search(user_id,result,old){
 
 		var green = "smallsize_idea_border";
 		var red = "smallsize_problem_border";
@@ -128,7 +117,7 @@ function complete_user_content_search(user_id,result){
 		$("#user_"+user_id+"_content").autocomplete(result, {
 		minChars: 0,
 		width:347,
-		delay:400,
+		delay:100,
 		scrollHeight:200,
 		cacheLength:20,
 		matchContains: true,
@@ -173,7 +162,7 @@ function complete_user_content_search(user_id,result){
 			return row.title_cnt;
 		}
 	});
-
+	$("#user_"+user_id+"_content_search_text").html(old);
 };
 
 function complete_city(result){
@@ -300,11 +289,11 @@ function complete_city(result){
 		                        
 		                        <?php if (sizeof($this->userContents[$user['id_usr']]) > 0): ?>
 		                        <div class="user_list_user_recent_contents">
-		                        <div class="user_list_user_line">
+		                        <div class="user_list_user_line" style="height: 15px">
 			                        <span class="user_list_recet_contents_title">Recent posts </span>
 			                        |
-			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="block">Show more </a>
-			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" /><span> Please wait...</span></div>
+			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="display: inline">Show more </a>
+			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"></div>
 			                        |
 			                        <a id="user_list_<?php echo $user['id_usr']; ?>_hide_new" href="#" onClick="return false;" style="block">Hide</a>
 		                        </div>
@@ -312,7 +301,7 @@ function complete_city(result){
 		                        <div class="user_list_statistics" id="user_list_user_<?php echo $user['id_usr']; ?>_search" style="display:none;">
 			                        <div class="user_list_user_line">
 				                        <div class="user_list_content_search">
-	                       					<form action="#" id="user_<?php echo $user['id_usr']; ?>_content_link">Content search: <input id="user_<?php echo $user['id_usr']; ?>_content"></input><input type="submit" value="Go"></input></form>
+	                       					<form action="#" id="user_<?php echo $user['id_usr']; ?>_content_link"><span id="user_<?php echo $user['id_usr']; ?>_content_search_text">Content search: </span><input id="user_<?php echo $user['id_usr']; ?>_content"></input><input type="submit" value="Go"></input></form>
 	                       				</div>
 		                       		</div>
 	                       		</div>
