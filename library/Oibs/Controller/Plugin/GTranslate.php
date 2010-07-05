@@ -2,7 +2,7 @@
 /**
  *  GTranslate - Get translations from Google Translate service (Google AJAX API)
  *
- *   Copyright (c) <2010>, Jaakko Paukamainen <jaakko.paukamainen@student.samk.fi>
+ *  Copyright (c) <2010>, Jaakko Paukamainen <jaakko.paukamainen@student.samk.fi>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -37,6 +37,7 @@ class Oibs_Controller_Plugin_GTranslate {
 	private $_langTo;
 	private $_translateString;
 	private $_detectString;
+	private $_detectFlag;
 	private $_response;
 	private $_errorLog;
 	
@@ -198,10 +199,11 @@ class Oibs_Controller_Plugin_GTranslate {
 	 * 
 	 * Detect language from given string
 	 * 
-	 * @param	detectString	string	String to detect
-	 * @return					string	Detected language
+	 * @param	string	string	String to detect
+	 * @param	set		boolean	Set to 'from' language
+	 * @return			string	Detected language
 	 */
-	public function detectLanguage($string)
+	public function detectLanguage($string, $set = false)
 	{
 		// Limit query to max length
 		$this->_detectString = substr($string,0,$this->_getParamMaxLength);
@@ -242,6 +244,7 @@ class Oibs_Controller_Plugin_GTranslate {
 			$detected = "Detection failed";
 		}
 		
+		if($set) $this->_langFrom = $detected;
 		
 		return $detected;
 	}
@@ -287,6 +290,27 @@ class Oibs_Controller_Plugin_GTranslate {
 			if(in_array($key, $includeList)) $array[$key] = $this->translate($value);
 		}
 		
+		return $array;
+	}
+	
+	/*
+	 * public function translateTags()
+	 * 
+	 * Translates content tags (name_tag)
+	 * 
+	 * @param	array	array	Array of tags
+	 * @param	detect	boolean	Toggle language detection
+	 * $return			array	Translated tags
+	 */
+	public function translateTags($array, $detect = 0)
+	{
+		$i = 0;
+		foreach($array as $blip)
+		{
+			$array[$i]['name_tag'] = $this->translate($blip['name_tag']);
+			$i++;
+		}
+
 		return $array;
 	}
 	
