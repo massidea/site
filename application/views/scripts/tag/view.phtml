@@ -1,26 +1,63 @@
 <?php $this->headLink()->appendStylesheet('/css/style_additions_req.css'); ?>
 
 <div id="tag_list_container">
-    <h3>
-        <?php echo $this->translate('tag-view-header'); ?>
-        "<?php echo $this->escape($this->tagName); ?>"
-    </h3>
-    
-    <div class="tag_view_col_hearders">
-    	<?php echo '<div class="tag_index_col_1'.'" style="text-align: left; width: 225px; float:left;">';
-    		echo 'Sarake 1';
-    	echo '</div>';
-    	echo '<div class="tag_index_col_2'.'" style="text-align: left; width: 225px; float:left; margin-left: 15px;">';
-    		echo 'Sarake 2';
-    	echo '</div>';
-    	echo '<div class="tag_index_col_3'.'" style="text-align: left; width: 225px; float:left; margin-left: 15px;">';
-    		echo 'Sarake 3';
-    	echo '</div>';?>
+    <div class="tag_view_search_result_title">
+    	<div class="tag_view_search_title" style="margin-bottom: 10px; text-align: left; width: 300px; float:left;">
+	        <?php echo $this->translate('tag-view-header'); ?>
+	        "<?php echo $this->escape($this->tagName); ?>"
+		</div>
+		<div class="tag_view_search_title_links" style="text-align: right; width: 250px; float:right;">
+	        <a href="<?php echo $this->url(array('controller' => 'tag',
+	        									 'list_type' => 'cloud',
+	                                             'language' => $this->language), 
+	                                       'lang_default', true); ?>">
+	            <?php echo $this->translate('tag-view-cloudmsg'); ?>
+	        </a>
+	         | 
+	        <a href="<?php echo $this->url(array('controller' => 'tag',
+	        									'list_type' => 'index',
+	                                             'language' => $this->language), 
+	                                       'lang_default', true); ?>">
+	            <?php echo $this->translate('tag-view-indexmsg'); ?>
+	        </a>
+	         |
+	        <a href="<?php echo $this->url(array('controller' => 'tag',
+	                                             'language' => $this->language), 
+	                                       'lang_default', true); ?>">
+	            <?php echo $this->translate('tag-view-companymsg'); ?>
+	        </a>
+        </div>
     </div>
     
     <div style="clear:both">
     
-    <div class="tag_view_results">
+    <div class="tag_view_col_hearders">
+    	<div class="tag_index_col_1_header">
+    		<?php echo $this->translate('tag-view-contents');?>
+    		<div class="tag_index_col_header_img"><img src="<?php echo $this->baseUrl('/images/no_profile_img_placeholder.gif'); ?>" alt="Massidea.org" width=45 height=45/></div>
+    		<div class="tag_index_col_header_txt"><?php echo $this->translate('tag-view-contents-intro');?></div>
+    		<div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" /></div>
+    	<?php echo '</div>';?>
+    	
+    	<div class="tag_index_col_2_header">
+    		<?php echo $this->translate('tag-view-campaigns-groups');?>
+    		<div class="tag_index_col_header_img"><img src="<?php echo $this->baseUrl('/images/no_profile_img_placeholder.gif'); ?>" alt="Massidea.org" width=45 height=45/></div>
+    		<div class="tag_index_col_header_txt"><?php echo $this->translate('tag-view-campaigns-groups-intro');?></div>
+    		<div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" /></div>
+    	<?php echo '</div>';?>
+    	
+    	<div class="tag_index_col_3_header">
+    		<?php echo $this->translate('tag-view-users');?>
+    		<div class="tag_index_col_header_img"><img src="<?php echo $this->baseUrl('/images/no_profile_img_placeholder.gif'); ?>" alt="Massidea.org" width=45 height=45/></div>
+    		<div class="tag_index_col_header_txt"><?php echo $this->translate('tag-view-users-intro');?></div>
+    		<div class="user_content_spacer"><img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" /></div>
+    	<?php echo '</div>';?>
+    </div>
+    
+    <div style="clear:both">
+    
+    
+    <div class="tag_index_col_1" style="text-align: left; width: 225px; float:left;">
     <?php $i = 0; ?>
     <?php foreach($this->content as $content): ?>
     	<?php if ($content['id_cnt'] != null)
@@ -28,7 +65,7 @@
     	?>
 	        <?php if ($i != 0): ?>
 	            <div class="user_content_spacer">
-	                <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
+	                <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
 	            </div>
 	        <?php endif; ?>
 	        
@@ -54,11 +91,74 @@
     <?php endforeach; ?>
     </div>
     
-    <h2>
-        <a href="<?php echo $this->url(array('controller' => 'tag',
-                                             'language' => $this->language), 
-                                       'lang_default', true); ?>">
-            <?php echo $this->translate('tag-view-cloudmsg'); ?>
-        </a>
-    </h2>
+    <div class="tag_index_col_2" style="text-align: left; width: 225px; float:left; margin-left: 20px;">
+    <?php $i = 0; ?>
+    <?php foreach($this->content as $content): ?>
+    	<?php if ($content['id_cnt'] != null)
+    	{
+    	?>
+	        <?php if ($i != 0): ?>
+	            <div class="user_content_spacer">
+	                <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+	            </div>
+	        <?php endif; ?>
+	        
+	        <?php $i++; ?>
+	        
+	        <div class="tag_view_<?php echo $content['key_cty']; ?>">
+	            <div class="tag_view_title">
+	                <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'], 
+	                                                     'language' => $this->language), 
+	                                               'content_shortview', true); ?>">
+	                    <?php echo $this->escape($content['title_cnt']); ?>
+	                </a>
+	            </div>
+	            <div class="tag_view_lead">
+	                <p style="padding: 0px; margin:0px;">
+	                    <?php echo $this->escape($content['lead_cnt']); ?>
+	                </p>
+	            </div>
+	        </div>
+        <?php
+        }
+        ?>
+    <?php endforeach; ?>
+    </div>
+    
+    <div class="tag_index_col_2" style="text-align: left; width: 225px; float:left; margin-left: 20px;">
+    <?php $i = 0; ?>
+    <?php foreach($this->content as $content): ?>
+    	<?php if ($content['id_cnt'] != null)
+    	{
+    	?>
+	        <?php if ($i != 0): ?>
+	            <div class="user_content_spacer">
+	                <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+	            </div>
+	        <?php endif; ?>
+	        
+	        <?php $i++; ?>
+	        
+	        <div class="tag_view_<?php echo $content['key_cty']; ?>">
+	            <div class="tag_view_title">
+	                <a href="<?php echo $this->url(array('content_id' => $content['id_cnt'], 
+	                                                     'language' => $this->language), 
+	                                               'content_shortview', true); ?>">
+	                    <?php echo $this->escape($content['title_cnt']); ?>
+	                </a>
+	            </div>
+	            <div class="tag_view_lead">
+	                <p style="padding: 0px; margin:0px;">
+	                    <?php echo $this->escape($content['lead_cnt']); ?>
+	                </p>
+	            </div>
+	        </div>
+        <?php
+        }
+        ?>
+    <?php endforeach; ?>
+    </div>
+    
+    
+    
 </div>
