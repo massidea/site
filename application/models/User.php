@@ -977,11 +977,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	    	$select1 = $this->_db->select()->from('usr_groups_grp', 'id_grp')
 	    								->where('group_name_grp LIKE ?','%'. $group .'%');
     	}
-
     							
 		$select = $this->_db->select()->from('usr_has_grp', 'id_usr')
     								->where('id_grp IN (?)', $select1);
-    					$this->getU			      
         return $select;
     } 
     
