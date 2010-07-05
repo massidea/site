@@ -91,6 +91,25 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                 </p>
                 <?php endif; ?>
                 <p><?php echo $this->campaign['description_cmp']; ?></p>
+                <?php if (isset($this->campaign['campaignWeblinks']) && $this->campaign['campaignWeblinks'] != NULL) : ?>
+                <div id="campaign-links">
+                    <p class="campaign-links">Campaign links:
+                        <?php
+                        $count = count($this->campaign['campaignWeblinks']);
+                        $i = 1;
+                        foreach ($this->campaign['campaignWeblinks'] as $weblink) {
+                        ?>
+                        <a href="<?php echo $weblink['url_cwl']; ?>"><?php
+                            echo $weblink['name_cwl'];
+                        ?></a><?php
+                        if ($i != $count)
+                            echo ',';
+                        $i++;
+                        }
+                        ?>
+                    </p>
+                </div>
+                <?php endif; ?>
             </div>
             <div class="clear"></div>
             <div id="contribute">

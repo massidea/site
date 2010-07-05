@@ -21,12 +21,12 @@ ENGINE = MyISAM;
 -- -----------------------------------------------------
 -- Table `grp_weblinks_uwl`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `grp_weblinks_uwl` (
+CREATE  TABLE IF NOT EXISTS `grp_weblinks_gwl` (
   `id_gwl` INT NOT NULL AUTO_INCREMENT ,
   `id_grp_gwl` INT NOT NULL ,
   `name_gwl` VARCHAR(45) NOT NULL ,
   `url_gwl` VARCHAR(150) NOT NULL ,
-  `count_uwl` INT NOT NULL ,
+  `count_gwl` INT NOT NULL ,
   `created_gwl` DATETIME NULL ,
   `modified_gwl` DATETIME NULL ,
   PRIMARY KEY (`id_gwl`) ,
@@ -41,12 +41,12 @@ ENGINE = MyISAM;
 -- -----------------------------------------------------
 -- Table `cmp_weblinks_uwl`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `cmp_weblinks_uwl` (
+CREATE  TABLE IF NOT EXISTS `cmp_weblinks_cwl` (
   `id_cwl` INT NOT NULL AUTO_INCREMENT ,
   `id_cmp_cwl` INT NOT NULL ,
   `name_cwl` VARCHAR(45) NOT NULL ,
   `url_cwl` VARCHAR(150) NOT NULL ,
-  `count_uwl` INT NOT NULL ,
+  `count_cwl` INT NOT NULL ,
   `created_cwl` DATETIME NULL ,
   `modified_cwl` DATETIME NULL ,
   PRIMARY KEY (`id_cwl`) ,

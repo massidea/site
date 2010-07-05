@@ -1,6 +1,6 @@
 <?php
 /**
- *  UserWeblinks -> UserWeblinks database model for usr_weblinks_uwl table.
+ *  GroupWeblinks -> GroupWeblinks database model for grp_weblinks_gwl table.
  *
  * 	Copyright (c) <2009>, Mikko Korpinen
  *
@@ -18,7 +18,7 @@
  */
 
 /**
- *  UserWeblinks - class
+ *  GroupWeblinks - class
  *
  *  @package 	models
  *  @author     Mikko Korpinen
@@ -26,20 +26,20 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
-class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
+class Default_Model_GroupWeblinks extends Zend_Db_Table_Abstract
 {
 	// Name of table
-    protected $_name = 'usr_weblinks_uwl';
+    protected $_name = 'grp_weblinks_gwl';
 	
 	// Primary key of table
-	protected $_primary = 'id_uwl';
+	protected $_primary = 'id_gwl';
 	
 	// Tables reference map
 	protected $_referenceMap    = array(
-        'UserWeblinks' => array(
-            'columns'           => array('id_usr_uwl'),
-            'refTableClass'     => 'Default_Model_User',
-            'refColumns'        => array('id_usr')
+        'GroupWeblinks' => array(
+            'columns'           => array('id_grp_gwl'),
+            'refTableClass'     => 'Default_Model_Groups',
+            'refColumns'        => array('id_grp')
         )
     );
 	
@@ -47,47 +47,47 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
      * setWeblink - Set web link
      * 
      * @author Mikko Korpinen
-     * @param int $id_usr
+     * @param int $id_grp
      * @param string (45) $name
      * @param string (150) $url
      * @param int $count
      */
-    public function setWeblink($id_usr, $name, $url, $count) {
+    public function setWeblink($id_grp, $name, $url, $count) {
         // get old values
         $select = $this->select()
-            ->from($this, array('name_uwl', 'url_uwl'))
-            ->where('id_usr_uwl = ?', $id_usr)
-            ->where('count_uwl = ?', $count);
+            ->from($this, array('name_gwl', 'url_gwl'))
+            ->where('id_grp_gwl = ?', $id_grp)
+            ->where('count_gwl = ?', $count);
         $result = $this->fetchAll($select)->toArray();
 
         $new = array(
-                'id_usr_uwl' => $id_usr,
-                'name_uwl' => $name,
-                'url_uwl' => $url,
-                'count_uwl' => $count,
-                'created_uwl' => new Zend_Db_Expr('NOW()'),
-                'modified_uwl' => new Zend_Db_Expr('NOW()')
+                'id_usr_gwl' => $id_grp,
+                'name_gwl' => $name,
+                'url_gwl' => $url,
+                'count_gwl' => $count,
+                'created_gwl' => new Zend_Db_Expr('NOW()'),
+                'modified_gwl' => new Zend_Db_Expr('NOW()')
         );
 
         $update = array(
-                'id_usr_uwl' => $id_usr,
-                'name_uwl' => $name,
-                'url_uwl' => $url,
-                'count_uwl' => $count,
-                'modified_uwl' => new Zend_Db_Expr('NOW()')
+                'id_grp_gwl' => $id_grp,
+                'name_gwl' => $name,
+                'url_gwl' => $url,
+                'count_gwl' => $count,
+                'modified_gwl' => new Zend_Db_Expr('NOW()')
         );
 
         // if old values found (= not new link field)
-		if(isset($result[0]['name_uwl'])) {
-            if ($result[0]['name_uwl'] == $name
-            && $result[0]['url_uwl'] == $url
-            && $result[0]['count_uwl'] == $count) {
+		if(isset($result[0]['name_gwl'])) {
+            if ($result[0]['name_gwl'] == $name
+            && $result[0]['url_gwl'] == $url
+            && $result[0]['count_gwl'] == $count) {
                 return true;    // dont set the same values
             }
 
             // update old values
-            $where[] = $this->getAdapter()->quoteInto('id_usr_uwl = ?', $id_usr);
-            $where[] = $this->getAdapter()->quoteInto('count_uwl = ?', $count);
+            $where[] = $this->getAdapter()->quoteInto('id_grp_gwl = ?', $id_grp);
+            $where[] = $this->getAdapter()->quoteInto('count_gwl = ?', $count);
 
 			if($this->update($update, $where)) {
                 return true;
@@ -111,7 +111,7 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
     public function getWeblink($id) {
         $select = $this->select()
 				->from($this, array('*'))
-				->where('id_uwl = ?', $id);
+				->where('id_gwl = ?', $id);
 
 		$result = $this->fetchAll($select)->toArray();
 
@@ -119,17 +119,17 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
     }
 
     /**
-     * getUserWeblinks - Get user weblinks
+     * getGroupWeblinks - Get group weblinks
      *
      * @author Mikko Korpinen
-     * @param int $id_usr
+     * @param int $id_grp
      * @return array
      */
-    public function getUserWeblinks($id_usr) {
+    public function getUserWeblinks($id_grp) {
         $select = $this->select()
 				->from($this, array('*'))
-				->where('id_usr_uwl = ?', $id_usr)
-                ->order('count_uwl');
+				->where('id_grp_gwl = ?', $id_grp)
+                ->order('count_gwl');
 
 		$result = $this->fetchAll($select)->toArray();
 
@@ -152,13 +152,13 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
     }
 
     /**
-     * removeUserWeblinks - Remove user weblinks
+     * removeGroupWeblinks - Remove group weblinks
      *
      * @author Mikko Korpinen
-     * @param int $id_usr
+     * @param int $id_grp
      */
-    public function removeUserWeblinks($id_usr) {
-        $where = $this->getAdapter()->quoteInto('id_usr_uwl = ?', $id_usr);
+    public function removeGroupWeblinks($id_grp) {
+        $where = $this->getAdapter()->quoteInto('id_grp_gwl = ?', $id_gsr);
         if ($this->delete($where)) {
             return true;
         } else {

@@ -1,6 +1,6 @@
 <?php
 /**
- *  UserWeblinks -> UserWeblinks database model for usr_weblinks_uwl table.
+ *  CampaignWeblinks -> CampaignWeblinks database model for cmp_weblinks_cwl table.
  *
  * 	Copyright (c) <2009>, Mikko Korpinen
  *
@@ -18,7 +18,7 @@
  */
 
 /**
- *  UserWeblinks - class
+ *  CampaignWeblinks - class
  *
  *  @package 	models
  *  @author     Mikko Korpinen
@@ -26,20 +26,20 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
-class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
+class Default_Model_CampaignWeblinks extends Zend_Db_Table_Abstract
 {
 	// Name of table
-    protected $_name = 'usr_weblinks_uwl';
+    protected $_name = 'cmp_weblinks_cwl';
 	
 	// Primary key of table
-	protected $_primary = 'id_uwl';
+	protected $_primary = 'id_cwl';
 	
 	// Tables reference map
 	protected $_referenceMap    = array(
-        'UserWeblinks' => array(
-            'columns'           => array('id_usr_uwl'),
-            'refTableClass'     => 'Default_Model_User',
-            'refColumns'        => array('id_usr')
+        'CampaignWeblinks' => array(
+            'columns'           => array('id_usr_cwl'),
+            'refTableClass'     => 'Default_Model_Campaigns',
+            'refColumns'        => array('id_cmp')
         )
     );
 	
@@ -47,47 +47,47 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
      * setWeblink - Set web link
      * 
      * @author Mikko Korpinen
-     * @param int $id_usr
+     * @param int $id_cmp
      * @param string (45) $name
      * @param string (150) $url
      * @param int $count
      */
-    public function setWeblink($id_usr, $name, $url, $count) {
+    public function setWeblink($id_cmp, $name, $url, $count) {
         // get old values
         $select = $this->select()
-            ->from($this, array('name_uwl', 'url_uwl'))
-            ->where('id_usr_uwl = ?', $id_usr)
-            ->where('count_uwl = ?', $count);
+            ->from($this, array('name_cwl', 'url_cwl'))
+            ->where('id_cmp_cwl = ?', $id_cmp)
+            ->where('count_cwl = ?', $count);
         $result = $this->fetchAll($select)->toArray();
 
         $new = array(
-                'id_usr_uwl' => $id_usr,
-                'name_uwl' => $name,
-                'url_uwl' => $url,
-                'count_uwl' => $count,
-                'created_uwl' => new Zend_Db_Expr('NOW()'),
-                'modified_uwl' => new Zend_Db_Expr('NOW()')
+                'id_cmp_cwl' => $id_cmp,
+                'name_cwl' => $name,
+                'url_cwl' => $url,
+                'count_cwl' => $count,
+                'created_cwl' => new Zend_Db_Expr('NOW()'),
+                'modified_cwl' => new Zend_Db_Expr('NOW()')
         );
 
         $update = array(
-                'id_usr_uwl' => $id_usr,
-                'name_uwl' => $name,
-                'url_uwl' => $url,
-                'count_uwl' => $count,
-                'modified_uwl' => new Zend_Db_Expr('NOW()')
+                'id_cmp_cwl' => $id_cmp,
+                'name_cwl' => $name,
+                'url_cwl' => $url,
+                'count_cwl' => $count,
+                'modified_cwl' => new Zend_Db_Expr('NOW()')
         );
 
         // if old values found (= not new link field)
-		if(isset($result[0]['name_uwl'])) {
-            if ($result[0]['name_uwl'] == $name
-            && $result[0]['url_uwl'] == $url
-            && $result[0]['count_uwl'] == $count) {
+		if(isset($result[0]['name_cwl'])) {
+            if ($result[0]['name_cwl'] == $name
+            && $result[0]['url_cwl'] == $url
+            && $result[0]['count_cwl'] == $count) {
                 return true;    // dont set the same values
             }
 
             // update old values
-            $where[] = $this->getAdapter()->quoteInto('id_usr_uwl = ?', $id_usr);
-            $where[] = $this->getAdapter()->quoteInto('count_uwl = ?', $count);
+            $where[] = $this->getAdapter()->quoteInto('id_cmp_cwl = ?', $id_cmp);
+            $where[] = $this->getAdapter()->quoteInto('count_cwl = ?', $count);
 
 			if($this->update($update, $where)) {
                 return true;
@@ -111,7 +111,7 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
     public function getWeblink($id) {
         $select = $this->select()
 				->from($this, array('*'))
-				->where('id_uwl = ?', $id);
+				->where('id_cwl = ?', $id);
 
 		$result = $this->fetchAll($select)->toArray();
 
@@ -119,17 +119,17 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
     }
 
     /**
-     * getUserWeblinks - Get user weblinks
+     * getCampaignWeblinks - Get campaign weblinks
      *
      * @author Mikko Korpinen
-     * @param int $id_usr
+     * @param int $id_cmp
      * @return array
      */
-    public function getUserWeblinks($id_usr) {
+    public function getCampaignWeblinks($id_cmp) {
         $select = $this->select()
 				->from($this, array('*'))
-				->where('id_usr_uwl = ?', $id_usr)
-                ->order('count_uwl');
+				->where('id_cmp_cwl = ?', $id_cmp)
+                ->order('count_cwl');
 
 		$result = $this->fetchAll($select)->toArray();
 
@@ -152,13 +152,13 @@ class Default_Model_UserWeblinks extends Zend_Db_Table_Abstract
     }
 
     /**
-     * removeUserWeblinks - Remove user weblinks
+     * removeCampaignWeblinks - Remove campaign weblinks
      *
      * @author Mikko Korpinen
-     * @param int $id_usr
+     * @param int $id_cmp
      */
-    public function removeUserWeblinks($id_usr) {
-        $where = $this->getAdapter()->quoteInto('id_usr_uwl = ?', $id_usr);
+    public function removeCampaignWeblinks($id_cmp) {
+        $where = $this->getAdapter()->quoteInto('id_cmp_cwl = ?', $id_cmp);
         if ($this->delete($where)) {
             return true;
         } else {

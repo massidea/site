@@ -135,6 +135,17 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmp['description_cmp'] = str_replace("\n", '<br>', $cmp['description_cmp']);
         $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
 
+        // Campaign weblinks
+        $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
+        $cmp['campaignWeblinks'] = $campaignWeblinksModel->getCampaignWeblinks($cmpid);
+        $i = 0;
+        foreach($cmp['campaignWeblinks'] as $weblink) {
+            if (strlen($weblink['name_cwl']) == 0) {
+                unset($cmp['campaignWeblinks'][$i]);
+            }
+            $i++;
+        }
+
         $uhgModel = new Default_Model_UserHasGroup();
         $this->view->userHasGroup = $uhgModel->userHasGroup($cmp['id_grp_cmp'], $user->user_id);
 

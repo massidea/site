@@ -245,9 +245,17 @@ class AccountController extends Oibs_Controller_CustomController
 		$userProfile = new Default_Model_UserProfiles();
         $dataa = $userProfile->getPublicData($id);
         $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
-        
+
+        // User weblinks
         $userWeblinksModel = new Default_Model_UserWeblinks();
         $dataa['userWeblinks'] = $userWeblinksModel->getUserWeblinks($id);
+        $i = 0;
+        foreach($dataa['userWeblinks'] as $weblink) {
+            if (strlen($weblink['name_uwl']) == 0) {
+                unset($dataa['userWeblinks'][$i]);
+            }
+            $i++;
+        }
 
         // $dataa is an array with key=>val like firstname => "Joel Peeloten"
 
@@ -1037,11 +1045,9 @@ class AccountController extends Oibs_Controller_CustomController
             // Get user weblinks
             $userWeblinksModel = new Default_Model_UserWeblinks();
             $userWeblinks = $userWeblinksModel->getUserWeblinks($id);
-            $i = 0;
             foreach ($userWeblinks as $userWeblink) {
-                $settingsData['weblinks_name_site'.$userWeblinks[$i]['count_uwl']] = $userWeblinks[$i]['name_uwl'];
-                $settingsData['weblinks_url_site'.$userWeblinks[$i]['count_uwl']] = $userWeblinks[$i]['url_uwl'];
-                $i++;
+                $settingsData['weblinks_name_site'.$userWeblink['count_uwl']] = $userWeblink['name_uwl'];
+                $settingsData['weblinks_url_site'.$userWeblink['count_uwl']] = $userWeblink['url_uwl'];
             }
             
             // Get users email notifications and push to settingsdata in correct form
@@ -1076,21 +1082,21 @@ class AccountController extends Oibs_Controller_CustomController
                     $userProfile->setProfileData($id, $formdata);
 
                     // Set weblinks
-                    if (isset($formdata['weblinks_name_site1']) && $formdata['weblinks_name_site1'] != ''
-                            && isset($formdata['weblinks_url_site1']) && $formdata['weblinks_url_site1'] != '')
+                    if (isset($formdata['weblinks_name_site1']) && isset($formdata['weblinks_url_site1'])) {
                         $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site1'], $formdata['weblinks_url_site1'], 1);
-                    if (isset($formdata['weblinks_name_site2']) && $formdata['weblinks_name_site2'] != ''
-                            && isset($formdata['weblinks_url_site2']) && $formdata['weblinks_url_site2'] != '')
+                    }
+                    if (isset($formdata['weblinks_name_site2']) && isset($formdata['weblinks_url_site2'])) {
                         $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site2'], $formdata['weblinks_url_site2'], 2);
-                    if (isset($formdata['weblinks_name_site3']) && $formdata['weblinks_name_site3'] != ''
-                            && isset($formdata['weblinks_url_site3']) && $formdata['weblinks_url_site3'] != '')
+                    }
+                    if (isset($formdata['weblinks_name_site3']) && isset($formdata['weblinks_url_site3'])) {
                         $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site3'], $formdata['weblinks_url_site3'], 3);
-                    if (isset($formdata['weblinks_name_site4']) && $formdata['weblinks_name_site4'] != ''
-                            && isset($formdata['weblinks_url_site4']) && $formdata['weblinks_url_site4'] != '')
+                    }
+                    if (isset($formdata['weblinks_name_site4']) && isset($formdata['weblinks_url_site4'])) {
                         $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site4'], $formdata['weblinks_url_site4'], 4);
-                    if (isset($formdata['weblinks_name_site5']) && $formdata['weblinks_name_site5'] != ''
-                            && isset($formdata['weblinks_url_site5']) && $formdata['weblinks_url_site5'] != '')
+                    }
+                    if (isset($formdata['weblinks_name_site5']) && isset($formdata['weblinks_url_site5'])) {
                         $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site5'], $formdata['weblinks_url_site5'], 5);
+                    }
 
                     $user = new Default_Model_User($id);
 

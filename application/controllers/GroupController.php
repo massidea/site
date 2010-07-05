@@ -90,6 +90,17 @@
         $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
         $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
 
+        // Group weblinks
+        $groupWeblinksModel = new Default_Model_GroupWeblinks();
+        $grpData['campaignWeblinks'] = $groupWeblinksModel->getGroupWeblinks($grpId);
+        $i = 0;
+        foreach($grpData['groupWeblinks'] as $weblink) {
+            if (strlen($weblink['name_gwl']) == 0) {
+                unset($grpData['groupWeblinks'][$i]);
+            }
+            $i++;
+        }
+
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;
