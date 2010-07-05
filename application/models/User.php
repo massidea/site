@@ -528,15 +528,21 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     *   @params array $filter $page, $count $order $list
     *   @return array
+    *   @author Jari Korpela
     */
 	public function getUserListing(&$filter = null, $page = 1, $count = 10, $order = 'login', $list = 'DESC', &$listSize = 1)
     {
     	//For some odd reason this order and list default set has to be done here and wont work on ^...
 		if(!$order) $order = 'login';
 		if(!$list) $list = 'DESC';
-    	$userIdList = $this->sortAndFilterUsers(&$filter, $page, $count, $order, $list);
+		
+		//Get full sorted and filtered userIdList
+    	$userIdList = $this->sortAndFilterUsers(&$filter, $order, $list);
     	$listSize = sizeof($userIdList);
     	
+    	if($listSize == 0) return array(); //If list size is 0, we just return
+    	
+    	//Then we choose the part of id list we want to show and collect data on
     	$userIdListCut = array();
     	$i = ($page-1)*$count;
     	$limit = $i+$count;
@@ -544,27 +550,36 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     		if(!$userIdList[$i]) break;
     		$userIdListCut[] = $userIdList[$i];
     	}
-    	$userIdList = $userIdListCut;
-    	$userInfo = $this->getUserSearchUserInfo($userIdList);
-    	$userData = $userInfo;
-    	$userContents = $this->getUserSearchContentContents($userIdList);
+    	
+    	$userIdList = $userIdListCut; //We replace the whole list with the user Ids we want (this is for final ordering purpose)
+    	$userInfo = $this->getUserInfo($userIdList); //Get basic user information
+    	$userData = $userInfo; //We start to collect data about users to $userData array
+    	
+    	$userContents = $this->getUsersContents($userIdList); //Get all content ID's from users in id list
 
+    	//Add these contents to $userData array in which we collect data (if user doesnt have content we add empty array)
     	foreach($userData as $key => $data) {
     		 if (!$userContents[$data['id_usr']])
     		 	 $userContents[$data['id_usr']] = array();
     		 $userData[$key]['contents'] = $userContents[$data['id_usr']];
     		 
     	}
-    	ksort($userContents);
+    	ksort($userContents); //We sort $userContents again because we might have added empty arrays
+
+    	//Calculate contentCounts for users.
     	foreach($userData as $key => $data) {
     		$userData[$key]['contentCount'] = sizeof($data['contents']);
     	}
-    	$userRatings = $this->getUserSearchContentRatings($userContents);
+    	
+    	//Get Ratings statistics
+    	$userRatings = $this->getUserContentRatings($userContents);
     	$userData = $this->intersectMergeArray($userData,$userRatings);
     	
-    	$userLocations = $this->getUserSearchUserLocation($userIdList);
+    	//Get location info
+    	$userLocations = $this->getUsersLocation($userIdList);
     	$userData = $this->intersectMergeArray($userData,$userLocations);
     	
+    	//Finally we sort the $userData array to same order as our $userIdList
     	$final = array();
     	foreach($userIdList as $id) {
     		foreach($userData as $data) {
@@ -574,69 +589,79 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     			}
     		}
     	}
-    	//print_r($final);die;
-		//print_r($userIdList);print_r($userData);die;
-
-        /*
-        $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
-                                             array('id_usr'))
-                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
-                                                 'chu.id_usr = usr.id_usr',array()) 
-                                      ->joinLeft(array('vws' => 'cnt_views_vws'),
-                                                      'usr.id_usr = vws.id_usr_vws',
-                                                      array('uniqueContentsRead' => 'COUNT(DISTINCT vws.id_cnt_vws)'
-                                                      ))
-                                      ->joinLeft(array('vws2' => 'cnt_views_vws'),
-                                                      'chu.id_cnt = vws2.id_cnt_vws',
-                                                      array('uniqueContentReaders' => 'COUNT(DISTINCT vws2.id_usr_vws)-1'
-                                                      ))
-                                      ->where($this->getUserSearchUsernameFilter($filter['username']))
-                                      ->where($this->getUserSearchCountryFilter($filter['country']))
-                                      ->where($this->getUserSearchCityFilter($filter['city']))
-                                      ->having($this->getUserSearchContentCountFilter($filter['contentlimit'],
-                                                                                      $filter['counttype']))
-                                      ->group('usr.id_usr')
-                                      ->order('id_usr')
-                                      ->limitPage($page, $count)
-                                      ;
-
-                                      
-        $result2 = $this->_db->fetchAll($select);
-        
-        $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
-                                             array('id_usr'))
-                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
-                                                 'chu.id_usr = usr.id_usr',array()) 
-                                      ->joinLeft(array('vws' => 'cnt_views_vws'),
-                                                      'chu.id_cnt = vws.id_cnt_vws',
-                                                      array('totalTimeContentsBeenViewed' => 'FLOOR(SUM(vws.views_vws))'
-                                                      ))
-                                      ->where($this->getUserSearchUsernameFilter($filter['username']))
-                                      ->where($this->getUserSearchCountryFilter($filter['country']))
-                                      ->where($this->getUserSearchCityFilter($filter['city']))
-                                      ->having($this->getUserSearchContentCountFilter($filter['contentlimit'],
-                                                                                      $filter['counttype']))
-                                      ->group('usr.id_usr')
-                                      ->order('id_usr')
-                                      ->limitPage($page, $count)
-                                      ;
-                                      
-        $result3 = $this->_db->fetchAll($select);
-        
-        $result = array();
-		*/
-        /* 
-         *                                                    
-                                      ->joinLeft(array('cmt' => 'comments_cmt'), 
-                                                 'chu.id_usr = cmt.id_usr_cmt',
-                                      			 array('totalComments' => 'COUNT(DISTINCT cmt.id_cmt)')) 
-         */
-        
-        //print_r($final);die;
 
         return $final;
     }
     
+    /*
+     * sortAndFilterUsers
+     * 
+     * Sort and Filter Users
+     * 
+     * @param array $filter
+     * @param string $order
+     * @param string $list
+     * @author Jari Korpela
+     */
+    private function sortAndFilterUsers(&$filter, $order, $list) {
+
+		$orderGroups = array(
+			'userInfo' => array(
+						'username' => 'login_name_usr',
+						'joined' => 'created_usr',
+						'login' => 'last_login_usr'),
+			'contentInfo' => array('content' => 'COUNT(id_cnt)')
+		);
+		
+        $groupName = "";
+        foreach($orderGroups as $key => $group) {
+        	if($group[$order]) {
+        		$groupName = $key;
+        	}
+        }
+
+   		if($order) $sort = $orderGroups[$groupName][$order]." ".$list;
+        else $sort = "id_usr";
+		
+        $select = $this->select()->from($this, 'id_usr')
+                                 ->order('id_usr');
+                                 
+	        if($filter['city'] != "")
+	          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
+	
+	        if($filter['username'] != "")
+	          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
+	          
+	        if($filter['country'] != "0")
+	          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
+	        
+	        if($filter['group'] != "")
+	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
+	                                 
+        $result = $this->_db->fetchAll($select);      
+        if(!$result) return array();
+        
+        $userIDList = $this->simplifyArray($result);
+        
+        if($groupName == "userInfo")
+       		$output = $this->sortByUserInfo($userIDList, $sort);
+        elseif($groupName == "contentInfo")
+        	$output = $this->sortUsersByContentInfo($userIDList, $sort);
+        	
+        return $output;
+        
+    }
+    
+    /*
+     * intersectMergeArray
+     * 
+     * This function merges data in same keys in 2 arrays together 
+     * 
+     * @param array $arr1
+     * @param array $arr2
+     * @return array
+     * @author Jari Korpela
+     */
     private function intersectMergeArray($arr1,$arr2) {
     	if((!(array)$arr1 )|| (!(array)$arr2)) return false;
     	$merged_array = array();
@@ -646,6 +671,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	return $merged_array;
     } 
 
+    /*
+     * simplyfyArray
+     * 
+     * There might be function in Zend so we dont need this but I didnt find, perhaps you can? ;)
+     * This function makes associative array to nonassociative (works only for arrays that have 'id_usr')
+     * 
+     * @param $result
+     * @return non associative array $userIdList
+     * @author Jari Korpela
+     */
     private function simplifyArray($result) {
         $userIDList = array();
 
@@ -655,14 +690,24 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $userIDList;
     }
     
-    private function getUserSearchUserLocation($userIdList) {
+    /*
+     * getUsersLocation
+     * 
+     * Gets users locations (city and country)
+     * 
+     * @param array $userIdList
+     * @return array $list
+     * @author Jari Korpela
+     */
+    private function getUsersLocation($userIdList) {
     	sort($userIdList);
     	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
                                       			array('id_usr_usp','profile_key_usp',
                                       			'profile_value_usp'))
                                       ->joinLeft(array('usc' => 'countries_ctr'),
                                       			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
-                                      			 array('countryName' => 'usc.printable_name_ctr'))
+                                      			 array('countryName' => 'usc.printable_name_ctr',
+                                      			 	   'countryIso' => 'usc.iso_ctr'))
                                       ->where('usp.id_usr_usp IN (?)', $userIdList)
                                       ->where('usp.public_usp = 1')
                                       ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
@@ -675,6 +720,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	   foreach($userIdList as $id) {
 	   	$city = "";
 	   	$country = "";
+	   	$countryIso = "";
 	   	$checks = 0;
 	   	foreach($result as $res ) {
 	   		if($res['id_usr_usp'] == $id) {
@@ -684,6 +730,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	   			}
 	   			elseif($res['profile_key_usp'] == "country") {
 	   				$country = $res['countryName'];
+	   				$countryIso = $res['countryIso'];
 	   			}
 	   		}
 	   		if(($country != "" && $city != "") || $checks == 2) break;
@@ -691,13 +738,23 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	   	$list[] = array(
    				'id_usr' => $id,
    				'city'	=> $city,
-	   			'country' => $country
+	   			'country' => $country,
+	   			'countryIso' => $countryIso
    				);
 	   }
        return $list;                             
     }
     
-    private function getUserSearchContentRatings($userContents) {
+    /*
+     * getUserContentRatings
+     * 
+     * Gets Users Content Ratings info
+     * 
+     * @param array $userContents as $userId => $content
+     * @return array $list
+     * @author Jari Korpela
+     */
+    private function getUserContentRatings($userContents) {
     	$userRatings = array();
     	foreach($userContents as $userId => $content) {
     		if($content) {
@@ -728,7 +785,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $userRatings;
     }
     
-	private function getUserSearchUserInfo($userIdList) {
+    /*
+     * getUserInfo 
+     * 
+     * Gets basic user information from users_usr table
+     * 
+     * @param array $userIdList
+     * @return array $list
+     * @author Jari Korpela
+     */
+	private function getUserInfo($userIdList) {
 		$select = $this->_db->select()->from(array('usr' => 'users_usr'), 
                                              array('id_usr',
                                                    'login_name_usr',
@@ -740,7 +806,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $this->_db->fetchAll($select);                                      
     }
 
-    private function getUserSearchContentCount($userIdList) {
+    /*
+     * getUsersContentCount
+     * 
+     *  Gets Users content counts
+     *  
+     *  @param array $userIdList
+     *  @return array $list
+     *  @author Jari Korpela
+     * 
+     */
+    private function getUsersContentCount($userIdList) {
     	sort($userIdList);
     	
     	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
@@ -768,7 +844,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $resultList;
     }
     
-    private function getUserSearchContentContents($userIdList) {
+    /*
+     * getUsersContents
+     * 
+     *  Gets users content ID:s
+     *  
+     *  @param array $userIdList
+     *  @return array $list
+     *  @author Jari Korpela     *
+     */
+    private function getUsersContents($userIdList) {
     	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
                                              array('id_usr',
                                              	   'id_cnt'))
@@ -787,53 +872,18 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $contentArray;
         
     }
-        
-     /*
-     * sortAndFilterUsers
-     * 
-     */
-    private function sortAndFilterUsers(&$filter, $page, $count, $order, $list) {
-
-    	// This is some old Todo but left it here...
-        // TODO: Filter by join date between selected times
-        // $joinDate = 1;
-        // if(!empty($filter['pv1']) && !empty($filter['pv2'])) {
-        //  $joinDate = $this->_db->quoteInto('usr.created_usr BETWEEN ?', $pv1);
-        //  $joinDate .= $this->_db->quoteInto(' AND ?', $pv2));
-        // }
-		//->limitPage($page, $count)
-		
-    	if($order == "username") $orderDb = "login_name_usr"; 
-        elseif($order == "joined") $orderDb = "created_usr";
-        elseif($order == "login") $orderDb = "last_login_usr";
-        elseif($order == "content") $orderDb = "COUNT(id_cnt)";
-        else $orderDb = null;
-        
-   		if($orderDb) $sort = $orderDb." ".$list;
-        else $sort = "usr_id";
-		   					
-        $select = $this->select()->from($this, 'id_usr')
-                                 ->where('id_usr IN (?)',$this->getUserSearchUsernameFilter($filter['username']))
-                                 ->order('id_usr');
-                                 
-        if($filter['city'] != "")
-          $select->where('id_usr IN (?)',$this->getUserSearchCityFilter($filter['city']));
-        
-                                 
-        $result = $this->_db->fetchAll($select);
-            
-        $userIDList = $this->simplifyArray($result);
-        //print_r($userIDList);die;
-        if($order == "username" || $order == "joined" || $order == "login")
-       		$output = $this->sortUserSearchByUserInfo($userIDList, $sort);
-        elseif($order == "content")
-        	$output = $this->sortUserSearchByContentInfo($userIDList, $sort);
-        //print_r($output);die;
-        return $output;
-        
-    }
     
-    private function sortUserSearchByContentInfo($userIDList, $sort) {
+    /*
+     * sortUsersByContentInfo
+     * 
+     * Sorts $userIdList by $sort
+     * 
+     * @param array $userIDList
+     * @param string $sort
+     * @return $resultList
+     * @author Jari Korpela
+     */    
+    private function sortUsersByContentInfo($userIDList, $sort) {
     	$content = new Default_Model_ContentHasUser(); 
     	$select = $content->select()->from('cnt_has_usr',
     									array('id_usr'))
@@ -850,7 +900,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     }
     
-    private function sortUserSearchByUserInfo($userIDList, $sort) {
+    /*
+     * sortByUserInfo
+     * 
+     * Sorts $userIdList by $sort
+     * 
+     * @param array $userIDList
+     * @param string $sort
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function sortByUserInfo($userIDList, $sort) {
     	$select = $this->select()->from($this,
     									array('id_usr'))
     							->where('id_usr IN (?)',$userIDList)
@@ -861,18 +921,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $this->simplifyArray($result);
     }
     
-
-        
-    
     /**
-    *   getUserSearchCityFilter
+    *   getCityFilter
     *
     *   Gets user search city filter.
     *
     *   @param int $city
     *   @return string
     */
-    private function getUserSearchCityFilter(&$city) 
+    private function getCityFilter(&$city) 
     {
     	
         $profile = new Default_Model_UserProfiles();
@@ -882,15 +939,61 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $select;
     }
     
+    
     /**
-    *   getUserSearchUsernameFilter
+    *   getCountryFilter
+    *
+    *   Gets user search city filter.
+    *
+    *   @param int $country
+    *   @return string
+    */
+    private function getCountryFilter(&$country) 
+    {
+
+        $profile = new Default_Model_UserProfiles();
+    	$select = $profile->select()->from($profile, 'id_usr_usp')
+    								->where('public_usp = 1 AND profile_key_usp = "country" AND profile_value_usp = ?', $country);
+        						
+        return $select;
+    }
+    
+    /**
+    *   getGroupFilter
+    *
+    *   Get Group Filter.
+    *
+    *   @param string $group
+    *   @return string
+    */    
+    private function getGroupFilter(&$group,$exactg) 
+    {
+    	
+        if($exactg == "1") {
+    		$select1 = $this->_db->select()->from('usr_groups_grp', 'id_grp')
+	    								->where('group_name_grp = ?',$group);
+    	}
+    	else { 
+	    	$select1 = $this->_db->select()->from('usr_groups_grp', 'id_grp')
+	    								->where('group_name_grp LIKE ?','%'. $group .'%');
+    	}
+
+    							
+		$select = $this->_db->select()->from('usr_has_grp', 'id_usr')
+    								->where('id_grp IN (?)', $select1);
+    					$this->getU			      
+        return $select;
+    } 
+    
+    /**
+    *   getUsernameFilter
     *
     *   Get user search username filter.
     *
     *   @param string $username
     *   @return string
     */
-    private function getUserSearchUsernameFilter(&$username) 
+    private function getUsernameFilter(&$username) 
     {
     	$select = $this->select()->from($this, 'id_usr')
     								->where('login_name_usr LIKE ?','%'. $username. '%');
@@ -898,27 +1001,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $select;
     } 
     
-    /**
-    *   getUserSearchCountryFilter
-    *
-    *   Gets user search country filter.
-    *
-    *   @param int $country
-    *   @return string
-    */
-    /*public function getUserSearchCountryFilter(&$country) 
-    {
-        $result = 1;
-        if ($country != 0) {
-            $result = $this->_db->quoteInto("usp.profile_key_usp = 'country'
-                                                AND usp.public_usp = 1
-                                                AND usp.profile_value_usp = ?", 
-                                             $country);
-        }
-        
-        return $result;
-    }
-    */
     
     /**
     *   getUserSearchContentCountFilter
@@ -941,37 +1023,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
        return $result;
     }
     */
-    /**
-    *   getUserCountBySearch
-    *
-    *   Get total user count by search
-    *
-    *   @param 
-    *   @return array
-    */
-    /*public function getUserCountBySearch(&$filter = null) 
-    {
-        $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
-                                             array('userCount' => 'COUNT(DISTINCT usr.id_usr)'))
-                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
-                                                 'chu.id_usr = usr.id_usr', 
-                                                 array('contentCount' => 'COUNT(DISTINCT chu.id_cnt)'))
-                                      ->joinLeft(array('usp' => 'usr_profiles_usp'), 
-                                                 'usr.id_usr = usp.id_usr_usp', 
-                                                 array())
-                                      ->where($this->getUserSearchUsernameFilter($filter['username']))
-                                      ->where($this->getUserSearchCountryFilter($filter['country']))
-                                      ->where($this->getUserSearchCityFilter($filter['city']))
-                                      ->having($this->getUserSearchContentCountFilter($filter['contentlimit'],
-                                                                                      $filter['counttype']))
-                                      // TODO: Filter by join date
-                                      //->where($joinDate)
-                                      /*->group('usr.id_usr')*///;        
-        /*$data = $this->_db->fetchAll($select);
-        
-        return isset($data[0]['userCount']) ? $data[0]['userCount'] : 0;   
-    }
-    */
+
     /**
     *    checkContentCount
     *
@@ -1210,16 +1262,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      */
     public function getAllUsersLocations() {
     	$result = array();
-    	$city = 'city';
-    	
-    	
+
         $select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
                                       	array('profile_key_usp',
                                       	'profile_value_usp',
                                       	'COUNT(profile_value_usp) AS amount'))
                                       ->joinLeft(array('usc' => 'countries_ctr'),
                                       	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
-                                      	 array('countryName' => 'usc.printable_name_ctr'))
+                                      	 array('countryName' => 'usc.printable_name_ctr',
+                                      	 		'countryIso' => 'usc.iso_ctr'))
                                       ->where('usp.public_usp = 1')
                                       ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
                                       ->order('usp.id_usr_usp')
@@ -1234,7 +1285,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
        		continue;
        	}
        	if($res['profile_key_usp'] == "country" && $res['countryName'] != "") {
-       		$final['countries'][] = array('name' => $res['countryName'],'amount' => $res['amount']);
+       		$final['countries'][] = array('name' => $res['countryName'],'amount' => $res['amount'], 'countryIso' => $res['countryIso']);
        		continue;
        	}
        }

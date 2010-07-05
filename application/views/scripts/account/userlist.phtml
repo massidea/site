@@ -75,6 +75,7 @@ function json_search_contents(listStart,id,div) {
 	  url: "<?php echo $url_getUserContents ?>/search/"+id+"/start/"+listStart,
 	  dataType: 'json',
 	  success: function(data) {
+	  		
 	  		var output = "";
 			$.each(data, function() {
 				if(this.title_cnt.length > 70) { 
@@ -87,12 +88,16 @@ function json_search_contents(listStart,id,div) {
 							this.title_cnt+"</a></div>"
 							;
 			});
-			
+
 		  	$("#user_"+id+"_list_user_recent_contents_list").append(output);
 		  	$("#user_"+id+"_list_user_recent_contents_list .user_list_user_line_new").slideDown(700,function(){ 
 		  	$("#user_list_"+id+"_show_more_loading").hide();
 		  	$(div).show();
 		  	 });
+		  	if(output == "") {
+			    $("#user_list_"+id+"_show_more_loading").hide();
+			  	$(div).show();
+		  	}
 
 	  }	
 	});
@@ -258,9 +263,9 @@ function complete_city(result){
 			                                    <?php echo $user['login_name_usr']; ?> (<?php echo $user['contentCount']; ?>)
 			                                </a>,</span>
 			                        <?php if($user['city']): ?>
-			                        <span class="user_list_city"><?php echo $user['city']; ?>, </span>
+			                        <a href="<?php echo $this->url(array('city' => $user['city'])); ?>" class="user_list_city"><?php echo $user['city']; ?>, </a>
 			                        <?php endif; if($user['country']): ?>
-			                        <span class="user_list_country"><?php echo $user['country']; ?>, </span>
+			                        <a href="<?php echo $this->url(array('country' => $user['countryIso'])); ?>" class="user_list_country"><?php echo substr($user['country'],0,20); ?>, </a>
 			                        <?php endif; if($user['ratingAmount']): ?>
 									<span class="user_list_rating"><span class="user_list_positive_icon"><?php echo $user['ratingRatioPositive']; ?>% </span><img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="" /><img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="" /><span class="user_list_negative_icon"><?php echo $user['ratingRatioNegative']; ?>%</span></span>
 									<span class="user_list_rating_amount">(<?php echo $user['ratingAmount']; ?> Ratings) </span>
@@ -272,7 +277,7 @@ function complete_city(result){
 		                        <div class="user_list_statistics" id="user_list_user_<?php echo $user['id_usr']; ?>_statistics" style="display:none;">
 			                        <div class="user_list_user_line"><span class="user_list_statistics_title">Statistics</span></div>
 			                        <div class="user_list_user_line"><span class="user_list_statistics_line">> Joined: <?php echo date("d M Y",strtotime($user['created_usr'])); ?></span></div>
-			                        <?php if($user['ratingAmount']): ?>
+			                        <?php /* if($user['ratingAmount']): ?>
 			                        <div class="user_list_user_line">
 				                        <span class="user_list_statistics_line">> Contents rating ratio: 
 				                        	<span class="user_list_positive_icon"><?php echo $user['ratingRatioPositive']; ?>% </span><img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="" /><img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="" /><span class="user_list_negative_icon"><?php echo $user['ratingRatioNegative']; ?>%</span>
@@ -284,7 +289,7 @@ function complete_city(result){
 				                        </span>
 			                        </div>
 
-			                        <?php endif; ?>
+			                        <?php endif; */ ?>
 		                        </div>
 		                        
 		                        <?php if (sizeof($this->userContents[$user['id_usr']]) > 0): ?>
@@ -292,7 +297,7 @@ function complete_city(result){
 		                        <div class="user_list_user_line" style="height: 15px">
 			                        <span class="user_list_recet_contents_title">Recent posts </span>
 			                        |
-			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="display: inline">Show more </a>
+			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="display: inline">Show 3 more </a>
 			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"></div>
 			                        |
 			                        <a id="user_list_<?php echo $user['id_usr']; ?>_hide_new" href="#" onClick="return false;" style="block">Hide</a>

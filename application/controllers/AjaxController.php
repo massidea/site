@@ -152,7 +152,9 @@ class AjaxController extends Oibs_Controller_CustomController
 					if($resultList[$i])
 						$newContents[] = $resultList[$i];
 				}
-				$contentList = $userModel->getUserContentList($newContents,3);
+				if(!sizeof($newContents) == 0)
+					$contentList = $userModel->getUserContentList($newContents,3);
+				else $contentList = array();
 			}
 			$output = json_encode($contentList);
 	
