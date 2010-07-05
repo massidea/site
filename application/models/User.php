@@ -526,12 +526,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     *   Gets user listing with filtering options.
     *
-    *   Query in this function fetches all users
-    *   from database. This will cause a creation
-    *   of a very large array when user count
-    *   is big.
-    *
-    *   @params array $filter Filtering options
+    *   @params array $filter $page, $count $order $list
     *   @return array
     */
 	public function getUserListing(&$filter = null, $page = 1, $count = 10, $order = 'login', $list = 'DESC', &$listSize = 1)
@@ -1250,7 +1245,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
       public function getUserContentList($contentIdList, $amount) {
         $result = array();  // container for final results array
-        // If author id is set get users content
                 
         $contentSelect = $this->_db->select()
                                            ->from(array('cnt' => 'contents_cnt'),         
@@ -1266,6 +1260,35 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->_db->fetchAll($contentSelect);
         return $result;
     } // end of getUserContentList
+    
+    public function getWholeUserContentList($userId, $contentIdList) {
+    	$result = "";
+    	if(is_numeric($userId) && is_array($contentIdList)) {
+			$contentSelect = $this->_db->select()
+                                           ->from(array('chu' => 'cnt_has_usr'),
+                                                  array('id_cnt'))
+                                           ->joinLeft(array('crt' => 'content_ratings_crt'),
+                                                      'chu.id_cnt = crt.id_cnt_crt',
+                                                      array('rating_sum' => 'SUM(crt.rating_crt)',
+                                                       'ratings' => 'COUNT(crt.id_cnt_crt)'))
+                                           ->joinLeft(array('cnt' => 'contents_cnt'),
+                                                  'cnt.id_cnt = chu.id_cnt',
+                                                  array('id_cnt', 'id_cty_cnt', 'title_cnt',
+                                                        'lead_cnt', 'created_cnt'))
+                                           ->joinLeft(array('cmt' => 'comments_cmt'),
+                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
+                                           ->joinLeft(array('cty' => 'content_types_cty'),
+                                                  'cty.id_cty = cnt.id_cty_cnt',
+                                                  array('key_cty'))
+                                           ->where('chu.id_cnt IN (?)', $contentIdList)
+                                           ->group(array('chu.id_cnt'))          
+            ;                                
+            $result = $this->_db->fetchAll($contentSelect);                         
+		}
+			
+		return $result;
+    }
     
     /*
      * getUsersViewers
