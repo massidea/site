@@ -111,6 +111,66 @@
         $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
     }
 
+    function removeAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $grpId = $this->_request->getParam('id');
+
+            if (!$grpId) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'index',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Only group admins get to delete the group.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue(
+                $grpAdmins, 'id_usr', $auth->getIdentity()->user_id);
+            if (!$userIsGroupAdmin) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid' => $grpId,
+                        'language' => $this->view->language),
+                    'group_shortview', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Get existing group info.
+            $grpModel = new Default_Model_Groups();
+            $grpData = $grpModel->getGroupData($grpId);
+
+            // Delete group.
+            $grpModel->removeGroup($grpId);
+
+            // Redirect to the groups & campaigns page.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        } else {
+            // Not logged in.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+    }
+
     function editAction()
     {
         $auth = Zend_Auth::getInstance();

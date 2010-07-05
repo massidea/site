@@ -108,6 +108,66 @@ class CampaignController extends Oibs_Controller_CustomController
             $this->_redirector->gotoUrl($redirectUrl);
         }
     }
+
+    public function removeAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $cmpId = $this->_request->getParam('id');
+
+            if (!$cmpId) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'index',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Get group id from campaign info.
+            $cmpModel = new Default_Model_Campaigns();
+            $cmp = $cmpModel->getCampaignById($cmpId)->toArray();
+            $grpId = $cmp['id_grp_cmp'];
+
+            // Only group admins get to remove campaigns.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue(
+                $grpAdmins, 'id_usr', $auth->getIdentity()->user_id);
+            if (!$userIsGroupAdmin) {
+                $redirectUrl = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'campaign',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            // Delete campaign.
+            $cmpModel->removeCampaign($cmpId);
+
+            // Redirect to the group page.
+            $target = $this->_urlHelper->url(
+                array(
+                    'groupid'    => $grpId,
+                    'language'   => $this->view->language),
+                'group_shortview', true);
+            $this->_redirector->gotoUrl($target);
+        } else {
+            // Not logged in - redirect to the group page.
+            $target = $this->_urlHelper->url(
+                array(
+                    'groupid'    => $grpId,
+                    'language'   => $this->view->language),
+                'group_shortview', true);
+            $this->_redirector->gotoUrl($target);
+        }
+    }
     
     /**
      * viewAction
