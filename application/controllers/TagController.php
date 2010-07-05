@@ -172,6 +172,8 @@ class TagController extends Oibs_Controller_CustomController
 		$tag = new Default_Model_Tags();
         
 		$contentList = $tag->getTagContentById($tagId);
+		$campaignGroupList = 0;
+		$userList = 0;
 		$tagName = $tag->getTagNameById($tagId);
         
         /* What is this
@@ -208,6 +210,8 @@ class TagController extends Oibs_Controller_CustomController
         */
         
 		$this->view->content = $contentList;
+		$this->view->campaignGroupList = $campaignGrouList;
+		$this->view->userList = $userList;
         $this->view->tagName = $tagName;
 	} // end of viewAction
 	
