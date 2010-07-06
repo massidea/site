@@ -1324,6 +1324,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                   'cnt.id_cnt = chu.id_cnt',
                                                   array('id_cnt', 'id_cty_cnt', 'title_cnt',
                                                         'lead_cnt', 'created_cnt'))
+                                           ->joinLeft(array('vws' => 'cnt_views_vws'),
+				                                 'vws.id_cnt_vws = chu.id_cnt',
+				                                  array('views' => 'SUM(vws.views_vws)'))
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
