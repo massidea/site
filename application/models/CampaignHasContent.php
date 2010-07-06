@@ -77,16 +77,22 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
      */
     public function removeContentFromCampaign($id_cmp = 0, $id_cnt = 0)
     {
-        $return = false;
+        $result = false;
 
         $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
         $where = $this->getAdapter()->quoteInto(
             "$where AND id_cnt = ?", $id_cnt);
         if($this->delete($where)) {
-            $return = true;
+            $result = true;
         }
 
-        return $return;
+        return $result;
+    }
+
+    public function removeAllContentFromCampaign($id_cmp = 0)
+    {
+        $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
+        return $this->delete($where);
     }
 
     /**
