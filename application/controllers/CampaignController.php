@@ -92,6 +92,29 @@ class CampaignController extends Oibs_Controller_CustomController
                     $newCampaign = $campaignModel->createCampaign(
                         $name, $ingress, $desc, $start, $end, $grpId);
 
+                    // Set weblinks
+                    $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
+                    if (isset($post['weblinks_name_site1']) && isset($post['weblinks_url_site1'])) {
+                        $campaignWeblinksModel->setWeblink($newCampaign['id_cmp'], $post['weblinks_name_site1'],
+                                $post['weblinks_url_site1'], 1);
+                    }
+                    if (isset($post['weblinks_name_site2']) && isset($post['weblinks_url_site2'])) {
+                        $campaignWeblinksModel->setWeblink($newCampaign['id_cmp'], $post['weblinks_name_site2'],
+                                $post['weblinks_url_site2'], 2);
+                    }
+                    if (isset($post['weblinks_name_site3']) && isset($post['weblinks_url_site3'])) {
+                        $campaignWeblinksModel->setWeblink($newCampaign['id_cmp'], $post['weblinks_name_site3'],
+                                $post['weblinks_url_site3'], 3);
+                    }
+                    if (isset($post['weblinks_name_site4']) && isset($post['weblinks_url_site4'])) {
+                        $campaignWeblinksModel->setWeblink($newCampaign['id_cmp'], $post['weblinks_name_site4'],
+                                $post['weblinks_url_site4'], 4);
+                    }
+                    if (isset($post['weblinks_name_site5']) && isset($post['weblinks_url_site5'])) {
+                        $campaignWeblinksModel->setWeblink($newCampaign['id_cmp'], $post['weblinks_name_site5'],
+                                $post['weblinks_url_site5'], 5);
+                    }
+
                     $target = $this->_urlHelper->url(
                         array(
                             'groupid'    => $grpId,
@@ -200,7 +223,7 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmp['campaignWeblinks'] = $campaignWeblinksModel->getCampaignWeblinks($cmpid);
         $i = 0;
         foreach($cmp['campaignWeblinks'] as $weblink) {
-            if (strlen($weblink['name_cwl']) == 0) {
+            if (strlen($weblink['name_cwl']) == 0 || strlen($weblink['url_cwl']) == 0) {
                 unset($cmp['campaignWeblinks'][$i]);
             }
             $i++;
@@ -268,6 +291,15 @@ class CampaignController extends Oibs_Controller_CustomController
             $formData['campaign_name'] = $cmp['name_cmp'];
             $formData['campaign_ingress'] = $cmp['ingress_cmp'];
             $formData['campaign_desc'] = $cmp['description_cmp'];
+
+            // Get campaign weblinks
+            $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
+            $campaignWeblinks = $campaignWeblinksModel->getCampaignWeblinks($cmpId);
+            foreach ($campaignWeblinks as $campaignWeblink) {
+                $formData['weblinks_name_site'.$campaignWeblink['count_cwl']] = $campaignWeblink['name_cwl'];
+                $formData['weblinks_url_site'.$campaignWeblink['count_cwl']] = $campaignWeblink['url_cwl'];
+            }
+
             $form->populate($formData);
 
             $this->view->form = $form;
@@ -286,6 +318,23 @@ class CampaignController extends Oibs_Controller_CustomController
                         $post['campaign_ingress'],
                         $post['campaign_desc']
                     );
+
+                    // Set weblinks
+                    if (isset($post['weblinks_name_site1']) && isset($post['weblinks_url_site1'])) {
+                        $campaignWeblinksModel->setWeblink($cmpId, $post['weblinks_name_site1'], $post['weblinks_url_site1'], 1);
+                    }
+                    if (isset($post['weblinks_name_site2']) && isset($post['weblinks_url_site2'])) {
+                        $campaignWeblinksModel->setWeblink($cmpId, $post['weblinks_name_site2'], $post['weblinks_url_site2'], 2);
+                    }
+                    if (isset($post['weblinks_name_site3']) && isset($post['weblinks_url_site3'])) {
+                        $campaignWeblinksModel->setWeblink($cmpId, $post['weblinks_name_site3'], $post['weblinks_url_site3'], 3);
+                    }
+                    if (isset($post['weblinks_name_site4']) && isset($post['weblinks_url_site4'])) {
+                        $campaignWeblinksModel->setWeblink($cmpId, $post['weblinks_name_site4'], $post['weblinks_url_site4'], 4);
+                    }
+                    if (isset($post['weblinks_name_site5']) && isset($post['weblinks_url_site5'])) {
+                        $campaignWeblinksModel->setWeblink($cmpId, $post['weblinks_name_site5'], $post['weblinks_url_site5'], 5);
+                    }
 
                     // Redirect back to the campaign page.
                     $target = $this->_urlHelper->url(

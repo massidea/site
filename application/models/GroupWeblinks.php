@@ -61,7 +61,7 @@ class Default_Model_GroupWeblinks extends Zend_Db_Table_Abstract
         $result = $this->fetchAll($select)->toArray();
 
         $new = array(
-                'id_usr_gwl' => $id_grp,
+                'id_grp_gwl' => $id_grp,
                 'name_gwl' => $name,
                 'url_gwl' => $url,
                 'count_gwl' => $count,
@@ -125,7 +125,7 @@ class Default_Model_GroupWeblinks extends Zend_Db_Table_Abstract
      * @param int $id_grp
      * @return array
      */
-    public function getUserWeblinks($id_grp) {
+    public function getGroupWeblinks($id_grp) {
         $select = $this->select()
 				->from($this, array('*'))
 				->where('id_grp_gwl = ?', $id_grp)
