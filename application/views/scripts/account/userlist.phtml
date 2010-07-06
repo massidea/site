@@ -55,11 +55,12 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 		"content",
 		"login",
 		"joined",
+		"views"
 	);
 
 	foreach($order as $line): ?>
-			<a href="<?php echo $this->url(array("order" => $line,"list" => "desc")); ?>" style="text-decoration:none"><?php echo mb_convert_case($line, MB_CASE_TITLE); ?><img src="<?php echo $url_arrowUp ?>" style="vertical-align: middle;"></img></a>
-			<a href="<?php echo $this->url(array("order" => $line,"list" => "asc")); ?>"><img src="<?php echo $url_arrowDown ?>" style="vertical-align: middle;"></img></a>
+			<a href="<?php echo $this->url(array("order" => $line,"list" => "desc")); ?>" style="text-decoration:none"><?php echo mb_convert_case($line, MB_CASE_TITLE); ?><img src="<?php echo $url_arrowDown ?>" style="vertical-align: middle;"></img></a>
+			<a href="<?php echo $this->url(array("order" => $line,"list" => "asc")); ?>"><img src="<?php echo $url_arrowUp ?>" style="vertical-align: middle;"></img></a>
 			<strong> |</strong>
 	<?php endforeach; ?>
 	

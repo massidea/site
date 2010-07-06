@@ -610,7 +610,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 						'username' => 'login_name_usr',
 						'joined' => 'created_usr',
 						'login' => 'last_login_usr'),
-			'contentInfo' => array('content' => 'COUNT(id_cnt)')
+			'contentInfo' => array('content' => 'COUNT(id_cnt)'),
+			'contentViews' => array('views' => 'COUNT(id_cnt_vws)')
 		);
 		
         $groupName = "";
@@ -622,7 +623,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
    		if($order) $sort = $orderGroups[$groupName][$order]." ".$list;
         else $sort = "id_usr";
-		
+
         $select = $this->select()->from($this, 'id_usr')
                                  ->order('id_usr');
                                  
@@ -641,13 +642,14 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->_db->fetchAll($select);      
         if(!$result) return array();
         
-        $userIDList = $this->simplifyArray($result);
+        $userIDList = $this->simplifyArray($result,'id_usr');
         
         if($groupName == "userInfo")
-       		$output = $this->sortByUserInfo($userIDList, $sort);
+       		$output = $this->sortByUserInfo($userIDList, $sort, $list);
         elseif($groupName == "contentInfo")
-        	$output = $this->sortUsersByContentInfo($userIDList, $sort);
-        	
+        	$output = $this->sortUsersByContentInfo($userIDList, $sort, $list);
+        elseif($groupName == "contentViews")
+        	$output = $this->sortUsersByViews($userIDList, $sort, $list);	
         return $output;
         
     }
@@ -675,17 +677,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * simplyfyArray
      * 
      * There might be function in Zend so we dont need this but I didnt find, perhaps you can? ;)
-     * This function makes associative array to nonassociative (works only for arrays that have 'id_usr')
+     * This function makes associative array to nonassociative 
      * 
      * @param $result
      * @return non associative array $userIdList
      * @author Jari Korpela
      */
-    private function simplifyArray($result) {
+    private function simplifyArray($result,$by) {
         $userIDList = array();
 
         foreach($result as $res) {
-           $userIDList[] = $res['id_usr'];
+           $userIDList[] = $res[$by];
         }
         return $userIDList;
     }
@@ -883,7 +885,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return $resultList
      * @author Jari Korpela
      */    
-    private function sortUsersByContentInfo($userIDList, $sort) {
+    private function sortUsersByContentInfo($userIDList, $sort, $list) {
     	$content = new Default_Model_ContentHasUser(); 
     	$select = $content->select()->from('cnt_has_usr',
     									array('id_usr'))
@@ -891,10 +893,22 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->order($sort)
     							->group('id_usr')
     							;
-        $result = $this->simplifyArray($content->_db->fetchAll($select));
+        $result = $this->simplifyArray($content->_db->fetchAll($select),'id_usr');
         
-        foreach($userIDList as $id) {
-        	if(!in_array($id,$result)) $result[] = $id;
+        if($list == "desc") {
+	        foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $result[] = $id;
+	        }
+        }
+        elseif($list == "asc") {
+        	$final = array();
+        	foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $final[] = $id;
+	        }
+	        foreach($result as $res) {
+	        	$final[] = $res;
+	        }
+	        $result = $final;
         }
         
         return $result;
@@ -918,7 +932,46 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							;
         $result = $this->_db->fetchAll($select);
         
-		return $this->simplifyArray($result);
+		return $this->simplifyArray($result,'id_usr');
+    }
+    
+    /*
+     * sortUsersByViews
+     * 
+     * Sorts $userIdList by $sort
+     * 
+     * @param array $userIDList
+     * @param string $sort
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function sortUsersByViews($userIDList, $sort, $list) {
+
+    	$select = $this->_db->select()->from('cnt_views_vws',
+    									array('id_usr_vws'))
+    							->where('id_usr_vws IN (?)',$userIDList)
+    							->group('id_usr_vws')
+    							->order($sort)
+    							;
+        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws');
+        
+        if($list == "desc") {
+	        foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $result[] = $id;
+	        }
+        }
+        elseif($list == "asc") {
+        	$final = array();
+        	foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $final[] = $id;
+	        }
+	        foreach($result as $res) {
+	        	$final[] = $res;
+	        }
+	        $result = $final;
+        }
+        
+		return $result;
     }
     
     /**
