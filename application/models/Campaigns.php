@@ -205,10 +205,15 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     *   Removes the campaign from the database
     *   
     *   @param int id_cmp
-    *   @author Pekka Piispanen
+    *   @author Pekka Piispanen, Mikko Aatola
     */
     public function removeCampaign($id_cmp = 0)
     {
+        // Delete campaign-content links from cmp_has_cnt
+        $cmpHasCntModel = new Default_Model_CampaignHasContent();
+        $cmpHasCntModel->removeAllContentFromCampaign($id_cmp);
+
+        // Delete campaign.
         $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
         $this->delete($where);
     } // end of removeCampaign

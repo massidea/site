@@ -221,7 +221,10 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 if (isset($this->userprofile['birthday']) && $this->userprofile['birthday'] != NULL):
                 ?>
                 <?php
-                $date = date_parse_from_format("n/j/Y", $this->userprofile['birthday']);
+				// date_parse_from_format() is not supported in php 5.2.0,
+				// date_parse() function seems to work ok as a workaround with older versions.
+                $date = date_parse($this->userprofile['birthday']);
+                //$date = date_parse_from_format("n/j/Y", $this->userprofile['birthday']);
                 if ($date['day'] < 10)
                     $date['day'] = '0'.$date['day'];
                 if ($date['month'] < 10)

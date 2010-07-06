@@ -215,12 +215,16 @@
         $languagesModel = new Default_Model_Languages();
         $languageName = $languagesModel->getLanguageByLangCode($contentData['language_cnt']);
         $gtranslateLangPair = $this->gtranslate->getLangPair();
-        
+
         // get content tags - functions returns names as well
         // needs updating to proper MVC?
         $contentHasTagModel = new Default_Model_ContentHasTag();
         $tags = $contentHasTagModel->getContentTags($id);
-        //echo "<pre>"; print_r($tags); echo "</pre>"; die;
+        
+        if($isTranslated)
+        {
+			$tags = $this->gtranslate->translateTags($tags);
+        }
 
         // get content links, to be implemented
         $links = array();
