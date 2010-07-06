@@ -94,7 +94,7 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         // needs replacing to single setValue($id, $key, $val, $pub)! <--- Is this some old comment?
         foreach ($formdata as $key => $val) {                                   // go through data
             if ($key != "email" && $key != "password"                           // ignore certain keys...
-                && $key != "notifications" && $val != "")                       // ignore
+                && $key != "notifications")                                     // ignore
             {
                 $publicity = strpos($key,'_publicity');                         // returns true if publicitied
                 if($publicity !== false) {                                      // note the use of !== (not !=), this operator must be used since strpos can return boolean and integer values

@@ -251,7 +251,7 @@ class AccountController extends Oibs_Controller_CustomController
         $dataa['userWeblinks'] = $userWeblinksModel->getUserWeblinks($id);
         $i = 0;
         foreach($dataa['userWeblinks'] as $weblink) {
-            if (strlen($weblink['name_uwl']) == 0 || strlen($weblink['url_uwl'] == 0)) {
+            if (strlen($weblink['name_uwl']) == 0 || strlen($weblink['url_uwl']) == 0) {
                 unset($dataa['userWeblinks'][$i]);
             }
             $i++;

@@ -255,7 +255,8 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $weblinks_url = new Oibs_Form_Element_Note('weblinks_url');
         $weblinks_url->setValue('<div class="input-column-website3">Url</div><div class="clear"></div>');
 
-        $nameTooLongText = 'Name too long';
+        $nameTooLongText = 'Name too long (max 45)';
+        $urlTooLongText = 'URL too long (max 150)';
 
         $weblinks_name_site1 = new Zend_Form_Element_Text('weblinks_name_site1');
         $weblinks_name_site1->setLabel('Web site 1')
@@ -268,7 +269,13 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             ));
         $weblinks_url_site1 = new Zend_Form_Element_Text('weblinks_url_site1');
         $weblinks_url_site1->setAttrib('id', 'website1-url')
-                           ->addValidator(new Oibs_Validators_UrlValidator());
+                           ->addValidators(array(
+                               new Oibs_Validators_UrlValidator(),
+                               array('StringLength',
+                                   false,
+                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                               )
+                           ));
 
         $weblinks_name_site2 = new Zend_Form_Element_Text('weblinks_name_site2');
         $weblinks_name_site2->setLabel('Web site 2')
@@ -281,7 +288,13 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             ));
         $weblinks_url_site2 = new Zend_Form_Element_Text('weblinks_url_site2');
         $weblinks_url_site2->setAttrib('id', 'website2-url')
-                           ->addValidator(new Oibs_Validators_UrlValidator());
+                           ->addValidators(array(
+                               new Oibs_Validators_UrlValidator(),
+                               array('StringLength',
+                                   false,
+                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                               )
+                           ));
 
         $weblinks_name_site3 = new Zend_Form_Element_Text('weblinks_name_site3');
         $weblinks_name_site3->setLabel('Web site 3')
@@ -295,7 +308,13 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             ));
         $weblinks_url_site3 = new Zend_Form_Element_Text('weblinks_url_site3');
         $weblinks_url_site3->setAttrib('id', 'website3-url')
-                           ->addValidator(new Oibs_Validators_UrlValidator());
+                           ->addValidators(array(
+                               new Oibs_Validators_UrlValidator(),
+                               array('StringLength',
+                                   false,
+                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                               )
+                           ));
 
         $weblinks_name_site4 = new Zend_Form_Element_Text('weblinks_name_site4');
         $weblinks_name_site4->setLabel('Web site 4')
@@ -309,7 +328,13 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             ));
         $weblinks_url_site4 = new Zend_Form_Element_Text('weblinks_url_site4');
         $weblinks_url_site4->setAttrib('id', 'website4-url')
-                           ->addValidator(new Oibs_Validators_UrlValidator());
+                           ->addValidators(array(
+                               new Oibs_Validators_UrlValidator(),
+                               array('StringLength',
+                                   false,
+                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                               )
+                           ));
 
         $weblinks_name_site5 = new Zend_Form_Element_Text('weblinks_name_site5');
         $weblinks_name_site5->setLabel('Web site 5')
@@ -323,7 +348,13 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             ));
         $weblinks_url_site5 = new Zend_Form_Element_Text('weblinks_url_site5');
         $weblinks_url_site5->setAttrib('id', 'website5-url')
-                           ->addValidator(new Oibs_Validators_UrlValidator());
+                           ->addValidators(array(
+                               new Oibs_Validators_UrlValidator(),
+                               array('StringLength',
+                                   false,
+                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                               )
+                           ));
 
         $languages = New Default_Model_Languages();
         $allLanguages = $languages->getAllNamesAndIds();

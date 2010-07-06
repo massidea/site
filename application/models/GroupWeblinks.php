@@ -158,7 +158,7 @@ class Default_Model_GroupWeblinks extends Zend_Db_Table_Abstract
      * @param int $id_grp
      */
     public function removeGroupWeblinks($id_grp) {
-        $where = $this->getAdapter()->quoteInto('id_grp_gwl = ?', $id_gsr);
+        $where = $this->getAdapter()->quoteInto('id_grp_gwl = ?', $id_grp);
         if ($this->delete($where)) {
             return true;
         } else {
