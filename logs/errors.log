@@ -1,1 +1,89 @@
 
+2010-06-03T12:59:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42000] [1044] Access denied for user ''@'localhost' to database 'oibs'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Mysql.php(96): Zend_Db_Adapter_Pdo_Abstract->_connect()
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(448): Zend_Db_Adapter_Pdo_Mysql->_connect()
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(706): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Select), Array)
+#4 D:\xampp\www\site\application\models\Tags.php(373): Zend_Db_Adapter_Abstract->fetchAll(Object(Zend_Db_Select))
+#5 D:\xampp\www\site\application\controllers\IndexController.php(87): Default_Model_Tags->getPopular(20)
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): IndexController->indexAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-06-03T12:59:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42000] [1044] Access denied for user ''@'localhost' to database 'oibs'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Mysql.php(96): Zend_Db_Adapter_Pdo_Abstract->_connect()
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(448): Zend_Db_Adapter_Pdo_Mysql->_connect()
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(706): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Select), Array)
+#4 D:\xampp\www\site\application\models\Tags.php(373): Zend_Db_Adapter_Abstract->fetchAll(Object(Zend_Db_Select))
+#5 D:\xampp\www\site\application\controllers\IndexController.php(87): Default_Model_Tags->getPopular(20)
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): IndexController->indexAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-06-03T13:00:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (jquery.autocomplete). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-06-03T14:27:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (jquery.autocomplete). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-02T13:49:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (jquery.autocomplete). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-02T15:39:26+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (jquery.autocomplete). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-02T15:40:20+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (jquery.autocomplete). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-05T10:17:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (jquery.autocomplete). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-05T10:17:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (jquery.autocomplete). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
