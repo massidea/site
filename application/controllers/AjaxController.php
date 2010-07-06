@@ -96,18 +96,20 @@ class AjaxController extends Oibs_Controller_CustomController
     	// Gather data for recent posts
     	$i = 0;
     	foreach ($recentposts_raw as $post) {
-	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
-
-	    	// Action helper for define is tag running number divisible by two
-		$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
-
 	    	$this->gtranslate->setLangFrom($post['language_cnt']);
+
+	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
+	    	
+	    	// Action helper for define is tag running number divisible by two
+			$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+		    $translatedtags = $this->gtranslate->translateTags($tags);
+			
 	    	$translang = $this->gtranslate->getLangPair();
 
 	    	$recentposts[$i]['original'] = $post;
 	    	$recentposts[$i]['translated'] = $this->gtranslate->translateContent($post);
 	    	$recentposts[$i]['original']['tags'] = $tags;
-	    	$recentposts[$i]['translated']['tags'] = $tags;
+	    	$recentposts[$i]['translated']['tags'] = $translatedtags;
 	    	$recentposts[$i]['original']['translang'] = $translang;
 	    	$recentposts[$i]['translated']['translang'] = $translang;
 	    	
@@ -152,7 +154,9 @@ class AjaxController extends Oibs_Controller_CustomController
 					if($resultList[$i])
 						$newContents[] = $resultList[$i];
 				}
-				$contentList = $userModel->getUserContentList($newContents,3);
+				if(!sizeof($newContents) == 0)
+					$contentList = $userModel->getUserContentList($newContents,3);
+				else $contentList = array();
 			}
 			$output = json_encode($contentList);
 	

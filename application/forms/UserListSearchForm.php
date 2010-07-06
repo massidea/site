@@ -2,7 +2,7 @@
 /**
  *  UserListSearchForm -> Form for searching users.
  *
-* 	Copyright (c) <2009>, Markus Riihelä
+* 	Copyright (c) <2009>, Markus Riihelï¿½
 * 	Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -22,8 +22,8 @@
  *  UserListSearchForm - class
  *
  *  @package 	Forms
- *  @author 	Markus Riihelä & Mikko Sallinen
- *  @copyright 	2009 Markus Riihelä & Mikko Sallinen
+ *  @author 	Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright 	2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license 	GPL v2
  *  @version 	1.0
  */
@@ -71,22 +71,31 @@
                       ->setDecorators(array('UserListFilterContentDecorator'))
                       ->setValue(isset($formData['contentlimit']) ? $formData['contentlimit'] : '');
          
-        
+        */
         // User country select
 		$countrySelect = new Zend_Form_Element_Select('country');
 		$countrySelect->setLabel($translate->_('userlist-filter-country-label'))
-				      ->addFilter('StringToLower')
 				      ->setDecorators(array('UserListFilterElementDecorator'))
-				      ->setMultiOptions($formData['countryList'])
+				      ->setMultiOptions($formData['countries'])
                       ->setValue(isset($formData['country']) ? $formData['country'] : '');
                       
-        */
         // User city input
 		$city = new Zend_Form_Element_Text('city');
 		$city->setLabel($translate->_('userlist-filter-city-label'))
-              ->addFilter('StringToLower')
               ->setDecorators(array('UserListFilterElementDecorator'))
               ->setValue(isset($formData['city']) ? $formData['city'] : '');
+              
+        // User group input
+		$group = new Zend_Form_Element_Text('group');
+		$group->setLabel("Group")
+				->setDecorators(array('UserListFilterInputCheckboxDecorator'))
+              ->setValue(isset($formData['group']) ? $formData['group'] : '');
+              
+        $groupExact = New Zend_Form_Element_Checkbox('exactg');
+        $groupExact->setLabel("Search exact group name")
+        			->setAttrib("checked",isset($formData['exactg']) ? $formData['exactg'] : 0)
+        			->setDecorators(array('UserListFilterCheckboxNextToInputDecorator'))
+        			;
            
 		// Search submit 
 		$submit = new Zend_Form_Element_Submit('filter');
@@ -94,6 +103,6 @@
 		$submit->removeDecorator('DtDdWrapper');
 		
 		// Add elements to form
-		$this->addElements(array($username, /*$contentSelect, $contentAmount, $countrySelect,*/ $city, $submit));	
+		$this->addElements(array($username, /*$contentSelect, $contentAmount,*/ $countrySelect, $city, $group, $groupExact, $submit));	
 	}
 }

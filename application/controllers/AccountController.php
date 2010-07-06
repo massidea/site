@@ -1176,24 +1176,21 @@ class AccountController extends Oibs_Controller_CustomController
         // Filter form data
         $formData['username'] = isset($params['username']) ? $params['username'] : '';
         $formData['city'] = isset($params['city']) ? $params['city'] : '';
-        //$formData['country'] = isset($params['country']) ? $params['country'] : 0;    
+        $formData['country'] = isset($params['country']) ? $params['country'] : 0;
+        $formData['group'] = isset($params['group']) ? $params['group'] : '';
+        $formData['exactg'] = isset($params['exactg']) ? $params['exactg'] : 0;        
         //$formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
-        //$formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;
-        /*
-        // Get country listing
-        $userCountry = new Default_Model_UserCountry();
-        $formData['countryList'] = $userCountry->getCountryList();
+        //$formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;       
         
-        // Reorder country listing and add all countries option
-        $temp[0] = $this->view->translate('userlist-filter-country-all');
+        $userLocations = $this->getAllCitiesAndCountries();
+        $userCities = json_encode($userLocations['cities']);
+        $userCountries = json_encode($userLocations['countries']);
+
+        $formData['countries'][] = $this->view->translate('userlist-filter-country-all');
+        foreach($userLocations['countries'] as $country) {
+        	$formData['countries'][$country['countryIso']] = $country['name'];
+        }        
         
-        foreach($formData['countryList'] as $k => $v) {
-            $temp[$v['id_ctr']] = $v['name_ctr'];
-        }
-        
-        $formData['countryList'] = $temp;
-        */
-        //Set array patterns
         $pat_sql = array("%","_");
         $pat_def = array("*","?");
 
@@ -1206,6 +1203,14 @@ class AccountController extends Oibs_Controller_CustomController
         $user = new Default_Model_User();
         $userListing = $user->getUserListing($formData, $page, $count, $order, $list, $listSize);
 
+        $userContents = array();
+        foreach($userListing as $user) {
+        	$contentsArray = $this->getUserContents($user['id_usr'],$user['contents'],3);
+        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
+        		$userContents[$user['id_usr']] = array();
+        	else $userContents[$user['id_usr']] = $contentsArray;
+        }
+        
         $userIdList = array();
         foreach($userListing as $u) {
         	$userIdList[] = $u['id_usr']; 
@@ -1213,7 +1218,7 @@ class AccountController extends Oibs_Controller_CustomController
         
         // Calculate total page count
         $pageCount = ceil($listSize / $count);
-        //print_r($pageCount);die;
+                        
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
         
@@ -1224,22 +1229,7 @@ class AccountController extends Oibs_Controller_CustomController
           
         $userSearch->setAction($url)
                    ->setMethod('get');
-                   
-                   
-        $userLocations = $this->getAllCitiesAndCountries();
-        
-        $userCities = json_encode($userLocations['cities']);
-        $userCountries = json_encode($userLocations['countries']);
-
-        $userContents = array();
-        
-        foreach($userListing as $user) {
-        	$contentsArray = $this->getUserContents($user['id_usr'],$user['contents'],3);
-        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
-        		$userContents[$user['id_usr']] = array();
-        	else $userContents[$user['id_usr']] = $contentsArray;
-        }
-        
+                           
         $this->view->userSearch = $userSearch;
         // Custom pagination to fix memory error on large amount of data
         $paginator = new Zend_View();
