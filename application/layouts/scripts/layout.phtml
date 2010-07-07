@@ -18,6 +18,7 @@ echo $this->doctype();
     
     <?php
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/style.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie8_fix.css'), 'screen', 'IE 8');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix.css'), 'screen', 'IE 6');
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));

@@ -1,0 +1,10 @@
+/* 
+ * IE8 CSS FIX
+*/
+
+.user_list_user_container div { display:inline }
+.user_list_left_side,.user_list_right_side { float:left; }
+.user_list_city,.user_list_country,.user_list_rating,.user_list_rating_amount { padding-left: 2px; }
+.user_list_user_image  { margin-right: 15px; }
+.user_list_last_login { float: right; }
+.user_list_right_side { width: 85%; }

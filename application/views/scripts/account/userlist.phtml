@@ -9,6 +9,11 @@ $url_contentView = $this->url(array('controller' => 'view',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
+$url_getUserStatistics = $this->url(array('controller' => 'ajax',
+							 'action' => 'getuserstatistics',
+							 'language' => $this->language), 
+							 'lang_default', true);
+
 $url_arrowUp = $this->baseUrl('/images/arrow_up.png');
 $url_arrowDown = $this->baseUrl('/images/arrow_down.png');
 $url_loader = $this->baseUrl('/images/ajax-loader-black.gif');
@@ -16,6 +21,7 @@ $url_thumbUp = $this->baseUrl('/images/icon_thumb_up.png');
 $url_thumbDown = $this->baseUrl('/images/icon_thumb_down.png');
 
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete.js');
+$this->headScript()->appendFile($this->baseUrl . '/js/jquery.gchart.min');
 //$this->headLink()->prependStylesheet($this->baseUrl . '/css/css_reset.css');
 $this->headScript()->captureStart();
 
@@ -26,6 +32,7 @@ var thumbDown = "<?php echo $url_thumbDown; ?>";
 var loader = "<?php echo $url_loader; ?>";
 var contentView = "<?php echo $url_contentView; ?>";
 var userContents = "<?php echo $url_getUserContents ?>";
+var userStatistics = "<?php echo $url_getUserStatistics ?>";
 var loading = "<img src=\""+loader+"\" /><span> Please wait...</span>";
 var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
 var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
@@ -98,13 +105,13 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
                         <div class="user_list_right_side"> 
 	                        <div id="user_<?php echo $user['id_usr']; ?>_info" class="user_list_user_info">
 		                        <div class="user_list_user_line">
-			                        <span class="user_list_username"><a href="<?php echo $this->url(array('controller' => 'account',
+			                        <a class="user_list_username" href="<?php echo $this->url(array('controller' => 'account',
 			                                                                     'action' => 'view',
 			                                                                     'user' => $user['login_name_usr'],
 			                                                                     'language' =>  $this->language),
 			                                                               'lang_default', true); ?>">
 			                                    <?php echo $user['login_name_usr']; ?>(<?php echo $user['contentCount']; ?>)
-			                                </a>,</span>
+			                         ,</a>
 			                        <?php if($user['city']): ?>
 			                        <a href="<?php echo $this->url(array('city' => $user['city'])); ?>" class="user_list_city"><?php echo $user['city']; ?>, </a>
 			                        <?php endif; if($user['country']): ?>
@@ -115,10 +122,13 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 			                        <?php else: ?>
 			                        <span class="user_list_rating">No rated contents.</span>
 			                        <?php endif; ?>
-			                        <span class="user_list_last_login">Last login: <?php echo date("d M Y, H:i",strtotime($user['last_login_usr'])); ?></span>
+			                        <span class="user_list_last_login" style="display: block">Last login: <?php echo date("d M Y, H:i",strtotime($user['last_login_usr'])); ?></span>
 		                        </div>
 		                        <div class="user_list_statistics" id="user_list_user_<?php echo $user['id_usr']; ?>_statistics" style="display:none;">
-			                        <div class="user_list_user_line"><span class="user_list_statistics_title">Statistics</span></div>
+			                        <div class="user_list_user_line"><span class="user_list_statistics_title">Statistics</span>
+			                         | <a id="user_list_user_<?php echo $user['id_usr']; ?>_statistics_load_graphs" href="#" onClick="return false;">Show graphs</a>
+			                         <div style="display:inline"><div id="user_list_<?php echo $user['id_usr']; ?>_show_graphs_loading" style="display: none"></div></div>
+			                        </div>
 			                        <div class="user_list_user_line"><span class="user_list_statistics_line">> Joined: <?php echo date("d M Y",strtotime($user['created_usr'])); ?></span></div>
 			                        <?php /* if($user['ratingAmount']): ?>
 			                        <div class="user_list_user_line">
@@ -133,6 +143,9 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 			                        </div>
 
 			                        <?php endif; */ ?>
+			                        <div class="user_list_charts" id="user_<?php echo $user['id_usr']; ?>_charts" style="display:none">
+			                        	<div class="user_list_user_line"><div id="user_<?php echo $user['id_usr']; ?>_typechart" class="contentTypeChart"></div></div>
+		                        	</div>
 		                        </div>
 		                        
 		                        <?php if (sizeof($this->userContents[$user['id_usr']]) > 0): ?>
@@ -141,7 +154,7 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 			                        <span class="user_list_recet_contents_title">Recent posts </span>
 			                        |
 			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="display: inline">Show 3 more </a>
-			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"></div>
+			                        <div style="display:inline"><div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"></div></div>
 			                        |
 			                        <a id="user_list_<?php echo $user['id_usr']; ?>_hide_new" href="#" onClick="return false;" style="block">Hide</a>
 		                        </div>

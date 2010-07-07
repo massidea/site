@@ -900,6 +900,23 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         
     }
     
+    private function getUserStatisticsContentTypes($contentIdList) {
+		
+    	$select = $this->_db->select()->from(array('cnt' => 'contents_cnt'),
+    											array())
+    									->joinLeft(array('cty' => 'content_types_cty'),    
+                                                  'cty.id_cty = cnt.id_cty_cnt',  
+                                                  array('type' => 'key_cty',
+                                                  'amount' => 'COUNT(key_cty)'))
+                                        ->where('id_cnt IN (?)',$contentIdList)
+                                        ->group('key_cty')
+         ;
+                           
+        $result = $this->_db->fetchAll($select);
+        
+        return $result;                                 
+    }
+    
     /*
      * sortUsersByContentInfo
      * 
@@ -1414,6 +1431,18 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->_db->fetchAll($contentSelect);
         return $result;
     } // end of getUserContentList
+    
+    /*
+     * array $statisticsList holds info about what statistics you want to have
+     */
+    public function getUserStatistics($userId, $contentIdList, $statisticsList) {
+    	
+    	$statistics = array();
+    	if(in_array("contentTypes",$statisticsList)) {
+    		$statistics = array_merge($statistics,$this->getUserStatisticsContentTypes($contentIdList));
+    	}
+    	return $statistics;
+    }
     
     public function getWholeUserContentList($userId, $contentIdList) {
     	$result = "";
