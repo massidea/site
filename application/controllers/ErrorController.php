@@ -77,7 +77,7 @@ class ErrorController extends Oibs_Controller_CustomController
 		                $errors->exception->getTraceAsString()
 		        );
 				$mail = new Zend_Mail();
-				$subject = "Iiron testi - Massidea.org - ErrorController";
+				$subject = "Massidea.org - ErrorController";
 				
 		    	$mail->setBodyHtml($message);
 		    	$mail->setFrom('no-reply@massidea.org', 'Massidea.org');
