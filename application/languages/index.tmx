@@ -1,4 +1,4 @@
-?<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
 <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
@@ -571,4 +571,3 @@
     		<tuv xml:lang="fi"><seg>Viimeisimmät kampanjat</seg></tuv>
     </tu>
 </body>
-
