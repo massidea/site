@@ -144,17 +144,21 @@
                             'lang_default', true);
                             
             if ($list_type == 'cloud') {
-                $size = $tag['tag_size'];
-                echo ' <a href="'.$url.'" style="font-size:'.$size.'%">'.stripslashes($tag['name_tag']).'</a>';
-            } else if ($list_type == 'index') {
-                if ($i == $limiter && $col <= 1) {              // max 3 cols!
-                    echo '</div>';                              // this div is full, move to next
-                    echo '<div class="tag_index_col_'.$i.'" style="text-align: left; width: 225px; float:left; margin-left: 22px;">';  // move to next column
-                    $i = 0;
-                    $col++;
-                }
-                $i++;
-                echo ' <a href="'.$url.'">'.stripslashes($tag['name_tag']).' (' . $tag['count'] . ')</a><br />';
+	                    $size = $tag['tag_size'];
+	                    if($tag['divisible']) {
+	                    	echo ' <a href="'.$url.'" style="font-size:'.$size.'%"><span class="first_tag">'.stripslashes($tag['name_tag']).'</span></a>';
+	                    } else {
+	                    	echo ' <a href="'.$url.'" style="font-size:'.$size.'%"><span class="second_tag">'.stripslashes($tag['name_tag']).'</span></a>';
+	                    }
+	                } else if ($list_type == 'index') {
+	                    if ($i == $limiter && $col <= 1) {              // max 3 cols!
+	                        echo '</div>';                              // this div is full, move to next
+	                        echo '<div class="tag_index_col_'.$i.'" style="text-align: left; width: 225px; float:left; margin-left: 22px;">';  // move to next column
+	                        $i = 0;
+	                        $col++;
+	                    }
+	                    $i++;
+	                    echo ' <a href="'.$url.'">'.stripslashes($tag['name_tag']).' (' . $tag['count'] . ')</a><br />';
             }
         }
     ?>
@@ -167,3 +171,4 @@
         ?></div>
 	</div>
 </div>
+

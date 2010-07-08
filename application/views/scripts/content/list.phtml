@@ -3,24 +3,19 @@
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css'));  
 
     // change background color
-    if ($this->type == "Problems" || $this->type == "problem") {
-        $this->headScript()->captureStart();
-        ?>setTimeout("changeBack('#d21034')", 300); <?php
-        $this->headScript()->captureEnd();
-    } else if ($this->type == "Ideas" || $this->type == "idea") {
-        $this->headScript()->captureStart();
-        ?>setTimeout("changeBack('#4b9b07')", 300);<?php 
-        $this->headScript()->captureEnd();
-    } else if ($this->type == "Future info" || $this->type == "finfo") {
-        $this->headScript()->captureStart();
-        ?>setTimeout("changeBack('#ffc726')", 300);<?php 
-        $this->headScript()->captureEnd();
-    } 
+    $color = array( 'problem' => '#d21034',
+    				'idea' => '#4b9b07',
+    				'finfo' => '#ffc726');
+    
+    if (isset($color[$this->type])) {
+	    $this->headScript()->captureStart(); 
+	    ?> changeBack('<?php echo $color[$this->type]; ?>'); <?php
+	    $this->headScript()->captureEnd(); 
+    }
             
     // some variable initiation
     $url_tag_cloud = $this->url(array('controller' => 'tag',
         'action' => 'index',
-    	'ctype' => $this->type,
         'language' => $this->language), 
         'lang_default', true);
         
@@ -29,178 +24,121 @@
         'language' => $this->language), 
         'lang_default', true);
     
-    $tags_type = 'index-'.$this->type.'-tags';
-    
-    $type = $this->type;
-
+	$url_getRecentContent = $this->url(array('controller' => 'ajax',
+											 'action' => 'getrecentcontent',
+											 'type' => $this->type,
+											 'language' => $this->language), 
+											 'lang_default', true);
+	
+	$url_checkRecentContent = $this->url(array('controller' => 'ajax',
+											   'action' => 'checkrecentcontent',
+											   'language' => $this->language), 
+											   'lang_default', true);
+	$tags_type = 'index-'.$this->type.'-tags';
+	    
+	$type = $this->type;
 ?>
 
+<?php $this->headScript()->captureStart()?>
+
+// Variables for ajax requests
+var url_checkrecentcontent = '<?php echo $url_checkRecentContent; ?>';
+var url_getrecentcontent = '<?php echo $url_getRecentContent; ?>';
+var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif'); ?>';
+
+<?php $this->headScript()->captureEnd()?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
+
 <div class="content_list_recent">
-    <?php if (!empty($this->contentData)): ?>
-    <div id="search_result">
+	<h3 class="recent_posts"><?php echo $this->translate('content-list-'.$this->type); ?>
+		<a href="<?php echo $this->url(array('controller' => 'rss',
+                                             'action' => 'generate',
+                                             'type' => $this->type,
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
+            <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 5px; vertical-align: middle;" /></a>
+        <a href="<?php echo $this->url(array('controller' => 'voice',
+                                             'action' => 'generate',
+                                             'type' => $this->type,
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
+			<img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 4px; vertical-align: middle;" /></a>
+	</h3>
+	
+	<div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
+		<div id="recent_posts_ajax" style="width: 500px;"></div>
+	    <div class="user_content_spacer">
+	        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
+	    </div>
+	    
+	    <div id="recent_posts_ajax_link" style="margin-top: 10px; margin-left: 220px;">
+	        <h3>
+	            <a href="#" onclick="return false;"><?php echo $this->translate('index-view-more'); ?></a>
+	        </h3>
+	    </div>
+	</div>
     
-        <h3 class="content_list_header_<?php echo $this->type; ?>">
-            <?php echo $this->translate('content-list-'.$this->type); ?>
-            
-            <a href="<?php echo $this->url(array('controller' => 'rss',
-                                                 'action' => 'generate',
-                                                 'type' => $this->type,
-                                                 'language' => $this->language),
-                                           'lang_default', true); ?>">
-                                           
-                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" />
-            </a>
-            <a href="<?php echo $this->url(array('controller' => 'voice',
-                                                 'action' => 'generate',
-                                                 'type' => $this->type,
-                                                 'language' => $this->language),
-                                           'lang_default', true); ?>">
-                                           
-                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" />
-            </a>
-        </h3>
-    
-        <?php /*if ($this->contentCount > $this->count): ?>
-        <div id="content_list_content_pagination_top">
-            <?php echo $this->contentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
-        </div>
-        <?php endif;*/ ?>
-        
-        <?php /*<div id="content_list_content_order">
-            <span><?php echo $this->translate('content-list-order-by'); ?></span>
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'author'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-author'); ?>
-            </a> | 
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'created'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-date'); ?>
-            </a> |
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'header'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-header'); ?>
-            </a> | 
-            
-            <a href="<?php echo $this->url(array('type' => $this->type, 
-                                                 'page' => $this->page, 
-                                                 'language' => $this->language, 
-                                                 'order' => 'views'), 
-                                           'content_list', true); ?>">
-                <?php echo $this->translate('content-list-order-by-views'); ?>
-            </a>
-        </div>
-        */ ?>
-        
-       <?php echo $this->partialLoop('partials/content_row.phtml', $this->contentData); ?>
-        
-        <div class="clear"></div> 
-        
-        <?php if ($this->contentCount > $this->count): ?>
-        <div id="content_list_content_pagination_bottom">
-            <?php echo $this->contentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
-        </div>
-        <?php endif; ?>
-           
-        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="------------" />
-    </div>
-    
-    <?php else: ?>
-    
-    <div style="float:left; width: 490px;">
-        <?php echo $this->translate('search-nothing-found'); ?>
-    </div>
-    
-    <?php endif; ?>
-    
-    <div class="right_side">
-        <div class="right_side_title_small">
-            <?php echo $this->translate('content-list-right-header-'.$this->type); ?>
-        </div>
+    <div class="right_side" style="padding: 0px; margin: 0px; margin-top: -52px;">
+   	    <h4 style="margin-top: 8px; margin-bottom: 6px;">
+   	        <?php echo $this->translate('content-list-right-header-'.$this->type); ?>
+   	    </h4>
         
         <div class="top_right_box">
-            <div>
-                <p><?php echo $this->translate('content-list-right-p1-'.$this->type); ?></p>
-                <p><?php echo $this->translate('content-list-right-p2-'.$this->type); ?></p>
-                <p><?php echo $this->translate('content-list-right-p3'); ?></p>
-            </div>
+            <p><?php echo $this->translate('content-list-right-p1-'.$this->type); ?></p>
+            <p><?php echo $this->translate('content-list-right-p2-'.$this->type); ?></p>
+            <p><?php echo $this->translate('content-list-right-p3'); ?></p>
         </div>
-         
+        
         <p id="tags_link" style="margin-top: 1px;" class="top_right_box_links">
             <?php echo $this->translate('index-most-popular')?>
             <a href="<?php echo $url_tag_cloud; ?>">
-                <?php echo $this->translate($tags_type); ?>
+                <?php echo $this->translate('index-tags')?>
             </a>
         </p>
         
 		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
         
         <div class="tag_cloud">
-            <?php if (isset($this->tags)): ?>
-            
-                <?php foreach ($this->tags as $tag): ?>
-                
-                    <a href="<?php echo $this->url(array('controller' => 'tag',
-                                            'action' => 'view',
-                                            'id' => $tag['id_tag'],
-                                            'language' => $this->language),
-                                      'lang_default', true); ?>" style="font-size:<?php echo $tag['tag_size']; ?>%">
-                        <?php echo stripslashes($tag['name_tag']); ?>
-                    </a>
-                    
-                <?php endforeach; ?>
-                
-            <?php endif; ?>
-            <p id="show_all_tags" style="padding: 0px;" class="top_right_box_links">
-                <a href="<?php echo $this->url(array('controller' => 'tag',
-                                                     'action' => 'index',
-                                                     'language' => $this->language), 
-                                                'lang_default', true); ?>">
-                    <?php echo $this->translate('index-show-all')?>
-                </a>
-            </p>
-		</div>
-        
-        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
-        
-        <div class="see_also_title">
-        	<?php echo $this->translate('index-see-also-'.$this->type); ?>
-        	<div class="see_also_links">
-        		<a href="<?php echo $this->url(array('controller' => 'search', 
-                                                     'action' => 'result',  
-                                                     'language' => $this->language, 
-                                                     'order' => 'views'), 
-                                               'lang_default', true); ?>">
-        			<?php echo $this->translate('content-most-viewed'); ?>
-				</a>
-        		<?php echo ' | '; ?>
-        		<a href="#"><?php echo $this->translate('content-best-rated'); ?></a>
-        	</div>
-        </div>
-        
-        <div id="right_side_content_container">
-        	<?php echo $this->partialLoop('partials/mini_content_row.phtml', $this->mostViewedData); ?>
+		<?php echo $this->partialLoop('partials/tag.phtml', $this->tags); ?>
+
+		<p id="show_all_tags" style="padding: 0px; margin-top: 10px;" class="top_right_box_links">
+		    <a href="<?php echo $this->url(array('controller' => 'tag',
+						     'language' => $this->language),
+						     'lang_default', true); ?>">
+			<?php echo $this->translate('index-show-all')?>
+		    </a>
+		</p>
+	    </div>
+	 <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+
+	 <div class="see_also_title">
+			<?php echo $this->translate('index-see-also-'.$this->type); ?>
+			<div class="see_also_links">
+				<a href="<?php echo $this->url(array('controller' => 'search', 
+							      'action' => 'result',  
+							      'language' => $this->language, 
+							      'order' => 'views'), 
+							'lang_default', true); ?>">
+					<?php echo $this->translate('content-most-viewed'); ?>
+					</a>
+				<?php echo ' | '; ?>
+				<a href="#"><?php echo $this->translate('content-best-rated'); ?></a>
+			</div>
+		 </div>
+
+		 <div id="right_side_content_container">
+			<?php echo $this->partialLoop('partials/mini_content_row.phtml', $this->mostViewedData); ?>
         </div>
         
         <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
         
-        <div class="right_side_title_small"><?php echo $this->translate('content-list-missing-header'); ?></div>
-        <div class="top_right_box">
-	        <p style="padding:0; margin:0;">
-	            <?php echo $this->translate('index-opensource'); ?>
-	        </p>
-        </div>
+        <h3 style="padding:0; margin-top: 5px;">
+            <?php echo $this->translate('content-list-missing-header'); ?>
+        </h3>
+        
+        <p style="padding:0; margin:0;">
+            <?php echo $this->translate('index-opensource'); ?>
+        </p>
         
     </div>
 </div>

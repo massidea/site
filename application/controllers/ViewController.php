@@ -32,9 +32,6 @@
     public function init()
     {
         parent::init();
-        
-        $ajaxContext = $this->_helper->getHelper('AjaxContext');
-        $ajaxContext->addActionContext('index', 'html')->initContext();
     }
 
     /**
@@ -66,12 +63,21 @@
         $id = (int)$params['content_id'];
                 
         if ($id == 0) {
-            $this->flash('content-not-found', '/'.$this->view->language.'/msg/');   
+            $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');   
         }
         
         // Get specific content data -- this could fail? Needs check?
         $contentModel = new Default_Model_Content();
         $contentData = $contentModel->getDataAsSimpleArray($id);
+        
+        $isTranslated = isset($params['notranslate']) ? false:true;
+        
+        if($isTranslated)
+        {
+	        // Translate content data
+			$this->gtranslate->setLangFrom($contentData['language_cnt']);
+			$contentData = $this->gtranslate->translateContent($contentData);
+        }
         
         $filesModel = new Default_Model_Files();
         $files = $filesModel->getFilenamesByCntId($id);
@@ -88,7 +94,7 @@
         	$auth->getIdentity()->user_id != $ownerId &&
         	!in_array("admin", $this->view->logged_user_roles))
         {
-            $this->flash('content-not-found', '/'.$this->view->language.'/msg/');  
+            $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');  
         }
    
         // get rating from params (if set)
@@ -103,6 +109,9 @@
         
         // turn commenting off by default
         $user_can_comment = false;
+        
+        // turn rating off by default
+        $user_can_rate = false;
 
         // Comment model
         $comment = new Default_Model_Comments();
@@ -111,8 +120,14 @@
         
         // If user has identity
         if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) {
-            // enable comment form, also used as rating permission
+            // enable comment form
             $user_can_comment = true;
+            
+            // enable rating if the content was not published by the user
+            // (also used for flagging)
+            if ($ownerId != $auth->getIdentity()->user_id) {
+                $user_can_rate = true;
+            }
             
             // generate comment form
             $comment_form = new Default_Form_CommentForm($parentId);
@@ -190,83 +205,33 @@
         // get content owner picture ... to be implemented later
         $userImage = $userModel->getUserImageData($ownerId);
 
-        // get other content from user.. function needs a looking-over!
-        // Also it needs to be separated from this action so the MVC-is correct!
-        
-        $moreFromUser = $userModel->getUserContent($ownerId);
-    	
-        // get related contents
-        $relatedContents = $contentModel->getRelatedContents($id);
-
         // get (VIEWED) content views (returns a string directly)
         $contentViewsModel = new Default_Model_ContentViews();
-        $contentViewsModel->increaseViewCount($id);
+        if (! $this->alreadyViewed($id)) {
+			$contentViewsModel->increaseViewCount($id);
+        }
         $views = $contentViewsModel->getViewsByContentId($id);
-
-        // get content rating (returns a string directly)
-        $contentRatingsModel = new Default_Model_ContentRatings();
-        //$rating = $contentRatingsModel->getById($id);
-        $rating = $contentRatingsModel->getPercentagesById($id);
         
-        // $rate is gotten from params[], 1 and -1 are the only allowed
-        if ($rate != "NONE"
-            && ($rate == 1 || $rate == -1)
-            && $auth->hasIdentity())
-        { 
-            if($contentRatingsModel->addRating($id, $auth->getIdentity()->user_id, $rate)) {
-                $this->view->savedRating = $rate;
-                //$rating = $contentRatingsModel->getById($id);
-                $rating = $contentRatingsModel->getPercentagesById($id);
-            } else {
-                $this->flash('rating-failed-msg', '/en/msg/');
-            }
-        }
+        $languagesModel = new Default_Model_Languages();
+        $languageName = $languagesModel->getLanguageByLangCode($contentData['language_cnt']);
+        $gtranslateLangPair = $this->gtranslate->getLangPair();
 
-        // get contents total favourites
-        $userFavouritesModel = new Default_Model_UserHasFavourites();
-        $totalFavourites = $userFavouritesModel->getUsersCountByFavouriteContent($id);
-        $totalFavourites = $totalFavourites[0]['users_count_fvr'];
-        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$auth->getIdentity()->user_id);
-
-        /*
-         * favouritemethod comes from parameters sent by
-         * ajax function (ajaxLoad_favourite(method)) in index.phtml in /view/.
-         * this function gets parameter "method" (add/remove) from onClick event that is in index.ajax.phtml.
-         * if this onClick event is activated by clicking "heart" (icon_fav_on/off) icon in content view page,
-         * it runs the ajaxLoad_favourite(method) function which sends parameter "favourite" (add/remove) to
-         * this viewController which then handles the adding or removing the content from favourites.
-         */
-        if($favouriteMethod != "NONE" && $auth->hasIdentity()) {
-        	$favouriteUserId = $auth->getIdentity()->user_id;
-        	//If favourite method was "add", then add content to user favourites
-        	if($favouriteMethod == "add" && !$isFavourite) 
-        		{
-        		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
-        		} else $this->flash('favourite-adding-failed','/en/msg');
-        	} 
-        	//If favourite method was "remove" then remove content from user favourites.
-        	elseif ($favouriteMethod == "remove" && $isFavourite)
-        		{
-        		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
-        		} else $this->flash('favourite-removing-failed','/en/msg');
-        	} else unset($favouriteMethod);
-        }
-        
-        $favourite = array(
-        	'total_favourites' 	=> $totalFavourites,
-        	'is_favourite'		=> $isFavourite,
-        );
-        
         // get content tags - functions returns names as well
         // needs updating to proper MVC?
         $contentHasTagModel = new Default_Model_ContentHasTag();
         $tags = $contentHasTagModel->getContentTags($id);
-        //echo "<pre>"; print_r($tags); echo "</pre>"; die;
+        
+        if($isTranslated)
+        {
+			$tags = $this->gtranslate->translateTags($tags);
+        }
 
         // get content links, to be implemented
         $links = array();
+
+        // Get all content campaigns
+        $campaignHasContentModel = new Default_Model_CampaignHasContent();
+        $campaigns = $campaignHasContentModel->getContentCampaigns($id);
 
         // This functionality needs looking over (code and general idea)
         // get content family (array of children, parents and siblings)
@@ -385,13 +350,14 @@
         $this->view->commentPaginator   = $paginator;
         $this->view->commentData        = $commentsSorted;
 		$this->view->user_can_comment   = $user_can_comment;
+		$this->view->user_can_rate      = $user_can_rate;
         $this->view->contentData        = $contentData;
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;
-        $this->view->moreFromUser       = $moreFromUser;
-        $this->view->relatedContents    = $relatedContents;
         $this->view->views              = $views;
-        $this->view->rating             = $rating;
+        $this->view->isTranslated		= $isTranslated;
+        $this->view->languageName		= $languageName;
+        $this->view->gtranslateLangPair	= $gtranslateLangPair;
         $this->view->tags               = $tags;
         $this->view->links              = $links;
         $this->view->parents            = $parents;
@@ -402,7 +368,7 @@
         $this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
         $this->view->count              = $count;
-        //$this->view->favourite			= $favourite;
+        $this->view->campaigns          = $campaigns;
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];

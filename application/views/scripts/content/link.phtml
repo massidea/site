@@ -31,12 +31,12 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
 ?>
     <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
         <p class="linkedtotext">
-            <?php echo $this->translate('content-link-target', 
+            <?php echo $this->translate('content-link-target',
                                                     $this->language);
             ?>
         </p>
-        <?php 
-        if($this->relatesToContentContentTypeId == "problem") { 
+        <?php
+        if($this->relatesToContentContentTypeId == "problem") {
             $color = "red";
         }
         elseif($this->relatesToContentContentTypeId == "finfo") {
@@ -47,10 +47,10 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
         }
         ?>
         <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" />
-        
+
         <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId, 
-                                                 'language' => $this->language), 
+            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
+                                                 'language' => $this->language),
                                            'content_shortview', true); ?>">
                 <?php
                     if(strlen($this->relatesToContentTitle) > 68) {
@@ -70,14 +70,14 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
                 ?>
                 <div class="form_helptext_line"></div>
                 <div style="height: 20px;">
-                    <div style="float: left; width: 450px;">
+                    <div style="float: left; width: 445px;">
                         <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" height="15" width="4"/>
                         <?php
                         $linkurl = $this->url(array('content_id' => $content['id_cnt'],
                                                     'language' => $this->language),
                                               'content_shortview', true);
                         ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a>
+                        <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
                         <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
                     </div>
                     <div style="margin-top: 4px;">
@@ -91,10 +91,11 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
                         <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-link'); ?></a>
                     </div>
                 </div>
-                <div style="clear: both;"></div>
+                <div style="clear: both;">&nbsp;</div>
                 <?php
             }
         }
+        ?> <div class="form_helptext_line"></div> <?php
     }
 } else {
     ?>

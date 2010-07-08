@@ -67,6 +67,24 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         
         return $result;
     }
+
+    /**
+     * getRecent
+     *
+     * Gets the specified number of the most recently created groups.
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getRecent($limit)
+    {
+        if (!isset($limit)) $limit = 10;
+
+        $select = $this->select()
+                ->order('id_grp DESC')
+                ->limit($limit);
+        return $this->fetchAll($select)->toArray();
+    }
     
     /**
      * Adds a new group to the db.
@@ -92,6 +110,46 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         
         return $row->id_grp;
     }
+
+    public function editGroup($id, $name, $description, $body)
+    {
+		$data = array(
+            'group_name_grp' => $name,
+            'description_grp' => $description,
+            'body_grp' => $body,
+        );
+		$where = $this->getAdapter()->quoteInto('id_grp = ?', $id);
+		$this->update($data, $where);
+    }
+
+    /**
+    *   removeGroup
+    *   Removes the group from the database
+    *
+    *   @param int id_grp
+    *   @author Mikko Aatola
+    */
+    public function removeGroup($id_grp = 0)
+    {
+        if (!$id_grp) return false;
+
+        // Delete the group's campaigns.
+        $data = $this->_db->select()
+            ->from('campaigns_cmp', 'id_cmp')
+            ->where('id_grp_cmp = ?', $id_grp);
+        $campaigns = $this->_db->fetchAll($data);
+        $cmpModel = new Default_Model_Campaigns();
+        foreach ($campaigns as $cmp)
+            $cmpModel->removeCampaign($cmp['id_cmp']);
+
+        // Delete group-admin links from grp_has_admin_usr.
+        $grpAdm = new Default_Model_GroupAdmins();
+        $grpAdm->removeAdminsFromGroup($id_grp);
+        
+        // Delete group.
+        $where = $this->getAdapter()->quoteInto('id_grp = ?', $id_grp);
+        $this->delete($where);
+    } // end of removeCampaign
     
     /**
      * Checks if a group exists in db.

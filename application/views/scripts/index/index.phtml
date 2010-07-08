@@ -13,6 +13,7 @@ $url_more = $this->url(array('controller' => 'search',
 
 $url_getRecentContent = $this->url(array('controller' => 'ajax',
 							 'action' => 'getrecentcontent',
+							 'type' => 'all',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
@@ -22,96 +23,36 @@ $url_checkRecentContent = $this->url(array('controller' => 'ajax',
 										   'lang_default', true);
 
 $url_tag_cloud = $this->url(array('controller' => 'tag',
-                                  'action' => 'index',
-                                  'language' => $this->language), 
-                            'lang_default', true);
+                             	  'action' => 'index',
+								  'list_type' => 'index',
+                             	  'language' => $language),
+                             	  'lang_default', true);
 ?>
 <?php $this->headScript()->captureStart()?>
 
-$(document).ready(function(){
-	recentpostsdiv  = '#recent_posts_ajax';
-	recentpostslink = '#recent_posts_ajax_link';
-	recentpostslink_orig = $(recentpostslink).html();
-	pagecount = 1;
-	previousresult = "";
-
-	$(recentpostslink+' a').live('click', function(){
-		pagecount = pagecount + 1;
-		ajaxLoad_getRecentPosts(recentpostsdiv, pagecount);
-	});
-
-	ajaxLoad_checkRecentPosts();
-	//ajaxLoad_getRecentPosts(recentpostsdiv, pagecount);
-	
-});
-
-	function ajaxLoad_getRecentPosts(obj, offset, prepend){
-		$.ajax({
-			beforeSend: function(){
-				$(recentpostslink).html(
-					'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
-					'Please wait...</h3>'
-				);
-			},
-			complete: function(){
-				$(recentpostslink).html(recentpostslink_orig);
-			},
-			url: "<?php echo $url_getRecentContent; ?>/offset/"+offset,
-			success: function(result){
-				if(prepend == 1) {
-					$(obj).prepend(result);
-				} else {
-					$(obj).append(result);
-				}
-				$('.user_content_row_new').hide();
-				removeDupes_recentPosts(recentpostsdiv);
-				$('.user_content_row_new').removeClass('user_content_row_new');
-				$('.user_content_row').fadeIn('slow');
-			}
-		});
-	};
-	
-	function removeDupes_recentPosts(obj){
-		$(recentpostsdiv + ' [id]').each(function(){
-			var ids = $('[id='+this.id+']');
-			if(ids.length > 1 && ids[0]!=this){
-				console.warn('Multiple IDs #'+this.id);
-				$(this).remove();
-			}
-		});
-	}
-
-	function ajaxLoad_checkRecentPosts(){
-		$.ajax({
-			url: "<?php echo $url_checkRecentContent; ?>/check/",
-			success: function(result){
-				//alert(result + " | " + previousresult);
-				if(result != previousresult) {
-					ajaxLoad_getRecentPosts(recentpostsdiv, 1, 1);
-				}
-				previousresult = result;
-				setTimeout("ajaxLoad_checkRecentPosts()", 30000);
-			}
-		});
-	}
+// Variables for ajax requests
+var url_checkrecentcontent = '<?php echo $url_checkRecentContent; ?>';
+var url_getrecentcontent = '<?php echo $url_getRecentContent; ?>';
+var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif'); ?>';
 
 <?php $this->headScript()->captureEnd()?>
-<h3 class="recent_posts"><?php echo $this->translate('index-recent-posts'); ?>
-            <a href="<?php echo $this->url(array('controller' => 'rss',
-                                                 'action' => 'generate',
-                                                 'language' => $this->language),
-                                           		 'lang_default', true); ?>">
+<?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
+    <h3 class="recent_posts"><?php echo $this->translate('index-recent-posts'); ?>
+        <a href="<?php echo $this->url(array('controller' => 'rss',
+                                             'action' => 'generate',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
                                            
-                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" />
-            </a>
-            <a href="<?php echo $this->url(array('controller' => 'voice',
-                                                 'action' => 'generate',
-                                                 'language' => $this->language),
-	                                           'lang_default', true); ?>">
+        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 5px; vertical-align: middle;" />
+        </a>
+        <a href="<?php echo $this->url(array('controller' => 'voice',
+                                             'action' => 'generate',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
                                            
-                <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" />
-            </a>
-		</h3>
+        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 4px; vertical-align: middle;" />
+        </a>
+	</h3>
 <!-- Small hack to force a small space between the h2 and content... might help the Symbian -browsers a bit -->
 <div style="height: 2px;"></div>
 
@@ -161,7 +102,12 @@ Commented to fix temporary problem, will be researched further later
     
     <h3 style="margin-top: 5px; margin-bottom: 0; padding: 0;">
         <?php echo $this->translate('index-most-popular')?>
-        <a href="<?php echo $url_tag_cloud; ?>">
+        <a href="<?php echo $this->url(array('controller' => 'tag',
+                                             'action' => 'index',
+        									 'order' => 'popularity',
+        									 'direction' => 'desc',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
             <?php echo $this->translate('index-tags')?>
         </a>
     </h3>
@@ -173,31 +119,22 @@ Commented to fix temporary problem, will be researched further later
         <?php echo $this->partialLoop('partials/tag.phtml', $this->poptags); ?>
         
         <p id="show_all_tags" style="padding: 0px; margin-top: 10px;" class="top_right_box_links">
-            <a href="<?php echo $url_tag_cloud; ?>">
+            <a href="<?php echo $this->url(array('controller' => 'tag',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
                 <?php echo $this->translate('index-show-all')?>
             </a>
         </p>
     </div>
-    
-    <div class="recent_campaigns_title">
-    	<a href="#"><?php echo '> '.$this->translate('index-recent-campaigns'); ?> </a>
-	</div>
-	<div>
-		Recent campaigns content rows here. If more than 15 excists, "Show more" -link will appear.
-	</div>
-	
-	<?php if($this->recentCampaignsCount > 15): ?>
-	<div id="show_more_campaign" style="padding-top: 5px;" class="top_right_box_links">
-		<a href="#">Show more</a>
-    </div>
-    <?php endif; ?>
-
+        
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
     
     <p id="most_active_users" style="padding: 0px;" class="top_right_box_links">
         <?php echo $this->translate('index-most-active')?>
         <a href="<?php echo $this->url(array('controller' => 'account',
                                              'action' => 'userlist',
+        									 'order' => 'content',
+        									 'list' => 'desc',
                                              'language' => $this->language),
                                              'lang_default', true); ?>">
             <?php echo $this->translate('index-users')?>
@@ -224,5 +161,22 @@ Commented to fix temporary problem, will be researched further later
     
     <div class="massidea_dev_info">
         <?php echo $this->translate('index-opensource')?>
+    </div>
+
+    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+
+    <div id="campaigns">
+        <h3>Recent campaigns</h3>
+        <ul>
+            <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <?php $cmpurl = $this->url(array('controller' => 'campaign',
+                                         'action' => 'list',
+                                         'language' => $this->language),
+                                   'lang_default', true); ?>
+        <strong><a href="<?php echo $cmpurl; ?>">Show more</a></strong>
     </div>
 </div>

@@ -191,7 +191,8 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
         $this->_localPart = $matches[1];
         $this->_hostname  = $matches[2];
 
-        if ((strlen($this->_localPart) > 64) || (strlen($this->_hostname) > 255)) {
+        //if ((strlen($this->_localPart) > 64) || (strlen($this->_hostname) > 255)) {
+        if (strlen($this->_localPart . $this->_hostname) + 1 > 50) {
             $length = false;
             $this->_error(self::LENGTH_EXCEEDED);
         }

@@ -71,7 +71,7 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     		mkdir($dir, 0777, true);
     	} 
     	
-    	if ( file_exists($dir.$hash)) {
+    	if ( !file_exists($dir) || file_exists($dir.$hash)) {
     		return false;
     	}
     	
@@ -166,7 +166,7 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     		$cur = $rs->current();
     		$dir = "files/".$cur->id_usr_fil."/".$cur->hash_fil;
     		$success = @unlink($dir);
-    		
+
     		return $success;
     }
     
@@ -178,13 +178,15 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
      * $return  bool			if fileremoval was successfull
      */
     private function deleteFromFilesystemByContentId($id_cnt_fil){
-        $select = $this->select()->from($this, array('id_fil'))
+        $select = $this->select()//->from($this, array('id_fil'))
         			   ->where('id_cnt_fil = ?', $id_cnt_fil);
 		$result = $this->fetchAll($select);
       	$results = array();
+
         foreach ($result as $row) {
         	array_push($results, $this->deleteFromFilesystem($row->id_fil));
         }
+
         return !in_array(false, $results);
     }
     
@@ -225,9 +227,9 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     public function removeContentFiles($id_cnt_fil)
     {
         $where = $this->getAdapter()->quoteInto('id_cnt_fil = ?', $id_cnt_fil);
-        $databaseDeleteResult = $this->delete($where);
         
-        $this->deleteFromFilesystemByContentId($id_cnt_fil);
+        $filesystemDeleteResult = $this->deleteFromFilesystemByContentId($id_cnt_fil);
+        $databaseDeleteResult = $this->delete($where);
         
         if ($databaseDeleteResult && $filesystemDeleteResult) {
             return true;
@@ -236,5 +238,33 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
         }
     }
 
+    public function convertFiles() {
+    	$select = $this->_db->select()
+    						->from("files_fil_old");
+    	$rs = $this->_db->fetchAll($select);
+    	foreach ($rs as $row) {
+    		$hash = hash_hmac('sha1', $row['data_fil'], $row['id_cnt_fil'].$row['filename_fil'] );
+    		$dir = "files/".$row["id_usr_fil"]."/";
+    		if (! file_exists($dir)) {
+    			mkdir($dir, 0777, true);
+    		}
+    		if (! file_exists($dir.$hash)) {
+	    		if (($fh = fopen($dir.$hash, "w"))) {
+	    			fwrite($fh, $row['data_fil']);
+	    			fclose($fh);
+	    			
+	    			$file = $this->createRow();
+	    			$file->id_cnt_fil = $row['id_cnt_fil'];
+	    			$file->id_usr_fil = $row['id_usr_fil'];
+	    			$file->filetype_fil = $row['filetype_fil'];
+	    			$file->filename_fil = $row['filename_fil'];
+	    			$file->hash_fil = $hash;
+			 	    $file->created_fil = new Zend_Db_Expr('NOW()');
+			        $file->modified_fil = new Zend_Db_Expr('NOW()');
+			        $file->save();
+	    		}
+    		}
+    	}
+	}
 } // end of class
 ?>

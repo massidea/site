@@ -105,10 +105,40 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
             ->join(array('usr' =>'users_usr'),
                    'uhg.id_usr = usr.id_usr',
                    array('login_name_usr'))
-            ->where('id_grp = ?', $id_grp);
-            
+            ->join('usr_profiles_usp',
+                   'usr.id_usr = usr_profiles_usp.id_usr_usp',
+                   array('city' => 'usr_profiles_usp.profile_value_usp'))
+            ->joinLeft('cnt_has_usr',
+                    'cnt_has_usr.id_usr = uhg.id_usr',
+                    array('count' => 'count(*)'))
+            ->where('uhg.id_grp = ?', $id_grp)
+            ->group('uhg.id_usr')
+            ->where('usr_profiles_usp.profile_key_usp = "city"');
+
         $result = $this->_db->fetchAll($data);
         
+        return $result;
+    }
+
+    /**
+     * Returns user groups from the user group table.
+     *
+     * @author Mikko Korpinen
+     * @param id_usr user id
+     * @return array of data of every group from user
+     */
+    public function getGroupsByUserId($id_usr)
+    {
+        $data = $this->_db->select()
+            ->from(array('uhg' => 'usr_has_grp'),
+                   array('id_grp'))
+            ->join(array('ugg' =>'usr_groups_grp'),
+                   'uhg.id_grp = ugg.id_grp',
+                   array('*'))
+            ->where('id_usr = ?', $id_usr);
+
+        $result = $this->_db->fetchAll($data);
+
         return $result;
     }
     

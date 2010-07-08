@@ -1,3 +1,15 @@
+<?php $this->headScript()->captureStart(); ?>
+function deleteconfirmation(url) {
+    var answer = confirm("Delete group? This will also delete all of the group's campaigns.");
+    if (answer) {
+        alert("Group deleted");
+        window.location = url;
+    } else {
+        //alert("");
+    }
+}
+<?php $this->headScript()->captureEnd(); ?>
+
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601);
@@ -7,10 +19,11 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
 
     <div id="profile-meta">
         <?php //TODO: tähän tulostetaan ryhmän kuva, ei tätä kiinteää kuvaa ?>
-        <img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" />
+        <!-- <img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" /> -->
 
         <p><?php echo $this->grpData["description_grp"]; ?></p>
         <?php //TODO:muutä tätä järkevämmäksi? ?>
+        <!--
         <p><strong><a href="<?php echo $this->url(array('controller' => 'tag',
                                                         'action' => 'index',
                                                         'language' => $this->language),
@@ -18,36 +31,59 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                   <?php echo $this->translate('content-view-tags'); ?>
                   </a>
             </strong><?php // tägit tähän väliin ?></p>
-
-        <p><strong><?php echo $this->translate('group-founded') . ':'; ?></strong> ' <?php echo $date_founded->toString('dd MMM, yyyy'); ?></p>
-
-
-
+        -->
+        <p><strong><?php echo $this->translate('group-founded') . ': '; ?></strong><?php echo $date_founded->toString('dd MMM, yyyy'); ?></p>
         <strong><?php echo $this->translate('group-admins') . ':'; ?></strong>
-        <ul>
+		<ul>
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
         </ul>
-
-
-
         <h4><?php echo $this->translate('group-members'); ?></h4>
-        <span class="more"><strong><a href="">Show all</a></strong></span>
+        <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
         <div class="clear"></div>
         <ul>
            <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
         </ul>
-        <span class="more"><strong><a href="">Show all</a></strong></span>
+        <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
         <div class="clear dot-line-200"></div>
     </div>
     <div id="activity" class="right">
         <div class="left">
             <div id="group-info">
+                <?php if ($this->userIsGroupAdmin):
+                    $editlink = $this->url(
+                        array(
+                            'controller' => 'group',
+                            'action'     => 'edit',
+                            'language'   => $this->language,
+                            'id'         => $this->grpData["id_grp"]
+                        ), 'lang_default', true
+                    );
+                    $dellink = $this->url(
+                        array(
+                            'controller' => 'group',
+                            'action'     => 'remove',
+                            'language'   => $this->language,
+                            'id'         => $this->grpData["id_grp"]
+                         ), 'lang_default', true
+                    );
+                ?>
+                <div id="join-group">
+                    <p class="join" style="text-align: right; padding-top: 10px;">
+                        <a href="<?php echo $editlink; ?>">Edit group</a> |
+                        <!--<a href="#">Edit group links</a> |-->
+                        <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete group</a>
+                    </p>
+                </div>
+                <?php endif; ?>
+
                 <p><?php echo $this->grpData['body_grp']; ?></p>
             </div>
             <div class="clear"></div>
             <div id="group-campaigns">
                 <h3>Campaigns</h3>
+                <p>Group's call of contents</p>
             </div>
+            <?php if ($this->identity == true) : ?>
             <div id="join-group">
                 <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
                     $joinurl = $this->url(
@@ -61,21 +97,21 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 ?>
 
                 <p class="join">
-                    <a href="<?php echo $joinurl; ?>"><?php echo $this->translate('group-join_group'); ?></a>
+                    <a href="<?php echo $joinurl; ?>">&gt; <?php echo $this->translate('group-join_group'); ?></a>
                 </p>
                 <?php
                 elseif ($this->userIsGroupAdmin):
                      $cmplink = $this->url(
-                        array(
+                         array(
                             'controller' => 'campaign',
                             'action'     => 'create',
                             'language'   => $this->language,
                             'grpid'      => $this->grpData["id_grp"]
-                        ), 'lang_default', true
+                         ), 'lang_default', true
                 );
                 ?>
                 <p class="join">
-                    <a href="<?php echo $cmplink; ?>">Create a campaign</a>
+                    <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a>
                 </p>
                 <?php else:
                     $leaveurl = $this->url(
@@ -87,11 +123,13 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                         ), 'lang_default', true);
                 ?>
                 <p class="join">
-                    <a href="<?php echo $leaveurl; ?>"><?php echo $this->translate('group-leave_group'); ?></a>
+                    <a href="<?php echo $leaveurl; ?>">&gt; <?php echo $this->translate('group-leave_group'); ?></a>
                 </p>
 
                     <?php endif; ?>
+                <p>Only by joining you can add contents to campaigns</p>
             </div>
+            <?php endif; ?>
             <div class="clear"></div>
             <div class="scroll-box">
                 <ul>

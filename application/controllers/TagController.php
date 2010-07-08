@@ -137,6 +137,9 @@ class TagController extends Oibs_Controller_CustomController
             //$this->changeTagSize($tagList);
             $tagList = $this->_helper->tagsizes->tagCalc($tagList);
             
+            // Action helper for define is tag running number divisible by two
+            $tagList = $this->_helper->tagsizes->isTagDivisibleByTwo($tagList);
+
             $cache->save($tagList, $cacheFile);
         } else {
             $tagList = $result;
@@ -172,9 +175,9 @@ class TagController extends Oibs_Controller_CustomController
 		$tag = new Default_Model_Tags();
         
 		$contentList = $tag->getTagContentById($tagId);
+		$tagName = $tag->getTagNameById($tagId);
 		$campaignGroupList = 0;
 		$userList = 0;
-		$tagName = $tag->getTagNameById($tagId);
         
         /* What is this
         $contentTypesModel = new Default_Model_ContentTypes();
@@ -210,9 +213,9 @@ class TagController extends Oibs_Controller_CustomController
         */
         
 		$this->view->content = $contentList;
-		$this->view->campaignGroupList = $campaignGrouList;
+        	$this->view->tagName = $tagName;
+        	$this->view->campaignGroupList = $campaignGrouList;
 		$this->view->userList = $userList;
-        $this->view->tagName = $tagName;
 	} // end of viewAction
 	
 	/**

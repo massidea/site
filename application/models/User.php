@@ -428,15 +428,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * @author Pekka Piispanen
     * @author Joel Peltonen
     * @author Mikko Aatola
-    * @todo pagination 
+    * @todo pagination
     * @todo ignore parameter / functionality to leave out a content
     * @todo splitting model-specific selects to their own models
-    * @todo moving the logic to controller instead of model
     * @todo the functionality where this is used should be ajaxified
     * @param integer $author_id id of whose content to get
+    * @param string $type limit search to a specific content type
+    * @param integer $id_cnt 	id to be skipped
     * @return array
     */    
-    public function getUserContent($author_id = 0, $type = 0)
+    public function getUserContent($author_id = 0, $type = 0, $id_cnt = 0, $limit = -1)
     {
         $result = array();  // container for final results array
         
@@ -456,29 +457,36 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->joinLeft(array('cnt' => 'contents_cnt'),         
                                                   'cnt.id_cnt = chu.id_cnt',
                                                   array('id_cnt', 'id_cty_cnt', 'title_cnt', 
-                                                        'lead_cnt', 'published_cnt', 'created_cnt'))
+                                                        'lead_cnt', 'language_cnt', 'published_cnt', 'created_cnt'))
                                            ->joinLeft(array('cty' => 'content_types_cty'),    
                                                   'cty.id_cty = cnt.id_cty_cnt',  
                                                   array('key_cty'))
                                            ->joinLeft(array('vws' => 'cnt_views_vws'),
                                                       'vws.id_cnt_vws = cnt.id_cnt',
-                                                      array('views' => 'COUNT(DISTINCT vws.views_vws)'))
+                                                      array('views' => 'SUM(vws.views_vws)'))
                                            ->joinLeft(array('crt' => 'content_ratings_crt'),
                                                       'cnt.id_cnt = crt.id_cnt_crt',
                                                       array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
                                                       'cnt.id_cnt = cmt.id_cnt_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
-                                           ->joinLeft(array('chc' => 'cnt_has_cnt'),
-                                                      'cnt.id_cnt = chc.id_parent_cnt',
-                                                      array('cntHasCntCount' => 'COUNT(DISTINCT chc.id_child_cnt)'))
+                                           ->joinLeft(array('chc1' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc1.id_parent_cnt',
+                                                      array('cntHasCntCountParent' => 'COUNT(DISTINCT chc1.id_child_cnt)'))
+                                           ->joinLeft(array('chc2' => 'cnt_has_cnt'),
+                                                      'cnt.id_cnt = chc2.id_child_cnt',
+                                                      array('cntHasCntCountChild' => 'COUNT(DISTINCT chc2.id_parent_cnt)'))
+                                           ->joinLeft(array('cmpHasCnt' => 'cmp_has_cnt'),
+                                                      'cnt.id_cnt = cmpHasCnt.id_cnt',
+                                                      array('cmpHasCntCount' => 'COUNT(DISTINCT cmpHasCnt.id_cmp)'))
                                            ->where('chu.id_usr = ?', $author_id)
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
-                                           ->order('cnt.id_cty_cnt ASC')
+                                           ->where('cnt.id_cnt != ?', $id_cnt)
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
-                ;
+				;
+				if($limit != -1) $contentSelect->limit($limit);
 
                 $result = $this->_db->fetchAll($contentSelect);
                 
@@ -488,17 +496,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             //                             ->order('id_cty_cnt ASC')
             //                             ->order('created_cnt DESC');
             //}
-            //try{
             
-            /*}catch(Zend_Exception $e){
-                echo '<pre>';
-                print_r($e);
-                echo '</pre>';
-            }
-            echo '<pre>';
-            print_r($result);
-            echo '</pre>';
-            die();*/
             //$row = $this->find((int)$author_id)->current();
             //$result = $row->findDefault_Model_ContentViaDefault_Model_ContentHasUser($select);
         } // end if        
@@ -528,182 +526,532 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     *   Gets user listing with filtering options.
     *
-    *   Query in this function fetches all users
-    *   from database. This will cause a creation
-    *   of a very large array when user count
-    *   is big.
-    *
-    *   @params array $filter Filtering options
+    *   @params array $filter $page, $count $order $list
     *   @return array
+    *   @author Jari Korpela
     */
-    public function getUserListing(&$filter = null, $page = 1, $count = 10)
+	public function getUserListing(&$filter = null, $page = 1, $count = 10, $order = 'login', $list = 'DESC', &$listSize = 1)
     {
+    	//For some odd reason this order and list default set has to be done here and wont work on ^...
+		if(!$order) $order = 'login';
+		if(!$list) $list = 'DESC';
+		
+		//Get full sorted and filtered userIdList
+    	$userIdList = $this->sortAndFilterUsers(&$filter, $order, $list);
+    	$listSize = sizeof($userIdList);
+    	
+    	if($listSize == 0) return array(); //If list size is 0, we just return
+    	
+    	//Then we choose the part of id list we want to show and collect data on
+    	$userIdListCut = array();
+    	$i = ($page-1)*$count;
+    	$limit = $i+$count;
+    	for($i; $i < $limit; $i++) {
+    		if(!$userIdList[$i]) break;
+    		$userIdListCut[] = $userIdList[$i];
+    	}
+    	
+    	$userIdList = $userIdListCut; //We replace the whole list with the user Ids we want (this is for final ordering purpose)
+    	$userInfo = $this->getUserInfo($userIdList); //Get basic user information
+    	$userData = $userInfo; //We start to collect data about users to $userData array
+    	
+    	$userContents = $this->getUsersContents($userIdList); //Get all content ID's from users in id list
 
+    	//Add these contents to $userData array in which we collect data (if user doesnt have content we add empty array)
+    	foreach($userData as $key => $data) {
+    		 if (!$userContents[$data['id_usr']])
+    		 	 $userContents[$data['id_usr']] = array();
+    		 $userData[$key]['contents'] = $userContents[$data['id_usr']];
+    		 
+    	}
+    	ksort($userContents); //We sort $userContents again because we might have added empty arrays
 
+    	//Calculate contentCounts for users.
+    	foreach($userData as $key => $data) {
+    		$userData[$key]['contentCount'] = sizeof($data['contents']);
+    	}
+    	
+    	//Get Ratings statistics
+    	$userRatings = $this->getUserContentRatings($userContents);
+    	$userData = $this->intersectMergeArray($userData,$userRatings);
+    	
+    	//Get location info
+    	$userLocations = $this->getUsersLocation($userIdList);
+    	$userData = $this->intersectMergeArray($userData,$userLocations);
+    	
+    	//Finally we sort the $userData array to same order as our $userIdList
+    	$final = array();
+    	foreach($userIdList as $id) {
+    		foreach($userData as $data) {
+    			if ($data['id_usr'] == $id) {
+    				$final[] = $data;
+    				continue 2;
+    			}
+    		}
+    	}
+
+        return $final;
+    }
+    
+    /*
+     * sortAndFilterUsers
+     * 
+     * Sort and Filter Users
+     * 
+     * @param array $filter
+     * @param string $order
+     * @param string $list
+     * @author Jari Korpela
+     */
+    private function sortAndFilterUsers(&$filter, $order, $list) {
+
+		$orderGroups = array(
+			'userInfo' => array(
+						'username' => 'login_name_usr',
+						'joined' => 'created_usr',
+						'login' => 'last_login_usr'),
+			'contentInfo' => array('content' => 'COUNT(id_cnt)'),
+			'contentViews' => array('views' => 'COUNT(id_cnt_vws)')
+		);
+		
+        $groupName = "";
+        foreach($orderGroups as $key => $group) {
+        	if($group[$order]) {
+        		$groupName = $key;
+        	}
+        }
+
+   		if($order) $sort = $orderGroups[$groupName][$order]." ".$list;
+        else $sort = "id_usr";
+
+        $select = $this->select()->from($this, 'id_usr')
+                                 ->order('id_usr');
+                                 
+	        if($filter['city'] != "")
+	          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
+	
+	        if($filter['username'] != "")
+	          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
+	          
+	        if($filter['country'] != "0")
+	          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
+	        
+	        if($filter['group'] != "")
+	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
+	                                 
+        $result = $this->_db->fetchAll($select);      
+        if(!$result) return array();
         
-        // TODO: Filter by join date between selected times
-        // $joinDate = 1;
-        // if(!empty($filter['pv1']) && !empty($filter['pv2'])) {
-        //  $joinDate = $this->_db->quoteInto('usr.created_usr BETWEEN ?', $pv1);
-        //  $joinDate .= $this->_db->quoteInto(' AND ?', $pv2));
-        // }
+        $userIDList = $this->simplifyArray($result,'id_usr');
         
-        // Subquery to get users latest profile picture.
-        // Should fix bug in userlisting where wrong user profile
-        // picture is shown. Ugly and inefficient fix. 
-        // Current user picture should be added to user table
-        // or make users only have one profile picture.
-        // Increases load on database server.
-        // - Removed to increase efficiency on user listing.
-        /*
-        $subQuery = $this->_db->select()
-                              ->from(array('usi2' => 'usr_images_usi'),
-                                     array('usi2.id_usi'))
-                              ->order('usi2.created_usi DESC')
-                              ->where('usi2.id_usr_usi = usr.id_usr')
-                              ->limit(1);
-        */
+        if($groupName == "userInfo")
+       		$output = $this->sortByUserInfo($userIDList, $sort, $list);
+        elseif($groupName == "contentInfo")
+        	$output = $this->sortUsersByContentInfo($userIDList, $sort, $list);
+        elseif($groupName == "contentViews")
+        	$output = $this->sortUsersByViews($userIDList, $sort, $list);	
+        return $output;
         
-        // Added subquery to usr_image_usi join to get
-        // only the latest user profile picture.
-        // This query will become a bottleneck on large user counts
-        $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
+    }
+    
+    /*
+     * intersectMergeArray
+     * 
+     * This function merges data in same keys in 2 arrays together 
+     * 
+     * @param array $arr1
+     * @param array $arr2
+     * @return array
+     * @author Jari Korpela
+     */
+    private function intersectMergeArray($arr1,$arr2) {
+    	if((!(array)$arr1 )|| (!(array)$arr2)) return false;
+    	$merged_array = array();
+    	foreach($arr1 as $key => $a) {
+    		$merged_array[$key] = array_merge($a, $arr2[$key]);
+    	}
+    	return $merged_array;
+    } 
+
+    /*
+     * simplyfyArray
+     * 
+     * There might be function in Zend so we dont need this but I didnt find, perhaps you can? ;)
+     * This function makes associative array to nonassociative 
+     * 
+     * @param $result
+     * @return non associative array $userIdList
+     * @author Jari Korpela
+     */
+    private function simplifyArray($result,$by) {
+        $userIDList = array();
+
+        foreach($result as $res) {
+           $userIDList[] = $res[$by];
+        }
+        return $userIDList;
+    }
+    
+    /*
+     * getUsersLocation
+     * 
+     * Gets users locations (city and country)
+     * 
+     * @param array $userIdList
+     * @return array $list
+     * @author Jari Korpela
+     */
+    private function getUsersLocation($userIdList) {
+    	sort($userIdList);
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      			array('id_usr_usp','profile_key_usp',
+                                      			'profile_value_usp'))
+                                      ->joinLeft(array('usc' => 'countries_ctr'),
+                                      			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      			 array('countryName' => 'usc.printable_name_ctr',
+                                      			 	   'countryIso' => 'usc.iso_ctr'))
+                                      ->where('usp.id_usr_usp IN (?)', $userIdList)
+                                      ->where('usp.public_usp = 1')
+                                      ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
+                                      ->group(array('usp.id_usr_usp','usp.id_usp'))
+                                      ->order('usp.id_usr_usp')
+                                      ;
+       $result = $this->_db->fetchAll($select);
+       
+	   $list = array();
+	   foreach($userIdList as $id) {
+	   	$city = "";
+	   	$country = "";
+	   	$countryIso = "";
+	   	$checks = 0;
+	   	foreach($result as $res ) {
+	   		if($res['id_usr_usp'] == $id) {
+	   			$checks++;
+	   			if($res['profile_key_usp'] == "city") {
+	   				$city = $res['profile_value_usp'];
+	   			}
+	   			elseif($res['profile_key_usp'] == "country") {
+	   				$country = $res['countryName'];
+	   				$countryIso = $res['countryIso'];
+	   			}
+	   		}
+	   		if(($country != "" && $city != "") || $checks == 2) break;
+	   	}
+	   	$list[] = array(
+   				'id_usr' => $id,
+   				'city'	=> $city,
+	   			'country' => $country,
+	   			'countryIso' => $countryIso
+   				);
+	   }
+       return $list;                             
+    }
+    
+    /*
+     * getUserContentRatings
+     * 
+     * Gets Users Content Ratings info
+     * 
+     * @param array $userContents as $userId => $content
+     * @return array $list
+     * @author Jari Korpela
+     */
+    private function getUserContentRatings($userContents) {
+    	$userRatings = array();
+    	foreach($userContents as $userId => $content) {
+    		if($content) {
+	    	$select = $this->_db->select()->from(array('crt' => 'content_ratings_crt'),
+	                                             array('ratingAveragePositive' => 'CEIL(((SUM(crt.rating_crt) / COUNT(DISTINCT crt.id_cnt_crt))+1)*50)',
+	                                                   'ratingAverageNegative' => 'FLOOR(100-((SUM(crt.rating_crt) / COUNT(DISTINCT crt.id_cnt_crt))+1)*50)',
+	                                                   'ratingRatioPositive' => 'CEIL((SUM(crt.rating_crt) / COUNT(crt.id_cnt_crt)+1)*50)',
+	                                                   'ratingRatioNegative' => 'FLOOR(100-(SUM(crt.rating_crt) / COUNT(crt.id_cnt_crt)+1)*50)',
+	                                                   'ratingAmount' => 'COUNT(crt.id_cnt_crt)',
+	                                                   'ratedContents' => 'COUNT(DISTINCT crt.id_cnt_crt)'))
+	                                      ->where('id_cnt_crt IN (?)',$content)
+	                                      ->order('id_cnt_crt')
+	                                     ;
+	        $result = $this->_db->fetchAll($select);
+	        $userRatings[] = array_merge(array('id_usr' => $userId),$result[0]);
+    		}
+    		else {
+    			$userRatings[] = array_merge(array('id_usr' => $userId),array(
+						    		'ratingAveragePositive' => '',
+						            'ratingAverageNegative' => '',
+						            'ratingRatioPositive' => '',
+						            'ratingRatioNegative' => '',
+						            'ratingAmount' => '',
+						            'ratedContents' => ''  			
+    								));
+    		}
+    	}
+        return $userRatings;
+    }
+    
+    /*
+     * getUserInfo 
+     * 
+     * Gets basic user information from users_usr table
+     * 
+     * @param array $userIdList
+     * @return array $list
+     * @author Jari Korpela
+     */
+	private function getUserInfo($userIdList) {
+		$select = $this->_db->select()->from(array('usr' => 'users_usr'), 
                                              array('id_usr',
                                                    'login_name_usr',
-                                                   'email_usr',
                                                    'last_login_usr',
                                                    'created_usr'))
-                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
-                                                 'chu.id_usr = usr.id_usr', 
-                                                 array('contentCount' => 'COUNT(DISTINCT chu.id_cnt)'))
-                                      //->joinLeft(array('usi' => 'usr_images_usi'), 
-                                      //      'usr.id_usr = usi.id_usr_usi', 
-                                      //      array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)', 
-                                      //            'usi.id_usi'))
-                                      // Join on result column of subquery
-                                      // This more than doubles loading time
-                                      // - Removed to increase efficiency.
-                                      //->joinLeft(array('usi' => 'usr_images_usi'),
-                                      //           'usi.id_usi = ' . ' (' . $subQuery . ') ',
-                                      //           array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)',
-                                      //                 'usi.id_usi'))
-                                      ->joinLeft(array('usp' => 'usr_profiles_usp'), 
-                                                 'usr.id_usr = usp.id_usr_usp', 
-                                                 array())
-                                      ->where($this->getUserSearchUsernameFilter($filter['username']))
-                                      ->where($this->getUserSearchCountryFilter($filter['country']))
-                                      ->where($this->getUserSearchCityFilter($filter['city']))
-                                      ->having($this->getUserSearchContentCountFilter($filter['contentlimit'],
-                                                                                      $filter['counttype']))
-                                      // TODO: Filter by join date
-                                      //->where($joinDate)
-                                      ->group('usr.id_usr')
-                                      ->order('usr.last_login_usr DESC')
-                                      ->limitPage($page, $count);
-        
-        // Fetch all results from database
+                                             ->where('id_usr IN (?)',$userIdList)
+                                             ->order('id_usr')
+                                             ;
+        return $this->_db->fetchAll($select);                                      
+    }
+
+    /*
+     * getUsersContentCount
+     * 
+     *  Gets Users content counts
+     *  
+     *  @param array $userIdList
+     *  @return array $list
+     *  @author Jari Korpela
+     * 
+     */
+    private function getUsersContentCount($userIdList) {
+    	sort($userIdList);
+    	
+    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
+                                             array('id_usr',
+                                             	   'contentCount' => 'COUNT(id_cnt)'))
+                                             ->where('id_usr IN (?)', $userIdList)
+                                             ->group('id_usr')
+                                             ->order('id_usr')
+                                             ;
+                        
+        $result = $this->_db->fetchAll($select);
+        $resultList = array();
+
+        foreach($userIdList as $id) {
+        	foreach($result as $user) {
+        		if($user['id_usr'] == $id) {
+        			$resultList[] = $user;
+        			continue 2;
+        		}
+        	}
+
+        	$resultList[] = array('id_usr' => $id, 'contentCount' => 0);
+        }
+                
+        return $resultList;
+    }
+    
+    /*
+     * getUsersContents
+     * 
+     *  Gets users content ID:s
+     *  
+     *  @param array $userIdList
+     *  @return array $list
+     *  @author Jari Korpela     *
+     */
+    private function getUsersContents($userIdList) {
+    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
+                                             array('id_usr',
+                                             	   'id_cnt'))
+                                             ->group('id_cnt')
+                                             ->where('id_usr IN (?)',$userIdList)
+                                             ->order(array('id_usr','id_cnt DESC'))
+                                             ;
         $result = $this->_db->fetchAll($select);
         
-        // Go through users in result, and find their profile images.
-        // Replaces subquery, and increases efficiency considerably.
-        // Increases database query count by the cell count of result array.
-        $size = count($result);
-        for ($i = 0; $i < $size; $i++) {
-            $imageQuery = $this->_db->select()
-                                    ->from(array('usi' => 'usr_images_usi'),
-                                           array('hasImage' => 'OCTET_LENGTH(usi.thumbnail_usi)', 
-                                                 'usi.id_usi'))
-                                    ->where('usi.id_usr_usi = ?', $result[$i]['id_usr'])
-                                    ->order('usi.created_usi DESC')
-                                    ->limit(1);
-            
-            $image = $this->_db->fetchAll($imageQuery);
+        $contentArray = array();
         
-            $result[$i]['hasImage'] = 0;
-            
-            if (!empty($image)) {
-                $result[$i]['hasImage'] = $image[0]['hasImage'];
-                $result[$i]['id_usi'] = $image[0]['id_usi'];
-            }
+        foreach($result as $res) {
+        	$contentArray[$res['id_usr']][] = $res['id_cnt'];
         }
         
-        // Check content count filtering and remove
-        // users that do not satisfy given parameters.
-        // Possible to do more efficiently.
-        /*
-        if(isset($result) && isset($filter['contentlimit'])) {
-            foreach ($result as $k => $res) {
-                if (!$this->checkContentCount($filter['counttype'], 
-                                              $filter['contentlimit'],
-                                              $res['contentCount'])) {
-                    unset($result[$k]);
-                }
-            }
-        }*/
+        return $contentArray;
+        
+    }
+    
+    /*
+     * sortUsersByContentInfo
+     * 
+     * Sorts $userIdList by $sort
+     * 
+     * @param array $userIDList
+     * @param string $sort
+     * @return $resultList
+     * @author Jari Korpela
+     */    
+    private function sortUsersByContentInfo($userIDList, $sort, $list) {
+    	$content = new Default_Model_ContentHasUser(); 
+    	$select = $content->select()->from('cnt_has_usr',
+    									array('id_usr'))
+    							->where('id_usr IN (?)',$userIDList)
+    							->order($sort)
+    							->group('id_usr')
+    							;
+        $result = $this->simplifyArray($content->_db->fetchAll($select),'id_usr');
+        
+        if($list == "desc") {
+	        foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $result[] = $id;
+	        }
+        }
+        elseif($list == "asc") {
+        	$final = array();
+        	foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $final[] = $id;
+	        }
+	        foreach($result as $res) {
+	        	$final[] = $res;
+	        }
+	        $result = $final;
+        }
         
         return $result;
     }
     
+    /*
+     * sortByUserInfo
+     * 
+     * Sorts $userIdList by $sort
+     * 
+     * @param array $userIDList
+     * @param string $sort
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function sortByUserInfo($userIDList, $sort) {
+    	$select = $this->select()->from($this,
+    									array('id_usr'))
+    							->where('id_usr IN (?)',$userIDList)
+    							->order($sort)
+    							;
+        $result = $this->_db->fetchAll($select);
+        
+		return $this->simplifyArray($result,'id_usr');
+    }
+    
+    /*
+     * sortUsersByViews
+     * 
+     * Sorts $userIdList by $sort
+     * 
+     * @param array $userIDList
+     * @param string $sort
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function sortUsersByViews($userIDList, $sort, $list) {
+
+    	$select = $this->_db->select()->from('cnt_views_vws',
+    									array('id_usr_vws'))
+    							->where('id_usr_vws IN (?)',$userIDList)
+    							->group('id_usr_vws')
+    							->order($sort)
+    							;
+        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws');
+        
+        if($list == "desc") {
+	        foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $result[] = $id;
+	        }
+        }
+        elseif($list == "asc") {
+        	$final = array();
+        	foreach($userIDList as $id) {
+	        	if(!in_array($id,$result)) $final[] = $id;
+	        }
+	        foreach($result as $res) {
+	        	$final[] = $res;
+	        }
+	        $result = $final;
+        }
+        
+		return $result;
+    }
+    
     /**
-    *   getUserSearchCityFilter
+    *   getCityFilter
     *
     *   Gets user search city filter.
     *
     *   @param int $city
     *   @return string
     */
-    public function getUserSearchCityFilter(&$city) 
+    private function getCityFilter(&$city) 
     {
-        $result = 1;
-        if (!empty($city)) {
-            $result = $this->_db->quoteInto("usp.profile_key_usp = 'city'
-                                                AND usp.public_usp = 1
-                                                AND usp.profile_value_usp LIKE ?", 
-                                             '%' . $city . '%');
-        }
+    	
+        $profile = new Default_Model_UserProfiles();
+    	$select = $profile->select()->from($profile, 'id_usr_usp')
+    								->where('public_usp = 1 AND profile_key_usp = "city" AND profile_value_usp LIKE ?','%'. $city. '%');
         
-        return $result;
-    }	
+        return $select;
+    }
+    
     
     /**
-    *   getUserSearchCountryFilter
+    *   getCountryFilter
     *
-    *   Gets user search country filter.
+    *   Gets user search city filter.
     *
     *   @param int $country
     *   @return string
     */
-    public function getUserSearchCountryFilter(&$country) 
+    private function getCountryFilter(&$country) 
     {
-        $result = 1;
-        if ($country != 0) {
-            $result = $this->_db->quoteInto("usp.profile_key_usp = 'country'
-                                                AND usp.public_usp = 1
-                                                AND usp.profile_value_usp = ?", 
-                                             $country);
-        }
-        
-        return $result;
+
+        $profile = new Default_Model_UserProfiles();
+    	$select = $profile->select()->from($profile, 'id_usr_usp')
+    								->where('public_usp = 1 AND profile_key_usp = "country" AND profile_value_usp = ?', $country);
+        						
+        return $select;
     }
     
     /**
-    *   getUserSearchUsernameFilter
+    *   getGroupFilter
+    *
+    *   Get Group Filter.
+    *
+    *   @param string $group
+    *   @return string
+    */    
+    private function getGroupFilter(&$group,$exactg) 
+    {
+    	
+        if($exactg == "1") {
+    		$select1 = $this->_db->select()->from('usr_groups_grp', 'id_grp')
+	    								->where('group_name_grp = ?',$group);
+    	}
+    	else { 
+	    	$select1 = $this->_db->select()->from('usr_groups_grp', 'id_grp')
+	    								->where('group_name_grp LIKE ?','%'. $group .'%');
+    	}
+    							
+		$select = $this->_db->select()->from('usr_has_grp', 'id_usr')
+    								->where('id_grp IN (?)', $select1);
+        return $select;
+    } 
+    
+    /**
+    *   getUsernameFilter
     *
     *   Get user search username filter.
     *
     *   @param string $username
     *   @return string
     */
-    public function getUserSearchUsernameFilter(&$username) 
+    private function getUsernameFilter(&$username) 
     {
-        $result = 1;
-        if(!empty($username)) {
-            $result = $this->_db->quoteInto('usr.login_name_usr LIKE ?', 
-                                              '%' . $username . '%');
-        }
+    	$select = $this->select()->from($this, 'id_usr')
+    								->where('login_name_usr LIKE ?','%'. $username. '%');
         
-        return $result;
+        return $select;
     } 
+    
     
     /**
     *   getUserSearchContentCountFilter
@@ -714,7 +1062,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *   @param int $type
     *   @return string
     */
-    public function getUserSearchContentCountFilter(&$count, &$type) 
+    /*public function getUserSearchContentCountFilter(&$count, &$type) 
     {
         $result = 1;
         if(!empty($count) && 
@@ -725,38 +1073,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         
        return $result;
     }
-    
-    /**
-    *   getUserCountBySearch
-    *
-    *   Get total user count by search
-    *
-    *   @param 
-    *   @return array
     */
-    public function getUserCountBySearch(&$filter = null) 
-    {
-        $select = $this->_db->select()->from(array('usr' => 'users_usr'), 
-                                             array('userCount' => 'COUNT(DISTINCT usr.id_usr)'))
-                                      ->joinLeft(array('chu' => 'cnt_has_usr'), 
-                                                 'chu.id_usr = usr.id_usr', 
-                                                 array('contentCount' => 'COUNT(DISTINCT chu.id_cnt)'))
-                                      ->joinLeft(array('usp' => 'usr_profiles_usp'), 
-                                                 'usr.id_usr = usp.id_usr_usp', 
-                                                 array())
-                                      ->where($this->getUserSearchUsernameFilter($filter['username']))
-                                      ->where($this->getUserSearchCountryFilter($filter['country']))
-                                      ->where($this->getUserSearchCityFilter($filter['city']))
-                                      ->having($this->getUserSearchContentCountFilter($filter['contentlimit'],
-                                                                                      $filter['counttype']))
-                                      // TODO: Filter by join date
-                                      //->where($joinDate)
-                                      /*->group('usr.id_usr')*/;        
-        $data = $this->_db->fetchAll($select);
-        
-        return isset($data[0]['userCount']) ? $data[0]['userCount'] : 0;   
-    }
-    
+
     /**
     *    checkContentCount
     *
@@ -767,8 +1085,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *    @params integer count content count
     *    @return boolean
     */
-    private function checkContentCount(&$action/*, &$limit, &$count*/)
-    {
+    //private function checkContentCount(&$action/*, &$limit, &$count*/)
+    /*{
         switch($action) {
             case 0:
                 //if($count > $limit) {
@@ -789,7 +1107,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                 return false;        
         }
     }
-    
+    */
     
 	/*
     *   changeUserEmail
@@ -995,17 +1313,148 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      */
     public function getAllUsersLocations() {
     	$result = array();
-    	$city = 'city';
-    	$select = $this->_db->select()
-    				->from('usr_profiles_usp', array('profile_value_usp AS name','COUNT(*) AS amount'))
-    				->distinct()
-    				->where('profile_key_usp = ?' ,$city)
-    				->order('profile_value_usp')
-    				->group('name');
-    	$result = $this->_db->fetchAll($select);
-    	$result = array('cities' => $result);
+
+        $select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      	array('profile_key_usp',
+                                      	'profile_value_usp',
+                                      	'COUNT(profile_value_usp) AS amount'))
+                                      ->joinLeft(array('usc' => 'countries_ctr'),
+                                      	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      	 array('countryName' => 'usc.printable_name_ctr',
+                                      	 		'countryIso' => 'usc.iso_ctr'))
+                                      ->where('usp.public_usp = 1')
+                                      ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
+                                      ->order('usp.id_usr_usp')
+                                      ->group('usp.profile_value_usp')
+                                      ->distinct()
+                                      ;
+       $result = $this->_db->fetchAll($select);
+       $final = array();
+       foreach($result as $res) {
+       	if($res['profile_key_usp'] == "city" && $res['profile_value_usp'] != "") {
+       		$final['cities'][] = array('name' => $res['profile_value_usp'],'amount' => $res['amount']);
+       		continue;
+       	}
+       	if($res['profile_key_usp'] == "country" && $res['countryName'] != "") {
+       		$final['countries'][] = array('name' => $res['countryName'],'amount' => $res['amount'], 'countryIso' => $res['countryIso']);
+       		continue;
+       	}
+       }
     	
-    	return $result;
+    	return $final;
     }
+    
+
+      public function getUserContentList($contentIdList, $amount) {
+        $result = array();  // container for final results array
+                
+        $contentSelect = $this->_db->select()
+                                           ->from(array('cnt' => 'contents_cnt'),         
+                                                  array('id_cnt', 'title_cnt', 'created_cnt'))
+                                           ->joinLeft(array('cty' => 'content_types_cty'),    
+                                                  'cty.id_cty = cnt.id_cty_cnt',  
+                                                  array('key_cty'))
+                                            ->where('cnt.id_cnt IN (?)', $contentIdList)
+                                            ->where('cnt.published_cnt = 1')
+                                            ->order('cnt.created_cnt DESC')
+                                            ->limit($amount)
+                ;       
+        $result = $this->_db->fetchAll($contentSelect);
+        return $result;
+    } // end of getUserContentList
+    
+    public function getWholeUserContentList($userId, $contentIdList) {
+    	$result = "";
+    	if(is_numeric($userId) && is_array($contentIdList)) {
+			$contentSelect = $this->_db->select()
+                                           ->from(array('chu' => 'cnt_has_usr'),
+                                                  array('id_cnt'))
+                                           ->joinLeft(array('crt' => 'content_ratings_crt'),
+                                                      'chu.id_cnt = crt.id_cnt_crt',
+                                                      array('rating_sum' => 'SUM(crt.rating_crt)',
+                                                       'ratings' => 'COUNT(crt.id_cnt_crt)'))
+                                           ->joinLeft(array('cnt' => 'contents_cnt'),
+                                                  'cnt.id_cnt = chu.id_cnt',
+                                                  array('id_cnt', 'id_cty_cnt', 'title_cnt',
+                                                        'lead_cnt', 'created_cnt'))
+                                           ->joinLeft(array('vws' => 'cnt_views_vws'),
+				                                 'vws.id_cnt_vws = chu.id_cnt',
+				                                  array('views' => 'SUM(vws.views_vws)'))
+                                           ->joinLeft(array('cmt' => 'comments_cmt'),
+                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
+                                           ->joinLeft(array('cty' => 'content_types_cty'),
+                                                  'cty.id_cty = cnt.id_cty_cnt',
+                                                  array('key_cty'))
+                                           ->where('chu.id_cnt IN (?)', $contentIdList)
+                                           ->group(array('chu.id_cnt'))          
+            ;                                
+            $result = $this->_db->fetchAll($contentSelect);                         
+		}
+			
+		return $result;
+    }
+    
+    /*
+     * getUsersViewers
+     * 
+     * gets list of users who has read users content, sorted last viewed
+     * 
+     * @param 	id 			users id
+     * @param 	limit		limit of users, default 10
+     * @return 	array		array (views => viewcount, id_usr_vws => viewers user id)
+     */
+    public function getUsersViewers($id, $limit = 10) {
+    	// select max(modified_vws), id_usr_vws from cnt_has_usr,cnt_views_vws 
+    	// where id_usr=2 and id_cnt=id_cnt_vws and modified_vws is not null and id_usr_vws != 0 group by id_usr_vws order by modified_vws desc;
+    	$select = $this->select()->setIntegrityCheck(false)
+    							 ->from('cnt_has_usr', array())
+    							 ->where('cnt_has_usr.id_usr = ?', $id)
+    							 ->join('cnt_views_vws', 
+    							 		'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt',
+    							  		array('latest' => 'max(modified_vws)', 'id_usr_vws' ))
+    							 ->join('users_usr', 'id_usr_vws = users_usr.id_usr', array('login_name_usr'))
+    							 ->where('users_usr.id_usr != ?', $id)
+    							 ->where('cnt_has_usr.id_usr != 0')
+    							 ->where('modified_vws is not null')
+    							 ->group('id_usr_vws')
+    							 ->order('modified_vws desc')
+    							 ->limit($limit)
+    							 ;
+		$result = $this->_db->fetchAll($select);
+		return $result;		   		 
+    }
+    
+    /*
+     * getGravatarStatus
+     * @return 1 or 0 (true, false)
+     * @param user id
+     */
+    public function getGravatarStatus($id = 0) {
+        $select = $this->select()
+                            ->from($this, array('gravatar_usr'))
+                            ->where('id_usr = ?', $id);
+
+        // Fetch data from database
+        $result = $this->_db->fetchRow($select); 
         
+        return $result['gravatar_usr'];
+    }
+    
+    /*
+     * changeGravatarStatus
+     * @return true, false
+     * @param user id
+     */
+    public function changeGravatarStatus($id = 0,$status = -1) {
+    	if($status != false && $status != true) return false;
+    	if($status == -1) return false;
+
+    	$status == false ? $status = 0 : $status = 1;
+    	
+    	$data = array('gravatar_usr' => $status);			
+		$where = $this->getAdapter()->quoteInto('id_usr = ?', $id);
+		if ($this->update($data, $where)) return true;
+		return false;
+    }
 } // end of class

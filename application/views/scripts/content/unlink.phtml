@@ -1,17 +1,14 @@
 <?php
 
-$title = '';
+$title = $this->translate('content-unlink-title', $this->language);
 
 if($this->linkingContentType == "problem") {
-    $title = $this->translate('content-unlink-from-challenge');
     $linkedColor = "red";
 }
 elseif($this->linkingContentType == "finfo") {
-    $title = $this->translate('content-unlink-from-vision');
     $linkedColor = "yellow";
 }
 elseif($this->linkingContentType == "idea") {
-    $title = $this->translate('content-unlink-from-idea');
     $linkedColor = "green";
 }
 ?>
@@ -28,10 +25,10 @@ if($this->contentexists) {
             ?>
         </p>
         <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" />
-        
+
         <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId, 
-                                                     'language' => $this->language), 
+            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
+                                                     'language' => $this->language),
                                                      'content_shortview', true); ?>">
                 <?php
                     if(strlen($this->relatesToContentTitle) > 68) {
@@ -46,47 +43,64 @@ if($this->contentexists) {
     <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('content-unlink-helptext'); ?></p>
     <?php
     if($this->contents) {
-        foreach($this->contents as $content) {
-            if($content['published_cnt'] != 0) {
-                ?>
-                <div class="form_helptext_line"></div>
-                <div style="height: 20px;">
-                    <div style="float: left; width: 420px;">
-                        <?php
-                        if($content['key_cty'] == "problem") {
-                            $color = "red";
-                        }
-                        elseif($content['key_cty'] == "finfo") {
-                            $color = "yellow";
-                        }
-                        elseif($content['key_cty'] == "idea") {
-                            $color = "green";
-                        }
-                        ?>
-                        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
-                        <?php
-                        $linkurl = $this->url(array('content_id' => $content['id_cnt'],
-                                                    'language' => $this->language),
-                                              'content_shortview', true);
-                        ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a>
-                        <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
+        foreach($this->contents as $key => $contents) {
+            foreach ($contents as $content) {
+                if($content['published_cnt'] != 0) {
+                    ?>
+                    <div class="form_helptext_line"></div>
+                    <div style="height: 20px;">
+                        <div style="float: left; width: 420px;">
+                            <?php
+                            if($content['key_cty'] == "problem") {
+                                $color = "red";
+                            }
+                            elseif($content['key_cty'] == "finfo") {
+                                $color = "yellow";
+                            }
+                            elseif($content['key_cty'] == "idea") {
+                                $color = "green";
+                            }
+                            ?>
+                            <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
+                            <?php
+                            $linkusr = $this->url(array('controller' => 'account',
+                                                        'action' => 'view',
+                                                        'user' => $content['login_name_usr'],
+                                                        'language' => $this->language),
+                                                  'lang_default', true);
+                            $linkurl = $this->url(array('content_id' => $content['id_cnt'],
+                                                        'language' => $this->language),
+                                                  'content_shortview', true);
+                            ?>
+                            <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
+                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
+                            <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
+                        </div>
+                        <div style="margin-top: 4px;">
+                            <?php
+                            if ($key === "parents") {
+                                $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
+                                                        'childid'     => $content['id_cnt'],
+                                                        'parentid'    => $this->relatesToId,
+                                                        'language' => $this->language),
+                                                  'removecontentlinks', true);
+                            } elseif ($key === "childs") {
+                                $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
+                                                        'childid'     => $this->relatesToId,
+                                                        'parentid'    => $content['id_cnt'],
+                                                        'language' => $this->language),
+                                                  'removecontentlinks', true);
+                            }
+                            ?>
+                            <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-unlink'); ?></a>
+                        </div>
                     </div>
-                    <div style="margin-top: 4px;">
-                        <?php
-                        $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
-                                                    'childid'     => $content['id_cnt'],
-                                                    'parentid'    => $this->relatesToId,
-                                                    'language' => $this->language),
-                                              'removecontentlinks', true);
-                        ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-unlink'); ?></a>
-                    </div>
-                </div>
-                <div style="clear: both;"></div>
-                <?php
+                    <div style="clear: both;">&nbsp;</div>
+                    <?php
+                }
             }
         }
+        ?> <div class="form_helptext_line"></div> <?php
     }
 } else {
     ?>

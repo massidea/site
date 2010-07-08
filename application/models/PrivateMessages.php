@@ -50,9 +50,7 @@ class Default_Model_PrivateMessages extends Zend_Db_Table_Abstract
     );	
     
     public function addMessage($data)
-	{
-        $return = true;
-        
+	{       
 		// Create a new row
 		$message = $this->createRow();
 		
@@ -66,9 +64,8 @@ class Default_Model_PrivateMessages extends Zend_Db_Table_Abstract
         }
         else
         {
-            $message->message_body_pmg = strip_tags($data['privmsg_message']);
+            $message->message_body_pmg = htmlspecialchars($data['privmsg_message']);
         }
-        $message->sender_email_pmg = strip_tags($data['privmsg_email']);
 		
         $message->read_pmg = 0;
 		$message->created_pmg = new Zend_Db_Expr('NOW()');
@@ -77,10 +74,10 @@ class Default_Model_PrivateMessages extends Zend_Db_Table_Abstract
 		// Add row to database
 		if(!$message->save())
         {
-            $return = false;
+            return false;
         }
         
-        return $return;
+        return true;
     } // end of addMessage
     
     public function getPrivateMessagesByUserId($id_usr)

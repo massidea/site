@@ -1,0 +1,10 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<h2>Groups</h2>
+
+<div id="gaccampaignlist">
+    <div class="campaign-list">
+        <ul>
+            <?php echo $this->partialLoop('partials/group_row.phtml', $this->groups); ?>
+        </ul>
+    </div>
+</div>

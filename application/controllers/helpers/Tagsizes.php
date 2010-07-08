@@ -51,10 +51,28 @@ class Zend_Controller_Action_Helper_Tagsizes extends Zend_Controller_Action_Help
                 $size = $maxSize;
             }
             
-            $tags[$k]['tag_size'] = $size;	
+            $tags[$k]['tag_size'] = $size;
         }
         
         return $tags;
+    }
+    
+    
+    /**
+     * Is tags running numer divisible by 2?
+     * 
+     * @return array
+     */
+    public function isTagDivisibleByTwo(array $tags = array()) {
+    	foreach($tags as $key => $value) {    		
+    		if($key%2) {
+    			$tags[$key]['divisible'] = true;
+    		} else {
+    			$tags[$key]['divisible'] = false;
+    		}
+    	}
+    	
+    	return $tags;
     }
     
     /**

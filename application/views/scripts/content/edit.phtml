@@ -1,26 +1,19 @@
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckContentForm.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
-
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-min.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-unicode-base.js'); ?>
 <?php 
-if($this->short_contenttype == "problem") {
+    // change background color
+    $color = array( 'problem' => '#d21034',
+    				'idea' => '#4b9b07',
+    				'finfo' => '#ffc726');
+    
+    if (isset($color[$this->short_contenttype])) {
+	    $this->headScript()->captureStart(); 
+	    ?> changeBack('<?php echo $color[$this->short_contenttype]; ?>'); <?php
+	    $this->headScript()->captureEnd(); 
+    }
 ?>
-    <?php $this->headScript()->captureStart() ?>
-    setTimeout("changeBack('#d21034')", 300);
-    <?php $this->headScript()->captureEnd() ?>
-<?php
-} else if($this->short_contenttype == "idea") {
-?>
-    <?php $this->headScript()->captureStart() ?>
-    setTimeout("changeBack('#4b9b07')", 300);
-    <?php $this->headScript()->captureEnd() ?>
-<?php
-} else if ($this->short_contenttype == "finfo") {;
-?>
-   <?php $this->headScript()->captureStart() ?>
-   setTimeout("changeBack('#ffc726')", 300);
-    <?php $this->headScript()->captureEnd() ?>
-<?php
-} ?>
 
 <div id="form_content_add_container" style="float: left;">	
 	<div id="form_content_realcontent">

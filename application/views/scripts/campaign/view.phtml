@@ -1,22 +1,42 @@
+<?php $this->headScript()->captureStart(); ?>
+function deleteconfirmation(url) {
+    var answer = confirm("Delete campaign?");
+    if (answer) {
+        alert("Campaign deleted");
+        window.location = url;
+    } else {
+        //alert("");
+    }
+}
+<?php $this->headScript()->captureEnd(); ?>
+
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
-$cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
-$linkurl = $this->url(array('controller' => 'campaign',
-                            'action'     => 'link',
-                            'cmpid'      => $this->campaign['id_cmp'],
+if ($this->campaign['end_time_cmp'] == '0000-00-00') {
+    $cmpend = 'Never';
+} else {
+    $cmpend = new Zend_Date($this->campaign['end_time_cmp'], Zend_Date::ISO_8601);
+    $cmpend = $cmpend->toString('dd MMM, yyyy');
+}
+
+$linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
                             'language'   => $this->language),
-                        'lang_default', true);
+                            'linkcampaign', true);
+$grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
+                           'language'   => $this->language),
+                     'group_shortview', true);
 ?>
 <div id="campaign-page">
     <h2>
         <?php echo $this->campaign['name_cmp']; ?>
         campaign by
-        <?php echo $this->grpname; ?>
+        <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
     </h2>
     <div id="profile-meta">
-        <img class="avatar" alt="" src="" />
+        <!--<img src="<?php echo $this->baseUrl("/images/no_profile_img_placeholder.png"); ?>" alt="avatar" class="avatar" />-->
         <p><?php echo $this->campaign['ingress_cmp']; ?></p>
+        <!--
         <p>
             <strong><a href="<?php echo $this->url(array('controller' => 'tag',
                                                         'action' => 'index',
@@ -24,27 +44,34 @@ $linkurl = $this->url(array('controller' => 'campaign',
                                                         'lang_default', true); ?>">
                   <?php echo $this->translate('content-view-tags'); ?>
                   </a>
-            </strong><?php // tägit tähän väliin ?>
+            </strong><?php // t�git t�h�n v�liin ?>
         </p>
+        -->
+        <!--
         <p>
             <strong>Campaign has started: </strong>
             <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
         </p>
         <p>
             <strong>Campaign is ending: </strong>
-            <?php echo $cmpend->toString('dd MMM, yyyy'); ?>
+            <?php echo $cmpend; ?>
         </p>
+        -->
+        <?php if (is_array($this->cmpAdmins)): ?>
         <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
-        <ul>
-        <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
-        </ul>
+            <ul>
+            <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
+            </ul>
+        <?php endif; ?>
         <p>
             <strong>Group: </strong>
             <br />
-            Ryhmän nimi tähän
+            <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
             <br />
         </p>
+        <?php if (is_array($this->grpUsers)): ?>
         <div id="members">
+            
             <h4><?php echo $this->translate('group-members'); ?></h4>
             <span class="more"><strong><a href="">Show all</a></strong></span>
             <div class="clear"></div>
@@ -54,28 +81,66 @@ $linkurl = $this->url(array('controller' => 'campaign',
             <span class="more"><strong><a href="">Show all</a></strong></span>
             <div class="clear dot-line-200"></div>
         </div>
+        <?php endif; ?>
     </div>
     <div id="activity" class="right">
         <div class="left">
             <div id="campaign-info">
+                <?php if ($this->userIsGroupAdmin):
+                    $editlink = $this->url(
+                        array(
+                            'controller' => 'campaign',
+                            'action'     => 'edit',
+                            'language'   => $this->language,
+                            'id'         => $this->campaign["id_cmp"]
+                         ), 'lang_default', true
+                    );
+                    $dellink = $this->url(
+                        array(
+                            'controller' => 'campaign',
+                            'action'     => 'remove',
+                            'language'   => $this->language,
+                            'id'         => $this->campaign["id_cmp"]
+                         ), 'lang_default', true
+                    );
+                ?>
+                <p class="link" style="text-align: right; padding-top: 10px;">
+                    <a href="<?php echo $editlink; ?>">Edit campaign</a> |
+                    <!--<a href="#">Edit campaign links</a> |-->
+                    <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete campaign</a>
+                </p>
+                <?php endif; ?>
                 <p><?php echo $this->campaign['description_cmp']; ?></p>
             </div>
             <div class="clear"></div>
             <div id="contribute">
+                <?php if ($this->identity == true) : ?>
                 <h2>I want to contribute:</h2>
+
                 <div class="right">
-                    <a href="<?php echo $linkurl; ?>">Link more content to campaign</a>
-                </div>
+                    <p class="link">
+                    <?php
+                    if ($this->userHasGroup):
+                    ?>
+                        <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+                    <?php endif; ?>
+                    </p>
+                    <!--<p>If you add content, you'll become a group member</p> -->
+               </div>
+               <?php endif; ?>
                 <div class="clear"></div>
                 <div id="current-posts">
                     <div id="head">
                         <h2>Current posts</h2>
                     </div>
                     <div class="clear"></div>
+
                     <div class="scroll-box">
+                        <?php if (is_array($this->cmpcnts) && $this->cmpcnts[0]['id_cnt'] != null): ?>
                         <ul>
-                            <?php echo $this->partialLoop('partials/content-row.phtml', $this->cmpcnts); ?>
+                            <?php  echo $this->partialLoop('partials/content_row_new.phtml', $this->cmpcnts); ?>
                         </ul>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

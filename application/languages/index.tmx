@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+?<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
 <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
@@ -18,7 +18,7 @@
 		<tuv xml:lang="fi"><seg>Näytä lisää</seg></tuv>
 	</tu>    
 	<tu tuid='index-opensource'>
-		<tuv xml:lang="en"><seg>Massidea.org is also an open source project. <a href="http://www.oibs.fi/wiki/">Join the development team.</a></seg></tuv>
+		<tuv xml:lang="en"><seg>Massidea.org is also an open source project. <a href="http://www.massidea.org/blog/?page_id=74">Join the development team.</a></seg></tuv>
 		<tuv xml:lang="fi"><seg>Massidea.org on myös open source-projekti. <a href="http://www.oibs.fi/wiki/">Liity kehitystiimiin.</a></seg></tuv>
 	</tu>
 	<tu tuid='index-users'>
@@ -46,17 +46,17 @@
 		<tuv xml:lang="fi"><seg>tagit</seg></tuv>
 	</tu>
 	<tu tuid='index-problem-tags'>
-		<tuv xml:lang="en"><seg>Challenge tags</seg></tuv>
-		<tuv xml:lang="fi"><seg>Haaste tagit</seg></tuv>
+			<tuv xml:lang="en"><seg>Challenge tags</seg></tuv>
+			<tuv xml:lang="fi"><seg>Haaste tagit</seg></tuv>
 	</tu>
 	<tu tuid='index-idea-tags'>
-		<tuv xml:lang="en"><seg>Idea tags</seg></tuv>
-		<tuv xml:lang="fi"><seg>Idea tagit</seg></tuv>
+			<tuv xml:lang="en"><seg>Idea tags</seg></tuv>
+			<tuv xml:lang="fi"><seg>Idea tagit</seg></tuv>
+		</tu>
+		<tu tuid='index-finfo-tags'>
+			<tuv xml:lang="en"><seg>Vision tags</seg></tuv>
+			<tuv xml:lang="fi"><seg>Visio tagit</seg></tuv>
 	</tu>
-	<tu tuid='index-finfo-tags'>
-		<tuv xml:lang="en"><seg>Vision tags</seg></tuv>
-		<tuv xml:lang="fi"><seg>Visio tagit</seg></tuv>
-	</tu>	
 	<tu tuid='index-most-popular'>
 		<tuv xml:lang="en"><seg>Most popular</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosituimmat</seg></tuv>
@@ -75,9 +75,11 @@
 	</tu>
     <tu tuid='index-what-is-long'>
 		<tuv xml:lang="en"><seg>
-            <p style="padding: 5px;">Massidea.org is a free open innovation community where users are uploading their ideas, visions of the future and today's challenges and linking them with other user’s brainchildren.</p>
-            <p style="padding: 5px;">The mixed outcome - lucky insight - is boosting individual’s creativity and enabling the birth of smashing idea. <a href="#">Learn more</a></p>
-        </seg></tuv>
+			<p>Massidea.org is an open innovation community for sharing challenges, ideas and visions.</p>
+			<p>It boosts individual and communal creativity by intelligently connectiong people and their insights.</p>
+			<p>Massidea.org is free open source solution and it is publicly available for use and modifications.</p>
+			<p>Learn more from our <a href="http://massidea.org/blog"><strong>blog</strong></a>.</p>
+		</seg></tuv>
 		<tuv xml:lang="fi"><seg>
             <p style="padding: 5px;">Massidea.org on ilmainen ja avoin innovaatioyhteisö, jonka jäsenet lisäävät ideoitaan, tulevaisuuden visioitaan ja tämän päivän haasteita sekä linkittävät niitä toisten käyttäjien vastaaviin.</p>
             <p style="padding: 5px;">Sekoituksen lopputulos voimistaa yksilön luomiskykyä ja auttaa mahtavan idean synnyssä. <a href="#">Lue lisää</a></p>
@@ -549,23 +551,24 @@
         </seg></tuv>
 	</tu>
 	<tu tuid='index-admin-tools'>
-		<tuv xml:lang="en"><seg>System administration</seg></tuv>
-		<tuv xml:lang="fi"><seg>Järjestelmän hallinta</seg></tuv>
+		<tuv xml:lang="en"><seg>Admin tools</seg></tuv>
+		<tuv xml:lang="fi"><seg>Hallintatyökalut</seg></tuv>
     </tu>
     <tu tuid='index-see-also-problem'>
-		<tuv xml:lang="en"><seg>See also these challenges</seg></tuv>
-		<tuv xml:lang="fi"><seg>Katso myös nämä haasteet</seg></tuv>
-    </tu>
-    <tu tuid='index-see-also-idea'>
-		<tuv xml:lang="en"><seg>See also these ideas</seg></tuv>
-		<tuv xml:lang="fi"><seg>Katso myös nämä ideat</seg></tuv>
-    </tu>
-    <tu tuid='index-see-also-finfo'>
-		<tuv xml:lang="en"><seg>See also these visions</seg></tuv>
-		<tuv xml:lang="fi"><seg>Katso myös nämä visiot</seg></tuv>
-    </tu>
-    <tu tuid='index-recent-campaigns'>
-		<tuv xml:lang="en"><seg>Recent campaigns</seg></tuv>
-		<tuv xml:lang="fi"><seg>Viimeisimmät kampanjat</seg></tuv>
+    		<tuv xml:lang="en"><seg>See also these challenges</seg></tuv>
+    		<tuv xml:lang="fi"><seg>Katso myös nämä haasteet</seg></tuv>
+        </tu>
+        <tu tuid='index-see-also-idea'>
+    		<tuv xml:lang="en"><seg>See also these ideas</seg></tuv>
+    		<tuv xml:lang="fi"><seg>Katso myös nämä ideat</seg></tuv>
+        </tu>
+        <tu tuid='index-see-also-finfo'>
+    		<tuv xml:lang="en"><seg>See also these visions</seg></tuv>
+    		<tuv xml:lang="fi"><seg>Katso myös nämä visiot</seg></tuv>
+        </tu>
+        <tu tuid='index-recent-campaigns'>
+    		<tuv xml:lang="en"><seg>Recent campaigns</seg></tuv>
+    		<tuv xml:lang="fi"><seg>Viimeisimmät kampanjat</seg></tuv>
     </tu>
 </body>
+

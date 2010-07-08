@@ -20,7 +20,7 @@ echo $this->doctype();
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/style.css'));
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix.css'), 'screen', 'IE 6');
-        $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
 	
     $this->headlink()->headLink(array(
         'rel' => 'shortcut icon',
@@ -44,9 +44,7 @@ echo $this->doctype();
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
     $this->headScript()->prependFile('http://maps.google.com/jsapi');
-    ?>
-    
-    <?php
+
     echo $this->headLink();
     echo $this->headMeta();
     echo $this->headScript();
@@ -71,17 +69,25 @@ echo $this->doctype();
 					
 						<?php if($this->authenticated) : ?>
                         <div style="float: left; width: 14px;">&nbsp;</div>
-                        
-						<div style="text-align: right; padding-left: 100px; float: left; width: 50px;">
-                                <div style="width: 237px;">
+						<div style="text-align: right; float: left; width: 50px;">
+                                <div style="width: 337px;">
+							            <?php //$auth = Zend_Auth::getInstance(); ?>
+								        <?php if (in_array("admin", $this->logged_user_roles)): ?>
+											<a href="<?php echo $this->url(array('controller' => 'admin',
+																				 'action' => 'index',
+																				 'language' => $this->language),
+																				 'lang_default', true); ?>">
+												<?php echo $this->translate('index-admin-tools');?>
+											</a> | 
+							            <?php endif; ?>
+
                                     <?php echo $this->translate('index-logged_in'); ?>
                                     <a href="<?php echo $this->url(array('controller' => 'account',
                                                                          'action' => 'view',
                                                                          'user' => $this->username,
                                                                          'language' => $this->language),
                                                                    'lang_default', true); ?>">
-                                        <?php echo $this->username; ?>
-                                    </a>
+                                        <?php echo $this->username; ?></a>
                                     <?php
                                     if($this->unread_privmsgs > 0) {
                                         if($this->controller == "privmsg" && $this->action == "index") {
@@ -93,8 +99,7 @@ echo $this->doctype();
                                                                                  'action' => 'index',
                                                                                  'language' => $this->language),
                                                                            'lang_default', true); ?>">
-                                                (<?php echo $this->unread_privmsgs; ?>)
-                                            </a>
+                                                (<?php echo $this->unread_privmsgs; ?>)</a>
                                             <?php
                                         }
                                     } ?>
@@ -119,8 +124,7 @@ echo $this->doctype();
                             
                                 <div style="width: 237px;">
                                     <a id="login_link" href="#">
-                                        <?php echo $this->translate('index-login'); ?>
-                                    </a> 
+                                        <?php echo $this->translate('index-login'); ?></a> 
                                     | 
                                     <a href="<?php echo $url_sign_up; ?>">
                                         <?php echo $this->translate('index-signup'); ?>
@@ -152,11 +156,14 @@ echo $this->doctype();
                                             <input style="margin-right: 6px; width: 70px;" type="submit" 
                                                 value="<?php echo $this->translate('account-login-submit'); ?>" /> 
                                             <span class="top_right_box_links" style="font-size: 12px;">
-                                                <a href="#">
+                                                <a href="<?php echo $this->url(array('controller' => 'account', 
+                                                                                     'action' => 'fetchpassword', 
+                                                                                     'language' => $this->language), 
+                                                                                     'lang_default', true); ?>">
                                                     <?php echo $this->translate('account-login-problems'); ?>
                                                 </a>
                                             </span>
-                                        </div>                                       
+                                        </div>
                                     </form>
                                     
                                     <div style="margin-top: 0px;">
@@ -250,42 +257,12 @@ echo $this->doctype();
                 
                 <!-- Language selector -->
 				<div class="top_row_center_right_language">
-			    	<input type="hidden" id="translate-language-code-value" value=<?php
-			    
-	                    $languages = New Default_Model_Languages();
-	
-	                    //get select language code from request url
-	                    $subject = str_replace($this->baseUrl(),'',$this->url());
-	                     
-	                    $pattern = '/^(\/([^\/]+)[\/]?)/';
-	                    preg_match($pattern,$subject,$matches);
-	                    //Search language code from database and if there is one, allow the code, else force en.
-	                    $languageCode = $languages->getLanguageByLangCode($matches[2]);
-	                    if($languageCode) $lang = $matches[2];
-	                    else $lang = "en";
-	                    echo $lang;
-	
-			    ?> /> 
 
-            		<select id="languages" onchange="changeLang('<?php echo $lang; ?>', '<?php echo $this->baseUrl('/');?>')">
-                        
-            <?php 
-            $allLanguages = $languages->getAllNamesAndCodes();
-
- 			for($i=0;$i<=sizeof($allLanguages);$i++) {
- 				foreach($this->languages as $language) {
- 					if ($language == $allLanguages[$i]['iso6391_lng']) unset($allLanguages[$i]);
- 				}
- 			}
-            
-            foreach($this->languages as $language): ?>
-                   <option value="<?php echo $language; ?>"<?php if($language == $lang): ?> selected="selected"<?php endif; ?>><?php echo $this->translate('lang-'.$language); ?></option>
-            <?php endforeach; ?>
-			<?php foreach($allLanguages as $language) : ?>
-				<option value="<?php echo $language['iso6391_lng']; ?>"<?php if($language['name_lng'] == $languageCode): ?> selected="selected"<?php endif; ?>><?php echo $language['name_lng']; ?></option>
-			<?php endforeach; ?>
-
-                    </select>
+		            <?php
+		            $languages = new Default_Model_Languages();
+		            $allLanguages = $languages->getAllNamesAndCodes();
+		            echo $translationForm = new Default_Form_ChangeTranslationLanguageForm($allLanguages);
+		            ?>
 				</div>
                 
 			</div>
@@ -357,7 +334,7 @@ echo $this->doctype();
                     <?php echo $this->translate('index-futureinfo');?>
                 </a>
             </div>
-            
+
             <div class="sub_menu_left_space">&nbsp;</div>
             
             <div id="groups_campaigns" 
@@ -365,8 +342,10 @@ echo $this->doctype();
                 onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
                 class="sub_menu_item_blue"
             >
-                <a href="<?php echo $this->url(array('language' => $this->language),
-                                                	'lang_default', true); ?>">
+                <a href="<?php echo $this->url(array('language'   => $this->language,
+                                                     'controller' => 'groupsandcampaigns',
+                                                     'action'     => 'index',
+                                               ), 'lang_default', true); ?>">
                     <?php echo $this->translate('index-groups-campaigns');?>
                 </a>
             </div>
@@ -385,7 +364,14 @@ echo $this->doctype();
                     <?php echo $this->translate('index-users');?>
                 </a>
             </div>
-            
+            <div class="sub_menu_left_space">&nbsp;</div>
+			<div id="blog" 
+                onmouseout="blurMenu(this.id, 'deepblue', '<?php echo $this->baseUrl();?>')" 
+                onmouseover="focusMenu(this.id, 'deepblue', '<?php echo $this->baseUrl();?>');" 
+                class="sub_menu_item_deepblue"
+            >
+                <a href="/blog/">Blog</a>
+            </div>            
             <div class="sub_menu_left_space">&nbsp;</div>
 			
 			<!-- RIGHT SIDE OF THE MENU, note that the placement order is reversed -->
@@ -424,78 +410,44 @@ echo $this->doctype();
                 
 				<!-- This menu is hidden, and activated by using jQuery on demand. Check the JS -file for the function -->
 				<div id="add_content_menu">
-					<div onmouseover="highlightContentMenuItem(this.id)" 
-                            onmouseout="dimContentMenuItem(this.id)" 
-                            id="add_content_menu_challenge">
-                            
-						<div class="hidden_menu_red"></div>
-                        
-						<div class="hidden_menu_row">
-                            <a href="<?php echo $url_add_c; ?>">
-                                <?php echo $this->translate('index-addcontent-challenge'); ?>
-                            </a>
-                        </div>
-                        
+					<div id="add_content_menu_challenge">
+						<a class="add_content_button" href="<?php echo $url_add_c; ?>">
+							<span> 
+								<div class="hidden_menu_red"></div>
+								<div class="hidden_menu_row">
+		                                <?php echo $this->translate('index-addcontent-challenge'); ?>
+		                        </div>
+							</span>		
+                        </a>
 						<div style="clear: both;"></div>
 					</div>
                     
-					<div onmouseover="highlightContentMenuItem(this.id)" 
-                            onmouseout="dimContentMenuItem(this.id)"
-                            id="add_content_menu_idea">
-                            
-						<div class="hidden_menu_green"></div>
-                        
-						<div class="hidden_menu_row">
-                            <a href="<?php echo $url_add_i; ?>">
-                                <?php echo $this->translate('index-addcontent-idea'); ?>
-                            </a>
-                        </div>
-                        
+					<div id="add_content_menu_idea">
+						<a class="add_content_button" href="<?php echo $url_add_i; ?>">
+							<span>
+								<div class="hidden_menu_green"></div>
+								<div class="hidden_menu_row">
+		                                <?php echo $this->translate('index-addcontent-idea'); ?>
+		                        </div>
+		                    </span>	
+	                    </a>
 						<div style="clear: both;"></div>
 					</div>
                     
-					<div onmouseover="highlightContentMenuItem(this.id)"
-                            onmouseout="dimContentMenuItem(this.id)"
-                            id="add_content_menu_vision">
-                            
-						<div class="hidden_menu_yellow"></div>
-                        
-						<div class="hidden_menu_row">
-                            <a href="<?php echo $url_add_v; ?>">
-                                <?php echo $this->translate('index-addcontent-vision'); ?>
-                            </a>
-                        </div>
-                        
-						<div style="clear: both;"></div>
+					<div id="add_content_menu_vision">
+                        <a class="add_content_button" href="<?php echo $url_add_v; ?>">
+	                        <span>
+								<div class="hidden_menu_yellow"></div>
+								<div class="hidden_menu_row">
+			    	          		<?php echo $this->translate('index-addcontent-vision'); ?>
+		                        </div>
+								<div style="clear: both;"></div>
+							</span>
+						</a>
 					</div>
 				</div>		
-				
 			</div>
-                                    
-            <?php 
-            $auth = Zend_Auth::getInstance();
-	        if ($auth->hasIdentity()):
-	            if(in_array("admin", $this->logged_user_roles)):
-            ?>
-            
-			<div class="sub_menu_right_space" style="width: 0px;">&nbsp;</div>
-            
-			<div id="admintools" 
-                onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')" 
-                onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
-                class="sub_menu_item_blue"
-            >
-                <a href="<?php echo $this->url(array('controller' => 'admin',
-                                                     'action' => 'index',
-                                                     'language' => $this->language),
-                                                'lang_default', true); ?>">
-                    <?php echo $this->translate('index-admin-tools');?>
-                </a>
-            </div>
-            <?php 
-	            endif;
-	        endif;
-	        ?>
+			
 			<div class="sub_menu_right_space" style="width: 0px;">&nbsp;</div>
 			<!-- Resets the floating row -->
 			<div style="clear: both;"></div>
@@ -536,30 +488,15 @@ echo $this->doctype();
                     <span class="link_text">&copy; 2009 <a href="http://massidea.org">Massidea.org</a></span>
                     
                     <span class="link_text">
-                        <a href="<?php echo $this->url(array('controller' => 'help',
-                                                             'action' => 'about',
-                                                             'language' => $this->language),
-                                                       'lang_default', true); ?>">
+                        <a href="http://www.massidea.org/blog/?page_id=40">
                             <?php echo $this->translate('index-about'); ?></a>
                     </span>
                     
-                    <a href="<?php echo $this->url(array('controller' => 'help',
-                                                         'action' => 'contact',
-                                                         'language' => $this->language),
-                                                   'lang_default', true); ?>">
+                    <a href="http://www.massidea.org/blog/?page_id=71">
                     <?php echo $this->translate('index-contact'); ?></a> 
                     
-                    <a href="http://www.oibs.fi/wiki">
+                    <a href="http://www.massidea.org/blog/?page_id=74">
                     	<?php echo $this->translate('index-development'); ?></a> 
-                    
-                    <a href="<?php echo $this->url(array('controller' => 'help',
-                                                         'action' => 'index',
-                                                         'language' => $this->language),
-                                                   'lang_default', true); ?>">
-                    	<?php echo $this->translate('index-help'); ?></a>
-                    
-                    <a href="#">
-                    	<?php echo $this->translate('index-jobs'); ?></a>
                     
                     <a href="#" onclick="popup('popup_terms_'); return false;">
                         <?php echo $this->translate('index-service-agreement'); ?></a> 
@@ -677,13 +614,13 @@ echo $this->doctype();
             </div>       
         </div>
         
-        <div style="clear:both; padding-top: 10px;">
+        <div class="privacy">
             <?php echo $this->translate('network-service-agreement'); ?>
         </div>      
     </div>
 
     <div id="popup_privacy_" class="popup_terms" style="display:none;">
-        <div class="popup_close" style="">
+        <div class="popup_close">
             <div style="float:right;">
                 <a href="#" onclick="popup_terms_close('')">
                     <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" />
@@ -691,7 +628,7 @@ echo $this->doctype();
             </div>
         </div>
         
-        <div style="clear:both; padding-top: 10px; color: black; font-family: times new roman, arial;">
+        <div class="privacy">
             <?php echo $this->translate('register-description'); ?>
         </div>
     </div>

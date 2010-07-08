@@ -1,4 +1,10 @@
 <?php
+
+
+// This model is not used any more?
+
+
+
 /**
  *  UserCountry -> 
  *
@@ -31,7 +37,7 @@ class Default_Model_UserCountry extends Zend_Db_Table_Abstract
     protected $_name = 'countries_ctr';
 	
 	// Primary key of table
-	protected $_primary = 'id_ctr';
+	protected $_primary = 'iso_ctr';
     
     /**
     *   Get country name by id.
@@ -44,7 +50,7 @@ class Default_Model_UserCountry extends Zend_Db_Table_Abstract
         if ($id != -1 && $id != "" && $id != NULL) {
             $select = $this->select()
                                 ->from($this, array('name_ctr'))
-                                ->where('id_ctr = ?', $id)
+                                ->where('iso_ctr = ?', $id)
                                 ->limit(1);
                                 
             $result = $this->fetchAll($select)->current();
@@ -64,7 +70,7 @@ class Default_Model_UserCountry extends Zend_Db_Table_Abstract
     */
     public function getCountryList()
     {
-        $select = $this->select()->from($this, array('name_ctr', 'id_ctr'))
+        $select = $this->select()->from($this, array('name_ctr', 'iso_ctr'))
                                  ->order('name_ctr');
         
         $result = $this->_db->fetchAll($select);

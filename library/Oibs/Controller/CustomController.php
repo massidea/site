@@ -71,6 +71,13 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         
         // bbCode plugin
         $this->view->BBCode = new Oibs_Controller_Plugin_BBCode();
+        
+        // Set up GTranslate plugin
+        $this->gtranslate = new Oibs_Controller_Plugin_GTranslate();
+        $translateSession = new Zend_Session_Namespace('translate');
+        // If no session exist, set default translation language to english
+        if(!isset($translateSession->translateTo)) $translateSession->translateTo = 'en';
+        $this->gtranslate->setLangTo($translateSession->translateTo);
 		
 		// Add the root step to breadcrumbs
 		$this->breadcrumbs->addStep('Massidea.org Home', '/');
@@ -251,5 +258,24 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         }
         return false;
     }
+    /* alreadyViewed
+     * 
+     * checks if user has viewed specific content during this session 
+     * 
+     * @param 	$cntId	content id
+     * @return  bool	if user has viewed page or not 
+     */
+    function alreadyViewed($cntId) {
+    	$session = new Zend_Session_Namespace();
+    	if (!isset($session->viewedPages) || !is_array($session->viewedPages) ) {
+    		$session->viewedPages = array();
+    	}
+    	if (in_array($cntId, $session->viewedPages)) {
+    		return true;
+    	} else {
+    		$session->viewedPages[] = $cntId;
+    		return false;
+    	}
+    	
+    } 
 } // end of class
-?>

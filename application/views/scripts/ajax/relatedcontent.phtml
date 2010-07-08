@@ -1,0 +1,10 @@
+<?php if(count($this->relatedContents)):?>
+	<?php foreach($this->relatedContents as $cnt) : ?>
+		<div id="content_view_content_related_entry_<?php echo $cnt['id_cnt']; ?>" class="content_view_content_related_entry_<?php echo $cnt['contentType'];?>">
+			<span><a href="<?php echo $this->url(array('content_id' => $cnt['id_cnt'], 'language' => $this->language), 'content_shortview', true); ?>"><?php echo stripslashes($cnt['title_cnt']); ?></a></span><br />
+			<span><?php echo $this->translate('content-view-user-related-views'); echo $cnt['viewCount']; ?></span>
+		</div>
+	<?php endforeach;?>
+<?php else: ?>
+<?php echo $this->translate('content-view-content-related-nothing'); ?>
+<?php endif;?>

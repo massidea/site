@@ -77,16 +77,22 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
      */
     public function removeContentFromCampaign($id_cmp = 0, $id_cnt = 0)
     {
-        $return = false;
+        $result = false;
 
         $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
         $where = $this->getAdapter()->quoteInto(
             "$where AND id_cnt = ?", $id_cnt);
         if($this->delete($where)) {
-            $return = true;
+            $result = true;
         }
 
-        return $return;
+        return $result;
+    }
+
+    public function removeAllContentFromCampaign($id_cmp = 0)
+    {
+        $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
+        return $this->delete($where);
     }
 
     /**
@@ -107,5 +113,35 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
 
         return isset($result[0]);
     }
+
+    /**
+     * Get all campaigns where content is linked.
+     *
+     * @author Mikko Korpinen
+     * @param id_cnt content id
+     * @return array
+     */
+    public function getContentCampaigns($id_cnt)
+    {
+        $result = array();
+
+        $select = $this->_db->select()
+                            ->from(array('chc' => 'cmp_has_cnt'),
+                                   array('id_cmp', 'id_cnt'))
+                            ->joinLeft(array('cmp' => 'campaigns_cmp'),
+                                   'cmp.id_cmp = chc.id_cmp',
+                                   array('id_cmp', 'id_grp_cmp', 'name_cmp',
+                                         'ingress_cmp', 'description_cmp', 'created_cmp'))
+                            ->joinLeft(array('grp' => 'usr_groups_grp'),
+                                             'grp.id_grp = cmp.id_grp_cmp',
+                                             array('id_grp', 'group_name_grp'))
+                            ->where('chc.id_cnt = ?', $id_cnt)
+                            ->group('chc.id_cmp');
+
+        $result = $this->_db->fetchAll($select);
+
+        return $result;
+    }
+
 } // end of class
 ?>

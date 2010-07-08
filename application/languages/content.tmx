@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
 <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
@@ -221,6 +221,22 @@
 		<tuv xml:lang="en"><seg>Reply</seg></tuv>
 		<tuv xml:lang="fi"><seg>Vastaa</seg></tuv>
 	</tu>
+	<tu tuid='content-view-comment-replying-to'>
+		<tuv xml:lang="en"><seg>Replying to</seg></tuv>
+		<tuv xml:lang="fi"><seg>Vastaamassa käyttäjälle</seg></tuv>
+	</tu>
+	<tu tuid='content-view-comment-cancel'>
+		<tuv xml:lang="en"><seg>Cancel reply</seg></tuv>
+		<tuv xml:lang="fi"><seg>Peru vastaus</seg></tuv>
+	</tu>
+    <tu tuid='content-view-campaigns'>
+		<tuv xml:lang="en"><seg>Campaigns: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Kampanjat: </seg></tuv>
+	</tu>
+    <tu tuid='content-view-has-no-campaigns'>
+		<tuv xml:lang="en"><seg>Content has no campaigns</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisällöllä ei ole kampanjoita</seg></tuv>
+	</tu>
 	<tu tuid='content-view-tags'>
 		<tuv xml:lang="en"><seg>Tags: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Avainsanat: </seg></tuv>
@@ -260,10 +276,18 @@
 	<tu tuid='content-view-user-related-views'>
 		<tuv xml:lang="en"><seg>Views: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Katsottu: </seg></tuv>
-	</tu>	
+	</tu>
+	<tu tuid='content-view-user-related-nothing'>
+		<tuv xml:lang="en"><seg>No other content available</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei muita käyttäjän sisältöjä</seg></tuv>
+	</tu>
 	<tu tuid='content-view-related'>
 		<tuv xml:lang="en"><seg>Related content</seg></tuv>
 		<tuv xml:lang="fi"><seg>Liittyvää sisältöä</seg></tuv>
+	</tu>
+	<tu tuid='content-view-content-related-nothing'>
+		<tuv xml:lang="en"><seg>No related content available</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei asiaan liittyviä sisältöjä</seg></tuv>
 	</tu>
 	<tu tuid='content-view-author'>
 		<tuv xml:lang="en"><seg>Corresponding author</seg></tuv>
@@ -288,6 +312,22 @@
 	<tu tuid='content-view-added'>
 		<tuv xml:lang="en"><seg>Added: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisätty: </seg></tuv>
+	</tu>
+	<tu tuid='content-view-translated-from'>
+		<tuv xml:lang="en"><seg>This content has been translated from </seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä sisältö on käännetty kielestä </seg></tuv>
+	</tu>
+	<tu tuid='content-view-not-translated'>
+		<tuv xml:lang="en"><seg>This content is in original language </seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä sisältö on alkuperäisessä kielessään </seg></tuv>
+	</tu>
+	<tu tuid='content-view-translated-show-translated'>
+		<tuv xml:lang="en"><seg>Show translated</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näytä käännettynä</seg></tuv>
+	</tu>
+	<tu tuid='content-view-not-translated-show-original'>
+		<tuv xml:lang="en"><seg>Show original</seg></tuv>
+		<tuv xml:lang="fi"><seg>Näytä alkuperäinen</seg></tuv>
 	</tu>
 	<tu tuid='content-view-comment-form-subject'>
 		<tuv xml:lang="en"><seg>Subject: </seg></tuv>
@@ -354,16 +394,16 @@
 		<tuv xml:lang="fi"><seg>Avainsanat</seg></tuv>
 	</tu>
 	<tu tuid='content-add-textlead'>
-		<tuv xml:lang="en"><seg>Textlead</seg></tuv>
+		<tuv xml:lang="en"><seg>Lead chapter</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ingressi</seg></tuv>
 	</tu>
 	<tu tuid='content-add-text'>
-		<tuv xml:lang="en"><seg>Text</seg></tuv>
+		<tuv xml:lang="en"><seg>Body text</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
 	</tu>
 	<tu tuid='content-add-related_companies'>
-		<tuv xml:lang="en"><seg>Related companies</seg></tuv>
-		<tuv xml:lang="fi"><seg>Liittyvät yritykset</seg></tuv>
+		<tuv xml:lang="en"><seg>Related companies and organizations</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liittyvät yritykset ja organisaatiot</seg></tuv>
 	</tu>
 	<tu tuid='content-add-research'>
 		<tuv xml:lang="en"><seg>Research question</seg></tuv>
@@ -441,6 +481,9 @@
 		<tuv xml:lang="en"><seg>The header should be concise and it should describe the subject as well as possible (max. length 100 marks)</seg></tuv>
 		<tuv xml:lang="fi"><seg>Mahdollisimman hyvin aihetta kuvaava, tiivis otsikko (maksimipituus 100 merkkiä).</seg></tuv>
 	</tu>
+	<tu tuid='content-add-headline-help-text'>
+		<tuv xml:lang="en"><seg>(Explain in one sentence the whole story)</seg></tuv>
+	</tu>
 	<tu tuid='content-add-keywords-help-text'>
 		<tuv xml:lang="en"><seg>(Use commas to separate tags)</seg></tuv>
 		<tuv xml:lang="fi"><seg>(Erota avainsanat pilkulla)</seg></tuv>
@@ -450,7 +493,7 @@
 		<tuv xml:lang="fi"><seg>(Tämä teksti näkyy hakutuloslistoissa)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-problem-textbody-help-text'>
-		<tuv xml:lang="en"><seg>(What is challenge and why it is important)</seg></tuv>
+		<tuv xml:lang="en"><seg>(Answer what, why, who, when and where questions)</seg></tuv>
 		<tuv xml:lang="fi"><seg>(Mikä haaste on ja miksi se on tärkeä)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-finfo-textbody-help-text'>
@@ -462,8 +505,8 @@
 		<tuv xml:lang="fi"><seg>(Mikä idea on ja miksi se on tärkeä)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-related_companies-help-text'>
-		<tuv xml:lang="en"><seg>(Use commas to separate companies)</seg></tuv>
-		<tuv xml:lang="fi"><seg>(Erota yritykset pilkulla)</seg></tuv>
+		<tuv xml:lang="en"><seg>(Use commas to separate)</seg></tuv>
+		<tuv xml:lang="fi"><seg>(Erota pilkulla)</seg></tuv>
 	</tu>
 	<tu tuid='content-add-campaigns-help-text'>
 		<tuv xml:lang="en"><seg>(Use commas to separate campaigns)</seg></tuv>
@@ -704,15 +747,15 @@
 	<tu tuid='content-add-problem-right-box-p5'>
 		<tuv xml:lang="en">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
@@ -850,15 +893,15 @@
 	<tu tuid='content-add-finfo-right-box-p6'>
 		<tuv xml:lang="en">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
@@ -964,15 +1007,15 @@
 	<tu tuid='content-add-idea-right-box-p5'>
 		<tuv xml:lang="en">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <b>Title, subheader and keywords</b> are important, as they will 
-                determine how attractive your article is and whether others 
+                <b>Title, subheader and keywords</b> are important, as they will
+                determine how attractive your article is and whether others
                 will find it.
             </seg>
         </tuv>
@@ -1060,7 +1103,15 @@
 	<tu tuid='content-delete'>
 		<tuv xml:lang="en"><seg>Delete</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
-	</tu>    
+	</tu>
+    <tu tuid='content-edit-content-links'>
+		<tuv xml:lang="en"><seg>Edit content links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa sisällön linkkejä</seg></tuv>
+	</tu>
+    <tu tuid='content-edit-campaign-links'>
+		<tuv xml:lang="en"><seg>Edit campaign links</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa kampanjan linkkejä</seg></tuv>
+	</tu>
 	<tu tuid='content-cancel'>
 		<tuv xml:lang="en"><seg>Cancel</seg></tuv>
 		<tuv xml:lang="fi"><seg>Peruuta</seg></tuv>
@@ -1136,7 +1187,7 @@
 	<tu tuid='content-rating'>
 		<tuv xml:lang="en"><seg>Ratings</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ääntä</seg></tuv>
-	</tu>    
+	</tu>
 	<tu tuid='rating-succesful'>
 		<tuv xml:lang="en"><seg>Rating succesful! </seg></tuv>
 		<tuv xml:lang="fi"><seg>Arvosana tallennettu!</seg></tuv>
@@ -1156,27 +1207,27 @@
 	<tu tuid='content-torate'>
 		<tuv xml:lang="en"><seg>to rate!</seg></tuv>
 		<tuv xml:lang="fi"><seg>äänestääksesi!</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-favourites'>
 		<tuv xml:lang="en"><seg>Favourited</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosikkina</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-favourite-add'>
 		<tuv xml:lang="en"><seg>Add</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-favourite-remove'>
 		<tuv xml:lang="en"><seg>Remove</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='favourite-adding-failed'>
 		<tuv xml:lang="en"><seg>Adding the favourite failed for some odd reason...</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosikin lisääminen epäonnistui jostain eriskummallisesta syystä...</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='favourite-removing-failed'>
 		<tuv xml:lang="en"><seg>Removing the favourite failed for some odd reason...</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosikin poistaminen epäonnistui jostain eriskummallisesta syystä...</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='content-box-add-header'>
 		<tuv xml:lang="en"><seg>Add content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisää sisältöä!</seg></tuv>
@@ -1293,6 +1344,10 @@
 		<tuv xml:lang="en"><seg>Content linked succesfully!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sisältö linkitettiin onnistuneesti!</seg></tuv>
 	</tu>
+    	<tu tuid='content-link-themselves'>
+		<tuv xml:lang="en"><seg>You can't link to content themselves!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Et voi linkittää sisältöä itseensä!</seg></tuv>
+	</tu>
 	<tu tuid='content-link-not-content-owner'>
 		<tuv xml:lang="en"><seg>You can only link you're own content!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Voit linkittää vain omaa sisältöäsi!</seg></tuv>
@@ -1321,17 +1376,53 @@
 		<tuv xml:lang="en"><seg>You can't link content to an idea!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ideaan ei voi linkittää!</seg></tuv>
 	</tu>
+    <tu tuid='content-unlink-title'>
+		<tuv xml:lang="en"><seg>Edit content to content(s) link(s)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Muokkaa sisältöjen välisiä linkkejä</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-from-challenge'>
+		<tuv xml:lang="en"><seg>Remove linking from challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys haasteesta</seg></tuv>
+	</tu>
+	<tu tuid='content-unlink-from-vision'>
+		<tuv xml:lang="en"><seg>Remove linking from vision</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys näkymästä</seg></tuv>
+	</tu>
+	<tu tuid='content-unlink-from-idea'>
+		<tuv xml:lang="en"><seg>Remove linking from idea</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkitys ideasta</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-invalid-relatestoid'>
+		<tuv xml:lang="en"><seg>Content to what you're trying to see doesn't exist!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältöä, jonka yritit nähdä, ei ole olemassa!</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-target'>
+		<tuv xml:lang="en"><seg>Content</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-helptext'>
+		<tuv xml:lang="en"><seg>This content is currently linked to following content(s)</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tämä sisältö on linkitetty seuraaviin sisältöihin</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink'>
+		<tuv xml:lang="en"><seg>Remove link</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista linkki</seg></tuv>
+	</tu>
+    <tu tuid='content-unlink-successful'>
+		<tuv xml:lang="en"><seg>Content link removed succesfully!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Linkitys poistettu onnistuneesti!</seg></tuv>
+	</tu>
 	<tu tuid='content-index-authenticated-text'>
 		<tuv xml:lang="en"><seg>
             <h3>Guidelines for adding content</h3>
 
             <ul>
                 <li>
-                    OIBS content is short descriptions of today’s challenges, 
+                    OIBS content is short descriptions of today’s challenges,
                     visions of the future and the related ideas and solutions.
                 </li>
                 <li>
-                    All content is in the form of an A4 sheet, with the min. 
+                    All content is in the form of an A4 sheet, with the min.
                     length of 1500 marks.
                 </li>
                 <li>
@@ -1341,18 +1432,18 @@
                     Include references in your writing
                 </li>
                 <li>
-                    All content is open and public. Therefore, ideas planned to 
-                    be patented are not recommended to be added into the 
+                    All content is open and public. Therefore, ideas planned to
+                    be patented are not recommended to be added into the
                     database.
                 </li>
                 <li>
-                    The current OIBS is a demo version. Thus, when adding new 
-                    content we recommend to save a copy of the material for the 
+                    The current OIBS is a demo version. Thus, when adding new
+                    content we recommend to save a copy of the material for the
                     possible re-adding process into the new version.
                 </li>
                 <li>
                     To add an idea, it has to relate to the content found in the
-                    OIBS database. In other words, there has to be a challenge 
+                    OIBS database. In other words, there has to be a challenge
                     or vision what the idea is for.
                 </li>
             </ul></seg></tuv>
@@ -1361,12 +1452,12 @@
 
             <ul>
                 <li>
-                    OIBS:in aineisto on lyhyitä kuvauksia tämän päivän 
-                    haasteista, tulevaisuuden näkymistä sekä niihin 
+                    OIBS:in aineisto on lyhyitä kuvauksia tämän päivän
+                    haasteista, tulevaisuuden näkymistä sekä niihin
                     tarjotuista ideoista.
                 </li>
                 <li>
-                    Kaikki aineisto on A4-arkin muodossa, min. pituus on 1500 
+                    Kaikki aineisto on A4-arkin muodossa, min. pituus on 1500
                     merkkiä.
                 </li>
                 <li>
@@ -1376,20 +1467,20 @@
                     Sisällytä lähteet kirjoitukseesi.
                 </li>
                 <li>
-                    Kaikki OIBS:n sisältö on avointa ja julkista. 
-                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
+                    Kaikki OIBS:n sisältö on avointa ja julkista.
+                    Patentoitavaksi suunniteltuja ideoita ei siis kannata
                     tallentaa järjestelmään.
                 </li>
                 <li>
-                    Sivusto on demoversio. Säilytä kopio tallentamastasi 
+                    Sivusto on demoversio. Säilytä kopio tallentamastasi
                     materiaalista, jotta mahdollinen uudelleentalletus sivuston
                     uuteen versioon onnistuu vaivattomasti.
                 </li>
                 <li>
-                    Lisätäksesi jonkin uuden idean, sen on liityttävä 
+                    Lisätäksesi jonkin uuden idean, sen on liityttävä
                     tietokannasta jo löytyvään aineistoon. Toisin sanoen ideat
-                    (ratkaisut) ovat vastauksia tietokannasta löytyviin 
-                    ongelmiin tai tulevaisuuden visioihin. 
+                    (ratkaisut) ovat vastauksia tietokannasta löytyviin
+                    ongelmiin tai tulevaisuuden visioihin.
                 </li>
             </ul>
         </seg></tuv>
@@ -1400,29 +1491,29 @@
 
             <ul>
                 <li>
-                    In order to add new content into OIBS, 
-                    <a href="%s">register</a> or 
+                    In order to add new content into OIBS,
+                    <a href="%s">register</a> or
                     <a href="%s">log in</a> with your account.
                 </li>
                 <li>
-                    Start by browsing the content or by adding a new challenge 
+                    Start by browsing the content or by adding a new challenge
                     or a new vision.
                 </li>
                 <li>
-                    Ideas can be added only when they relate to the content 
-                    found in the database. In other words, there has to be a 
+                    Ideas can be added only when they relate to the content
+                    found in the database. In other words, there has to be a
                     challenge or a vision, what the solution if for.
                 </li>
                 <li>
-                    All content is open and public. Therefore, ideas planned to 
-                    be patented are not recommended to be added into the 
+                    All content is open and public. Therefore, ideas planned to
+                    be patented are not recommended to be added into the
                     database.
                 </li>
                 <li>
-                    The current OIBS website is a demo version. When adding new 
+                    The current OIBS website is a demo version. When adding new
                     content, it’s recommended to save a copy of the material for
-                    the possible re-adding process into the new version of the 
-                    website. 
+                    the possible re-adding process into the new version of the
+                    website.
                 </li>
             </ul>
           </seg></tuv>
@@ -1431,28 +1522,28 @@
 
             <ul>
                 <li>
-                    <a href="%s">Rekisteröidy</a> tai 
-                    <a href="%s">kirjaudu sisään</a> 
+                    <a href="%s">Rekisteröidy</a> tai
+                    <a href="%s">kirjaudu sisään</a>
                     tunnuksillasi lisätäksesi tietokantaan uutta aineistoa.
                 </li>
                 <li>
-                    Aloita joko selaamalla sivuston aineistoa tai lisäämällä 
-                    tietokantaan jokin tämän päivän ongelma tai tulevaisuuden 
+                    Aloita joko selaamalla sivuston aineistoa tai lisäämällä
+                    tietokantaan jokin tämän päivän ongelma tai tulevaisuuden
                     visio.
                 </li>
                 <li>
-                    Ideoita voidaan ainoastaan lisätä tietokannasta löytyvään 
-                    aineistoon. Toisin sanoen ideat (ratkaisut) ovat vastauksia 
+                    Ideoita voidaan ainoastaan lisätä tietokannasta löytyvään
+                    aineistoon. Toisin sanoen ideat (ratkaisut) ovat vastauksia
                     kuvailtuihin ongelmiin tai tulevaisuuden visioihin.
                 </li>
                 <li>
-                    Kaikki OIBS:n sisältö on avointa ja julkista. 
-                    Patentoitavaksi suunniteltuja ideoita ei siis kannata 
+                    Kaikki OIBS:n sisältö on avointa ja julkista.
+                    Patentoitavaksi suunniteltuja ideoita ei siis kannata
                     tallentaa järjestelmään.
                 </li>
                 <li>
-                    Sivusto on demoversio. Pidä itselläsi kopio tallentamastasi 
-                    materiaalista, jotta mahdollinen uudelleentalletus sivuston 
+                    Sivusto on demoversio. Pidä itselläsi kopio tallentamastasi
+                    materiaalista, jotta mahdollinen uudelleentalletus sivuston
                     uuteen versioon onnistuu vaivattomasti.
                 </li>
             </ul>
@@ -1482,13 +1573,13 @@
 		<tuv xml:lang="en"><seg>
             Problems and obstacles are stopping us from achieving our goals.
             Whether it's a question of business or personal life related
-            issues, we can turn problems into challenges and start solving 
+            issues, we can turn problems into challenges and start solving
             them.
         </seg></tuv>
 		<tuv xml:lang="fi"><seg>
             Problems and obstacles are stopping us from achieving our goals.
             Whether it's a question of business or personal life related
-            issues, we can turn problems into challenges and start solving 
+            issues, we can turn problems into challenges and start solving
             them.
         </seg></tuv>
 	</tu>
@@ -1537,5 +1628,9 @@
             Massidea database. In other words, ideas are answers or solutions
             to current challenges or visions of the future.
         </seg></tuv>
-	</tu>    
+	</tu>
+	<tu tuid='content-preview-not-logged-in'>
+		<tuv xml:lang="en"><seg>Your session has timed out, please log in again.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Istunto on vanhentunut, kirjaudu uudestaan sisään.</seg></tuv>
+	</tu>
 </body>

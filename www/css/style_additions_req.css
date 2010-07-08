@@ -17,7 +17,9 @@
 }
 
 .box_468_medium {
-    border: 1px solid #ccc;
+    border-width: 0px 1px 1px 1px;
+    border-color: #ccc;
+    border-style: solid;
     padding: 5px;
     background-color: #F3F3F3;
     width:468px;
@@ -502,7 +504,7 @@ form_registration_container dd,
 }
 
 /* more from boxi */
- #content_view_user_related_container, 
+#content_view_user_related_container, 
 #content_view_related_content_container {
 	margin: 0 0 1em 0;
 }
@@ -515,7 +517,7 @@ form_registration_container dd,
 }
 
 #content_view_user_related, #content_view_content_related {
-	height: 145px;
+	max-height: 200px;
 	overflow: auto;
 }
 
@@ -551,6 +553,7 @@ form_registration_container dd,
 	height: 20px;
 	padding: 0.3em 1em 0 1em;
 	font-weight: bold;
+	font-size: 14px;
 }
 
 .content_rating_positive {
@@ -667,15 +670,17 @@ form_registration_container dd,
 }
 
 .search_result_details_left {
-    margin-top: 10px;  
-    /*float:left;*/
+    display:inline-block;
 }
 
 .search_result_details_right {
-    margin-top: 10px;
+    display:inline-block;
     float:right;
 }
 
+.search_result_details {
+	margin-top: 10px;
+}
 /*  acc settings */
 
 #account_settings_form_container {
@@ -689,7 +694,7 @@ form_registration_container dd,
 	font-weight: bold;
 	display: block;
 	float: left;
-	width: 10em;
+	width: 12em;
 	/*margin: 0.2em 0;*/
 }
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
 <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
@@ -36,15 +36,15 @@
 	</tu>
 
     <tu tuid='campaign-unlink-content-from-campaign'>
-		<tuv xml:lang="en"><seg>Remove link from campaign</seg></tuv>
+		<tuv xml:lang="en"><seg>Edit campaign link(s)</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poista linkki kampanjasta</seg></tuv>
 	</tu>
     <tu tuid='campaign-unlink-target'>
-		<tuv xml:lang="en"><seg>Remove link target</seg></tuv>
+		<tuv xml:lang="en"><seg>Content</seg></tuv>
 		<tuv xml:lang="fi"><seg>Linkin poiston kohde</seg></tuv>
 	</tu>
     <tu tuid='campaign-unlink-helptext'>
-		<tuv xml:lang="en"><seg>Select the content which link will be removed</seg></tuv>
+		<tuv xml:lang="en"><seg>This content is currently included to following campaign(s)</seg></tuv>
 		<tuv xml:lang="fi"><seg>Valitse sisältö minkä linkki poistetaan</seg></tuv>
 	</tu>
     <tu tuid='campaign-unlink'>

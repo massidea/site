@@ -96,7 +96,8 @@ class Default_Form_EditContentForm extends Zend_Form
                                                         array('stringLengthTooLong' => 
                                                             'content-add-field-too-long')
                                                    )
-                                             )
+                                             ),
+                                        array('Regex', true, array('/^[\\p{L}0-9, ]*$/'))
                                      )
                                )
                 ->setLabel($translate->_("content-add-keywords"))
@@ -162,29 +163,21 @@ class Default_Form_EditContentForm extends Zend_Form
         
         // Content keywords input form element
 		$related_companies = new Zend_Form_Element_Text('content_related_companies');
-		$related_companies->setValue($data['content_related_companies'])
-                ->setRequired(true)
-                ->addValidators(array(array('NotEmpty', 
-                                            true, 
-                                            array('messages' => 
-                                                array('isEmpty' => 
-                                                    'content-add-field-empty')
-                                                 )
-                                           ),
-                                        array('StringLength', 
-                                              true, 
-                                              array(1, 
-                                                    120,
-                                                    'messages' => 
-                                                        array('stringLengthTooLong' => 
-                                                            'content-add-field-too-long')
-                                                   )
-                                             )
-                                     )
+		$related_companies//->setValue($data['content_related_companies'])
+                ->setRequired(false)
+                ->addValidators(array(array('StringLength', 
+                                			true, 
+                                    		array(0, 
+                                          		  120,
+                                          		  'messages' => array('stringLengthTooLong' => 
+                                                  			          'content-add-field-too-long')
+                                         		 )
+                                     	   )
+                               		 )
                                )
                 ->setLabel($translate->_("content-add-related_companies"))
                 ->setDescription($translate->_("content-add-related_companies-help-text"))
-				->setDecorators(array('FormElementDecorator')); 
+				->setDecorators(array('FormOptionalElementDecorator')); 
         
         // Problem research question input form element
 		$research = new Zend_Form_Element_Text('content_research');

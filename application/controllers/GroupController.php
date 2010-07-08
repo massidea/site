@@ -31,24 +31,34 @@
 {
     function indexAction()
     {
-        // Get authentication
-        $auth = Zend_Auth::getInstance();
+        $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                    'action' => 'list',
+                                                    'language' => $this->view->language),
+                                              'lang_default', true);
+        $this->_redirector->gotoUrl($redirectUrl);
+    }
 
-        // If user has identity
-        if ($auth->hasIdentity()) {
-            // Get the names and descriptions of all groups.
-            $groupModel = new Default_Model_Groups();
-            $this->view->groupdata = $groupModel->getAllGroups();
-        } else {
-            // Groups are only visible to registered users.
-            // Redirect to main page.
-            $target = $this->_urlHelper->url(array(
-                'controller' => 'index',
-                'action' => 'index',
-                'language' => $this->view->language),
-                'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+    /**
+     * listAction - shows a list of all groups
+     */
+    function listAction()
+    {
+        $grpmodel = new Default_Model_Groups();
+        $cmpmodel = new Default_Model_Campaigns();
+        $grpadm = new Default_Model_GroupAdmins();
+
+        // If you find a better way to do this, be my guest.
+        // ...and also fix it to GroupsAndCampaignsController.
+        $grps = $grpmodel->getAllGroups();
+        $grps_new = array();
+        foreach ($grps as $grp) {
+            $adm = $grpadm->getGroupAdmins($grp['id_grp']);
+            $grp['id_admin'] = $adm[0]['id_usr'];
+            $grp['login_name_admin'] = $adm[0]['login_name_usr'];
+            $grps_new[] = $grp;
         }
+
+        $this->view->groups = $grps_new;
     }
 
     /**
@@ -63,28 +73,177 @@
 
         // If user has identity
         if ($auth->hasIdentity()) {
-            // Get data for this specific group.
-            $grpId = $this->_request->getParam('groupid');
-            $grpModel = new Default_Model_Groups();
-            $usrHasGrpModel = new Default_Model_UserHasGroup();
-            $grpAdminsModel = new Default_Model_GroupAdmins();
-            $campaignModel = new Default_Model_Campaigns();
-            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
-            $user = $auth->getIdentity();
-            // Add data to the view.
-            $this->view->grpId = $grpId;
-            $this->view->grpData = $grpModel->getGroupData($grpId);
-            $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
-            $this->view->grpAdmins = $grpAdmins;
-            $this->view->userHasGroup = $usrHasGrpModel;
-            $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
-            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+            $this->view->identity = true;
         } else {
-            // Groups are only visible to registered users.
-            $target = $this->_urlHelper->url(array(
-                'controller' => 'index',
-                'action' => 'index',
-                'language' => $this->view->language),
+            $this->view->identity = false;
+        }
+
+        // Get data for this specific group.
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        $usrHasGrpModel = new Default_Model_UserHasGroup();
+        $grpAdminsModel = new Default_Model_GroupAdmins();
+        $campaignModel = new Default_Model_Campaigns();
+        $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+        $user = $auth->getIdentity();
+        $grpData = $grpModel->getGroupData($grpId);
+        $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
+        $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
+
+        // Add data to the view.
+        $this->view->grpId = $grpId;
+        $this->view->grpData = $grpData;
+        $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
+        $this->view->grpAdmins = $grpAdmins;
+        $this->view->userHasGroup = $usrHasGrpModel;
+        $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
+        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+    }
+
+    function removeAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $grpId = $this->_request->getParam('id');
+
+            if (!$grpId) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'index',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Only group admins get to delete the group.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue(
+                $grpAdmins, 'id_usr', $auth->getIdentity()->user_id);
+            if (!$userIsGroupAdmin) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid' => $grpId,
+                        'language' => $this->view->language),
+                    'group_shortview', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Get existing group info.
+            $grpModel = new Default_Model_Groups();
+            $grpData = $grpModel->getGroupData($grpId);
+
+            // Delete group.
+            $grpModel->removeGroup($grpId);
+
+            // Redirect to the groups & campaigns page.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        } else {
+            // Not logged in.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+    }
+
+    function editAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $grpId = $this->_request->getParam('id');
+            
+            if (!$grpId) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'index',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Only group admins get to edit group info.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue(
+                $grpAdmins, 'id_usr', $auth->getIdentity()->user_id);
+            if (!$userIsGroupAdmin) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid' => $grpId,
+                        'language' => $this->view->language),
+                    'group_shortview', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Get existing group info.
+            $grpModel = new Default_Model_Groups();
+            $grpData = $grpModel->getGroupData($grpId);
+
+            // Create the form in edit mode.
+            $form = new Default_Form_AddGroupForm($this, array(
+                'mode' => 'edit',
+                'oldname' => $grpData['group_name_grp'],
+            ));
+
+            // Populate the form.
+            $formData = array();
+            $formData['groupname'] = $grpData['group_name_grp'];
+            $formData['groupdesc'] = $grpData['description_grp'];
+            $formData['groupbody'] = $grpData['body_grp'];
+            $form->populate($formData);
+
+            $this->view->form = $form;
+
+            $this->view->grpName = $grpData['group_name_grp'];
+
+            // If the form is posted and valid, save the changes to db.
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $post = $request->getPost();
+                if ($form->isValid($post)) {
+                    // Change existing group info.
+                    $groupModel = new Default_Model_Groups();
+                    $newGroupId = $groupModel->editGroup(
+                        $grpId,
+                        $post['groupname'],
+                        $post['groupdesc'],
+                        $post['groupbody']);
+
+                    // Redirect back to the group page.
+                    $target = $this->_urlHelper->url(
+                        array(
+                            'groupid' => $grpId,
+                            'language' => $this->view->language),
+                         'group_shortview', true
+                    );
+                    $this->_redirector->gotoUrl($target);
+                }
+            }
+        } else {
+            // Not logged in.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
                 'lang_default', true);
             $this->_redirector->gotoUrl($target);
         }
@@ -92,40 +251,51 @@
 
     function createAction()
     {
-        // Add the "add new group"-form to the view.
-        $form = new Default_Form_AddGroupForm();
-        $this->view->form = $form;
+        $auth = Zend_Auth::getInstance();
 
-        // If the form is posted and valid, add the new group to db.
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $post = $request->getPost();
-            if ($form->isValid($post)) {
-                // Add new group to db.
-                $groupModel = new Default_Model_Groups();
-                $newGroupId = $groupModel->createGroup(
-                    $post['groupname'],
-                    $post['groupdesc'],
-                    $post['groupbody']);
+        if ($auth->hasIdentity()) {
+            // Add the "add new group"-form to the view.
+            $form = new Default_Form_AddGroupForm();
+            $this->view->form = $form;
 
-                // Add the current user to the new group.
-                $userHasGroupModel = new Default_Model_UserHasGroup();
-                $userHasGroupModel->addUserToGroup(
-                    $newGroupId, $this->view->userid);
+            // If the form is posted and valid, add the new group to db.
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+                $post = $request->getPost();
+                if ($form->isValid($post)) {
+                    // Add new group to db.
+                    $groupModel = new Default_Model_Groups();
+                    $newGroupId = $groupModel->createGroup(
+                        $post['groupname'],
+                        $post['groupdesc'],
+                        $post['groupbody']);
 
-                // Make the current user an admin for the new group.
-                $groupAdminModel = new Default_Model_GroupAdmins();
-                $groupAdminModel->addAdminToGroup(
-                    $newGroupId, $this->view->userid);
+                    // Add the current user to the new group.
+                    $userHasGroupModel = new Default_Model_UserHasGroup();
+                    $userHasGroupModel->addUserToGroup(
+                        $newGroupId, $this->view->userid);
 
-                // Redirect back to groups page.
-                $target = $this->_urlHelper->url(array(
-                    'controller' => 'group',
-                    'action'     => 'index',
-                    'language'   => $this->view->language
-                    ), 'lang_default', true);
-                $this->_redirector->gotoUrl($target);
+                    // Make the current user an admin for the new group.
+                    $groupAdminModel = new Default_Model_GroupAdmins();
+                    $groupAdminModel->addAdminToGroup(
+                        $newGroupId, $this->view->userid);
+
+                    $target = $this->_urlHelper->url(array(
+                        'groupid' => $newGroupId,
+                        'language' => $this->view->language),
+                         'group_shortview', true);
+                    $this->_redirector->gotoUrl($target);
+                }
             }
+        } else {
+            // Not logged in.
+            $target = $this->_urlHelper->url(
+                array(
+                    'controller' => 'groupsandcampaigns',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true);
+            $this->_redirector->gotoUrl($target);
         }
     }
 
@@ -205,5 +375,11 @@
                 'lang_default', true);
             $this->_redirector->gotoUrl($target);
         }
+    }
+
+    public function imageAction()
+    {
+        $form = new Default_Form_ProfileImageForm();
+        $this->view->form = $form;
     }
 }

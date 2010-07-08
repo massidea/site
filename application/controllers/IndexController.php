@@ -101,6 +101,10 @@ class IndexController extends Oibs_Controller_CustomController
             // Action helper for tags
             $tags = $this->_helper->tagsizes->tagCalc($tags);
             
+            
+            // Action helper for define is tag running number divisible by two
+            $tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+            
             // Save most popular tags data to cache
             $cache->save($tags, 'IndexTags');
         } else {
@@ -124,7 +128,20 @@ class IndexController extends Oibs_Controller_CustomController
         } else {
             $this->view->recentposts = '';
         }
-        
+
+        // Get recent campaigns
+        $grpmodel = new Default_Model_Groups();
+        $campaignModel = new Default_Model_Campaigns();
+    	$recentcampaigns = $campaignModel->getRecent(10);
+        // If you find (time to think of) a better way to do this, be my guest.
+        $cmps_new = array();
+        foreach ($recentcampaigns as $cmp) {
+            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+            $cmp['group_name_grp'] = $grp['group_name_grp'];
+            $cmps_new[] = $cmp;
+        }
+
+        $this->view->campaigns = $cmps_new;
         $this->view->poptags = $tags;
         $this->view->activeusers = $activeusers;
         $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();

@@ -52,7 +52,7 @@ class AccountController extends Oibs_Controller_CustomController
     *    Gets users profile thumbnail image from database. Sets image to view with empty layout. 
     *
     */
-    public function profilethumbAction()
+	public function profilethumbAction()
     {
         // Set an empty layout for view
         $this->_helper->layout()->setLayout('empty');
@@ -66,34 +66,54 @@ class AccountController extends Oibs_Controller_CustomController
         $image = null;
         
         if (isset($params['id'])) {
-		$userid = $params['id'];
+			$userid = $params['id'];
+			$user = new Default_Model_User($userid);
+			
+			$gravatar = $user->getGravatarStatus($userid);
 
-	        // Get cache from registry
-        	$cache = Zend_Registry::get('cache');
-        	
-        	$mimeType = "image/jpeg";
-        
-        	// Load recent posts from cache
-        	$cacheImages = 'ProfileThumbs_' . $userid . '_' . $thumbnail;
-        
-        	if(!$result = $cache->load($cacheImages)) {
-				$user = new Default_Model_User($userid);
-				$imagedata = $user->getUserImageData($userid, $thumb);
-	            		
-	            if($imagedata == null) {
-	                $filename = '../www/images/no_profile_img_placeholder.gif';
-	                $handle = fopen($filename, "r");
-	                $imagedata[$thumbnail] = fread($handle, filesize($filename));
-	            } 
-
-        		// Save recent posts data to cache
-        		$cache->save($imagedata, $cacheImages);          
-        	} else {
-				$imagedata = $result;
-        	}
-        	
-	        $this->view->mime = $mimeType;
-        	$this->view->img = $imagedata[$thumbnail];
+			if($gravatar == 0) {
+	
+		        // Get cache from registry
+	        	$cache = Zend_Registry::get('cache');
+	        	
+	        	$mimeType = "image/jpeg";
+	        
+	        	// Load recent posts from cache
+	        	$cacheImages = 'ProfileThumbs_' . $userid . '_' . $thumbnail;
+	        
+	        	if(!$result = $cache->load($cacheImages)) {
+					
+					$imagedata = $user->getUserImageData($userid, $thumb);
+		            		
+		            if($imagedata == null) {
+		                $filename = '../www/images/no_profile_img_placeholder.png';
+		                $handle = fopen($filename, "r");
+		                $imagedata[$thumbnail] = fread($handle, filesize($filename));
+		            } 
+	
+	        		// Save recent posts data to cache
+	        		$cache->save($imagedata, $cacheImages);          
+	        	} else {
+					$imagedata = $result;
+	        	}
+	        	
+		        $this->view->mime = $mimeType;
+	        	$this->view->img = $imagedata[$thumbnail];
+	        }
+	        
+	        elseif ($gravatar == 1) {
+	        	$gravatarUrl = "http://www.gravatar.com/avatar/".md5(strtolower($user->getUserEmail($userid)))."?s=200";
+	        	$this->_redirect($gravatarUrl);
+	        }
+	        else { 
+                $filename = '../www/images/no_profile_img_placeholder.png';
+                $handle = fopen($filename, "r");
+                $imagedata[$thumbnail] = fread($handle, filesize($filename));
+                $mimeType = "image/jpeg";
+                $this->view->mime = $mimeType;
+	        	$this->view->img = $imagedata[$thumbnail];
+	         }
+	        
         }
     }
     
@@ -181,37 +201,55 @@ class AccountController extends Oibs_Controller_CustomController
 	*    Gets user profile information, users content and comments.
     */
     public function viewAction() {
+
+        if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+            $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+        }
+
+        $hometargeturl = $this->_urlHelper->url(array('controller' => 'index',
+                                                      'action' => 'index',
+                                                      'language' => $this->view->language),
+                                                'lang_default', true);
+
         // Get user identity
         $auth = Zend_Auth::getInstance();
-        
+
         // Disable edit profile by default
-        $userEdit = false;                              
-        
+        $userEdit = false;
+
         // Get params
         $params = $this->getRequest()->getParams();
-        // Get username from params
-        $username = $params['user'];				    
-        
+        if (isset($params['user'])) {
+            // Get username from params
+            $username = $params['user'];
+        } else {
+            $redirector->gotoUrl($hometargeturl);
+        }
+
         // Get content types
-        $contentTypes = new Default_Model_ContentTypes();        
+        $contentTypes = new Default_Model_ContentTypes();
         $this->view->content_types = $contentTypes->getAllNamesAndIds();
-        
+
         // Get user data from User Model
-        $user = new Default_Model_User();        
+        $user = new Default_Model_User();
         $data = $user->getUserByName($username);
-        
+
+        if ($data == null) {
+            $redirector->gotoUrl($hometargeturl);
+        }
+
         $this->view->user = $data;
 		$id = $data['id_usr'];
-	
+
         // Get public user data from UserProfiles Model
 		$userProfile = new Default_Model_UserProfiles();
         $dataa = $userProfile->getPublicData($id);
-        
+
         // $dataa is an array with key=>val like firstname => "Joel Peeloten"
 
         // This was replaced with get public data and the foreach above
         // Kept here just in case for the future
-        /* 
+        /*
         $dataa['gender'] 		= $userprofile->getUserProfileValue($id, 'gender');
 		$dataa['surname'] 		= $userprofile->getUserProfileValue($id, 'surname');
 		$dataa['firstname'] 	= $userprofile->getUserProfileValue($id, 'firstname');
@@ -223,27 +261,30 @@ class AccountController extends Oibs_Controller_CustomController
 		$dataa['phone'] 		= $userprofile->getUserProfileValue($id, 'phone');
 		$dataa['birthday'] 		= $userprofile->getUserProfileValue($id, 'birthday');
         */
-        
+
+        // No countries in countries_ctr and not very good table at all?
+        // This would be better: http://snipplr.com/view/6636/mysql-table--iso-country-list-with-abbreviations/
+        /*
 		$dataa['country'] = $userProfile->getUserProfileValue($id, 'country');
-        
+
         $userCountry = new Default_Model_UserCountry();
 		$dataa['country'] = $userCountry->getCountryNameById(
             $dataa['country']['profile_value_usp']
         );
-        
+        */
         // Get content user has released
         $type = isset($params['type']) ? $params['type'] : 0 ;
         $contentList = $user->getUserContent($data['id_usr']);
         $temp = array();
-        
+
         // Initialize content counts
-        $dataa['contentCounts']['totalCount'] = 0;
-        $dataa['contentCounts']['savedCount'] = 0;
-        
+        $dataa['contentCounts']['all'] = 0;
+        $dataa['contentCounts']['user_edit'] = 0;
+
         $dataa['contentCounts']['problem'] = 0;
         $dataa['contentCounts']['finfo'] = 0;
         $dataa['contentCounts']['idea'] = 0;
-        
+
         // Count amount of content user has published
         // and check unpublished so only owner can see it.
         foreach ($contentList as $k => $c) {
@@ -253,8 +294,8 @@ class AccountController extends Oibs_Controller_CustomController
                 unset($contentList[$k]);
             // Else if user logged in and not owner of unpublished content,
             // remove content from list
-            } else if ($auth->hasIdentity() && 
-                       $c['id_usr'] != $auth->getIdentity()->user_id && 
+            } else if ($auth->hasIdentity() &&
+                       $c['id_usr'] != $auth->getIdentity()->user_id &&
                        $c['published_cnt'] == 0) {
                 unset($contentList[$k]);
             // Else increase content counts and sort content by content type
@@ -263,34 +304,34 @@ class AccountController extends Oibs_Controller_CustomController
                     // Set content to array by its content type
                     //$temp[$c['key_cty']][] = $c;
                     //$temp[] = $c;
-                    
+
                     // Increase total count
-                    $dataa['contentCounts']['totalCount']++;
-                    
+                    $dataa['contentCounts']['all']++;
+
                     // Set content type count to 0 if count is not set
                     if (!isset($dataa['contentCounts'][$c['key_cty']] )) {
                         $dataa['contentCounts'][$c['key_cty']] = 0;
                     }
-                    
+
                     // Increase content type count
                     $dataa['contentCounts'][$c['key_cty']]++;
                 }
             }
-            
+
             if($c['published_cnt'] == 0) {
-                $dataa['contentCounts']['savedCount']++;
+                $dataa['contentCounts']['user_edit']++;
             }
         } // end foreach
-        
+
         // If user is logged in, and viewing self; allow edit
         if ($auth->hasIdentity()) {
             $identity = $auth->getIdentity();
-            
+
             if ($data['id_usr'] == $identity->user_id) {
                 $userEdit = true;
             }
         }
-         
+
         if ($auth->hasIdentity() && $data['id_usr'] == $auth->getIdentity()->user_id) {
         	$favouriteModel = new Default_Model_UserHasFavourites();
         	$favouriteType = isset($params['favourite']) ? $params['favourite'] : 0;
@@ -313,31 +354,92 @@ class AccountController extends Oibs_Controller_CustomController
                 	unset($favouriteList[$k]);
                 	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
             	}
-            	
+
         	    if (isset($favourite['key_cty'])) {
-                    
+
                     // Increase total count
                     $dataa['favouriteCounts']['totalCount']++;
-                    
+
                     // Set content type count to 0 if count is not set
                     if (!isset($dataa['favouriteCounts'][$favourite['key_cty']] )) {
                         $dataa['favouriteCounts'][$favourite['key_cty']] = 0;
                     }
-                    
+
                     // Increase content type count
                     $dataa['favouriteCounts'][$favourite['key_cty']]++;
                 }
-        	}	
+        	}
         	//print_r($dataa);print_r($favouriteList);die;
         }
-
+        //Zend_Debug::dump("" === null);
+		//Zend_Debug::dump($dataa['contentCounts']['idea']);
+		//Zend_Debug::dump($dataa['contentCounts']['idea'] == "");
+		//die;
+        //	My Posts box data
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		
+		$box->setHeader("My Posts")
+			->setClass("right")
+			->setName("my-posts")
+			->addTab("All", "all", "all selected", $dataa['contentCounts']['all']) //Header, type, calss, extra
+			->addTab("Challenges", "problem", "challenges", $dataa['contentCounts']['problem'])
+			->addTab("Ideas", "idea", "ideas", $dataa['contentCounts']['idea'])
+			->addTab("Visions", "finfo", "visions", $dataa['contentCounts']['finfo']);
+			
+		if ($dataa['contentCounts']['user_edit'] && $userEdit) {
+			$box->addTab("Saved", "user_edit", "saved", $dataa['contentCounts']['user_edit']);
+		}
+		$boxes[] = $box;
+		
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("My Groups")
+			->setClass("left")
+			->setName("my_groups")
+			->addTab("All", "all", "all selected");
+		$boxes[] = $box;
+		
+		$views = new Default_Model_ContentViews();
+		$myViews = $this->getViewRows($data['id_usr']);
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box	->setHeader("My Views")
+				->setName("my-views")
+				->setClass("right")
+				->addTab("Views", "views", "all selected");			
+		$boxes[] = $box;
+		
+		$myReaders = $user->getUsersViewers($data['id_usr']);
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("My Reads")
+			->setClass("left")
+			->setName("my-reads")
+			->addTab("Readers", "readers", "all selected");
+			
+		$boxes[] = $box;
+			
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
         $this->view->authorContents = $contentList;/*$temp*/
-        $this->view->authorFavourites = $favouriteList;
+        $this->view->boxes = $boxes;
+        $this->view->myViews = $myViews;
+        $this->view->myReaders = $myReaders;
+        //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
+
+        /* Waiting for layout that is maybe coming 
+        // MyViews
+        $viewsModel = new Default_Model_ContentViews();
+        Zend_Debug::dump($viewsModel->getUserViewedContents($data['id_usr']));
+        
+        // MyReaders
+        Zend_Debug::dump($user->getUsersViewers($data['id_usr']));
+        die;*/
+        
+        $group_model = new Default_Model_UserHasGroup();
+        $usergroups = $group_model->getGroupsByUserId($id);
+
+        $this->view->usergroups = $usergroups;
     }
     
     /**
@@ -614,7 +716,7 @@ class AccountController extends Oibs_Controller_CustomController
         if ($this->_request->isPost()) {
         
             $formData = $this->_request->getPost();
-
+            
             // If form is valid, handle database insertions 
             // Else form population (automatic)
             if ($form->isValid($formData)) {
@@ -700,6 +802,9 @@ class AccountController extends Oibs_Controller_CustomController
                         'account-login-not-successful'
                     );
                 }      
+            } else {
+                $formData['captcha_text'] = '';
+                $form->populate($formData);
             }
         }
     }
@@ -915,14 +1020,15 @@ class AccountController extends Oibs_Controller_CustomController
 			// get user data
 			$userInfos = new Default_Model_UserProfiles();
 			$settingsData = $userInfos->getUserInfoById($id);
-			//var_dump($settingsData);	
 
             // get user email and push to settingsData
             $userModel = new Default_Model_User($id);
             $email = $userModel->getUserEmail($id);
             
+            $settingsData['gravatar'] = $userModel->getGravatarStatus($id);
             $settingsData['email'] = $email;
             $settingsData['confirm_email'] = $email;
+            $settingsData['username'] = $identity->username;
             
             // Get users email notifications and push to settingsdata in correct form
             $notificationsModel = new Default_Model_Notifications(); 
@@ -934,6 +1040,7 @@ class AccountController extends Oibs_Controller_CustomController
             
             // populate form
 			if(isset($settingsData)) {
+                //echo '<pre>'; var_dump($settingsData);
 				$form->populate($settingsData);
 			}
 			
@@ -942,40 +1049,37 @@ class AccountController extends Oibs_Controller_CustomController
 			if($this->_request->isPost()) {
        
                 // get form data
-				$formData = $this->_request->getPost();
+				$formdata = $this->_request->getPost();
                 
-				if($form->isValid($formData)) {
+				if($form->isValid($formdata)) {
                     // if form is valid
-					//$auth = Zend_Auth::getInstance();
-					
-					// If user is logged in -- double check? why? -joel
-					//if ($auth->hasIdentity()) {
-						// Updates checked notifications  
-					
-						$notificationsModel->setUserNotifications($id, $formData['notifications']);						
-		
-						$userProfile = new Default_Model_UserProfiles();
-                        $userProfile->setProfileData($id, $formData); 
+                    // Updates checked notifications
 
-						$user = new Default_Model_User($id);
-						
-						// Updates email
-						if(strlen($formData['email']) != 0) {
-							$user->changeUserEmail($id, $formData['email']);
-						}
+                    //echo "<pre>"; var_dump($formdata);
+                    $notificationsModel->setUserNotifications($id, $formdata['notifications']);
 
-						// Updates the password
-						if(strlen($formData['password']) != 0) {
-							$user->changeUserPassword($id, $formData['password']);
-						}
-						
-                        // Redirects the user to a page that shows the update complete
-                        $redirect = $this->_urlHelper->url(array('controller' => 'account', 
-                                                                 'action' => 'settings', 
-                                                                 'language' => $this->view->language), 
-                                                           'lang_default', true);
-						$this->flash('Information has been changed.', $redirect);
-					//}
+                    $userProfile = new Default_Model_UserProfiles();
+                    $userProfile->setProfileData($id, $formdata);
+
+                    $user = new Default_Model_User($id);
+
+                    // Updates email
+                    if(strlen($formdata['email']) != 0) {
+                        $user->changeUserEmail($id, $formdata['email']);
+                    }
+
+                    // Updates the password
+                    if(strlen($formdata['password']) != 0) {
+                        $user->changeUserPassword($id, $formdata['password']);
+                    }
+
+                    // Redirects the user to a user page
+                    $redirect = $this->_urlHelper->url(array('controller' => 'account',
+                                                             'action' => 'view',
+                                                             'user' => $identity->username,
+                                                             'language' => $this->view->language),
+                                                       	     'lang_default', true);
+                    $this->_redirect($redirect);
 				} else {
                     // Formdata is not valid, do nothing -- here for possible debugging
 					// echo $form->getErrors();
@@ -1027,45 +1131,57 @@ class AccountController extends Oibs_Controller_CustomController
         // Get page nummber and items per page
         $page = isset($params['page']) ? $params['page'] : 1;
         $count = isset($params['count']) ? $params['count'] : 10;
+        $order = isset($params['order']) ? $params['order'] : null;
+        $list = isset($params['list']) ? $params['list'] : null;
+        
+        if($list != "asc" && $list != "desc") $list = null;
         
         // Filter form data
         $formData['username'] = isset($params['username']) ? $params['username'] : '';
         $formData['city'] = isset($params['city']) ? $params['city'] : '';
-        //$formData['country'] = isset($params['country']) ? $params['country'] : 0;    
-        $formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
-        $formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;
+        $formData['country'] = isset($params['country']) ? $params['country'] : 0;
+        $formData['group'] = isset($params['group']) ? $params['group'] : '';
+        $formData['exactg'] = isset($params['exactg']) ? $params['exactg'] : 0;        
+        //$formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
+        //$formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;       
         
-        // Get country listing
-        $userCountry = new Default_Model_UserCountry();
-        $formData['countryList'] = $userCountry->getCountryList();
+        $userLocations = $this->getAllCitiesAndCountries();
+        $userCities = json_encode($userLocations['cities']);
+        $userCountries = json_encode($userLocations['countries']);
+
+        $formData['countries'][] = $this->view->translate('userlist-filter-country-all');
+        foreach($userLocations['countries'] as $country) {
+        	$formData['countries'][$country['countryIso']] = $country['name'];
+        }        
         
-        // Reorder country listing and add all countries option
-        $temp[0] = $this->view->translate('userlist-filter-country-all');
-        
-        foreach($formData['countryList'] as $k => $v) {
-            $temp[$v['id_ctr']] = $v['name_ctr'];
-        }
-        
-        $formData['countryList'] = $temp;
-        
-        //Set array patterns
         $pat_sql = array("%","_");
         $pat_def = array("*","?");
-        
+
         //Replace * and ? characters  
         $formData['username'] = str_replace($pat_def,$pat_sql,$formData['username']);
         $formData['city'] = str_replace($pat_def,$pat_sql,$formData['city']);
         
+        $listSize = 1;
         // Get user listing
         $user = new Default_Model_User();
-        $userListing = $user->getUserListing($formData, $page, $count);
+        $userListing = $user->getUserListing($formData, $page, $count, $order, $list, $listSize);
+
+        $userContents = array();
+        foreach($userListing as $user) {
+        	$contentsArray = $this->getUserContents($user['id_usr'],$user['contents'],3);
+        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
+        		$userContents[$user['id_usr']] = array();
+        	else $userContents[$user['id_usr']] = $contentsArray;
+        }
         
-        // Get total content count
-        $userCount = $user->getUserCountBySearch($formData);
+        $userIdList = array();
+        foreach($userListing as $u) {
+        	$userIdList[] = $u['id_usr']; 
+        }
         
         // Calculate total page count
-        $pageCount = ceil($userCount / $count);
-                
+        $pageCount = ceil($listSize / $count);
+                        
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
         
@@ -1076,9 +1192,8 @@ class AccountController extends Oibs_Controller_CustomController
           
         $userSearch->setAction($url)
                    ->setMethod('get');
-        
+                           
         $this->view->userSearch = $userSearch;
-        
         // Custom pagination to fix memory error on large amount of data
         $paginator = new Zend_View();
         $paginator->setScriptPath('../application/views/scripts');
@@ -1086,38 +1201,59 @@ class AccountController extends Oibs_Controller_CustomController
         $paginator->currentPage = $page;
         $paginator->pagesInRange = 10;
         
-        /*
-        if (!empty($userListing)) {
-            // Content pagination
-            $paginator = Zend_Paginator::factory($userListing);
-            
-            // Set items per page
-            $paginator->setItemCountPerPage($count);
-            
-            // Get items by page
-            $paginator->getItemsByPage($page);
-            
-            // Set current page number
-            $paginator->setCurrentPageNumber($page);
-            
-            Zend_Paginator::setDefaultScrollingStyle('Sliding');
-            
-            $view = new Zend_View();
-            $paginator->setView($view);
-            
-            // Set paginator for view
-            $this->view->userListPaginator = $paginator;	
-        } // end if
-        */
-        
         // Set to view
         $this->view->userPaginator = $paginator;
         $this->view->userListData = $userListing;
+        $this->view->userList = $userIdList;
         $this->view->count = $count;
-        $this->view->userCount = $userCount;
+        $this->view->userCount = $listSize;
         $this->view->page = $page;
+        $this->view->cities = $userCities;
+        $this->view->countries = $userCountries;
+        $this->view->userContents = $userContents;
 
     } // end of userListingAction
+    
+    
+    /*
+     * getAllCitiesAndCountries
+     * 
+     */
+	private function getAllCitiesAndCountries() {
+
+		$cache = Zend_Registry::get('cache');
+
+		// Load user locations from cache
+		if(!$resultList = $cache->load('UserLocationsList')) {
+			$userModel = new Default_Model_User();
+			$locations = $userModel->getAllUsersLocations();
+			$cache->save($locations, 'UserLocationsList');
+
+		} else {
+			$locations = $resultList;
+		}
+		
+		$output = $locations;
+
+		return $output;
+	}
+	
+	private function getUserContents($userId, $contentIdList = array(),$amount = 3) {
+
+		if(is_array($contentIdList) && sizeof($contentIdList) > 0 && $amount > 0) {
+			// Get cache from registry
+			$cache = Zend_Registry::get('cache');
+
+			$userModel = new Default_Model_User();
+			$contentList = $userModel->getUserContentList($contentIdList,$amount);
+			$cache->save($contentIdList, 'UserContentsList_'.$userId);
+				
+			$output = $contentList;
+		}
+
+		return $output;
+	}
+    
     
     /**
     *   imagesAction
@@ -1366,6 +1502,7 @@ class AccountController extends Oibs_Controller_CustomController
               $model = new Default_Model_UserImages();
               $model->deleteImageById($id);
               
+              $this->resetCache();
               $url = $this->_urlHelper->url(array('controller' => 'account',
                                                   'action' => 'images',
                                                   'language' => $this->language),
@@ -1385,19 +1522,66 @@ class AccountController extends Oibs_Controller_CustomController
         $params = $this->getRequest()->getParams(); 
         $id = $params['img_id'];
         $auth = Zend_Auth::getInstance();
-		
+	
         // If user has identity
         if ($auth->hasIdentity()) {
-              $model = new Default_Model_UserImages();
-              $model->updateModDate($id);
+            $model = new Default_Model_UserImages();
+			$model->updateModDate($id);
+
               
-              $url = $this->_urlHelper->url(array('controller' => 'account',
+			$this->resetCache();
+            $url = $this->_urlHelper->url(array('controller' => 'account',
                                                   'action' => 'images',
                                                   'language' => $this->language),
                                             'lang_default', true);
-              $this->_redirect($url);
+            $this->_redirect($url);
         } else {
             $this->_redirect($this->_baseUrl);
         }
-    }    
+    }
+    
+    public function resetCache() {
+       // Purge cache from old picture
+        $cache = Zend_Registry::get('cache');
+        $auth = Zend_Auth::getInstance();
+		$userid = $auth->getIdentity()->user_id;
+        
+    	$cacheThumb = 'ProfileThumbs_' . $userid . '_thumbnail_usi';
+        $cacheImage = 'ProfileThumbs_' . $userid . '_image_usi';
+        $cache->remove($cacheThumb);
+        $cache->remove($cacheImage);
+    }
+    
+    private function getViewRows($id_usr) {
+
+    	$viewsModel = new Default_Model_ContentViews();
+    	$contentHasTagModel = new Default_Model_ContentHasTag();
+	
+    	// Get recent post data
+    	$recentposts_raw = $viewsModel->getUserViewedContents($id_usr);
+
+    	$recentposts = array();
+
+    	// Gather data for recent posts
+    	$i = 0;
+    	foreach ($recentposts_raw as $post) {
+	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
+
+	    	// Action helper for define is tag running number divisible by two
+		$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+
+	    	$this->gtranslate->setLangFrom($post['language_cnt']);
+	    	$translang = $this->gtranslate->getLangPair();
+
+	    	$recentposts[$i]['original'] = $post;
+	    	$recentposts[$i]['translated'] = $this->gtranslate->translateContent($post);
+	    	$recentposts[$i]['original']['tags'] = $tags;
+	    	$recentposts[$i]['translated']['tags'] = $tags;
+	    	$recentposts[$i]['original']['translang'] = $translang;
+	    	$recentposts[$i]['translated']['translang'] = $translang;
+	    	
+	    	$i++;
+    	}
+    	return $recentposts;
+    }
 } // end of class

@@ -3,6 +3,9 @@ $language = Zend_Layout::getMvcInstance()->getView()->language;
 $cmpurl = $this->url(array('cmpid' => $this->id_cmp,
                            'language' => $language),
                      'campaign_view', true);
+$grpurl = $this->url(array('groupid' => $this->id_grp_cmp,
+                           'language' => $language),
+                       'group_shortview', true);
 
 if ($this->end_time_cmp == '0000-00-00') {
     $date = 'Never';
@@ -12,21 +15,26 @@ if ($this->end_time_cmp == '0000-00-00') {
 }
 // TODO: muokkailua :D
 ?>
-<li class="deepblue">
+<li>
     <div>
         <p>
-            <a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a>
+            <?php if ((isset($this->group_name_grp)) && (isset($this->id_grp_cmp))): ?>
+                <a href="<?php echo $grpurl; ?>"><?php echo $this->group_name_grp; ?></a>:
+            <?php endif; ?>
+            <strong><a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a></strong>
         </p>
         <p>
             <?php echo $this->ingress_cmp; ?>
         </p>
         <span class="left">
-            <strong>Ending:</strong>
-            <?php echo $date;?>
+            <?php // <strong>Ending:</strong> ?>
+            <?php // echo $date;?>
         </span>
         <span class="right">
+            <!--
             <strong>Posts:</strong>
             1,000,000
+            -->
             <!-- Tähän kampanjaan liittyvien sisältöjen määrä -->
         </span>
         <div class="clear"></div>

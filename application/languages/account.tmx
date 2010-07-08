@@ -94,8 +94,8 @@
 		<tuv xml:lang="fi"><seg>Kenttä ei voi olla tyhjä!</seg></tuv>
 	</tu>
 	<tu tuid='account-login-forgot_password'>
-		<tuv xml:lang="en"><seg>I Forgot my password.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Unohdin salasanani.</seg></tuv>
+		<tuv xml:lang="en"><seg>I forgot my password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Unohdin salasanani</seg></tuv>
 	</tu>
     <tu tuid='account-login-not-successful'>
 		<tuv xml:lang="en"><seg>Wrong username and/or password!</seg></tuv>
@@ -445,12 +445,34 @@
 	</tu>	
 	
 	<tu tuid='account-userlist-search-instructions'>
-		<tuv xml:lang="en"><seg>You can use % or * as a wildcard in the search fields and _ or ? as one character match. Search uses wildcards automatically in the both ends of the search word.</seg></tuv>
+		<tuv xml:lang="en"><seg><![CDATA[
+		<span><strong>Guidelines to extend your search</strong></span><br>
+		<p>You can substitute search term characters with any other characters by following these guidelines:</p>
+		<p>Use % or * to replace multiple character,<br>
+		   Use _ or ? to replace single character. </p>
+		<p><strong>Examples:</strong><br> *burg will result Saint Petersburg, Hamburg, etc.<br> *b?rg  will result the same results as above, but it also includes cities like björneborg etc.</p>
+		]]></seg></tuv>
 		<tuv xml:lang="fi"><seg>Voit käyttää haussa % tai * jokerimerkkinä ja _ tai ? merkkiä yhden merkin korvausmerkkinä. Haku käyttää automaattisesti jokerimerkkejä tekstin molemmin puolin.</seg></tuv>
 	</tu>
 	<tu tuid='account-userlist-user-content-added'>
 		<tuv xml:lang="en"><seg>User has added %s content.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjä on lisännyt %s sisältöä.</seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-latest-contents'>
+		<tuv xml:lang="en"><seg>Users latest contents: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjän uusimmat sisällöt: </seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-has-no-latest-content'>
+		<tuv xml:lang="en"><seg>User contents have not been rated. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjällä ei ole arvosteltuja sisältöjä: </seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-ratings-ratio'>
+		<tuv xml:lang="en"><seg>Ratings ratio: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Arvostelujen suhde: </seg></tuv>
+	</tu>
+	<tu tuid='account-userlist-user-ratings-average'>
+		<tuv xml:lang="en"><seg>Ratings avg.: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Arvostelujen keskiarvo: </seg></tuv>
 	</tu>
 	<tu tuid='account-userlist-user-joined'>
 		<tuv xml:lang="en"><seg>Joined: </seg></tuv>
@@ -497,8 +519,8 @@
 		<tuv xml:lang="fi"><seg>Kaupunki</seg></tuv>
 	</tu>
 	<tu tuid='userlist-filter-submit'>
-		<tuv xml:lang="en"><seg>Filter</seg></tuv>
-		<tuv xml:lang="fi"><seg>Suodata</seg></tuv>
+		<tuv xml:lang="en"><seg>Search</seg></tuv>
+		<tuv xml:lang="fi"><seg>Etsi</seg></tuv>
 	</tu>
 	<tu tuid='account-login-via-openid'>
 		<tuv xml:lang="en"><seg>Login via OpenID</seg></tuv>

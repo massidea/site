@@ -98,63 +98,22 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	{
 		switch ($order) {
 			case 'author':
-				$order = 'usr.login_name_usr';
+				$order = 'login_name_usr';
 				break;
 			case 'header':
-				$order = 'cnt.title_cnt';
+				$order = 'title_cnt';
 				break;
 		 	case 'views':
 				$order = 'viewCount ASC';
 		 		break;
 			default:
-				$order = 'cnt.created_cnt DESC';
+				$order = 'created_cnt DESC';
 		}
 
-		/*
-		 $industry = 1;
-		 if ($ind > 0) {
-		 $industry = $this->_db->quoteInto('chi.id_ind = ?', $ind);
-		 }
-		 */
-
-		// Needs more optimization
-		$select = $this->_db->select()->from(array('cty' => 'content_types_cty'),
-		array('cty.id_cty', 'cty.key_cty'))
-		->join(array('cnt' => 'contents_cnt'),
-                                            'cnt.id_cty_cnt = cty.id_cty',
-		array('cnt.id_cnt',
-                                                  'cnt.title_cnt',
-                                                  'cnt.lead_cnt',
-                                                  'cnt.created_cnt',
-                                                  'cnt.language_cnt'))
-		->joinLeft(array('chu' => 'cnt_has_usr'),
-                                            'chu.id_cnt = cnt.id_cnt',
-		array())
-		->joinLeft(array('usr' => 'users_usr'),
-                                            'usr.id_usr = chu.id_usr',
-		array('usr.id_usr',
-                                                  'usr.login_name_usr'))
-		/*
-		 ->joinLeft(array('chi' => 'cnt_has_ind'),
-		 'chi.id_cnt = cnt.id_cnt',
-		 array())
-
-		 ->joinLeft(array('vws' => 'cnt_views_vws'),
-		 'vws.id_cnt_vws = cnt.id_cnt',
-		 array('viewCount' => 'COUNT(vws.id_usr_vws)'))
-
-		 ->joinLeft(array('ind' => 'industries_ind'),
-		 'ind.id_ind = chi.id_ind',
-		 array())*/
-		->group('cnt.id_cnt')
-		->where('cnt.published_cnt = 1')
-		//->where('cnt.language_cnt = ?', $lang)
-		->order($order);
-
-		if ($cty != 'all' && $cty != 'All') {
-			$select->where('cty.key_cty = ?', $cty);
-		}
-
+		$select = $this->select()->from($this, "id_cnt")
+								 ->where('published_cnt = 1')
+								 ->order($order);
+			
 		if ($count > 0){
 			$select->limitPage($page, $count);
 		} else {
@@ -162,8 +121,59 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		}
 
 		// Content data
+		//$data = $this->_db->fetchAll($select);
+		$ids = $this->fetchAll($select);
+		$data = $this->getContentRows($ids->toArray());
+		return $data;
+	}
+	
+	/* getcontentRows
+	 * 
+	 * Function to get data for content_row partial from given id parameters
+	 * 
+	 *  @param ids		array	array of arrays with content_id in it
+	 *  @param id_cnt	string	what is the key of id_cnt in the ids array
+	 *  @param sort		bool	sorts the data according to given id array or not
+	 *  @return 		array	array of all data needed for content_row partial
+	 */
+	public function getContentRows($ids, $id_cnt = 'id_cnt', $sort = false) {
+		if (empty($ids)) {
+			return array();
+		}
+		$select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
+																	"title_cnt",
+																	"lead_cnt",
+																	"language_cnt"))
+								->joinLeft(	"cnt_has_usr", 
+											"contents_cnt.id_cnt = cnt_has_usr.id_cnt",
+											array())
+								->join(	"users_usr", 
+											"users_usr.id_usr = cnt_has_usr.id_usr",
+											array("login_name_usr", "id_usr"))
+								->joinLeft( "content_types_cty",
+											"content_types_cty.id_cty = contents_cnt.id_cty_cnt",
+											array("id_cty", "key_cty"))
+								->joinLeft(	array("chu" => "cnt_has_usr"),
+											"cnt_has_usr.id_usr = chu.id_usr",
+											array("count" => "count(*)"))
+								->group('contents_cnt.id_cnt')
+								->where('contents_cnt.id_cnt IN (?)', $ids)
+								;
 		$data = $this->_db->fetchAll($select);
 
+		if ($sort) {
+			$idList = array();
+			foreach ($ids as $id) {
+				$idList[] = $id[$id_cnt];
+			}
+			$idList = array_flip($idList);
+			$sortedData = array();
+			foreach ($data as $row) {
+				$sortedData[$idList[$row['id_cnt']]] = $row;
+			}
+			ksort($sortedData);
+			return $sortedData;
+		}
 		return $data;
 	}
 
@@ -303,7 +313,85 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 }
 	 */
 
-	/**
+
+	/* getRelatedContents
+	 * 
+	 * gets all contents that share tags with specified content
+	 * 
+	 * @param 	int		id		content id
+	 * @param	int		limit	limit to N contents
+	 * @return	array			array of title_cnt, id_cnt,  viewCount, contentType 
+	 */
+    public function getRelatedContents($id, $limit = -1) {
+
+    	$tags = $this->getTagIdsByContentId($id);
+
+    	$linkedContents = array();
+    					
+   		$cntHasTagModel = new Default_Model_ContentHasTag();
+    	$select = $cntHasTagModel->select()
+    							 ->from('cnt_has_tag', array('id_cnt'))
+    							 ->where('id_tag IN (?)', $tags)
+    							 ->where('id_cnt != ?', $id);
+    	if($limit != -1)  $select->limit($limit);
+   		
+   		$contents = $cntHasTagModel->fetchAll($select)->toArray();
+    	$linkedContents = $this->find($contents);
+ 	
+    	$viewsModel = new Default_Model_ContentViews();
+    	$rows = array();
+    	
+    	foreach ($linkedContents as $row) {
+    		$tempRow = array();
+    		$tempRow['title_cnt']   = $row->title_cnt;
+    		$tempRow['id_cnt']      = $row->id_cnt;
+    		$tempRow['language_cnt']= $row->language_cnt;
+    		$tempRow['viewCount']   = $viewsModel->getViewsByContentId($row->id_cnt);
+    		$tempRow['contentType'] = $row->findDependentRowset('Default_Model_ContentTypes', 'ContentType')->current()->key_cty;
+    		array_push($rows, $tempRow);
+    	}
+
+    	return $rows;
+    }
+    
+    /* getTagNamesByContentId
+     * gets tag names by content id 
+     * 
+     * @param			id_cnt		content id
+     * @return	array	(name_tag, name_tag, ...) 
+     */
+    public function getTagNamesByContentId($id_cnt) {
+
+    	$content = $this->find($id_cnt)->current();
+    	$contentTagIds = $content->findDependentRowset('Default_Model_ContentHasTag', 'TagContent');
+    	$tagsArray = array();
+    	foreach ($contentTagIds as $tagId) {
+    		$tag = $tagId->findDependentRowset('Default_Model_Tags', 'TagTag')->current();
+    		array_push($tagsArray, $tag->name_tag);
+	    }
+	    return $tagsArray;
+    }
+    
+    /*getTagIdsByContentId
+     * 
+     * Gets all tag ids linked to content
+     * 
+     * @param			id_cnt		content id
+     * @return 	array	(id_tag, id_tag, ...) tag ids
+     */
+    public function getTagIdsByContentId($id_cnt) {
+
+    	$content = $this->find($id_cnt)->current();
+    	$contentTags = $content->findDependentRowset('Default_Model_ContentHasTag', 'TagContent');
+    	$ids = array();
+    	foreach ($contentTags as $tag) {
+    		array_push($ids, $tag->id_tag);
+    	}
+
+	    return $ids;
+    }
+
+    /**
 	 *   getByName
 	 *
 	 *   Gets content by name from database. This is used in search function.
@@ -359,7 +447,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		array())
 		->joinLeft(array('vws' => 'cnt_views_vws'),
                                                  'cnt.id_cnt = vws.id_cnt_vws',
-		array('viewCount' => 'COUNT(vws.id_usr_vws)'))
+		array('viewCount' => 'SUM(DISTINCT vws.views_vws)'))
 		->joinLeft(array('usr' => 'users_usr'),
                                              'chu.id_usr = usr.id_usr',
 		array('usr.id_usr', 'usr.login_name_usr'))
@@ -438,24 +526,24 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		// Set data to row
 		$content->id_cty_cnt = $data['content_type'];
-		$content->title_cnt = strip_tags($data['content_header']);
-		$content->lead_cnt = strip_tags($data['content_textlead']);
-		$content->body_cnt = strip_tags($data['content_text']);
+		$content->title_cnt = htmlspecialchars($data['content_header']);
+		$content->lead_cnt = htmlspecialchars($data['content_textlead']);
+		$content->body_cnt = htmlspecialchars($data['content_text']);
 
 		if(isset($data['content_research'])) {
-			$content->research_question_cnt = strip_tags($data['content_research']);
+			$content->research_question_cnt = htmlspecialchars($data['content_research']);
 		}
 
 		if(isset($data['content_opportunity'])) {
-			$content->opportunity_cnt = strip_tags($data['content_opportunity']);
+			$content->opportunity_cnt = htmlspecialchars($data['content_opportunity']);
 		}
 
 		if(isset($data['content_threat'])) {
-			$content->threat_cnt = strip_tags($data['content_threat']);
+			$content->threat_cnt = htmlspecialchars($data['content_threat']);
 		}
 
 		if(isset($data['content_solution'])) {
-			$content->solution_cnt = strip_tags($data['content_solution']);
+			$content->solution_cnt = htmlspecialchars($data['content_solution']);
 		}
 
 		$content->references_cnt = $data['content_references'];
@@ -674,10 +762,10 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		unset($content['views_cnt']);
 		unset($content['created_cnt']);
 
-		$content['title_cnt'] = strip_tags($data['content_header']);
-		$content['lead_cnt'] = strip_tags($data['content_textlead']);
+		$content['title_cnt'] = htmlspecialchars($data['content_header']);
+		$content['lead_cnt'] = htmlspecialchars($data['content_textlead']);
 		$content['language_cnt'] = $data['content_language'];
-		$content['body_cnt'] = strip_tags($data['content_text']);
+		$content['body_cnt'] = htmlspecialchars($data['content_text']);
 
 		if(!isset($data['content_research'])) {
 			$data['content_research'] = "";
@@ -695,13 +783,14 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			$data['content_solution'] = "";
 		}
 
-		$content['research_question_cnt'] = strip_tags($data['content_research']);
-		$content['opportunity_cnt'] = strip_tags($data['content_opportunity']);
-		$content['threat_cnt'] = strip_tags($data['content_threat']);
-		$content['solution_cnt'] = strip_tags($data['content_solution']);
-		$content['references_cnt'] = strip_tags($data['content_references']);
-		//$content['published_cnt'] = $data['publish']; //it defaults to 0 so let it be 1 if data is already published?
+		$content['research_question_cnt'] = htmlspecialchars($data['content_research']);
+		$content['opportunity_cnt'] = htmlspecialchars($data['content_opportunity']);
+		$content['threat_cnt'] = htmlspecialchars($data['content_threat']);
+		$content['solution_cnt'] = htmlspecialchars($data['content_solution']);
+		$content['references_cnt'] = htmlspecialchars($data['content_references']);
 		$content['modified_cnt'] = new Zend_Db_Expr('NOW()');
+		if ($data['publish'] == 1) 
+			$content['published_cnt'] = 1;
 
 		$where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
 
@@ -860,6 +949,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		 if($_FILES['content_file_upload']['size'] != 0) {
 		 $files = new Default_Model_Files();
 		 $files->newFile($content->id_cnt, $auth->getIdentity()->user_id);
+		 }
 		 */
 		// Check if user has given campaigns
 		if(!empty($data['content_campaigns'])) {
@@ -1007,9 +1097,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		$content = new Default_Model_Content();
 
-		$where = $this->getAdapter()->quoteInto('id_cnt = ?', (int)$id_cnt);
-
-		if($this->delete($where)) {
+		if($this->delete("id_cnt = ".$id_cnt)) {
 			$return = true;
 		}
 
@@ -1396,6 +1484,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		return $result;
 	}
 	
+
 	/**
 	 * getMostViewedType
 	 *
@@ -1469,8 +1558,32 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		}
 
 		// Content data
-		$data = $this->_db->fetchAll($select);
+		$data = $this->_db->fetchAll($select);	
 
 		return $data;
 	}
+	
+	
+	public function getRecentByLangAndType($lang, $type, $limit=10) {
+		$order = 'contents_cnt.created_cnt DESC';
+
+		$select = $this->select()
+					->from($this, array("*"))
+					->join('content_types_cty', 'contents_cnt.id_cty_cnt = content_types_cty.id_cty', array())
+					->where('published_cnt = 1')
+					//->where('language_cnt = ?', $lang)
+					->order($order)
+					->limit($limit);
+					
+		if($type != "all") {
+			$select->where('key_cty = ?', $type);
+		}
+		
+		// Content data
+		$data = $this->_db->fetchAll($select);
+		
+		return $data;
+	}
+
 } // end of class
+

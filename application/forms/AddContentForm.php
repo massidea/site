@@ -87,6 +87,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                                         'content-add-field-too-long')))
                                      )
                                )
+		->setDescription($translate->_("content-add-headline-help-text"))
                 ->setLabel($translate->_("content-add-header"))
 				->setDecorators(array('FormElementDecorator'));
 				
@@ -109,7 +110,8 @@ class Default_Form_AddContentForm extends Zend_Form
                                                         array('stringLengthTooLong' => 
                                                             'content-add-field-too-long')
                                                    )
-                                             )
+                                             ),
+                                        array('Regex', true, array('/^[\\p{L}0-9, ]*$/'))
                                      )
                                )
                 ->setLabel($translate->_("content-add-keywords"))
@@ -121,6 +123,13 @@ class Default_Form_AddContentForm extends Zend_Form
 		$content_type->setValue($data['content_type'])
                      ->setDecorators(array('FormHiddenElementDecorator'));
         
+		// Used for track button clicks
+        $hidden_content_publish = new Zend_Form_Element_Hidden('content_publish');
+		$hidden_content_publish->setDecorators(array('FormHiddenElementDecorator'));
+		
+		$hidden_content_save = new Zend_Form_Element_Hidden('content_save');
+		$hidden_content_save->setDecorators(array('FormHiddenElementDecorator'));
+		
         // Related content, Hidden
 		$content_relatesto_id = new Zend_Form_Element_Hidden('content_relatesto_id');
 		$content_relatesto_id->setValue($data['content_relatesto_id'])
@@ -173,17 +182,10 @@ class Default_Form_AddContentForm extends Zend_Form
         
         // Related companies, Input
 		$related_companies = new Zend_Form_Element_Text('content_related_companies');
-		$related_companies->setRequired(true)
-                ->addValidators(array(array('NotEmpty', 
-                                            true, 
-                                            array('messages' => 
-                                                array('isEmpty' => 
-                                                    'content-add-field-empty')
-                                                 )
-                                           ),
-                                        array('StringLength', 
+		$related_companies->setRequired(false)
+                ->addValidators(array(array('StringLength', 
                                               true, 
-                                              array(1, 
+                                              array(0, 
                                                     120,
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
@@ -194,7 +196,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                )
                 ->setLabel($translate->_("content-add-related_companies"))
                 ->setDescription($translate->_("content-add-related_companies-help-text"))
-				->setDecorators(array('FormElementDecorator')); 
+				->setDecorators(array('FormOptionalElementDecorator')); 
         
         // Problem research question, Input
 		$research = new Zend_Form_Element_Text('content_research');
@@ -371,21 +373,23 @@ class Default_Form_AddContentForm extends Zend_Form
                 ->setMultiOptions($data['InnovationTypes']);
                 
         */
-        
-        // Form buttons
-        
-        $publish = new Zend_Form_Element_Submit('content_publish');
+
+	    // Form buttons
+        $publish = new Zend_Form_Element_Button('content_publish_button');
         $publish->setLabel($translate->_("content-add-publish"))
-                ->removeDecorator('DtDdWrapper');
+                ->removeDecorator('DtDdWrapper')
+                ->setAttrib('class', 'content_manage_button');
         
-        $save = new Zend_Form_Element_Submit('content_save');
+        $save = new Zend_Form_Element_Button('content_save_button');
         $save->setLabel($translate->_("content-add-save"))
-             ->removeDecorator('DtDdWrapper');
+                ->removeDecorator('DtDdWrapper')
+                ->setAttrib('class', 'content_manage_button');
         
-        $preview = new Zend_Form_Element_Submit('preview');
+        $preview = new Zend_Form_Element_Button('content_preview_button');
         $preview->setLabel($translate->_("content-add-preview"))
-                ->removeDecorator('DtDdWrapper');
-                //->setAttrib('onclick',"populatePreview(); previewRoll('open')");
+                ->removeDecorator('DtDdWrapper')
+                ->setAttrib('class', 'content_manage_button')
+                ->setAttrib('onclick', 'generatePreview();');
         
         // Set custom form layout
         $this->setDecorators(array(array('ViewScript', array(
@@ -409,6 +413,8 @@ class Default_Form_AddContentForm extends Zend_Form
             //$division,
             //$group,
             //$class,
+            $hidden_content_publish,
+            $hidden_content_save,
             $publish,
             $save,
             $preview

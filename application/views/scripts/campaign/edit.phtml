@@ -1,0 +1,55 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/CheckGacForm.js'); ?>
+
+<?php $this->headScript()->captureStart(); ?>
+// Definitions for input boxes ([0] = minimum, [1] = maximum, [2] = required (1 true/0 false)
+var inputDefinitions = {
+    'campaign_name':    [1,  140, 1],
+    'campaign_ingress': [1,  320, 1],
+    'campaign_desc':    [1,  4000, 1]
+};
+<?php $this->headScript()->captureEnd(); ?>
+
+<?php $this->headScript()->captureStart(); ?>
+$(function() {
+    $("#campaign_start").datepicker();
+    $("#campaign_end").datepicker();
+});
+<?php $this->headScript()->captureEnd(); ?>
+
+<div id="add-content-page" style="float:left; width:500px;">
+    <h2>Edit campaign <?php echo $this->cmpName; ?></h2>
+    <p>To collect others' opinions, launch a campaign that combines
+    individual contents as an easy-to-navigate unit.</p>
+    <div id="add-content-form">
+        <?php echo $this->form; ?>
+    </div>
+</div>
+
+<div id="sidebar" style="margin-left:20px; margin-right:0;">
+    <div class="box">
+        <h4>How to create a campaign?</h4>
+        <div class="box-content">
+            <p><strong>Name</strong><br />
+            A good name grabs the reader's attention and summarizes the meaning
+            of the campaign.</p>
+
+            <p><strong>Lead paragraph</strong><br />
+            Lead paragraph sums up the whole meaning of your campaign.</p>
+
+            <p><strong>Body</strong><br />
+            The further body content is elaborating the headline and lead
+            paragraph, and justifies in more detail, why you should join the
+            campaign.</p>
+
+            <!--
+            <p><strong>Start and end date</strong><br />
+            Indicates the starting and ending time of the campaign.</p>
+
+            <p>If a campaign has ended, users cannot add new posts.</p>
+            -->
+
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

@@ -4,7 +4,13 @@
 
 function changeBack(color)
 {
-	document.body.style.background = color;
+	// change background color
+	$('body').ready(function () {
+		 colors = { 'problem': '#d21034',
+				 	'idea': '#4b9b07',
+					'finfo': '#ffc726'};
+		$('body').css('background-color', colors[color]);
+	});	
 }
 
 function focusMenu(target, color, baseurl)

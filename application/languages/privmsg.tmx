@@ -25,6 +25,14 @@
 		<tuv xml:lang="en"><seg>From:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Keneltä:</seg></tuv>
 	</tu>
+	<tu tuid='privmsg-delete'>
+		<tuv xml:lang="en"><seg>Delete</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista</seg></tuv>
+	</tu>
+	<tu tuid='privmsg-delete-selected'>
+		<tuv xml:lang="en"><seg>Delete selected</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poista valitut</seg></tuv>
+	</tu>
     <tu tuid='privmsg-header'>
 		<tuv xml:lang="en"><seg>Header:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Otsikko:</seg></tuv>
@@ -44,6 +52,10 @@
     <tu tuid='privmsg-send-invalid-receiver'>
 		<tuv xml:lang="en"><seg>Given private message receiver doesn't exist!</seg></tuv>
 		<tuv xml:lang="fi"><seg>Yksityisviestin vastaanottajaa ei ole olemassa!</seg></tuv>
+	</tu>
+    <tu tuid='privmsg-send-own-account'>
+		<tuv xml:lang="en"><seg>Can't send private message to your self!</seg></tuv>
+		<tuv xml:lang="fi"><seg>Et voi lähettää itselle viestiä!</seg></tuv>
 	</tu>
     <tu tuid='privmsg-send-not-logged'>
 		<tuv xml:lang="en"><seg>You must login in order to send private messages!</seg></tuv>
@@ -95,5 +107,12 @@
                 voit antaa vastaanottavalle käyttäjälle myös sähköpostiosoitteesi.
             </seg>
         </tuv>
+	</tu>
+	<tu tuid='message-sent-too-fast'>
+		<tuv xml:lang="en">
+			<seg>
+				Trying to send message too fast
+			</seg>
+		</tuv>
 	</tu>
 </body>

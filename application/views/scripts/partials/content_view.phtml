@@ -1,0 +1,460 @@
+<?php 
+
+$url_register = $this->url(array('controller' => 'account',
+                                 'action' => 'register',
+                                 'language' => $this->language),
+                                 'lang_default', true);
+
+$url_login = $this->url(array('controller' => 'account',
+                                 'action' => 'login',
+                                 'language' => $this->language),
+                                 'lang_default', true); 
+
+//some pre-generation stuff..
+$authenticated = $this->authenticated;
+
+$pi = 0;    // keeps track of problem cells
+$fi = 0;    // keeps track of finfo cells
+$ii = 0;    // keeps track of idea cells
+
+// roll children_siblings to separate arrays
+if (isset($this->children_siblings[0])) {
+    foreach ($this->children_siblings as $children_sibling) {
+        if ($children_sibling['name_cty'] == 'Problems') {
+            $linked_problems[$pi] = $children_sibling;
+            $pi++;
+        } else if ($children_sibling['name_cty'] == 'Ideas') {
+            $linked_ideas[$ii] = $children_sibling;
+            $ii++;
+        } else if ($children_sibling['name_cty'] == 'Future info') {
+            $linked_futures[$fi] = $children_sibling;
+            $fi++;
+        }
+    }
+}
+
+
+// roll parent_siblings to separate arrays
+if (isset($this->parent_siblings[0])) {
+    foreach ($this->parent_siblings as $parent_sibling) {
+        if ($parent_sibling['name_cty'] == 'Problems') {
+            $linked_problems[$pi] = $parent_sibling;
+            $pi++;
+        } else if ($parent_sibling['name_cty'] == 'Ideas') {
+            $linked_ideas[$ii] = $parent_sibling;
+            $ii++;
+        } else if ($parent_sibling['name_cty'] == 'Future info') {
+            $linked_futures[$fi] = $parent_sibling;
+            $fi++;
+        }
+    }
+}
+?>
+<div class="user_content_row" style="float: left;">
+    <div style="padding: 10px;">
+        <div class="view_content_left_header">
+            <div class="view_content_left_header_top">
+                <div style="float:left; ">
+                	<?php echo $this->translate('content-view-added') . date("d.m.Y H:i", strtotime($this->contentData['created_cnt'])); ?>
+                </div>
+                
+                <!-- AddThis Button BEGIN -->
+                <div id="view_content_left_header_top_add_this">
+                    <a class="addthis_button_expanded" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=xa-4b12c6f671039279">
+                        <img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" 
+                            width="125" height="16" alt="Bookmark and Share" style="border:0"/>
+                    </a>
+                    <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4b12c6f671039279"></script>
+                </div>
+                <!-- AddThis Button END -->
+               
+				<?php if ($this->user_can_rate): // also used to enable/disable flagging ?>
+				<div style="float:right;">
+					<a href="#" id="flagContentLink" onclick="javascript:flagContent(); return false;">
+						<?php echo $this->translate('content-view-flagcontent'); ?>
+					</a>
+				</div>
+				<?php endif; ?>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="box_468_light">
+                <div style="width:100%; float: left; overflow:hidden;">
+                    <div style="float: left; padding-bottom: 3px;">
+                        <span style="font-weight: bold; color: #d21034;"><?php echo $this->translate('content-linked-challenges'); ?></span>
+                    </div>
+                    <?php if ($authenticated): ?>
+                    <div style="float: right;">
+                        <span style="font-size: 80%; color: black;">
+                            <?php echo $this->translate('content-box-add'); ?>
+                        </span>
+                        <span style="font-size: 80%">
+                            <a href="<?php echo $this->url(array('language' => $this->language,
+                                                                 'contenttype' => 'problem',
+                                                                 'relatestoid' => $this->contentData['id_cnt']),
+                                                                 'addcnttype', true); ?>">
+                                <?php echo $this->translate('content-box-add-new'); ?>
+                            </a>
+                             | 
+                            <a href="<?php echo $this->url(array('language' => $this->language,
+                                                                 'contenttype' => 'problem',
+                                                                 'relatestoid' => $this->contentData['id_cnt']),
+                                                                 'linkcontent', true); ?>">
+                                <?php echo $this->translate('content-box-link-existing'); ?>
+                            </a>
+                        </span>
+                    </div>
+                    <?php endif; ?>
+                </div><br clear="all" />
+                <div style="width:300px;">
+                    <?php if (isset($linked_problems)): ?>
+                        <?php foreach ($linked_problems as $problem): ?>
+                            <span style="font-weight: bold;">
+                                <a href=""><?php echo $problem['login_name_usr'] . ': '; ?></a>
+                            </span>
+                            <a href="<?php echo $this->url(array('content_id' => $problem['id_cnt'], 
+                                                                 'language' => $this->language), 
+                                                                 'content_shortview', true); ?>">
+                                <?php echo $problem['title_cnt']; ?>
+                            </a>
+                            <br />
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span><?php echo $this->translate('content-box-no-linked-challenges'); ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="box_468_medium">
+                <div style="width:100%; float: left; overflow:hidden;">
+                    <div style="float: left; padding-bottom: 3px;">
+                        <span style="font-weight: bold; color: #ffc726"><?php echo $this->translate('content-linked-visions'); ?></span>
+                    </div>
+                    <?php if ($authenticated): ?>
+                    <div style="float: right;">
+                        <span style="font-size: 80%; color: black;">
+                            <?php echo $this->translate('content-box-add'); ?>
+                        </span>
+                        <span style="font-size: 80%">
+                            <a href="<?php echo $this->url(array('language' => $this->language,
+                                                                 'contenttype' => 'finfo',
+                                                                 'relatestoid' => $this->contentData['id_cnt']),
+                                                                 'addcnttype', true); ?>">
+                                <?php echo $this->translate('content-box-add-new'); ?>
+                            </a>
+                             | 
+                            <a href="<?php echo $this->url(array('language' => $this->language,
+                                                                 'contenttype' => 'finfo',
+                                                                 'relatestoid' => $this->contentData['id_cnt']),
+                                                                 'linkcontent', true); ?>">
+                                <?php echo $this->translate('content-box-link-existing'); ?>
+                            </a>
+                        </span>
+                    </div>
+                    <?php endif; ?>
+                </div><br clear="all" />
+                <div style="width:300px;">
+                    <?php if (isset($linked_futures)): ?>
+                        <?php foreach ($linked_futures as $future): ?>
+                            <span style="font-weight: bold;">
+                                <a href=""><?php echo $future['login_name_usr'] . ': '; ?></a>
+                            </span>
+                            <a href="<?php echo $this->url(array('content_id' => $future['id_cnt'], 
+                                                                 'language' => $this->language), 
+                                                           'content_shortview', true); ?>">
+                                <?php echo $future['title_cnt']; ?>
+                            </a>
+                            <br />
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span><?php echo $this->translate('content-box-no-linked-visions'); ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="view_content_left_header_btm">
+                <div style="float:left;">
+                	<div id="content_view_content_info_container"></div>
+                </div>  
+                <!--  <div style="float:left; padding:5px;">
+                	<div id="content_view_favourite"></div>
+                </div>  -->                
+                <div style="float:right; padding:5px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
+                <div style="clear: both;">
+	                <?php if($this->contentData['language_cnt'] != $this->gtranslateLangPair['to']): ?>
+	                	<?php if($this->isTranslated): ?>
+		                	<?php echo $this->translate('content-view-translated-from') . "<strong>" .$this->languageName . "</strong>. "; ?>
+		                	<?php $notranslate = $this->url(array('notranslate' => '1')); ?>
+		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-not-translated-show-original'); ?></a>]
+		                <?php elseif(!$this->isTranslated): ?>
+		                	<?php echo $this->translate('content-view-not-translated') . "(<strong>" .$this->languageName . "</strong>). "; ?>
+		                	<?php $notranslate = $this->url(array('content_id' => $this->contentData['id_cnt'], 
+																  'language' => $this->language), 
+																  'content_shortview', true); ?>
+		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-translated-show-translated'); ?></a>]
+		                <?php endif; ?>
+	                <?php endif;?>
+                </div>
+            </div>
+        </div>
+        
+        <div class="view_content_left_main" id="view_content_left_main" style="clear:both; padding-top: 10px;">
+            <h3 style="padding: 0px; margin: 0px; font-weight: bold;"><?php echo stripslashes($this->contentData['title_cnt']); ?></h3>
+            <p style="font-style:italic; padding: 0px; margin: 0px;"><?php echo stripslashes($this->contentData['lead_cnt']); ?></p>
+            <div id="content_view_campaigns" style="padding-top:7px;">
+                <span class="content_view_bold">
+                	<a href="<?php echo $this->url(array('controller' => 'campaign',
+                                                         'action' => 'list',
+                                                         'language' => $this->language),
+                                                         'lang_default', true); ?>">
+                		<?php echo $this->translate('content-view-campaigns'); ?>
+                	</a>
+                </span>
+                <?php if (count($this->campaigns) == 0) : ?>
+                    <?php echo $this->translate('content-view-has-no-campaigns'); ?>
+                <?php else : ?>
+                    <?php $i = count($this->campaigns) - 1; ?>
+                    <?php foreach($this->campaigns as $campaign): ?>
+                        <a href="<?php echo $this->url(array('cmpid' => $campaign['id_cmp'],
+                                                             'language' => $this->language),
+                                                       'campaign_view', true); ?>">
+                            <?php echo stripslashes($campaign['name_cmp']); ?>
+                        </a>
+                        <?php echo $i-- > 0 ? ', ' : ''; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+            <div id="content_view_tags" style="padding-top:7px; padding-bottom:7px;">
+                <span class="content_view_bold">
+                	<a href="<?php echo $this->url(array('controller' => 'tag',
+                                                         'action' => 'index',
+                                                         'language' => $this->language), 
+                                                         'lang_default', true); ?>">
+                		<?php echo $this->translate('content-view-tags'); ?>
+                	</a>
+                </span>
+                <?php $i = count($this->tags) - 1; ?>
+                <?php foreach($this->tags as $tag): ?>
+                    <a href="<?php echo $this->url(array('controller' => 'tag', 
+                                                         'action' => 'view', 
+                                                         'id' => $tag['id_tag'], 
+                                                         'language' => $this->language), 
+                                                   		 'lang_default', true); ?>">
+                        <?php echo stripslashes($tag['name_tag']); ?>
+                    </a>
+                    <?php echo $i-- > 0 ? ', ' : ''; ?>
+                <?php endforeach; ?>	
+            </div>
+            <p><?php echo stripslashes(nl2br($this->contentData['body_cnt'])); ?></p>
+            
+            <?php if ($this->modified) : ?>
+            	<div class="content_view_content_modified">
+            		<p><?php echo $this->translate('content-modified')." ".$this->modified; ?></p>
+            	</div>
+            <?php endif; ?>
+            
+        </div>
+        
+        <?php if(!empty($this->contentData['references_cnt'])) : ?>
+        <div class="user_content_spacer">
+        	<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
+        </div>
+        <div class="content_view_references">
+        	<?php // Translation missing ?>
+        	<span>References: </span>
+        	<p><?php echo $this->contentData['references_cnt']; ?></p>
+        </div>
+        <?php endif;?>
+  
+        <div class="content_view_files">
+	        <?php if(!empty($this->files)) : ?>
+	        	<div class="user_content_spacer">
+	        		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
+	        	</div>
+	        	<div class="content_view_file_list">
+        		<span style="float: left;"><?php echo $this->translate('content-files').':'; ?>&nbsp;</span>
+	        		<?php $filecount = count($this->files); ?>
+	        		<?php $file_i = 0; ?>
+       				<?php foreach ($this->files as $id_fil => $filename): ?>
+       					<?php $file_i++; ?>
+	        			<a href="<?php echo $this->baseUrl('/en/file/view/'.$id_fil); ?>">
+	        				<?php echo $filename; ?>
+	        			</a>
+	        			<?php if($file_i < $filecount) echo ', '; ?>
+        			<?php endforeach;?>
+	        	</div>
+	        <?php endif;?>
+        </div>
+        
+		<!-- From now on, also ideas are allowed to link to ideas (check was removed) -->
+        <div class="user_content_spacer">
+        	<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
+        </div>
+  
+		<div class="content_view_core_content">
+            <?php if ($this->contentType == "problem"): ?>
+                <p>
+                	<span><?php echo $this->translate('content-add-research') . ':'?></span>
+                	<?php echo stripslashes($this->contentData['research_question_cnt']); ?>
+                </p>
+            <?php elseif($this->contentType == "idea"): ?>
+                <p>
+                	<span><?php echo $this->translate('content-add-solution') . ':'?></span>
+                	<?php echo stripslashes($this->contentData['solution_cnt']); ?>
+                </p>
+            <?php elseif($this->contentType == "finfo"): ?>
+                <p>
+                	<span><?php echo $this->translate('content-add-opportunity') . ':'?></span>
+                	<?php echo stripslashes($this->contentData['opportunity_cnt']); ?>
+                </p>
+                <p>
+                	<span><?php echo $this->translate('content-add-threat') . ':'?></span>
+                	<?php echo stripslashes($this->contentData['threat_cnt']); ?>
+				</p>
+			<?php endif; ?>
+		</div> 
+		<div class="view_content_left_contentlinks">
+			<p style="font-weight: bold; font-size:80%;">
+				<?php echo $this->translate('content-view-solve-'.$this->contentType);?>
+            	<a href="<?php echo $this->url(array('language' => $this->language,
+                                     				 'contenttype' => 'idea',
+                                     				 'relatestoid' => $this->contentData['id_cnt']),
+                               						 'linkcontent', true); ?>">
+					<img style="vertical-align:middle;" src="<?php echo $this->baseUrl('/images/button_add_existing_idea_'.$this->language); ?>.png" alt="" title="add new idea" />
+            	</a>
+            	<?php echo $this->translate('or');?>
+            	<a href="<?php echo $this->url(array('language' => $this->language,
+                                     				 'contenttype' => 'idea',
+                                     				 'relatestoid' => $this->contentData['id_cnt']),
+                               						 'addcnttype', true); ?>">
+					<img style="vertical-align:middle;" src="<?php echo $this->baseUrl('/images/button_add_new_idea_'.$this->language); ?>.png" alt="" title="add new idea" />
+				</a>
+			</p>
+		</div>
+        
+        <?php if (isset($this->children[0])): ?>
+        <div class="solutions_for_this_content">
+			<div class="box_468_medium">
+            	<span style="font-weight:bold;">
+            		<?php echo $this->translate('content-view-solutions-for'); ?>
+            	</span>
+            </div>
+            <div class="box_468_light">
+                <div class="child_row" style="clear:both; overflow: hidden;">
+                    <?php foreach ($this->children as $child): ?>
+                        <div style="clear:both;"></div>
+                        <div style="float:left">
+				            <img src="<?php echo $this->url(array('controller' => 'account',
+				                                                  'action' => 'profilethumb',
+				                                                  'id' => $child['id_usr'],
+				                                                  'language' => $this->language,
+				                                                  'thumb' => 'true'),
+				                                            	  'lang_default', true); ?>" 
+				                 alt="User image" class="profile_image_smallsize" />
+                        </div>
+                        <div class="solutions_child_row_content" style="float:left; padding-left: 10px;">
+                            <a href="#"><?php echo $child['login_name_usr'];?></a>
+                            <span style="font-weight:bold;">
+                            	<a href="<?php echo $this->url(array('content_id' => $child['id_cnt'], 
+                                                                 	 'language' => $this->language), 
+                                                           			 'content_shortview', true); ?>">
+                                	<?php echo $child['title_cnt']; ?>
+                            	</a>
+                            </span>
+                            <br />
+                            <span><?php echo $child['lead_cnt']; ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
+			<div class="user_content_spacer">
+        		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
+        	</div>
+        	<div class="user_content_edit">
+				<input type="button" value="Edit" onclick="location.href='<?php echo $this->baseUrl("/".$this->language."/content/edit/".$this->contentData['id_cnt']); ?>';" />
+			</div>
+		<?php endif; ?>
+        
+        <div class="view_content_comments">
+        	<?php if ($this->comments > 0): ?>
+	            <div id="content_view_comments">
+	                <div id="content_view_comments_header">
+	                    <h3><?php echo $this->translate('content-view-comments'); ?></h3>
+	                </div>
+		            <?php foreach($this->commentData as $comment): ?>		
+			            <div class="clear"></div>
+						<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_container" 
+			                class="content_view_comment_container_<?php echo $comment['level']; ?>">
+							<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_header" class="content_view_comment_header">
+								<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_username" class="content_view_comment_username">
+			                            <?php echo $comment['login_name_usr']; ?>
+			                    </div>
+			                    <div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_date" class="content_view_comment_date">
+			                        <?php echo date('(d M Y)', strtotime($comment['created_cmt'])); ?>
+			                    </div>
+			                    <div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_reply" class="content_view_comment_reply">
+			                    	<a id="flagSpamLink_<?php echo $comment['id_cmt']; ?>" href="#"
+			                    	   onclick="javascript:flagAsSpam('<?php echo $comment['id_cmt']; ?>');return false;">
+			                    		Spam
+			                    	</a> / 
+			                        <a href="#" onclick="javascript:replyTo('<?php echo $comment['id_cmt']; ?>', 
+			                                            '<?php echo $comment['login_name_usr']; ?>');return false;">
+			                            <?php echo $this->translate('content-view-comment-reply'); ?>
+			                        </a>
+			                    </div>
+			                </div>
+							<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>" class="content_view_comment">
+								<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_textbody" 
+			                         class="content_view_comment_textbody">
+			                    	<?php echo $this->BBCode->parse(stripslashes($comment['body_cmt'])); ?>
+			                    </div>
+			                    <div id="unmodified_<?php echo $comment['id_cmt']; ?>" style="display:none;">
+			                        <?php echo $comment['body_cmt']; ?>
+			                    </div>
+							</div>
+			            </div>
+					<?php endforeach; ?>
+					<?php if (false && $this->comments > $this->count): ?>
+		                <div id="content_view_comment_pagination">
+		                	<?php echo $this->commentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
+		                </div>
+					<?php endif;?>
+				</div>
+			<?php endif; ?>
+			<?php if($this->user_can_comment): ?>
+		        <div style="clear:both;"></div>
+				<div id="content_view_comment_form_container">
+					<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
+					<a href="#" id="cancel_reply_link" style="float: right; padding: 3px 0px 0px 0px; display: none;" onclick="javascript:cancelReply();return false;">
+						<?php echo $this->translate('content-view-comment-cancel'); ?>
+					</a>
+					<p id="replying_to" style="float: right; padding: 3px 20px 0px 0px; display: none;">Replying to [username]</p>
+					<?php echo $this->comment_form; ?>
+				</div>
+			<?php endif; ?>
+		</div>
+        <?php if (!$this->user_can_comment): ?>
+            <p style="margin: 0px; padding: 0px;">Would you like to comment?</p>
+            <p style="margin: 0px; padding: 0px;">
+            	<a href="<?php echo $url_login; ?>">Log in</a> or <a href="<?php echo $url_register; ?>">Sign up</a>
+            </p>
+        <?php endif; ?>
+        <?php if (isset($this->parents[0])) : ?>
+			<div class="success">
+				<h3><?php echo $this->translate('content-view-solution-to'); ?></h3>
+				<ul>
+					<?php foreach ($this->parents as $parent): ?>
+						<li>
+							<a href="<?php echo $this->url(array('content_id' => $parent['id_cnt'], 
+                                                                 'language' => $this->language), 
+                                                                 'content_shortview', true); ?>">
+								<?php echo $parent['title_cnt']; ?>
+							</a>
+							<br />
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		<?php endif; ?>
+	</div>
+</div>
