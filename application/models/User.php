@@ -533,8 +533,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	public function getUserListing(&$filter = null, $page = 1, $count = 10, $order = 'login', $list = 'DESC', &$listSize = 1)
     {
     	//For some odd reason this order and list default set has to be done here and wont work on ^...
-		if(!$order) $order = 'login';
-		if(!$list) $list = 'DESC';
+		if(!$order) $order = 'username';
+		if(!$list) $list = 'ASC';
 		
 		//Get full sorted and filtered userIdList
     	$userIdList = $this->sortAndFilterUsers(&$filter, $order, $list);
@@ -613,7 +613,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 			'contentInfo' => array('content' => 'COUNT(id_cnt)'),
 			'contentViews' => array('views' => 'COUNT(id_cnt_vws)'),
 			'contentPopularity' => array('popularity' => 'COUNT(id_usr_vws)'),
-			'contentRatings' => array('rating' => 'SUM(rating_crt)')
+			'contentRatings' => array('rating' => 'SUM(rating_crt)'),
+			'contentComments' => array('comments' => 'COUNT(id_cmt)')
 		);
 		
         $groupName = "";
@@ -656,6 +657,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         	$output = $this->sortUsersByRating($userIDList, $sort, $list);
         elseif($groupName == "contentPopularity")
         	$output = $this->sortUsersByPopularity($userIDList, $sort, $list);	
+        elseif($groupName == "contentComments")	
+        	$output = $this->sortUsersByComments($userIDList, $sort, $list);
         return $output;
         
     }
@@ -985,6 +988,30 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         
 		return $result;
     }
+    
+    /*
+     * sortUsersByComments
+     * 
+     * Sorts $userIdList by $sort
+     * 
+     * @param array $userIDList
+     * @param string $sort
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function sortUsersByComments($userIDList, $sort, $list) {
+
+    	$select = $this->_db->select()->from('comments_cmt',
+    									array('id_usr_cmt'))
+    							->where('id_usr_cmt IN (?)',$userIDList)
+    							->group('id_usr_cmt')
+    							->order($sort)
+    							;
+        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt'); 
+        $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        
+		return $result;
+    }    
     
     /*
      * sortUsersByPopularity

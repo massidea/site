@@ -1146,15 +1146,18 @@ class AccountController extends Oibs_Controller_CustomController
         //$formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;       
         
         if($list == "asc") $listName = "ascending";
-		else $listName = "descending";
+        elseif($list == "desc") $listName = "descending";
+		else $listName = "ascending";
+		
         $orderList = array(
 			"username" => "Users are now sorted in alphabetical $listName order by Usernames.",
-			"content" => "Users are now sorted in $listName order by the content amount they have published.",
-			"login" => "Users are now sorted in $listName order by their last login times.",
+        	"login" => "Users are now sorted in $listName order by their last login times.",
 			"joined" => "Users are now sorted in $listName order by their account creation time.",
+			"content" => "Users are now sorted in $listName order by the content amount they have published.",
 			"views" => "Users are now sorted in $listName order by the amount of unique contents that the users have viewed.",
 			"rating" => "Users are now sorted in $listName order by the sum of their contents positive and negative votes.",
-			"popularity" => "Users are now sorted in $listName order by the amount of views that unique users have viewed listed users unique contents."
+			"popularity" => "Users are now sorted in $listName order by the amount of views that unique users have viewed listed users unique contents.",
+        	"comments" => "Users are now sorted in $listName order by the amount of comments they have made.",
 		);
 		
         $userLocations = $this->getAllCitiesAndCountries();
@@ -1229,7 +1232,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->list = $listName;
         $this->view->page = $page;
         $this->view->order = $orderList;
-        $this->view->lastOrder = isset($order) ? $order : "login";
+        $this->view->lastOrder = isset($order) ? $order : "username";
         $this->view->cities = $userCities;
         $this->view->countries = $userCountries;
         $this->view->userContents = $userContents;
