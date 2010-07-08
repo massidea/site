@@ -50,12 +50,12 @@
 			<tuv xml:lang="fi"><seg>Haaste tagit</seg></tuv>
 	</tu>
 	<tu tuid='index-idea-tags'>
-			<tuv xml:lang="en"><seg>Idea tags</seg></tuv>
-			<tuv xml:lang="fi"><seg>Idea tagit</seg></tuv>
-		</tu>
-		<tu tuid='index-finfo-tags'>
-			<tuv xml:lang="en"><seg>Vision tags</seg></tuv>
-			<tuv xml:lang="fi"><seg>Visio tagit</seg></tuv>
+		<tuv xml:lang="en"><seg>Idea tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Idea tagit</seg></tuv>
+	</tu>
+	<tu tuid='index-finfo-tags'>
+		<tuv xml:lang="en"><seg>Vision tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Visio tagit</seg></tuv>
 	</tu>
 	<tu tuid='index-most-popular'>
 		<tuv xml:lang="en"><seg>Most popular</seg></tuv>
@@ -73,7 +73,7 @@
 		<tuv xml:lang="en"><seg>What is Massidea.org?</seg></tuv>
 		<tuv xml:lang="fi"><seg>Mikä on Massidea.org?</seg></tuv>
 	</tu>
-    <tu tuid='index-what-is-long'>
+    	<tu tuid='index-what-is-long'>
 		<tuv xml:lang="en"><seg>
 			<p>Massidea.org is an open innovation community for sharing challenges, ideas and visions.</p>
 			<p>It boosts individual and communal creativity by intelligently connectiong people and their insights.</p>
@@ -188,20 +188,20 @@
 	<tu tuid='index-privacy'>
 		<tuv xml:lang="en"><seg>Privacy</seg></tuv>
 		<tuv xml:lang="fi"><seg>Yksityisyys</seg></tuv>
-    </tu>
+    	</tu>
 	<tu tuid='index-funded'>
 		<tuv xml:lang="en"><seg>This project is funded by</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tätä projektia rahoittaa</seg></tuv>
-    </tu>
+    	</tu>
 	<tu tuid='index-coordinator'>
 		<tuv xml:lang="en"><seg>Project coordinator</seg></tuv>
 		<tuv xml:lang="fi"><seg>Projektin koordinaattori</seg></tuv>
-    </tu>
+    	</tu>
 	<tu tuid='index-group'>
 		<tuv xml:lang="en"><seg>Project group</seg></tuv>
 		<tuv xml:lang="fi"><seg>Projektiryhmä</seg></tuv>
-    </tu>
-    <tu tuid='index-frontpage-default-text-1'>
+    	</tu>
+    	<tu tuid='index-frontpage-default-text-1'>
         <tuv xml:lang="en"><seg>
             <h1>Welcome to the innovation community!</h1>
         	<p>

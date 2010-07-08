@@ -87,3 +87,669 @@ STACK TRACE:
 #2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
 #3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
 #4 {main}
+2010-07-08T10:14:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T10:35:42+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T10:35:46+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T10:40:14+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T10:40:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T10:40:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T10:40:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T10:42:02+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T10:42:03+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T10:42:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T10:42:05+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T10:42:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T11:49:56+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T11:49:57+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T11:53:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T11:53:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T11:59:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T11:59:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T11:59:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T11:59:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (no_profile_img_placeholder.gif). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:03:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:03:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (no_profile_img_placeholder.gif). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:26:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:26:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:31:50+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:32:21+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:32:23+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:32:28+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:32:32+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T12:33:03+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:33:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T12:47:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:47:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T12:47:51+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: content_id is not specified. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Router\Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 D:\xampp\www\site\library\Zend\View\Helper\Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 D:\xampp\www\site\library\Zend\View\Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 D:\xampp\www\site\application\views\scripts\partials\content_row_single.phtml(11): Zend_View->url(Array, 'content_shortvi...', true)
+#6 D:\xampp\www\site\library\Zend\View.php(108): include('D:\xampp\www\si...')
+#7 D:\xampp\www\site\library\Zend\View\Abstract.php(831): Zend_View->_run('D:\xampp\www\si...')
+#8 D:\xampp\www\site\library\Zend\View\Helper\Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 [internal function]: Zend_View_Helper_Partial->partial('partials/conten...', NULL)
+#10 D:\xampp\www\site\library\Zend\View\Abstract.php(340): call_user_func_array(Array, Array)
+#11 [internal function]: Zend_View_Abstract->__call('partial', Array)
+#12 D:\xampp\www\site\application\views\scripts\partials\content_row.phtml(2): Zend_View->partial('partials/conten...', NULL)
+#13 D:\xampp\www\site\library\Zend\View.php(108): include('D:\xampp\www\si...')
+#14 D:\xampp\www\site\library\Zend\View\Abstract.php(831): Zend_View->_run('D:\xampp\www\si...')
+#15 D:\xampp\www\site\library\Zend\View\Helper\Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#16 D:\xampp\www\site\library\Zend\View\Helper\PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#17 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#18 D:\xampp\www\site\library\Zend\View\Abstract.php(340): call_user_func_array(Array, Array)
+#19 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#20 D:\xampp\www\site\application\views\scripts\content\list.phtml(107): Zend_View->partialLoop('partials/conten...', Array)
+#21 D:\xampp\www\site\library\Zend\View.php(108): include('D:\xampp\www\si...')
+#22 D:\xampp\www\site\library\Zend\View\Abstract.php(831): Zend_View->_run('D:\xampp\www\si...')
+#23 D:\xampp\www\site\library\Zend\Controller\Action\Helper\ViewRenderer.php(903): Zend_View_Abstract->render('content/list.ph...')
+#24 D:\xampp\www\site\library\Zend\Controller\Action\Helper\ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('content/list.ph...', NULL)
+#25 D:\xampp\www\site\library\Zend\Controller\Action\Helper\ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#26 D:\xampp\www\site\library\Zend\Controller\Action\HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#27 D:\xampp\www\site\library\Zend\Controller\Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#28 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('listAction')
+#29 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#30 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#31 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#32 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#33 {main}
+2010-07-08T12:47:51+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:47:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: content_id is not specified. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Router\Rewrite.php(441): Zend_Controller_Router_Route->assemble(Array, true, true)
+#1 D:\xampp\www\site\library\Zend\View\Helper\Url.php(49): Zend_Controller_Router_Rewrite->assemble(Array, 'content_shortvi...', true, true)
+#2 [internal function]: Zend_View_Helper_Url->url(Array, 'content_shortvi...', true)
+#3 D:\xampp\www\site\library\Zend\View\Abstract.php(340): call_user_func_array(Array, Array)
+#4 [internal function]: Zend_View_Abstract->__call('url', Array)
+#5 D:\xampp\www\site\application\views\scripts\partials\content_row_single.phtml(11): Zend_View->url(Array, 'content_shortvi...', true)
+#6 D:\xampp\www\site\library\Zend\View.php(108): include('D:\xampp\www\si...')
+#7 D:\xampp\www\site\library\Zend\View\Abstract.php(831): Zend_View->_run('D:\xampp\www\si...')
+#8 D:\xampp\www\site\library\Zend\View\Helper\Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#9 [internal function]: Zend_View_Helper_Partial->partial('partials/conten...', NULL)
+#10 D:\xampp\www\site\library\Zend\View\Abstract.php(340): call_user_func_array(Array, Array)
+#11 [internal function]: Zend_View_Abstract->__call('partial', Array)
+#12 D:\xampp\www\site\application\views\scripts\partials\content_row.phtml(2): Zend_View->partial('partials/conten...', NULL)
+#13 D:\xampp\www\site\library\Zend\View.php(108): include('D:\xampp\www\si...')
+#14 D:\xampp\www\site\library\Zend\View\Abstract.php(831): Zend_View->_run('D:\xampp\www\si...')
+#15 D:\xampp\www\site\library\Zend\View\Helper\Partial.php(103): Zend_View_Abstract->render('partials/conten...')
+#16 D:\xampp\www\site\library\Zend\View\Helper\PartialLoop.php(91): Zend_View_Helper_Partial->partial('partials/conten...', NULL, Array)
+#17 [internal function]: Zend_View_Helper_PartialLoop->partialLoop('partials/conten...', Array)
+#18 D:\xampp\www\site\library\Zend\View\Abstract.php(340): call_user_func_array(Array, Array)
+#19 [internal function]: Zend_View_Abstract->__call('partialLoop', Array)
+#20 D:\xampp\www\site\application\views\scripts\content\list.phtml(107): Zend_View->partialLoop('partials/conten...', Array)
+#21 D:\xampp\www\site\library\Zend\View.php(108): include('D:\xampp\www\si...')
+#22 D:\xampp\www\site\library\Zend\View\Abstract.php(831): Zend_View->_run('D:\xampp\www\si...')
+#23 D:\xampp\www\site\library\Zend\Controller\Action\Helper\ViewRenderer.php(903): Zend_View_Abstract->render('content/list.ph...')
+#24 D:\xampp\www\site\library\Zend\Controller\Action\Helper\ViewRenderer.php(924): Zend_Controller_Action_Helper_ViewRenderer->renderScript('content/list.ph...', NULL)
+#25 D:\xampp\www\site\library\Zend\Controller\Action\Helper\ViewRenderer.php(963): Zend_Controller_Action_Helper_ViewRenderer->render()
+#26 D:\xampp\www\site\library\Zend\Controller\Action\HelperBroker.php(277): Zend_Controller_Action_Helper_ViewRenderer->postDispatch()
+#27 D:\xampp\www\site\library\Zend\Controller\Action.php(523): Zend_Controller_Action_HelperBroker->notifyPostDispatch()
+#28 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('listAction')
+#29 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#30 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#31 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#32 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#33 {main}
+2010-07-08T12:47:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:48:02+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T12:48:02+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T13:40:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T13:40:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T13:40:55+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T13:40:56+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T13:41:16+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T13:41:17+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T13:47:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T13:47:35+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T14:30:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T14:30:46+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T14:30:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T14:30:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T14:31:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T14:31:01+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-07-08T14:31:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-08T14:31:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'users_usr.gravatar_usr' in 'field list'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(725): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1439): Zend_Db_Adapter_Abstract->fetchRow(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(72): Default_Model_User->getGravatarStatus('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->profilethumbAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('profilethumbAct...')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
