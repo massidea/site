@@ -14,8 +14,14 @@ $url_getUserStatistics = $this->url(array('controller' => 'ajax',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
-$url_arrowUp = $this->baseUrl('/images/arrow_up.png');
-$url_arrowDown = $this->baseUrl('/images/arrow_down.png');
+$url_getUserListBase = $this->url(array('controller' => 'account',
+							 'action' => 'userlist',
+							 'language' => $this->language), 
+							 'lang_default', true);
+
+$url_arrowUpDown = $this->baseUrl('/images/arrow_UpDown.png');
+$url_arrowUp_active = $this->baseUrl('/images/arrow_UpDownUpActive.png');
+$url_arrowDown_active = $this->baseUrl('/images/arrow_UpDownDownActive.png');
 $url_loader = $this->baseUrl('/images/ajax-loader-black.gif');
 $url_thumbUp = $this->baseUrl('/images/icon_thumb_up.png'); 
 $url_thumbDown = $this->baseUrl('/images/icon_thumb_down.png');
@@ -54,27 +60,34 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
     </div>
     </div>
     <div style="border-bottom:1px dotted #DDDDDD; padding-bottom:5px;"></div>
+    
+    <?php if($url_getUserListBase != $this->url()): ?>
+    <div class="user_list_search_results"> 
     <div class="user_list_sort">
 	<strong>Sort by: </strong>
-	<?php
-	$order = array(
-		"username",
-		"content",
-		"login",
-		"joined",
-		"views",
-		"rating",
-		"popularity"
-	);
+	<?php foreach($this->order as $line => $description): ?>
+	<?php 
+		$url_desc = $this->url(array("order" => $line,"list" => "desc"));
+		$url_asc = $this->url(array("order" => $line,"list" => "asc"));
+		$sort_name = mb_convert_case($line, MB_CASE_TITLE);
+		$style = "text-decoration: none;";
+		$arrow = $url_arrowUpDown;
+		$url = $url_desc;
+		if($line == $this->lastOrder) { 
+			$style .= "color:green; font-weight: bold;";
+			if($this->list == "descending") { $arrow = $url_arrowDown_active; $url = $url_asc; }
+			if($this->list == "ascending") { $arrow = $url_arrowUp_active; $url = $url_desc; }
+		}
 
-	foreach($order as $line): ?>
+	?>
 			<strong> |</strong>
-			<a href="<?php echo $this->url(array("order" => $line,"list" => "desc")); ?>" style="text-decoration:none"><?php echo mb_convert_case($line, MB_CASE_TITLE); ?><img src="<?php echo $url_arrowDown ?>" style="vertical-align: middle;"></img></a>
-			<a href="<?php echo $this->url(array("order" => $line,"list" => "asc")); ?>"><img src="<?php echo $url_arrowUp ?>" style="vertical-align: middle;"></img></a>
+			<a href="<?php echo $url; ?>" style="<?php echo $style; ?>">
+			<?php echo $sort_name; ?> <img src="<?php echo $arrow; ?>" style="vertical-align: middle;"></img></a>
+			
 	<?php endforeach; ?>
 	
 	</div>
-	
+	<div style="margin-top: 5px;"><span style="font-weight: bold">Sort description: </span><span><?php echo $this->order[$this->lastOrder]; ?></span></div>
     <div style="border-bottom:1px dotted #DDDDDD; padding-bottom:5px;"></div>
     <?php if (!empty($this->userListData)):?>
             <?php if ($this->userCount > $this->count): ?>
@@ -208,5 +221,12 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 	<div>
 		<?php echo $this->translate('search-nothing-found'); ?>
 	</div>
+<?php endif; ?>
+</div>
+<?php else: ?>
+<div class="user_list_top_list">
+	<div class="user_list_">
+	</div>
+</div>
 <?php endif; ?>
  </div>
