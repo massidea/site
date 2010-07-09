@@ -9,205 +9,30 @@ $url_contentView = $this->url(array('controller' => 'view',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
+$url_arrowUp = $this->baseUrl('/images/arrow_up.png');
+$url_arrowDown = $this->baseUrl('/images/arrow_down.png');
+$url_loader = $this->baseUrl('/images/ajax-loader-black.gif');
+$url_thumbUp = $this->baseUrl('/images/icon_thumb_up.png'); 
+$url_thumbDown = $this->baseUrl('/images/icon_thumb_down.png');
+
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete.js');
-//$this->headLink()->appendStylesheet($this->baseUrl . '/css/css_reset.css');
+//$this->headLink()->prependStylesheet($this->baseUrl . '/css/css_reset.css');
 $this->headScript()->captureStart();
-//print_r($this->userContents);die;
-//print_r($this->userListData);die;
-//print_r($this->cities);die;
+
 ?>
 
-$(document).ready(function(){
-/*
-	$(".users_latest_content_list").html(
-		'<h3 style="vertical-align: middle;"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" style="padding-right: 10px;" /> ' + 
-		'Please wait...</h3>'
-	);
-	*/
-	var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
-	<?php 
-	foreach($this->userListData as $data) {
-		echo "\n\tvar user_".$data['id_usr']." = jQuery.parseJSON('".json_encode($data['contents'])."');";
-	}
-	?>
-	
-	var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
-	complete_city(userCities);
-	
-	$.each(userIds, function() {
-		var id = this;
-		$("#user_"+this+"_list_more").click(function() {
-				$(this).attr("style",'display: none;');
-				$("#user_"+id+"_list_less").attr("style",'display: block;');
-				$("#user_list_user_"+id+"_statistics").slideDown(200,
-				function(){ $("#user_list_user_"+id+"_search").slideDown(200); }
-				);
-		});
-		$("#user_"+this+"_list_less").click(function() {
-				$(this).attr("style",'display: none;');
-				$("#user_"+id+"_list_more").attr("style",'display: block;');
-				$("#user_list_user_"+id+"_statistics").slideUp(400);
-				$("#user_list_user_"+id+"_search").slideUp(400);
-		});
-		$("#user_list_"+this+"_show_more").click(function() {
-				$(this).hide();
-				$("#user_list_"+id+"_show_more_loading").show();
-		
-				var childs = $("#user_"+id+"_list_user_recent_contents_list").children().length;
-				var listStart = childs+1;
-				var listEnd = listStart+3;
-				var listIndexes = "";
-				for(var i = listStart; i < listEnd; i++) { listIndexes += eval("user_"+id)[i]+"," }
-				listIndexes = listIndexes.substr(0,listIndexes.length-1);
-				json_search_contents(listIndexes,id,this);
-				
-		});
-	});
-	
-	//jsonSearchLocations("cities");
-	/*var json_users = '<?php echo json_encode($this->userList); ?>';
-	var obj = jQuery.parseJSON(json_users);
-	
-	$.each(obj, function() {
-	
-		jsonSearchContents(this);
+var thumbUp = "<?php echo $url_thumbUp; ?>";
+var thumbDown = "<?php echo $url_thumbDown; ?>";
+var loader = "<?php echo $url_loader; ?>";
+var contentView = "<?php echo $url_contentView; ?>";
+var userContents = "<?php echo $url_getUserContents ?>";
+var loading = "<img src=\""+loader+"\" /><span> Please wait...</span>";
+var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
+var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 
-		$("input#user_"+this+"_content").focus(function() {
-			$(this).click();
-		});
-		
-		$("input#user_"+this+"_content").result(function(event, data, formatted) {
-			 $("#user_"+data.id_usr+"_content_link").attr('action', function() {
-			 	return '<?php echo $url_contentView ?>/'+data.id_cnt;
-			 });
-		});
-		
-	});
-	*/
-	
-});
-
-function json_search_contents(listIndexes,id,div) {
-	$.ajax({
-	  url: "<?php echo $url_getUserContents ?>/search/"+listIndexes,
-	  dataType: 'json',
-	  success: function(data) {
-	  		var output = "";
-			$.each(data, function() {
-				if(this.title_cnt.length > 70) { 
-					this.title_cnt.length = 70;
-					this.title_cnt += "...";
-				}
-				output += "<div class=\"user_list_user_line_new\" style=\"display:none\">"+
-							"<span class=\"user_list_content_type_"+this.key_cty+"\">> </span>"+
-							"<a class=\"user_list_content_title\" href=\"<?php echo $url_contentView; ?>/"+this.id_cnt+"\">"+
-							this.title_cnt+"</a></div>"
-							;
-			});
-			
-		  	$("#user_"+id+"_list_user_recent_contents_list").append(output);
-		  	$('.user_list_user_line_new').addClass('user_list_user_line').removeClass('user_list_user_line_new');
-		  	$(".user_list_user_line").slideDown(700,function(){ 
-		  	$("#user_list_"+id+"_show_more_loading").hide();
-		  	$(div).show();
-		  	 });
-
-	  }	
-	});
-};
-
-function jsonSearchContents(user_id){
-
-$.ajax({
-  url: "<?php echo $url_getUserContents ?>/search/"+user_id,
-  dataType: 'json',
-  success: function(data) {
-	  complete_user_content_search(user_id,data);
-	}	
-});
-
-};
-
-function complete_user_content_search(user_id,result){
-
-		var green = "smallsize_idea_border";
-		var red = "smallsize_problem_border";
-		var yellow = "smallsize_finfo_border";
-		
-		$("#user_"+user_id+"_content").autocomplete(result, {
-		minChars: 0,
-		width:347,
-		delay:400,
-		scrollHeight:200,
-		cacheLength:20,
-		matchContains: true,
-		autoFill: false,
-		selectFirst:true,
-		max:result.length,
-		formatItem: function(row, i, max) {
-			if (row.id_cty_cnt == 1) var type = yellow;
-			if (row.id_cty_cnt == 2) var type = green;
-			if (row.id_cty_cnt == 3) var type = red;
-			
-			var rating_positive = Math.ceil(((row.rating_sum / row.ratings) + 1) * 50);
-			var rating_negative = Math.floor(100-((row.rating_sum / row.ratings) + 1) * 50);
-
-			var rating = "<span class=\"user_list_positive_icon\">"+rating_positive+"% </span>"+
-						"<img src=\"<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>\" alt=\"\" />"+
-						"<img src=\"<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>\" alt=\"\" />"+
-						"<span class=\"user_list_negative_icon\"> "+rating_negative+"%</span>";
-			
-			if (row.views)
-				var views = row.views;
-			else var views = "Not viewed";
-			
-			if (row.created_cnt)
-				var created_cnt = "Created: "+row.created_cnt.split(" ")[0];
-			else var created_cnt = "Created: Date missing";
-			
-			if (!row.rating_sum) var rating = "Not rated"
-			return "<span class=\""+type+"\">"+
-						"<span class=\"user_list_input_box_title\">"+
-							"<a href=\"<?php echo $url_contentView ?>/"+row.id_cnt+"\" OnClick=\"window.location=\'<?php echo $url_contentView ?>/"+row.id_cnt+"'\;\">"+
-							 row.title_cnt + "</a></span><br />"+
-						"<span class=\"user_list_input_box_lead\">"+row.lead_cnt+"</span><br />"+
-						"<span class=\"user_list_input_box_meta\">"+rating+" | Views: "+views+ " | " + created_cnt + "</span>"+
-				   "</span>";
-
-		},
-		formatMatch: function(row, i, max) {
-			return row.title_cnt+" "+row.lead_cnt;
-		},
-		formatResult: function(row) {
-			return row.title_cnt;
-		}
-	});
-
-};
-
-function complete_city(result){
-	
-		$("#city").autocomplete(result, {
-		minChars: 1,
-		width:247,
-		delay:400,
-		scrollHeight:200,
-		matchContains: true,
-		autoFill: false,
-		selectFirst:false,
-		formatItem: function(row, i, max) {
-			return row.name + "<span style=\"float:right\"> [" + row.amount + "]</span>";
-		},
-		formatMatch: function(row, i, max) {
-			return row.name;
-		},
-		formatResult: function(row) {
-			return row.name;
-		}
-	});
-	
-};
 <?php $this->headScript()->captureEnd(); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/userlist.js')); ?>
 
 <div id="user_list">
 
@@ -230,11 +55,12 @@ function complete_city(result){
 		"content",
 		"login",
 		"joined",
+		"views"
 	);
 
 	foreach($order as $line): ?>
-			<a href="<?php echo $this->url(array("order" => $line,"list" => "desc")); ?>"><?php echo mb_convert_case($line, MB_CASE_TITLE); ?><span style="font-size: 16px;"> ʌ</span></a>
-			<a href="<?php echo $this->url(array("order" => $line,"list" => "asc")); ?>"><span style="font-size: 16px;"> v</span></a>
+			<a href="<?php echo $this->url(array("order" => $line,"list" => "desc")); ?>" style="text-decoration:none"><?php echo mb_convert_case($line, MB_CASE_TITLE); ?><img src="<?php echo $url_arrowDown ?>" style="vertical-align: middle;"></img></a>
+			<a href="<?php echo $this->url(array("order" => $line,"list" => "asc")); ?>"><img src="<?php echo $url_arrowUp ?>" style="vertical-align: middle;"></img></a>
 			<strong> |</strong>
 	<?php endforeach; ?>
 	
@@ -275,12 +101,12 @@ function complete_city(result){
 			                                                                     'user' => $user['login_name_usr'],
 			                                                                     'language' =>  $this->language),
 			                                                               'lang_default', true); ?>">
-			                                    <?php echo $user['login_name_usr']; ?> (<?php echo $user['contentCount']; ?>)
+			                                    <?php echo $user['login_name_usr']; ?>(<?php echo $user['contentCount']; ?>)
 			                                </a>,</span>
 			                        <?php if($user['city']): ?>
-			                        <span class="user_list_city"><?php echo $user['city']; ?>, </span>
+			                        <a href="<?php echo $this->url(array('city' => $user['city'])); ?>" class="user_list_city"><?php echo $user['city']; ?>, </a>
 			                        <?php endif; if($user['country']): ?>
-			                        <span class="user_list_country"><?php echo $user['country']; ?>, </span>
+			                        <a href="<?php echo $this->url(array('country' => $user['countryIso'])); ?>" class="user_list_country"><?php echo substr($user['country'],0,20); ?>, </a>
 			                        <?php endif; if($user['ratingAmount']): ?>
 									<span class="user_list_rating"><span class="user_list_positive_icon"><?php echo $user['ratingRatioPositive']; ?>% </span><img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="" /><img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="" /><span class="user_list_negative_icon"><?php echo $user['ratingRatioNegative']; ?>%</span></span>
 									<span class="user_list_rating_amount">(<?php echo $user['ratingAmount']; ?> Ratings) </span>
@@ -292,7 +118,7 @@ function complete_city(result){
 		                        <div class="user_list_statistics" id="user_list_user_<?php echo $user['id_usr']; ?>_statistics" style="display:none;">
 			                        <div class="user_list_user_line"><span class="user_list_statistics_title">Statistics</span></div>
 			                        <div class="user_list_user_line"><span class="user_list_statistics_line">> Joined: <?php echo date("d M Y",strtotime($user['created_usr'])); ?></span></div>
-			                        <?php if($user['ratingAmount']): ?>
+			                        <?php /* if($user['ratingAmount']): ?>
 			                        <div class="user_list_user_line">
 				                        <span class="user_list_statistics_line">> Contents rating ratio: 
 				                        	<span class="user_list_positive_icon"><?php echo $user['ratingRatioPositive']; ?>% </span><img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="" /><img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="" /><span class="user_list_negative_icon"><?php echo $user['ratingRatioNegative']; ?>%</span>
@@ -304,22 +130,24 @@ function complete_city(result){
 				                        </span>
 			                        </div>
 
-			                        <?php endif; ?>
+			                        <?php endif; */ ?>
 		                        </div>
 		                        
 		                        <?php if (sizeof($this->userContents[$user['id_usr']]) > 0): ?>
 		                        <div class="user_list_user_recent_contents">
-		                        <div class="user_list_user_line">
+		                        <div class="user_list_user_line" style="height: 15px">
 			                        <span class="user_list_recet_contents_title">Recent posts </span>
 			                        |
-			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="block">Show more</a>
-			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"><img src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" /><span> Please wait...</span></div>
+			                        <a id="user_list_<?php echo $user['id_usr']; ?>_show_more" href="#" onClick="return false;" style="display: inline">Show 3 more </a>
+			                        <div id="user_list_<?php echo $user['id_usr']; ?>_show_more_loading" style="display: none"></div>
+			                        |
+			                        <a id="user_list_<?php echo $user['id_usr']; ?>_hide_new" href="#" onClick="return false;" style="block">Hide</a>
 		                        </div>
 		                        
 		                        <div class="user_list_statistics" id="user_list_user_<?php echo $user['id_usr']; ?>_search" style="display:none;">
 			                        <div class="user_list_user_line">
 				                        <div class="user_list_content_search">
-	                       					<form action="#" id="user_<?php echo $user['id_usr']; ?>_content_link">Content search: <input id="user_<?php echo $user['id_usr']; ?>_content"></input><input type="submit" value="Go"></input></form>
+	                       					<form action="#" id="user_<?php echo $user['id_usr']; ?>_content_link"><span id="user_<?php echo $user['id_usr']; ?>_content_search_text">Content search: </span><input id="user_<?php echo $user['id_usr']; ?>_content"></input><input type="submit" value="Go"></input></form>
 	                       				</div>
 		                       		</div>
 	                       		</div>

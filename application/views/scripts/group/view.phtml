@@ -1,3 +1,15 @@
+<?php $this->headScript()->captureStart(); ?>
+function deleteconfirmation(url) {
+    var answer = confirm("Delete group? This will also delete all of the group's campaigns.");
+    if (answer) {
+        alert("Group deleted");
+        window.location = url;
+    } else {
+        //alert("");
+    }
+}
+<?php $this->headScript()->captureEnd(); ?>
+
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601);
@@ -39,19 +51,27 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             <div id="group-info">
                 <?php if ($this->userIsGroupAdmin):
                     $editlink = $this->url(
-                     array(
-                        'controller' => 'group',
-                        'action'     => 'edit',
-                        'language'   => $this->language,
-                        'id'         => $this->grpData["id_grp"]
-                     ), 'lang_default', true
+                        array(
+                            'controller' => 'group',
+                            'action'     => 'edit',
+                            'language'   => $this->language,
+                            'id'         => $this->grpData["id_grp"]
+                        ), 'lang_default', true
+                    );
+                    $dellink = $this->url(
+                        array(
+                            'controller' => 'group',
+                            'action'     => 'remove',
+                            'language'   => $this->language,
+                            'id'         => $this->grpData["id_grp"]
+                         ), 'lang_default', true
                     );
                 ?>
                 <div id="join-group">
                     <p class="join" style="text-align: right; padding-top: 10px;">
-                        <a href="<?php echo $editlink; ?>">Edit group</a> <!--|
-                        <a href="#">Edit group links</a> |
-                        <a href="#">Delete group</a>-->
+                        <a href="<?php echo $editlink; ?>">Edit group</a> |
+                        <!--<a href="#">Edit group links</a> |-->
+                        <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete group</a>
                     </p>
                 </div>
                 <?php endif; ?>

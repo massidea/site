@@ -96,18 +96,20 @@ class AjaxController extends Oibs_Controller_CustomController
     	// Gather data for recent posts
     	$i = 0;
     	foreach ($recentposts_raw as $post) {
-	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
-
-	    	// Action helper for define is tag running number divisible by two
-		$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
-
 	    	$this->gtranslate->setLangFrom($post['language_cnt']);
+
+	    	$tags = $contentHasTagModel->getContentTags($post['id_cnt']);
+	    	
+	    	// Action helper for define is tag running number divisible by two
+			$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+		    $translatedtags = $this->gtranslate->translateTags($tags);
+			
 	    	$translang = $this->gtranslate->getLangPair();
 
 	    	$recentposts[$i]['original'] = $post;
 	    	$recentposts[$i]['translated'] = $this->gtranslate->translateContent($post);
 	    	$recentposts[$i]['original']['tags'] = $tags;
-	    	$recentposts[$i]['translated']['tags'] = $tags;
+	    	$recentposts[$i]['translated']['tags'] = $translatedtags;
 	    	$recentposts[$i]['original']['translang'] = $translang;
 	    	$recentposts[$i]['translated']['translang'] = $translang;
 	    	
@@ -136,18 +138,40 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function getusercontentsAction() {
 		$output = "";
 		// Get requests
-		$search = isset($this->params['search']) ? $this->params['search'] : null;
-		
-		$contentsToSearch = explode(",",$search);
-		foreach($contentsToSearch as $id) {
-			if(!is_numeric($id)) return $output;
+
+		$params = $this->getRequest()->getParams();
+		$userId = isset($params['search']) ? $params['search'] : null;
+		$start = isset($params['start']) ? $params['start'] : null;
+		$cache = Zend_Registry::get('cache');
+
+		if(is_numeric($userId) && is_numeric($start)) {
+
+			// Load user locations from cache
+			if($resultList = $cache->load('UserContentsList_'.$userId)) {
+				$newContents = array();
+				$userModel = new Default_Model_User();
+				for($i = $start; $i < $start +3; $i++) {
+					if($resultList[$i])
+						$newContents[] = $resultList[$i];
+				}
+				if(!sizeof($newContents) == 0)
+					$contentList = $userModel->getUserContentList($newContents,3);
+				else $contentList = array();
+			}
+			$output = json_encode($contentList);
+	
 		}
-		
-		if(is_array($contentsToSearch)) {
-			$userModel = new Default_Model_User();
-			$contentList = $userModel->getUserContentList($contentsToSearch,3);
+
+		elseif(is_numeric($userId) && !$start) {
+			
+			// Load user locations from cache
+			if($resultList = $cache->load('UserContentsList_'.$userId)) {
+				$userModel = new Default_Model_User();
+				$contentList = $userModel->getWholeUserContentList($userId, $resultList);
+			}
 			$output = json_encode($contentList);
 		}
+		
 		$this->view->output = $output;
 	}
 	

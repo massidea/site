@@ -121,6 +121,35 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
 		$where = $this->getAdapter()->quoteInto('id_grp = ?', $id);
 		$this->update($data, $where);
     }
+
+    /**
+    *   removeGroup
+    *   Removes the group from the database
+    *
+    *   @param int id_grp
+    *   @author Mikko Aatola
+    */
+    public function removeGroup($id_grp = 0)
+    {
+        if (!$id_grp) return false;
+
+        // Delete the group's campaigns.
+        $data = $this->_db->select()
+            ->from('campaigns_cmp', 'id_cmp')
+            ->where('id_grp_cmp = ?', $id_grp);
+        $campaigns = $this->_db->fetchAll($data);
+        $cmpModel = new Default_Model_Campaigns();
+        foreach ($campaigns as $cmp)
+            $cmpModel->removeCampaign($cmp['id_cmp']);
+
+        // Delete group-admin links from grp_has_admin_usr.
+        $grpAdm = new Default_Model_GroupAdmins();
+        $grpAdm->removeAdminsFromGroup($id_grp);
+        
+        // Delete group.
+        $where = $this->getAdapter()->quoteInto('id_grp = ?', $id_grp);
+        $this->delete($where);
+    } // end of removeCampaign
     
     /**
      * Checks if a group exists in db.
