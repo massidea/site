@@ -1161,7 +1161,11 @@ class AccountController extends Oibs_Controller_CustomController
             $this->getResponse()->sendResponse();
             return;
         }
-
+        
+        $url = $this->_urlHelper->url(array('controller' => 'account', 
+                                            'action' => 'userlist',
+                                            'language' => $this->view->language),
+                                      'lang_default', true); 
         // Get requests
         $params = $this->getRequest()->getParams();
         
@@ -1187,14 +1191,14 @@ class AccountController extends Oibs_Controller_CustomController
 		else $listName = "ascending";
 		
         $orderList = array(
-			"username" => "Users are now sorted in alphabetical $listName order by Usernames.",
+			"username" => "Users are now sorted in $listName alphabetical order by Usernames.",
         	"login" => "Users are now sorted in $listName order by their last login times.",
 			"joined" => "Users are now sorted in $listName order by their account creation time.",
 			"content" => "Users are now sorted in $listName order by the content amount they have published.",
 			"views" => "Users are now sorted in $listName order by the amount of unique contents that the users have viewed.",
 			"rating" => "Users are now sorted in $listName order by the sum of their contents positive and negative votes.",
 			"popularity" => "Users are now sorted in $listName order by the amount of views that unique users have viewed listed users unique contents.",
-        	"comments" => "Users are now sorted in $listName order by the amount of comments they have made.",
+        	"comments" => "Users are now sorted in $listName order by the amount of comments they have made to contents.",
 		);
 		
         $userLocations = $this->getAllCitiesAndCountries();
@@ -1214,41 +1218,37 @@ class AccountController extends Oibs_Controller_CustomController
         $formData['city'] = str_replace($pat_def,$pat_sql,$formData['city']);
         $formData['group'] = str_replace($pat_def,$pat_sql,$formData['group']);
         
-        $listSize = 1;
-        // Get user listing
-        $userModel = new Default_Model_User();
-        $userListing = $userModel->getUserListing($formData, $page, $count, $order, $list, $listSize);
-
-        $userContents = array();
-        $cache = Zend_Registry::get('cache');
-        foreach($userListing as $user) {
-        	// Get cache from registry
-        	if(is_array($user['contents']) && sizeof($user['contents']) > 0) {
-				$cache->save($user['contents'], 'UserContentsList_'.$user['id_usr']);
-				$contentsArray = $userModel->getUserContentList($user['contents'],3);
-        	}
-        	else $contentsArray = null;
-
-        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
-        		$userContents[$user['id_usr']] = array();
-        	else $userContents[$user['id_usr']] = $contentsArray;
-        }
-        $userIdList = array();
-        foreach($userListing as $u) {
-        	$userIdList[] = $u['id_usr']; 
-        }
-        
-        // Calculate total page count
-        $pageCount = ceil($listSize / $count);
-                        
+        if($url != $this->_urlHelper->url()) {
+	        $listSize = 1;
+	        // Get user listing
+	        $userModel = new Default_Model_User();
+	        $userListing = $userModel->getUserListing($formData, $page, $count, $order, $list, $listSize);
+	
+	        $userContents = array();
+	        $cache = Zend_Registry::get('cache');
+	        foreach($userListing as $user) {
+	        	// Get cache from registry
+	        	if(is_array($user['contents']) && sizeof($user['contents']) > 0) {
+					$cache->save($user['contents'], 'UserContentsList_'.$user['id_usr']);
+					$contentsArray = $userModel->getUserContentList($user['contents'],3);
+	        	}
+	        	else $contentsArray = null;
+	
+	        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
+	        		$userContents[$user['id_usr']] = array();
+	        	else $userContents[$user['id_usr']] = $contentsArray;
+	        }
+	        $userIdList = array();
+	        foreach($userListing as $u) {
+	        	$userIdList[] = $u['id_usr']; 
+	        }
+	        
+	        // Calculate total page count
+	        $pageCount = ceil($listSize / $count);
+        }                
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
-        
-        $url = $this->_urlHelper->url(array('controller' => 'account', 
-                                            'action' => 'userlist',
-                                            'language' => $this->view->language),
-                                      'lang_default', true); 
-          
+
         $userSearch->setAction($url)
                    ->setMethod('get');
                            
