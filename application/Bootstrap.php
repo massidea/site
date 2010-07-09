@@ -65,7 +65,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initFrontController()
     {
         $frontController = Zend_Controller_Front::getInstance();  
-        $frontController->throwExceptions(false);  
+        $frontController->throwExceptions(false);
         $frontController->setControllerDirectory(  
             APPLICATION_PATH . '/controllers'  
         ); 
@@ -107,7 +107,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view = new Zend_View();
         $view->setEncoding('UTF-8');
         $view->doctype('XHTML11');
-        
+        //$view->setEscape('htmlentities');
         return $view;
     }
     
