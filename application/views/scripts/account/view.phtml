@@ -1,12 +1,3 @@
-<?php
-// User page has new layout but still WIP because edit profile form is not ready.
-// Todo:
-//      My groups
-//      Delete and publish confirm
-//      Country and city links ??
-//      PartialLoops for contents and order
-?>
-
 <?php $this->headScript()->captureStart() ?>
 
 function publishconfirmation(url) {
@@ -259,6 +250,25 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
             <!--<p><a href="#">(read more)</a></p>-->
 
             <!--<p class="my-links"><strong>My links:</strong> <a href="#">Facebook</a>, <a href="#">LinkedIN</a>, <a href="#">Blogger</a>, <a href="#">Youtube</a>, <a href="#">Myspace</a></p>-->
+        </div>
+        <?php endif; ?>
+        <?php if (isset($this->userprofile['userWeblinks']) && $this->userprofile['userWeblinks'] != NULL) : ?>
+        <div id="user-links">
+            <p class="my-links">My links:
+                <?php
+                $count = count($this->userprofile['userWeblinks']);
+                $i = 1;
+                foreach ($this->userprofile['userWeblinks'] as $weblink) {
+                ?>
+                <a href="<?php echo $weblink['url_uwl']; ?>"><?php
+                    echo $weblink['name_uwl'];
+                ?></a><?php
+                if ($i != $count)
+                    echo ',';
+                $i++;
+                }
+                ?>
+            </p>
         </div>
         <?php endif; ?>
     </div>

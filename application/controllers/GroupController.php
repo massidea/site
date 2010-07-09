@@ -90,6 +90,17 @@
         $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
         $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
 
+        // Group weblinks
+        $groupWeblinksModel = new Default_Model_GroupWeblinks();
+        $grpData['groupWeblinks'] = $groupWeblinksModel->getGroupWeblinks($grpId);
+        $i = 0;
+        foreach($grpData['groupWeblinks'] as $weblink) {
+            if (strlen($weblink['name_gwl']) == 0 || strlen($weblink['url_gwl']) == 0) {
+                unset($grpData['groupWeblinks'][$i]);
+            }
+            $i++;
+        }
+
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;
@@ -208,6 +219,15 @@
             $formData['groupname'] = $grpData['group_name_grp'];
             $formData['groupdesc'] = $grpData['description_grp'];
             $formData['groupbody'] = $grpData['body_grp'];
+
+            // Get group weblinks
+            $groupWeblinksModel = new Default_Model_GroupWeblinks();
+            $groupWeblinks = $groupWeblinksModel->getGroupWeblinks($grpId);
+            foreach ($groupWeblinks as $groupWeblink) {
+                $formData['weblinks_name_site'.$groupWeblink['count_gwl']] = $groupWeblink['name_gwl'];
+                $formData['weblinks_url_site'.$groupWeblink['count_gwl']] = $groupWeblink['url_gwl'];
+            }
+
             $form->populate($formData);
 
             $this->view->form = $form;
@@ -226,6 +246,23 @@
                         $post['groupname'],
                         $post['groupdesc'],
                         $post['groupbody']);
+
+                    // Set weblinks
+                    if (isset($post['weblinks_name_site1']) && isset($post['weblinks_url_site1'])) {
+                        $groupWeblinksModel->setWeblink($grpId, $post['weblinks_name_site1'], $post['weblinks_url_site1'], 1);
+                    }
+                    if (isset($post['weblinks_name_site2']) && isset($post['weblinks_url_site2'])) {
+                        $groupWeblinksModel->setWeblink($grpId, $post['weblinks_name_site2'], $post['weblinks_url_site2'], 2);
+                    }
+                    if (isset($post['weblinks_name_site3']) && isset($post['weblinks_url_site3'])) {
+                        $groupWeblinksModel->setWeblink($grpId, $post['weblinks_name_site3'], $post['weblinks_url_site3'], 3);
+                    }
+                    if (isset($post['weblinks_name_site4']) && isset($post['weblinks_url_site4'])) {
+                        $groupWeblinksModel->setWeblink($grpId, $post['weblinks_name_site4'], $post['weblinks_url_site4'], 4);
+                    }
+                    if (isset($post['weblinks_name_site5']) && isset($post['weblinks_url_site5'])) {
+                        $groupWeblinksModel->setWeblink($grpId, $post['weblinks_name_site5'], $post['weblinks_url_site5'], 5);
+                    }
 
                     // Redirect back to the group page.
                     $target = $this->_urlHelper->url(
@@ -269,6 +306,24 @@
                         $post['groupname'],
                         $post['groupdesc'],
                         $post['groupbody']);
+
+                    // Set weblinks
+                    $groupWeblinksModel = new Default_Model_GroupWeblinks();
+                    if (isset($post['weblinks_name_site1']) && isset($post['weblinks_url_site1'])) {
+                        $groupWeblinksModel->setWeblink($newGroupId, $post['weblinks_name_site1'], $post['weblinks_url_site1'], 1);
+                    }
+                    if (isset($post['weblinks_name_site2']) && isset($post['weblinks_url_site2'])) {
+                        $groupWeblinksModel->setWeblink($newGroupId, $post['weblinks_name_site2'], $post['weblinks_url_site2'], 2);
+                    }
+                    if (isset($post['weblinks_name_site3']) && isset($post['weblinks_url_site3'])) {
+                        $groupWeblinksModel->setWeblink($newGroupId, $post['weblinks_name_site3'], $post['weblinks_url_site3'], 3);
+                    }
+                    if (isset($post['weblinks_name_site4']) && isset($post['weblinks_url_site4'])) {
+                        $groupWeblinksModel->setWeblink($newGroupId, $post['weblinks_name_site4'], $post['weblinks_url_site4'], 4);
+                    }
+                    if (isset($post['weblinks_name_site5']) && isset($post['weblinks_url_site5'])) {
+                        $groupWeblinksModel->setWeblink($newGroupId, $post['weblinks_name_site5'], $post['weblinks_url_site5'], 5);
+                    }
 
                     // Add the current user to the new group.
                     $userHasGroupModel = new Default_Model_UserHasGroup();
