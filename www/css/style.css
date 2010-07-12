@@ -1637,8 +1637,9 @@ form #uploadedFiles_div .form_element_input label {
 
 #user_list_search_form {
 	float:left;
-	width:60%;
+	width:61%;
 	padding: 10px;
+	padding-right: 5px;
 	padding-bottom: 30px;
 	margin-right: 15px;
 	background:none repeat scroll 0 0 #EEEEEE;
@@ -1668,7 +1669,7 @@ form #uploadedFiles_div .form_element_input label {
 
 #user_list_search_instructions {
 	float:left;
-	width:30%;
+	width:33%;
 }
 
 .user_list_input_box_meta {

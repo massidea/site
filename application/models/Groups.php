@@ -142,6 +142,10 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         foreach ($campaigns as $cmp)
             $cmpModel->removeCampaign($cmp['id_cmp']);
 
+        // Delete group weblinks
+        $grpWeblinksModel = new Default_Model_GroupWeblinks();
+        $grpWeblinksModel->removeGroupWeblinks($id_grp);
+
         // Delete group-admin links from grp_has_admin_usr.
         $grpAdm = new Default_Model_GroupAdmins();
         $grpAdm->removeAdminsFromGroup($id_grp);

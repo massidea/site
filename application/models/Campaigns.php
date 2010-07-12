@@ -213,6 +213,10 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $cmpHasCntModel = new Default_Model_CampaignHasContent();
         $cmpHasCntModel->removeAllContentFromCampaign($id_cmp);
 
+        // Delete campaign weblinks
+        $cmpWeblinksModel = new Default_Model_CampaignWeblinks();
+        $cmpWeblinksModel->removeCampaignWeblinks($id_cmp);
+
         // Delete campaign.
         $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
         $this->delete($where);

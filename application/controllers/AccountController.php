@@ -244,6 +244,18 @@ class AccountController extends Oibs_Controller_CustomController
         // Get public user data from UserProfiles Model
 		$userProfile = new Default_Model_UserProfiles();
         $dataa = $userProfile->getPublicData($id);
+        $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
+
+        // User weblinks
+        $userWeblinksModel = new Default_Model_UserWeblinks();
+        $dataa['userWeblinks'] = $userWeblinksModel->getUserWeblinks($id);
+        $i = 0;
+        foreach($dataa['userWeblinks'] as $weblink) {
+            if (strlen($weblink['name_uwl']) == 0 || strlen($weblink['url_uwl']) == 0) {
+                unset($dataa['userWeblinks'][$i]);
+            }
+            $i++;
+        }
 
         // $dataa is an array with key=>val like firstname => "Joel Peeloten"
 
@@ -1029,6 +1041,14 @@ class AccountController extends Oibs_Controller_CustomController
             $settingsData['email'] = $email;
             $settingsData['confirm_email'] = $email;
             $settingsData['username'] = $identity->username;
+
+            // Get user weblinks
+            $userWeblinksModel = new Default_Model_UserWeblinks();
+            $userWeblinks = $userWeblinksModel->getUserWeblinks($id);
+            foreach ($userWeblinks as $userWeblink) {
+                $settingsData['weblinks_name_site'.$userWeblink['count_uwl']] = $userWeblink['name_uwl'];
+                $settingsData['weblinks_url_site'.$userWeblink['count_uwl']] = $userWeblink['url_uwl'];
+            }
             
             // Get users email notifications and push to settingsdata in correct form
             $notificationsModel = new Default_Model_Notifications(); 
@@ -1060,6 +1080,23 @@ class AccountController extends Oibs_Controller_CustomController
 
                     $userProfile = new Default_Model_UserProfiles();
                     $userProfile->setProfileData($id, $formdata);
+
+                    // Set weblinks
+                    if (isset($formdata['weblinks_name_site1']) && isset($formdata['weblinks_url_site1'])) {
+                        $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site1'], $formdata['weblinks_url_site1'], 1);
+                    }
+                    if (isset($formdata['weblinks_name_site2']) && isset($formdata['weblinks_url_site2'])) {
+                        $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site2'], $formdata['weblinks_url_site2'], 2);
+                    }
+                    if (isset($formdata['weblinks_name_site3']) && isset($formdata['weblinks_url_site3'])) {
+                        $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site3'], $formdata['weblinks_url_site3'], 3);
+                    }
+                    if (isset($formdata['weblinks_name_site4']) && isset($formdata['weblinks_url_site4'])) {
+                        $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site4'], $formdata['weblinks_url_site4'], 4);
+                    }
+                    if (isset($formdata['weblinks_name_site5']) && isset($formdata['weblinks_url_site5'])) {
+                        $userWeblinksModel->setWeblink($id, $formdata['weblinks_name_site5'], $formdata['weblinks_url_site5'], 5);
+                    }
 
                     $user = new Default_Model_User($id);
 
@@ -1108,11 +1145,11 @@ class AccountController extends Oibs_Controller_CustomController
     */
     function userlistAction()
     {
+    	
         // assuming that the CleanQuery plugin has already stripped empty parameters
         if (isset($_GET) && is_array($_GET) && !empty($_GET)) {
             $path = '';
             array_walk($_GET, array('AccountController', 'encodeParam'));
-            
             foreach ($_GET as $key => $value) {
                 if ($key != 'filter' && $key != 'submit_user_filter')
                     $path .= '/' . $key . '/' . $value;
@@ -1145,6 +1182,21 @@ class AccountController extends Oibs_Controller_CustomController
         //$formData['contentlimit'] = isset($params['contentlimit']) ? $params['contentlimit'] : null;
         //$formData['counttype'] = isset($params['counttype']) ? $params['counttype'] : 0;       
         
+        if($list == "asc") $listName = "ascending";
+        elseif($list == "desc") $listName = "descending";
+		else $listName = "ascending";
+		
+        $orderList = array(
+			"username" => "Users are now sorted in alphabetical $listName order by Usernames.",
+        	"login" => "Users are now sorted in $listName order by their last login times.",
+			"joined" => "Users are now sorted in $listName order by their account creation time.",
+			"content" => "Users are now sorted in $listName order by the content amount they have published.",
+			"views" => "Users are now sorted in $listName order by the amount of unique contents that the users have viewed.",
+			"rating" => "Users are now sorted in $listName order by the sum of their contents positive and negative votes.",
+			"popularity" => "Users are now sorted in $listName order by the amount of views that unique users have viewed listed users unique contents.",
+        	"comments" => "Users are now sorted in $listName order by the amount of comments they have made.",
+		);
+		
         $userLocations = $this->getAllCitiesAndCountries();
         $userCities = json_encode($userLocations['cities']);
         $userCountries = json_encode($userLocations['countries']);
@@ -1157,23 +1209,30 @@ class AccountController extends Oibs_Controller_CustomController
         $pat_sql = array("%","_");
         $pat_def = array("*","?");
 
-        //Replace * and ? characters  
+        //Replace * and ? characters to % and _ characters for mysql LIKE  
         $formData['username'] = str_replace($pat_def,$pat_sql,$formData['username']);
         $formData['city'] = str_replace($pat_def,$pat_sql,$formData['city']);
+        $formData['group'] = str_replace($pat_def,$pat_sql,$formData['group']);
         
         $listSize = 1;
         // Get user listing
-        $user = new Default_Model_User();
-        $userListing = $user->getUserListing($formData, $page, $count, $order, $list, $listSize);
+        $userModel = new Default_Model_User();
+        $userListing = $userModel->getUserListing($formData, $page, $count, $order, $list, $listSize);
 
         $userContents = array();
+        $cache = Zend_Registry::get('cache');
         foreach($userListing as $user) {
-        	$contentsArray = $this->getUserContents($user['id_usr'],$user['contents'],3);
+        	// Get cache from registry
+        	if(is_array($user['contents']) && sizeof($user['contents']) > 0) {
+				$cache->save($user['contents'], 'UserContentsList_'.$user['id_usr']);
+				$contentsArray = $userModel->getUserContentList($user['contents'],3);
+        	}
+        	else $contentsArray = null;
+
         	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
         		$userContents[$user['id_usr']] = array();
         	else $userContents[$user['id_usr']] = $contentsArray;
         }
-        
         $userIdList = array();
         foreach($userListing as $u) {
         	$userIdList[] = $u['id_usr']; 
@@ -1207,7 +1266,10 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->userList = $userIdList;
         $this->view->count = $count;
         $this->view->userCount = $listSize;
+        $this->view->list = $listName;
         $this->view->page = $page;
+        $this->view->order = $orderList;
+        $this->view->lastOrder = isset($order) ? $order : "username";
         $this->view->cities = $userCities;
         $this->view->countries = $userCountries;
         $this->view->userContents = $userContents;
@@ -1236,24 +1298,7 @@ class AccountController extends Oibs_Controller_CustomController
 		$output = $locations;
 
 		return $output;
-	}
-	
-	private function getUserContents($userId, $contentIdList = array(),$amount = 3) {
-
-		if(is_array($contentIdList) && sizeof($contentIdList) > 0 && $amount > 0) {
-			// Get cache from registry
-			$cache = Zend_Registry::get('cache');
-
-			$userModel = new Default_Model_User();
-			$contentList = $userModel->getUserContentList($contentIdList,$amount);
-			$cache->save($contentIdList, 'UserContentsList_'.$userId);
-				
-			$output = $contentList;
-		}
-
-		return $output;
-	}
-    
+	}    
     
     /**
     *   imagesAction

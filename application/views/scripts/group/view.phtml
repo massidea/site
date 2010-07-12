@@ -77,6 +77,26 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 <?php endif; ?>
 
                 <p><?php echo $this->grpData['body_grp']; ?></p>
+
+                <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
+                <div id="group-links">
+                    <p class="group-links">Group links:
+                        <?php
+                        $count = count($this->grpData['groupWeblinks']);
+                        $i = 1;
+                        foreach ($this->grpData['groupWeblinks'] as $weblink) {
+                        ?>
+                        <a href="<?php echo $weblink['url_gwl']; ?>"><?php
+                            echo $weblink['name_gwl'];
+                        ?></a><?php
+                        if ($i != $count)
+                            echo ',';
+                        $i++;
+                        }
+                        ?>
+                    </p>
+                </div>
+                <?php endif; ?>
             </div>
             <div class="clear"></div>
             <div id="group-campaigns">

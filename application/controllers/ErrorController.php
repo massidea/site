@@ -53,17 +53,38 @@ class ErrorController extends Oibs_Controller_CustomController
                 break; 
         }
 
-        $logger = Zend_Registry::get('logs');
-        if(isset($logger['errors'])) {
-            $message = sprintf(
-                "FROM: %s. \nMESSAGE: %s. \nSTACK TRACE:\n%s", 
-                $_SERVER['REMOTE_ADDR'], 
-                $errors->exception->getMessage(),
-                $errors->exception->getTraceAsString()
-            );
-            
-            $logger['errors']->notice($message);
-            //$logger['errors']->debug($errors->exception->getMessage() . "\n" . );
+        if ($this->getInvokeArg('env') == 'development') {
+	        $logger = Zend_Registry::get('logs');
+	        if(isset($logger['errors'])) {
+	            $message = sprintf(
+	                "FROM: %s. \nURI: %s\nMESSAGE: %s. \nSTACK TRACE:\n%s", 
+	                $_SERVER['REMOTE_ADDR'],
+					$errors->request->getRequestUri(),
+	                $errors->exception->getMessage(),
+	                $errors->exception->getTraceAsString()
+	            );
+	            
+	            $logger['errors']->notice($message);
+	            //$logger['errors']->debug($errors->exception->getMessage() . "\n" . );
+	        }
+        } else {
+                if($errors->type == Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER) {
+                        $message = sprintf(
+                                "FROM: %s<br />URI: %s<br />MESSAGE: %s<br /><br />STACK TRACE: <br />%s",
+                                $_SERVER['REMOTE_ADDR'],
+                                                $errors->request->getRequestUri(),
+                                $errors->exception->getMessage(),
+                                nl2br($errors->exception->getTraceAsString())
+                        );
+                                $mail = new Zend_Mail();
+                                $subject = "Massidea.org - ErrorController";
+
+                        $mail->setBodyHtml($message);
+                        $mail->setFrom('no-reply@massidea.org', 'Massidea.org');
+                        $mail->addTo('main@massidea.flowdock.com');
+                        $mail->setSubject($subject);
+                        $mail->send();
+                }
         }
         
         // pass the environment to the view script so we can conditionally 

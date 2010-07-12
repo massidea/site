@@ -161,3 +161,15 @@ div.user_summary_list_without_stats{
 .smallsize_finfo_border {
     border-left: 6px solid #FFC726;
 }
+
+#content #add-content-page #Createacampaign .input-column-website1,
+#content #add-content-page #add_group_form .input-column-website1 {  width:119px; float:left; text-align:right; margin-right:10px; margin-bottom:8px; }
+#content #add-content-page #Createacampaign .input-column-website2,
+#content #add-content-page #add_group_form .input-column-website2 { width:120px; float:left;  margin-right:15px;  margin-bottom:8px; }
+#content #add-content-page #Createacampaign .input-column-website3,
+#content #add-content-page #add_group_form .input-column-website3 {  width:120px; float:left;  margin-bottom:8px; }
+
+#content #add-content-page #Createacampaign .input-column-website2 input,
+#content #add-content-page #add_group_form .input-column-website2 input { width:120px; }
+#content #add-content-page #Createacampaign .input-column-website3 input,
+#content #add-content-page #add_group_form .input-column-website3 input { width:120px; }

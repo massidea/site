@@ -70,21 +70,31 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
             unset($formdata['save']);
         if (isset($formdata['cancel']))
             unset($formdata['cancel']);
-
-        /*
-        if (isset($formdata['birthday'])) {
-            $date = date_parse_from_format("j.n.Y", $formdata['birthday']);
-            if ($date['day'] < 10)
-                $date['day'] = '0'.$date['day'];
-            if ($date['month'] < 10)
-                $date['month'] = '0'.$date['month'];
-            $formdata['birthday'] = $date['year'].'-'.$date['month'].'-'.$date['day'];
-        }*/
+        if (isset($formdata['weblinks_name_site1']))
+            unset($formdata['weblinks_name_site1']);
+        if (isset($formdata['weblinks_url_site1']))
+            unset($formdata['weblinks_url_site1']);
+        if (isset($formdata['weblinks_name_site2']))
+            unset($formdata['weblinks_name_site2']);
+        if (isset($formdata['weblinks_url_site2']))
+            unset($formdata['weblinks_url_site2']);
+        if (isset($formdata['weblinks_name_site3']))
+            unset($formdata['weblinks_name_site3']);
+        if (isset($formdata['weblinks_url_site3']))
+            unset($formdata['weblinks_url_site3']);
+        if (isset($formdata['weblinks_name_site4']))
+            unset($formdata['weblinks_name_site4']);
+        if (isset($formdata['weblinks_url_site4']))
+            unset($formdata['weblinks_url_site4']);
+        if (isset($formdata['weblinks_name_site5']))
+            unset($formdata['weblinks_name_site5']);
+        if (isset($formdata['weblinks_url_site5']))
+            unset($formdata['weblinks_url_site5']);
 
         // needs replacing to single setValue($id, $key, $val, $pub)! <--- Is this some old comment?
         foreach ($formdata as $key => $val) {                                   // go through data
             if ($key != "email" && $key != "password"                           // ignore certain keys...
-                && $key != "notifications" && $val != "")                       // ignore
+                && $key != "notifications")                                     // ignore
             {
                 $publicity = strpos($key,'_publicity');                         // returns true if publicitied
                 if($publicity !== false) {                                      // note the use of !== (not !=), this operator must be used since strpos can return boolean and integer values
