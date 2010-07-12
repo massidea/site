@@ -1,5 +1,5 @@
 <?php 
-
+  
 $url_getUserContents = $this->url(array('controller' => 'ajax',
 							 'action' => 'getusercontents',
 							 'language' => $this->language), 
@@ -43,10 +43,11 @@ var loading = "<img src=\""+loader+"\" /><span> Please wait...</span>";
 var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
 var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 
+
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php $this->headScript()->appendFile($this->baseUrl('/js/userlist.js')); ?>
-
+ 
 <div id="user_list">
 
 <span class="user_list_title">Users</span>
@@ -226,9 +227,17 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 <?php endif; ?>
 </div>
 <?php else: ?>
+
 <div class="user_list_top_list">
-	<div class="user_list_">
-	</div>
+<?php $i = 1;
+	 foreach($this->top as $top) : ?>
+	<?php if($i % 2):?> <div class="user_list_top_line"> <?php endif; ?>
+		<?php echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); ?>
+	<?php if($i % 2 == 0):?> </div> <?php endif; ?>
+<?php 
+		$i++;
+		endforeach; 
+?>
 </div>
 <?php endif; ?>
  </div>

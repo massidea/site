@@ -2,6 +2,7 @@ $(document).ready(function(){
 	
 	complete_city(userCities);
 	
+	if(userIds) {
 	$.each(userIds, function() {
 		var id = this;
 		$("#user_"+this+"_list_more").click(function() {
@@ -67,6 +68,7 @@ $(document).ready(function(){
 			$("#user_"+id+"_charts").slideUp(400);
 		});
 	});	
+	} //End of if userIds
 });
 
 function json_search_contents(listStart,id,div) {

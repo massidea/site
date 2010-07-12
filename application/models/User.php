@@ -650,15 +650,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         if($groupName == "userInfo")
        		$output = $this->sortByUserInfo($userIDList, $sort, $list);
         elseif($groupName == "contentInfo")
-        	$output = $this->sortUsersByContentInfo($userIDList, $sort, $list);
+        	$output = $this->sortUsersByContentInfo($userIDList, $sort, $list, null);
         elseif($groupName == "contentViews")
-        	$output = $this->sortUsersByViews($userIDList, $sort, $list);
+        	$output = $this->sortUsersByViews($userIDList, $sort, $list, null);
         elseif($groupName == "contentRatings")
-        	$output = $this->sortUsersByRating($userIDList, $sort, $list);
+        	$output = $this->sortUsersByRating($userIDList, $sort, $list, null);
         elseif($groupName == "contentPopularity")
-        	$output = $this->sortUsersByPopularity($userIDList, $sort, $list);	
+        	$output = $this->sortUsersByPopularity($userIDList, $sort, $list, null);	
         elseif($groupName == "contentComments")	
-        	$output = $this->sortUsersByComments($userIDList, $sort, $list);
+        	$output = $this->sortUsersByComments($userIDList, $sort, $list, null);
         return $output;
         
     }
@@ -720,6 +720,100 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     }
     
+    private function finalizeToSortingOrderByUserId($arr1,$arr2) {
+    	$final = array();
+    	foreach($arr1 as $id) {
+    		foreach($arr2 as $data) {
+    			if ($data['id_usr'] == $id) {
+    				$final[] = $data;
+    				continue 2;
+    			}
+    		}
+    	}
+    	return $final;
+    }
+    /*
+     * getTopUsers
+     * 
+     * This function retrieves data of all top users into an array and returns it.
+     * 
+     * @return array
+     * @author Jari Korpela
+     */
+    public function getTopUsers($limit = 10) {
+    	$topList = array();
+    	$userIds = array();
+    	$userIds = $this->getUserIds();
+
+    	$top = array(
+    		'contentInfo' => array('content' => 'COUNT(id_cnt) desc'),
+			'contentViews' => array('views' => 'COUNT(id_cnt_vws) desc'),
+			'contentPopularity' => array('popularity' => 'COUNT(id_usr_vws) desc'),
+			'contentRatings' => array('rating' => 'SUM(rating_crt) desc'),
+			'contentComments' => array('comments' => 'COUNT(id_cmt) desc')
+    	);
+        
+    	$topContents = $this->sortUsersByContentInfo($userIds,$top['contentInfo']['content'],null,$limit);
+    	$topViews = $this->sortUsersByViews($userIds,$top['contentViews']['views'],null,$limit);
+    	$topPopularity = $this->sortUsersByPopularity($userIds,$top['contentPopularity']['popularity'],null,$limit);
+    	$topRatings = $this->sortUsersByRating($userIds,$top['contentRatings']['rating'],null,$limit);
+    	$topComments = $this->sortUsersByComments($userIds,$top['contentComments']['comments'],null,$limit);
+    	
+    	$topContentsContentCount = $this->getUsersContentCount($topContents);
+    	$topContentsContentCount2 = array();
+    	foreach($topContentsContentCount as $user) { $topContentsContentCount2[] = array('id_usr' => $user['id_usr'], 'value' => $user['contentCount']); }
+    	$topContentsContentCount = $topContentsContentCount2;
+    	$topContentsInfo = $this->getUserInfo($topContents);
+    	$topContentsMerge = $this->intersectMergeArray($topContentsContentCount,$topContentsInfo);
+        $topContents = $this->finalizeToSortingOrderByUserId($topContents,$topContentsMerge);
+        
+        $topViewsViewCount = $this->getUsersViews($topViews);
+        $topViewsInfo = $this->getUserInfo($topViews);
+        $topViewsMerge = $this->intersectMergeArray($topViewsViewCount,$topViewsInfo);
+        $topViews = $this->finalizeToSortingOrderByUserId($topViews,$topViewsMerge);
+        
+        $topPopularityReadersCount = $this->getUsersPopularity($topPopularity);
+        $topPopularityInfo = $this->getUserInfo($topPopularity);
+        $topPopularityMerge = $this->intersectMergeArray($topPopularityReadersCount,$topPopularityInfo);
+        $topPopularity = $this->finalizeToSortingOrderByUserId($topPopularity,$topPopularityMerge);
+        
+        $topRatingsRatingsSum = $this->getUsersRating($topRatings);
+        $topRatingsInfo = $this->getUserInfo($topRatings);
+        $topRatingsMerge = $this->intersectMergeArray($topRatingsRatingsSum,$topRatingsInfo);
+        $topRatings = $this->finalizeToSortingOrderByUserId($topRatings,$topRatingsMerge);
+        
+        $topCommentsCommentCount = $this->getUsersCommentCount($topComments);
+        $topCommentsInfo = $this->getUserInfo($topComments);
+        $topCommentsMerge = $this->intersectMergeArray($topCommentsCommentCount,$topCommentsInfo);
+        $topComments = $this->finalizeToSortingOrderByUserId($topComments,$topCommentsMerge);
+    	
+        $topContents = array('contentCount' => array('name' => 'contents', 'users' => $topContents));
+	   	$topViews = array('views' => array('name' => 'views', 'users' => $topViews));
+    	$topPopularity = array('popularity' => array('name' => 'popularity', 'users' => $topPopularity));
+    	$topRatings = array('ratings' => array('name' => 'ratings', 'users' => $topRatings));
+    	$topComments = array('comments' => array('name' => 'comments', 'users' => $topComments));
+    	
+    	$topList = array_merge($topContents,$topViews,$topPopularity,$topRatings,$topComments);
+    	
+    	return $topList;
+    } 
+    
+    
+    /*
+     * getUserIds
+     * 
+     * This function retrieves all user ID:s
+     * 
+     * @return array
+     * @author Jari Korpela
+     */
+    private function getUserIds() {
+    	$select = $this->select()->from($this, 'id_usr')
+                                 ->order('id_usr');
+        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr');
+        return $result;
+    } 
+    
     /*
      * getUsersLocation
      * 
@@ -774,6 +868,104 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	   }
        return $list;                             
     }
+     
+    /*
+     * getUsersViews
+     * 
+     * gets users views count
+     * 
+     * @param array $userIDList
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function getUsersViews($userIDList) {
+
+    	$select = $this->_db->select()->from('cnt_views_vws',
+    									array('id_usr' => 'id_usr_vws',
+    										'value' => 'COUNT(id_cnt_vws)'))
+    							->where('id_usr_vws IN (?)',$userIDList)
+    							->group('id_usr_vws')
+    							->order('id_usr_vws')
+    							;
+    							
+        $result = $this->_db->fetchAll($select); 
+        
+		return $result;
+    }    
+    
+    /*
+     * getUsersPopularity
+     * Popularity means how many unique users has viewed users contents
+     * 
+     * @param array $userIDList
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function getUsersPopularity($userIDList) {
+
+    	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
+    									array('id_usr'))
+    									->joinLeft(array('vws' => 'cnt_views_vws'),
+    											'cnt.id_cnt = vws.id_cnt_vws',
+    									array('value' => 'COUNT(id_usr_vws)'))
+    							->where('cnt.id_usr IN (?)',$userIDList)
+    							->group('cnt.id_usr')
+    							->order('cnt.id_usr')
+    							;
+        $result = $this->_db->fetchAll($select);
+
+		return $result;
+    }
+    
+    /*
+     * getUsersRating
+     * 
+     * Gets users rating sum
+     * 
+     * @param array $userIDList
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function getUsersRating($userIDList) {
+
+    	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
+    									array('id_usr'))
+    									->joinLeft(array('crt' => 'content_ratings_crt'),
+    												'crt.id_cnt_crt = cnt.id_cnt',
+    												array('value' => 'SUM(rating_crt)'))
+    							->where('id_usr IN (?)',$userIDList)
+    							->group('id_usr')
+    							->order('id_usr')
+    							;
+					
+        $result = $this->_db->fetchAll($select);
+
+		return $result;
+    }
+    
+    /*
+     * getUsersCommentCount
+     * 
+     * Gets users comment count
+     * 
+     * @param array $userIDList
+     * @return $resultList
+     * @author Jari Korpela
+     */   
+    private function getUsersCommentCount($userIDList) {
+
+    	$select = $this->_db->select()->from('comments_cmt',
+    									array('id_usr' => 'id_usr_cmt',
+    										'value' => 'COUNT(id_cmt)'))
+    							->where('id_usr_cmt IN (?)',$userIDList)
+    							->group('id_usr_cmt')
+    							->order('id_usr_cmt')
+    							;
+
+        $result = $this->_db->fetchAll($select); 
+ 
+		return $result;
+    }       
     
     /*
      * getUserContentRatings
@@ -930,16 +1122,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return $resultList
      * @author Jari Korpela
      */    
-    private function sortUsersByContentInfo($userIDList, $sort, $list) {
+    private function sortUsersByContentInfo($userIDList, $sort, $list, $limit) {
     	$content = new Default_Model_ContentHasUser(); 
     	$select = $content->select()->from('cnt_has_usr',
     									array('id_usr'))
     							->where('id_usr IN (?)',$userIDList)
     							->order($sort)
-    							->group('id_usr')
+    							->group('id_usr')    							
     							;
+    	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($content->_db->fetchAll($select),'id_usr');
-		$result = $this->addMissingIdsToResult($result, $userIDList, $list);
+		if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
         
         return $result;
     }
@@ -975,7 +1168,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return $resultList
      * @author Jari Korpela
      */   
-    private function sortUsersByViews($userIDList, $sort, $list) {
+    private function sortUsersByViews($userIDList, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('cnt_views_vws',
     									array('id_usr_vws'))
@@ -983,8 +1176,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->group('id_usr_vws')
     							->order($sort)
     							;
+    	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws'); 
-        $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
         
 		return $result;
     }
@@ -999,7 +1193,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return $resultList
      * @author Jari Korpela
      */   
-    private function sortUsersByComments($userIDList, $sort, $list) {
+    private function sortUsersByComments($userIDList, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('comments_cmt',
     									array('id_usr_cmt'))
@@ -1007,8 +1201,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->group('id_usr_cmt')
     							->order($sort)
     							;
+    	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt'); 
-        $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
         
 		return $result;
     }    
@@ -1023,7 +1218,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return $resultList
      * @author Jari Korpela
      */   
-    private function sortUsersByPopularity($userIDList, $sort, $list) {
+    private function sortUsersByPopularity($userIDList, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
@@ -1034,9 +1229,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->group('cnt.id_usr')
     							->order($sort)
     							;
+    	if($limit) $select->limit($limit,0);
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
-        $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
         
 		return $result;
     }
@@ -1051,7 +1247,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return $resultList
      * @author Jari Korpela
      */   
-    private function sortUsersByRating($userIDList, $sort, $list) {
+    private function sortUsersByRating($userIDList, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
@@ -1062,10 +1258,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->group('id_usr')
     							->order($sort)
     							;
-    							
+    	if($limit) $select->limit($limit,0);						
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
-        $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
         
 		return $result;
     }
