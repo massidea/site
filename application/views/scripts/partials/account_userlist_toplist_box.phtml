@@ -15,7 +15,7 @@
 				<span class="user_list_top_box_description"><?php echo $this->description; echo $this->users[0]['value'] ?></span>
 			</div>
 			<div class="user_list_top_box_right">
-				<div class="user_list_top_box_runnerups">Runner ups:</div>
+				<div class="user_list_top_box_runnerups">#<span class="user_list_top_box_runnerups_title_name">Runner-ups</span><span class="user_list_top_box_runnerups_title_points">Points</span></div>
 				<div class="user_list_top_box_runnerupsbox">
 				<?php $i = 1; foreach($this->users as $user): ?>
 					<?php if($i != 1): ?>
@@ -26,7 +26,8 @@
 							 'user' => $user['login_name_usr'],
 							 'language' => $this->language), 
 							 'lang_default', true); ?>" class="user_list_top_box_runnerups_names" style="text-decoration: none;">
-							<?php echo $user['login_name_usr']; ?>(<?php echo $user['value']; ?>)</a>
+							<?php echo $user['login_name_usr']; ?></a>
+							<span class="user_list_top_box_runnerups_value"><?php echo $user['value']; ?></span>
 					</div>
 					<?php endif; ?>
 				<?php $i++; endforeach; ?>

@@ -229,15 +229,22 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 <?php else: ?>
 
 <div class="user_list_top_list">
-<?php $i = 1;
-	 foreach($this->top as $top) : ?>
-	<?php if($i % 2):?> <div class="user_list_top_line"> <?php endif; ?>
-		<?php echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); ?>
-	<?php if($i % 2 == 0):?> </div> <?php endif; ?>
-<?php 
+	<div class="user_list_top_line">
+<?php $i = 0;
+	foreach($this->top as $top) { 
+		if($i % 3 == 0 && $i != 0) { ?>
+			</div> 
+			<div class="user_list_top_line">
+			<?php 
+				 echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); 
+		} else { 
+			echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); 
+		}
 		$i++;
-		endforeach; 
+	}
+	
 ?>
+	</div>
 </div>
 <?php endif; ?>
  </div>
