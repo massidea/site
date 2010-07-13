@@ -1162,6 +1162,11 @@ class AccountController extends Oibs_Controller_CustomController
             return;
         }
 
+        $url_array = array('controller' => 'account', 
+                           'action' => 'userlist',
+                           'language' => $this->view->language);
+        
+        $url = $this->_urlHelper->url($url_array,'lang_default', true); 
         // Get requests
         $params = $this->getRequest()->getParams();
         
@@ -1187,14 +1192,14 @@ class AccountController extends Oibs_Controller_CustomController
 		else $listName = "ascending";
 		
         $orderList = array(
-			"username" => "Users are now sorted in alphabetical $listName order by Usernames.",
+			"username" => "Users are now sorted in $listName alphabetical order by Usernames.",
         	"login" => "Users are now sorted in $listName order by their last login times.",
 			"joined" => "Users are now sorted in $listName order by their account creation time.",
 			"content" => "Users are now sorted in $listName order by the content amount they have published.",
 			"views" => "Users are now sorted in $listName order by the amount of unique contents that the users have viewed.",
 			"rating" => "Users are now sorted in $listName order by the sum of their contents positive and negative votes.",
 			"popularity" => "Users are now sorted in $listName order by the amount of views that unique users have viewed listed users unique contents.",
-        	"comments" => "Users are now sorted in $listName order by the amount of comments they have made.",
+        	"comments" => "Users are now sorted in $listName order by the amount of comments they have made to contents.",
 		);
 		
         $userLocations = $this->getAllCitiesAndCountries();
@@ -1214,44 +1219,72 @@ class AccountController extends Oibs_Controller_CustomController
         $formData['city'] = str_replace($pat_def,$pat_sql,$formData['city']);
         $formData['group'] = str_replace($pat_def,$pat_sql,$formData['group']);
         
-        $listSize = 1;
-        // Get user listing
         $userModel = new Default_Model_User();
-        $userListing = $userModel->getUserListing($formData, $page, $count, $order, $list, $listSize);
+        //This is code to fetch search results
+        if($url != $this->_urlHelper->url()) {
+	        $listSize = 1;
+	        
+	        // Get user listing
+	        $userListing = $userModel->getUserListing($formData, $page, $count, $order, $list, $listSize);
+	
+	        $userContents = array();
+	        $cache = Zend_Registry::get('cache');
+	        foreach($userListing as $user) {
+	        	// Get cache from registry
+	        	if(is_array($user['contents']) && sizeof($user['contents']) > 0) {
+	        		//Content ID:s are saved to cache which is used by ajax in user search
+					$cache->save($user['contents'], 'UserContentsList_'.$user['id_usr']);
+					$contentsArray = $userModel->getUserContentList($user['contents'],3);
+	        	}
+	        	else $contentsArray = null;
+	
+	        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
+	        		$userContents[$user['id_usr']] = array();
+	        	else $userContents[$user['id_usr']] = $contentsArray;
+	        }
+	        $userIdList = array();
+	        foreach($userListing as $u) {
+	        	$userIdList[] = $u['id_usr']; 
+	        }
+	        
+	        // Calculate total page count
+	        $pageCount = ceil($listSize / $count);
+        } else { //Here is Top list code :)
+        	
+        	$cache = Zend_Registry::get('cache');
 
-        $userContents = array();
-        $cache = Zend_Registry::get('cache');
-        foreach($userListing as $user) {
-        	// Get cache from registry
-        	if(is_array($user['contents']) && sizeof($user['contents']) > 0) {
-				$cache->save($user['contents'], 'UserContentsList_'.$user['id_usr']);
-				$contentsArray = $userModel->getUserContentList($user['contents'],3);
-        	}
-        	else $contentsArray = null;
-
-        	if (!is_array($contentsArray) || sizeof($contentsArray) < 1)
-        		$userContents[$user['id_usr']] = array();
-        	else $userContents[$user['id_usr']] = $contentsArray;
-        }
-        $userIdList = array();
-        foreach($userListing as $u) {
-        	$userIdList[] = $u['id_usr']; 
-        }
-        
-        // Calculate total page count
-        $pageCount = ceil($listSize / $count);
-                        
+			if(!$resultList = $cache->load('UserTopList')) {
+				$topList = $userModel->getTopUsers(10);
+				$cache->save($topList, 'UserTopList');
+	
+			} else {
+				$topList = $resultList;
+			}
+		
+        	$topList['contentCount']['title'] = "Most contents";
+        	$topList['views']['title'] = "Most viewed contents";
+        	$topList['popularity']['title'] = "Most popular";
+        	$topList['ratings']['title'] = "Highest rating";
+        	$topList['comments']['title'] = "Most comments";
+        	
+        	$topList['contentCount']['description'] = "Has content count of ";
+        	$topList['views']['description'] = "Has view count of ";
+        	$topList['popularity']['description'] = "Has reader count of ";
+        	$topList['ratings']['description'] = "Has rating sum of ";
+        	$topList['comments']['description'] = "Has comment count of ";
+        	
+        }                
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
-        
-        $url = $this->_urlHelper->url(array('controller' => 'account', 
-                                            'action' => 'userlist',
-                                            'language' => $this->view->language),
-                                      'lang_default', true); 
-          
-        $userSearch->setAction($url)
+
+        $order = isset($order) ? $order : "username";
+        $list = isset($list) ? $list : "asc";
+        $form_url = $this->_urlHelper->url(array_merge($url_array,array(
+        									'order' => $order,
+        									'list' => $list)),'lang_default', true);
+        $userSearch->setAction($form_url)
                    ->setMethod('get');
-                           
+                       
         $this->view->userSearch = $userSearch;
         // Custom pagination to fix memory error on large amount of data
         $paginator = new Zend_View();
@@ -1267,9 +1300,10 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->count = $count;
         $this->view->userCount = $listSize;
         $this->view->list = $listName;
+        $this->view->top = $topList;
         $this->view->page = $page;
         $this->view->order = $orderList;
-        $this->view->lastOrder = isset($order) ? $order : "username";
+        $this->view->lastOrder = $order;
         $this->view->cities = $userCities;
         $this->view->countries = $userCountries;
         $this->view->userContents = $userContents;

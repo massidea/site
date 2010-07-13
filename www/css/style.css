@@ -1795,6 +1795,27 @@ form #uploadedFiles_div .form_element_input label {
 .user_list_content_type_idea { color: #4B9B07; }
 .user_list_content_type_problem { color: #D21034;  }
 
+.user_list_top_box_runnerupsbox { display: inline; }
+.user_list_top_box_runnerups_line { display: block; padding-bottom: 3px; }
+.user_list_top_box_runnerups_line div { display: inline; }
+.user_list_top_box_title, .user_list_top_box_image, .user_list_top_box_user, .user_list_top_box_description { display: block; }
+.user_list_top_box_left, .user_list_top_box_right { display: inline; vertical-align: top; }
+.user_list_top_box { display: inline-block; padding: 5px; margin-right: 11px; width: 30%; vertical-align: top; background-color: #EEEEEE; }
+.user_list_top_line { display: table; padding-bottom: 5px; width: 100% }
+.user_list_top_list { display: block; }
+.user_list_top_box_title { font-size: 18px; font-weight: bold; vertical-align: top; padding-bottom: 5px; }
+.user_list_top_box_runnerups { font-weight: bold; margin-bottom: 5px; }
+.user_list_top_box_runnerups_title_name { padding-left: 13px; }
+.user_list_top_box_runnerups_title_points { float: right; }
+.user_list_top_box_runnerups_value { float:right; }
+.user_list_top_box_runnerups_rank { font-weight: bold; float:left; width: 20px; }
+.user_list_top_box_runnerups_names { display: inline; }
+.user_list_top_box_right { width: 100px; padding-top: 5px; }
+.user_list_top_box_left { padding-right: 5px; }
+.user_list_top_box_description { text-align:center; font-weight: bold; }
+.user_list_top_box_user { font-size: 16px; text-align:center; font-weight: bold; padding-top: 4px; }
+.user_list_top_box_image { margin-left:auto; margin-right:auto; }
+
 #view_content_left_header_top_add_this {
     float: left;
     margin: 0 0 0 1em;
