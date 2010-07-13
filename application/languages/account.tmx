@@ -454,6 +454,38 @@
 		]]></seg></tuv>
 		<tuv xml:lang="fi"><seg>Voit käyttää haussa % tai * jokerimerkkinä ja _ tai ? merkkiä yhden merkin korvausmerkkinä. Haku käyttää automaattisesti jokerimerkkejä tekstin molemmin puolin.</seg></tuv>
 	</tu>
+	<tu tuid='userlist-orderlist-username'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s alphabetical order by Usernames.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s aakkosjärjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>
+	<tu tuid='userlist-orderlist-login'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s order by their last login times.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>
+	<tu tuid='userlist-orderlist-joined'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s order by their account creation time.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>
+	<tu tuid='userlist-orderlist-content'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s order by the content amount they have published.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>
+	<tu tuid='userlist-orderlist-views'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s order by the amount of unique contents that the users have viewed.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>
+	<tu tuid='userlist-orderlist-rating'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s order by the sum of their contents positive and negative votes.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>
+	<tu tuid='userlist-orderlist-popularity'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s order by the amount of views that unique users have viewed listed users unique contents.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>
+	<tu tuid='userlist-orderlist-comments'>
+		<tuv xml:lang="en"><seg>Users are now sorted in %s order by the amount of comments they have made to contents.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
+	</tu>	
 	<tu tuid='account-userlist-user-content-added'>
 		<tuv xml:lang="en"><seg>User has added %s content.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjä on lisännyt %s sisältöä.</seg></tuv>

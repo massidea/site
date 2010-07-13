@@ -13,8 +13,9 @@
 							 'language' => $this->language), 
 							 'lang_default', true); ?>" class="user_list_top_box_user" style="text-decoration: none"><?php echo $this->users[0]['login_name_usr']; ?></a>
 				<span class="user_list_top_box_description"><?php echo $this->description; echo $this->users[0]['value'] ?></span>
+				<div class="user_list_top_box_show_more"><a id="user_list_top_box_show_more_link_<?php echo $this->name; ?>" href="#" onClick="return false;" style="text-decoration: none;"><img src="<?php echo $this->baseUrl('/images/arrow_down.png'); ?>"/></a></div>
 			</div>
-			<div class="user_list_top_box_right">
+			<div class="user_list_top_box_right" id="user_list_top_box_right_<?php echo $this->name; ?>" style="display:none">
 				<div class="user_list_top_box_runnerups"><span class="user_list_top_box_runnerups_title_rank">#</span><span class="user_list_top_box_runnerups_title_name">Runner-ups</span><span class="user_list_top_box_runnerups_title_points">Points</span></div>
 				<div class="user_list_top_box_runnerupsbox">
 				<?php $i = 1; foreach($this->users as $user): ?>
