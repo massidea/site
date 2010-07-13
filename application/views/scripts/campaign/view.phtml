@@ -82,6 +82,55 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <div class="clear dot-line-200"></div>
         </div>
         <?php endif; ?>
+        <div>
+            <p>
+                <strong>Linked campaigns: </strong>
+                <br />
+                <ul>
+                    <?php //var_dump($this->linkedcampaigns); ?>
+                    <?php
+                    foreach($this->linkedcampaigns as $campaign) {
+                        $cmpurl = $this->url(array('cmpid'      => $campaign['id_cmp'],
+                                                   'language'   => $this->language),
+                                             'campaign_view', true);
+                        $grpurl = $this->url(array('groupid'    => $campaign['id_grp_cmp'],
+                                                   'language'   => $this->language),
+                                             'group_shortview', true);
+                        ?>
+                        <li class="linked_campaigns">
+                            <div class="linked_campaigns">
+                                <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
+                                <strong><a href="<?php echo $cmpurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+            </p>
+            <?php
+            $addcampaigns = $this->url(
+                                array(
+                                    'controller' => 'campaign',
+                                    'action'     => 'linkcampaign',
+                                    'language'   => $this->language,
+                                    'cmpid'      => $this->campaign["id_cmp"]
+                                 ), 'lang_default', true
+                            );
+            $editcampaignlinks = $this->url(
+                                array(
+                                    'controller' => 'campaign',
+                                    'action'     => 'unlinkcampaign',
+                                    'language'   => $this->language,
+                                    'cmpid'      => $this->campaign["id_cmp"]
+                                 ), 'lang_default', true
+                            );
+             ?>
+            <p><a href="<?php echo $addcampaigns; ?>">Add campaigns</a></p>
+            <?php if ($this->userIsGroupAdmin): ?>
+                <p><a href="<?php echo $editcampaignlinks; ?>">Edit campaign links</a></p>
+            <?php endif; ?>
+        </div>
     </div>
     <div id="activity" class="right">
         <div class="left">
@@ -103,10 +152,17 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                             'id'         => $this->campaign["id_cmp"]
                          ), 'lang_default', true
                     );
+                    $adminuncontentlink = $this->url(
+                        array(
+                            'relatestoid' => $this->campaign['id_cmp'],
+                            'groupid'     => $this->campaign['id_grp_cmp'],
+                            'language' => $this->language),
+                            'adminunlinkcampaign', true
+                    );
                 ?>
                 <p class="link" style="text-align: right; padding-top: 10px;">
                     <a href="<?php echo $editlink; ?>">Edit campaign</a> |
-                    <!--<a href="#">Edit campaign links</a> |-->
+                    <a href="<?php echo $adminuncontentlink; ?>">Edit content links</a> |
                     <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete campaign</a>
                 </p>
                 <?php endif; ?>

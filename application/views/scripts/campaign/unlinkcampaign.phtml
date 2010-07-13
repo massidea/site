@@ -1,0 +1,84 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div class="linking">
+<h3 class="linking_header">Unlink from campaign</h3>
+<?php
+if($this->cmpid != 0 && $this->hasUserCampaigns == true) {
+?>
+    <div id="linked_to">
+        <div id="linked_to_where">
+            <p class="linking_paragraph">Campaign</p>
+        </div>
+        <div id="linked_to_where_name">
+            <p class="linking_paragraph"><a href="<?php echo $this->url(array('cmpid'    => $this->cmpid,
+                                                                              'language' => $this->language),
+                                                                        'campaign_view', true); ?>">
+                <?php
+                    if(strlen($this->cmp['name_cmp']) > 68) {
+                        $this->cmp['name_cmp'] = substr($this->cmp['name_cmp'], 0, 68) . "...";
+                    }
+                    echo $this->cmp['name_cmp'];
+                ?>
+            </a></p>
+        </div>
+    </div>
+    <p class="linking_help_text">Help text</p>
+    <?php
+    if($this->usrcmp) {
+        foreach($this->usrcmp as $campaign) {
+            ?>
+            <div class="linking_dot_line"></div>
+            <div class="linking_from">
+                <div class="linking_from_name">
+                    <?php
+                    $cmpurl = $this->url(array('cmpid'      => $campaign['id_cmp'],
+                                               'language'   => $this->language),
+                                         'campaign_view', true);
+                    $grpurl = $this->url(array('groupid'    => $campaign['id_grp_cmp'],
+                                               'language'   => $this->language),
+                                         'group_shortview', true);
+                    ?>
+                    <div class="linking_from_campaign">
+                        <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
+                        <strong><a href="<?php echo $cmpurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
+                        <p class="linking_from_text"><?php echo $campaign['ingress_cmp']; ?></p>
+                    </div>
+                </div>
+                <div class="linking_from_link">
+                    <?php
+                    $linkurl = $this->url(array('controller'  => 'campaign',
+                                                'action'      => 'removecampaignlink',
+                                                'parentcmpid' => $this->cmpid,
+                                                'childcmpid'  => $campaign['id_cmp'],
+                                                'language'    => $this->language),
+                                          'lang_default', true);
+                    ?>
+                    <a href="<?php echo $linkurl; ?>">Remove link</a>
+                </div>
+            </div>
+            <div class="clear">&nbsp;</div>
+            <?php
+        }
+        ?> <div class="linking_dot_line"></div> <?php
+    }
+} else {
+    ?>
+    <p>No campaigns to unlink.</p>
+    <?php
+}
+?>
+</div>
+
+<div id="sidebar" style="margin-left:20px; margin-right:0;">
+    <div class="box">
+        <h4>What is campaign linking?</h4>
+        <div class="box-content">
+            <p><strong></strong><br />
+            </p>
+
+            <p><strong></strong><br />
+            </p>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

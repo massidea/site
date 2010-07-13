@@ -244,7 +244,7 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         $results = $this->fetchAll($select);
         foreach ($results as $result)
         {
-        	$collection[$result->profile_key_usp] = htmlentities($result->profile_value_usp);
+        	$collection[$result->profile_key_usp] = htmlspecialchars($result->profile_value_usp);
         }
         // Change gender to M or N
         if (isset($collection['gender']) && $collection['gender'] == 1)

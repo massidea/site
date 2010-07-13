@@ -504,6 +504,71 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } // end of getUserContent
 
+    /**
+     * getUserCampaigns - Get all campaigns which belong to group where user is admin
+     *
+     * @author Mikko Korpinen
+     * @param int $id_usr
+     * @return array
+     */
+    public function getUserCampaigns($id_usr) {
+        $result = array();
+
+        $campaignSelect = $this->_db->select()
+                                           ->from(array('ghau' => 'grp_has_admin_usr'),
+                                                  array('id_usr', 'id_grp'))
+                                           ->joinLeft(array('cc' => 'campaigns_cmp'),
+                                                  'cc.id_grp_cmp = ghau.id_grp',
+                                                  array('id_cmp', 'id_grp_cmp', 'name_cmp', 'ingress_cmp', 'description_cmp'))
+                                           ->joinLeft(array('ugg' => 'usr_groups_grp'),
+                                                  'ghau.id_grp = ugg.id_grp',
+                                                  array('id_grp', 'group_name_grp'))
+                                           ->where('ghau.id_usr = ?', $id_usr)
+                                           ->order('ghau.id_grp ASC')
+                                           ->group('cc.id_cmp')
+                                           ;
+
+        $result = $this->_db->fetchAll($campaignSelect);
+
+        $i = 0;
+        foreach($result as $r) {
+            if ($r['id_cmp'] == NULL)
+                unset($result[$i]);
+            $i++;
+        }
+
+        return $result;
+    }
+
+    /**
+     * getUserGroups - Get all groups where user is admin
+     *
+     * @author Mikko Korpinen
+     * @param int $id_usr
+     * @return array
+     */
+    public function getUserGroups($id_usr) {
+        $result = array();
+
+        $groupSelect = $this->_db->select()
+                                           ->from(array('ghau' => 'grp_has_admin_usr'),
+                                                  array('id_usr', 'id_grp'))
+                                           ->joinLeft(array('ugg' => 'usr_groups_grp'),
+                                                  'ghau.id_grp = ugg.id_grp',
+                                                  array('id_grp', 'group_name_grp', 'description_grp', 'body_grp'))
+                                           ->joinLeft(array('uu' => 'users_usr'),
+                                                  'uu.id_usr = ghau.id_usr',
+                                                  array('id_usr', 'login_name_usr'))
+                                           ->where('ghau.id_usr = ?', $id_usr)
+                                           ->order('ghau.id_grp ASC')
+                                           ->group('ugg.id_grp')
+                                           ;
+
+        $result = $this->_db->fetchAll($groupSelect);
+
+        return $result;
+    }
+
     public function getSimpleUserDataById($id = -1) 
     {
         $data = array();
