@@ -1,7 +1,8 @@
 $(document).ready(function(){
-
+	
 	complete_city(userCities);
 	
+	if(userIds) {
 	$.each(userIds, function() {
 		var id = this;
 		$("#user_"+this+"_list_more").click(function() {
@@ -35,15 +36,39 @@ $(document).ready(function(){
 				$("#user_"+id+"_content_link").attr('name','complete');
 			}
 		});
-		$("input#user_"+id+"_content").focus(function() {
+		$("input#user_"+this+"_content").focus(function() {
 			$(this).click();
 		});
 		$("input#user_"+this+"_content").result(function(event, data, formatted) {
 			 $("#user_"+id+"_content_link").attr('action', function() {
 			 	return contentView+'/'+data.id_cnt;
 			 });
-		});		
+		});
+		$("#user_list_user_"+this+"_statistics_load_graphs").click(function() {
+			if($("#user_list_user_"+id+"_statistics_load_graphs").attr('name') != 'complete') {
+				$("#user_list_user_"+id+"_statistics_load_graphs").hide();
+				$("#user_list_"+id+"_show_graphs_loading").html(loading).show();
+				getUserStatisticsGraphs(id);
+				$("#user_list_user_"+id+"_statistics_load_graphs").attr('name','complete');
+			}
+			else {
+				var attr = $("#user_"+id+"_charts").css('display');
+				if(attr == 'none') {
+					$("#user_"+id+"_charts").slideDown(200);
+					$("#user_list_user_"+id+"_statistics_load_graphs").html("Hide Graphs");
+				}
+				else {
+					$("#user_"+id+"_charts").slideUp(400);
+					$("#user_list_user_"+id+"_statistics_load_graphs").html("Show graphs");
+				}
+			}
+		});
+		
+		$("#user_list_"+this+"_hide_graphs").click(function() {
+			$("#user_"+id+"_charts").slideUp(400);
+		});
 	});	
+	} //End of if userIds
 });
 
 function json_search_contents(listStart,id,div) {
@@ -165,6 +190,46 @@ function complete_city(result){
 	formatResult: function(row) {
 		return row.name;
 	}
-});
+	});
 
 };
+
+function getUserStatisticsGraphs(user_id) {
+	$.ajax({
+		  url: userStatistics+"/user/"+user_id+"/search/graphs",
+		  dataType: 'json',
+		  success: function(data) {
+			  createGraphs(user_id,data);
+		}	
+	});
+}
+
+function createGraphs(user_id, data) {
+	var graphTypes = [0,0,0];
+	var total = 0;
+	$.each(data, function() {
+		total += parseInt(this.amount);
+		if(this.type == "finfo") graphTypes[0] = parseInt(this.amount);
+		else if(this.type == "idea") graphTypes[1] = parseInt(this.amount);
+		else if(this.type == "problem") graphTypes[2] = parseInt(this.amount);
+	});
+
+	var graphPie = [0,0,0];
+	var i = 0;
+	for(i=0;i<3;i++) {
+		graphPie[i] = Math.round((graphTypes[i]/total)*100);
+	}
+	var data = [$.gchart.series(graphPie, ['FFC726', '4B9B07', 'D21034'])];
+	
+	$("#user_"+user_id+"_typechart").gchart({
+		width: 270, height: 100,
+		title: 'User content distribution',
+		type: 'pie3D',
+		series: data,
+		dataLabels: ['Visions', 'Ideas', 'Problems']
+	}).delay(500).queue(function() {
+		$("#user_list_"+user_id+"_show_graphs_loading").hide();
+		$("#user_list_user_"+user_id+"_statistics_load_graphs").html("Hide graphs").show();
+		$("#user_"+user_id+"_charts").slideDown(200);
+	});
+}

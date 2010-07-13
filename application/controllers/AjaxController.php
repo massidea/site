@@ -175,6 +175,25 @@ class AjaxController extends Oibs_Controller_CustomController
 		$this->view->output = $output;
 	}
 	
+	public function getuserstatisticsAction() {
+		$output = "";
+
+		$params = $this->getRequest()->getParams();
+		$userId = isset($params['user']) ? $params['user'] : null;
+		$search = isset($params['search']) ? $params['search'] : null;
+		$cache = Zend_Registry::get('cache');
+		
+		if(is_numeric($userId) && $search == "graphs") {
+			if($resultList = $cache->load('UserContentsList_'.$userId)) {
+				$statisticsList = array("contentTypes");
+				$userModel = new Default_Model_User();
+				$contentTypes = $userModel->getUserStatistics($userId,$resultList,$statisticsList);
+				$output = json_encode($contentTypes);
+			}
+		}
+		$this->view->output = $output;
+	}
+	
 	public function morefromuserAction() {
 		// Get content owner data
         $userModel = new Default_Model_User();

@@ -7,3 +7,10 @@ div.top_row_center_right_login_links, div.user_content_spacer, div.user_content_
 .add_content_button {cursor: pointer;}
 #add_content_menu { margin-left: -132px; margin-top: 27px;}
 .rsslogo {margin-top: -10px;}
+.user_list_left_side,.user_list_right_side,.user_list_last_login,.user_list_username,.user_list_city,.user_list_country,.user_list_rating,.user_list_rating_amount { float:left; }
+.user_list_moreless { margin-left: 25px; }
+.user_list_last_login { float: right; }
+.user_list_city,.user_list_country,.user_list_rating,.user_list_rating_amount { padding-left: 5px; }
+#user_list_search_form { padding-bottom: 0px; }
+.user_list_top_box, .user_list_top_box_runnerups_rank, .user_list_top_box_runnerups_names, .user_list_top_box_runnerups_title_name, .user_list_top_box_runnerups_title_rank, .user_list_top_box_runnerups_title_points { float: left; }
+.user_list_top_box_runnerups_title_points { padding-left: 95px; }
