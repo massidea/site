@@ -1161,7 +1161,7 @@ class AccountController extends Oibs_Controller_CustomController
             $this->getResponse()->sendResponse();
             return;
         }
-		        
+        
         $url_array = array('controller' => 'account', 
                            'action' => 'userlist',
                            'language' => $this->view->language);
@@ -1251,24 +1251,48 @@ class AccountController extends Oibs_Controller_CustomController
 	        $pageCount = ceil($listSize / $count);
         } else { //Here is Top list code :)
         
+        	$auth = Zend_Auth::getInstance();
+			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
+			
         	$cache = Zend_Registry::get('cache');
-
+        	
+        	$top = new Oibs_Controller_Plugin_TopList();
+        	
 			if(!$resultList = $cache->load('UserTopList')) {
-				$top = new Oibs_Controller_Plugin_TopList();
+				
 				$top->setLimit(10)
 					->setTop("Count")
 					->setTop("View")
 					->setTop("Popularity")
 					->setTop("Rating")
-					->setTop("Comment");
-	        	
-				$topList = $top->getTopList();
-				$cache->save($topList, 'UserTopList');
+					->setTop("Comment")
+					;
+
+				$cache->save($top, 'UserTopList');
 	
 			} else {
-				$topList = $resultList;
+				$top = $resultList;
 			}
+			$topList = $top->getTopList();
+			
+			if($userid) $userTop = $top->addUser($userid)->getAddedUser();
+			
+			$topListMerge = array();
 
+			if($userid) {
+				foreach($topList as $key1 => $list1) {
+					foreach($userTop as $key2 => $top1) {
+						if($key1 == $key2) {
+							$topListMerge[$key1] = array_merge($list1,array('addedUsers' => $top1));
+							continue 2;
+						}
+					}
+					$topListMerge[] = $list1;
+				}
+				$topList = $topListMerge;
+			}
+			//print_r($top->test());die;
+			//print_r($topList);die;
         	$topList['Count']['title'] = "Most contents";
         	$topList['View']['title'] = "Most viewed contents";
         	$topList['Popularity']['title'] = "Most popular";
@@ -1286,15 +1310,15 @@ class AccountController extends Oibs_Controller_CustomController
         		$topNames[] = $top['name'];
         	}
         	
-        }                
+        }
+      
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
 
         $order = isset($order) ? $order : "username";
         $list = isset($list) ? $list : "asc";
-        $form_url = $this->_urlHelper->url(array_merge($url_array,array(
-        									'order' => $order,
-        									'list' => $list)),'lang_default', true);
+        $form_url_path = array_merge($url_array,array('order' => $order,'list' => $list));
+        $form_url = $this->_urlHelper->url($form_url_path,'lang_default', true);
         $userSearch->setAction($form_url)
                    ->setMethod('get');
                        

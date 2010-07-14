@@ -33,6 +33,10 @@ class Oibs_Controller_Plugin_TopList {
 	private		$_userList = array();
 	private		$_topLists = array();
 	private		$_topList = array();
+	private		$_topListIds = array();
+	private		$_addedTops = array();
+	private		$_addedUser = array();
+	
 	private		$_limit = 10;
 
 
@@ -48,6 +52,102 @@ class Oibs_Controller_Plugin_TopList {
 		);
 	}
 
+	/*public function test() {
+		//echo $this->_limit;
+		print_r($this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists['Count'],null,null));
+		print_r($this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists['Count'],null,$this->_limit));
+		die;
+	}*/
+	
+	private function _addUserRank($id) {
+		if(!is_array($id)) $id = array($id);
+		$tops = $this->_addedTops;
+		
+		if(!empty($tops)) {
+			foreach($tops as $top) {
+				$sortedUsers = array();
+				$value = array();
+				
+				if($top == 'Count') {
+					$sortedUsers = $this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists[$top],null,null);
+					$value = $this->_userModel->getUsersContentCount($id);
+				}
+				elseif($top == 'View') {
+					$sortedUsers = $this->_userModel->sortUsersByViews($this->_userList,$this->_topLists[$top],null,null);
+					$value = $this->_userModel->getUsersViews($id);
+				}
+				elseif($top == 'Popularity') {
+					$sortedUsers = $this->_userModel->sortUsersByPopularity($this->_userList,$this->_topLists[$top],null,null);
+					$value = $this->_userModel->getUsersPopularity($id);
+				}
+				elseif($top == 'Rating') {
+					$sortedUsers = $this->_userModel->sortUsersByRating($this->_userList,$this->_topLists[$top],null,null);
+					$value = $this->_userModel->getUsersRating($id);
+				}
+				elseif($top == 'Comment') {
+					$sortedUsers = $this->_userModel->sortUsersByComments($this->_userList,$this->_topLists[$top],null,null);
+					$value = $this->_userModel->getUsersCommentCount($id);
+				}
+				$rank = array(array('rank' => array_search($id[0],$sortedUsers)));
+				$info = $this->_userModel->getUserInfo($id);
+	
+				if(($rank[0]['rank'] !== "") && (!empty($value))) {
+					$merge = $this->_intersectMergeArray($value,$rank);
+				}
+				else {
+					$rank[0]['rank'] = "-1";
+					$value = array(array('id_usr' => $info[0]['id_usr']));
+					$merge = $this->_intersectMergeArray($value,$rank);
+				}
+				$this->_addedUser[$top] = $this->_intersectMergeArray($merge,$info);
+			}
+		}
+		else {
+			foreach($this->_topListIds as $key => $list) {
+				$rank = "-1";
+				$value = array();
+				
+				if(in_array($id[0],$list)) {
+						$rank = array_search($id[0],$list);
+				}
+
+				if($rank < $this->_limit) {
+					if($key == 'Count') $value = $this->_userModel->getUsersContentCount($id);
+					elseif($key == 'View') $value = $this->_userModel->getUsersViews($id);
+					elseif($key == 'Popularity') $value = $this->_userModel->getUsersPopularity($id);
+					elseif($key == 'Rating') $value = $this->_userModel->getUsersRating($id);
+					elseif($key == 'Comment') $value = $this->_userModel->getUsersCommentCount($id);
+				}
+				
+				$value[0]['rank'] = $rank;
+				$info = $this->_userModel->getUserInfo($id);
+				$final = $this->_intersectMergeArray($value,$info);
+				$this->_addedUser[$key] = $final;
+
+			}			
+		}
+		return;
+	}
+		
+	public function addUser($id) {
+		
+		$this->_addUserRank($id);
+		return $this;
+	}
+	
+	public function addTopsToUser($tops = "all") {
+		if($tops = "all") $this->_addedTops = array_keys($this->_topLists);
+		else {
+			if(array_key_exists($tops,$this->_topLists))
+				$this->_addedTops = $tops;
+		}
+		return $this;
+	}
+	
+	public function getAddedUser() {
+		return $this->_addedUser;
+	}
+	
 	public function getUsers() {
 		return $this->_userList;
 	}
@@ -65,17 +165,21 @@ class Oibs_Controller_Plugin_TopList {
 	}
 	
 	private function _getUserInfo($choice) {
-		if($choice == 'Count') $temp = $this->_userModel->getUsersContentCount($this->_topList[$choice]);
-		elseif($choice == 'View') $temp = $this->_userModel->getUsersViews($this->_topList[$choice]);
-		elseif($choice == 'Popularity') $temp = $this->_userModel->getUsersPopularity($this->_topList[$choice]);
-		elseif($choice == 'Rating') $temp = $this->_userModel->getUsersRating($this->_topList[$choice]);
-		elseif($choice == 'Comment') $temp = $this->_userModel->getUsersCommentCount($this->_topList[$choice]);
+		$getIds = array();
+		for($i = 0; $i < $this->_limit; $i++) {
+			$getIds[] = $this->_topListIds[$choice][$i];
+		}
+		if($choice == 'Count') $temp = $this->_userModel->getUsersContentCount($getIds);
+		elseif($choice == 'View') $temp = $this->_userModel->getUsersViews($getIds);
+		elseif($choice == 'Popularity') $temp = $this->_userModel->getUsersPopularity($getIds);
+		elseif($choice == 'Rating') $temp = $this->_userModel->getUsersRating($getIds);
+		elseif($choice == 'Comment') $temp = $this->_userModel->getUsersCommentCount($getIds);
 		
 		$this->_topList[$choice] = array(
 			'users' => 
-				$this->_finalizeToSortingOrderByUserId($this->_topList[$choice],
+				$this->_finalizeToSortingOrderByUserId($getIds,
 					$this->_intersectMergeArray($temp,
-						$this->_userModel->getUserInfo($this->_topList[$choice]))),
+						$this->_userModel->getUserInfo($getIds))),
 			'name' => $choice
 		);
 		
@@ -87,12 +191,11 @@ class Oibs_Controller_Plugin_TopList {
 	 */
 	public function setTop($choice) {
 		if(array_key_exists($choice,$this->_topLists)) {
-			if($choice == 'Count') $this->_topList[$choice] = $this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists[$choice],null,$this->_limit);
-			elseif($choice == 'View') $this->_topList[$choice] = $this->_userModel->sortUsersByViews($this->_userList,$this->_topLists[$choice],null,$this->_limit);
-			elseif($choice == 'Popularity') $this->_topList[$choice] = $this->_userModel->sortUsersByPopularity($this->_userList,$this->_topLists[$choice],null,$this->_limit);
-			elseif($choice == 'Rating') $this->_topList[$choice] = $this->_userModel->sortUsersByRating($this->_userList,$this->_topLists[$choice],null,$this->_limit);
-			elseif($choice == 'Comment') $this->_topList[$choice] = $this->_userModel->sortUsersByComments($this->_userList,$this->_topLists[$choice],null,$this->_limit);
-			
+			if($choice == 'Count') $this->_topListIds[$choice] = $this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists[$choice],null,null);
+			elseif($choice == 'View') $this->_topListIds[$choice] = $this->_userModel->sortUsersByViews($this->_userList,$this->_topLists[$choice],null,null);
+			elseif($choice == 'Popularity') $this->_topListIds[$choice] = $this->_userModel->sortUsersByPopularity($this->_userList,$this->_topLists[$choice],null,null);
+			elseif($choice == 'Rating') $this->_topListIds[$choice] = $this->_userModel->sortUsersByRating($this->_userList,$this->_topLists[$choice],null,null);
+			elseif($choice == 'Comment') $this->_topListIds[$choice] = $this->_userModel->sortUsersByComments($this->_userList,$this->_topLists[$choice],null,null);
 			$this->_getUserInfo($choice);	
 			return $this;
 		}

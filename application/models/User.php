@@ -1061,10 +1061,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	$select = $content->select()->from('cnt_has_usr',
     									array('id_usr'))
     							->where('id_usr IN (?)',$userIDList)
-    							->order($sort)
+    							->order(array($sort,'id_usr'))
     							->group('id_usr')    							
     							;
     	if($limit) $select->limit($limit,0);
+    	//print_r($select->assemble());echo "\n";
         $result = $this->simplifyArray($content->_db->fetchAll($select),'id_usr');
 		if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
         
@@ -1108,7 +1109,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     									array('id_usr_vws'))
     							->where('id_usr_vws IN (?)',$userIDList)
     							->group('id_usr_vws')
-    							->order($sort)
+    							->order(array($sort,'id_usr_vws'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws'); 
@@ -1133,7 +1134,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     									array('id_usr_cmt'))
     							->where('id_usr_cmt IN (?)',$userIDList)
     							->group('id_usr_cmt')
-    							->order($sort)
+    							->order(array($sort,'id_usr_cmt'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt'); 
@@ -1161,7 +1162,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     									array('readers' => 'COUNT(id_usr_vws)'))
     							->where('cnt.id_usr IN (?)',$userIDList)
     							->group('cnt.id_usr')
-    							->order($sort)
+    							->order(array($sort,'id_usr'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->_db->fetchAll($select);
@@ -1190,7 +1191,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     												array())
     							->where('id_usr IN (?)',$userIDList)
     							->group('id_usr')
-    							->order($sort)
+    							->order(array($sort,'id_usr'))
     							;
     	if($limit) $select->limit($limit,0);						
         $result = $this->_db->fetchAll($select);
