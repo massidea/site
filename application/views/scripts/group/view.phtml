@@ -189,6 +189,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                         array(
                             'controller' => 'group',
                             'action' => 'leave',
+                            'confirm' => 0,
                             'groupid' => $this->grpId,
                             'language' => $this->language
                         ), 'lang_default', true);

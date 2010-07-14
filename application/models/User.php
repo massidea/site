@@ -541,6 +541,71 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     }
 
     /**
+     * getUserCampaignsWhereUserHasContent - Get all campaigns which belong to specified group and where user has content
+     *
+     * @author Mikko Korpinen
+     * @param int $id_usr
+     * @param int $id_grp
+     * @return array
+     */
+    public function getUserCampaignsWhereUserHasContent($id_usr, $id_grp) {
+        $result = array();
+
+        $campaignSelect = $this->_db->select()
+                                           ->from(array('ugg' => 'usr_groups_grp'),
+                                                  array('id_grp', 'group_name_grp', 'description_grp', 'body_grp'))
+                                           ->joinLeft(array('cc' => 'campaigns_cmp'),
+                                                  'cc.id_grp_cmp = ugg.id_grp',
+                                                  array('id_cmp', 'id_grp_cmp', 'name_cmp', 'ingress_cmp', 'description_cmp'))
+                                           ->joinLeft(array('chc' => 'cmp_has_cnt'),
+                                                  'chc.id_cmp = cc.id_cmp',
+                                                  array('id_cmp', 'id_cnt', 'count' => 'COUNT(DISTINCT chc.id_cnt)'))
+                                           ->joinLeft(array('chu' => 'cnt_has_usr'),
+                                                  'chu.id_cnt = chc.id_cnt',
+                                                  array('id_usr'))
+                                           ->where('chu.id_usr = ?', $id_usr)
+                                           ->where('ugg.id_grp = ?', $id_grp)
+                                           ->order('ugg.id_grp ASC')
+                                           ->group('cc.id_cmp')
+                                           ;
+
+        $result = $this->_db->fetchAll($campaignSelect);
+        
+        return $result;
+    }
+
+    /**
+     * getUserContentsInCampaign - Get all user contents in campaign
+     *
+     * @author Mikko Korpinen
+     * @param int $id_usr
+     * @param int $id_cmp
+     * @return array
+     */
+    public function getUserContentsInCampaign($id_usr, $id_cmp) {
+        $result = array();
+
+        $campaignSelect = $this->_db->select()
+                                           ->from(array('cc' => 'campaigns_cmp'),
+                                                  array('id_cmp'))
+                                           ->joinLeft(array('chc' => 'cmp_has_cnt'),
+                                                  'chc.id_cmp = cc.id_cmp',
+                                                  array('id_cnt'))
+                                           ->joinLeft(array('chu' => 'cnt_has_usr'),
+                                                  'chu.id_cnt = chc.id_cnt',
+                                                  array('id_usr'))
+                                           ->where('chu.id_usr = ?', $id_usr)
+                                           ->where('cc.id_cmp = ?', $id_cmp)
+                                           ->order('chc.id_cnt ASC')
+                                           ->group('chc.id_cnt')
+                                           ;
+
+        $result = $this->_db->fetchAll($campaignSelect);
+
+        return $result;
+    }
+
+    /**
      * getUserGroups - Get all groups where user is admin
      *
      * @author Mikko Korpinen

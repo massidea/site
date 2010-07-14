@@ -401,6 +401,9 @@
             $grpId = $this->_request->getParam('groupid');
             $usrId = $auth->getIdentity()->user_id;
 
+            // Get confirm 0 = question, 1 = leave and delete also content links from group campaigns, 2 = leave only
+            $confirm = $this->_request->getParam('confirm');
+
             $groupAdminsModel = new Default_Model_GroupAdmins();
             if ($groupAdminsModel->userIsAdmin($grpId, $usrId)) {
                 // Group admin can't leave the group.
@@ -414,20 +417,50 @@
                     'lang_default', true);
                 $this->flash($message, $url);
             } else {
-                // Remove user from group.
-                $usrHasGroupModel = new Default_Model_UserHasGroup();
-                $usrHasGroupModel->removeUserFromGroup($grpId, $usrId);
+                // Get group campaings where user have content linked
+                $usrModel = new Default_Model_User();
+                $campaigns = $usrModel->getUserCampaignsWhereUserHasContent($usrId, $grpId);
+                //echo '<pre>'; var_dump($campaigns);
+                //$contents = $usrModel->getUserContentsInCampaign($usrId, $campaigns[1]['id_cmp']);
+                //echo '<pre>'; var_dump($contents);
+
+                if (isset($confirm) && $confirm == 1) {
+                    // Leave group and delete all content linking from group campaigns
+                    $usrHasGroupModel = new Default_Model_UserHasGroup();
+                    $cmpHasCntModel = new Default_Model_CampaignHasContent();
+                    $usrHasGroupModel->removeUserFromGroup($grpId, $usrId);
+                    foreach ($campaigns as $campaign) {
+                        $contents = $usrModel->getUserContentsInCampaign($usrId, $campaign['id_cmp']);
+                        foreach ($contents as $content) {
+                            $cmpHasCntModel->removeContentFromCampaign($content['id_cmp'], $content['id_cnt']);
+                        }
+                    }
+                    $redirect = true;
+                } elseif (isset($confirm) && $confirm == 2) {
+                    // Only leave campaign
+                    $usrHasGroupModel = new Default_Model_UserHasGroup();
+                    $usrHasGroupModel->removeUserFromGroup($grpId, $usrId);
+                    $redirect = true;
+                } else {
+                    // No confirmation yet
+                    $this->view->campaigns = $campaigns;
+                    $this->view->contentInCampaigns = count($campaigns);
+                    $this->view->grpId = $grpId;
+                    $redirect = false;
+                }
             }
 
-            // Redirect back to the group page.
-            $target = $this->_urlHelper->url(
-                array(
-                    'groupid'    => $grpId,
-                    'language'   => $this->view->language),
-                'group_shortview', true);
-            $this->_redirector->gotoUrl($target);
+            if ($redirect) {
+                // Redirect back to the group page.
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid'    => $grpId,
+                        'language'   => $this->view->language),
+                    'group_shortview', true);
+                $this->_redirector->gotoUrl($target);
+            }
         } else {
-            // Not logged in - can't join a group.
+            // Not logged in
             $target = $this->_urlHelper->url(
                 array(
                     'controller' => 'index',
