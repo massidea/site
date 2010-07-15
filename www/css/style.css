@@ -1694,11 +1694,15 @@ form #uploadedFiles_div .form_element_input label {
 .user_list_top_box_runnerups_value { float:right; }
 .user_list_top_box_runnerups_rank { font-weight: bold; float:left; width: 20px; }
 .user_list_top_box_runnerups_names { display: inline; }
-.user_list_top_box_right { width: 100px; padding-top: 5px; }
+.user_list_top_box_right { padding-top: 5px; }
 .user_list_top_box_left { padding-right: 5px; }
-.user_list_top_box_description { text-align:center; font-weight: bold; }
-.user_list_top_box_user { font-size: 16px; text-align:center; font-weight: bold; padding-top: 4px; }
+.user_list_top_box_description { text-align:center; font-weight: bold; font-size: 14px; }
+.user_list_top_box_user { font-size: 18px; text-align:center; font-weight: bold; padding-top: 4px; }
 .user_list_top_box_image { margin-left:auto; margin-right:auto; }
+.user_list_top_box_show_more { width:16px; margin-left:auto; margin-right:auto; margin-top: 5px; margin-bottom: -20px; }
+.user_list_top_list_title span { font-size: 24px; font-weight: bold; color:#AAAAAA; }
+.user_list_top_list_title a { vertical-align: middle; height: 24px; }
+.user_list_top_list_title { margin: 10px 25px 5px 0px;  }
 
 #view_content_left_header_top_add_this {
     float: left;

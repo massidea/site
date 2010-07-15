@@ -69,6 +69,42 @@ $(document).ready(function(){
 		});
 	});	
 	} //End of if userIds
+	//Start of Top list js
+	else {
+		$.each(topList, function() {
+			var name = this;
+			$("#user_list_top_box_show_more_link_"+name+"").click(function() {
+				if($("#user_list_top_box_right_"+name+"").css("display") == "none") {
+					$("#user_list_top_box_right_"+name+"").slideDown(500);
+					$(this).html("<img src=\""+arrowup+"\"/>");
+				}
+				else {
+					$("#user_list_top_box_right_"+name+"").slideUp(500);
+					$(this).html("<img src=\""+arrowdown+"\"/>");
+				}			
+			});
+		});
+		$("#user_list_top_list_expand_all").click(function() {
+			if($("#user_list_top_list_expand_all").attr('name') != 'expand') {
+				$.each(topList, function() {
+					var name = this;
+					$("#user_list_top_box_right_"+name+"").slideDown(500);
+					$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowup+"\"/>");
+					$("#user_list_top_list_expand_all").html("<img src=\""+iconminus+"\"/>");
+					$("#user_list_top_list_expand_all").attr('name','expand');
+				});
+			}
+			else {
+				$.each(topList, function() {
+					var name = this;
+					$("#user_list_top_box_right_"+name+"").slideUp(500);
+					$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowdown+"\"/>");
+					$("#user_list_top_list_expand_all").html("<img src=\""+iconplus+"\"/>");
+					$("#user_list_top_list_expand_all").attr('name','collapse');
+				});
+			}
+		});
+	}
 });
 
 function json_search_contents(listStart,id,div) {
