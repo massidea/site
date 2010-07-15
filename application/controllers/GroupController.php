@@ -101,6 +101,11 @@
             $i++;
         }
 
+        // Get group groups
+        $grpHasGrpModel = new Default_Model_GroupHasGroup();
+        $linkedgroups = $grpHasGrpModel->getGroupGroups($grpId);
+        $linkedgroups = array_merge($linkedgroups['parents'], $linkedgroups['childs']);
+
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;
@@ -109,6 +114,7 @@
         $this->view->userHasGroup = $usrHasGrpModel;
         $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
         $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+        $this->view->linkedgroups = $linkedgroups;
     }
 
     function removeAction()
@@ -395,6 +401,9 @@
             $grpId = $this->_request->getParam('groupid');
             $usrId = $auth->getIdentity()->user_id;
 
+            // Get confirm 0 = question, 1 = leave and delete also content links from group campaigns, 2 = leave only
+            $confirm = $this->_request->getParam('confirm');
+
             $groupAdminsModel = new Default_Model_GroupAdmins();
             if ($groupAdminsModel->userIsAdmin($grpId, $usrId)) {
                 // Group admin can't leave the group.
@@ -408,20 +417,50 @@
                     'lang_default', true);
                 $this->flash($message, $url);
             } else {
-                // Remove user from group.
-                $usrHasGroupModel = new Default_Model_UserHasGroup();
-                $usrHasGroupModel->removeUserFromGroup($grpId, $usrId);
+                // Get group campaings where user have content linked
+                $usrModel = new Default_Model_User();
+                $campaigns = $usrModel->getUserCampaignsWhereUserHasContent($usrId, $grpId);
+                //echo '<pre>'; var_dump($campaigns);
+                //$contents = $usrModel->getUserContentsInCampaign($usrId, $campaigns[1]['id_cmp']);
+                //echo '<pre>'; var_dump($contents);
+
+                if (isset($confirm) && $confirm == 1) {
+                    // Leave group and delete all content linking from group campaigns
+                    $usrHasGroupModel = new Default_Model_UserHasGroup();
+                    $cmpHasCntModel = new Default_Model_CampaignHasContent();
+                    $usrHasGroupModel->removeUserFromGroup($grpId, $usrId);
+                    foreach ($campaigns as $campaign) {
+                        $contents = $usrModel->getUserContentsInCampaign($usrId, $campaign['id_cmp']);
+                        foreach ($contents as $content) {
+                            $cmpHasCntModel->removeContentFromCampaign($content['id_cmp'], $content['id_cnt']);
+                        }
+                    }
+                    $redirect = true;
+                } elseif (isset($confirm) && $confirm == 2) {
+                    // Only leave campaign
+                    $usrHasGroupModel = new Default_Model_UserHasGroup();
+                    $usrHasGroupModel->removeUserFromGroup($grpId, $usrId);
+                    $redirect = true;
+                } else {
+                    // No confirmation yet
+                    $this->view->campaigns = $campaigns;
+                    $this->view->contentInCampaigns = count($campaigns);
+                    $this->view->grpId = $grpId;
+                    $redirect = false;
+                }
             }
 
-            // Redirect back to the group page.
-            $target = $this->_urlHelper->url(
-                array(
-                    'groupid'    => $grpId,
-                    'language'   => $this->view->language),
-                'group_shortview', true);
-            $this->_redirector->gotoUrl($target);
+            if ($redirect) {
+                // Redirect back to the group page.
+                $target = $this->_urlHelper->url(
+                    array(
+                        'groupid'    => $grpId,
+                        'language'   => $this->view->language),
+                    'group_shortview', true);
+                $this->_redirector->gotoUrl($target);
+            }
         } else {
-            // Not logged in - can't join a group.
+            // Not logged in
             $target = $this->_urlHelper->url(
                 array(
                     'controller' => 'index',
@@ -437,4 +476,192 @@
         $form = new Default_Form_ProfileImageForm();
         $this->view->form = $form;
     }
+
+    /**
+     * linkgroupAction
+     *
+     * Link group to group.
+     */
+    public function linkgroupAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $usrId = $auth->getIdentity()->user_id;
+
+            $grpId = $this->_request->getParam('grpid');
+            if (!isset($grpId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            $this->view->grpid = $grpId;
+
+            $grpmodel = new Default_Model_Groups();
+            $grp = $grpmodel->getGroupData($grpId);
+
+            $usrmodel = new Default_Model_User();
+
+            $usrgrp = $usrmodel->getUserGroups($usrId);
+
+            $grpHasGrpModel = new Default_Model_GroupHasGroup();
+            if (!empty($usrgrp)) {
+                $i = 0;
+                foreach ($usrgrp as $group) {
+                    if ($grpHasGrpModel->checkIfGroupHasGroup($grpId, $group['id_grp']) || $grpId == $group['id_grp']) {
+                       unset($usrgrp[$i]);
+                    }
+                    $i++;
+                }
+            }
+
+            if (!empty($usrgrp)) {
+                $hasUserGroups = true;
+            } else {
+                $hasUserGroups = false;
+            }
+
+            $this->view->grp = $grp;
+            $this->view->usrgrp = $usrgrp;
+            $this->view->hasUserGroups = $hasUserGroups;
+        } else {
+            // If not logged, redirecting to system message page
+			$message = 'You must login in order to link groups!';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+        }
+    }
+
+    /**
+     * unlinkgroupAction
+     *
+     * Unlink group from group.
+     */
+    public function unlinkgroupAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $usrId = $auth->getIdentity()->user_id;
+
+            $grpId = $this->_request->getParam('grpid');
+            if (!isset($grpId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            $this->view->grpid = $grpId;
+
+            $grpmodel = new Default_Model_Groups();
+            $grp = $grpmodel->getGroupData($grpId);
+
+            // Is user group admin?
+            $grpadminmodel = new Default_Model_GroupAdmins();
+            if (!$grpadminmodel->userIsAdmin($grpId, $usrId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            $grpHasGrpModel = new Default_Model_GroupHasGroup();
+            $usrgrp = $grpHasGrpModel->getGroupGroups($grpId);
+
+            if (!empty($usrgrp)) {
+                $hasUserGroups = true;
+                $usrgrp = array_merge($usrgrp['parents'], $usrgrp['childs']);
+            } else {
+                $hasUserGroups = false;
+            }
+
+            $this->view->grp = $grp;
+            $this->view->usrgrp = $usrgrp;
+            $this->view->hasUserGroups = $hasUserGroups;
+        } else {
+            // If not logged, redirecting to system message page
+			$message = 'You must login in order to link groups!';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+        }
+    }
+
+    /**
+     * makegrouplinkAction - Make group link
+     */
+    public function makegrouplinkAction()
+    {
+        $parentGrpId = $this->_request->getParam('parentgrpid');
+        $this->view->parentgrpid = $parentGrpId;
+
+        $childGrpId = $this->_request->getParam('childgrpid');
+        $this->view->childgrpid = $childGrpId;
+
+        if (!((isset($parentGrpId)) && (isset($childGrpId)))) {
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                        'action' => 'index',
+                                                        'language' => $this->view->language),
+                                                  'lang_default', true);
+            $this->_redirector($redirectUrl);
+        }
+
+        $grphasgrpmodel = new Default_Model_GroupHasGroup();
+        $grphasgrpmodel->addGroupToGroup($parentGrpId, $childGrpId);
+
+        // TODO:
+        // Tell the user that the link was created.
+
+        // Redirect back to the current campaign's page.
+        $target = $this->_urlHelper->url(array('groupid' => $parentGrpId,
+                                               'language' => $this->view->language),
+                                         'group_shortview', true);
+        $this->_redirector->gotoUrl($target);
+    }
+
+    /**
+     * removegrouplinkAction - Remove group link
+     */
+    public function removegrouplinkAction()
+    {
+        $parentGrpId = $this->_request->getParam('parentgrpid');
+        $this->view->parentgrpid = $parentGrpId;
+
+        $childGrpId = $this->_request->getParam('childgrpid');
+        $this->view->childgrpid = $childGrpId;
+
+        if (!((isset($parentGrpId)) && (isset($childGrpId)))) {
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                        'action' => 'index',
+                                                        'language' => $this->view->language),
+                                                  'lang_default', true);
+            $this->_redirector($redirectUrl);
+        }
+
+        $grphasgrpmodel = new Default_Model_GroupHasGroup();
+        $grphasgrpmodel->removeGroupFromGroup($parentGrpId, $childGrpId);
+
+        // TODO:
+        // Tell the user that the unlink was created.
+
+        // Redirect back to the current campaign's page.
+        $target = $this->_urlHelper->url(array('groupid' => $parentGrpId,
+                                               'language' => $this->view->language),
+                                         'group_shortview', true);
+        $this->_redirector->gotoUrl($target);
+    }
+
 }

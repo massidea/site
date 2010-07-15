@@ -1161,7 +1161,7 @@ class AccountController extends Oibs_Controller_CustomController
             $this->getResponse()->sendResponse();
             return;
         }
-
+        
         $url_array = array('controller' => 'account', 
                            'action' => 'userlist',
                            'language' => $this->view->language);
@@ -1192,14 +1192,14 @@ class AccountController extends Oibs_Controller_CustomController
 		else $listName = "ascending";
 		
         $orderList = array(
-			"username" => "Users are now sorted in $listName alphabetical order by Usernames.",
-        	"login" => "Users are now sorted in $listName order by their last login times.",
-			"joined" => "Users are now sorted in $listName order by their account creation time.",
-			"content" => "Users are now sorted in $listName order by the content amount they have published.",
-			"views" => "Users are now sorted in $listName order by the amount of unique contents that the users have viewed.",
-			"rating" => "Users are now sorted in $listName order by the sum of their contents positive and negative votes.",
-			"popularity" => "Users are now sorted in $listName order by the amount of views that unique users have viewed listed users unique contents.",
-        	"comments" => "Users are now sorted in $listName order by the amount of comments they have made to contents.",
+			"username" => $this->view->translate('userlist-orderlist-username',$listName),
+        	"login" => $this->view->translate('userlist-orderlist-login',$listName),
+			"joined" => $this->view->translate('userlist-orderlist-joined',$listName),
+			"content" => $this->view->translate('userlist-orderlist-content',$listName),
+			"views" => $this->view->translate('userlist-orderlist-views',$listName),
+			"rating" => $this->view->translate('userlist-orderlist-rating',$listName),
+			"popularity" => $this->view->translate('userlist-orderlist-popularity',$listName),
+        	"comments" => $this->view->translate('userlist-orderlist-comments',$listName),
 		);
 		
         $userLocations = $this->getAllCitiesAndCountries();
@@ -1250,38 +1250,75 @@ class AccountController extends Oibs_Controller_CustomController
 	        // Calculate total page count
 	        $pageCount = ceil($listSize / $count);
         } else { //Here is Top list code :)
-        	
+        
+        	$auth = Zend_Auth::getInstance();
+			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
+			
         	$cache = Zend_Registry::get('cache');
-
+        	
+        	$top = new Oibs_Controller_Plugin_TopList();
+        	
 			if(!$resultList = $cache->load('UserTopList')) {
-				$topList = $userModel->getTopUsers(10);
-				$cache->save($topList, 'UserTopList');
+				
+				$top->setLimit(10)
+					->setTop("Count")
+					->setTop("View")
+					->setTop("Popularity")
+					->setTop("Rating")
+					->setTop("Comment")
+					;
+
+				$cache->save($top, 'UserTopList');
 	
 			} else {
-				$topList = $resultList;
+				$top = $resultList;
 			}
-		
-        	$topList['contentCount']['title'] = "Most contents";
-        	$topList['views']['title'] = "Most viewed contents";
-        	$topList['popularity']['title'] = "Most popular";
-        	$topList['ratings']['title'] = "Highest rating";
-        	$topList['comments']['title'] = "Most comments";
+			$topList = $top->getTopList();
+			
+			if($userid) $userTop = $top->addUser($userid)->getAddedUser();
+			
+			$topListMerge = array();
+
+			if($userid) {
+				foreach($topList as $key1 => $list1) {
+					foreach($userTop as $key2 => $top1) {
+						if($key1 == $key2) {
+							$topListMerge[$key1] = array_merge($list1,array('addedUsers' => $top1));
+							continue 2;
+						}
+					}
+					$topListMerge[] = $list1;
+				}
+				$topList = $topListMerge;
+			}
+			//print_r($top->test());die;
+			//print_r($topList);die;
+        	$topList['Count']['title'] = "Most contents";
+        	$topList['View']['title'] = "Most viewed contents";
+        	$topList['Popularity']['title'] = "Most popular";
+        	$topList['Rating']['title'] = "Highest rating";
+        	$topList['Comment']['title'] = "Most comments";
+
+        	$topList['Count']['description'] = "Has content count of ";
+        	$topList['View']['description'] = "Has view count of ";
+        	$topList['Popularity']['description'] = "Has reader count of ";
+        	$topList['Rating']['description'] = "Has rating sum of ";
+        	$topList['Comment']['description'] = "Has comment count of ";
         	
-        	$topList['contentCount']['description'] = "Has content count of ";
-        	$topList['views']['description'] = "Has view count of ";
-        	$topList['popularity']['description'] = "Has reader count of ";
-        	$topList['ratings']['description'] = "Has rating sum of ";
-        	$topList['comments']['description'] = "Has comment count of ";
+        	$topNames = array();
+        	foreach($topList as $top) {
+        		$topNames[] = $top['name'];
+        	}
         	
-        }                
+        }
+      
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
 
         $order = isset($order) ? $order : "username";
         $list = isset($list) ? $list : "asc";
-        $form_url = $this->_urlHelper->url(array_merge($url_array,array(
-        									'order' => $order,
-        									'list' => $list)),'lang_default', true);
+        $form_url_path = array_merge($url_array,array('order' => $order,'list' => $list));
+        $form_url = $this->_urlHelper->url($form_url_path,'lang_default', true);
         $userSearch->setAction($form_url)
                    ->setMethod('get');
                        
@@ -1301,6 +1338,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->userCount = $listSize;
         $this->view->list = $listName;
         $this->view->top = $topList;
+        $this->view->topNames = $topNames;
         $this->view->page = $page;
         $this->view->order = $orderList;
         $this->view->lastOrder = $order;

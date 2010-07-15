@@ -45,6 +45,57 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
         </ul>
         <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
         <div class="clear dot-line-200"></div>
+        <div>
+            <p>
+                <strong>Linked groups: </strong>
+                <br />
+                <ul>
+                    <?php //var_dump($this->linkedgroups); ?>
+                    <?php
+                    foreach($this->linkedgroups as $group) {
+                        $usrurl = $this->url(array('controller' => 'account',
+                                                   'action' => 'view',
+                                                   'user' => $group['login_name_usr'],
+                                                   'language' => $this->language),
+                                             'lang_default', true);
+                        $grpurl = $this->url(array('groupid'    => $group['id_grp'],
+                                                   'language'   => $this->language),
+                                             'group_shortview', true);
+                        ?>
+                        <li class="linked_groups">
+                            <div class="linked_groups">
+                                <a href="<?php echo $usrurl; ?>"><?php echo $group['login_name_usr']; ?></a> :
+                                <strong><a href="<?php echo $grpurl; ?>"><?php echo $group['group_name_grp']; ?></a></strong>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+            </p>
+            <?php
+            $addgroups = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action'     => 'linkgroup',
+                                    'language'   => $this->language,
+                                    'grpid'      => $this->grpData["id_grp"]
+                                 ), 'lang_default', true
+                            );
+            $editgrouplinks = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action'     => 'unlinkgroup',
+                                    'language'   => $this->language,
+                                    'grpid'      => $this->grpData["id_grp"]
+                                 ), 'lang_default', true
+                            );
+            ?>
+            <p><a href="<?php echo $addgroups; ?>">Add groups</a></p>
+            <?php if ($this->userIsGroupAdmin): ?>
+                <p><a href="<?php echo $editgrouplinks; ?>">Edit group links</a></p>
+            <?php endif; ?>
+        </div>
     </div>
     <div id="activity" class="right">
         <div class="left">
@@ -138,6 +189,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                         array(
                             'controller' => 'group',
                             'action' => 'leave',
+                            'confirm' => 0,
                             'groupid' => $this->grpId,
                             'language' => $this->language
                         ), 'lang_default', true);

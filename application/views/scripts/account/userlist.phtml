@@ -19,6 +19,10 @@ $url_getUserListBase = $this->url(array('controller' => 'account',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
+$url_iconPlus = $this->baseUrl('/images/icon_plus_tiny.png');
+$url_iconMinus = $this->baseUrl('/images/icon_minus_tiny.png');
+$url_arrowDown = $this->baseUrl('/images/arrow_down.png');
+$url_arrowUp = $this->baseUrl('/images/arrow_up.png');
 $url_arrowUpDown = $this->baseUrl('/images/arrow_UpDown.png');
 $url_arrowUp_active = $this->baseUrl('/images/arrow_UpDownUpActive.png');
 $url_arrowDown_active = $this->baseUrl('/images/arrow_UpDownDownActive.png');
@@ -42,7 +46,11 @@ var userStatistics = "<?php echo $url_getUserStatistics ?>";
 var loading = "<img src=\""+loader+"\" /><span> Please wait...</span>";
 var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
 var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
-
+var topList = jQuery.parseJSON('<?php echo json_encode($this->topNames); ?>');
+var arrowdown = "<?php echo $url_arrowDown; ?>";
+var arrowup = "<?php echo $url_arrowUp; ?>";
+var iconplus = "<?php echo $url_iconPlus; ?>";
+var iconminus = "<?php echo $url_iconMinus; ?>";
 
 <?php $this->headScript()->captureEnd(); ?>
 
@@ -229,9 +237,13 @@ var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 <?php else: ?>
 
 <div class="user_list_top_list">
+<div class="user_list_top_list_title">
+<span>Top users list </span>
+<a id="user_list_top_list_expand_all" href="#" onClick="return false;"><img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a>
+</div>
 	<div class="user_list_top_line">
 <?php $i = 0;
-	foreach($this->top as $top) { 
+	foreach($this->top as $key => $top) { 
 		if($i % 3 == 0 && $i != 0) { ?>
 			</div> 
 			<div class="user_list_top_line">

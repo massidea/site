@@ -173,3 +173,91 @@ div.user_summary_list_without_stats{
 #content #add-content-page #add_group_form .input-column-website2 input { width:120px; }
 #content #add-content-page #Createacampaign .input-column-website3 input,
 #content #add-content-page #add_group_form .input-column-website3 input { width:120px; }
+
+
+.linking {
+    float: left;
+	width: 500px;
+    margin-bottom: 10px;
+}
+.linking_header {
+    color: #C0C0C0;
+}
+.linking_paragraph, leaving_paragraph {
+    margin: 4px 10px 4px 10px;
+}
+#linked_to {
+    border: 1px solid #CCCCCC;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+#linked_to_where {
+    float: left;
+}
+#linked_to_where_name {
+    margin-left: 80px;
+    border-left: 5px solid #0089CF;
+}
+.linking_help_text {
+    color: #808080;
+    margin: 10px 0 8px 15px;
+}
+.linking_dot_line, .leaving_dot_line {
+    height: 1px;
+    width:500px;
+    border-bottom: 1px dotted #D2DADA;
+    margin: 6px 0 6px 0;
+    padding: 0;
+}
+.linking_from, .leaving_from {
+    
+}
+.linking_from_name, .leaving_from_name {
+    float: left;
+    width: 430px;
+}
+.leaving_from_name {
+    margin-bottom: 5px;
+}
+.linking_from_campaign, .linking_from_group,
+.linking_from_problem, .linking_from_finfo, .linking_from_idea,
+.linking_from_challenge, .linking_from_visions, .linking_from_ideas,
+.leaving_from_campaign {
+    padding-left: 10px;
+}
+.linking_from_campaign, .linking_from_group, .leaving_from_campaign {
+    border-left: 5px solid #0089CF;
+}
+.linking_from_problem, .linking_from_challenge {
+    border-left: 5px solid #D21034;
+}
+.linking_from_finfo, .linking_from_visions {
+    border-left: 5px solid #FFC726;
+}
+.linking_from_idea, .linking_from_ideas {
+    border-left: 5px solid #4B9B07;
+}
+.linking_from_text, leaving_from_text {
+    margin: 4px 0 4px 20px;
+}
+.linking_from_link {
+    margin-top: 4px;
+}
+
+li.linked_campaigns, li.linked_groups {
+    list-style-type: none;
+    margin-top: 4px;
+    border-left:5px solid #0089CF;
+}
+div.linked_campaigns, div.linked_groups {
+    margin-left: 5px;
+}
+
+#leave_confirm {
+    width: 500px;
+    float: left;
+    margin-bottom: 10px;
+}
+#leave_confirm_groups {
+
+}

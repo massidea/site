@@ -1,0 +1,83 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="leave_confirm">
+    <h2>Leave the group?</h2>
+    <?php if ($this->contentInCampaigns > 0) : ?>
+        <p class="leaving_paragraph">You have content(s) in the following campaigns.</p>
+    <?php else : ?>
+        <p class="leaving_paragraph">You don't have contents in campaigns.</p>
+    <?php endif; ?>
+    <div class="leave_confirm_groups">
+        <?php
+        if($this->campaigns) {
+            foreach($this->campaigns as $campaign) {
+                ?>
+                <div class="leaving_from">
+                    <div class="leaving_from_name">
+                        <?php
+                        $cmpurl = $this->url(array('cmpid'      => $campaign['id_cmp'],
+                                                   'language'   => $this->language),
+                                             'campaign_view', true);
+                        $grpurl = $this->url(array('groupid'    => $campaign['id_grp_cmp'],
+                                                   'language'   => $this->language),
+                                             'group_shortview', true);
+                        ?>
+                        <div class="leaving_from_campaign">
+                            <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
+                            <strong><a href="<?php echo $cmpurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
+                            (<?php echo $campaign['count']; ?>)
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <?php
+            }
+        } else {
+
+        }
+        ?>
+        <div>
+            <?php
+            $onlyleaveurl = $this->url(
+                array(
+                    'controller' => 'group',
+                    'action' => 'leave',
+                    'groupid' => $this->grpId,
+                    'confirm' => 2,
+                    'language' => $this->language
+                ), 'lang_default', true);
+            $leaveanddestroyurl = $this->url(
+                array(
+                    'controller' => 'group',
+                    'action' => 'leave',
+                    'groupid' => $this->grpId,
+                    'confirm' => 1,
+                    'language' => $this->language
+                ), 'lang_default', true);
+            ?>
+            <div>
+                <?php if ($this->contentInCampaigns > 0) : ?>
+                    <p><a href="<?php echo $leaveanddestroyurl; ?>">Leave and delete all content linking in campaigns</a></p>
+                    <p><a href="<?php echo $onlyleaveurl; ?>">Leave but don't delete content linking in campaigns</a></p>
+                <?php else : ?>
+                    <p><a href="<?php echo $onlyleaveurl; ?>">Leave</a></p>
+                <?php endif; ?>
+                <p><a href="<?php echo $grpurl; ?>">Don't leave</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sidebar" style="margin-left:20px; margin-right:0;">
+    <div class="box">
+        <h4>What is group leaving?</h4>
+        <div class="box-content">
+            <p><strong></strong><br />
+            </p>
+
+            <p><strong></strong><br />
+            </p>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
