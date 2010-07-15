@@ -78,6 +78,9 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         // If no session exist, set default translation language to english
         if(!isset($translateSession->translateTo)) $translateSession->translateTo = 'en';
         $this->gtranslate->setLangTo($translateSession->translateTo);
+        
+        // Set up JsMetaBox plugin
+        $this->view->jsmetabox = new Oibs_Controller_Plugin_JsMetaBox();
 		
 		// Add the root step to breadcrumbs
 		$this->breadcrumbs->addStep('Massidea.org Home', '/');
