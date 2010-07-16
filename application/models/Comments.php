@@ -324,4 +324,30 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             	
         } // end if
     } // end of flagComment
+
+    /**
+     * userIsOwner - Return true if user is comment owner
+     *
+     * @author Mikko Korpinen
+     * @param int $id_usr_cmt
+     * @param int $id_cmt
+     * @return boolean
+     */
+    public function userIsOwner($id_usr_cmt, $id_cmt)
+    {
+        $select = $this->select()
+                       ->from($this, array('id_cmt'))
+                       ->where('id_usr_cmt = ?', $id_usr_cmt)
+                       ->where('id_cmt = ?', $id_cmt)
+                       ->limit(1);
+
+        $result = $this->_db->fetchAll($select);
+
+        if(isset($result[0]) && !empty($result[0])) {
+            return true;
+        }
+
+        return false;
+    }
+
 } // end of class

@@ -98,6 +98,50 @@ class CommentController extends Oibs_Controller_CustomController
 		}
         $this->view->success = $success;
 	}
+
+    /**
+     * removeAction - Remove specified comment by content owner or comment owner
+     *
+     * @author Mikko Korpinen
+     */
+    public function removeAction()
+	{
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            // Get requests
+            $params = $this->getRequest()->getParams();
+            $cmtid = $params['cmtid'];
+            $cntid = $params['cntid'];
+
+            $usrid = $auth->getIdentity()->user_id;
+
+            $cntHasUsrModel = new Default_Model_ContentHasUser();
+            $user_is_content_owner = $cntHasUsrModel->contentHasOwner($usrid, $cntid);
+
+            $commentmodel = new Default_Model_Comments();
+            $user_is_comment_owner = $commentmodel->userIsOwner($usrid, $cmtid);
+
+            if ($user_is_content_owner || $user_is_comment_owner) {
+                $flagmodel = new Default_Model_CommentFlags();
+                $flags = $flagmodel->getFlagsByCommentId($cmtid);
+                $commentExists = $commentmodel->commentExists($cmtid);
+                if($commentExists) {
+                    if(count($flags) > 0) {
+                        $flagmodel->removeFlagsByCommentId($cmtid);
+                    }
+                    $commentmodel->removeCommentText($cmtid);
+                }
+            }
+            $redirectUrl = $this->_urlHelper->url(array('content_id' => $cntid,
+                                                        'language' => $this->view->language),
+                                                    'content_shortview', true);
+            $this->_redirector->gotoUrl($redirectUrl);
+        } else {
+            $redirectUrl = $this->_urlHelper->url(array('language' => $this->view->language),
+                                                    'index', true);
+            $this->_redirector->gotoUrl($redirectUrl);
+        }
+	}
 	
 }
 ?>

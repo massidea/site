@@ -184,4 +184,22 @@ class Default_Model_CommentFlags extends Zend_Db_Table_Abstract
             return false;
         }
     }
+
+    /**
+    * removeFlagByCommentId
+    * Removes specified flag by comment id
+    *
+    * @author Mikko Korpinen
+    * @param int id_comment_cmf
+    */
+    public function removeFlagsByCommentId($id_comment_cmf)
+    {
+        $where = $this->getAdapter()->quoteInto('id_comment_cmf = ?', $id_comment_cmf);
+        if ($this->delete($where)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 } // end of class

@@ -89,9 +89,14 @@
 
         // Get authentication
         $auth = Zend_Auth::getInstance();
+
+        // Get user_id
+        if ($auth->hasIdentity()) {
+            $usrId = $auth->getIdentity()->user_id;
+        }
         
         if ($contentData['published_cnt'] == 0 && 
-        	$auth->getIdentity()->user_id != $ownerId &&
+        	$usrId != $ownerId &&
         	!in_array("admin", $this->view->logged_user_roles))
         {
             $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');  
@@ -113,6 +118,9 @@
         // turn rating off by default
         $user_can_rate = false;
 
+        // user is not owner by default
+        $user_is_owner = false;
+
         // Comment model
         $comment = new Default_Model_Comments();
         
@@ -127,6 +135,11 @@
             // (also used for flagging)
             if ($ownerId != $auth->getIdentity()->user_id) {
                 $user_can_rate = true;
+            }
+
+            // Check if user is owner of content
+            if ($ownerId == $auth->getIdentity()->user_id) {
+                $user_is_owner = true;
             }
             
             // generate comment form
@@ -351,6 +364,8 @@
         $this->view->commentData        = $commentsSorted;
 		$this->view->user_can_comment   = $user_can_comment;
 		$this->view->user_can_rate      = $user_can_rate;
+        $this->view->user_is_owner      = $user_is_owner;
+        $this->view->usrId              = $usrId;
         $this->view->contentData        = $contentData;
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;
