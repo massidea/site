@@ -280,6 +280,12 @@ div.top_row_center_right_selection_text{
 	font-size: 12px;
 }
 
+div.top_row_center_right_layout{
+	text-align: left; 
+	padding-top: 3px; 
+	width: 200px;
+}
+
 /* Middle section, content area */
 
 div.middle_row{
