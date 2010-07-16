@@ -1,0 +1,20 @@
+<div class="user_list_top_list_title">
+<span>Top users list </span>
+<a id="user_list_top_list_expand_all" href="#" onClick="return false;"><img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a>
+</div>
+	<div class="user_list_top_line">
+<?php $i = 0;
+	foreach($this->top as $key => $top) { 
+		if($i % 3 == 0 && $i != 0) { ?>
+			</div> 
+			<div class="user_list_top_line">
+			<?php 
+				 echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); 
+		} else { 
+			echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); 
+		}
+		$i++;
+	}
+	
+?>
+	</div>
