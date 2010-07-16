@@ -733,7 +733,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @param string $list
      * @author Jari Korpela
      */
-    private function sortAndFilterUsers(&$filter, $order, $list) {
+    public function sortAndFilterUsers(&$filter, $order, $list) {
 
 		$orderGroups = array(
 			'userInfo' => array(
@@ -772,10 +772,12 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	        if($filter['group'] != "")
 	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
 	                                 
-        $result = $this->_db->fetchAll($select);      
+        $result = $this->_db->fetchAll($select);
+
         if(!$result) return array();
         
         $userIDList = $this->simplifyArray($result,'id_usr');
+        $output = $userIDList;
         
         if($groupName == "userInfo")
        		$output = $this->sortByUserInfo($userIDList, $sort, $list);
@@ -789,6 +791,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         	$output = $this->sortUsersByPopularity($userIDList, $sort, $list, null);	
         elseif($groupName == "contentComments")	
         	$output = $this->sortUsersByComments($userIDList, $sort, $list, null);
+        	
         return $output;
         
     }

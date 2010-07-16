@@ -19,6 +19,11 @@ $url_getUserListBase = $this->url(array('controller' => 'account',
 							 'language' => $this->language), 
 							 'lang_default', true);
 
+$url_getUserListTop = $this->url(array('controller' => 'ajax',
+							 'action' => 'getuserlisttop',
+							 'language' => $this->language), 
+							 'lang_default', true);
+
 $url_iconPlus = $this->baseUrl('/images/icon_plus_tiny.png');
 $url_iconMinus = $this->baseUrl('/images/icon_minus_tiny.png');
 $url_arrowDown = $this->baseUrl('/images/arrow_down.png');
@@ -36,7 +41,8 @@ $this->headScript()->appendFile($this->baseUrl . '/js/jquery.gchart.min');
 $this->headScript()->captureStart();
 
 ?>
-
+var topUrl = "<?php echo $url_getUserListTop; ?>";
+var requestedUrl = "<?php echo $this->parsedUrl; ?>";
 var thumbUp = "<?php echo $url_thumbUp; ?>";
 var thumbDown = "<?php echo $url_thumbDown; ?>";
 var loader = "<?php echo $url_loader; ?>";
@@ -98,12 +104,18 @@ var iconminus = "<?php echo $url_iconMinus; ?>";
 	</div>
 	<div style="margin-top: 5px;"><span style="font-weight: bold">Sort description: </span><span><?php echo $this->order[$this->lastOrder]; ?></span></div>
     <div style="border-bottom:1px dotted #DDDDDD; padding-bottom:5px;"></div>
+    
     <?php if (!empty($this->userListData)):?>
-            <?php if ($this->userCount > $this->count): ?>
+            
             <div id="user_list_user_pagination_top">
+            <?php if ($this->userCount > $this->count): ?>
                 <?php echo $this->userPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
-            </div>
             <?php endif; ?>
+                <div id="user_list_top_list_show"><span>Toplist</span><a id="user_list_top_list_link" href="#" onClick="return false;" style="text-decoration: none;"> <img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a></div>
+            </div>
+        <div class="user_list_top_list" style="display: none"></div>
+        <div style="border-bottom:1px dotted #DDDDDD; padding-bottom:2px;<?php if ($this->userCount < $this->count): ?> padding-bottom:22px; <?php endif; ?> "></div> 
+           
         <div id="user_list_bottom">
                    
             <div id="account_user_list_container">

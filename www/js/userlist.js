@@ -67,45 +67,83 @@ $(document).ready(function(){
 		$("#user_list_"+this+"_hide_graphs").click(function() {
 			$("#user_"+id+"_charts").slideUp(400);
 		});
-	});	
+	});
+	$("#user_list_top_list_link").live('click', function() {
+		if($(".user_list_top_list").html() == "") {
+			getSearchTopList();
+			generateTopListEffects(jQuery.parseJSON('["Count","View","Popularity","Rating","Comment"]'));
+			
+		}
+		else {
+			if($(".user_list_top_list").css("display") == "block") $(".user_list_top_list").slideUp(500);
+			else $(".user_list_top_list").slideDown(1000);
+		}
+	});
 	} //End of if userIds
 	//Start of Top list js
 	else {
-		$.each(topList, function() {
-			var name = this;
-			$("#user_list_top_box_show_more_link_"+name+"").click(function() {
-				if($("#user_list_top_box_right_"+name+"").css("display") == "none") {
-					$("#user_list_top_box_right_"+name+"").slideDown(500);
-					$(this).html("<img src=\""+arrowup+"\"/>");
-				}
-				else {
-					$("#user_list_top_box_right_"+name+"").slideUp(500);
-					$(this).html("<img src=\""+arrowdown+"\"/>");
-				}			
-			});
-		});
-		$("#user_list_top_list_expand_all").click(function() {
-			if($("#user_list_top_list_expand_all").attr('name') != 'expand') {
-				$.each(topList, function() {
-					var name = this;
-					$("#user_list_top_box_right_"+name+"").slideDown(500);
-					$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowup+"\"/>");
-					$("#user_list_top_list_expand_all").html("<img src=\""+iconminus+"\"/>");
-					$("#user_list_top_list_expand_all").attr('name','expand');
-				});
-			}
-			else {
-				$.each(topList, function() {
-					var name = this;
-					$("#user_list_top_box_right_"+name+"").slideUp(500);
-					$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowdown+"\"/>");
-					$("#user_list_top_list_expand_all").html("<img src=\""+iconplus+"\"/>");
-					$("#user_list_top_list_expand_all").attr('name','collapse');
-				});
-			}
-		});
+		generateTopListEffects(topList);
 	}
 });
+
+function generateTopListEffects(list) {
+	$.each(list, function() {
+		var name = this;
+		$("#user_list_top_box_show_more_link_"+name+"").live('click', function() {
+			if($("#user_list_top_box_right_"+name+"").css("display") == "none") {
+				$("#user_list_top_box_right_"+name+"").slideDown(500);
+				$(this).html("<img src=\""+arrowup+"\"/>");
+			}
+			else {
+				$("#user_list_top_box_right_"+name+"").slideUp(500);
+				$(this).html("<img src=\""+arrowdown+"\"/>");
+			}			
+		});
+	});
+
+	$("#user_list_top_list_expand_all").live('click',function() {
+		if($("#user_list_top_list_expand_all").attr('name') != 'expand') {
+			$.each(list, function() {
+				
+				var name = this;
+				$("#user_list_top_box_right_"+name+"").slideDown(500);
+				$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowup+"\"/>");
+				$("#user_list_top_list_expand_all").html("<img src=\""+iconminus+"\"/>");
+				$("#user_list_top_list_expand_all").attr('name','expand');
+			});
+		}
+		else {
+			$.each(list, function() {
+				var name = this;
+				$("#user_list_top_box_right_"+name+"").slideUp(500);
+				$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowdown+"\"/>");
+				$("#user_list_top_list_expand_all").html("<img src=\""+iconplus+"\"/>");
+				$("#user_list_top_list_expand_all").attr('name','collapse');
+			});
+		}
+	});
+}
+
+function getSearchTopList() {
+	
+	var before = $("#user_list_top_list_show span").html();
+	$.ajax({
+		beforeSend: function(){
+			$("#user_list_top_list_show span").html(loading);
+		},
+		complete: function(){
+			$("#user_list_top_list_show span").html(before);
+			$("#user_list_top_list_link img").attr("src",iconminus);
+		},	
+		url: topUrl+requestedUrl,
+		success: function(data) {
+		  $(".user_list_top_list").html(data);
+		  $(".user_list_top_list").slideDown(1000);
+
+		}	
+	});
+};
+
 
 function json_search_contents(listStart,id,div) {
 	$.ajax({

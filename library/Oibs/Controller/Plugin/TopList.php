@@ -59,6 +59,12 @@ class Oibs_Controller_Plugin_TopList {
 		die;
 	}*/
 	
+	public function setUserIdList($list) {
+		if(is_array($list)) $this->_userList = $list;
+		else return "error";
+		return $this;
+	}
+	
 	private function _addUserRank($id) {
 		if(!is_array($id)) $id = array($id);
 		$tops = $this->_addedTops;
@@ -167,14 +173,15 @@ class Oibs_Controller_Plugin_TopList {
 	private function _getUserInfo($choice) {
 		$getIds = array();
 		for($i = 0; $i < $this->_limit; $i++) {
-			$getIds[] = $this->_topListIds[$choice][$i];
+			if($this->_topListIds[$choice][$i]) $getIds[] = $this->_topListIds[$choice][$i];
 		}
+		
 		if($choice == 'Count') $temp = $this->_userModel->getUsersContentCount($getIds);
 		elseif($choice == 'View') $temp = $this->_userModel->getUsersViews($getIds);
 		elseif($choice == 'Popularity') $temp = $this->_userModel->getUsersPopularity($getIds);
 		elseif($choice == 'Rating') $temp = $this->_userModel->getUsersRating($getIds);
 		elseif($choice == 'Comment') $temp = $this->_userModel->getUsersCommentCount($getIds);
-		
+
 		$this->_topList[$choice] = array(
 			'users' => 
 				$this->_finalizeToSortingOrderByUserId($getIds,

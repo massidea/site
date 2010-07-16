@@ -1293,17 +1293,17 @@ class AccountController extends Oibs_Controller_CustomController
 			}
 			//print_r($top->test());die;
 			//print_r($topList);die;
-        	$topList['Count']['title'] = "Most contents";
-        	$topList['View']['title'] = "Most viewed contents";
-        	$topList['Popularity']['title'] = "Most popular";
-        	$topList['Rating']['title'] = "Highest rating";
-        	$topList['Comment']['title'] = "Most comments";
+        	$topList['Count']['title'] = $this->view->translate('userlist-top-title-count');
+        	$topList['View']['title'] = $this->view->translate('userlist-top-title-view');
+        	$topList['Popularity']['title'] = $this->view->translate('userlist-top-title-popularity');
+        	$topList['Rating']['title'] = $this->view->translate('userlist-top-title-rating');
+        	$topList['Comment']['title'] = $this->view->translate('userlist-top-title-comment');
 
-        	$topList['Count']['description'] = "Has content count of ";
-        	$topList['View']['description'] = "Has view count of ";
-        	$topList['Popularity']['description'] = "Has reader count of ";
-        	$topList['Rating']['description'] = "Has rating sum of ";
-        	$topList['Comment']['description'] = "Has comment count of ";
+        	$topList['Count']['description'] = $this->view->translate('userlist-top-description-count');
+        	$topList['View']['description'] = $this->view->translate('userlist-top-description-view');
+        	$topList['Popularity']['description'] = $this->view->translate('userlist-top-description-popularity');
+        	$topList['Rating']['description'] = $this->view->translate('userlist-top-description-rating');
+        	$topList['Comment']['description'] = $this->view->translate('userlist-top-description-comment');
         	
         	$topNames = array();
         	foreach($topList as $top) {
@@ -1321,7 +1321,13 @@ class AccountController extends Oibs_Controller_CustomController
         $form_url = $this->_urlHelper->url($form_url_path,'lang_default', true);
         $userSearch->setAction($form_url)
                    ->setMethod('get');
-                       
+
+        $parsedUrl = "";
+        foreach($params as $key => $param) {
+        	if($key == "controller" || $key == "action" || $key == "module" || $key == "language") continue;
+        	$parsedUrl .= "/$key/$param";
+        }
+           
         $this->view->userSearch = $userSearch;
         // Custom pagination to fix memory error on large amount of data
         $paginator = new Zend_View();
@@ -1338,6 +1344,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->userCount = $listSize;
         $this->view->list = $listName;
         $this->view->top = $topList;
+        $this->view->parsedUrl = $parsedUrl;
         $this->view->topNames = $topNames;
         $this->view->page = $page;
         $this->view->order = $orderList;

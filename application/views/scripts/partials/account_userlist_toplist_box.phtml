@@ -19,16 +19,19 @@ if($this->addedUsers[0]['rank'] < 10) {
 
 		<div class="user_list_top_box">
 			<div class="user_list_top_box_left">
-				<span class="user_list_top_box_title"><?php echo $this->title; ?></span>
-				<img class="user_list_top_box_image" src="<?php echo $this->url(array('controller' => 'account', 
+				<p><span class="user_list_top_box_title"><?php echo $this->title; ?></span></p>
+				<div class="user_list_top_box_image"><img src="<?php echo $this->url(array('controller' => 'account', 
 	                                                                      'action' => 'profilethumb', 
 	                                                                      'thumb' => true, 
 	                                                                      'id' => $this->users[0]['id_usr'], 
 	                                                                      'language' => $this->language), 
 	                                                                'lang_default', true); ?>" alt="User image" class="profile_image_largesize" />
-				<a href="<?php echo $url_userFirst; ?>" class="user_list_top_box_user" style="text-decoration: none; <?php echo $colorFirst; ?>"><?php echo $this->users[0]['login_name_usr']; ?></a>
-				<span class="user_list_top_box_description"><?php echo $this->description; echo $this->users[0]['value'] ?></span>
-				<div class="user_list_top_box_show_more"><a id="user_list_top_box_show_more_link_<?php echo $this->name; ?>" href="#" onClick="return false;" style="text-decoration: none;"><img src="<?php echo $this->baseUrl('/images/arrow_down.png'); ?>"/></a></div>
+				</div>
+				<div class="user_list_top_box_bottom">
+					<p><a href="<?php echo $url_userFirst; ?>" class="user_list_top_box_user" style="text-decoration: none; <?php echo $colorFirst; ?>"><?php echo $this->users[0]['login_name_usr']; ?></a></p>
+					<p><span class="user_list_top_box_description"><?php echo $this->description; echo $this->users[0]['value'] ?></span></p>
+					<div class="user_list_top_box_show_more"><a id="user_list_top_box_show_more_link_<?php echo $this->name; ?>" href="#" onClick="return false;" style="text-decoration: none;"><img src="<?php echo $this->baseUrl('/images/arrow_down.png'); ?>"/></a></div>
+				</div>
 			</div>
 			<div class="user_list_top_box_right" id="user_list_top_box_right_<?php echo $this->name; ?>" style="display:none">
 				<div class="user_list_top_box_runnerups"><span class="user_list_top_box_runnerups_title_rank">#</span><span class="user_list_top_box_runnerups_title_name">Runner-ups</span><span class="user_list_top_box_runnerups_title_points">Points</span></div>
