@@ -197,7 +197,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function morefromuserAction() {
 		// Get content owner data
         $userModel = new Default_Model_User();
-		$rawcontents = $userModel->getUserContent($this->params['id_usr'], 0, $this->params['id_cnt'], 5);
+		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], 5);
 		foreach($rawcontents as $rawcnt)
 		{
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
@@ -281,5 +281,44 @@ class AjaxController extends Oibs_Controller_CustomController
         );
         
         $this->view->favourite = $favourite;
+	}
+	
+	public function postcommentAction() {
+		//$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$auth = Zend_Auth::getInstance();
+		$user = $auth->getIdentity();
+		//Zend_Debug::dump($this->params);
+		$params = $this->params;
+
+		if ($auth->hasIdentity() && null != $params['msg'] && null != $params['type'] && null != $params['parent'] && null != $params['id'] ) {
+			$msg = $params['msg'];
+			$parent = $params['parent'];
+			$type = $params['type'];
+			$id = $params['id'];
+			
+			$comments = new Oibs_Controller_Plugin_Comments($type, $id);
+			$comments->addComment($user->user_id, $parent, $msg);
+		}
+	}
+	
+	public function getcommentsAction() {
+
+		//$this->_helper->viewRenderer->setNoRender(true);
+				
+		$auth = Zend_Auth::getInstance();
+		
+		if ($auth->hasIdentity()) {
+			$type = $this->params['type'];
+			$id = $this->params['id'];
+			
+			$comments = new Oibs_Controller_Plugin_Comments($type, $id);
+			$newComments = array();
+			$newComments = $comments->getNewComments($auth->getIdentity()->user_id);
+			
+			if (count($newComments) != 0) {
+				$this->view->comments = $newComments;
+			}
+		}
 	}
 }

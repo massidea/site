@@ -1,0 +1,31 @@
+            <div class="clear"></div>
+			<div id="content_view_comment_<?php echo $this->id_cmt; ?>_container" 
+                class="content_view_comment_container_<?php echo $this->level; ?>">
+				<div id="content_view_comment_<?php echo $this->id_cmt; ?>_header" class="content_view_comment_header">
+					<div id="content_view_comment_<?php echo $this->id_cmt; ?>_username" class="content_view_comment_username">
+                            <?php echo $this->login_name_usr; ?>
+                    </div>
+                    <div id="content_view_comment_<?php echo $this->id_cmt; ?>_date" class="content_view_comment_date">
+                        <?php echo date('(d M Y)', strtotime($this->created_cmt)); ?>
+                    </div>
+                    <div id="content_view_comment_<?php echo $this->id_cmt; ?>_reply" class="content_view_comment_reply">
+                    	<a id="flagSpamLink_<?php echo $this->id_cmt; ?>" href="#"
+                    	   onclick="flagAsSpam('<?php echo $this->id_cmt; ?>'); return false;">
+                    		Spam
+                    	</a> / 
+                        <a href="#" onclick="replyTo('<?php echo $this->id_cmt; ?>', 
+                                            '<?php echo $this->login_name_usr; ?>'); return false;">
+                            <?php echo $this->translate('content-view-comment-reply'); ?>
+                        </a>
+                    </div>
+                </div>
+				<div id="content_view_comment_<?php echo $this->id_cmt; ?>" class="content_view_comment">
+					<div id="content_view_comment_<?php echo $this->id_cmt; ?>_textbody" 
+                         class="content_view_comment_textbody">
+                    	<?php echo /*$this->BBCode->parse(stripslashes())*/$this->body_cmt; ?>
+                    </div>
+                    <div id="unmodified_<?php echo $this->id_cmt; ?>" style="display:none;">
+                        <?php echo $this->body_cmt; ?>
+                    </div>
+				</div>
+            </div>

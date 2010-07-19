@@ -425,6 +425,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * For edit links in user pages array need cntHasCntCount (edit links will be
     * showing if content has any content.
     *
+    * Edited 19.7.2010 by Sami Suuriniemi
+    * Remdae the function, tried to be sure everything works with the new one
+    * 
     * @author Pekka Piispanen
     * @author Joel Peltonen
     * @author Mikko Aatola
@@ -437,7 +440,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * @param integer $id_cnt 	id to be skipped
     * @return array
     */    
-    public function getUserContent($author_id = 0, $type = 0, $id_cnt = 0, $limit = -1)
+    /*public function getUserContent($author_id = 0, $type = 0, $id_cnt = 0, $limit = -1)
     {
         $result = array();  // container for final results array
         
@@ -468,7 +471,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                       'cnt.id_cnt = crt.id_cnt_crt',
                                                       array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
-                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      'cnt.id_cnt = cmt.id_target_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
                                            ->joinLeft(array('chc1' => 'cnt_has_cnt'),
                                                       'cnt.id_cnt = chc1.id_parent_cnt',
@@ -483,9 +486,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ->where($whereType)
                                            ->where('cnt.id_cnt != ?', "") // Odd hack
                                            ->where('cnt.id_cnt != ?', $id_cnt)
+                                           //->where('cmt.type_cmt = ?', 1)
                                            ->order('cnt.created_cnt DESC')
                                            ->group('cnt.id_cnt')
 				;
+				//echo $contentSelect->__toString(); die;
 				if($limit != -1) $contentSelect->limit($limit);
 
                 $result = $this->_db->fetchAll($contentSelect);
@@ -502,8 +507,21 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         } // end if        
 
         return $result;
-    } // end of getUserContent
+    } // end of getUserContent*/
 
+    public function getUserContent($id_usr, $id_cnt=0, $limit=0) {
+    	$select = $this->_db->select()->from('cnt_has_usr', 'id_cnt')
+    									->join('contents_cnt', 'cnt_has_usr.id_cnt = contents_cnt.id_cnt')
+    									->join('content_types_cty', 'content_types_cty.id_cty = contents_cnt.id_cty_cnt', array('key_cty'))
+    									->join('cnt_views_vws', 'contents_cnt.id_cnt = cnt_views_vws.id_cnt_vws', array('views' => 'sum(views_vws)'))
+    									->group('contents_cnt.id_cnt')
+    									->where('cnt_has_usr.id_usr = ?', $id_usr)
+    									;
+    	if ($id_cnt != 0) $select->where('contents_cnt.id_cnt != ?', $id_cnt);
+    	if ($limit != 0) $select->limit($limit);
+    	return $this->_db->fetchAll($select);
+    }
+    
     /**
      * getUserCampaigns - Get all campaigns which belong to group where user is admin
      *
@@ -1639,7 +1657,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	                                 'cnt.id_cnt = crt.id_cnt_crt',
 	                                 array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
 	                ->joinLeft(array('cmt' => 'comments_cmt'),
-	                                 'cnt.id_cnt = cmt.id_cnt_cmt',
+	                                 'cnt.id_cnt = cmt.id_target_cmt and type_cmt=1',
 	                                 array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))   
 	                ->where('uhf.id_usr = ?', $author_id)
 	                ->order('cnt.id_cty_cnt ASC')

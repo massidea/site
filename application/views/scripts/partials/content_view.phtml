@@ -374,71 +374,7 @@ if (isset($this->parent_siblings[0])) {
 				<input type="button" value="Edit" onclick="location.href='<?php echo $this->baseUrl("/".$this->language."/content/edit/".$this->contentData['id_cnt']); ?>';" />
 			</div>
 		<?php endif; ?>
-        
-        <div class="view_content_comments">
-        	<?php if ($this->comments > 0): ?>
-	            <div id="content_view_comments">
-	                <div id="content_view_comments_header">
-	                    <h3><?php echo $this->translate('content-view-comments'); ?></h3>
-	                </div>
-		            <?php foreach($this->commentData as $comment): ?>		
-			            <div class="clear"></div>
-						<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_container" 
-			                class="content_view_comment_container_<?php echo $comment['level']; ?>">
-							<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_header" class="content_view_comment_header">
-								<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_username" class="content_view_comment_username">
-			                            <?php echo $comment['login_name_usr']; ?>
-			                    </div>
-			                    <div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_date" class="content_view_comment_date">
-			                        <?php echo date('(d M Y)', strtotime($comment['created_cmt'])); ?>
-			                    </div>
-			                    <div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_reply" class="content_view_comment_reply">
-			                    	<a id="flagSpamLink_<?php echo $comment['id_cmt']; ?>" href="#"
-			                    	   onclick="javascript:flagAsSpam('<?php echo $comment['id_cmt']; ?>');return false;">
-			                    		Spam
-			                    	</a> / 
-			                        <a href="#" onclick="javascript:replyTo('<?php echo $comment['id_cmt']; ?>', 
-			                                            '<?php echo $comment['login_name_usr']; ?>');return false;">
-			                            <?php echo $this->translate('content-view-comment-reply'); ?>
-			                        </a>
-			                    </div>
-			                </div>
-							<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>" class="content_view_comment">
-								<div id="content_view_comment_<?php echo $comment['id_cmt']; ?>_textbody" 
-			                         class="content_view_comment_textbody">
-			                    	<?php echo $this->BBCode->parse(stripslashes($comment['body_cmt'])); ?>
-			                    </div>
-			                    <div id="unmodified_<?php echo $comment['id_cmt']; ?>" style="display:none;">
-			                        <?php echo $comment['body_cmt']; ?>
-			                    </div>
-							</div>
-			            </div>
-					<?php endforeach; ?>
-					<?php if (false && $this->comments > $this->count): ?>
-		                <div id="content_view_comment_pagination">
-		                	<?php echo $this->commentPaginator->render('pagination/slidingPaginationControl.phtml'); ?>
-		                </div>
-					<?php endif;?>
-				</div>
-			<?php endif; ?>
-			<?php if($this->user_can_comment): ?>
-		        <div style="clear:both;"></div>
-				<div id="content_view_comment_form_container">
-					<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
-					<a href="#" id="cancel_reply_link" style="float: right; padding: 3px 0px 0px 0px; display: none;" onclick="javascript:cancelReply();return false;">
-						<?php echo $this->translate('content-view-comment-cancel'); ?>
-					</a>
-					<p id="replying_to" style="float: right; padding: 3px 20px 0px 0px; display: none;">Replying to [username]</p>
-					<?php echo $this->comment_form; ?>
-				</div>
-			<?php endif; ?>
-		</div>
-        <?php if (!$this->user_can_comment): ?>
-            <p style="margin: 0px; padding: 0px;">Would you like to comment?</p>
-            <p style="margin: 0px; padding: 0px;">
-            	<a href="<?php echo $url_login; ?>">Log in</a> or <a href="<?php echo $url_register; ?>">Sign up</a>
-            </p>
-        <?php endif; ?>
+        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
         <?php if (isset($this->parents[0])) : ?>
 			<div class="success">
 				<h3><?php echo $this->translate('content-view-solution-to'); ?></h3>

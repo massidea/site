@@ -115,7 +115,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$select = $this->select()->from($this, "id_cnt")
 								 ->where('published_cnt = 1')
 								 ->order($order);
-			
+								 
+		if ($cty != "all") {
+			$select->join('content_types_cty', 'content_types_cty.id_cty = contents_cnt.id_cty_cnt',array())
+				   ->where('content_types_cty.key_cty = ?', $cty);
+		}
 		if ($count > 0){
 			$select->limitPage($page, $count);
 		} else {

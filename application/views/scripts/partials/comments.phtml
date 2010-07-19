@@ -1,0 +1,41 @@
+        <div class="view_content_comments">
+       			<?php if($this->comments->userCanComment()): ?>
+		        <div style="clear:both;"></div>
+				<div id="content_view_comment_form_container">
+					<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
+					<a href="#" id="cancel_reply_link" style="float: right; padding: 3px 0px 0px 0px; display: none;" onclick="javascript:cancelReply();return false;">
+						<?php echo $this->translate('content-view-comment-cancel'); ?>
+					</a>
+					<p id="replying_to" style="float: right; padding: 3px 20px 0px 0px; display: none;">Replying to [username]</p>
+					<div class="clear"></div>
+					<p><textarea id="commentTextarea" name="Comments"></textarea></p>
+					<input type="button" value="Post comment" id="commentPostButton"></input>
+					<input type="hidden" id="comment_parent" value="0"></input>
+				</div>
+			<?php //echo $this->comments->getForm(); ?>
+			
+	            <div id="content_view_comments">
+	                <div id="content_view_comments_header" 
+	                	<?php if($this->comments->getCommentCount() == 0):?> style="display: none;"<?php endif; ?>> 
+	                    <h3><?php echo $this->translate('content-view-comments'); ?></h3>
+	                </div>
+		        	<?php if ($this->comments->getCommentCount() > 0): ?>
+		            <?php foreach($this->comments->getComments() as $comment): ?>		
+					<?php echo $this->partial('partials/comment_row.phtml', $comment); ?>
+					<?php endforeach; ?>
+					<?php if (false && $this->comments > $this->count): ?>
+		                <div id="content_view_comment_pagination">
+		                	<?php echo $this->commentPaginator->render('paginati+on/slidingPaginationControl.phtml'); ?>
+		                </div>
+					<?php endif;?>
+				<?php endif; ?>
+				</div>
+		
+        <?php else: ?>
+            <p style="margin: 0px; padding: 0px;">Would you like to comment?</p>
+            <p style="margin: 0px; padding: 0px;">
+            	<a href="<?php echo $url_login; ?>">Log in</a> or <a href="<?php echo $url_register; ?>">Sign up</a>
+            </p>
+        <?php endif; ?>
+        </div>
+     
