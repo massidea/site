@@ -672,7 +672,7 @@ class CampaignController extends Oibs_Controller_CustomController
             $groupAdmins = $groupAdminsModel->getGroupAdmins($groupId);
             $user = $auth->getIdentity();
 
-            if (!$groupAdminsModel->userIsAdmin($relatestoid, $user->user_id)) {
+            if (!$groupAdminsModel->userIsAdmin($groupId, $user->user_id)) {
                 $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
@@ -687,10 +687,24 @@ class CampaignController extends Oibs_Controller_CustomController
                 $relatesToCampaign = $campaignModel->getCampaignById($relatestoid);
                 $this->view->relatesToCampaignName = $relatesToCampaign['name_cmp'];
 				$campaignContents = $campaignModel->getAllContentsInCampaign($relatestoid);
+                $campaignFlagContents = array();
+                $campaignNormalContents = array();
+                $contentflagmodel = new Default_Model_ContentFlags();
+                // Check if content is flaged
+                foreach ($campaignContents as $content) {
+                    $cfl_ids = $contentflagmodel->getFlagsByContentId($content['id_cnt']);
+                    if (!empty($cfl_ids)) {
+                        $campaignFlagContents[] = $content;
+                    } else {
+                        $campaignNormalContents[] = $content;
+                    }
+                }
+
             }
             $this->view->campaignexists = $campaignexists;
             $this->view->relatesToId = $relatestoid;
-            $this->view->contents = $campaignContents;
+            $this->view->contents = $campaignNormalContents;
+            $this->view->flagcontents = $campaignFlagContents;
             $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($groupAdmins, 'id_usr', $user->user_id);
 		} else {
 			// If not logged, redirecting to system message page
@@ -793,18 +807,22 @@ class CampaignController extends Oibs_Controller_CustomController
                 $this->_redirector($redirectUrl);
             }
 
-            $cmphascntmodel = new Default_Model_CampaignHasContent();
-            $cmphascntmodel->removeContentFromCampaign($cmpId, $cntId);
+            $cmpModel = new Default_Model_Campaigns();
+            $cmp = $cmpModel->getCampaignById($cmpId);
+            $grpId = $cmp['id_grp_cmp'];
 
             $usrId = $auth->getIdentity()->user_id;
             $grpadminmodel = new Default_Model_GroupAdmins();
-            if (!$grpadminmodel->userIsAdmin($cmpId, $usrId)) {
+            if (!$grpadminmodel->userIsAdmin($grpId, $usrId)) {
                 $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
                 $this->_redirector->gotoUrl($redirectUrl);
             }
+
+            $cmphascntmodel = new Default_Model_CampaignHasContent();
+            $cmphascntmodel->removeContentFromCampaign($cmpId, $cntId);
 
             // TODO:
             // Tell the user that the unlink was created.

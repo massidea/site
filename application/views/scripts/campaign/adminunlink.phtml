@@ -21,45 +21,89 @@ if($this->campaignexists) {
             </a></p>
         </div>
     </div>
-    <p class="linking_help_text">This campaign is currently linked to following content(s)</p>
     <?php
-    if($this->contents) {
-        foreach($this->contents as $content) {
-            ?>
-            <div class="linking_dot_line"></div>
-            <div class="linking_from">
-                <div class="linking_from_name">
-                    <?php
-                    $linkusr = $this->url(array('controller' => 'account',
-                                                'action' => 'view',
-                                                'user' => $content['login_name_usr'],
-                                                'language' => $this->language),
-                                          'lang_default', true);
-                    $linkurl = $this->url(array('content_id' => $content['id_cnt'],
-                                                'language' => $this->language),
-                                          'content_shortview', true);
-                    ?>
-                    <div class="linking_from_<?php echo $content['key_cty']; ?>">
-                        <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
-                        <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
-                        <p class="linking_from_text"><?php echo $content['lead_cnt']; ?></p>
+    if ($this->flagcontents || $this->contents) {
+        ?> <p class="linking_help_text">This campaign is currently linked to</p> <?php
+        if($this->flagcontents) {
+            ?> <p class="linking_help_text">following flaged content(s)</p> <?php
+            foreach($this->flagcontents as $content) {
+                ?>
+                <div class="linking_dot_line"></div>
+                <div class="linking_from">
+                    <div class="linking_from_name">
+                        <?php
+                        $linkusr = $this->url(array('controller' => 'account',
+                                                    'action' => 'view',
+                                                    'user' => $content['login_name_usr'],
+                                                    'language' => $this->language),
+                                              'lang_default', true);
+                        $linkurl = $this->url(array('content_id' => $content['id_cnt'],
+                                                    'language' => $this->language),
+                                              'content_shortview', true);
+                        ?>
+                        <div class="linking_from_<?php echo $content['key_cty']; ?>">
+                            <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
+                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
+                            <p class="linking_from_text"><?php echo $content['lead_cnt']; ?></p>
+                        </div>
+                    </div>
+                    <div class="linking_from_link">
+                        <?php
+                            $linkurl = $this->url(array('contenttype' => $content['key_cty'],
+                                                    'cmpid'    => $this->relatesToId,
+                                                    'cntid'    => $content['id_cnt'],
+                                                    'language' => $this->language),
+                                              'removecampaignlinks', true);
+                            ?>
+                        <a href="<?php echo $linkurl; ?>">Remove link</a>
                     </div>
                 </div>
-                <div class="linking_from_link">
-                    <?php
-                        $linkurl = $this->url(array('contenttype' => $content['key_cty'],
-                                                'cmpid'    => $this->relatesToId,
-                                                'cntid'    => $content['id_cnt'],
-                                                'language' => $this->language),
-                                          'removecampaignlinks', true);
-                        ?>
-                    <a href="<?php echo $linkurl; ?>">Remove link</a>
-                </div>
-            </div>
-            <div class="clear"></div>
-            <?php
+                <div class="clear"></div>
+                <?php
+            }
+            ?> <div class="linking_dot_line"></div> <?php
         }
-        ?> <div class="linking_dot_line"></div> <?php
+        if($this->contents) {
+            ?> <p class="linking_help_text">following not flaged content(s)</p> <?php
+            foreach($this->contents as $content) {
+                ?>
+                <div class="linking_dot_line"></div>
+                <div class="linking_from">
+                    <div class="linking_from_name">
+                        <?php
+                        $linkusr = $this->url(array('controller' => 'account',
+                                                    'action' => 'view',
+                                                    'user' => $content['login_name_usr'],
+                                                    'language' => $this->language),
+                                              'lang_default', true);
+                        $linkurl = $this->url(array('content_id' => $content['id_cnt'],
+                                                    'language' => $this->language),
+                                              'content_shortview', true);
+                        ?>
+                        <div class="linking_from_<?php echo $content['key_cty']; ?>">
+                            <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
+                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
+                            <p class="linking_from_text"><?php echo $content['lead_cnt']; ?></p>
+                        </div>
+                    </div>
+                    <div class="linking_from_link">
+                        <?php
+                            $linkurl = $this->url(array('contenttype' => $content['key_cty'],
+                                                    'cmpid'    => $this->relatesToId,
+                                                    'cntid'    => $content['id_cnt'],
+                                                    'language' => $this->language),
+                                              'removecampaignlinks', true);
+                            ?>
+                        <a href="<?php echo $linkurl; ?>">Remove link</a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <?php
+            }
+            ?> <div class="linking_dot_line"></div> <?php
+        }
+    } else {
+        ?> <p>No linked contents</p> <?php
     }
 } else {
     ?>
