@@ -197,24 +197,39 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function morefromuserAction() {
 		// Get content owner data
         $userModel = new Default_Model_User();
-		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], 5);
+        $limit = 5;
+        $more = false;
+        if (null != $this->params['more']) {
+        	$limit = 100;
+        	$more = true;
+        }
+		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], $limit);
 		foreach($rawcontents as $rawcnt)
 		{
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
 			$contents[] = $this->gtranslate->translateContent($rawcnt);
 		}
+		$this->view->more = $more;
 		$this->view->contents = $contents;
 	}
 	
 	public function relatedcontentAction() {
         // Get related contents
         $contentModel = new Default_Model_Content();
-        $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], 10);
+        $limit = 5;
+        $more = false;
+        if (null != $this->params['more']) { 
+        	$limit = 100;
+        	$more = true;
+        }
+        $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], $limit);
         foreach($rawcontents as $rawcnt)
         {
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
 			$contents[] = $this->gtranslate->translateContent($rawcnt);
         }
+        $this->view->id=$this->params['id_cnt'];
+        $this->view->more = $more;
         $this->view->relatedContents = $contents;
 	}
 	

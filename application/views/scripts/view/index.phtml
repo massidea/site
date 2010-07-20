@@ -25,6 +25,8 @@
 ?>
 
 <?php $this->headScript()->captureStart() ?>
+more = false;
+
 function expandCollapse(type) {
 	target = "#content_view_"+type+"_related";
 	expandButton = ".expand_"+type+"_related";
@@ -36,9 +38,18 @@ function expandCollapse(type) {
 	$(target).slideToggle('normal');
 }
 	
-function ajaxLoad_moreRelated(type, url){
+function ajaxLoad_moreRelated(type){
 	expandButton = ".expand_"+type+"_related";
 	target =  "#content_view_"+type+"_related";
+	if (type == 'user') {
+		url = "<?php echo $moreFromUserUrl; ?>";
+	} else {
+		url = "<?php echo $relatedContentUrl; ?>";
+	}
+	data = new Array();
+	if (more) {
+		data = { 'more': '1' };
+	}
 	$(expandButton).bind('click', function () { expandCollapse(type); });
 	$.ajax({
 		async: false,
@@ -49,17 +60,23 @@ function ajaxLoad_moreRelated(type, url){
 			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 		},
 		url: url,
+		data: data,
 		success: function(result){
-			$(target).append(result);
+			$(target).html(result);
 			//$(target).slideToggle('normal');
 		}
 	});
 };
 	
 $(document).ready(function(){
-		ajaxLoad_moreRelated("user", "<?php echo $moreFromUserUrl; ?>");
-		ajaxLoad_moreRelated("content", "<?php echo $relatedContentUrl; ?>");
-
+		ajaxLoad_moreRelated("user");
+		ajaxLoad_moreRelated("content");
+		$("a[id*='show_more_']").click(function(obj) {
+			more=true;
+			obj.preventDefault();
+			type = $(this).attr('id').replace("show_more_", "");
+			ajaxLoad_moreRelated(type);
+		});
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
 		//$("#content_view_favourite").load("?page=add_favourite&format=html");
 });
