@@ -191,6 +191,12 @@ if (isset($this->parent_siblings[0])) {
 		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-translated-show-translated'); ?></a>]
 		                <?php endif; ?>
 	                <?php endif;?>
+	                		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
+
+        	<div class="user_content_edit" style="float:right">
+				<input type="button" value="Edit" onclick="location.href='<?php echo $this->baseUrl("/".$this->language."/content/edit/".$this->contentData['id_cnt']); ?>';" />
+			</div>
+		<?php endif; ?>
                 </div>
             </div>
         </div>
@@ -366,31 +372,30 @@ if (isset($this->parent_siblings[0])) {
             </div>
         </div>
         <?php endif; ?>
-		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
+        <?php if (isset($this->parents[0])) : ?>
+        <div class="user_content_spacer">
+        	<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
+        </div>
+		<div class="success">
+			<h3><?php echo $this->translate('content-view-solution-to'); ?></h3>
+			<ul>
+				<?php foreach ($this->parents as $parent): ?>
+					<li>
+						<a href="<?php echo $this->url(array('content_id' => $parent['id_cnt'], 
+                                                                 'language' => $this->language), 
+                                                                 'content_shortview', true); ?>">
+							<?php echo $parent['title_cnt']; ?>
+						</a>
+						<br />
+					</li>
+				<?php endforeach; ?>
+				</ul>
+			</div>
 			<div class="user_content_spacer">
         		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
         	</div>
-        	<div class="user_content_edit">
-				<input type="button" value="Edit" onclick="location.href='<?php echo $this->baseUrl("/".$this->language."/content/edit/".$this->contentData['id_cnt']); ?>';" />
-			</div>
 		<?php endif; ?>
-        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
-        <?php if (isset($this->parents[0])) : ?>
-			<div class="success">
-				<h3><?php echo $this->translate('content-view-solution-to'); ?></h3>
-				<ul>
-					<?php foreach ($this->parents as $parent): ?>
-						<li>
-							<a href="<?php echo $this->url(array('content_id' => $parent['id_cnt'], 
-                                                                 'language' => $this->language), 
-                                                                 'content_shortview', true); ?>">
-								<?php echo $parent['title_cnt']; ?>
-							</a>
-							<br />
-						</li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-		<?php endif; ?>
+		        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
+
 	</div>
 </div>

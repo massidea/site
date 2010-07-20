@@ -20,7 +20,8 @@
 	                    <h3><?php echo $this->translate('content-view-comments'); ?></h3>
 	                </div>
 		        	<?php if ($this->comments->getCommentCount() > 0): ?>
-		            <?php foreach($this->comments->getComments() as $comment): ?>		
+		            <?php foreach($this->comments->getComments() as $comment): ?>
+		            <?php $comment['userUrl'] = $this->comments->getUserUrl($comment['login_name_usr']); ?>		
 					<?php echo $this->partial('partials/comment_row.phtml', $comment); ?>
 					<?php endforeach; ?>
 					<?php if (false && $this->comments > $this->count): ?>

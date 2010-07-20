@@ -82,6 +82,21 @@ class Oibs_Controller_Plugin_Comments {
 	}
 	
 	/**
+	 * getUserUrl
+	 * 
+	 * gets the url to users account view page
+	 * 
+	 * @param string $username
+	 * @return string
+	 */
+	public function getUserUrl($username) {
+		return $this->_helper->url(array('controller' => 'account',
+										 'action' => 'view',
+										 'user' => $username ),
+										 'lang_default', true);
+	}
+	
+	/**
 	 * getPartial
 	 * 
 	 * @return string partial to be used

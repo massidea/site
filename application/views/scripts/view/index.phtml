@@ -28,8 +28,8 @@
 more = false;
 
 function expandCollapse(type) {
-	target = "#content_view_"+type+"_related";
-	expandButton = ".expand_"+type+"_related";
+	var target = "#content_view_"+type+"_related";
+	var expandButton = ".expand_"+type+"_related";
 	if ($(target).is(':hidden')){
 		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 	} else {
@@ -38,21 +38,24 @@ function expandCollapse(type) {
 	$(target).slideToggle('normal');
 }
 	
-function ajaxLoad_moreRelated(type){
-	expandButton = ".expand_"+type+"_related";
-	target =  "#content_view_"+type+"_related";
+function ajaxLoad_moreRelated(type, more){
+	var expandButton = ".expand_"+type+"_related";
+	var targetDiv =  "#content_view_"+type+"_related";
+	var url = "";
 	if (type == 'user') {
 		url = "<?php echo $moreFromUserUrl; ?>";
 	} else {
 		url = "<?php echo $relatedContentUrl; ?>";
 	}
-	data = new Array();
-	if (more) {
+	var data = new Array();
+	if (more) { 
 		data = { 'more': '1' };
+	} else { 
+		$(expandButton).bind('click', function () { expandCollapse(type); }); 
 	}
-	$(expandButton).bind('click', function () { expandCollapse(type); });
+	
 	$.ajax({
-		async: false,
+		//async: false,
 		beforeSend: function(){
 			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 		},
@@ -62,21 +65,20 @@ function ajaxLoad_moreRelated(type){
 		url: url,
 		data: data,
 		success: function(result){
-			$(target).html(result);
-			//$(target).slideToggle('normal');
+			$(targetDiv).html(result);
+			$("a[id*='show_more_']").click(function(obj) {
+				var more=true;
+				obj.preventDefault();
+				var type = $(this).attr('id').replace("show_more_", "");
+				ajaxLoad_moreRelated(type, more);
+			});
 		}
 	});
 };
-	
+
 $(document).ready(function(){
-		ajaxLoad_moreRelated("user");
-		ajaxLoad_moreRelated("content");
-		$("a[id*='show_more_']").click(function(obj) {
-			more=true;
-			obj.preventDefault();
-			type = $(this).attr('id').replace("show_more_", "");
-			ajaxLoad_moreRelated(type);
-		});
+		ajaxLoad_moreRelated("user", false);
+		ajaxLoad_moreRelated("content", false);
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
 		//$("#content_view_favourite").load("?page=add_favourite&format=html");
 });
