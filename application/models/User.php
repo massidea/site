@@ -303,59 +303,74 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     } // end of generateSalt
     
     /**
-    *    Create a new password for user and set it to profile to wait activation and send email to user
+    *    sendVerificationEmail
+    *
+    *    Sends a verification link to the user (for new password requests).
+    *
+    *    @param integer $userId      user's id
+    *    @param string  $email       email address to send the message
+    *    @param string  $url         url to the verification page
+    *    @param string  $lang        language of the note
+    *    @return bool
     */
-    /*
-    public function fetchPassword($lang)
+    public function sendVerificationEmail($userId, $email, $url, $lang)
     {
-    
-        if (!$this->isSaved())
-        {
-            return false;
-        }
-        // generate new password properties
-        $this->newPassword = $this->createRandomPassword();
-        $this->profile->new_password = md5($this->newPassword);
-        $this->profile->new_password_ts = time();
-        $this->profile->new_password_key = md5(uniqid() .
-        $this->getId() .
-        $this->newPassword);
-        // save new password to profile and send e-mail
-        $this->profile->save();
-        
-        // Send password to user
-        $mail = new Zend_Mail();
-        $emailText = '';
-        
-        // open the resetpassword email template text with correct language
-        $handle = @fopen('../application/layouts/passwordreset_email_plain_'.$lang .'.txt', 'r');
-        if ($handle) {
-            // read first line of file to be the mail subject
-            $mailSubject = fgets($handle);
-            while (!feof($handle)) {
-                // read rest of the file to the mail text
-                $emailText .= fgets($handle);
-            }
-            fclose($handle);
-        
-        
-            $activation_link = 'http://oibs.projects.tamk.fi/account/fetchpassword?action=confirm&id='.$this->userid.'&key='.$this->profile->new_password_key.'';
-            
-            // insert username and password to text
-            $emailText = str_replace('<activation_link>', $activation_link, $emailText);
-            $emailText = str_replace('<username>', $this->username, $emailText);
-            $emailText = str_replace('<password>', $this->newPassword, $emailText);
-            
-            $mail->setBodyText($emailText, "UTF-8");
-            $mail->setFrom('noreply@oibs.tamk.fi');
-            $mail->addTo($this->profile->email);
-            $mail->setSubject(trim($mailSubject));
+        // Create the message
+        $mail = new Oibs_Controller_Plugin_Email();
+        $mail->setNotificationType('passwordreset_'.$lang)
+             ->setReceiverId($userId)
+             ->setParameter('USER', $this->getUserNameById($userId))
+             ->setParameter('URL', $url);
+
+        // Send email
+        if ($mail->isValid()) {
             $mail->send();
-            
             return true;
         }
+        else {
+            return false;
+        }
     }
+
+    /**
+    *    addPasswordRequest
+    *
+    *    Creates a new line (or updates the old one) for a user into the usr_has_npwd table,
+    *    which shows all password requests.
+    *
+    *    @param integer $userId   users's id
+    *    @param string  $key      verification key (crypted)
+    *    @return bool
     */
+    public function addPasswordRequest($userId, $key)
+    {
+        // generate expire date for the password
+        // (verification link will not work after that date)
+        $expireDate = date('y-m-d H:i:s', mktime(date('H')+24, date('i'), date('s'), date('m'), date('d'), date('y')));
+
+        // Get user's previous request
+        $query = $this->_db->select()
+                           ->from('usr_has_npwd')
+                           ->where('id_usr_npwd = ?', $userId);
+        $result = $this->_db->fetchAll($query);
+
+        // Update the old request if it exists
+        if (isset($result[0])) {
+            $bind = array('key_npwd'         => $key,
+                          'expire_date_npwd' => $expireDate);
+
+            $result = $this->_db->update('usr_has_npwd', $bind, 'id_usr_npwd='.$userId);
+        }
+        // Create a new one if there were no previous requests
+        else {
+            $result = $this->_db->insert('usr_has_npwd', array('id_usr_npwd'      => $userId,
+                                                               'key_npwd'         => $key,
+                                                               'expire_date_npwd' => $expireDate));
+        }
+
+        // Return the result of the used SQL-query
+        return $result;
+    }
     
     /**
     *    getUserByName
@@ -1501,6 +1516,32 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         
         return $result['email_usr'];
+    }
+
+    /**
+    * getIdByEmail
+    *
+    * @param  email  user's email address
+    * @return int    userid
+    */
+    public function getIdByEmail($email = ''){
+        if ($email == '') {
+            return null;
+        }
+        
+        $select = $this->select()
+                    ->from('users_usr', 'id_usr')
+                    ->where('email_usr = ?', $email);
+                    
+        $result = $this->fetchAll($select);
+
+        
+        if (isset($result[0])) {
+            return $result[0]['id_usr'];
+        }
+        else {
+            return null;
+        }
     }
     
 	/*
