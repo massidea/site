@@ -340,7 +340,12 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
     	if($limit != -1)  $select->limit($limit);
    		
    		$contents = $cntHasTagModel->fetchAll($select)->toArray();
-    	$linkedContents = $this->find($contents);
+   		
+   		$cnthascntModel = new Default_Model_ContentHasContent();
+
+   		$contents = array_merge($contents, $cnthascntModel->getContentLinkIds($id));
+		
+   		$linkedContents = $this->find($contents);
  	
     	$viewsModel = new Default_Model_ContentViews();
     	$rows = array();

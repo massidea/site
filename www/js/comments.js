@@ -105,6 +105,8 @@ function replyTo (replyId, username) {
     $('p#replying_to').show();
     $('a#cancel_reply_link').show();
     
+    $('#commentTextarea').focus();
+    
     return false;
 }
 
