@@ -881,6 +881,23 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } 
     
+    public function getUsersWithCountry() {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+    									array('id_usr' => 'id_usr_usp'))
+    								->joinLeft(array('usc' => 'countries_ctr'),
+                                      			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      			 array('countryName' => 'usc.printable_name_ctr',
+                                      			 	   'countryIso' => 'usc.iso_ctr'))
+	    							->where('profile_key_usp = ?','country')
+	    							->where('public_usp = ?','1')
+	    							->where('usp.profile_value_usp != ?',"0")
+	    							->order('id_usr')
+    							;
+				
+        $result = $this->_db->fetchAssoc($select); 
+		return $result;
+    }
+    
     /*
      * getUsersLocation
      * 

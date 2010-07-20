@@ -1161,7 +1161,7 @@ class AccountController extends Oibs_Controller_CustomController
             $this->getResponse()->sendResponse();
             return;
         }
-        
+                
         $url_array = array('controller' => 'account', 
                            'action' => 'userlist',
                            'language' => $this->view->language);
@@ -1293,22 +1293,30 @@ class AccountController extends Oibs_Controller_CustomController
 			}
 			//print_r($top->test());die;
 			//print_r($topList);die;
-        	$topList['Count']['title'] = $this->view->translate('userlist-top-title-count');
-        	$topList['View']['title'] = $this->view->translate('userlist-top-title-view');
-        	$topList['Popularity']['title'] = $this->view->translate('userlist-top-title-popularity');
-        	$topList['Rating']['title'] = $this->view->translate('userlist-top-title-rating');
-        	$topList['Comment']['title'] = $this->view->translate('userlist-top-title-comment');
+			
+			foreach($topList as $name => $info) {
+				$topList[$name]['title'] = $this->view->translate("userlist-top-title-".strtolower($name));
+				$topList[$name]['description'] = $this->view->translate("userlist-top-description-".strtolower($name));
+			}
 
-        	$topList['Count']['description'] = $this->view->translate('userlist-top-description-count');
-        	$topList['View']['description'] = $this->view->translate('userlist-top-description-view');
-        	$topList['Popularity']['description'] = $this->view->translate('userlist-top-description-popularity');
-        	$topList['Rating']['description'] = $this->view->translate('userlist-top-description-rating');
-        	$topList['Comment']['description'] = $this->view->translate('userlist-top-description-comment');
-        	
         	$topNames = array();
         	foreach($topList as $top) {
         		$topNames[] = $top['name'];
         	}
+        	
+        	$topListCountries = new Oibs_Controller_Plugin_TopList();
+	        $topListCountries->fetchUserCountries()
+	        	->setCountryTop("Count")
+	        	->setCountryTop("View")
+				->setCountryTop("Popularity")
+				->setCountryTop("Rating")
+				->setCountryTop("Comment")
+				;
+			$topCountry = $topListCountries->getCountryGroups();
+			foreach($topCountry as $name => $info) {
+				$topCountry[$name]['title'] = $this->view->translate("userlist-top-title-".strtolower($name));
+				$topCountry[$name]['description'] = $this->view->translate("userlist-top-description-".strtolower($name));
+			}
         	
         }
       
@@ -1344,6 +1352,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->userCount = $listSize;
         $this->view->list = $listName;
         $this->view->top = $topList;
+        $this->view->topCountry = $topCountry;
         $this->view->parsedUrl = $parsedUrl;
         $this->view->topNames = $topNames;
         $this->view->page = $page;

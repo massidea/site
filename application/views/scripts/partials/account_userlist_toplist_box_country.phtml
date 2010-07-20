@@ -1,0 +1,61 @@
+<?php 
+
+$first = array_values($this->countries);
+$first = $first[0];
+$firstCode = array_keys($this->countries);
+$firstCode = $firstCode[0];
+
+$url_defaultImage = $this->url(array('controller' => 'account', 
+          'action' => 'profilethumb', 
+          'thumb' => true, 
+          'id' => "0", 
+          'language' => $this->language), 
+          'lang_default', true);
+          
+
+?>
+
+		<div class="user_list_top_box">
+			<div class="user_list_top_box_left">
+				<p class="user_list_top_box_title"><span><?php echo $this->title; ?></span></p>			
+				<div class="user_list_top_box_image"><img src="<?php echo $url_defaultImage; ?>" alt="User image" class="profile_image_largesize" />
+				</div>
+				<div class="user_list_top_box_bottom">
+				<?php if($first != "No users"): ?>
+					<p><a href="<?php 
+						  echo $this->url(array('controller' => 'account', 
+				          'action' => 'userlist', 
+				          'country' => $firstCode, 
+				          'language' => $this->language), 
+				          'lang_default', true); ?>" class="user_list_top_box_user" style="text-decoration: none;"><?php echo $first['countryName']; ?></a></p>
+					<p><span class="user_list_top_box_description"><?php echo $this->description; echo $first['value'] ?></span></p>
+					<div class="user_list_top_box_show_more"><a id="user_list_top_box_show_more_link_<?php echo $this->name; ?>" href="#" onClick="return false;" style="text-decoration: none;"><img src="<?php echo $this->baseUrl('/images/arrow_down.png'); ?>"/></a></div>
+				<?php else: ?>
+					<p>No countries!</p>
+				<?php endif; ?>
+				</div>
+			</div>
+			<?php if($first != "No users"): ?>
+			<div class="user_list_top_box_right" id="user_list_top_box_right_<?php echo $this->name; ?>" style="display:block">
+				<div class="user_list_top_box_runnerups"><span class="user_list_top_box_runnerups_title_rank">#</span><span class="user_list_top_box_runnerups_title_name">Runner-ups</span><span class="user_list_top_box_runnerups_title_points">Points</span></div>
+				<div class="user_list_top_box_runnerupsbox">
+				<?php $i = 1; foreach($this->countries as $code => $country): ?>
+					<?php if($i != 1): ?>
+					<div class="user_list_top_box_runnerups_line">
+						<span class="user_list_top_box_runnerups_rank"><?php echo $i ?>. </span>
+						<a href="<?php 
+						  echo $this->url(array('controller' => 'account', 
+				          'action' => 'userlist', 
+				          'country' => $code, 
+				          'language' => $this->language), 
+				          'lang_default', true); ?>
+         				 " class="user_list_top_box_runnerups_names" style="text-decoration: none;">
+							<?php echo $country['countryName']; ?></a>
+							<span class="user_list_top_box_runnerups_value"><?php echo $country['value']; ?></span>
+					</div>
+					<?php endif; ?>
+				<?php $i++; endforeach; ?>
+				</div>
+			</div>
+			<?php endif; ?>
+		</div>

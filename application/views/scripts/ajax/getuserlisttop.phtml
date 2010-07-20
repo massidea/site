@@ -2,12 +2,12 @@
 <span>Top users list </span>
 <a id="user_list_top_list_expand_all" href="#" onClick="return false;"><img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a>
 </div>
-	<div class="user_list_top_line">
-<?php $i = 0;
+	<div class="user_list_top_column">
+<?php $i = 0; $columnCount = ceil(sizeof($this->top)/3);
 	foreach($this->top as $key => $top) { 
-		if($i % 3 == 0 && $i != 0) { ?>
+		if($i % $columnCount == 0 && $i != 0) { ?>
 			</div> 
-			<div class="user_list_top_line">
+			<div class="user_list_top_column">
 			<?php 
 				 echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); 
 		} else { 

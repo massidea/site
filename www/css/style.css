@@ -1681,26 +1681,27 @@ form #uploadedFiles_div .form_element_input label {
 
 .user_list_top_box_runnerups_line { display: block; padding-bottom: 3px; }
 .user_list_top_box_runnerups_line div { display: inline; }
-.user_list_top_box_right { padding-top: 5px; }
+.user_list_top_box_right { padding: 5px; }
 .user_list_top_box_left { padding-right: 5px; }
 .user_list_top_box_left p { margin: 0px; }
-.user_list_top_box { display: inline-block; margin-right: 11px; width: 220px; vertical-align: top; background-color: #EEEEEE; }
-.user_list_top_line { padding-bottom: 5px;  }
-.user_list_top_box_title { font-size: 18px; font-weight: bold; vertical-align: top; padding-bottom: 5px; }
+.user_list_top_box { margin-bottom: 5px; margin-right: 11px; width: 220px; vertical-align: top; background-color: #EEEEEE; }
+.user_list_top_box_title { font-size: 18px; font-weight: bold; padding-bottom: 5px; padding: 5px; }
 .user_list_top_box_runnerups { font-weight: bold; margin-bottom: 5px; }
 .user_list_top_box_runnerups_title_name { padding-left: 13px; }
 .user_list_top_box_runnerups_title_points, .user_list_top_box_runnerups_value { float: right; }
 .user_list_top_box_runnerups_rank { font-weight: bold; float:left; width: 20px; }
 .user_list_top_box_description { text-align:center; font-weight: bold; font-size: 14px; }
 .user_list_top_box_user { font-size: 18px; text-align:center; font-weight: bold; padding-top: 4px; }
-.user_list_top_box_image { text-align:center; }
+.user_list_top_box_image { text-align:center; min-width: 200px; min-height: 200px; }
+.user_list_top_box_image img { min-width: 200px; min-height: 200px;  }
 .user_list_top_box_show_more { width:16px; margin-left:auto; margin-right:auto; margin-top: 5px; }
 .user_list_top_list_title span { font-size: 24px; font-weight: bold; color:#AAAAAA; }
 .user_list_top_list_title a { vertical-align: middle; height: 24px; }
 .user_list_top_list_title { margin: 10px 25px 5px 0px; }
-#user_list_top_list_show { text-align:right; font-size: 14px; font-weight: bold; }
+#user_list_top_list_show { text-align:left; font-size: 14px; font-weight: bold; padding-top: 5px;}
 #user_list_top_list_show img { vertical-align: bottom; }
 .user_list_top_box_bottom { text-align: center; }
+.user_list_top_column { display: inline-block; padding-bottom: 5px; vertical-align: top; }
 
 #view_content_left_header_top_add_this {
     float: left;

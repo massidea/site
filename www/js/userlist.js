@@ -75,8 +75,14 @@ $(document).ready(function(){
 			
 		}
 		else {
-			if($(".user_list_top_list").css("display") == "block") $(".user_list_top_list").slideUp(500);
-			else $(".user_list_top_list").slideDown(1000);
+			if($(".user_list_top_list").css("display") == "block") {
+				$("#user_list_top_list_link img").attr("src",iconplus);
+				$(".user_list_top_list").slideUp(500);
+			}
+			else {
+				$("#user_list_top_list_link img").attr("src",iconminus);
+				$(".user_list_top_list").slideDown(1000);
+			}
 		}
 	});
 	} //End of if userIds
@@ -104,7 +110,6 @@ function generateTopListEffects(list) {
 	$("#user_list_top_list_expand_all").live('click',function() {
 		if($("#user_list_top_list_expand_all").attr('name') != 'expand') {
 			$.each(list, function() {
-				
 				var name = this;
 				$("#user_list_top_box_right_"+name+"").slideDown(500);
 				$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowup+"\"/>");
@@ -122,6 +127,7 @@ function generateTopListEffects(list) {
 			});
 		}
 	});
+	
 }
 
 function getSearchTopList() {

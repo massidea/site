@@ -26,7 +26,7 @@
  *  @license    GPL v2
  *  @version    1.0
  */
-class Oibs_Controller_Plugin_TopList {
+class Oibs_Controller_Plugin_TopList extends Zend_Controller_Plugin_Abstract {
 
 	private		$_userModel;
 
@@ -36,6 +36,9 @@ class Oibs_Controller_Plugin_TopList {
 	private		$_topListIds = array();
 	private		$_addedTops = array();
 	private		$_addedUser = array();
+	private		$_usersWithCountry = array();
+	private		$_topListUsersCountry = array();
+	private		$_topListCountry = array();
 	
 	private		$_limit = 10;
 
@@ -50,6 +53,7 @@ class Oibs_Controller_Plugin_TopList {
 			'Rating' => 'SUM(rating_crt) desc',
 			'Comment' => 'COUNT(id_cmt) desc',
 		);
+
 	}
 
 	/*public function test() {
@@ -134,7 +138,34 @@ class Oibs_Controller_Plugin_TopList {
 		}
 		return;
 	}
-		
+	/*	
+	public function addTitles() {
+		if($this->_topList) {
+			foreach($this->_topList as $name => $list) {
+			    $this->_topList[$name]['title'] = $this->_translate("userlist-top-title-".strtolower($name));
+			}
+		}
+		if($this->_topListCountry) {
+			foreach($this->_topListCountry as $name => $list) {
+			    $this->_topListCountry[$name]['title'] = $this->_translate("userlist-top-title-".strtolower($name));
+			}
+		}
+		return $this;
+	}
+	
+	public function addDescription() {
+		if($this->_topList) {
+			foreach($this->_topList as $name => $list) {
+			    $topList[$name]['description'] = $this->view->translate("userlist-top-description-".strtolower($name));
+			}
+		}
+		if($this->_topListCountry) {
+			foreach($this->_topListCountry as $name => $list) {
+			    $this->_topListCountry[$name]['description'] = $this->_translate("userlist-top-description-".strtolower($name));
+			}
+		}
+	}
+	*/
 	public function addUser($id) {
 		
 		$this->_addUserRank($id);
@@ -161,6 +192,14 @@ class Oibs_Controller_Plugin_TopList {
 	public function getTopList() {
 		return $this->_topList;
 	}
+	
+	/**
+	* @return	Oibs_Controller_Plugin_TopList
+	*/
+	public function fetchUserCountries() {
+		$this->_usersWithCountry = $this->_userModel->getUsersWithCountry();
+		return $this;
+	}
 
    /**
 	* @return	Oibs_Controller_Plugin_TopList
@@ -168,6 +207,10 @@ class Oibs_Controller_Plugin_TopList {
 	public function setLimit($limit) {
 		$this->_limit = $limit;
 		return $this;
+	}
+	
+	public function getCountryGroups() {
+		return $this->_topListCountry;
 	}
 	
 	private function _getUserInfo($choice) {
@@ -191,6 +234,54 @@ class Oibs_Controller_Plugin_TopList {
 		);
 		
 		return;
+	}
+	
+	private function _makeToCountryGroups($choice) {
+		if($this->_topListUsersCountry[$choice]['users']) {
+			foreach($this->_topListUsersCountry[$choice]['users'] as $user) {
+				$this->_topListCountry[$choice]['countries'][$user['countryIso']]['value'] += $user['value'];
+				if(!$this->_topListCountry[$choice]['countries'][$user['countryIso']]['countryName']) 
+					$this->_topListCountry[$choice]['countries'][$user['countryIso']]['countryName'] = $user['countryName'];
+			}
+			foreach($this->_topListCountry[$choice]['countries'] as $info) {
+				$country[] = $info['countryName'];
+				$value[] = $info['value'];
+			}
+			array_multisort($value, SORT_DESC, $country, SORT_ASC, $this->_topListCountry[$choice]['countries']);	
+		}
+		else {
+			$this->_topListCountry[$choice]['countries'] = array("No users");
+		}
+		return;
+	}
+	
+	public function setCountryTop($choice) {
+		if(array_key_exists($choice,$this->_topLists) && !empty($this->_usersWithCountry)) {
+			$getIds = array_keys($this->_usersWithCountry);
+
+			if($choice == 'Count') $temp = $this->_userModel->getUsersContentCount($getIds);
+			elseif($choice == 'View') $temp = $this->_userModel->getUsersViews($getIds);
+			elseif($choice == 'Popularity') $temp = $this->_userModel->getUsersPopularity($getIds);
+			elseif($choice == 'Rating') $temp = $this->_userModel->getUsersRating($getIds);
+			elseif($choice == 'Comment') $temp = $this->_userModel->getUsersCommentCount($getIds);
+	
+			$this->_topListUsersCountry[$choice] = array(
+				'users' => $this->_intersectMergeArray(array_values($this->_usersWithCountry),$temp),
+				'name' => $choice
+			);
+						
+			$this->_makeToCountryGroups($choice);
+			
+			return $this;
+		}
+		else {
+			$error = "Invalid choice or countries not fetched. Possible choices are:";
+			$keys = array_keys($this->_topLists);
+			foreach($keys as $key) {
+				$error .= ", ".$key;
+			}
+			return $error;
+		}
 	}
 	
 	/**
