@@ -23,8 +23,6 @@
  *  NewPasswordForm - class
  *
  *  @package    Forms
- *  @author     Mikael Juhala
- *  @copyright  2010 Mikael Juhala
  *  @license    GPL v2
  *  @version    1.0
  */

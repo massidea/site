@@ -2,7 +2,7 @@
 /**
  *  FetchPasswordForm -> New password request
  *
-*   Copyright (c) <2009>, Markus RiihelÃ¤
+*   Copyright (c) <2009>, Markus Riihelä
 *   Copyright (c) <2009>, Mikko Sallinen
 *   Copyright (c) <2009>, Pekka Piispanen
 *
@@ -20,11 +20,9 @@
  */
 
 /**
- *  LoginForm - class
+ *  FetchPasswordForm - class
  *
  *  @package    Forms
- *  @author     Markus Riihelï¿½, Mikko Sallinen, Pekka Piispanen
- *  @copyright  2009 Markus Riihelï¿½, Mikko Sallinen, Pekka Piispanen
  *  @license    GPL v2
  *  @version    1.0
  */
