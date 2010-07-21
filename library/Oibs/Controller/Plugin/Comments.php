@@ -6,6 +6,8 @@ class Oibs_Controller_Plugin_Comments {
 	private $_count = 10;
 	private $_comments = array();
 	private $_partial;
+	public $loginUrl;
+	public $signupUrl;
 	
 	/**
 	 * __construct
@@ -19,6 +21,17 @@ class Oibs_Controller_Plugin_Comments {
 		$this->_partial = "partials/comments.phtml";
 		$this->_helper = new Zend_View_Helper_Url();
 		$this->setUrls();
+		
+		$this->signupUrl = $this->_helper->url(array('controller' => 'account',
+        		                         'action' => 'register',
+                		                 'language' => $this->language),
+                        		         'lang_default', true);
+
+		$this->loginUrl = $this->_helper->url(array('controller' => 'account',
+        	                    	  'action' => 'login',
+            	                      'language' => $this->language),
+                	                  'lang_default', true); 
+		
 	}
 	
 	/**

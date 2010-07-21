@@ -35,7 +35,7 @@
         <?php else: ?>
             <p style="margin: 0px; padding: 0px;">Would you like to comment?</p>
             <p style="margin: 0px; padding: 0px;">
-            	<a href="<?php echo $url_login; ?>">Log in</a> or <a href="<?php echo $url_register; ?>">Sign up</a>
+            	<a href="<?php echo $this->comments->loginUrl; ?>">Log in</a> or <a href="<?php echo $this->comments->signupUrl; ?>">Sign up</a>
             </p>
         <?php endif; ?>
         </div>
