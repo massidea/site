@@ -129,7 +129,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		// Content data
 		//$data = $this->_db->fetchAll($select);
 		$ids = $this->fetchAll($select);
-		$data = $this->getContentRows($ids->toArray());
+		$data = $this->getContentRows($ids->toArray(), 'id_cnt', true);
 		return $data;
 	}
 	
