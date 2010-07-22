@@ -208,7 +208,11 @@ class AjaxController extends Oibs_Controller_CustomController
 			->setTop("View")
 			->setTop("Popularity")
 			->setTop("Rating")
-			->setTop("Comment");
+			->setTop("Comment")
+			->addTitleLinks()
+			->addTitles()
+			->addDescriptions()
+			;
 		
 		$topList = $top->getTopList();
 		
@@ -228,19 +232,11 @@ class AjaxController extends Oibs_Controller_CustomController
 			$topList = $topListMerge;
 		}
 		
-	    $topList['Count']['title'] = $this->view->translate('userlist-top-title-count');
-        $topList['View']['title'] = $this->view->translate('userlist-top-title-view');
-        $topList['Popularity']['title'] = $this->view->translate('userlist-top-title-popularity');
-        $topList['Rating']['title'] = $this->view->translate('userlist-top-title-rating');
-        $topList['Comment']['title'] = $this->view->translate('userlist-top-title-comment');
-
-        $topList['Count']['description'] = $this->view->translate('userlist-top-description-count');
-        $topList['View']['description'] = $this->view->translate('userlist-top-description-view');
-        $topList['Popularity']['description'] = $this->view->translate('userlist-top-description-popularity');
-        $topList['Rating']['description'] = $this->view->translate('userlist-top-description-rating');
-        $topList['Comment']['description'] = $this->view->translate('userlist-top-description-comment');
+		$topListBoxes = array(
+        	'Users' => $topList,
+        );
 		
-		$this->view->top = $topList;
+		$this->view->topListBoxes = $topListBoxes;
 	}
 	
 	public function morefromuserAction() {

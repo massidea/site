@@ -26,12 +26,15 @@
  *  @license    GPL v2
  *  @version    1.0
  */
-class Oibs_Controller_Plugin_TopList extends Zend_Controller_Plugin_Abstract {
+class Oibs_Controller_Plugin_TopList {
 
 	private		$_userModel;
+	private		$_url;
+	private		$_translate;
 
 	private		$_userList = array();
 	private		$_topLists = array();
+	private		$_topListsLinks = array();
 	private		$_topList = array();
 	private		$_topListIds = array();
 	private		$_addedTops = array();
@@ -40,11 +43,14 @@ class Oibs_Controller_Plugin_TopList extends Zend_Controller_Plugin_Abstract {
 	private		$_topListUsersCountry = array();
 	private		$_topListCountry = array();
 	
+	
 	private		$_limit = 10;
 
 
 	public function __construct() {
 		$this->_userModel = new Default_Model_User();
+		$this->_url = new Zend_View_Helper_Url();
+		$this->_translate = new Zend_View_Helper_Translate();
 		$this->_userList = $this->_userModel->getUserIds();
 		$this->_topLists = array(
     		'Count' => 'COUNT(id_cnt) desc',
@@ -53,19 +59,40 @@ class Oibs_Controller_Plugin_TopList extends Zend_Controller_Plugin_Abstract {
 			'Rating' => 'SUM(rating_crt) desc',
 			'Comment' => 'COUNT(id_cmt) desc',
 		);
-
+		foreach($this->_topLists as $name => $info) {
+			if($name == 'Count') $order = 'content';
+			elseif($name == 'View') $order = 'views';
+			elseif($name == 'Popularity') $order = 'popularity';
+			elseif($name == 'Rating') $order = 'rating';
+			elseif($name == 'Comment') $order = 'comments';
+			$this->_topListsLinks[$name] = $this->_url->url(array('controller' => 'account',
+							 'action' => 'userlist',
+							 'order' => $order,
+							 'list' => 'desc',
+							 'language' => $this->language), 
+							 'lang_default', true);
+		}
+		
+		
 	}
-
-	/*public function test() {
-		//echo $this->_limit;
-		print_r($this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists['Count'],null,null));
-		print_r($this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists['Count'],null,$this->_limit));
-		die;
-	}*/
 	
 	public function setUserIdList($list) {
 		if(is_array($list)) $this->_userList = $list;
 		else return "error";
+		return $this;
+	}
+	
+	public function addTitleLinks() {
+		if($this->_topList) {
+			foreach($this->_topList as $name => $list) {
+				$this->_topList[$name]['link'] = $this->_topListsLinks[$name];
+			}
+		}
+		if($this->_topListCountry) {
+			foreach($this->_topListCountry as $name => $list) {
+				$this->_topListCountry[$name]['link'] = $this->_topListsLinks[$name];
+			}
+		}
 		return $this;
 	}
 	
@@ -138,34 +165,35 @@ class Oibs_Controller_Plugin_TopList extends Zend_Controller_Plugin_Abstract {
 		}
 		return;
 	}
-	/*	
+	
 	public function addTitles() {
 		if($this->_topList) {
 			foreach($this->_topList as $name => $list) {
-			    $this->_topList[$name]['title'] = $this->_translate("userlist-top-title-".strtolower($name));
+			    $this->_topList[$name]['title'] = $this->_translate->translate("userlist-top-title-".strtolower($name));
 			}
 		}
 		if($this->_topListCountry) {
 			foreach($this->_topListCountry as $name => $list) {
-			    $this->_topListCountry[$name]['title'] = $this->_translate("userlist-top-title-".strtolower($name));
+			    $this->_topListCountry[$name]['title'] = $this->_translate->translate("userlist-top-title-".strtolower($name));
 			}
 		}
 		return $this;
 	}
 	
-	public function addDescription() {
+	public function addDescriptions() {
 		if($this->_topList) {
 			foreach($this->_topList as $name => $list) {
-			    $topList[$name]['description'] = $this->view->translate("userlist-top-description-".strtolower($name));
+			    $this->_topList[$name]['description'] = $this->_translate->translate("userlist-top-description-".strtolower($name));
 			}
 		}
 		if($this->_topListCountry) {
 			foreach($this->_topListCountry as $name => $list) {
-			    $this->_topListCountry[$name]['description'] = $this->_translate("userlist-top-description-".strtolower($name));
+			    $this->_topListCountry[$name]['description'] = $this->_translate->translate("userlist-top-description-".strtolower($name));
 			}
 		}
+		return $this;
 	}
-	*/
+	
 	public function addUser($id) {
 		
 		$this->_addUserRank($id);
@@ -248,10 +276,12 @@ class Oibs_Controller_Plugin_TopList extends Zend_Controller_Plugin_Abstract {
 				$value[] = $info['value'];
 			}
 			array_multisort($value, SORT_DESC, $country, SORT_ASC, $this->_topListCountry[$choice]['countries']);	
+			
 		}
 		else {
 			$this->_topListCountry[$choice]['countries'] = array("No users");
 		}
+		$this->_topListCountry[$choice]['name'] = $choice; 
 		return;
 	}
 	

@@ -10,3 +10,5 @@
 .user_list_right_side { width: 85%; }
 .user_list_top_column { display: inline-block; }
 .user_list_top_box { display: inline; }
+.user_list_top_box .user_list_top_box_left, .user_list_top_box .user_list_top_box_right { background-color: #EEEEEE; }
+.user_list_top_box_left { margin-bottom: 5px; }

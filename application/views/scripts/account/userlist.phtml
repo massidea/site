@@ -38,6 +38,7 @@ $url_thumbDown = $this->baseUrl('/images/icon_thumb_down.png');
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.autocomplete.js');
 $this->headScript()->appendFile($this->baseUrl . '/js/jquery.gchart.min');
 //$this->headLink()->prependStylesheet($this->baseUrl . '/css/css_reset.css');
+
 $this->headScript()->captureStart();
 
 ?>
@@ -53,6 +54,7 @@ var loading = "<img src=\""+loader+"\" /><span> Please wait...</span>";
 var userIds = jQuery.parseJSON('<?php echo json_encode($this->userList); ?>');
 var userCities = jQuery.parseJSON('<?php echo $this->cities; ?>');
 var topList = jQuery.parseJSON('<?php echo json_encode($this->topNames); ?>');
+var lists = jQuery.parseJSON('<?php echo json_encode(array_keys($this->topListBoxes)); ?>');
 var arrowdown = "<?php echo $url_arrowDown; ?>";
 var arrowup = "<?php echo $url_arrowUp; ?>";
 var iconplus = "<?php echo $url_iconPlus; ?>";
@@ -109,7 +111,7 @@ var iconminus = "<?php echo $url_iconMinus; ?>";
     
     <div id="user_list_top_list_show"><a id="user_list_top_list_link" href="#" onClick="return false;" style="text-decoration: none;"> <img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a><span> Toplist</span></div>
     
-           <div><div class="user_list_top_list" style="display: none"></div> </div>
+           <div class="user_list_top_list" style="display: none"></div>
             <?php if ($this->userCount > $this->count): ?>
             <div id="user_list_user_pagination_top">
                 <?php echo $this->userPaginator->render('pagination/slidingPaginationControl.phtml'); ?>  
@@ -250,53 +252,9 @@ var iconminus = "<?php echo $url_iconMinus; ?>";
 </div>
 <?php else: ?>
 
-<div class="user_list_top_list">
-<div class="user_list_top_list_title">
-<span>Top users list </span>
-<a id="user_list_top_list_expand_all" href="#" onClick="return false;"><img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a>
-</div>
-<div class="user_list_top_column">
-<?php $i = 0;
-	$columnCount = ceil(sizeof($this->top)/3);
-	
-	foreach($this->top as $key => $top) { 
-		if($i % $columnCount == 0 && $i != 0) { ?>
-			</div> 
-			<div class="user_list_top_column">
-			<?php 
-				 echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); 
-		} else { 
-			echo $this->partial("partials/account_userlist_toplist_box.phtml", $top); 
-		}
-		$i++;
-	}
-	
-?>
-	</div>
-</div>
-
-<div class="user_list_top_list">
-<div class="user_list_top_list_title">
-<span>Top countries list </span>
-<a id="user_list_top_countries_list_expand_all" href="#" onClick="return false;"><img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a>
-</div>
-<div class="user_list_top_column">
-<?php $i = 0;
-	$columnCount = ceil(sizeof($this->topCountry)/3);
-	foreach($this->topCountry as $key => $top) { 
-		if($i % $columnCount == 0 && $i != 0) { ?>
-			</div> 
-			<div class="user_list_top_column">
-			<?php 
-				 echo $this->partial("partials/account_userlist_toplist_box_country.phtml", $top); 
-		} else { 
-			echo $this->partial("partials/account_userlist_toplist_box_country.phtml", $top); 
-		}
-		$i++;
-	}
-	
-?>
-	</div>
+<div class="user_list_giant_tab_box">
+<p id="user_list_hall_of_fame">Hall of fame</p>
+<?php echo $this->partial("partials/account_userlist_toplist_box.phtml", $this); ?>
 </div>
 
 <?php endif; ?>

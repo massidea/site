@@ -1684,7 +1684,7 @@ form #uploadedFiles_div .form_element_input label {
 .user_list_top_box_right { padding: 5px; }
 .user_list_top_box_left { padding-right: 5px; }
 .user_list_top_box_left p { margin: 0px; }
-.user_list_top_box { margin-bottom: 5px; margin-right: 11px; width: 220px; vertical-align: top; background-color: #EEEEEE; }
+.user_list_top_box { margin-bottom: 5px; width: 220px; vertical-align: top; background-color: #EEEEEE; }
 .user_list_top_box_title { font-size: 18px; font-weight: bold; padding-bottom: 5px; padding: 5px; }
 .user_list_top_box_runnerups { font-weight: bold; margin-bottom: 5px; }
 .user_list_top_box_runnerups_title_name { padding-left: 13px; }
@@ -1702,6 +1702,7 @@ form #uploadedFiles_div .form_element_input label {
 #user_list_top_list_show img { vertical-align: bottom; }
 .user_list_top_box_bottom { text-align: center; }
 .user_list_top_column { display: inline-block; padding-bottom: 5px; vertical-align: top; }
+#user_list_hall_of_fame { font-size: 28px; margin: 0px; font-weight: bold; color: #AAAAAA; text-align: center; }
 
 #view_content_left_header_top_add_this {
     float: left;

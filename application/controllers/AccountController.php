@@ -1266,6 +1266,9 @@ class AccountController extends Oibs_Controller_CustomController
 					->setTop("Popularity")
 					->setTop("Rating")
 					->setTop("Comment")
+					->addTitleLinks()
+					->addTitles()
+					->addDescriptions()
 					;
 
 				$cache->save($top, 'UserTopList');
@@ -1293,11 +1296,6 @@ class AccountController extends Oibs_Controller_CustomController
 			}
 			//print_r($top->test());die;
 			//print_r($topList);die;
-			
-			foreach($topList as $name => $info) {
-				$topList[$name]['title'] = $this->view->translate("userlist-top-title-".strtolower($name));
-				$topList[$name]['description'] = $this->view->translate("userlist-top-description-".strtolower($name));
-			}
 
         	$topNames = array();
         	foreach($topList as $top) {
@@ -1311,14 +1309,27 @@ class AccountController extends Oibs_Controller_CustomController
 				->setCountryTop("Popularity")
 				->setCountryTop("Rating")
 				->setCountryTop("Comment")
+				->addTitleLinks()
+				->addTitles()
+				->addDescriptions()
 				;
+			
 			$topCountry = $topListCountries->getCountryGroups();
-			foreach($topCountry as $name => $info) {
-				$topCountry[$name]['title'] = $this->view->translate("userlist-top-title-".strtolower($name));
-				$topCountry[$name]['description'] = $this->view->translate("userlist-top-description-".strtolower($name));
-			}
-        	
+			        	
         }
+        
+        if(!$topNames) {
+        	$topNames[] = "Count";
+            $topNames[] = "View";
+			$topNames[] = "Popularity";
+			$topNames[] = "Rating";
+			$topNames[] = "Comment";
+        }
+        
+        $topListBoxes = array(
+        	'Users' => $topList,
+        	'Countries' => $topCountry
+        );
       
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
@@ -1352,6 +1363,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->userCount = $listSize;
         $this->view->list = $listName;
         $this->view->top = $topList;
+        $this->view->topListBoxes = $topListBoxes;
         $this->view->topCountry = $topCountry;
         $this->view->parsedUrl = $parsedUrl;
         $this->view->topNames = $topNames;

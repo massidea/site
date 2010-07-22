@@ -70,9 +70,7 @@ $(document).ready(function(){
 	});
 	$("#user_list_top_list_link").live('click', function() {
 		if($(".user_list_top_list").html() == "") {
-			getSearchTopList();
-			generateTopListEffects(jQuery.parseJSON('["Count","View","Popularity","Rating","Comment"]'));
-			
+			getSearchTopList();			
 		}
 		else {
 			if($(".user_list_top_list").css("display") == "block") {
@@ -88,46 +86,70 @@ $(document).ready(function(){
 	} //End of if userIds
 	//Start of Top list js
 	else {
-		generateTopListEffects(topList);
+		$("#user_list_tabs").tabs().removeClass('ui-widget');
 	}
+	generateTopListEffects(topList,lists);
 });
 
-function generateTopListEffects(list) {
-	$.each(list, function() {
-		var name = this;
-		$("#user_list_top_box_show_more_link_"+name+"").live('click', function() {
-			if($("#user_list_top_box_right_"+name+"").css("display") == "none") {
-				$("#user_list_top_box_right_"+name+"").slideDown(500);
-				$(this).html("<img src=\""+arrowup+"\"/>");
-			}
-			else {
-				$("#user_list_top_box_right_"+name+"").slideUp(500);
-				$(this).html("<img src=\""+arrowdown+"\"/>");
-			}			
-		});
-	});
 
-	$("#user_list_top_list_expand_all").live('click',function() {
-		if($("#user_list_top_list_expand_all").attr('name') != 'expand') {
+function generateTopListEffects(list,lists) {
+	if(!lists) {
+		$.each(list, function() {
+			effectGeneratorArrows(this,null);
+		});
+
+		effectGeneratorFullExpand(list,null);
+	}
+	else {
+		$.each(lists, function() {
+			var name = this;
+			$.each(list, function() {
+				effectGeneratorArrows(this,name);
+			});
+
+			effectGeneratorFullExpand(list,name);
+		});
+	}
+	
+}
+
+function effectGeneratorFullExpand(list,listname) {
+	if(listname == null) listname = "";
+	$("#user_list_top_list_expand_all_"+listname).live('click',function() {
+		
+		if($("#user_list_top_list_expand_all_"+listname).attr('name') != 'expand') {
 			$.each(list, function() {
 				var name = this;
-				$("#user_list_top_box_right_"+name+"").slideDown(500);
-				$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowup+"\"/>");
-				$("#user_list_top_list_expand_all").html("<img src=\""+iconminus+"\"/>");
-				$("#user_list_top_list_expand_all").attr('name','expand');
+				$("#user_list_top_box_right_"+listname+name+"").slideDown(500);
+				$("#user_list_top_box_show_more_link_"+listname+name+"").html("<img src=\""+arrowup+"\"/>");
+				$("#user_list_top_list_expand_all_"+listname).html("<img src=\""+iconminus+"\"/>");
+				$("#user_list_top_list_expand_all_"+listname).attr('name','expand');
 			});
 		}
 		else {
 			$.each(list, function() {
 				var name = this;
-				$("#user_list_top_box_right_"+name+"").slideUp(500);
-				$("#user_list_top_box_show_more_link_"+name+"").html("<img src=\""+arrowdown+"\"/>");
-				$("#user_list_top_list_expand_all").html("<img src=\""+iconplus+"\"/>");
-				$("#user_list_top_list_expand_all").attr('name','collapse');
+				$("#user_list_top_box_right_"+listname+name+"").slideUp(500);
+				$("#user_list_top_box_show_more_link_"+listname+name+"").html("<img src=\""+arrowdown+"\"/>");
+				$("#user_list_top_list_expand_all_"+listname).html("<img src=\""+iconplus+"\"/>");
+				$("#user_list_top_list_expand_all_"+listname).attr('name','collapse');
 			});
 		}
 	});
-	
+}
+
+function effectGeneratorArrows(name,listname) {
+	if(listname == null) listname = "";
+	$("#user_list_top_box_show_more_link_"+listname+name+"").live('click', function() {
+		if($("#user_list_top_box_right_"+listname+name+"").css("display") == "none") {
+			$("#user_list_top_box_right_"+listname+name+"").slideDown(500);
+			$(this).html("<img src=\""+arrowup+"\"/>");
+		}
+		else {
+			$("#user_list_top_box_right_"+listname+name+"").slideUp(500);
+			$(this).html("<img src=\""+arrowdown+"\"/>");
+		}			
+	});
 }
 
 function getSearchTopList() {
@@ -144,6 +166,7 @@ function getSearchTopList() {
 		url: topUrl+requestedUrl,
 		success: function(data) {
 		  $(".user_list_top_list").html(data);
+		  $("#user_list_tabs").tabs().removeClass('ui-widget');
 		  $(".user_list_top_list").slideDown(1000);
 
 		}	
