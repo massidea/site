@@ -881,7 +881,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } 
     
-    public function getUsersWithCountry() {
+    public function getUsersWithCountry($userIdList) {
     	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
     									array('id_usr' => 'id_usr_usp'))
     								->joinLeft(array('usc' => 'countries_ctr'),
@@ -890,6 +890,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                       			 	   'countryIso' => 'usc.iso_ctr'))
 	    							->where('profile_key_usp = ?','country')
 	    							->where('public_usp = ?','1')
+	    							->where('id_usr_usp IN (?)', $userIdList)
 	    							->where('usp.profile_value_usp != ?',"0")
 	    							->order('id_usr')
     							;

@@ -232,8 +232,25 @@ class AjaxController extends Oibs_Controller_CustomController
 			$topList = $topListMerge;
 		}
 		
+		$topListCountries = new Oibs_Controller_Plugin_TopList();
+	        $topListCountries->setUserIdList($userIds)
+	        	->fetchUserCountries()
+	        	->setCountryTop("Count")
+	        	->setCountryTop("View")
+				->setCountryTop("Popularity")
+				->setCountryTop("Rating")
+				->setCountryTop("Comment")
+				->addTitleLinks()
+				->addTitles()
+				->addDescriptions()
+				;
+			
+			$topCountry = $topListCountries->getCountryGroups();
+		
+		
 		$topListBoxes = array(
         	'Users' => $topList,
+			'Countries' => $topCountry
         );
 		
 		$this->view->topListBoxes = $topListBoxes;

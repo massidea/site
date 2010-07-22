@@ -225,7 +225,7 @@ class Oibs_Controller_Plugin_TopList {
 	* @return	Oibs_Controller_Plugin_TopList
 	*/
 	public function fetchUserCountries() {
-		$this->_usersWithCountry = $this->_userModel->getUsersWithCountry();
+		$this->_usersWithCountry = $this->_userModel->getUsersWithCountry($this->_userList);
 		return $this;
 	}
 
@@ -247,6 +247,8 @@ class Oibs_Controller_Plugin_TopList {
 			if($this->_topListIds[$choice][$i]) $getIds[] = $this->_topListIds[$choice][$i];
 		}
 		
+		if($getIds) {
+		
 		if($choice == 'Count') $temp = $this->_userModel->getUsersContentCount($getIds);
 		elseif($choice == 'View') $temp = $this->_userModel->getUsersViews($getIds);
 		elseif($choice == 'Popularity') $temp = $this->_userModel->getUsersPopularity($getIds);
@@ -260,7 +262,7 @@ class Oibs_Controller_Plugin_TopList {
 						$this->_userModel->getUserInfo($getIds))),
 			'name' => $choice
 		);
-		
+		}
 		return;
 	}
 	
