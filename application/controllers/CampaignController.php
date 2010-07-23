@@ -933,9 +933,13 @@ class CampaignController extends Oibs_Controller_CustomController
                 $this->_redirector($redirectUrl);
             }
 
+            $cmpModel = new Default_Model_Campaigns();
+            $cmp = $cmpModel->getCampaignById($parentCmpId);
+            $grpId = $cmp['id_grp_cmp'];
+
             $usrId = $auth->getIdentity()->user_id;
             $grpadminmodel = new Default_Model_GroupAdmins();
-            if (!$grpadminmodel->userIsAdmin($parentCmpId, $usrId)) {
+            if (!$grpadminmodel->userIsAdmin($grpId, $usrId)) {
                 $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
