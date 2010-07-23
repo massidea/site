@@ -1,67 +1,39 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div class="linking">
+<h3 class="linking_header"><?php echo $this->translate('content-unlink-title', $this->language); ?></h3>
 <?php
-
-$title = $this->translate('content-unlink-title', $this->language);
-
-if($this->linkingContentType == "problem") {
-    $linkedColor = "red";
-}
-elseif($this->linkingContentType == "finfo") {
-    $linkedColor = "yellow";
-}
-elseif($this->linkingContentType == "idea") {
-    $linkedColor = "green";
-}
-?>
-<div class="linking_content">
-<?php
-echo "<h3 class=\"recent_posts\">".$title."</h3>";
-
 if($this->contentexists) {
 ?>
-    <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
-        <p class="linkedtotext">
-            <?php echo $this->translate('content-unlink-target',
-                                                    $this->language);
-            ?>
-        </p>
-        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" />
-
-        <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
-                                                     'language' => $this->language),
-                                                     'content_shortview', true); ?>">
-                <?php
-                    if(strlen($this->relatesToContentTitle) > 68) {
-                        $this->relatesToContentTitle = substr($this->relatesToContentTitle, 0, 68) . "...";
-                    }
-                    echo $this->relatesToContentTitle;
-                ?>
-            </a>
-        </p>
+    <div id="linked_to">
+        <div id="linked_to_where">
+            <p class="linking_paragraph"><?php echo $this->translate('content-unlink-target',
+                                                                     $this->language);
+            ?></p>
+        </div>
+        <div class="linked_to_where_<?php echo $this->linkingContentType; ?>">
+            <p class="linking_paragraph"><a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
+                                                                              'language' => $this->language),
+                                                                        'content_shortview', true); ?>">
+                    <?php
+                        if(strlen($this->relatesToContentTitle) > 68) {
+                            $this->relatesToContentTitle = substr($this->relatesToContentTitle, 0, 68) . "...";
+                        }
+                        echo $this->relatesToContentTitle;
+                    ?>
+                </a>
+            </p>
+        </div>
     </div>
-
-    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('content-unlink-helptext'); ?></p>
     <?php
     if($this->contents) {
+        ?> <p class="linking_help_text"><?php echo $this->translate('content-unlink-helptext'); ?></p> <?php
         foreach($this->contents as $key => $contents) {
             foreach ($contents as $content) {
                 if($content['published_cnt'] != 0) {
                     ?>
-                    <div class="form_helptext_line"></div>
-                    <div style="height: 20px;">
-                        <div style="float: left; width: 420px;">
-                            <?php
-                            if($content['key_cty'] == "problem") {
-                                $color = "red";
-                            }
-                            elseif($content['key_cty'] == "finfo") {
-                                $color = "yellow";
-                            }
-                            elseif($content['key_cty'] == "idea") {
-                                $color = "green";
-                            }
-                            ?>
-                            <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
+                    <div class="linking_dot_line"></div>
+                    <div class="linking_from">
+                        <div class="linking_from_name">
                             <?php
                             $linkusr = $this->url(array('controller' => 'account',
                                                         'action' => 'view',
@@ -72,11 +44,13 @@ if($this->contentexists) {
                                                         'language' => $this->language),
                                                   'content_shortview', true);
                             ?>
-                            <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
-                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
-                            <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
+                            <div class="linking_from_<?php echo $content['key_cty']; ?>">
+                                <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
+                                <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
+                                <p class="linking_from_text"><?php echo $content['lead_cnt']; ?></p>
+                            </div>
                         </div>
-                        <div style="margin-top: 4px;">
+                        <div class="linking_from_link">
                             <?php
                             if ($key === "parents") {
                                 $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
@@ -95,12 +69,14 @@ if($this->contentexists) {
                             <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-unlink'); ?></a>
                         </div>
                     </div>
-                    <div style="clear: both;">&nbsp;</div>
+                    <div class="clear"></div>
                     <?php
                 }
             }
         }
-        ?> <div class="form_helptext_line"></div> <?php
+        ?> <div class="linking_dot_line"></div> <?php
+    } else {
+        ?> <p>No linked contents</p> <?php
     }
 } else {
     ?>
@@ -109,6 +85,18 @@ if($this->contentexists) {
 }
 ?>
 </div>
-<div class="right_side" style="padding: 0px; margin-right: 5px; margin-top: 0px;">
-    What is content linking?
+
+<div id="sidebar" style="margin-left:20px; margin-right:0;">
+    <div class="box">
+        <h4>What is content unlinking?</h4>
+        <div class="box-content">
+            <p><strong></strong><br />
+            </p>
+
+            <p><strong></strong><br />
+            </p>
+
+            <div class="clear"></div>
+        </div>
+    </div>
 </div>

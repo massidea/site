@@ -194,9 +194,10 @@ div.user_summary_list_without_stats{
 #linked_to_where {
     float: left;
 }
-#linked_to_where_name {
+.linked_to_where_campaign, .linked_to_where_group,
+.linked_to_where_problem, .linked_to_where_finfo, .linked_to_where_idea,
+.linked_to_where_challenge, .linked_to_where_visions, .linked_to_where_ideas {
     margin-left: 80px;
-    border-left: 5px solid #0089CF;
 }
 .linking_help_text {
     color: #808080;
@@ -225,16 +226,20 @@ div.user_summary_list_without_stats{
 .leaving_from_campaign {
     padding-left: 10px;
 }
-.linking_from_campaign, .linking_from_group, .leaving_from_campaign {
+.linking_from_campaign, .linking_from_group, .leaving_from_campaign,
+.linked_to_where_campaign, .linked_to_where_group {
     border-left: 5px solid #0089CF;
 }
-.linking_from_problem, .linking_from_challenge {
+.linking_from_problem, .linking_from_challenge,
+.linked_to_where_problem, .linked_to_where_challenge {
     border-left: 5px solid #D21034;
 }
-.linking_from_finfo, .linking_from_visions {
+.linking_from_finfo, .linking_from_visions,
+.linked_to_where_finfo, .linked_to_where_visions {
     border-left: 5px solid #FFC726;
 }
-.linking_from_idea, .linking_from_ideas {
+.linking_from_idea, .linking_from_ideas,
+.linked_to_where_idea, .linked_to_where_ideas {
     border-left: 5px solid #4B9B07;
 }
 .linking_from_text, leaving_from_text {

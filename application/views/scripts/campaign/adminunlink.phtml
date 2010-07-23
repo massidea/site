@@ -8,7 +8,7 @@ if($this->campaignexists) {
         <div id="linked_to_where">
             <p class="linking_paragraph">Campaign</p>
         </div>
-        <div id="linked_to_where_name">
+        <div class="linked_to_where_campaign">
             <p class="linking_paragraph"><a href="<?php echo $this->url(array('cmpid'    => $this->relatesToId,
                                                                               'language' => $this->language),
                                                                         'campaign_view', true); ?>">
@@ -49,11 +49,12 @@ if($this->campaignexists) {
                     </div>
                     <div class="linking_from_link">
                         <?php
-                            $linkurl = $this->url(array('contenttype' => $content['key_cty'],
-                                                    'cmpid'    => $this->relatesToId,
-                                                    'cntid'    => $content['id_cnt'],
-                                                    'language' => $this->language),
-                                              'removecampaignlinks', true);
+                            $linkurl = $this->url(array('controller' => 'campaign',
+                                                        'action'     => 'removeadminlinks',
+                                                        'cmpid'      => $this->relatesToId,
+                                                        'cntid'      => $content['id_cnt'],
+                                                        'language'   => $this->language),
+                                                  'lang_default', true);
                             ?>
                         <a href="<?php echo $linkurl; ?>">Remove link</a>
                     </div>
@@ -88,11 +89,12 @@ if($this->campaignexists) {
                     </div>
                     <div class="linking_from_link">
                         <?php
-                            $linkurl = $this->url(array('contenttype' => $content['key_cty'],
-                                                    'cmpid'    => $this->relatesToId,
-                                                    'cntid'    => $content['id_cnt'],
-                                                    'language' => $this->language),
-                                              'removecampaignlinks', true);
+                            $linkurl = $this->url(array('controller' => 'campaign',
+                                                        'action'     => 'removeadminlinks',
+                                                        'cmpid'      => $this->relatesToId,
+                                                        'cntid'      => $content['id_cnt'],
+                                                        'language'   => $this->language),
+                                                  'lang_default', true);
                             ?>
                         <a href="<?php echo $linkurl; ?>">Remove link</a>
                     </div>

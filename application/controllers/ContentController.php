@@ -803,7 +803,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 			$this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
 			$this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
-			$this->view->relatesToContentContentTypeId = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
+			$this->view->relatesToContentContentType = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
 		}
 
 		if(!$invalid_contenttype && !$invalid_relatestoid) {

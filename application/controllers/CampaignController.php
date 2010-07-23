@@ -807,6 +807,71 @@ class CampaignController extends Oibs_Controller_CustomController
                 $this->_redirector($redirectUrl);
             }
 
+            $cntHasUsrModel = new Default_Model_ContentHasUser();
+
+            $usrId = $auth->getIdentity()->user_id;
+            if (!$cntHasUsrModel->contentHasOwner($usrId, $cntId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'account',
+                                                            'action' => 'view',
+                                                            'user' => $auth->getIdentity()->username,
+                                                            'language' => $this->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            $cmphascntmodel = new Default_Model_CampaignHasContent();
+            $cmphascntmodel->removeContentFromCampaign($cmpId, $cntId);
+
+            // TODO:
+            // Tell the user that the unlink was created.
+
+            // Redirect back to the user page
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'account',
+                                                        'action' => 'view',
+                                                        'user' => $auth->getIdentity()->username,
+                                                        'language' => $this->language),
+                                                  'lang_default', true);
+            $this->_redirector->gotoUrl($redirectUrl);
+        } else {
+            // If not logged, redirecting to system message page
+			$message = 'content-link-not-logged';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+        }
+    }
+
+    /**
+     * removeadminlinkAction
+     *
+     * Remove link to content from campaign
+     *
+     * @author Mikko Korpinen
+     */
+    public function removeadminlinksAction()
+    {
+        // Get authentication
+		$auth = Zend_Auth::getInstance();
+		// If user has identity
+		if ($auth->hasIdentity())
+		{
+            $cmpId = $this->_request->getParam('cmpid');
+            $this->view->cmpid = $cmpId;
+
+            $cntId = $this->_request->getParam('cntid');
+            $this->view->cntid = $cntId;
+
+            if (!((isset($cmpId)) && (isset($cntId)))) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector($redirectUrl);
+            }
+
             $cmpModel = new Default_Model_Campaigns();
             $cmp = $cmpModel->getCampaignById($cmpId);
             $grpId = $cmp['id_grp_cmp'];
