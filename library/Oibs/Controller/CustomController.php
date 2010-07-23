@@ -50,9 +50,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	protected $_redirector;
 	protected $_flashMessenger;
     protected $_urlHelper;
-
-    
-    private function slashes($e) { if (is_array($e)) return array_map("slashes", $e); else return stripslashes($e); }
     
 	/**
 	*	init
@@ -145,12 +142,8 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			->setMethod('get');
 			
 		$this->view->searchForm = $simpleSearchForm;
-     /*   
-		if (get_magic_quotes_gpc()) {
-		    if (isset ($_POST) && count($_POST)) $_POST = array_map("slashes", $_POST);
-		    if (isset ($_GET) && count($_GET)) $_GET = array_map("slashes", $_GET);
-		}
-*/
+
+		if (get_magic_quotes_gpc()) { function stripslashes_deep($value) { $value = is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value); return $value; } $_POST = array_map('stripslashes_deep', $_POST); $_GET = array_map('stripslashes_deep', $_GET); $_COOKIE = array_map('stripslashes_deep', $_COOKIE); } 
 		
 		if ($params['controller'] != 'ajax') {
 			$this->setActiveOnline();
