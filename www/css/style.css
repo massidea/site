@@ -1982,3 +1982,19 @@ div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; 
     padding:5px 0px 5px 2px;
     list-style:none;}
 #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
+
+/*
+ * Fetchpassword
+ */
+.fetchpassword-submit {
+    margin-left: 4px;
+    margin-top: -1px;
+}
+p.fetchpassword-no-error {
+    width: 430px;
+    margin-bottom: 0px;
+}
+p.fetchpassword-error {
+    font-weight: bold;
+    width: 430px;
+}

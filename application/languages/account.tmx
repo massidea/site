@@ -105,6 +105,88 @@
 		<tuv xml:lang="en"><seg>Can't access your account?</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ongelmia kirjautumisessa?</seg></tuv>
 	</tu>
+    <tu tuid='account-fetchpassword-request'>
+        <tuv xml:lang="en"><seg>
+            Enter your email address to request a password reset. After this you
+            will receive a link to a page, where you can change your password.
+        </seg></tuv>
+        <tuv xml:lang="fi"><seg>
+            Syötä sähköpostiosoitteesi pyytääksesi salasananpalautusta. Tämän
+            jälkeen saat sähköpostiisi linkin sivulle, jossa voit vaihtaa salasanasi.
+        </seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-email'>
+        <tuv xml:lang="en"><seg>Email </seg></tuv>
+        <tuv xml:lang="fi"><seg>Sähköposti </seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-password'>
+        <tuv xml:lang="en"><seg>New password </seg></tuv>
+        <tuv xml:lang="fi"><seg>Uusi salasana </seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-confirm'>
+        <tuv xml:lang="en"><seg>Confirm password </seg></tuv>
+        <tuv xml:lang="fi"><seg>Vahvista salasana </seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-submit'>
+        <tuv xml:lang="en"><seg>Send request</seg></tuv>
+        <tuv xml:lang="fi"><seg>Lähetä pyyntö</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-newpassword-submit'>
+        <tuv xml:lang="en"><seg>Change password</seg></tuv>
+        <tuv xml:lang="fi"><seg>Vaihda salasana</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-error-nosuchemail'>
+        <tuv xml:lang="en"><seg>Email address not found.</seg></tuv>
+        <tuv xml:lang="fi"><seg>Sähköpostiosoitetta ei löytynyt.</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-error-invalidemail'>
+        <tuv xml:lang="en"><seg>Invalid email address.</seg></tuv>
+        <tuv xml:lang="fi"><seg>Virheellinen sähköpostiosoite.</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-error-email'>
+        <tuv xml:lang="en"><seg>
+            Sending a verification email has failed. The service might be
+            currently unavailable. We apologise any inconvenience this problem
+            might cause. Please try again later.
+        </seg></tuv>
+        <tuv xml:lang="fi"><seg>
+            Vahvistusviestin lähettäminen epäonnistui. Palvelu saattaa olla
+            toistaiseksi poissa käytöstä. Pahoittelemme tästä aiheutuvaa haittaa.
+            Ole hyvä ja yritä myöhemmin uudelleen.
+        </seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-error-unknown'>
+        <tuv xml:lang="en"><seg>
+            An unknown error occured with your request. The service might be
+            currently unavailable. We apologise any inconvenience this problem
+            might cause. Please try again later.
+        </seg></tuv>
+        <tuv xml:lang="fi"><seg>
+            Pyyntösi käsittelyssä tapahtui tuntematon virhe. Palvelu saattaa olla
+            toistaiseksi poissa käytöstä. Pahoittelemme tästä aiheutuvaa haittaa.
+            Ole hyvä ja yritä myöhemmin uudelleen.
+        </seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-error-keyexpired'>
+        <tuv xml:lang="en"><seg>The verification link was expired.</seg></tuv>
+        <tuv xml:lang="fi"><seg>Vahvistuslinkki oli vanhentunut.</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-error-nosuchkey'>
+        <tuv xml:lang="en"><seg>The verification link was invalid.</seg></tuv>
+        <tuv xml:lang="fi"><seg>Vahvistuslinkki oli viallinen.</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-emailsent'>
+        <tuv xml:lang="en"><seg>A verification link has been sent to your email.</seg></tuv>
+        <tuv xml:lang="fi"><seg>Vahvistuslinkki on lähetetty sähköpostiisi.</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-newpassword'>
+        <tuv xml:lang="en"><seg>Enter and confirm a new password.</seg></tuv>
+        <tuv xml:lang="fi"><seg>Syötä ja vahvista uusi salasana.</seg></tuv>
+    </tu>
+    <tu tuid='account-fetchpassword-complete'>
+        <tuv xml:lang="en"><seg>Password successfully changed! You can now log in with your new password.</seg></tuv>
+        <tuv xml:lang="fi"><seg>Salasana onnistuneesti vaihdettu! Voit nyt kirjautua sisään uudella salasanallasi.</seg></tuv>
+    </tu>
 	<tu tuid='account-register-page_header'>
 		<tuv xml:lang="en"><seg>Sign up:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Rekisteröidy: </seg></tuv>
