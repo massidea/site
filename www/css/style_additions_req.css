@@ -906,3 +906,7 @@ form_registration_container dd,
     height: 22px;
     border: 1px solid #7f9db9;
 }
+
+#commentTextarea {
+	width: 480px;
+}

@@ -37,11 +37,6 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
 
     // Table reference map
     protected $_referenceMap    = array(
-        'CommentContent' => array(
-            'columns'           => array('id_cnt_cmt'),
-            'refTableClass'     => 'Default_Model_Content',
-            'refColumns'        => array('id_cnt')
-        ),
         'CommentUser' => array(
             'columns'           => array('id_usr_cmt'),
             'refTableClass'     => 'Default_Model_User',
@@ -111,7 +106,8 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
                            ->join(array('usr' => 'users_usr'), 
                                   'comments_cmt.id_usr_cmt = usr.id_usr', 
                                   array('id_usr', 'login_name_usr'))
-                           ->where('id_cnt_cmt = ?', (int)$id)
+                           ->where('id_target_cmt = ?', (int)$id)
+                           ->where('type_cmt = 1')
                            ->order('created_cmt DESC')
                            ->limitPage((int)$page, (int)$count)
             ;
@@ -136,7 +132,8 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             $select = $this->_db->select()
                             ->from(array('comments_cmt'),
                                    array('commentCount' => 'COUNT(id_cmt)'))
-                            ->where('id_cnt_cmt = ?', (int)$id);
+                            ->where('id_target_cmt = ?', (int)$id)
+                            ->where('type_cmt = 1');
                             
             $data = $this->_db->fetchAll($select);
         }
@@ -164,7 +161,8 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
                 'id_usr_cmt = id_usr', 
                 array('*')
             )
-            ->where('id_cnt_cmt = ?', (int)$id)
+            ->where('id_target_cmt = ?', (int)$id)
+            ->where('type_cmt = 1')
             //->where('id_parent_cmt = 0')
             ->order('created_cmt DESC');
         
@@ -179,6 +177,27 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
         return $data;
     }
     
+    public function getComments($type, $id, $id_usr, $time) {
+    	//Zend_Debug::dump($time);
+    	$select = $this->select()
+    					   ->setIntegrityCheck(false)	
+    					   ->from($this, array('*'))
+    					   ->joinInner(	'users_usr', 'id_usr_cmt = id_usr',
+    					   			array('id_usr', 'login_name_usr'))
+    					   ->where('id_target_cmt = ?', $id)
+    					   ->where('type_cmt = ?' , 1)
+    					   ->order('created_cmt DESC')	
+    					   ;
+    	//Zend_Debug::dump($select->__toString());
+   		if ($time != 0) {
+   			$select->where('created_cmt >= from_unixtime('.$time.') and id_usr != '.$id_usr);
+   			$select->orWhere('created_cmt > from_unixtime('.$time.') and id_usr = '.$id_usr);
+   		}
+		$result = $this->fetchAll($select);
+		//Zend_Debug::dump($result->toArray()); die;
+		return $result->toArray();
+    }
+    
     /**
     *   addComment
     *
@@ -188,24 +207,28 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     *   @param integer $user_id User id value.
     *   @param array $data Comment form data.
     */
-    public function addComment($content_id = 0, $user_id = 0, $data = null)
+    public function addComment($type = 0, $content_id = 0, $user_id = 0, $parent = 0, $data = null)
     {
+
+    	
+    	echo $type.$content_id.$user_id.$parent.$data;
         // Check if content id, user id and form data exists
-        if ($content_id != 0 && $user_id != 0 && $data != null) {
+        if ($type != 0 && $content_id != 0 && $user_id != 0 && $data != null) {
             // Create a new row
             $comment = $this->createRow();
             
             // Remove line breaks from the beginning of the message
-            while (substr($data['comment_message'], 0, strlen(PHP_EOL)) == PHP_EOL) {
-                $data['comment_message'] = substr($data['comment_message'], 2);
-            }
+            //while (substr($data['comment_message'], 0, strlen(PHP_EOL)) == PHP_EOL) {
+            //    $data['comment_message'] = substr($data['comment_message'], 2);
+            //}
             
             // Set columns values
-            $comment->id_cnt_cmt = $content_id;
+            $comment->id_target_cmt = $content_id;
+            $comment->type_cmt = 1;
             $comment->id_usr_cmt = $user_id;
-            $comment->id_parent_cmt = $data['comment_parent'];
+            $comment->id_parent_cmt = $parent;
             $comment->title_cmt = '';//strip_tags($data['comment_subject']);
-            $comment->body_cmt = strip_tags($data['comment_message']);
+            $comment->body_cmt = strip_tags($data);
             
             // Check if there's still characters left in the message
             if (strlen($comment->body_cmt) > 0) {
@@ -291,7 +314,8 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     */
     public function removeAllContentComments($id_cnt)
     {
-        $where = $this->getAdapter()->quoteInto('id_cnt_cmt = ?', (int)$id_cnt);
+        $where[] = $this->getAdapter()->quoteInto('id_target_cmt = ?', (int)$id_cnt);
+        $where[] = $this->getAdapter()->quoteInto('type_cmt = 1');
         if ($this->delete($where)) {
             return true;
         } else {

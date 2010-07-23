@@ -1679,30 +1679,30 @@ form #uploadedFiles_div .form_element_input label {
 .user_list_content_type_idea { color: #4B9B07; }
 .user_list_content_type_problem { color: #D21034;  }
 
-.user_list_top_box_runnerupsbox { display: inline; }
 .user_list_top_box_runnerups_line { display: block; padding-bottom: 3px; }
 .user_list_top_box_runnerups_line div { display: inline; }
-.user_list_top_box_title, .user_list_top_box_image, .user_list_top_box_user, .user_list_top_box_description { display: block; }
-.user_list_top_box_left, .user_list_top_box_right { display: inline; vertical-align: top; }
-.user_list_top_box { display: inline-block; padding: 5px; margin-right: 11px; width: 30%; vertical-align: top; background-color: #EEEEEE; }
-.user_list_top_line { display: table; padding-bottom: 5px; width: 100% }
-.user_list_top_list { display: block; }
-.user_list_top_box_title { font-size: 18px; font-weight: bold; vertical-align: top; padding-bottom: 5px; }
+.user_list_top_box_right { padding: 5px; }
+.user_list_top_box_left { padding-right: 5px; }
+.user_list_top_box_left p { margin: 0px; }
+.user_list_top_box { margin-bottom: 5px; width: 220px; vertical-align: top; background-color: #EEEEEE; }
+.user_list_top_box_title { font-size: 18px; font-weight: bold; padding-bottom: 5px; padding: 5px; }
 .user_list_top_box_runnerups { font-weight: bold; margin-bottom: 5px; }
 .user_list_top_box_runnerups_title_name { padding-left: 13px; }
-.user_list_top_box_runnerups_title_points { float: right; }
-.user_list_top_box_runnerups_value { float:right; }
+.user_list_top_box_runnerups_title_points, .user_list_top_box_runnerups_value { float: right; }
 .user_list_top_box_runnerups_rank { font-weight: bold; float:left; width: 20px; }
-.user_list_top_box_runnerups_names { display: inline; }
-.user_list_top_box_right { padding-top: 5px; }
-.user_list_top_box_left { padding-right: 5px; }
 .user_list_top_box_description { text-align:center; font-weight: bold; font-size: 14px; }
 .user_list_top_box_user { font-size: 18px; text-align:center; font-weight: bold; padding-top: 4px; }
-.user_list_top_box_image { margin-left:auto; margin-right:auto; }
-.user_list_top_box_show_more { width:16px; margin-left:auto; margin-right:auto; margin-top: 5px; margin-bottom: -20px; }
+.user_list_top_box_image { text-align:center; min-width: 200px; min-height: 200px; }
+.user_list_top_box_image img { min-width: 200px; min-height: 200px;  }
+.user_list_top_box_show_more { width:16px; margin-left:auto; margin-right:auto; margin-top: 5px; }
 .user_list_top_list_title span { font-size: 24px; font-weight: bold; color:#AAAAAA; }
 .user_list_top_list_title a { vertical-align: middle; height: 24px; }
-.user_list_top_list_title { margin: 10px 25px 5px 0px;  }
+.user_list_top_list_title { margin: 10px 25px 5px 0px; }
+#user_list_top_list_show { text-align:left; font-size: 14px; font-weight: bold; padding-top: 5px;}
+#user_list_top_list_show img { vertical-align: bottom; }
+.user_list_top_box_bottom { text-align: center; }
+.user_list_top_column { display: inline-block; padding-bottom: 5px; vertical-align: top; }
+#user_list_hall_of_fame { font-size: 28px; margin: 0px; font-weight: bold; color: #AAAAAA; text-align: center; }
 
 #view_content_left_header_top_add_this {
     float: left;
@@ -1982,3 +1982,19 @@ div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; 
     padding:5px 0px 5px 2px;
     list-style:none;}
 #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
+
+/*
+ * Fetchpassword
+ */
+.fetchpassword-submit {
+    margin-left: 4px;
+    margin-top: -1px;
+}
+p.fetchpassword-no-error {
+    width: 430px;
+    margin-bottom: 0px;
+}
+p.fetchpassword-error {
+    font-weight: bold;
+    width: 430px;
+}

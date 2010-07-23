@@ -110,7 +110,9 @@
         
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
-        $count = isset($params['count']) ? $params['count'] : 10;
+        
+        $comments = new Oibs_Controller_Plugin_Comments("content", $id);
+		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
         
         // turn commenting off by default
         $user_can_comment = false;
@@ -124,12 +126,12 @@
         // Comment model
         $comment = new Default_Model_Comments();
         
-        $parentId = isset($params['replyto']) ? $params['replyto'] : 0;
+        //$parentId = isset($params['replyto']) ? $params['replyto'] : 0;
         
         // If user has identity
         if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) {
             // enable comment form
-            $user_can_comment = true;
+            $comments->allowComments(true);
             
             // enable rating if the content was not published by the user
             // (also used for flagging)
@@ -143,7 +145,7 @@
             }
             
             // generate comment form
-            $comment_form = new Default_Form_CommentForm($parentId);
+            //$comment_form = new Default_Form_CommentForm($parentId);
      
             // if there is something in POST
             if ($request->isPost()) {
@@ -152,12 +154,10 @@
                 $formData = $this->_request->getPost();
                                 
                 // Validate and save comment data
-                if ($comment_form->isValid($formData)) {
-                    $user_id = $auth->getIdentity()->user_id;
+                $user_id = $auth->getIdentity()->user_id;
+                $comments->addComment($id, $user_id);
 
-                    $comment->addComment($id, $user_id, $formData);
-                 
-                    $comment_form = new Default_Form_CommentForm($parentId);
+                    //$comment_form = new Default_Form_CommentForm($parentId);
                  
                     if($user_id != $ownerId) {
                         $user = new Default_Model_User();
@@ -197,7 +197,6 @@
 	                    }
                         
                         $Default_Model_privmsg->addMessage($data);
-                    }
                 } // end if
             } // end if
             $this->view->comment_form = $comment_form;
@@ -312,7 +311,7 @@
 
         // get comments data 
         // $commentList = $comment->getAllByContentId($id, $page, $count);
-        $commentList = $comment->getCommentsByContent($id);
+        /*$commentList = $comment->getCommentsByContent($id);
         
         $commentsSorted = array();
         $this->getCommentChilds($commentList, $commentsSorted, 0, 0, 3);
@@ -328,7 +327,7 @@
         $paginator->setScriptPath('../application/views/scripts');
         $paginator->pageCount = $pageCount;
         $paginator->currentPage = $page;
-        $paginator->pagesInRange = 10;
+        $paginator->pagesInRange = 10;*/
         
         // get content industries -- will be updated later.
         $cntHasIndModel = new Default_Model_ContentHasIndustries();
@@ -355,14 +354,17 @@
         if ( ($dateModified-$dateCreated)/60 > 10) {
         	$modified = $contentData['modified_cnt'];
         }
+
+        $comments->loadComments();
         
         // Inject data to view
         $this->view->files 				= $files;
         $this->view->id					= $id;
         $this->view->userImage          = $userImage;
-        $this->view->commentPaginator   = $paginator;
-        $this->view->commentData        = $commentsSorted;
-		$this->view->user_can_comment   = $user_can_comment;
+        //$this->view->commentPaginator   = $paginator;
+        //$this->view->commentData        = $commentsSorted;
+		//$this->view->user_can_comment   = $user_can_comment;
+		$this->view->comments 			= $comments;
 		$this->view->user_can_rate      = $user_can_rate;
         $this->view->user_is_owner      = $user_is_owner;
         $this->view->usrId              = $usrId;
@@ -380,7 +382,7 @@
         $this->view->children           = $children;
         $this->view->children_siblings  = $children_siblings;
         $this->view->rivals             = $rivals;
-        $this->view->comments           = $commentCount;
+        //$this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
         $this->view->count              = $count;
         $this->view->campaigns          = $campaigns;
@@ -389,47 +391,5 @@
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
 	} // end of view2Action
     
-    /**
-    *   getCommentParent
-    *
-    *   Get comments where parent matches $parent value.
-    *
-    *   @param array $array Comment array
-    *   @param int $parent Comment parent id
-    *   @return array
-    */
-    public function getCommentParent(&$array, $parent)
-    {
-        $parents = array();
-        
-        foreach($array as $key => $value) {
-            if($value['id_parent_cmt'] == $parent) {
-                $parents[] = $value;
-            }
-        }
-        
-        return $parents;
-    }
-    
-    /**
-    *   getCommentChilds
-    *
-    *   Sort comments.
-    *    
-    *   @param array $array Comment array
-    *   @param array $result Target array for results
-    *   @param int $parent Comment parent id
-    *   @param int $level Comment hieararchy depth
-    *   @param int $maxLevel Maximum comment depth
-    */
-    public function getCommentChilds(&$array, &$result, $parent = 0, $level = 0, $maxLevel = 3)
-    {
-        $parent = $this->getCommentParent($array, $parent);
-        
-        foreach($parent as $parent) {
-            $parent['level'] = $level > $maxLevel ? $maxLevel : $level;
-            $result[] = $parent;
-            $this->getCommentChilds($array, $result, $parent['id_cmt'], $level+1);
-        }
-    }
+
 }
