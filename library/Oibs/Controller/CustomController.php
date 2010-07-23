@@ -50,7 +50,10 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	protected $_redirector;
 	protected $_flashMessenger;
     protected $_urlHelper;
-		
+
+    
+    private function slashes($e) { if (is_array($e)) return array_map("slashes", $e); else return stripslashes($e); }
+    
 	/**
 	*	init
 	*
@@ -93,7 +96,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         // urls like http://localhost/controller/action/something/action/something...
 		$this->_redirector = $this->_helper->getHelper('Redirector');
 		$this->_redirector->setPrependBase(false);
-		
+				
         // Set database. Is this needed somewhere? This creates an error at least...Maybe depreciated.
 		//$this->db = Zend_Registry::get('db');
 		
@@ -115,6 +118,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
                 $roles = array($roles);
             }
             $this->view->logged_user_roles = $roles;
+            
         }
         else
         {
@@ -141,12 +145,18 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			->setMethod('get');
 			
 		$this->view->searchForm = $simpleSearchForm;
-        
+     /*   
 		if (get_magic_quotes_gpc()) {
-		    function slashes($e) { if (is_array($e)) return array_map("slashes", $e); else return stripslashes($e); }
 		    if (isset ($_POST) && count($_POST)) $_POST = array_map("slashes", $_POST);
 		    if (isset ($_GET) && count($_GET)) $_GET = array_map("slashes", $_GET);
 		}
+*/
+		
+		if ($params['controller'] != 'ajax') {
+			$this->setActiveOnline();
+		}
+		
+		$this->view->jsmetabox->append('idleRefreshUrl', $this->_urlHelper->url(array('controller' => 'ajax', 'action' => 'idlerefresh')));
 		/*
 		echo '<pre>';
 		print_r($params);
@@ -266,7 +276,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         }
         return false;
     }
-    /* alreadyViewed
+    /** alreadyViewed
      * 
      * checks if user has viewed specific content during this session 
      * 
@@ -285,5 +295,39 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
     		return false;
     	}
     	
-    } 
+    }
+    
+    function setActiveOnline() {
+    	$auth = Zend_Auth::getInstance();
+		if ($auth->hasIdentity()) {
+    		$this->setOnline($auth->getIdentity()->user_id, 1);	
+		}
+    }
+    
+    protected function setOnline($id, $mode) {
+    	if (null == $id || null == $mode) return false;
+    	$userModel = new Default_Model_User();
+    	$userData = $userModel->getSimpleUserDataById($id);
+
+    	$cache = Zend_Registry::get('cache');
+    	
+    	$userList = array();
+    	$userList = $cache->load('onlineUsers');
+	    $userData['mode'] = $mode;
+	    $userData['time'] = time();
+	    $userList[$id] = $userData;
+		
+	    $cache->save($userList, 'onlineUsers');
+    }
+    
+    
+    /*protected function setOffline($id) {
+    	$cache = Zend_Registry::get('cache');
+    	
+    	$userList = array();
+    	$userList = $cache->load('onlineUsers');
+    	if (null != $userList[$id]) {
+    		$userList[$id]['browsers']--;
+    	}
+    }*/
 } // end of class

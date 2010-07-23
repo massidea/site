@@ -336,4 +336,13 @@ class AjaxController extends Oibs_Controller_CustomController
 			}
 		}
 	}
+	
+	public function idlerefreshAction() {
+		$this->_helper->viewRenderer->setNoRender(true);
+		$auth = Zend_Auth::getInstance();
+
+		if ($auth->hasIdentity()) {
+			$this->setOnline($auth->getIdentity()->user_id, 2);
+		}
+	}
 }

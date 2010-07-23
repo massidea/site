@@ -1701,4 +1701,29 @@ class AccountController extends Oibs_Controller_CustomController
     	}
     	return $recentposts;
     }
+    
+    public function onlineAction() {
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	$this->_helper->layout()->disableLayout();
+    	
+    	$timer = 180;
+    	
+    	$cache = Zend_Registry::get('cache');
+    	$userList = array();
+    	$userList = $cache->load('onlineUsers');
+
+    	if ($userList) {
+    		foreach ($userList as $user) {
+    			
+    			if (time() - $user['time'] >= $timer) {
+   					unset($userList[$user['id_usr']]);
+    			} else {   				
+    				echo $user['login_name_usr'].":";
+    				echo $user['mode']."<br />";
+    			}
+    		}
+    		$cache->save($userList, 'onlineUsers');
+    	}
+    	//Zend_Debug::dump($userList);	
+    }
 } // end of class
