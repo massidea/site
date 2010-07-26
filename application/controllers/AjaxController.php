@@ -194,27 +194,104 @@ class AjaxController extends Oibs_Controller_CustomController
 		$this->view->output = $output;
 	}
 	
+	public function getuserlisttopAction() {
+		$auth = Zend_Auth::getInstance();
+		if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
+			
+		$params = $this->getRequest()->getParams();
+		$userModel = new Default_Model_User();
+		$userIds = $userModel->sortAndFilterUsers($params,null,null);
+		
+		$top = new Oibs_Controller_Plugin_TopList();
+		$top->setUserIdList($userIds)
+			->setTop("Count")
+			->setTop("View")
+			->setTop("Popularity")
+			->setTop("Rating")
+			->setTop("Comment")
+			->addTitleLinks()
+			->addTitles()
+			->addDescriptions()
+			;
+		
+		$topList = $top->getTopList();
+		
+		if($userid) $userTop = $top->addUser($userid)->getAddedUser();
+		$topListMerge = array();
+
+		if($userid) {
+			foreach($topList as $key1 => $list1) {
+				foreach($userTop as $key2 => $top1) {
+					if($key1 == $key2) {
+						$topListMerge[$key1] = array_merge($list1,array('addedUsers' => $top1));
+						continue 2;
+					}
+				}
+				$topListMerge[] = $list1;
+			}
+			$topList = $topListMerge;
+		}
+		
+		$topListCountries = new Oibs_Controller_Plugin_TopList();
+	        $topListCountries->setUserIdList($userIds)
+	        	->fetchUserCountries()
+	        	->setCountryTop("Count")
+	        	->setCountryTop("View")
+				->setCountryTop("Popularity")
+				->setCountryTop("Rating")
+				->setCountryTop("Comment")
+				->addTitleLinks()
+				->addTitles()
+				->addDescriptions()
+				;
+			
+			$topCountry = $topListCountries->getCountryGroups();
+		
+		
+		$topListBoxes = array(
+        	'Users' => $topList,
+			'Countries' => $topCountry
+        );
+		
+		$this->view->topListBoxes = $topListBoxes;
+	}
+	
 	public function morefromuserAction() {
 		// Get content owner data
         $userModel = new Default_Model_User();
-		$rawcontents = $userModel->getUserContent($this->params['id_usr'], 0, $this->params['id_cnt'], 5);
+        $limit = 5;
+        $more = false;
+        if (null != $this->params['more']) {
+        	$limit = 100;
+        	$more = true;
+        }
+		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], $limit);
 		foreach($rawcontents as $rawcnt)
 		{
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
 			$contents[] = $this->gtranslate->translateContent($rawcnt);
 		}
+		$this->view->more = $more;
 		$this->view->contents = $contents;
 	}
 	
 	public function relatedcontentAction() {
         // Get related contents
         $contentModel = new Default_Model_Content();
-        $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], 10);
+        $limit = 5;
+        $more = false;
+        if (null != $this->params['more']) { 
+        	$limit = 100;
+        	$more = true;
+        }
+        $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], $limit);
         foreach($rawcontents as $rawcnt)
         {
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
 			$contents[] = $this->gtranslate->translateContent($rawcnt);
         }
+        $this->view->id=$this->params['id_cnt'];
+        $this->view->more = $more;
         $this->view->relatedContents = $contents;
 	}
 	
@@ -281,5 +358,44 @@ class AjaxController extends Oibs_Controller_CustomController
         );
         
         $this->view->favourite = $favourite;
+	}
+	
+	public function postcommentAction() {
+		//$this->_helper->layout()->disableLayout();
+		$this->_helper->viewRenderer->setNoRender(true);
+		$auth = Zend_Auth::getInstance();
+		$user = $auth->getIdentity();
+		//Zend_Debug::dump($this->params);
+		$params = $this->params;
+
+		if ($auth->hasIdentity() && null != $params['msg'] && null != $params['type'] && null != $params['parent'] && null != $params['id'] ) {
+			$msg = $params['msg'];
+			$parent = $params['parent'];
+			$type = $params['type'];
+			$id = $params['id'];
+			
+			$comments = new Oibs_Controller_Plugin_Comments($type, $id);
+			$comments->addComment($user->user_id, $parent, $msg);
+		}
+	}
+	
+	public function getcommentsAction() {
+
+		//$this->_helper->viewRenderer->setNoRender(true);
+				
+		$auth = Zend_Auth::getInstance();
+		
+		if ($auth->hasIdentity()) {
+			$type = $this->params['type'];
+			$id = $this->params['id'];
+			
+			$comments = new Oibs_Controller_Plugin_Comments($type, $id);
+			$newComments = array();
+			$newComments = $comments->getNewComments($auth->getIdentity()->user_id);
+			
+			if (count($newComments) != 0) {
+				$this->view->comments = $newComments;
+			}
+		}
 	}
 }

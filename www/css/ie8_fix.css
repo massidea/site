@@ -8,5 +8,8 @@
 .user_list_user_image  { margin-right: 15px; }
 .user_list_last_login { float: right; }
 .user_list_right_side { width: 85%; }
-.user_list_top_box_show_more {  margin-bottom: 0px; }
-.user_list_top_box_title { margin-top: -15px; }
+.user_list_top_column { display: inline-block; width: 220px; }
+.user_list_top_box { display: inline; }
+.user_list_top_box .user_list_top_box_left, .user_list_top_box .user_list_top_box_right { background-color: #EEEEEE; }
+.user_list_top_box_right { margin-bottom: 5px; }
+.user_list_top_box_runnerupsbox div { display: block; }

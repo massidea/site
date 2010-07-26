@@ -964,3 +964,7 @@ div.tag_view_search_title_links a:active {text-decoration: none; color: #0089CF;
     height: 22px;
     border: 1px solid #7f9db9;
 }
+
+#commentTextarea {
+	width: 480px;
+}

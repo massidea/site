@@ -78,6 +78,9 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         // If no session exist, set default translation language to english
         if(!isset($translateSession->translateTo)) $translateSession->translateTo = 'en';
         $this->gtranslate->setLangTo($translateSession->translateTo);
+        
+        // Set up JsMetaBox plugin
+        $this->view->jsmetabox = new Oibs_Controller_Plugin_JsMetaBox();
 		
 		// Add the root step to breadcrumbs
 		$this->breadcrumbs->addStep('Massidea.org Home', '/');
@@ -139,6 +142,11 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			
 		$this->view->searchForm = $simpleSearchForm;
         
+		if (get_magic_quotes_gpc()) {
+		    function slashes($e) { if (is_array($e)) return array_map("slashes", $e); else return stripslashes($e); }
+		    if (isset ($_POST) && count($_POST)) $_POST = array_map("slashes", $_POST);
+		    if (isset ($_GET) && count($_GET)) $_GET = array_map("slashes", $_GET);
+		}
 		/*
 		echo '<pre>';
 		print_r($params);

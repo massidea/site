@@ -234,5 +234,15 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
         }
     }
     
+    public function getContentLinkIds($id) {
+    	$selectParents = $this->select()->from($this, array('id_cnt' => 'id_parent_cnt'))
+    					->where('id_child_cnt = ?', $id);
+    	$ids = $this->fetchAll($selectParents)->toArray();
+
+    	$selectChilds = $this->select()	->from($this, array('id_cnt' => 'id_child_cnt' ))
+    									->where('id_parent_cnt = ?', $id);
+    	return array_merge($ids, $this->fetchAll($selectChilds)->toArray());	
+    }
+    
 } // end of class
 ?>
