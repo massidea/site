@@ -5,7 +5,7 @@
 ALTER TABLE comments_cmt ADD type_cmt INT NOT NULL;
 UPDATE comments_cmt SET type_cmt=1 WHERE type_cmt=NULL;
 ALTER TABLE comments_cmt DROP foreign key fk_cnt_cmt;
-ALTER TABLE comments_cmt CHANGE id_cnt_cmt id_target_cmt;
+ALTER TABLE comments_cmt CHANGE id_cnt_cmt id_target_cmt int not null;
 
 
 CREATE  TABLE IF NOT EXISTS `oibs`.`comment_types_ctp` (

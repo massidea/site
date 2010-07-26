@@ -89,7 +89,7 @@ class Default_Model_Countries extends Zend_Db_Table_Abstract
 				->where('iso_ctr = ?', $iso_ctr);
 
 		$result = $this->fetchAll($select)->toArray();
-
+		if (!isset($result[0])) return array();
         return $result[0]['printable_name_ctr'];
     }
 

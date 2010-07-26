@@ -23,13 +23,11 @@ class Oibs_Controller_Plugin_Comments {
 		$this->setUrls();
 		
 		$this->signupUrl = $this->_helper->url(array('controller' => 'account',
-        		                         'action' => 'register',
-                		                 'language' => $this->language),
+        		                         'action' => 'register'),
                         		         'lang_default', true);
 
 		$this->loginUrl = $this->_helper->url(array('controller' => 'account',
-        	                    	  'action' => 'login',
-            	                      'language' => $this->language),
+        	                    	  'action' => 'login'),
                 	                  'lang_default', true); 
 		
 	}

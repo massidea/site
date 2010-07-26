@@ -66,7 +66,7 @@
                                         Delete
                                     </a>
                                 </b>
-                                <?php if ($content['cntHasCntCountParent'] > 0 || $content['cntHasCntCountChild'] > 0): ?>
+                                <?php if (isset($content['cntHasCntCountParent']) && ($content['cntHasCntCountParent'] > 0 || $content['cntHasCntCountChild'] > 0)): ?>
                                 | <b>
                                     <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
                                                                          'language' => $this->language),
@@ -75,7 +75,7 @@
                                     </a>
                                 </b>
                                 <?php endif; ?>
-                                <?php if ($content['cmpHasCntCount'] > 0): ?>
+                                <?php if (isset($content['cmpHasCntCount']) && $content['cmpHasCntCount'] > 0): ?>
                                 | <b>
                                     <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
                                                                  'language' => $this->language),

@@ -186,7 +186,7 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     					   			array('id_usr', 'login_name_usr'))
     					   ->where('id_target_cmt = ?', $id)
     					   ->where('type_cmt = ?' , 1)
-    					   ->order('created_cmt DESC')	
+    					   ->order('created_cmt DESC')
     					   ;
     	//Zend_Debug::dump($select->__toString());
    		if ($time != 0) {

@@ -148,17 +148,8 @@
             //$comment_form = new Default_Form_CommentForm($parentId);
      
             // if there is something in POST
-            if ($request->isPost()) {
+            /*if ($request->isPost()) {
             
-                // Get comment form data
-                $formData = $this->_request->getPost();
-                                
-                // Validate and save comment data
-                $user_id = $auth->getIdentity()->user_id;
-                $comments->addComment($id, $user_id);
-
-                    //$comment_form = new Default_Form_CommentForm($parentId);
-                 
                     if($user_id != $ownerId) {
                         $user = new Default_Model_User();
                         $comment_sender = $user->getUserNameById($user_id);
@@ -198,8 +189,7 @@
                         
                         $Default_Model_privmsg->addMessage($data);
                 } // end if
-            } // end if
-            $this->view->comment_form = $comment_form;
+            }*/ // end if
         } // end if
         
         // get content type of the specific content viewed
@@ -384,7 +374,7 @@
         $this->view->rivals             = $rivals;
         //$this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
-        $this->view->count              = $count;
+        //$this->view->count              = $count;
         $this->view->campaigns          = $campaigns;
         
         // Inject title to view
