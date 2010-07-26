@@ -5,6 +5,9 @@
 			<span><?php echo $this->translate('content-view-user-related-views'); echo $cnt['viewCount']; ?></span>
 		</div>
 	<?php endforeach;?>
+	<?php if(count($this->relatedContents) >= 5 && !$this->more): ?>
+	<a id="show_more_content" href="">Show more</a>
+	<?php endif;?>
 <?php else: ?>
 <?php echo $this->translate('content-view-content-related-nothing'); ?>
 <?php endif;?>
