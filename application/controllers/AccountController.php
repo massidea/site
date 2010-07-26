@@ -306,7 +306,7 @@ class AccountController extends Oibs_Controller_CustomController
                 unset($contentList[$k]);
             // Else if user logged in and not owner of unpublished content,
             // remove content from list
-            } else if ($auth->hasIdentity() &&
+            } else if (isset($c['id_usr']) && $auth->hasIdentity() &&
                        $c['id_usr'] != $auth->getIdentity()->user_id &&
                        $c['published_cnt'] == 0) {
                 unset($contentList[$k]);
@@ -362,7 +362,7 @@ class AccountController extends Oibs_Controller_CustomController
         		 * unset from Favouritelist and remove all lines from user_has_favourites table that
         		 * refers to this content id
         		 */
-        		if ($favourite['id_cnt'] == '') {
+        		if (isset($favourite['id_cnt_fvr']) && $favourite['id_cnt'] == '') {
                 	unset($favouriteList[$k]);
                 	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
             	}

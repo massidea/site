@@ -261,10 +261,12 @@ class AjaxController extends Oibs_Controller_CustomController
         $userModel = new Default_Model_User();
         $limit = 5;
         $more = false;
-        if (null != $this->params['more']) {
+        if (isset($this->params['more'])) {
         	$limit = 100;
         	$more = true;
         }
+        
+        $contents = array();
 		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], $limit);
 		foreach($rawcontents as $rawcnt)
 		{
@@ -280,11 +282,12 @@ class AjaxController extends Oibs_Controller_CustomController
         $contentModel = new Default_Model_Content();
         $limit = 5;
         $more = false;
-        if (null != $this->params['more']) { 
+        if (isset($this->params['more'])) { 
         	$limit = 100;
         	$more = true;
         }
         $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], $limit);
+        $contents = array();
         foreach($rawcontents as $rawcnt)
         {
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
@@ -302,15 +305,16 @@ class AjaxController extends Oibs_Controller_CustomController
         // Get content rating
         $contentRatingsModel = new Default_Model_ContentRatings();
         
-		$rate = $this->params['rate'];
-		if ($auth->hasIdentity())
-		{
-			if($rate == 1 || $rate == -1)
+        if (isset($this->params['rate'])) {
+			$rate = $this->params['rate'];
+			if ($auth->hasIdentity())
 			{
-	            $contentRatingsModel->addRating($this->params['id_cnt'], $auth->getIdentity()->user_id, $rate);
+				if($rate == 1 || $rate == -1)
+				{
+		            $contentRatingsModel->addRating($this->params['id_cnt'], $auth->getIdentity()->user_id, $rate);
+				}
 			}
-		}
-		
+        }
         $rating = $contentRatingsModel->getPercentagesById($this->params['id_cnt']);
 		$this->view->hasIdentity = $auth->hasIdentity();
 		$this->view->rating = $rating;

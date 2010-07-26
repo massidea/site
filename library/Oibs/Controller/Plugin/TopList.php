@@ -68,8 +68,7 @@ class Oibs_Controller_Plugin_TopList {
 			$this->_topListsLinks[$name] = $this->_url->url(array('controller' => 'account',
 							 'action' => 'userlist',
 							 'order' => $order,
-							 'list' => 'desc',
-							 'language' => $this->language), 
+							 'list' => 'desc'), 
 							 'lang_default', true);
 		}
 		
