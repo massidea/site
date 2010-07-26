@@ -405,3 +405,12 @@ STACK TRACE:
 #2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
 #3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
 #4 {main}
+2010-07-16T14:57:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
