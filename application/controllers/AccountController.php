@@ -1284,6 +1284,17 @@ class AccountController extends Oibs_Controller_CustomController
         $formData['group'] = str_replace($pat_def,$pat_sql,$formData['group']);
         
         $userModel = new Default_Model_User();
+        
+        //variable initializings (to avoid notice errors :p)
+        $pageCount = null;
+        $userContents = null;
+        $listSize = null;
+        $userIdList = null;
+        $userListing = null;
+        $topNames = null;
+        $topList = null;
+        $topCountry = null;
+        
         //This is code to fetch search results
         if($url != $this->_urlHelper->url()) {
 	        $listSize = 1;
@@ -1316,11 +1327,12 @@ class AccountController extends Oibs_Controller_CustomController
         } else { //Here is Top list code :)
         
         	$auth = Zend_Auth::getInstance();
+        	$userid = null;
 			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
         	$cache = Zend_Registry::get('cache');
         	
-        	$top = new Oibs_Controller_Plugin_TopList();
+        	$top = new Oibs_Controller_Plugin_Toplist_Users();
         	
 			if(!$resultList = $cache->load('UserTopList')) {
 				
@@ -1366,19 +1378,19 @@ class AccountController extends Oibs_Controller_CustomController
         		$topNames[] = $top['name'];
         	}
         	
-        	$topListCountries = new Oibs_Controller_Plugin_TopList();
+        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
 	        $topListCountries->fetchUserCountries()
-	        	->setCountryTop("Count")
-	        	->setCountryTop("View")
-				->setCountryTop("Popularity")
-				->setCountryTop("Rating")
-				->setCountryTop("Comment")
+	        	->setTop("Count")
+	        	->setTop("View")
+				->setTop("Popularity")
+				->setTop("Rating")
+				->setTop("Comment")
 				->addTitleLinks()
 				->addTitles()
 				->addDescriptions()
 				;
 			
-			$topCountry = $topListCountries->getCountryGroups();
+			$topCountry = $topListCountries->getTopList();
 			        	
         }
         

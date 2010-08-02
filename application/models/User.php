@@ -710,7 +710,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	$i = ($page-1)*$count;
     	$limit = $i+$count;
     	for($i; $i < $limit; $i++) {
-    		if(!$userIdList[$i]) break;
+    		if(!isset($userIdList[$i])) break;
     		$userIdListCut[] = $userIdList[$i];
     	}
     	
@@ -722,7 +722,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     	//Add these contents to $userData array in which we collect data (if user doesnt have content we add empty array)
     	foreach($userData as $key => $data) {
-    		 if (!$userContents[$data['id_usr']])
+    		 if (!isset($userContents[$data['id_usr']]))
     		 	 $userContents[$data['id_usr']] = array();
     		 $userData[$key]['contents'] = $userContents[$data['id_usr']];
     		 
@@ -782,7 +782,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		
         $groupName = "";
         foreach($orderGroups as $key => $group) {
-        	if($group[$order]) {
+        	if(isset($group[$order])) {
         		$groupName = $key;
         	}
         }
@@ -793,16 +793,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $select = $this->select()->from($this, 'id_usr')
                                  ->order('id_usr');
                                  
-	        if($filter['city'] != "")
+	        if(isset($filter['city']) && $filter['city'] != "")
 	          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
 	
-	        if($filter['username'] != "")
+	        if(isset($filter['username']) && $filter['username'] != "")
 	          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
 	          
-	        if($filter['country'] != "0")
+	        if(isset($filter['country']) && $filter['country'] != "0")
 	          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
 	        
-	        if($filter['group'] != "")
+	        if(isset($filter['group']) && $filter['group'] != "")
 	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
 	                                 
         $result = $this->_db->fetchAll($select);
@@ -925,6 +925,21 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	    							->where('public_usp = ?','1')
 	    							->where('id_usr_usp IN (?)', $userIdList)
 	    							->where('usp.profile_value_usp != ?',"0")
+	    							->order('id_usr')
+    							;
+				
+        $result = $this->_db->fetchAssoc($select); 
+		return $result;
+    }
+    
+    public function getUsersWithCity($userIdList) {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+    									array('id_usr' => 'id_usr_usp',
+    										 'city' => 'profile_value_usp'))
+	    							->where('profile_key_usp = ?','city')
+	    							->where('public_usp = ?','1')
+	    							->where('id_usr_usp IN (?)', $userIdList)
+	    							->where('usp.profile_value_usp != ?',"")
 	    							->order('id_usr')
     							;
 				

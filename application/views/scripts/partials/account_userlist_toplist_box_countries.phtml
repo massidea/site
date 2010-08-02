@@ -1,9 +1,15 @@
 <?php 
 
+if(is_array($this->countries)) {
 $first = array_values($this->countries);
 $first = $first[0];
 $firstCode = array_keys($this->countries);
 $firstCode = $firstCode[0];
+}
+else {
+	$first = "No users";
+	$firstCode = 0;
+}
 
 $url_defaultImage = $this->url(array('controller' => 'account', 
           'action' => 'profilethumb', 

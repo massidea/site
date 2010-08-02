@@ -202,7 +202,8 @@ class AjaxController extends Oibs_Controller_CustomController
 		$userModel = new Default_Model_User();
 		$userIds = $userModel->sortAndFilterUsers($params,null,null);
 		
-		$top = new Oibs_Controller_Plugin_TopList();
+		if(!$userIds) die; 
+		$top = new Oibs_Controller_Plugin_Toplist_Users();
 		$top->setUserIdList($userIds)
 			->setTop("Count")
 			->setTop("View")
@@ -232,27 +233,27 @@ class AjaxController extends Oibs_Controller_CustomController
 			$topList = $topListMerge;
 		}
 		
-		$topListCountries = new Oibs_Controller_Plugin_TopList();
-	        $topListCountries->setUserIdList($userIds)
-	        	->fetchUserCountries()
-	        	->setCountryTop("Count")
-	        	->setCountryTop("View")
-				->setCountryTop("Popularity")
-				->setCountryTop("Rating")
-				->setCountryTop("Comment")
-				->addTitleLinks()
-				->addTitles()
-				->addDescriptions()
-				;
-			
-			$topCountry = $topListCountries->getCountryGroups();
+		$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
+        $topListCountries->setUserIdList($userIds)
+        	->fetchUserCountries()
+        	->setTop("Count")
+        	->setTop("View")
+			->setTop("Popularity")
+			->setTop("Rating")
+			->setTop("Comment")
+			->addTitleLinks()
+			->addTitles()
+			->addDescriptions()
+			;
+		
+		$topCountry = $topListCountries->getTopList();
 		
 		
 		$topListBoxes = array(
         	'Users' => $topList,
 			'Countries' => $topCountry
-        );
-		
+        ); 
+	
 		$this->view->topListBoxes = $topListBoxes;
 	}
 	
