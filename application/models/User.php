@@ -956,7 +956,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return array $list
      * @author Jari Korpela
      */
-    private function getUsersLocation($userIdList) {
+    public function getUsersLocation($userIdList) {
     	sort($userIdList);
     	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
                                       			array('id_usr_usp','profile_key_usp',
@@ -1845,7 +1845,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 				                                 'vws.id_cnt_vws = chu.id_cnt',
 				                                  array('views' => 'SUM(vws.views_vws)'))
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
-                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      'cnt.id_cnt = cmt.id_target_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
                                            ->joinLeft(array('cty' => 'content_types_cty'),
                                                   'cty.id_cty = cnt.id_cty_cnt',

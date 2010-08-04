@@ -7,36 +7,30 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 	}
 	
 	public function addUser($id) {
-		
 		$this->_addUserRank($id);
+		$this->_addAddedUserToTop();
 		return $this;
 	}
 	
-	public function getAddedUser() {
-		return $this->_addedUser;
+	public function autoSet() {
+		foreach($this->_topLists as $name => $info) {
+			$this->setTop($name);
+		}
+		$this->addDescriptions();
+		$this->addTitleLinks();
+		$this->addTitles();
+		return $this;
 	}
 	
 	/**
 	 * @return	Oibs_Controller_Plugin_TopList_Users
 	 */
 	public function setTop($choice) {
-		if(array_key_exists($choice,$this->_topLists)) {
-			if($choice == 'Count') $this->_topListIds[$choice] = $this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists[$choice],null,null);
-			elseif($choice == 'View') $this->_topListIds[$choice] = $this->_userModel->sortUsersByViews($this->_userList,$this->_topLists[$choice],null,null);
-			elseif($choice == 'Popularity') $this->_topListIds[$choice] = $this->_userModel->sortUsersByPopularity($this->_userList,$this->_topLists[$choice],null,null);
-			elseif($choice == 'Rating') $this->_topListIds[$choice] = $this->_userModel->sortUsersByRating($this->_userList,$this->_topLists[$choice],null,null);
-			elseif($choice == 'Comment') $this->_topListIds[$choice] = $this->_userModel->sortUsersByComments($this->_userList,$this->_topLists[$choice],null,null);
-			$this->_getUserInfo($choice);	
-			return $this;
-		}
-		else {
-			$error = "Invalid choice. Possible choices are:";
-			$keys = array_keys($this->_topLists);
-			foreach($keys as $key) {
-				$error .= ", ".$key;
-			}
-			return $error;
-		}
+		try { $this->_initializeTop($choice); }
+		catch (Exception $e) { echo "Exception: ".$e->getMessage(); }
+		$this->_topListIds[$choice] = $this->_getChoicesSortedUserList($choice,$this->_topLists[$choice]);
+		$this->_getUserInfo($choice);
+		return $this;
 	}
 	
 	private function _addUserRank($id) {
@@ -48,26 +42,10 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 				$sortedUsers = array();
 				$value = array();
 				
-				if($top == 'Count') {
-					$sortedUsers = $this->_userModel->sortUsersByContentInfo($this->_userList,$this->_topLists[$top],null,null);
-					$value = $this->_userModel->getUsersContentCount($id);
-				}
-				elseif($top == 'View') {
-					$sortedUsers = $this->_userModel->sortUsersByViews($this->_userList,$this->_topLists[$top],null,null);
-					$value = $this->_userModel->getUsersViews($id);
-				}
-				elseif($top == 'Popularity') {
-					$sortedUsers = $this->_userModel->sortUsersByPopularity($this->_userList,$this->_topLists[$top],null,null);
-					$value = $this->_userModel->getUsersPopularity($id);
-				}
-				elseif($top == 'Rating') {
-					$sortedUsers = $this->_userModel->sortUsersByRating($this->_userList,$this->_topLists[$top],null,null);
-					$value = $this->_userModel->getUsersRating($id);
-				}
-				elseif($top == 'Comment') {
-					$sortedUsers = $this->_userModel->sortUsersByComments($this->_userList,$this->_topLists[$top],null,null);
-					$value = $this->_userModel->getUsersCommentCount($id);
-				}
+				$sortedUsers = $this->_getChoicesSortedUserList($top,$this->_topLists[$top]);
+				
+				$value = $this->_getChoiceValue($top,$id);
+				
 				$rank = array(array('rank' => array_search($id[0],$sortedUsers)));
 				$info = $this->_userModel->getUserInfo($id);
 	
@@ -88,17 +66,11 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 				$value = array();
 				
 				if(in_array($id[0],$list)) {
-						$rank = array_search($id[0],$list);
+					$rank = array_search($id[0],$list);
 				}
 
-				if($rank < $this->_limit) {
-					if($key == 'Count') $value = $this->_userModel->getUsersContentCount($id);
-					elseif($key == 'View') $value = $this->_userModel->getUsersViews($id);
-					elseif($key == 'Popularity') $value = $this->_userModel->getUsersPopularity($id);
-					elseif($key == 'Rating') $value = $this->_userModel->getUsersRating($id);
-					elseif($key == 'Comment') $value = $this->_userModel->getUsersCommentCount($id);
-				}
-				
+				$value = $this->_getChoiceValue($key,$id);
+
 				$value[0]['rank'] = $rank;
 				$info = $this->_userModel->getUserInfo($id);
 				$final = $this->_intersectMergeArray($value,$info);
@@ -118,21 +90,17 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 			if($this->_topListIds[$choice][$i]) $getIds[] = $this->_topListIds[$choice][$i];
 		}
 		
-		if($getIds) {
-		
-		if($choice == 'Count') $temp = $this->_userModel->getUsersContentCount($getIds);
-		elseif($choice == 'View') $temp = $this->_userModel->getUsersViews($getIds);
-		elseif($choice == 'Popularity') $temp = $this->_userModel->getUsersPopularity($getIds);
-		elseif($choice == 'Rating') $temp = $this->_userModel->getUsersRating($getIds);
-		elseif($choice == 'Comment') $temp = $this->_userModel->getUsersCommentCount($getIds);
-
-		$this->_topList[$choice] = array(
-			'users' => 
-				$this->_finalizeToSortingOrderByUserId($getIds,
-					$this->_intersectMergeArray($temp,
-						$this->_userModel->getUserInfo($getIds))),
-			'name' => $choice
-		);
+		if(!empty($getIds)) {
+			
+			$temp = $this->_getChoiceValue($choice,$getIds);
+	
+			$this->_topList[$choice] = array(
+				'users' => 
+					$this->_finalizeToSortingOrderByUserId($getIds,
+						$this->_intersectMergeArray($temp,
+							$this->_userModel->getUserInfo($getIds))),
+				'name' => $choice
+			);
 
 		}
 		return;

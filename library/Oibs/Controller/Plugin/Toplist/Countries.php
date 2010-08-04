@@ -9,6 +9,43 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 		parent::__construct();
 	}
 	
+	public function autoSet() {
+		foreach($this->_topLists as $name => $info) {
+			$this->setTop($name);
+		}
+		$this->addDescriptions();
+		$this->addTitleLinks();
+		$this->addTitles();
+		
+		return $this;
+	}
+	
+	public function addUser($id) {
+		$this->_addUserRank($id);
+		$this->_addAddedUserToTop();
+		return $this;
+	}
+	
+	private function _addUserRank($id) {
+		if(!is_array($id)) $id = array($id);
+		
+		$user = $this->_intersectMergeArray($this->_userModel->getUserInfo($id),
+									$this->_userModel->getUsersLocation($id));
+
+		$userCountry = $user[0]['countryIso'];
+		
+		foreach($this->_topList as $name => $data) {
+			$iso = array_keys($data['countries']);
+			$value = array_search($userCountry, $iso);
+			if($value !== false) {
+				$user = $this->_intersectMergeArray($user,array(0 => array('rank' => $value)));
+				$this->_addedUser[$name] = $user;
+			}
+		}
+		
+		return;
+	}
+	
 	/**
 	* @return	Oibs_Controller_Plugin_TopList_Countries
 	*/
@@ -18,15 +55,12 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	}
 		
 	public function setTop($choice) {
-		if(array_key_exists($choice,$this->_topLists) && !empty($this->_usersWithCountry)) {
+		try { $this->_initializeTop($choice); }
+		catch (Exception $e) { echo "Exception: ".$e->getMessage(); }
+		
+		if(!empty($this->_usersWithCountry)) {
 			$getIds = array_keys($this->_usersWithCountry);
-
-			if($choice == 'Count') $this->_topListIds[$choice] = $this->_userModel->getUsersContentCount($getIds);
-			elseif($choice == 'View') $this->_topListIds[$choice] = $this->_userModel->getUsersViews($getIds);
-			elseif($choice == 'Popularity') $this->_topListIds[$choice] = $this->_userModel->getUsersPopularity($getIds);
-			elseif($choice == 'Rating') $this->_topListIds[$choice] = $this->_userModel->getUsersRating($getIds);
-			elseif($choice == 'Comment') $this->_topListIds[$choice] = $this->_userModel->getUsersCommentCount($getIds);
-				
+			$this->_topListIds[$choice] = $this->_getChoiceValue($choice,$getIds);
 			$final = array();
 			foreach($this->_topListIds[$choice] as $userValue) {
 				foreach(array_values($this->_usersWithCountry) as $userInfo) {
@@ -47,11 +81,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 			return $this;
 		}
 		else {
-			$error = "Invalid choice or countries not fetched. Possible choices are:";
-			$keys = array_keys($this->_topLists);
-			foreach($keys as $key) {
-				$error .= ", ".$key;
-			}
+			$error = "Countries not fetched.";
 			$this->_topListUsersCountry[$choice] = $error;
 			return $this;
 		}
@@ -75,13 +105,27 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 					$this->_topList[$choice]['countries'][$countryIso]['value'] += $user['value'];
 				
 			}
+						
 			foreach($this->_topList[$choice]['countries'] as $info) {
 				if($info['countryName']) $country[] = $info['countryName'];
 				else $country[] = null;
 				if($info['value']) $value[] = $info['value'];
 				else $value[] = null;
 			}
+			
+
 			array_multisort($value, SORT_DESC, $country, SORT_ASC, $this->_topList[$choice]['countries']);	
+			
+			if(sizeof($this->_topList[$choice]['countries']) > $this->_limit) {
+				$temp = $this->_topList[$choice]['countries'];
+				$this->_topList[$choice]['countries'] = array();
+				$i = 0;
+				foreach($temp as $iso => $data) {
+					if($i >= $this->_limit) break;
+					$i++;
+					$this->_topList[$choice]['countries'][$iso] = $data;
+				}
+			}
 			
 		}
 		else {
