@@ -29,6 +29,7 @@
 class Oibs_Controller_Plugin_TopList {
 
 	protected		$_userModel; //Models
+	protected		$_userProfileModel;
 	protected		$_url;
 	protected		$_translate;
 
@@ -47,6 +48,7 @@ class Oibs_Controller_Plugin_TopList {
 
 	public function __construct() {
 		$this->_userModel = new Default_Model_User();
+		$this->_userProfileModel = new Default_Model_UserProfiles();
 		$this->_url = new Zend_View_Helper_Url();
 		$this->_translate = new Zend_View_Helper_Translate();
 		$this->_userList = $this->_userModel->getUserIds();
@@ -75,7 +77,11 @@ class Oibs_Controller_Plugin_TopList {
 			$this->_topListIds[$name] = null;
 			$this->_topList[$name] = null;
 		}
-		
+		$this->_topListsLinks['Amount'] = $this->_url->url(array('controller' => 'account',
+							 'action' => 'userlist'), 
+							 'lang_default', true);
+		$this->_descriptions['Amount'] = "Has member count of ";
+		$this->_titles['Amount'] = "Most members";
 		
 	}
 		
@@ -104,8 +110,8 @@ class Oibs_Controller_Plugin_TopList {
 		
 	public function addTitles() {
 		if($this->_topList) {
-			foreach($this->_titles as $name => $list) {
-			    $this->_topList[$name]['title'] = $list;
+			foreach($this->_topList as $name => $data) {
+				$this->_topList[$name]['title'] = $this->_titles[$name];
 			}
 		}
 		return $this;
@@ -113,8 +119,8 @@ class Oibs_Controller_Plugin_TopList {
 	
 	public function addDescriptions() {
 		if($this->_topList) {
-			foreach($this->_descriptions as $name => $list) {
-			    $this->_topList[$name]['description'] = $list;
+		foreach($this->_topList as $name => $data) {
+				$this->_topList[$name]['description'] = $this->_descriptions[$name];
 			}
 		}
 		return $this;

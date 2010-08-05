@@ -216,7 +216,9 @@ class AjaxController extends Oibs_Controller_CustomController
 		$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
         $topListCountries->setUserIdList($userIds)
         	->fetchUserCountries()
+        	->setTopAmount()
         	->autoSet()
+        	
 			;
 		if($userid) $topListCountries->addUser($userid);
 		$topCountry = $topListCountries->getTopList();
