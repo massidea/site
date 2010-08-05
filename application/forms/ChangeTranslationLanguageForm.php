@@ -65,8 +65,7 @@
 	{
 		$urlHelper = new Zend_View_Helper_Url();
 		return $urlHelper->url(array('controller' => 'misc',
-									 'action' => 'changelang',
-									 'language' => $this->view->language),
+									 'action' => 'changelang'),
 									 'lang_default', true);
 	}
 	

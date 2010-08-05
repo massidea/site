@@ -1284,6 +1284,17 @@ class AccountController extends Oibs_Controller_CustomController
         $formData['group'] = str_replace($pat_def,$pat_sql,$formData['group']);
         
         $userModel = new Default_Model_User();
+        
+        //variable initializings (to avoid notice errors :p)
+        $pageCount = null;
+        $userContents = null;
+        $listSize = null;
+        $userIdList = null;
+        $userListing = null;
+        $topNames = null;
+        $topList = null;
+        $topCountry = null;
+        
         //This is code to fetch search results
         if($url != $this->_urlHelper->url()) {
 	        $listSize = 1;
@@ -1316,23 +1327,17 @@ class AccountController extends Oibs_Controller_CustomController
         } else { //Here is Top list code :)
         
         	$auth = Zend_Auth::getInstance();
+        	$userid = null;
 			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
         	$cache = Zend_Registry::get('cache');
         	
-        	$top = new Oibs_Controller_Plugin_TopList();
+        	$top = new Oibs_Controller_Plugin_Toplist_Users();
         	
 			if(!$resultList = $cache->load('UserTopList')) {
 				
 				$top->setLimit(10)
-					->setTop("Count")
-					->setTop("View")
-					->setTop("Popularity")
-					->setTop("Rating")
-					->setTop("Comment")
-					->addTitleLinks()
-					->addTitles()
-					->addDescriptions()
+					->autoSet()
 					;
 
 				$cache->save($top, 'UserTopList');
@@ -1340,24 +1345,10 @@ class AccountController extends Oibs_Controller_CustomController
 			} else {
 				$top = $resultList;
 			}
+			
+			if($userid) $top->addUser($userid);
 			$topList = $top->getTopList();
-			
-			if($userid) $userTop = $top->addUser($userid)->getAddedUser();
-			
-			$topListMerge = array();
 
-			if($userid) {
-				foreach($topList as $key1 => $list1) {
-					foreach($userTop as $key2 => $top1) {
-						if($key1 == $key2) {
-							$topListMerge[$key1] = array_merge($list1,array('addedUsers' => $top1));
-							continue 2;
-						}
-					}
-					$topListMerge[] = $list1;
-				}
-				$topList = $topListMerge;
-			}
 			//print_r($top->test());die;
 			//print_r($topList);die;
 
@@ -1366,19 +1357,12 @@ class AccountController extends Oibs_Controller_CustomController
         		$topNames[] = $top['name'];
         	}
         	
-        	$topListCountries = new Oibs_Controller_Plugin_TopList();
+        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
 	        $topListCountries->fetchUserCountries()
-	        	->setCountryTop("Count")
-	        	->setCountryTop("View")
-				->setCountryTop("Popularity")
-				->setCountryTop("Rating")
-				->setCountryTop("Comment")
-				->addTitleLinks()
-				->addTitles()
-				->addDescriptions()
+	        	->autoSet()
 				;
 			
-			$topCountry = $topListCountries->getCountryGroups();
+			$topCountry = $topListCountries->getTopList();
 			        	
         }
         
