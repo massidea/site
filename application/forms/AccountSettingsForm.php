@@ -141,7 +141,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $openidclear->setValue($clear);
 
         $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Password')
+        $password->setLabel('New password')
                  ->setAttrib('id', 'password')
                  ->addValidators(array(
                     new Oibs_Validators_RepeatValidator('confirm_password'),

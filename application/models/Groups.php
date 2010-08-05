@@ -93,7 +93,7 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
      * @param groupname string
      * @return id of the new group
      */
-    public function createGroup($name, $description = "", $body = "")
+    public function createGroup($name, $typeId = 1, $description = "", $body = "")
     {
         // Create new empty row.
         $row = $this->createRow();
@@ -104,6 +104,7 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         $row->body_grp = $body;
         $row->created_grp = new Zend_Db_Expr('NOW()');
         $row->modified_grp = new Zend_Db_Expr('NOW()');
+        $row->id_type_grp = $typeId;
         
         // Save data to database
         $row->save();
@@ -111,12 +112,13 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         return $row->id_grp;
     }
 
-    public function editGroup($id, $name, $description, $body)
+    public function editGroup($id, $name, $typeId, $description, $body)
     {
 		$data = array(
             'group_name_grp' => $name,
             'description_grp' => $description,
             'body_grp' => $body,
+            'id_type_grp' => $typeId,
         );
 		$where = $this->getAdapter()->quoteInto('id_grp = ?', $id);
 		$this->update($data, $where);
@@ -174,4 +176,22 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
             return true;
         }
     }
+
+    /**
+     * getGroupTypeId - Get group type id by group id
+     *
+     * @param int $id_grp
+     * @return string type id
+     */
+    public function getGroupTypeId($id_grp)
+    {
+        $data = $this->_db->select()
+            ->from('usr_groups_grp', array('id_type_grp'))
+            ->where('id_grp = ?', $id_grp);
+
+        $result = $this->_db->fetchAll($data);
+
+        return $result[0]['id_type_grp'];
+    }
+
 }
