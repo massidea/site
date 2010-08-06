@@ -414,3 +414,2418 @@ STACK TRACE:
 #2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
 #3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
 #4 {main}
+2010-07-26T10:11:20+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-26T10:11:28+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/view/2
+MESSAGE: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'oibs.comment_types_ctp' doesn't exist. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query('DESCRIBE `comme...', Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Mysql.php(156): Zend_Db_Adapter_Pdo_Abstract->query('DESCRIBE `comme...')
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(823): Zend_Db_Adapter_Pdo_Mysql->describeTable('comment_types_c...', NULL)
+#5 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(849): Zend_Db_Table_Abstract->_setupMetadata()
+#6 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(889): Zend_Db_Table_Abstract->_getCols()
+#7 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(973): Zend_Db_Table_Abstract->_setupPrimaryKey()
+#8 D:\xampp\www\site\library\Zend\Db\Table\Select.php(100): Zend_Db_Table_Abstract->info()
+#9 D:\xampp\www\site\library\Zend\Db\Table\Select.php(78): Zend_Db_Table_Select->setTable(Object(Default_Model_CommentTypes))
+#10 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1009): Zend_Db_Table_Select->__construct(Object(Default_Model_CommentTypes))
+#11 D:\xampp\www\site\application\models\CommentTypes.php(58): Zend_Db_Table_Abstract->select()
+#12 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId('content')
+#13 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase('content')
+#14 D:\xampp\www\site\application\controllers\ViewController.php(109): Oibs_Controller_Plugin_Comments->__construct('content', 2)
+#15 D:\xampp\www\site\library\Zend\Controller\Action.php(513): ViewController->indexAction()
+#16 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#17 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#18 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#19 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#20 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#21 {main}
+2010-07-26T10:11:29+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-26T10:27:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-26T10:27:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-26T10:27:47+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-26T10:27:51+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-26T16:05:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-28T14:03:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/view/2
+MESSAGE: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'oibs.comment_types_ctp' doesn't exist. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query('DESCRIBE `comme...', Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Mysql.php(156): Zend_Db_Adapter_Pdo_Abstract->query('DESCRIBE `comme...')
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(823): Zend_Db_Adapter_Pdo_Mysql->describeTable('comment_types_c...', NULL)
+#5 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(849): Zend_Db_Table_Abstract->_setupMetadata()
+#6 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(889): Zend_Db_Table_Abstract->_getCols()
+#7 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(973): Zend_Db_Table_Abstract->_setupPrimaryKey()
+#8 D:\xampp\www\site\library\Zend\Db\Table\Select.php(100): Zend_Db_Table_Abstract->info()
+#9 D:\xampp\www\site\library\Zend\Db\Table\Select.php(78): Zend_Db_Table_Select->setTable(Object(Default_Model_CommentTypes))
+#10 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1009): Zend_Db_Table_Select->__construct(Object(Default_Model_CommentTypes))
+#11 D:\xampp\www\site\application\models\CommentTypes.php(58): Zend_Db_Table_Abstract->select()
+#12 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId('content')
+#13 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase('content')
+#14 D:\xampp\www\site\application\controllers\ViewController.php(109): Oibs_Controller_Plugin_Comments->__construct('content', 2)
+#15 D:\xampp\www\site\library\Zend\Controller\Action.php(513): ViewController->indexAction()
+#16 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#17 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#18 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#19 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#20 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#21 {main}
+2010-07-28T14:03:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-28T14:20:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/view/2
+MESSAGE: Unable to Connect to tcp://ajax.googleapis.com:80. Error #0: php_network_getaddresses: getaddrinfo failed: No such host is known. . 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Http\Client.php(971): Zend_Http_Client_Adapter_Socket->connect('ajax.googleapis...', 80, false)
+#1 D:\xampp\www\site\library\Oibs\Controller\Plugin\GTranslate.php(167): Zend_Http_Client->request('POST')
+#2 D:\xampp\www\site\library\Oibs\Controller\Plugin\GTranslate.php(131): Oibs_Controller_Plugin_GTranslate->_getTranslation('Testihaaste 2')
+#3 D:\xampp\www\site\library\Oibs\Controller\Plugin\GTranslate.php(290): Oibs_Controller_Plugin_GTranslate->translate('Testihaaste 2')
+#4 D:\xampp\www\site\application\controllers\ViewController.php(79): Oibs_Controller_Plugin_GTranslate->translateContent(Array)
+#5 D:\xampp\www\site\library\Zend\Controller\Action.php(513): ViewController->indexAction()
+#6 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#7 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#8 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#9 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#10 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#11 {main}
+2010-07-28T14:20:51+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-07-30T08:20:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/view/2
+MESSAGE: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'oibs.comment_types_ctp' doesn't exist. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query('DESCRIBE `comme...', Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Mysql.php(156): Zend_Db_Adapter_Pdo_Abstract->query('DESCRIBE `comme...')
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(823): Zend_Db_Adapter_Pdo_Mysql->describeTable('comment_types_c...', NULL)
+#5 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(849): Zend_Db_Table_Abstract->_setupMetadata()
+#6 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(889): Zend_Db_Table_Abstract->_getCols()
+#7 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(973): Zend_Db_Table_Abstract->_setupPrimaryKey()
+#8 D:\xampp\www\site\library\Zend\Db\Table\Select.php(100): Zend_Db_Table_Abstract->info()
+#9 D:\xampp\www\site\library\Zend\Db\Table\Select.php(78): Zend_Db_Table_Select->setTable(Object(Default_Model_CommentTypes))
+#10 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1009): Zend_Db_Table_Select->__construct(Object(Default_Model_CommentTypes))
+#11 D:\xampp\www\site\application\models\CommentTypes.php(58): Zend_Db_Table_Abstract->select()
+#12 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId('content')
+#13 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase('content')
+#14 D:\xampp\www\site\application\controllers\ViewController.php(109): Oibs_Controller_Plugin_Comments->__construct('content', 2)
+#15 D:\xampp\www\site\library\Zend\Controller\Action.php(513): ViewController->indexAction()
+#16 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('indexAction')
+#17 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#18 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#19 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#20 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#21 {main}
+2010-07-30T08:20:02+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T11:24:28+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T11:24:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T11:24:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/account/view/user/JanneV
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cmt.id_target_cmt' in 'on clause'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(706): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1730): Zend_Db_Adapter_Abstract->fetchAll(Object(Zend_Db_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(350): Default_Model_User->getUserFavouriteContent('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->viewAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-08-03T11:24:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T11:48:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T11:48:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T11:48:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/account/view/user/JanneV
+MESSAGE: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'cmt.id_target_cmt' in 'on clause'. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(706): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Select), Array)
+#4 D:\xampp\www\site\application\models\User.php(1730): Zend_Db_Adapter_Abstract->fetchAll(Object(Zend_Db_Select))
+#5 D:\xampp\www\site\application\controllers\AccountController.php(350): Default_Model_User->getUserFavouriteContent('1')
+#6 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AccountController->viewAction()
+#7 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('viewAction')
+#8 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#9 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#10 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#11 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#12 {main}
+2010-08-03T11:48:46+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T13:32:49+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T13:33:07+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T13:33:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T13:33:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/jquery.gchart.min
+MESSAGE: Invalid controller specified (jquery.gchart.min). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-03T13:33:14+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /css/custom-theme/images/ui-bg_flat_75_ffffff_40x100.png
+MESSAGE: Invalid controller specified (custom-theme). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:39:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:39:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:39:54+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:39:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:40:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:41:22+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:41:22+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:41:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:41:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:43:29+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:43:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:43:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:43:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:43:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:43:49+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:43:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:43:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:03+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:08+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:23+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:28+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:44:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:44:43+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:44:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:47:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:47:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:47:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:47:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:48:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:48:14+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:48:21+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:48:26+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:48:31+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:48:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:48:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:48:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:48:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:48:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:49:05+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:49:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:49:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:49:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:49:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:49:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:50:22+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:50:26+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:50:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:50:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:51:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:51:08+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:51:51+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:53:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:53:38+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:53:43+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:53:49+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:54:50+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:55:14+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:55:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:55:25+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:55:30+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:55:35+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:55:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:55:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/1
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '1')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T09:55:46+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:55:56+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:56:01+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T09:56:01+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T10:28:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T10:28:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T10:29:03+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T10:29:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:08:49+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:08:56+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:08:56+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:12:16+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:12:17+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:13:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:13:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:19:21+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:19:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:19:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:53:55+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:55:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:55:21+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/3
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '3')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-04T12:55:23+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:55:24+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:55:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-04T12:55:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:05:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:05:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/jquery.gchart.min
+MESSAGE: Invalid controller specified (jquery.gchart.min). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:05:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:05:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:07:44+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:08:05+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:08:17+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:10:38+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:10:57+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:11:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:11:01+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:23:35+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:25:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:25:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getcomments/id/4
+MESSAGE: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Db\Statement.php(300): Zend_Db_Statement_Pdo->_execute(Array)
+#1 D:\xampp\www\site\library\Zend\Db\Adapter\Abstract.php(468): Zend_Db_Statement->execute(Array)
+#2 D:\xampp\www\site\library\Zend\Db\Adapter\Pdo\Abstract.php(238): Zend_Db_Adapter_Abstract->query(Object(Zend_Db_Table_Select), Array)
+#3 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1509): Zend_Db_Adapter_Pdo_Abstract->query(Object(Zend_Db_Table_Select))
+#4 D:\xampp\www\site\library\Zend\Db\Table\Abstract.php(1325): Zend_Db_Table_Abstract->_fetch(Object(Zend_Db_Table_Select))
+#5 D:\xampp\www\site\application\models\CommentTypes.php(62): Zend_Db_Table_Abstract->fetchAll(Object(Zend_Db_Table_Select))
+#6 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(294): Default_Model_CommentTypes->getId(NULL)
+#7 D:\xampp\www\site\library\Oibs\Controller\Plugin\Comments.php(19): Oibs_Controller_Plugin_Comments->getTypeFromDatabase(NULL)
+#8 D:\xampp\www\site\application\controllers\AjaxController.php(392): Oibs_Controller_Plugin_Comments->__construct(NULL, '4')
+#9 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getcommentsAction()
+#10 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getcommentsActi...')
+#11 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#12 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#13 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#14 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#15 {main}
+2010-08-05T09:25:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:25:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:34:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:34:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:34:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:34:31+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:34:32+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:34:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:34:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:35:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T09:35:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T12:29:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T12:29:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T12:29:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T12:29:46+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T13:23:57+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T13:23:57+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:20:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:20:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:45:09+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:45:10+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:45:45+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:45:46+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:46:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:46:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:46:26+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:46:26+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:46:30+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:46:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:46:50+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:47:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:47:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:48:31+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:49:09+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:49:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:49:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:49:23+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-05T15:49:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T09:05:20+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:14:43+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:18:50+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:20:55+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:20:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:21:47+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:22:50+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:23:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:26:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:26:56+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:27:32+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:28:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:28:20+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:28:30+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:29:26+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:29:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:29:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:31:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:32:47+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:32:51+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:33:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:35:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:36:03+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:36:25+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:36:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:38:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:38:32+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:39:05+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:39:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:39:26+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:40:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:41:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:41:52+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:42:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:42:24+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:43:39+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:44:00+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:44:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:45:08+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:46:48+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:47:07+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:47:22+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:47:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:48:02+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:48:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:48:28+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:48:32+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:49:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:50:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:51:21+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:54:05+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:54:14+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:54:20+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:54:29+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:54:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:55:13+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:55:33+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:55:42+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T10:56:11+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-06T12:21:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /en/ajax/getrecentcontent/type/all/offset/1
+MESSAGE: Unable to Connect to tcp://ajax.googleapis.com:80. Error #0: php_network_getaddresses: getaddrinfo failed: No such host is known. . 
+STACK TRACE:
+#0 D:\xampp\www\site\library\Zend\Http\Client.php(971): Zend_Http_Client_Adapter_Socket->connect('ajax.googleapis...', 80, false)
+#1 D:\xampp\www\site\library\Oibs\Controller\Plugin\GTranslate.php(167): Zend_Http_Client->request('POST')
+#2 D:\xampp\www\site\library\Oibs\Controller\Plugin\GTranslate.php(131): Oibs_Controller_Plugin_GTranslate->_getTranslation('massidea')
+#3 D:\xampp\www\site\library\Oibs\Controller\Plugin\GTranslate.php(310): Oibs_Controller_Plugin_GTranslate->translate('massidea')
+#4 D:\xampp\www\site\application\controllers\AjaxController.php(105): Oibs_Controller_Plugin_GTranslate->translateTags(Array)
+#5 D:\xampp\www\site\library\Zend\Controller\Action.php(513): AjaxController->getrecentcontentAction()
+#6 D:\xampp\www\site\library\Zend\Controller\Dispatcher\Standard.php(289): Zend_Controller_Action->dispatch('getrecentconten...')
+#7 D:\xampp\www\site\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#8 D:\xampp\www\site\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#9 D:\xampp\www\site\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#10 D:\xampp\www\site\www\index.php(30): Zend_Application->run()
+#11 {main}
