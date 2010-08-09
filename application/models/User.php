@@ -684,7 +684,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $data[0];
     }
     
-    /*
+    /**
     *   getUserListing
     *
     *   Gets user listing with filtering options.
@@ -757,7 +757,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $final;
     }
     
-    /*
+    /**
      * sortAndFilterUsers
      * 
      * Sort and Filter Users
@@ -900,7 +900,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	return $final;
     }   
     
-    /*
+    /**
      * getUserIds
      * 
      * This function retrieves all user ID:s
@@ -917,7 +917,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         
 
      
-    /*
+    /**
      * getUsersViews
      * 
      * gets users views count
@@ -941,7 +941,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }    
     
-    /*
+    /**
      * getUsersPopularity
      * Popularity means how many unique users has viewed users contents
      * 
@@ -965,7 +965,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersRating
      * 
      * Gets users rating sum
@@ -991,7 +991,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersCommentCount
      * 
      * Gets users comment count
@@ -1015,7 +1015,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }       
     
-    /*
+    /**
      * getUserContentRatings
      * 
      * Gets Users Content Ratings info
@@ -1055,7 +1055,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $userRatings;
     }
     
-    /*
+    /**
      * getUserInfo 
      * 
      * Gets basic user information from users_usr table
@@ -1076,7 +1076,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $this->_db->fetchAll($select);                                      
     }
 
-    /*
+    /**
      * getUsersContentCount
      * 
      *  Gets Users content counts
@@ -1114,7 +1114,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $resultList;
     }
     
-    /*
+    /**
      * getUsersContents
      * 
      *  Gets users content ID:s
@@ -1160,7 +1160,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;                                 
     }
     
-    /*
+    /**
      * sortUsersByContentInfo
      * 
      * Sorts $userIdList by $sort
@@ -1186,7 +1186,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     }
     
-    /*
+    /**
      * sortByUserInfo
      * 
      * Sorts $userIdList by $sort
@@ -1207,7 +1207,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $this->simplifyArray($result,'id_usr');
     }
     
-    /*
+    /**
      * sortUsersByViews
      * 
      * Sorts $userIdList by $sort
@@ -1232,7 +1232,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * sortUsersByComments
      * 
      * Sorts $userIdList by $sort
@@ -1257,7 +1257,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }    
     
-    /*
+    /**
      * sortUsersByPopularity
      * Popularity means how many unique users has viewed users contents
      * Sorts $userIdList by $sort
@@ -1286,7 +1286,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
      
-    /*
+    /**
      * sortUsersByRating
      * 
      * Sorts $userIdList by $sort
@@ -1684,7 +1684,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } // end of getUserContentList
     
-    /*
+    /**
      * array $statisticsList holds info about what statistics you want to have
      */
     public function getUserStatistics($userId, $contentIdList, $statisticsList) {
@@ -1728,7 +1728,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersViewers
      * 
      * gets list of users who has read users content, sorted last viewed
@@ -1758,7 +1758,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;		   		 
     }
     
-    /*
+    /**
      * getGravatarStatus
      * @return 1 or 0 (true, false)
      * @param user id
@@ -1774,7 +1774,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result['gravatar_usr'];
     }
     
-    /*
+    /**
      * changeGravatarStatus
      * @return true, false
      * @param user id
