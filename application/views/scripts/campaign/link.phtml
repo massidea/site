@@ -1,65 +1,47 @@
-<div class="linking_content">
-<h3 class=\"recent_posts\">Link to campaign<?php //echo $this->translate('campaign-link-content-to-campaign'); ?></h3>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div class="linking">
+<h3 class="linking_header">Link to campaign</h3>
 <?php
 if($this->cmpid != 0 && $this->hasUserContents == true) {
 ?>
-    <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
-        <p class="linkedtotext">
-            Campaign
-            <?php //echo $this->translate('campaign-link-target',
-                                                    //$this->language);
-            ?>
-        </p>
-        <?php
-        // This should be campaign color
-        $color = "red";
-        ?>
-        <img class="linkedtoimage" src="<?php echo $this->baseUrl ?>/images/blue_vertical_line_small.png" alt="<?php echo $color; ?>" />
-
-        <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('cmpid' => $this->cmpid,
+    <div id="linked_to">
+        <div id="linked_to_where">
+            <p class="linking_paragraph">Campaign</p>
+        </div>
+        <div class="linked_to_where_campaign">
+            <p class="linking_paragraph"><a href="<?php echo $this->url(array('cmpid' => $this->cmpid,
                                                  'language' => $this->language),
                                            'campaign_view', true); ?>">
-                <?php
-                    if(strlen($this->cmp['name_cmp']) > 68) {
-                        $this->cmp['name_cmp'] = substr($this->cmp['name_cmp'], 0, 68) . "...";
-                    }
-                    echo $this->cmp['name_cmp'];
-                ?>
-            </a>
-        </p>
+                    <?php
+                        if(strlen($this->cmp['name_cmp']) > 68) {
+                            $this->cmp['name_cmp'] = substr($this->cmp['name_cmp'], 0, 68) . "...";
+                        }
+                        echo $this->cmp['name_cmp'];
+                    ?>
+                </a>
+            </p>
+        </div>
     </div>
-
-    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('campaign-link-helptext'); ?></p>
     <?php
     if($this->usrcnt) {
+        ?> <p class="linking_help_text"><?php echo $this->translate('campaign-link-helptext'); ?></p> <?php
         foreach($this->usrcnt as $content) {
             if($content['published_cnt'] != 0) {
                 ?>
-                <div class="form_helptext_line"></div>
-                <div style="height: 20px;">
-                    <div style="float: left; width: 445px;">
-                        <?php
-                        if($content['key_cty'] == "problem") {
-                            $linkedColor = "red";
-                        }
-                        elseif($content['key_cty'] == "finfo") {
-                            $linkedColor = "yellow";
-                        }
-                        elseif($content['key_cty'] == "idea") {
-                            $linkedColor = "green";
-                        }
-                        ?>
-                        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" height="15" width="4"/>
+                <div class="linking_dot_line"></div>
+                <div class="linking_from">
+                    <div class="linking_from_name">
                         <?php
                         $linkurl = $this->url(array('content_id' => $content['id_cnt'],
                                                     'language' => $this->language),
                                               'content_shortview', true);
                         ?>
-                        <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
-                        <p style="margin: 4px 0 4px 20px;"><?php echo $content['lead_cnt']; ?></p>
+                        <div class="linking_from_<?php echo $content['key_cty']; ?>">
+                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
+                            <p class="linking_from_text"><?php echo $content['lead_cnt']; ?></p>
+                        </div>
                     </div>
-                    <div style="margin-top: 4px;">
+                    <div class="linking_from_link">
                         <?php
                         $linkurl = $this->url(array('cntid'    => $content['id_cnt'],
                                                     'cmpid'    => $this->cmpid,
@@ -69,11 +51,13 @@ if($this->cmpid != 0 && $this->hasUserContents == true) {
                         <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('campaign-link'); ?></a>
                     </div>
                 </div>
-                <div style="clear: both;">&nbsp;</div>
+                <div class="clear"></div>
                 <?php
             }
         }
-        ?> <div class="form_helptext_line"></div> <?php
+        ?> <div class="linking_dot_line"></div> <?php
+    } else {
+        ?> <p>No campaigns</p> <?php
     }
 } else {
     ?>
@@ -82,6 +66,18 @@ if($this->cmpid != 0 && $this->hasUserContents == true) {
 }
 ?>
 </div>
-<div class="right_side" style="padding: 0px; margin-right: 5px; margin-top: 0px;">
-    What is campaign linking?
+
+<div id="sidebar" style="margin-left:20px; margin-right:0;">
+    <div class="box">
+        <h4>What is campaign linking?</h4>
+        <div class="box-content">
+            <p><strong></strong><br />
+            </p>
+
+            <p><strong></strong><br />
+            </p>
+
+            <div class="clear"></div>
+        </div>
+    </div>
 </div>

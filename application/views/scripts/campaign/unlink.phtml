@@ -1,51 +1,37 @@
-<?php
-
-if($this->linkingContentType == "problem") {
-    $linkedColor = "red";
-}
-elseif($this->linkingContentType == "finfo") {
-    $linkedColor = "yellow";
-}
-elseif($this->linkingContentType == "idea") {
-    $linkedColor = "green";
-}
-?>
-<div class="linking_content">
-<h3 class="recent_posts"><?php echo $this->translate('campaign-unlink-content-from-campaign'); ?></h3>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div class="linking">
+<h3 class="linking_header"><?php echo $this->translate('campaign-unlink-content-from-campaign'); ?></h3>
 <?php
 if($this->contentexists) {
 ?>
-    <div id="linkedto" class="linkedto" style="margin-bottom: 10px;">
-        <p class="linkedtotext">
-            <?php echo $this->translate('content-unlink-target',
-                                                    $this->language);
-            ?>
-        </p>
-        <img class="linkedtoimage" src="<?php echo $this->baseUrl."/images/".$linkedColor; ?>_vertical_line_small.png" alt="<?php echo $linkedColor; ?>" />
-
-        <p style="padding-top: 9px;">
-            <a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
-                                                     'language' => $this->language),
-                                                     'content_shortview', true); ?>">
-                <?php
-                    if(strlen($this->relatesToContentTitle) > 68) {
-                        $this->relatesToContentTitle = substr($this->relatesToContentTitle, 0, 68) . "...";
-                    }
-                    echo $this->relatesToContentTitle;
-                ?>
-            </a>
-        </p>
+    <div id="linked_to">
+        <div id="linked_to_where">
+            <p class="linking_paragraph"><?php echo $this->translate('campaign-unlink-target',
+                                                                     $this->language);
+            ?></p>
+        </div>
+        <div class="linked_to_where_<?php echo $this->linkingContentType; ?>">
+            <p class="linking_paragraph"><a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
+                                                                              'language' => $this->language),
+                                                                        'content_shortview', true); ?>">
+                    <?php
+                        if(strlen($this->relatesToContentTitle) > 68) {
+                            $this->relatesToContentTitle = substr($this->relatesToContentTitle, 0, 68) . "...";
+                        }
+                        echo $this->relatesToContentTitle;
+                    ?>
+                </a>
+            </p>
+        </div>
     </div>
-
-    <p style="color: #808080; margin: 10px 0 8px 15px;"><?php echo $this->translate('campaign-unlink-helptext'); ?></p>
     <?php
     if($this->campaigns) {
+        ?> <p class="linking_help_text"><?php echo $this->translate('campaign-unlink-helptext'); ?></p> <?php
         foreach($this->campaigns as $campaign) {
             ?>
-            <div class="form_helptext_line"></div>
-            <div style="height: 20px;">
-                <div style="float: left; width: 420px;">
-                    <img class="linkedtoimage" src="/images/blue_vertical_line_small.png" alt="<?php echo $color; ?>" height="15" width="4"/>
+            <div class="linking_dot_line"></div>
+            <div class="linking_from">
+                <div class="linking_from_name">
                     <?php
                     $groupurl = $this->url(array('groupid' => $campaign['id_grp'],
                                                 'language' => $this->language),
@@ -54,11 +40,13 @@ if($this->contentexists) {
                                                 'language' => $this->language),
                                           'campaign_view', true);
                     ?>
-                    <a href="<?php echo $groupurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
-                    <strong><a href="<?php echo $campaignurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
-                    <p style="margin: 4px 0 4px 20px;"><?php echo $campaign['ingress_cmp']; ?></p>
+                    <div class="linking_from_campaign">
+                        <a href="<?php echo $groupurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
+                        <strong><a href="<?php echo $campaignurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
+                        <p class="linking_from_text"><?php echo $campaign['ingress_cmp']; ?></p>
+                    </div>
                 </div>
-                <div style="margin-top: 4px;">
+                <div class="linking_from_link">
                     <?php
                     $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
                                                 'cmpid'     => $campaign['id_cmp'],
@@ -69,10 +57,12 @@ if($this->contentexists) {
                     <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('campaign-unlink'); ?></a>
                 </div>
             </div>
-            <div style="clear: both;">&nbsp;</div>
+            <div class="clear"></div>
             <?php
         }
-        ?> <div class="form_helptext_line"></div> <?php
+        ?> <div class="linking_dot_line"></div> <?php
+    } else {
+        ?> <p>No linked campaigns</p> <?php
     }
 } else {
     ?>
@@ -81,6 +71,18 @@ if($this->contentexists) {
 }
 ?>
 </div>
-<div class="right_side" style="padding: 0px; margin-right: 5px; margin-top: 0px;">
-    What is campaign linking?
+
+<div id="sidebar" style="margin-left:20px; margin-right:0;">
+    <div class="box">
+        <h4>What is campaign unlinking?</h4>
+        <div class="box-content">
+            <p><strong></strong><br />
+            </p>
+
+            <p><strong></strong><br />
+            </p>
+
+            <div class="clear"></div>
+        </div>
+    </div>
 </div>

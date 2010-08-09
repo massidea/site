@@ -631,12 +631,24 @@ class ContentController extends Oibs_Controller_CustomController
 
 			$message = 'content-unlink-successful';
 
+            // TODO:
+            // Tell the user that the unlink was created.
+
+            // Redirect back to the user page
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'account',
+                                                        'action' => 'view',
+                                                        'user' => $auth->getIdentity()->username,
+                                                        'language' => $this->language),
+                                                  'lang_default', true);
+            $this->_redirector->gotoUrl($redirectUrl);
+
+            /*
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                                 'lang_default', true);
 
-			$this->flash($message, $url);
+			$this->flash($message, $url); */
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -807,7 +819,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 			$this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
 			$this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
-			$this->view->relatesToContentContentTypeId = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
+			$this->view->relatesToContentContentType = $model_content_types->getTypeById($relatesToContent['id_cty_cnt']);
 		}
 
 		if(!$invalid_contenttype && !$invalid_relatestoid) {

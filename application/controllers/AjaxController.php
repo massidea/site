@@ -196,63 +196,37 @@ class AjaxController extends Oibs_Controller_CustomController
 	
 	public function getuserlisttopAction() {
 		$auth = Zend_Auth::getInstance();
+		
+		$userid = 0;
 		if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
 		$params = $this->getRequest()->getParams();
 		$userModel = new Default_Model_User();
 		$userIds = $userModel->sortAndFilterUsers($params,null,null);
 		
-		$top = new Oibs_Controller_Plugin_TopList();
+		if(!$userIds) die; 
+		$top = new Oibs_Controller_Plugin_Toplist_Users();
 		$top->setUserIdList($userIds)
-			->setTop("Count")
-			->setTop("View")
-			->setTop("Popularity")
-			->setTop("Rating")
-			->setTop("Comment")
-			->addTitleLinks()
-			->addTitles()
-			->addDescriptions()
+			->autoSet();
 			;
 		
+		if($userid) $top->addUser($userid);
 		$topList = $top->getTopList();
 		
-		if($userid) $userTop = $top->addUser($userid)->getAddedUser();
-		$topListMerge = array();
-
-		if($userid) {
-			foreach($topList as $key1 => $list1) {
-				foreach($userTop as $key2 => $top1) {
-					if($key1 == $key2) {
-						$topListMerge[$key1] = array_merge($list1,array('addedUsers' => $top1));
-						continue 2;
-					}
-				}
-				$topListMerge[] = $list1;
-			}
-			$topList = $topListMerge;
-		}
-		
-		$topListCountries = new Oibs_Controller_Plugin_TopList();
-	        $topListCountries->setUserIdList($userIds)
-	        	->fetchUserCountries()
-	        	->setCountryTop("Count")
-	        	->setCountryTop("View")
-				->setCountryTop("Popularity")
-				->setCountryTop("Rating")
-				->setCountryTop("Comment")
-				->addTitleLinks()
-				->addTitles()
-				->addDescriptions()
-				;
-			
-			$topCountry = $topListCountries->getCountryGroups();
+		$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
+        $topListCountries->setUserIdList($userIds)
+        	->fetchUserCountries()
+        	->autoSet()
+			;
+		if($userid) $topListCountries->addUser($userid);
+		$topCountry = $topListCountries->getTopList();
 		
 		
 		$topListBoxes = array(
         	'Users' => $topList,
 			'Countries' => $topCountry
-        );
-		
+        ); 
+	
 		$this->view->topListBoxes = $topListBoxes;
 	}
 	
@@ -261,10 +235,12 @@ class AjaxController extends Oibs_Controller_CustomController
         $userModel = new Default_Model_User();
         $limit = 5;
         $more = false;
-        if (null != $this->params['more']) {
+        if (isset($this->params['more'])) {
         	$limit = 100;
         	$more = true;
         }
+        
+        $contents = array();
 		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], $limit);
 		foreach($rawcontents as $rawcnt)
 		{
@@ -280,11 +256,12 @@ class AjaxController extends Oibs_Controller_CustomController
         $contentModel = new Default_Model_Content();
         $limit = 5;
         $more = false;
-        if (null != $this->params['more']) { 
+        if (isset($this->params['more'])) { 
         	$limit = 100;
         	$more = true;
         }
         $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], $limit);
+        $contents = array();
         foreach($rawcontents as $rawcnt)
         {
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
@@ -302,15 +279,16 @@ class AjaxController extends Oibs_Controller_CustomController
         // Get content rating
         $contentRatingsModel = new Default_Model_ContentRatings();
         
-		$rate = $this->params['rate'];
-		if ($auth->hasIdentity())
-		{
-			if($rate == 1 || $rate == -1)
+        if (isset($this->params['rate'])) {
+			$rate = $this->params['rate'];
+			if ($auth->hasIdentity())
 			{
-	            $contentRatingsModel->addRating($this->params['id_cnt'], $auth->getIdentity()->user_id, $rate);
+				if($rate == 1 || $rate == -1)
+				{
+		            $contentRatingsModel->addRating($this->params['id_cnt'], $auth->getIdentity()->user_id, $rate);
+				}
 			}
-		}
-		
+        }
         $rating = $contentRatingsModel->getPercentagesById($this->params['id_cnt']);
 		$this->view->hasIdentity = $auth->hasIdentity();
 		$this->view->rating = $rating;
@@ -396,6 +374,15 @@ class AjaxController extends Oibs_Controller_CustomController
 			if (count($newComments) != 0) {
 				$this->view->comments = $newComments;
 			}
+		}
+	}
+	
+	public function idlerefreshAction() {
+		$this->_helper->viewRenderer->setNoRender(true);
+		$auth = Zend_Auth::getInstance();
+
+		if ($auth->hasIdentity()) {
+			$this->setOnline($auth->getIdentity()->user_id, 2);
 		}
 	}
 }

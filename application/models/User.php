@@ -710,7 +710,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	$i = ($page-1)*$count;
     	$limit = $i+$count;
     	for($i; $i < $limit; $i++) {
-    		if(!$userIdList[$i]) break;
+    		if(!isset($userIdList[$i])) break;
     		$userIdListCut[] = $userIdList[$i];
     	}
     	
@@ -722,7 +722,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     	//Add these contents to $userData array in which we collect data (if user doesnt have content we add empty array)
     	foreach($userData as $key => $data) {
-    		 if (!$userContents[$data['id_usr']])
+    		 if (!isset($userContents[$data['id_usr']]))
     		 	 $userContents[$data['id_usr']] = array();
     		 $userData[$key]['contents'] = $userContents[$data['id_usr']];
     		 
@@ -782,7 +782,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		
         $groupName = "";
         foreach($orderGroups as $key => $group) {
-        	if($group[$order]) {
+        	if(isset($group[$order])) {
         		$groupName = $key;
         	}
         }
@@ -793,16 +793,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $select = $this->select()->from($this, 'id_usr')
                                  ->order('id_usr');
                                  
-	        if($filter['city'] != "")
+	        if(isset($filter['city']) && $filter['city'] != "")
 	          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
 	
-	        if($filter['username'] != "")
+	        if(isset($filter['username']) && $filter['username'] != "")
 	          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
 	          
-	        if($filter['country'] != "0")
+	        if(isset($filter['country']) && $filter['country'] != "0")
 	          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
 	        
-	        if($filter['group'] != "")
+	        if(isset($filter['group']) && $filter['group'] != "")
 	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
 	                                 
         $result = $this->_db->fetchAll($select);
@@ -932,6 +932,21 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
+    public function getUsersWithCity($userIdList) {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+    									array('id_usr' => 'id_usr_usp',
+    										 'city' => 'profile_value_usp'))
+	    							->where('profile_key_usp = ?','city')
+	    							->where('public_usp = ?','1')
+	    							->where('id_usr_usp IN (?)', $userIdList)
+	    							->where('usp.profile_value_usp != ?',"")
+	    							->order('id_usr')
+    							;
+				
+        $result = $this->_db->fetchAssoc($select); 
+		return $result;
+    }
+    
     /*
      * getUsersLocation
      * 
@@ -941,7 +956,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return array $list
      * @author Jari Korpela
      */
-    private function getUsersLocation($userIdList) {
+    public function getUsersLocation($userIdList) {
     	sort($userIdList);
     	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
                                       			array('id_usr_usp','profile_key_usp',
@@ -1830,7 +1845,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 				                                 'vws.id_cnt_vws = chu.id_cnt',
 				                                  array('views' => 'SUM(vws.views_vws)'))
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
-                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      'cnt.id_cnt = cmt.id_target_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
                                            ->joinLeft(array('cty' => 'content_types_cty'),
                                                   'cty.id_cty = cnt.id_cty_cnt',

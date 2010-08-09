@@ -479,7 +479,21 @@ $(document).ready(function() {
 			$('#add_content_form').submit();
 		}
 	});
+	idleInterval = 180000;
+	setTimeout("onlineIdle()", idleInterval);
 });
+
+function onlineIdle() {
+	var json = JSON.parse($('#jsmetabox').text());
+	var url = json.idleRefreshUrl;
+	$.ajax({
+		type: "POST",
+		url: url,
+		success: function(msg) {
+			setTimeout("onlineIdle()", idleInterval);
+		}
+	});
+}
 
 /**
 * Industry selection

@@ -1780,7 +1780,7 @@ form #uploadedFiles_div .form_element_input label {
 .user_list_statistics_title,
 .user_list_recet_contents_title { font-weight: bold; }
 
-.user_list_last_login { float:right; padding-top:2px; }
+.user_list_last_login { float:right; padding-top:1px; }
 
 .user_list_user_info a { text-decoration: none; }
 

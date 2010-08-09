@@ -156,3 +156,33 @@ function flagAsSpam(commentId)
 		}
 	});
 }
+
+/**
+*   deleteComment
+*
+*   Basic function for deleting comment
+*/
+/*
+deleteComment = function (cmtid)
+{
+    // Show "Are you sure..." text and "Yes / No" -link
+    $('div#content_view_comment_'+cmtid+'_textbody').hide();
+    $('div#delete_comment_text_'+cmtid).show();
+
+    return false;
+}*/
+
+/**
+*   undodeleteComment
+*
+*   Basic function for forget deleting comment
+*/
+/*
+undodeleteComment = function (cmtid)
+{
+    // Show "Are you sure..." text and "Yes / No" -link
+    $('div#content_view_comment_'+cmtid+'_textbody').show();
+    $('div#delete_comment_text_'+cmtid).hide();
+
+    return false;
+}*/
