@@ -87,7 +87,7 @@ border-left:5px solid #0089CF;}
 }
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
-/*#content #user-page #activity .center { width:700px; align:center; }*/
+#content #user-page #activity .center { width:720px; align:center; }
 
 #my-reads .scroll-box ul li {
 	margin: 5px 5px 5px 5px;
