@@ -164,5 +164,28 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
             return true;
         }
     }
+    
+    public function getAllUsers($userIdList = null) {
+    	$select = $this->select()
+    						->from($this,array('id_usr'))
+    						->distinct();
+    						if(isset($userIdList)) $select->where('id_usr IN (?)',$userIdList);
+    	$result = $this->_db->fetchAssoc($select);		
+    	return array_keys($result); 			
+    }
+    
+    public function getAllGroupsWithUsers($userIdList = null) {
+    	$select = $this->_db->select()
+    						->from(array('uhg' => 'usr_has_grp'),array('*'))
+    						->joinLeft(array('ugg' => 'usr_groups_grp'),
+    							'ugg.id_grp = uhg.id_grp',
+    							array('ugg.group_name_grp'))
+    						;
+    						if(isset($userIdList)) $select->where('id_usr IN (?)',$userIdList);
+    						
+    	$result = $this->_db->fetchAll($select);
+    	return $result;
+    }
+    
 } // end of class
 ?>

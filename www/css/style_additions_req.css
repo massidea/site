@@ -587,13 +587,14 @@ form_registration_container dd,
 
 /* Search result juttua , content list juttua ja paginaattorijuttua SAMASSA */
 #content_list_content_pagination_top,
-#content_list_content_pagination_bottom,
-#user_list_user_pagination_top,
-#user_list_user_pagination_bottom {
+#content_list_content_pagination_bottom {
 	margin: 0 2em 0 0;
 	float: right;
 	font-size: 12pt;
 }
+
+#user_list_user_pagination_top,
+#user_list_user_pagination_bottom { margin: 1em 0 0 0; }
 
 .content_list_header_problem,
 .content_list_header_problems {
