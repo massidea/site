@@ -1369,12 +1369,14 @@ class AccountController extends Oibs_Controller_CustomController
         	foreach($topList as $top) {
         		$topNames[] = $top['name'];
         	}
+        	$topNames[] = "Amount";
         	
         	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
 	        $topListCountries->fetchUserCountries()
+	        ->setTopAmount()
 	        	->autoSet()
 				;
-			
+			if($userid) $topListCountries->addUser($userid);
 			$topCountry = $topListCountries->getTopList();
 			        	
         }
@@ -1385,6 +1387,7 @@ class AccountController extends Oibs_Controller_CustomController
 			$topNames[] = "Popularity";
 			$topNames[] = "Rating";
 			$topNames[] = "Comment";
+			$topNames[] = "Amount";
         }
         
         $topListBoxes = array(
@@ -1448,7 +1451,7 @@ class AccountController extends Oibs_Controller_CustomController
 
 		// Load user locations from cache
 		if(!$resultList = $cache->load('UserLocationsList')) {
-			$userModel = new Default_Model_User();
+			$userModel = new Default_Model_UserProfiles();
 			$locations = $userModel->getAllUsersLocations();
 			$cache->save($locations, 'UserLocationsList');
 

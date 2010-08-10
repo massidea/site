@@ -30,7 +30,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 		if(!is_array($id)) $id = array($id);
 		
 		$user = $this->_intersectMergeArray($this->_userModel->getUserInfo($id),
-									$this->_userModel->getUsersLocation($id));
+									$this->_userProfileModel->getUsersLocation($id));
 
 		$userCountry = $user[0]['countryIso'];
 		
@@ -50,41 +50,62 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	* @return	Oibs_Controller_Plugin_TopList_Countries
 	*/
 	public function fetchUserCountries() {
-		$this->_usersWithCountry = $this->_userModel->getUsersWithCountry($this->_userList);
+		$this->_usersWithCountry = $this->_userProfileModel->getUsersWithCountry($this->_userList);
 		return $this;
+	}
+	
+	public function setTopAmount() {
+
+		$countries = $this->_userProfileModel->getCountryAmounts();
+		
+		/* Couldnt decide between sql query or loop... I'll leave this here if someone notices it to be faster.
+		$countries = array();
+		foreach($this->_usersWithCountry as $data) {
+			if(!isset($countries[$data['countryIso']])) $countries[$data['countryIso']] = 1;
+			else $countries[$data['countryIso']] += 1;
+		}
+		*/
+		$this->_topList['Amount']['countries'] = $countries;
+		$this->_topList['Amount']['name'] = "Amount";
+		return $this;
+
 	}
 		
 	public function setTop($choice) {
 		try { $this->_initializeTop($choice); }
 		catch (Exception $e) { echo "Exception: ".$e->getMessage(); }
 		
-		if(!empty($this->_usersWithCountry)) {
-			$getIds = array_keys($this->_usersWithCountry);
-			$this->_topListIds[$choice] = $this->_getChoiceValue($choice,$getIds);
-			$final = array();
-			foreach($this->_topListIds[$choice] as $userValue) {
-				foreach(array_values($this->_usersWithCountry) as $userInfo) {
-					if($userValue['id_usr'] == $userInfo['id_usr']) {
-						$final[] = array_merge($userValue,$userInfo);
-						continue 2;
+		try {
+			if(!empty($this->_usersWithCountry)) {
+				$getIds = array_keys($this->_usersWithCountry);
+				$this->_topListIds[$choice] = $this->_getChoiceValue($choice,$getIds);
+				$final = array();
+				foreach($this->_topListIds[$choice] as $userValue) {
+					foreach(array_values($this->_usersWithCountry) as $userInfo) {
+						if($userValue['id_usr'] == $userInfo['id_usr']) {
+							$final[] = array_merge($userValue,$userInfo);
+							continue 2;
+						}
 					}
 				}
+				
+				$this->_topListUsersCountry[$choice] = array(
+					'users' => $final,
+					'name' => $choice
+				);
+							
+				$this->_makeToCountryGroups($choice);
+				
+				return $this;
 			}
-			
-			$this->_topListUsersCountry[$choice] = array(
-				'users' => $final,
-				'name' => $choice
-			);
-						
-			$this->_makeToCountryGroups($choice);
-			
-			return $this;
+			else {
+				$error = "Countries not fetched.";
+				throw new Exception($error);
+			}
+		} catch (Exception $e) {
+			echo "Exception: ".$e->getMessage();
 		}
-		else {
-			$error = "Countries not fetched.";
-			$this->_topListUsersCountry[$choice] = $error;
-			return $this;
-		}
+
 	}
 	
 	private function _makeToCountryGroups($choice) {

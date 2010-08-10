@@ -616,3 +616,60 @@ function selectOnlyThisMsg(id)
 	// Mark as checked only the message that is going to be deleted
 	document.getElementById('select_' + id).checked = true;
 }
+
+/**
+* acceptAllUsrInWaitinglist
+*
+* function to select or unselect all accept users from waiting list
+*/
+function acceptAllUsrInWaitinglist()
+{
+	// Get the form elements
+	var elems = document.getElementById('group_waiting_list_form');
+	var checked = document.group_waiting_list_form.accept_all.checked;
+
+	// Change values according to the "accept_all" checkbox
+	for (var i = 1; i < elems.elements.length; i++) {
+        if (elems.elements[i].id[0] == "a")
+            elems.elements[i].checked = checked;
+	}
+
+	for (i = 1; i < elems.elements.length; i++) {
+        if (elems.elements[i].id[0] == "d")
+            elems.elements[i].checked = false;
+	}
+}
+
+/**
+* denyAllUsrInWaitinglist
+*
+* function to select or unselect all deny users from waiting list
+*/
+function denyAllUsrInWaitinglist()
+{
+	// Get the form elements
+	var elems = document.getElementById('group_waiting_list_form');
+	var checked = document.group_waiting_list_form.deny_all.checked;
+
+	// Change values according to the "deny_all" checkbox
+	for (var i = 1; i < elems.elements.length; i++) {
+        if (elems.elements[i].id[0] == "d")
+            elems.elements[i].checked = checked;
+	}
+
+    for (i = 1; i < elems.elements.length; i++) {
+        if (elems.elements[i].id[0] == "a")
+            elems.elements[i].checked = false;
+	}
+}
+
+/**
+* unselectRadiobutton
+*
+* Function to unselect accept all and deny all radio buttons
+*/
+function unselectRadiobutton()
+{
+	document.group_waiting_list_form.accept_all.checked = false;
+    document.group_waiting_list_form.deny_all.checked = false;
+}
