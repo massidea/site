@@ -64,6 +64,10 @@
 		<tuv xml:lang="en"><seg>Join this group</seg></tuv>
 		<tuv xml:lang="fi"><seg>Liity tähän ryhmään</seg></tuv>
 	</tu>
+    <tu tuid='group-join-waiting_group'>
+		<tuv xml:lang="en"><seg>Join this group waiting list</seg></tuv>
+		<tuv xml:lang="fi"><seg>Liity tämän ryhmän odotuslistalle</seg></tuv>
+	</tu>
     <tu tuid='group-leave'>
 		<tuv xml:lang="en"><seg>Leave</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poistu</seg></tuv>
@@ -71,6 +75,10 @@
     <tu tuid='group-leave_group'>
 		<tuv xml:lang="en"><seg>Leave this group</seg></tuv>
 		<tuv xml:lang="fi"><seg>Poistu tästä ryhmästä</seg></tuv>
+	</tu>
+    <tu tuid='group-leave-waiting_group'>
+		<tuv xml:lang="en"><seg>Leave this group waiting list</seg></tuv>
+		<tuv xml:lang="fi"><seg>Poistu tämän ryhmän odotuslistalta</seg></tuv>
 	</tu>
     <tu tuid='group-comment'>
 		<tuv xml:lang="en"><seg>Comment</seg></tuv>

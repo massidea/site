@@ -7,6 +7,14 @@
 }
 #content #campaign-page p.link {font-size: 1.4em}
 
+#content #group-page #edit-group-etc {
+    color:#c0c0c0;
+    font-size:1.4em;
+    width: 100%;
+    text-align: right;
+    padding-top: 10px;
+}
+
 #content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
 #content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
 #gaccampaignlist { float:left; width:520px; }
@@ -170,6 +178,8 @@ div.user_summary_list_without_stats{
 #content #add-content-page #Createacampaign .input-column-website3,
 #content #add-content-page #add_group_form .input-column-website3 {  width:120px; float:left;  margin-bottom:8px; }
 
+#content #add-content-page #add_group_form select { width: 384px; margin-top: 6px; }
+
 #content #add-content-page #Createacampaign .input-column-website2 input,
 #content #add-content-page #add_group_form .input-column-website2 input { width:120px; }
 #content #add-content-page #Createacampaign .input-column-website3 input,
@@ -266,4 +276,38 @@ div.linked_campaigns, div.linked_groups {
 }
 #leave_confirm_groups {
 
+}
+
+#group_waiting_list {
+    float: left;
+	width: 500px;
+    margin-bottom: 10px;
+}
+.group_waiting_list_table {
+    width: 500px;
+    margin-top: 10px;
+    border-spacing: 0;
+}
+.group_waiting_list_user_accept, .group_waiting_list_user_deny, .group_waiting_list_user_ignore,
+.group_waiting_list_user_img, .group_waiting_list_user_name {
+    padding: 4px;
+    border-top: 1px black dotted;
+}
+.group_waiting_list_user_accept_all, .group_waiting_list_user_deny_all {
+    padding: 4px;
+}
+.group_waiting_list_user_accept {
+    width: 80px;
+}
+.group_waiting_list_user_deny {
+    width: 80px;
+}
+.group_waiting_list_user_ignore {
+    width: 80px;
+}
+.group_waiting_list_user_img {
+    width: 50px;
+}
+.group_waiting_list_user_name {
+    width: 210px;
 }

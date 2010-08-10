@@ -1,0 +1,104 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="group_waiting_list">
+    <?php
+    $grpurl = $this->url(array('groupid'    => $this->grp['id_grp'],
+                               'language'   => $this->language),
+                         'group_shortview', true);
+    ?>
+    <h2><a href="<?php echo $grpurl; ?>"><?php echo $this->grp['group_name_grp']; ?></a> waiting list</h2>
+    <?php if (count($this->users) > 0) : ?>
+        <p class="group_waiting_list_paragraph">Following users are in waiting list.</p>
+        <form name="group_waiting_list_form" id="group_waiting_list_form" action="#" method="post">
+            <input type="hidden" name="accept_or_deny_first" value="<?php echo $this->users[0]['id_usr']; ?>" />
+            <input type="hidden" name="accept_or_deny_last" value="<?php echo $this->users[count($this->users)-1]['id_usr']; ?>" />
+            <table class="group_waiting_list_table">
+                <tr>
+                    <td class="group_waiting_list_user_accept_all">
+                        <input type="radio" name="select_all" id="accept_all" value="accept_all" onclick="acceptAllUsrInWaitinglist(); return true;" />
+                    </td>
+                    <td class="group_waiting_list_user_deny_all">
+                        <input type="radio" name="select_all" id="deny_all" value="deny_all" onclick="denyAllUsrInWaitinglist(); return true;" />
+                    </td>
+                    <td colspan="3">
+                        &nbsp;
+                    </td>
+                </tr>
+            <?php foreach($this->users as $user): ?>
+                <tr class="group_waiting_list_user">
+                    <td class="group_waiting_list_user_accept">
+                        <input type="radio" name="select_<?php echo $user['id_usr']; ?>"
+                               id="accept_<?php echo $user['id_usr']; ?>" value="accept"
+                               onclick="unselectRadiobutton(); return true;" />
+                        Accept
+                    </td>
+                    <td class="group_waiting_list_user_deny">
+                        <input type="radio" name="select_<?php echo $user['id_usr']; ?>"
+                               id="deny_<?php echo $user['id_usr']; ?>" value="deny"
+                               onclick="unselectRadiobutton(); return true;" />
+                        Deny
+                    </td>
+                    <td class="group_waiting_list_user_ignore">
+                        <input type="radio" name="select_<?php echo $user['id_usr']; ?>"
+                               id="ignore_<?php echo $user['id_usr']; ?>" value="ignore"
+                               onclick="unselectRadiobutton(); return true;" />
+                        Ignore
+                    </td>
+                    <?php
+                    $usrImgUrl = $this->url(array('controller' => 'account',
+                                                  'action'     => 'profilethumb',
+                                                  'id'         => $user['id_usr'],
+                                                  'thumb'      => 'true',
+                                                  'language'   => $this->language),
+                                            'lang_default', true);
+                    $usrUrl = $this->url(array('controller' => 'account',
+                                               'action'     => 'view',
+                                               'user'       => $user['login_name_usr'],
+                                               'language'   => $this->language),
+                                         'lang_default', true);
+                    ?>
+                    <td class="group_waiting_list_user_img">
+                        <img src="<?php echo $usrImgUrl; ?>" width="50" alt="<?php echo $user['login_name_usr']; ?>" />
+                    </td>
+                    <td class="group_waiting_list_user_name">
+                        <a href="<?php echo $usrUrl; ?>">
+                            <?php echo $user['login_name_usr']; ?>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+                <tr>
+                    <td class="group_waiting_list_user_accept">&nbsp;</td>
+                    <td class="group_waiting_list_user_deny">&nbsp;</td>
+                    <td class="group_waiting_list_user_ignore">&nbsp;</td>
+                    <td class="group_waiting_list_user_img">&nbsp;</td>
+                    <td class="group_waiting_list_user_name">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <input type="submit" name="accept_or_deny_selected"
+                               value="Accept or deny selected"
+                               onclick="document.group_waiting_list_form.submit(); return false;"
+                               style="width: 168px;" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    <?php else : ?>
+        <p class="group_waiting_list_paragraph">There are no users in waiting list.</p>
+    <?php endif; ?>
+</div>
+
+<div id="sidebar" style="margin-left:20px; margin-right:0;">
+    <div class="box">
+        <h4>What is group waiting list?</h4>
+        <div class="box-content">
+            <p><strong></strong><br />
+            </p>
+
+            <p><strong></strong><br />
+            </p>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
