@@ -721,13 +721,11 @@ form_registration_container dd,
 /* Tag viewaction stuff */
 
 #tag_list_container {
-    margin-left: 20px;
-    margin-top: 10px;
+    margin-left: 0px;
+    margin-top: 0px;
 }
 
 .tag_view_results {
-    border-left: 1px solid #AAAAAA;
-    padding-left: 4px;
     overflow: hidden;
 }
 
@@ -736,8 +734,7 @@ form_registration_container dd,
     padding-left: 20px;
     padding-top: 2px;
     padding-bottom: 2px;
-    margin-left: 10px;
-    width: 450px;
+    width: 225px;
 }
 
 .tag_view_idea {
@@ -760,12 +757,73 @@ form_registration_container dd,
 .tag_view_title {
 	font-size: 12px;
 	font-weight: bold;
-	width: 400px;
+	width: 215px;
 }
 
 .tag_view_lead {
     
 }
+
+tag_view_search_result_title{
+	
+}
+
+.tag_view_search_title {
+	font-size: 12pt;
+	font-weight: bold;
+	color: #000;
+}
+
+.tag_view_search_title_links{
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+div.tag_view_search_title_links a:link {text-decoration: none; color: #0089CF;}
+div.tag_view_search_title_links a:visited {text-decoration: none; color: #0089CF;}
+div.tag_view_search_title_links a:hover {text-decoration: none; color: #0089CF;}
+div.tag_view_search_title_links a:active {text-decoration: none; color: #0089CF;}
+
+.tag_index_col_1_header {
+	text-align: left;
+	width: 225px;
+	float:left;
+	font-size: 11pt;
+	font-weight: bold;
+	font-color: #000;
+}
+
+.tag_index_col_2_header {
+	text-align: left;
+	width: 225px;
+	float:left;
+	margin-left: 20px;
+	font-size: 11pt;
+	font-weight: bold;
+	font-color: #000;
+}
+
+.tag_index_col_3_header {
+	text-align: left;
+	width: 225px;
+	float:left;
+	margin-left: 20px;
+	font-size: 11pt;
+	font-weight: bold;
+	color: #000;
+}
+
+.tag_index_col_header_txt {
+	font-size: 9pt;
+	color: #A4A4A4;
+	font-weight: normal;
+}
+
+.tag_index_col_header_img {
+	padding-right: 5px;
+	float: left;
+}
+
 
 /*  profile image stuff */
 #account_profile_image{

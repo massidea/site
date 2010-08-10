@@ -130,6 +130,9 @@ class ContentController extends Oibs_Controller_CustomController
 
 		// Calculate total page count
 		$pageCount = ceil($contentCount / $count);
+		
+		// Most viewed content
+		$mostViewedData = $contentModel->getMostViewedType($cty, $page, $count, 'views', 'en', $ind);
 
 		// Get all industries
 		//$industries = new Default_Model_Industries();
@@ -183,6 +186,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$this->view->page = $page;
 		$this->view->contentCount = $contentCount;
 		$this->view->ind = $ind;
+		$this->view->mostViewedData = $mostViewedData;
 
 		// RSS type for the layout
 		$this->view->rsstype = $cty;
@@ -1714,3 +1718,4 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 }
+

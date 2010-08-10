@@ -105,6 +105,38 @@
 		<tuv xml:lang="en"><seg>Tag cloud</seg></tuv>
 		<tuv xml:lang="fi"><seg>Avainsanat</seg></tuv>
 	</tu>
+	<tu tuid='tag-view-indexmsg'>
+		<tuv xml:lang="en"><seg>Tag index</seg></tuv>
+		<tuv xml:lang="fi"><seg>Avainsanalista</seg></tuv>
+	</tu>
+	<tu tuid='tag-view-companymsg'>
+		<tuv xml:lang="en"><seg>Company tags</seg></tuv>
+		<tuv xml:lang="fi"><seg>Yritysten avainsanat</seg></tuv>
+	</tu>
+	<tu tuid='tag-view-contents'>
+		<tuv xml:lang="en"><seg>Contents</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
+	</tu>
+	<tu tuid='tag-view-campaigns-groups'>
+		<tuv xml:lang="en"><seg>Campaigns and groups</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kampanjat ja ryhmät</seg></tuv>
+	</tu>
+	<tu tuid='tag-view-users'>
+		<tuv xml:lang="en"><seg>Users</seg></tuv>
+		<tuv xml:lang="fi"><seg>Käyttäjät</seg></tuv>
+	</tu>
+	<tu tuid='tag-view-contents-intro'>
+		<tuv xml:lang="en"><seg>added to this topic, including challenges, vision and ideas</seg></tuv>
+		<tuv xml:lang="fi"><seg>lisätty tähän aiheeseen, sisäläten haasteet, visiot ja ideat</seg></tuv>
+	</tu>
+	<tu tuid='tag-view-campaigns-groups-intro'>
+		<tuv xml:lang="en"><seg>producing content to this topic</seg></tuv>
+		<tuv xml:lang="fi"><seg>tähän aiheeseen sisältöä tuottavat</seg></tuv>
+	</tu>
+	<tu tuid='tag-view-users-intro'>
+		<tuv xml:lang="en"><seg>indicating intrest to this topic</seg></tuv>
+		<tuv xml:lang="fi"><seg>osoittavat kiinnostusta aiheeseen</seg></tuv>
+	</tu>
 </body>
 
 

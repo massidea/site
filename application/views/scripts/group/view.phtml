@@ -117,12 +117,21 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                             'id'         => $this->grpData["id_grp"]
                          ), 'lang_default', true
                     );
+                    $waitinglist = $this->url(
+                        array(
+                            'controller' => 'group',
+                            'action'     => 'waitinglist',
+                            'language'   => $this->language,
+                            'grpid'      => $this->grpData["id_grp"]
+                        ), 'lang_default', true
+                    );
                 ?>
-                <div id="join-group">
-                    <p class="join" style="text-align: right; padding-top: 10px;">
+                <div id="edit-group-etc">
+                    <p class="join">
                         <a href="<?php echo $editlink; ?>">Edit group</a> |
                         <!--<a href="#">Edit group links</a> |-->
-                        <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete group</a>
+                        <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete group</a> |
+                        <a href="<?php echo $waitinglist; ?>">Waiting&nbsp;list (<?php echo $this->usrWaitingCount; ?>)</a>
                     </p>
                 </div>
                 <?php endif; ?>
@@ -156,22 +165,8 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             </div>
             <?php if ($this->identity == true) : ?>
             <div id="join-group">
-                <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
-                    $joinurl = $this->url(
-                        array(
-                            'controller' => 'group',
-                            'action' => 'join',
-                            'groupid' => $this->grpId,
-                            'language' => $this->language
-                        ), 'lang_default', true
-                    );
-                ?>
-
-                <p class="join">
-                    <a href="<?php echo $joinurl; ?>">&gt; <?php echo $this->translate('group-join_group'); ?></a>
-                </p>
                 <?php
-                elseif ($this->userIsGroupAdmin):
+                if ($this->userIsGroupAdmin):
                      $cmplink = $this->url(
                          array(
                             'controller' => 'campaign',
@@ -184,21 +179,65 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 <p class="join">
                     <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a>
                 </p>
-                <?php else:
-                    $leaveurl = $this->url(
-                        array(
-                            'controller' => 'group',
-                            'action' => 'leave',
-                            'confirm' => 0,
-                            'groupid' => $this->grpId,
-                            'language' => $this->language
-                        ), 'lang_default', true);
-                ?>
-                <p class="join">
-                    <a href="<?php echo $leaveurl; ?>">&gt; <?php echo $this->translate('group-leave_group'); ?></a>
-                </p>
+                <?php else : ?>
+                    <?php if ($this->isClosed && !$this->userHasGroup->userHasGroup($this->grpId, $this->userid)) : ?>
+                        <?php if (!$this->userHasGroupWaiting->userWaitingGroup($this->grpId, $this->userid)):
+                            $joinwaitingurl = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action' => 'join',
+                                    'groupid' => $this->grpId,
+                                    'language' => $this->language
+                                ), 'lang_default', true
+                            );
+                        ?>
+                        <p class="join">
+                            <a href="<?php echo $joinwaitingurl; ?>">&gt; <?php echo $this->translate('group-join-waiting_group'); ?></a>
+                        </p>
+                        <?php else:
+                            $leavewaitingurl = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action' => 'leavewaiting',
+                                    'groupid' => $this->grpId,
+                                    'language' => $this->language
+                                ), 'lang_default', true);
+                        ?>
+                        <p class="join">
+                            <a href="<?php echo $leavewaitingurl; ?>">&gt; <?php echo $this->translate('group-leave-waiting_group'); ?></a>
+                        </p>
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
+                            $joinurl = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action' => 'join',
+                                    'groupid' => $this->grpId,
+                                    'language' => $this->language
+                                ), 'lang_default', true
+                            );
+                        ?>
 
+                        <p class="join">
+                            <a href="<?php echo $joinurl; ?>">&gt; <?php echo $this->translate('group-join_group'); ?></a>
+                        </p>
+                        <?php else:
+                            $leaveurl = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action' => 'leave',
+                                    'confirm' => 0,
+                                    'groupid' => $this->grpId,
+                                    'language' => $this->language
+                                ), 'lang_default', true);
+                        ?>
+                        <p class="join">
+                            <a href="<?php echo $leaveurl; ?>">&gt; <?php echo $this->translate('group-leave_group'); ?></a>
+                        </p>
+                        <?php endif; ?>
                     <?php endif; ?>
+                <?php endif; ?>
                 <p>Only by joining you can add contents to campaigns</p>
             </div>
             <?php endif; ?>

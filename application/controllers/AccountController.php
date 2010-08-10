@@ -427,6 +427,18 @@ class AccountController extends Oibs_Controller_CustomController
 			->addTab("Readers", "readers", "all selected");
 			
 		$boxes[] = $box;
+		
+		/*Box for user profile custom layout settings*/
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("Custom Layout")
+			->setClass("center")
+			->setName("my-custom-layout")
+			->addTab("Fonts", "fonts", "all selected") //Header, type, class, extra
+			->addTab("Colors", "colors", "colors")
+			->addTab("Background", "background", "background");
+		$boxes[] = $box;
+		
+		$customLayoutForm = new Default_Form_AccountCustomLayoutSettings();
 			
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
@@ -438,6 +450,7 @@ class AccountController extends Oibs_Controller_CustomController
         //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
+        $this->view->customLayoutSettingsForm = $customLayoutForm;
 
         /* Waiting for layout that is maybe coming 
         // MyViews

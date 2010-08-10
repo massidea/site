@@ -700,7 +700,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		if(!$list) $list = 'ASC';
 		
 		//Get full sorted and filtered userIdList
-    	$userIdList = $this->sortAndFilterUsers(&$filter, $order, $list);
+    	$userIdList = $this->sortAndFilterUsers($filter, $order, $list);
     	$listSize = sizeof($userIdList);
     	
     	if($listSize == 0) return array(); //If list size is 0, we just return
