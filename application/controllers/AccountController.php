@@ -1811,6 +1811,7 @@ class AccountController extends Oibs_Controller_CustomController
    					unset($userList[$user['id_usr']]);
     			} else {   				
     				echo $user['login_name_usr'].":";
+    				echo time()-$user['time'].":";
     				echo $user['mode']."<br />";
     			}
     		}

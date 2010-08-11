@@ -143,19 +143,19 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			
 		$this->view->searchForm = $simpleSearchForm;
 
-		if (get_magic_quotes_gpc()) { function stripslashes_deep($value) { $value = is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value); return $value; } $_POST = array_map('stripslashes_deep', $_POST); $_GET = array_map('stripslashes_deep', $_GET); $_COOKIE = array_map('stripslashes_deep', $_COOKIE); } 
+		//if (get_magic_quotes_gpc()) { function stripslashes_deep($value) { $value = is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value); return $value; } $_POST = array_map('stripslashes_deep', $_POST); $_GET = array_map('stripslashes_deep', $_GET); $_COOKIE = array_map('stripslashes_deep', $_COOKIE); } 
 		
 		if ($params['controller'] != 'ajax') {
 			$this->setActiveOnline();
 		}
 		
-		$this->view->jsmetabox->append('idleRefreshUrl', $this->_urlHelper->url(array('controller' => 'ajax', 'action' => 'idlerefresh')));
+		$this->view->jsmetabox->append('idleRefreshUrl', $this->_urlHelper->url(array('controller' => 'ajax', 'action' => 'idlerefresh'), 'lang_default', true));
 		/*
 		echo '<pre>';
 		print_r($params);
 		echo '</pre>';
 		*/
-		
+
 	} // end of init
 		
 	/**

@@ -311,3 +311,76 @@ div.linked_campaigns, div.linked_groups {
 .group_waiting_list_user_name {
     width: 210px;
 }
+
+#commentTextarea {
+	width: 498px;
+	margin-top: 10px;
+}
+
+#content_view_comments_header {
+	margin:1em 0;
+}
+
+.content_view_comment_header {
+	height: 2em;
+	background:#CCCCCC none repeat scroll 0 0;
+}
+
+.content_view_comment_username, .content_view_comment_date {
+	float:left;
+	margin:0.3em;
+}
+
+.content_view_comment_username {
+	color:#0089CF;
+	font-weight:bold;
+}
+
+.content_view_comment_reply {
+	float:right;
+	font-weight:bold;
+	margin:0.3em 1em;
+}
+.content_view_comment_container_0 {
+    margin: 0 0 1em 0;
+}
+
+.content_view_comment_container_1 {
+    margin: 0 0 1em 2em;
+}
+
+.content_view_comment_container_2 {
+    margin: 0 0 1em 4em;
+}
+
+.content_view_comment_container_3 {
+    margin: 0 0 1em 6em;
+}
+
+.content_view_comment {
+	margin:0.3em 0 0 1em;
+}
+
+#content_view_comment_form_container {
+	margin:1em 0 0;
+}
+
+a#cancel_reply_link {
+	padding: 0;
+	float: right;
+	margin: 0;	
+}
+p#replying_to {
+	padding: 0 20px 0 0;
+	margin: 0;
+	float: right;
+}
+
+.content_view_comment_container_1 .content_view_comment_header, .content_view_comment_container_2 .content_view_comment_header, .content_view_comment_container_3 .content_view_comment_header {
+	background:#EEEEEE none repeat scroll 0 0;
+}
+
+.content_view_comment_header {
+	background:#CCCCCC none repeat scroll 0 0;
+	height:2em;
+}

@@ -114,6 +114,12 @@
         $linkedgroups = $grpHasGrpModel->getGroupGroups($grpId);
         $linkedgroups = array_merge($linkedgroups['parents'], $linkedgroups['childs']);
 
+        $comments = new Oibs_Controller_Plugin_Comments("group", $grpId);
+        if ($this->view->identity) $comments->allowComments(true);
+  		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+		$comments->loadComments();
+        
+		$this->view->comments		 = $comments;
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;

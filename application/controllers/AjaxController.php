@@ -387,4 +387,13 @@ class AjaxController extends Oibs_Controller_CustomController
 			$this->setOnline($auth->getIdentity()->user_id, 2);
 		}
 	}
+	
+	public function readAction() {
+		$url = $this->params['url'];
+		$this->_helper->viewRenderer->setNoRender(true);
+
+		$reader = new Oibs_Controller_Plugin_RssReader();
+		$data = $reader->read($url);
+		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data));
+	}
 }

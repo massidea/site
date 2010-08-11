@@ -3,10 +3,10 @@
 		        <div style="clear:both;"></div>
 				<div id="content_view_comment_form_container">
 					<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
-					<a href="#" id="cancel_reply_link" style="float: right; padding: 3px 0px 0px 0px; display: none;" onclick="javascript:cancelReply();return false;">
+					<a href="#" id="cancel_reply_link" style="display: none;" onclick="javascript:cancelReply();return false;">
 						<?php echo $this->translate('content-view-comment-cancel'); ?>
 					</a>
-					<p id="replying_to" style="float: right; padding: 3px 20px 0px 0px; display: none;">Replying to [username]</p>
+					<p id="replying_to" style="display: none;">Replying to [username]</p>
 					<div class="clear"></div>
 					<p><textarea id="commentTextarea" name="Comments"></textarea></p>
 					<input type="button" value="Post comment" id="commentPostButton"></input>

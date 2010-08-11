@@ -968,3 +968,14 @@ div.tag_view_search_title_links a:active {text-decoration: none; color: #0089CF;
 #commentTextarea {
 	width: 480px;
 }
+
+a#cancel_reply_link {
+	padding: 3px;
+	float: right;
+	margin: 0;	
+}
+p#replying_to {
+	padding: 3px 20px 0 0;
+	margin: 0;
+	float: right;
+}
