@@ -1307,6 +1307,7 @@ class AccountController extends Oibs_Controller_CustomController
         $topNames = null;
         $topList = null;
         $topCountry = null;
+        $topGroup = null;
         
         //This is code to fetch search results
         if($url != $this->_urlHelper->url()) {
@@ -1346,7 +1347,7 @@ class AccountController extends Oibs_Controller_CustomController
         	$cache = Zend_Registry::get('cache');
         	
         	$top = new Oibs_Controller_Plugin_Toplist_Users();
-        	
+
 			if(!$resultList = $cache->load('UserTopList')) {
 				
 				$top->setLimit(10)
@@ -1378,7 +1379,18 @@ class AccountController extends Oibs_Controller_CustomController
 				;
 			if($userid) $topListCountries->addUser($userid);
 			$topCountry = $topListCountries->getTopList();
-			        	
+
+			
+			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+			$topListGroups->fetchUsersInGroups()
+							->autoSet()
+							;
+							
+							
+			$topGroup = $topListGroups->getTopList();
+			//$test = new Oibs_Controller_Plugin_Toplist_Groups();
+			//$test->fetchUsersInGroups()->autoSet();die;
+			
         }
         
         if(!$topNames) {
@@ -1392,8 +1404,10 @@ class AccountController extends Oibs_Controller_CustomController
         
         $topListBoxes = array(
         	'Users' => $topList,
-        	'Countries' => $topCountry
+       		'Groups' => $topGroup,
+        	'Countries' => $topCountry,
         );
+        //print_r($topListBoxes);die;
       
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);

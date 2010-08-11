@@ -1423,7 +1423,7 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
                                       	'COUNT(profile_value_usp) AS value'))
                                       ->joinLeft(array('usc' => 'countries_ctr'),
                                       	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
-                                      	 array('countryName' => 'usc.printable_name_ctr'))
+                                      	 array('name' => 'usc.printable_name_ctr'))
                                       ->where('usp.public_usp = 1')
                                       ->where('usp.profile_key_usp = "country"')
                                       ->where('usp.profile_value_usp != "0"')

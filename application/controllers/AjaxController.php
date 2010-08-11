@@ -203,8 +203,8 @@ class AjaxController extends Oibs_Controller_CustomController
 		$params = $this->getRequest()->getParams();
 		$userModel = new Default_Model_User();
 		$userIds = $userModel->sortAndFilterUsers($params,null,null);
-		
 		if(!$userIds) die; 
+		
 		$top = new Oibs_Controller_Plugin_Toplist_Users();
 		$top->setUserIdList($userIds)
 			->autoSet();
@@ -222,11 +222,19 @@ class AjaxController extends Oibs_Controller_CustomController
 			;
 		if($userid) $topListCountries->addUser($userid);
 		$topCountry = $topListCountries->getTopList();
-		
-		
+
+		$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+		$topListGroups->setUserIdList($userIds)
+						->fetchUsersInGroups()
+						->autoSet()
+						;
+						
+						
+		$topGroup = $topListGroups->getTopList();
 		$topListBoxes = array(
         	'Users' => $topList,
-			'Countries' => $topCountry
+			'Groups' => $topGroup,
+			'Countries' => $topCountry,
         ); 
 	
 		$this->view->topListBoxes = $topListBoxes;
