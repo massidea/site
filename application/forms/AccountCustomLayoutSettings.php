@@ -52,16 +52,28 @@
 		$customfontsize->setLabel('Font Size')
 				   ->setAttrib('id', 'customfontsize')
 				   ->addMultiOptions(array('8', '10', '12', '14', '16'));
-				   
-		// Font color
-		//$customfontcolor = ...
-				   
+
+		$customsizeclear = new Oibs_Form_Element_Note('customsizeclear');
+        $customsizeclear->setValue('<div class="clear"></div>');
+		
+        // Font color
+		$customfontcolor = $openid = new Zend_Form_Element_Text('customfontcolor');
+        $customfontcolor->setLabel('Font Color')
+               ->setAttrib('id', 'customfontcolor')
+               ->setValue('#000000');
+        				   
 		// Add elements to form
-		$this->addElements(array($customfont, $clear, $customfontsize));
+		$this->addElements(array($customfont,
+								 $clear,
+								 $customfontsize,
+								 //$customsizeclear,
+								 $customfontcolor));
+		
 		
 		// Add decorators
 		$customfont->setDecorators(array('InputDecorator'));
 		$customfontsize->setDecorators(array('InputDecorator'));
+		$customfontcolor->setDecorators(array('ColorPickerDecorator'));
 		
 		$this->setDecorators(array(
             'FormElements',
