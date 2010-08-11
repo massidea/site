@@ -68,6 +68,10 @@ function expandText(key)
 	$(".biographyrow:eq("+key+")").html("<span>"+ biographyBody +"</span>");
 }
 
+$(document).ready(function() {
+	$('#picker').farbtastic('#customfontcolor');
+});
+
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php
