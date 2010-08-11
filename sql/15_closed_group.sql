@@ -22,8 +22,8 @@ UPDATE usr_groups_grp SET id_type_grp=1 WHERE id_type_grp=0;
 
 # Insert group types
 
-INSERT INTO group_types_gtp (id_gtp, key_gtp, type_name_gtp) VALUES (1, 'open_grp','Open group');
-INSERT INTO group_types_gtp (id_gtp, key_gtp, type_name_gtp) VALUES (2, 'closed_grp','Closed group');
+INSERT INTO group_types_gtp (id_gtp, key_gtp, name_gtp) VALUES (1, 'open_grp','Open group');
+INSERT INTO group_types_gtp (id_gtp, key_gtp, name_gtp) VALUES (2, 'closed_grp','Closed group');
 
 # User has group waiting
 
