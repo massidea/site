@@ -1396,6 +1396,7 @@ class AccountController extends Oibs_Controller_CustomController
 			$topListCities->fetchUsersWithCity()
 							->autoSet()
 							;
+			if($userid) $topListCities->addUser($userid);
 			$topCity = $topListCities->getTopList();
 			
         }

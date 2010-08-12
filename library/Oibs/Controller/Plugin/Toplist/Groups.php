@@ -10,7 +10,6 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 	public function __construct() {
 		parent::__construct();
 		$this->_usrHasGroupModel = new Default_Model_UserHasGroup();
-		$this->_groupsWithIds = $this->_usrHasGroupModel->getAllGroupsWithUsers();
 	}
 	
 	public function autoSet() {
@@ -25,13 +24,14 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 	}
 
 	public function fetchUsersInGroups() {
-		$this->_usersInGroups = $this->_usrHasGroupModel->getAllUsers();
+		$this->_usersInGroups = $this->_usrHasGroupModel->getAllUsers($this->_userList);
+		$this->_groupsWithIds = $this->_usrHasGroupModel->getAllGroupsWithUsers($this->_userList);
 		return $this;
 	}
 	
 	public function setTop($choice) {
 		try { $this->_initializeTop($choice); }
-		catch (Exception $e) { echo "Exception: ".$e->getMessage(); }
+		catch (Exception $e) { echo "Exception: ".$e->getMessage(); die; }
 	
 		try {
 			if(!empty($this->_usersInGroups)) {
@@ -70,6 +70,7 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 				}
 			}
 			$this->_topList[$choice] = $final;
+			
 			$this->_valueSort($this->_name,$choice);
 			$this->_cutToLimit($this->_name,$choice);
 			

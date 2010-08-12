@@ -43,7 +43,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 				$this->_addedUser[$name] = $user;
 			}
 		}
-		
+
 		return;
 	}
 	

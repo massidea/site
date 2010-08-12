@@ -234,8 +234,9 @@ class AjaxController extends Oibs_Controller_CustomController
 						->fetchUsersWithCity()
 						->autoSet()
 						;
+		if($userid) $topListCities->addUser($userid);
 		$topCity = $topListCities->getTopList();
-		
+				
 		$topListBoxes = array(
         	'Users' => $topList,
 			'Groups' => $topGroup,

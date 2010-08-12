@@ -19,6 +19,33 @@ class Oibs_Controller_Plugin_Toplist_Cities extends Oibs_Controller_Plugin_TopLi
 		
 		return $this;
 	}
+	
+	public function addUser($id) {
+		$this->_addUserRank($id);
+		$this->_addAddedUserToTop();
+		return $this;
+	}
+	
+	private function _addUserRank($id) {
+		if(!is_array($id)) $id = array($id);
+		
+		$user = $this->_intersectMergeArray($this->_userModel->getUserInfo($id),
+									$this->_userProfileModel->getUsersLocation($id));
+		$city = $user[0]['city'];
+		foreach($this->_topList as $name => $data) {
+			$value = array();
+			foreach($data[$this->_name] as $rank => $data) {
+				if(mb_strtolower($data['name']) == mb_strtolower($city)) { $value[] = array_merge($data,array('rank' => $rank)); break; }
+			}
+						
+			if(!empty($value)) {
+				$user = $this->_intersectMergeArray($user,$value);
+				$this->_addedUser[$name] = $user;
+			}
+		}
+
+		return;
+	}
 
 	public function fetchUsersWithCity() {
 		$this->_usersWithCity = $this->_userProfileModel->getUsersWithCity($this->_userList);

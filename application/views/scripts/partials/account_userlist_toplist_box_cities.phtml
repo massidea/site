@@ -15,7 +15,17 @@ $url_defaultImage = $this->url(array('controller' => 'account',
           'lang_default', true);
 
 $url_firstImage = $url_defaultImage;
-$onlist = true;
+
+$color = "";
+$colorFirst = "";
+$onlist = false;
+
+if($this->addedUsers[0]['rank'] < 10) {
+	if($this->addedUsers[0]['rank'] === 0) $colorFirst =  "color: red;";
+	$color = "color: red;";
+	$onlist = true;
+}
+
 ?>
 
 
@@ -27,7 +37,7 @@ $onlist = true;
 				
 				<div class="user_list_top_box_bottom">
 				<?php if($usersFound): ?>
-					<p><a href="<?php echo $url_userFirst; ?>" class="user_list_top_box_user" style="text-decoration: none; <?php //echo $colorFirst; ?>"><?php echo $this->cities[0]['name']; ?></a></p>
+					<p><a href="<?php echo $url_userFirst; ?>" class="user_list_top_box_user" style="text-decoration: none; <?php echo $colorFirst; ?>"><?php echo $this->cities[0]['name']; ?></a></p>
 					<p><span class="user_list_top_box_description"><?php echo $this->description; echo $this->cities[0]['value'] ?></span></p>
 					<div class="user_list_top_box_show_more"><a id="user_list_top_box_show_more_link_Cities<?php echo $this->name; ?>" href="#" onClick="return false;" style="text-decoration: none;"><img src="<?php echo $this->baseUrl('/images/arrow_down.png'); ?>"/></a></div>
 				<?php else: ?>
@@ -43,7 +53,7 @@ $onlist = true;
 					<?php if($i != 1): ?>
 					<div class="user_list_top_box_runnerups_line">
 						<span class="user_list_top_box_runnerups_rank"><?php echo $i ?>. </span>
-						<a href="<?php // ?>" class="user_list_top_box_runnerups_names" style="text-decoration: none; <?php //if($this->addedUsers[0]['rank'] == $i-1) echo $color; ?>">
+						<a href="<?php // ?>" class="user_list_top_box_runnerups_names" style="text-decoration: none; <?php if($this->addedUsers[0]['rank'] == $i-1) echo $color; ?>">
 							<?php echo $city['name']; ?></a>
 							<span class="user_list_top_box_runnerups_value"><?php echo $city['value']; ?></span>
 					</div>
