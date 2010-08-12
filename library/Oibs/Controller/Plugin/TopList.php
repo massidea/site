@@ -154,10 +154,10 @@ abstract class Oibs_Controller_Plugin_TopList {
 			$temp = $this->_topList[$choice][$list];
 			$this->_topList[$choice][$list] = array();
 			$i = 0;
-			foreach($temp as $iso => $data) {
+			foreach($temp as $key => $data) {
 				if($i >= $this->_limit) break;
 				$i++;
-				$this->_topList[$choice][$list][$iso] = $data;
+				$this->_topList[$choice][$list][$key] = $data;
 			}
 		}
 		return;

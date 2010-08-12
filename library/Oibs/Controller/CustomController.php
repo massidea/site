@@ -323,4 +323,13 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
     		$userList[$id]['browsers']--;
     	}
     }*/
+    
+    /**
+     * Multibyte uppercase first character function
+     * @param $string
+     */
+    function mb_ucfirst($string) {
+        $string = mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
+        return $string;
+    }
 } // end of class

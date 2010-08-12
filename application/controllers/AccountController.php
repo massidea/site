@@ -942,6 +942,7 @@ class AccountController extends Oibs_Controller_CustomController
         $action = $this->getRequest()->isPost() ? 'submit' : $this->getRequest()->getQuery('action');
         $submittedForm = $this->getRequest()->getPost('submittedform');
         $key = $this->getRequest()->getParam('key');
+        $error = null;
 
         /** check in what stage the process of password reset is
             (according to variables $action, $_POST['passwordgiven'] and $_GET['key']) **/
@@ -1308,6 +1309,7 @@ class AccountController extends Oibs_Controller_CustomController
         $topList = null;
         $topCountry = null;
         $topGroup = null;
+        $topCity = null;
         
         //This is code to fetch search results
         if($url != $this->_urlHelper->url()) {
@@ -1388,8 +1390,13 @@ class AccountController extends Oibs_Controller_CustomController
 							
 							
 			$topGroup = $topListGroups->getTopList();
-			//$test = new Oibs_Controller_Plugin_Toplist_Groups();
-			//$test->fetchUsersInGroups()->autoSet();die;
+			
+			
+			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+			$topListCities->fetchUsersWithCity()
+							->autoSet()
+							;
+			$topCity = $topListCities->getTopList();
 			
         }
         
@@ -1405,6 +1412,7 @@ class AccountController extends Oibs_Controller_CustomController
         $topListBoxes = array(
         	'Users' => $topList,
        		'Groups' => $topGroup,
+       		'Cities' => $topCity,
         	'Countries' => $topCountry,
         );
         //print_r($topListBoxes);die;

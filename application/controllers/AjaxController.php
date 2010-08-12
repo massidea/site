@@ -218,7 +218,6 @@ class AjaxController extends Oibs_Controller_CustomController
         	->fetchUserCountries()
         	->setTopAmount()
         	->autoSet()
-        	
 			;
 		if($userid) $topListCountries->addUser($userid);
 		$topCountry = $topListCountries->getTopList();
@@ -227,13 +226,20 @@ class AjaxController extends Oibs_Controller_CustomController
 		$topListGroups->setUserIdList($userIds)
 						->fetchUsersInGroups()
 						->autoSet()
-						;
-						
-						
+						;		
 		$topGroup = $topListGroups->getTopList();
+		
+		$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+		$topListCities->setUserIdList($userIds)
+						->fetchUsersWithCity()
+						->autoSet()
+						;
+		$topCity = $topListCities->getTopList();
+		
 		$topListBoxes = array(
         	'Users' => $topList,
 			'Groups' => $topGroup,
+			'Cities' => $topCity,
 			'Countries' => $topCountry,
         ); 
 	

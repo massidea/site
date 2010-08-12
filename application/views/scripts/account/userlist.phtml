@@ -110,7 +110,8 @@ var iconminus = "<?php echo $url_iconMinus; ?>";
     
     <?php if (!empty($this->userListData)):?>
     
-    <div id="user_list_top_list_show"><a id="user_list_top_list_link" href="#" onClick="return false;" style="text-decoration: none;"> <img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a><span> Toplist</span></div>
+    <div id="user_list_top_list_show"><a id="user_list_top_list_link" href="#" onClick="return false;" style="text-decoration: none;"> <img src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png'); ?>" /></a><span> View hall of fame of search results</span></div>
+    <div style="border-bottom:1px dotted #DDDDDD; padding-bottom:5px;"></div>
     
            <div class="user_list_top_list" style="display: none"></div>
             <?php if ($this->userCount > $this->count): ?>
