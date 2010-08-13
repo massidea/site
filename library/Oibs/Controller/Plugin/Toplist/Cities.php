@@ -52,6 +52,22 @@ class Oibs_Controller_Plugin_Toplist_Cities extends Oibs_Controller_Plugin_TopLi
 		return $this;
 	}
 	
+	public function setTopAmount() {
+		$choice = "Amount";
+
+		$cities = array_values($this->_userProfileModel->getCityAmounts($this->_userList));
+		
+		$this->_topList[$choice][$this->_name] = $cities;
+		$this->_topList[$choice]['name'] = $choice;
+		$this->_cutToLimit($this->_name,$choice);
+		
+		foreach($this->_topList[$choice][$this->_name] as $key => $city) {
+			$this->_topList[$choice][$this->_name][$key]['name'] = mb_convert_case($this->_topList[$choice][$this->_name][$key]['name'], MB_CASE_TITLE, "UTF-8");
+		}
+		
+		return $this;
+	}
+	
 	public function setTop($choice) {
 		try { $this->_initializeTop($choice); }
 		catch (Exception $e) { echo "Exception: ".$e->getMessage(); }

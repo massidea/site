@@ -1394,6 +1394,7 @@ class AccountController extends Oibs_Controller_CustomController
 			
 			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
 			$topListCities->fetchUsersWithCity()
+			->setTopAmount()
 							->autoSet()
 							;
 			if($userid) $topListCities->addUser($userid);

@@ -187,5 +187,23 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
     	return $result;
     }
     
+    public function getGroupAmounts($userIdList = null) {
+    	$select = $this->_db->select()
+    						->from(array('uhg' => 'usr_has_grp'),
+    							array('id' => 'uhg.id_grp',
+    									'value' => 'COUNT(uhg.id_grp)'))
+    						->joinLeft(array('ugg' => 'usr_groups_grp'),
+    							'ugg.id_grp = uhg.id_grp',
+    							array('name' => 'ugg.group_name_grp'))
+    						->group('uhg.id_grp')
+    						->order('value desc')
+    						->order('name')
+    						;
+    						if(isset($userIdList)) $select->where('id_usr IN (?)',$userIdList);
+    						
+    	$result = $this->_db->fetchAll($select);
+    	return $result;
+    }
+    
 } // end of class
 ?>

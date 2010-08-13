@@ -35,6 +35,10 @@ h3.recent_posts{
 	color: #C0C0C0;
 }
 
+h3.recent_posts a {
+	text-decoration: none;
+}
+
 h3{
 	padding: 0px;
 	margin-top: 0px;

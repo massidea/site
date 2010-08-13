@@ -29,6 +29,18 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 		return $this;
 	}
 	
+	public function setTopAmount() {
+		$choice = "Amount";
+
+		$groups = $this->_usrHasGroupModel->getGroupAmounts($this->_userList);
+
+		$this->_topList[$choice][$this->_name] = $groups;
+		$this->_topList[$choice]['name'] = $choice;
+		$this->_cutToLimit($this->_name,$choice);
+				
+		return $this;
+	}	
+	
 	public function setTop($choice) {
 		try { $this->_initializeTop($choice); }
 		catch (Exception $e) { echo "Exception: ".$e->getMessage(); die; }
