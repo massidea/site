@@ -1385,6 +1385,7 @@ class AccountController extends Oibs_Controller_CustomController
 			
 			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
 			$topListGroups->fetchUsersInGroups()
+			->setTopAmount()
 							->autoSet()
 							;
 							
