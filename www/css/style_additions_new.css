@@ -184,6 +184,10 @@ div.user_summary_list_without_stats{
 #content #add-content-page #Createacampaign .input-column-website3 input,
 #content #add-content-page #add_group_form .input-column-website3 input { width:120px; }
 
+#content #add-content-page #Createacampaign #campaign_start,
+#content #add-content-page #Createacampaign #campaign_end { width: 328px; }
+#content #add-content-page #Createacampaign .ui-datepicker-trigger { margin: 2px 0 2px 2px; }
+
 
 .linking {
     float: left;

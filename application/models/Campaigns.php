@@ -118,15 +118,29 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $row->description_cmp = $desc;
 
         // MM/DD/YYYY -> YYYY-MM-DD
-        if (isset($start)) {
+        // If start day is empty: set current day
+        /*
+        if (isset($start) && !empty($start)) {
             $start = explode('/', $start);
             $start = implode('-', array($start[2], $start[0], $start[1]));
         } else {
             $start = date("Y-m-d", time());
         }
-        $end = explode('/', $end);
-        $end = implode('-', array($end[2], $end[0], $end[1]));
-
+        // If end day is empty: set 0000-00-00 day, this means campaign stays open always
+        if (isset($end) && !empty($end)) {
+            $end = explode('/', $end);
+            $end = implode('-', array($end[2], $end[0], $end[1]));
+        } else {
+            $end = "0000-00-00";
+        }
+        */
+        if (!isset($start) || empty($start)) {
+            $start = date("Y-m-d", time());
+        }
+        // If end day is empty: set 0000-00-00 day, this means campaign stays open always
+        if (!isset($end) || empty($end)) {
+            $end = "0000-00-00";
+        }
 
         $row->start_time_cmp = $start;
         $row->end_time_cmp = $end;
@@ -171,15 +185,26 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
      * Gets the specified number of the most recently created campaigns.
      *
      * @param int $limit
+     * @param boolean $onlyOpen
      * @return array
      */
-    public function getRecent($limit)
+    public function getRecent($limit, $onlyOpen=true)
     {
         if (!isset($limit)) $limit = 10;
 
-        $select = $this->select()
-                ->order('id_cmp DESC')
-                ->limit($limit);
+        if ($onlyOpen) {
+            $thisDay = date("Y-m-d", time());
+            $select = $this->select()
+                    ->where('start_time_cmp <= ?', $thisDay)
+                    ->where('end_time_cmp >= ? OR end_time_cmp = 0000-00-00', $thisDay)
+                    ->order('id_cmp DESC')
+                    ->limit($limit);
+        } else {
+            $select = $this->select()
+                    ->order('id_cmp DESC')
+                    ->limit($limit);
+        }
+
         return $this->fetchAll($select)->toArray();
     }
 
@@ -191,12 +216,23 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
      *
      * @param int $page
      * @param int $count
+     * @param boolean $onlyOpen
      */
-    public function getRecentFromOffset($page, $count)
+    public function getRecentFromOffset($page, $count, $onlyOpen=true)
     {
-        $select = $this->select()
-                ->order('id_cmp DESC')
-                ->limitPage($page, $count);
+        if ($onlyOpen) {
+            $thisDay = date("Y-m-d", time());
+            $select = $this->select()
+                    ->where('start_time_cmp <= ?', $thisDay)
+                    ->where('end_time_cmp >= ? OR end_time_cmp = 0000-00-00', $thisDay)
+                    ->order('id_cmp DESC')
+                    ->limitPage($page, $count);
+        } else {
+            $select = $this->select()
+                    ->order('id_cmp DESC')
+                    ->limitPage($page, $count);
+        }
+
         return $this->fetchAll($select)->toArray();
     }
     
@@ -276,6 +312,95 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         }
 
         return $result;
+    }
+
+    /**
+     * isOpen - Check if campaign is open
+     *
+     * @author Mikko Korpinen
+     * @param int $id_cmp
+     * @return boolean
+     */
+    public function isOpen($id_cmp)
+    {
+        $thisDate = date("Y-m-d", time());
+        $thisDate = new Zend_Date($thisDate, Zend_Date::ISO_8601);
+
+        $select = $this->select()
+                       ->where('id_cmp = ?', $id_cmp)
+                       ->limit(1);
+
+        $row = $this->fetchAll($select)->current();
+
+        $startDate = $row['start_time_cmp'];
+        $startDate = new Zend_Date($startDate, Zend_Date::ISO_8601);
+        $startDate->subDay(1);
+        $endDate = $row['end_time_cmp'];
+        if ($endDate === '0000-00-00') {
+            if ($thisDate->compare($startDate) == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            $endDate = new Zend_Date($endDate, Zend_Date::ISO_8601);
+            $endDate->addDay(1);
+
+            if ($thisDate->compare($startDate) == 1 && $thisDate->compare($endDate) == -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * getStatus - Check if campaign is open, closed or not started
+     *
+     * @author Mikko Korpinen
+     * @param int $id_cmp
+     * @return string
+     */
+    public function getStatus($id_cmp)
+    {
+        $notStarted = "not_started";
+        $open = "open";
+        $closed = "ended";
+
+        $thisDate =  date("Y-m-d", time());
+        $thisDate = new Zend_Date($thisDate, Zend_Date::ISO_8601);
+
+        $select = $this->select()
+                       ->where('id_cmp = ?', $id_cmp)
+                       ->limit(1);
+
+        $row = $this->fetchAll($select)->current();
+
+        $startDate = $row['start_time_cmp'];
+        $startDate = new Zend_Date($startDate, Zend_Date::ISO_8601);
+        $startDate->subDay(1);
+        $endDate = $row['end_time_cmp'];
+        if ($endDate === '0000-00-00') {
+            if ($thisDate->compare($startDate) == 1) {
+                return $open;
+            } else {
+                return $notStarted;
+            }
+        } else {
+            $endDate = new Zend_Date($endDate, Zend_Date::ISO_8601);
+            $endDate->addDay(1);
+
+            if ($thisDate->compare($startDate) == 1 && $thisDate->compare($endDate) == -1) {
+                return $open;
+            } else {
+                $startDate->addDay(1);
+                if ($thisDate->compare($startDate) == -1) {
+                    return $notStarted;
+                } else {
+                    return $closed;
+                }
+            }
+        }
     }
 
 } // end of class

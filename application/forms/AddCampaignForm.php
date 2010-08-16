@@ -128,11 +128,11 @@ class Default_Form_AddCampaignForm extends Zend_Form
         $campaignstart
             ->setAttrib('id', 'campaign_start')
             ->setAttrib('name', 'campaign_start')
-            ->setLabel('Start date')
-            ->setRequired(true)
+            ->setLabel('Start date (empty means current day)')
+            //->setRequired(true)
             ->setAttrib('invalidMessage', 'Invalid date specified')
             ->setAttrib('formalLength', 'long')
-            ->setValidators(array(new Zend_Validate_Date('campaign_start')))
+            ->setValidators(array(new Zend_Validate_Date('yyyy-MM-dd')))
             ->setDecorators(array('FieldDecorator'));
         
         $campaignstart_clear = new Oibs_Form_Element_Note('campaignstart_clear');
@@ -140,15 +140,19 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setValue($clear)
             ->setDecorators(array('ViewHelper'));
 
+        //$validator = new Zend_Validate_Date('yyyy-MM-dd');
         // End date
         $campaignend = new Zend_Form_Element_Text('campaign_end');
         $campaignend
             ->setAttrib('id', 'campaign_end')
-            ->setLabel('End date')
-            ->setRequired(true)
+            ->setLabel('End date (empty means permanent campaign)')
+            //->setRequired(true)
             ->setAttrib('invalidMessage', 'Invalid date specified')
             ->setAttrib('formalLength', 'long')
-            ->setValidators(array(new Zend_Validate_Date('campaign_end')))
+            ->setValidators(array(
+                //$validator('campaign_end'),
+                new Zend_Validate_Date('yyyy-MM-dd'),
+                new Oibs_Validators_EnddateValidator('campaign_start')))
             ->setDecorators(array('FieldDecorator'));
         
         $campaignend_clear = new Oibs_Form_Element_Note('campaignend_clear');
@@ -294,10 +298,10 @@ class Default_Form_AddCampaignForm extends Zend_Form
             $campaigningress_clear,
             $campaigndesc,
             $campaigndesc_clear,
-//            $campaignstart,
-//            $campaignstart_clear,
-//            $campaignend,
-//            $campaignend_clear,
+            $campaignstart,
+            $campaignstart_clear,
+            $campaignend,
+            $campaignend_clear,
             $weblinks_websites,
             $weblinks_name,
             $weblinks_url,

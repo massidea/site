@@ -47,7 +47,6 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             </strong><?php // t�git t�h�n v�liin ?>
         </p>
         -->
-        <!--
         <p>
             <strong>Campaign has started: </strong>
             <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
@@ -56,7 +55,6 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <strong>Campaign is ending: </strong>
             <?php echo $cmpend; ?>
         </p>
-        -->
         <?php if (is_array($this->cmpAdmins)): ?>
         <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
             <ul>
@@ -190,19 +188,24 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <div class="clear"></div>
             <div id="contribute">
                 <?php if ($this->identity == true) : ?>
-                <h2>I want to contribute:</h2>
-
-                <div class="right">
-                    <p class="link">
-                    <?php
-                    if ($this->userHasGroup):
-                    ?>
-                        <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+                    <?php if ($this->status === 'open') : ?>
+                    <h2>I want to contribute:</h2>
+                    <div class="right">
+                        <p class="link">
+                        <?php
+                        if ($this->userHasGroup):
+                        ?>
+                            <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+                        <?php endif; ?>
+                        </p>
+                        <!--<p>If you add content, you'll become a group member</p> -->
+                    </div>
+                    <?php elseif ($this->status === 'not_started') : ?>
+                    <h2>Campaign has not started</h2>
+                    <?php elseif ($this->status === 'ended') : ?>
+                    <h2>Campaign has been closed</h2>
                     <?php endif; ?>
-                    </p>
-                    <!--<p>If you add content, you'll become a group member</p> -->
-               </div>
-               <?php endif; ?>
+                <?php endif; ?>
                 <div class="clear"></div>
                 <div id="current-posts">
                     <div id="head">
