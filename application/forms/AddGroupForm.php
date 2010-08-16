@@ -73,6 +73,22 @@ class Default_Form_AddGroupForm extends Zend_Form
             ->setValue($clear)
             ->setDecorators(array('ViewHelper'));
 
+        // Group type
+        $groupTypes_model = new Default_Model_GroupTypes();
+        $groupTypes = $groupTypes_model->getAllTypes();
+        $grouptype = new Zend_Form_Element_Select('grouptype');
+        $grouptype->setLabel('Type')
+                  ->setAttrib('id', 'grouptype');
+        foreach ($groupTypes as $type) {
+            $grouptype->addMultiOption($type['id_gtp'], $type['name_gtp']);
+        }
+        $grouptype->setDecorators(array('FieldDecorator'));
+
+        $grouptype_clear = new Oibs_Form_Element_Note('grouptype_clear');
+        $grouptype_clear
+            ->setValue($clear)
+            ->setDecorators(array('ViewHelper'));
+
         // Lead paragraph (description)
         $groupdesc = new Zend_Form_Element_Textarea('groupdesc');
         $groupdesc
@@ -257,6 +273,8 @@ class Default_Form_AddGroupForm extends Zend_Form
         $this->addElements(array(
             $groupname,
             $groupname_clear,
+            $grouptype,
+            $grouptype_clear,
             $groupdesc,
             $groupdesc_clear,
             $groupbody,

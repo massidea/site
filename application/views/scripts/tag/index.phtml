@@ -11,7 +11,7 @@
 ?>
 
 <div id="tag_cloud_container">
-    <div class="tag_list_type_row">
+    <div id="tag_list_type_row">
         <?php
 			$cloud = '<a href="' . $this->url(array('list_type' => 'cloud')) . '">' . $this->translate('tag-cloud').'</a>';
 			$index = '<a href="' . $this->url(array('list_type' => 'index')) . '">' . $this->translate('tag-index').'</a>';
@@ -21,37 +21,41 @@
             echo '<h3 style="padding: 0px; margin: 0px;">' . $cloud . $divider . $index . '</h3>';
             ?>
     </div>
+    
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
-    <div class="tag_alphanum_row" style="padding-top:5px;">
-    <?php
-    // ignoring case, LIKE() is case insensitive
-    $chars = array('All','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','Å','Ä','Ö','#');
     
-    foreach ($chars as $char) {
-        if ($where != $char && $char != "#" && $char != 'all' && $char != 'All') {
-            echo '<a href="' . $this->url(array('where' => $char)) . '">' . $char.'</a>';
-            
-        } else if ($char == "#" && $where != 'other') {
-            echo '<a href="' . $this->url(array('where' => 'other')) . '">#</a>';
-        } else if ($where == 'other') {
-            echo '<font style="font-weight:bold;">#</font>';
-        } else if ($char == 'All' && $where == 'All') {
-            echo '<font style="font-weight:bold;">'.$this->translate('tag-all').'</font>';
-        } else if ($char == 'All' && $where != 'All') {
-        	echo '<a href="' . $this->url(array('where' => $char)) . '">' . $this->translate('tag-all') .'</a>';
-        } else {
-        	echo '<font style="font-weight:bold;">'.$char.'</font>';
-        }
-        if ($char != '#') echo $divider;
-    }
-    
-    ?>
+    <div class="tag_alphanum_row">
+    	<?php
+	    // ignoring case, LIKE() is case insensitive
+	    $chars = array('All','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','Å','Ä','Ö','#');
+	    
+	    foreach ($chars as $char) {
+	        if ($where != $char && $char != "#" && $char != 'all' && $char != 'All') {
+	            echo '<a href="' . $this->url(array('where' => $char)) . '">' . $char.'</a>';
+	            
+	        } else if ($char == "#" && $where != 'other') {
+	            echo '<a href="' . $this->url(array('where' => 'other')) . '">#</a>';
+	        } else if ($where == 'other') {
+	            echo '<font style="font-weight:bold;">#</font>';
+	        } else if ($char == 'All' && $where == 'All') {
+	            echo '<font style="font-weight:bold;">'.$this->translate('tag-all').'</font>';
+	        } else if ($char == 'All' && $where != 'All') {
+	        	echo '<a href="' . $this->url(array('where' => $char)) . '">' . $this->translate('tag-all') .'</a>';
+	        } else {
+	        	echo '<font style="font-weight:bold;">'.$char.'</font>';
+	        }
+	        if ($char != '#') echo $divider;
+	    }
+	    
+	    ?>
     </div>
+    
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
-    <div class="tag_filters_row" style="padding-top:5px;">
-        <div class="tag_filters_left" style="float:left;">
+
+    <div class="tag_filters_row">
+        <div class="tag_filters_left">
             <?php
-            $pre = $this->translate('tag-show')." ";
+            $pre = "<b>".$this->translate('tag-show')."</b>"." ";
 			$all = '<a href="' . $this->url(array('ctype' => 'all')) . '">' . $this->translate('tag-all').'</a>';
             $problem = '<a href="' . $this->url(array('ctype' => 'problem')) . '">' . $this->translate('tag-problem').'</a>';
             $futureinfo = '<a href="' . $this->url(array('ctype' => 'futureinfo')) . '">' . $this->translate('tag-futureinfo').'</a>';
@@ -81,7 +85,7 @@
             ?>
         </div> <div class="tag_filters_right" style="float: right;">
             <?php
-            $pre = $this->translate('tag-sort').": ";
+            $pre = "<b>".$this->translate('tag-sort')."</b>".": ";
             $name = '<a href="' . $this->url(array('order' => 'name', 'direction' => 'desc')) . '">' . $this->translate('tag-name').'</a> 
                      <a href="' . $this->url(array('order' => 'name', 'direction' => 'desc')) . '"><img src="'.$baseUrl.'/images/icon_desc_enabled.png" title="desc" alt="desc"></a>
                      <a href="' . $this->url(array('order' => 'name', 'direction' => 'asc')) . '"><img src="'.$baseUrl.'/images/icon_asc_enabled.png" title="asc" alt="asc"></a>'; 
@@ -140,21 +144,21 @@
                             'lang_default', true);
                             
             if ($list_type == 'cloud') {
-                $size = $tag['tag_size'];
-                if($tag['divisible']) {
-                	echo ' <a href="'.$url.'" style="font-size:'.$size.'%"><span class="first_tag">'.stripslashes($tag['name_tag']).'</span></a>';
-                } else {
-                	echo ' <a href="'.$url.'" style="font-size:'.$size.'%"><span class="second_tag">'.stripslashes($tag['name_tag']).'</span></a>';
-                }
-            } else if ($list_type == 'index') {
-                if ($i == $limiter && $col <= 1) {              // max 3 cols!
-                    echo '</div>';                              // this div is full, move to next
-                    echo '<div class="tag_index_col_'.$i.'" style="text-align: left; width: 225px; float:left; margin-left: 22px;">';  // move to next column
-                    $i = 0;
-                    $col++;
-                }
-                $i++;
-                echo ' <a href="'.$url.'">'.stripslashes($tag['name_tag']).' (' . $tag['count'] . ')</a><br />';
+	                    $size = $tag['tag_size'];
+	                    if($tag['divisible']) {
+	                    	echo ' <a href="'.$url.'" style="font-size:'.$size.'%"><span class="first_tag">'.stripslashes($tag['name_tag']).'</span></a>';
+	                    } else {
+	                    	echo ' <a href="'.$url.'" style="font-size:'.$size.'%"><span class="second_tag">'.stripslashes($tag['name_tag']).'</span></a>';
+	                    }
+	                } else if ($list_type == 'index') {
+	                    if ($i == $limiter && $col <= 1) {              // max 3 cols!
+	                        echo '</div>';                              // this div is full, move to next
+	                        echo '<div class="tag_index_col_'.$i.'" style="text-align: left; width: 225px; float:left; margin-left: 22px;">';  // move to next column
+	                        $i = 0;
+	                        $col++;
+	                    }
+	                    $i++;
+	                    echo ' <a href="'.$url.'">'.stripslashes($tag['name_tag']).' (' . $tag['count'] . ')</a><br />';
             }
         }
     ?>
@@ -166,5 +170,5 @@
         }
         ?></div>
 	</div>
-    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
 </div>
+

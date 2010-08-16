@@ -246,7 +246,14 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmpHasCmpModel = new Default_Model_CampaignHasCampaign();
         $linkedcampaigns = $cmpHasCmpModel->getCampaignCampaigns($cmpid);
         $linkedcampaigns = array_merge($linkedcampaigns['parents'], $linkedcampaigns['childs']);
+        
 
+        $comments = new Oibs_Controller_Plugin_Comments("campaign", $cmpid);
+        if ($this->view->identity) $comments->allowComments(true);
+  		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+		$comments->loadComments();
+        
+		$this->view->comments		 = $comments;
         $this->view->campaign        = $cmp;
         $this->view->cmpcnts         = $cnts;
         $this->view->grpname         = $grpname;
@@ -672,7 +679,7 @@ class CampaignController extends Oibs_Controller_CustomController
             $groupAdmins = $groupAdminsModel->getGroupAdmins($groupId);
             $user = $auth->getIdentity();
 
-            if (!$groupAdminsModel->userIsAdmin($relatestoid, $user->user_id)) {
+            if (!$groupAdminsModel->userIsAdmin($groupId, $user->user_id)) {
                 $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
@@ -687,10 +694,24 @@ class CampaignController extends Oibs_Controller_CustomController
                 $relatesToCampaign = $campaignModel->getCampaignById($relatestoid);
                 $this->view->relatesToCampaignName = $relatesToCampaign['name_cmp'];
 				$campaignContents = $campaignModel->getAllContentsInCampaign($relatestoid);
+                $campaignFlagContents = array();
+                $campaignNormalContents = array();
+                $contentflagmodel = new Default_Model_ContentFlags();
+                // Check if content is flaged
+                foreach ($campaignContents as $content) {
+                    $cfl_ids = $contentflagmodel->getFlagsByContentId($content['id_cnt']);
+                    if (!empty($cfl_ids)) {
+                        $campaignFlagContents[] = $content;
+                    } else {
+                        $campaignNormalContents[] = $content;
+                    }
+                }
+
             }
             $this->view->campaignexists = $campaignexists;
             $this->view->relatesToId = $relatestoid;
-            $this->view->contents = $campaignContents;
+            $this->view->contents = $campaignNormalContents;
+            $this->view->flagcontents = $campaignFlagContents;
             $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($groupAdmins, 'id_usr', $user->user_id);
 		} else {
 			// If not logged, redirecting to system message page
@@ -793,18 +814,87 @@ class CampaignController extends Oibs_Controller_CustomController
                 $this->_redirector($redirectUrl);
             }
 
+            $cntHasUsrModel = new Default_Model_ContentHasUser();
+
+            $usrId = $auth->getIdentity()->user_id;
+            if (!$cntHasUsrModel->contentHasOwner($usrId, $cntId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'account',
+                                                            'action' => 'view',
+                                                            'user' => $auth->getIdentity()->username,
+                                                            'language' => $this->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
             $cmphascntmodel = new Default_Model_CampaignHasContent();
             $cmphascntmodel->removeContentFromCampaign($cmpId, $cntId);
 
+            // TODO:
+            // Tell the user that the unlink was created.
+
+            // Redirect back to the user page
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'account',
+                                                        'action' => 'view',
+                                                        'user' => $auth->getIdentity()->username,
+                                                        'language' => $this->language),
+                                                  'lang_default', true);
+            $this->_redirector->gotoUrl($redirectUrl);
+        } else {
+            // If not logged, redirecting to system message page
+			$message = 'content-link-not-logged';
+
+			$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
+                                          'lang_default', true);
+			$this->flash($message, $url);
+        }
+    }
+
+    /**
+     * removeadminlinkAction
+     *
+     * Remove link to content from campaign
+     *
+     * @author Mikko Korpinen
+     */
+    public function removeadminlinksAction()
+    {
+        // Get authentication
+		$auth = Zend_Auth::getInstance();
+		// If user has identity
+		if ($auth->hasIdentity())
+		{
+            $cmpId = $this->_request->getParam('cmpid');
+            $this->view->cmpid = $cmpId;
+
+            $cntId = $this->_request->getParam('cntid');
+            $this->view->cntid = $cntId;
+
+            if (!((isset($cmpId)) && (isset($cntId)))) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector($redirectUrl);
+            }
+
+            $cmpModel = new Default_Model_Campaigns();
+            $cmp = $cmpModel->getCampaignById($cmpId);
+            $grpId = $cmp['id_grp_cmp'];
+
             $usrId = $auth->getIdentity()->user_id;
             $grpadminmodel = new Default_Model_GroupAdmins();
-            if (!$grpadminmodel->userIsAdmin($cmpId, $usrId)) {
+            if (!$grpadminmodel->userIsAdmin($grpId, $usrId)) {
                 $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
                 $this->_redirector->gotoUrl($redirectUrl);
             }
+
+            $cmphascntmodel = new Default_Model_CampaignHasContent();
+            $cmphascntmodel->removeContentFromCampaign($cmpId, $cntId);
 
             // TODO:
             // Tell the user that the unlink was created.
@@ -850,9 +940,13 @@ class CampaignController extends Oibs_Controller_CustomController
                 $this->_redirector($redirectUrl);
             }
 
+            $cmpModel = new Default_Model_Campaigns();
+            $cmp = $cmpModel->getCampaignById($parentCmpId);
+            $grpId = $cmp['id_grp_cmp'];
+
             $usrId = $auth->getIdentity()->user_id;
             $grpadminmodel = new Default_Model_GroupAdmins();
-            if (!$grpadminmodel->userIsAdmin($parentCmpId, $usrId)) {
+            if (!$grpadminmodel->userIsAdmin($grpId, $usrId)) {
                 $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
                                                             'action' => 'index',
                                                             'language' => $this->view->language),

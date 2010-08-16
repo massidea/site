@@ -18,11 +18,13 @@ echo $this->doctype();
     
     <?php
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/style.css'));
+	$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css'));
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie8_fix.css'), 'screen', 'IE 8');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix.css'), 'screen', 'IE 6');
     //$this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('/css/custom-theme/jquery-ui-1.8.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/farbtastic.css'));		// Used for farbtastic custom color picker
 	
     $this->headlink()->headLink(array(
         'rel' => 'shortcut icon',
@@ -46,6 +48,7 @@ echo $this->doctype();
     $this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
     $this->headScript()->prependFile('http://maps.google.com/jsapi');
 
     echo $this->headLink();
@@ -258,15 +261,22 @@ echo $this->doctype();
 					<div style="clear: both;"></div>
 				</div>
                 
+                <!-- Layout selector -->
+				<div class="top_row_center_right_layout">
+					<div class="top_row_center_right_selection_text">Layout: </div>
+					<?php //echo $layoutForm = new Default_Form_AccountCustomLayout(); ?>
+				</div>
+				
                 <!-- Language selector -->
 				<div class="top_row_center_right_language">
+
 		            <?php
 		            $languages = new Default_Model_Languages();
 		            $allLanguages = $languages->getAllNamesAndCodes();
 		            echo $translationForm = new Default_Form_ChangeTranslationLanguageForm($allLanguages);
 		            ?>
 				</div>
-                
+				
 			</div>
 			
 			<!-- Resets the floating row -->
@@ -635,7 +645,7 @@ echo $this->doctype();
         </div>
     </div>
     
-    <div id="jsmetabox">
+    <div id="jsmetabox" style="display:none;">
     	<?php echo $this->jsmetabox->output(); ?>
     </div>
 </body>

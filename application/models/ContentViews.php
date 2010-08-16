@@ -203,5 +203,21 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     	$contentModel = new Default_Model_Content();
     	return $contentModel->getContentRows($rowset->toArray(), 'id_cnt_vws', true);
     }
+    
+    public function getContentViewers($id_cnt, $limit = 10) {
+    	$select = $this->select()->from($this, 'id_usr_vws')
+    							 ->where('id_cnt_vws = ?', $id_cnt)
+    							 ->where('id_usr_vws != 0')
+    							 ->limit($limit);
+    							 
+    	$rowset = $this->fetchAll($select);
+    	
+    	$results = array();
+    	
+    	foreach ($rowset as $row) {
+    		$results[] = $row->id_usr_vws;
+    	}
+    	return $results;
+    }
 } // end of class
 ?>

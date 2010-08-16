@@ -684,7 +684,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $data[0];
     }
     
-    /*
+    /**
     *   getUserListing
     *
     *   Gets user listing with filtering options.
@@ -700,7 +700,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		if(!$list) $list = 'ASC';
 		
 		//Get full sorted and filtered userIdList
-    	$userIdList = $this->sortAndFilterUsers(&$filter, $order, $list);
+    	$userIdList = $this->sortAndFilterUsers($filter, $order, $list);
     	$listSize = sizeof($userIdList);
     	
     	if($listSize == 0) return array(); //If list size is 0, we just return
@@ -710,7 +710,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	$i = ($page-1)*$count;
     	$limit = $i+$count;
     	for($i; $i < $limit; $i++) {
-    		if(!$userIdList[$i]) break;
+    		if(!isset($userIdList[$i])) break;
     		$userIdListCut[] = $userIdList[$i];
     	}
     	
@@ -722,7 +722,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     	//Add these contents to $userData array in which we collect data (if user doesnt have content we add empty array)
     	foreach($userData as $key => $data) {
-    		 if (!$userContents[$data['id_usr']])
+    		 if (!isset($userContents[$data['id_usr']]))
     		 	 $userContents[$data['id_usr']] = array();
     		 $userData[$key]['contents'] = $userContents[$data['id_usr']];
     		 
@@ -739,7 +739,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	$userData = $this->intersectMergeArray($userData,$userRatings);
     	
     	//Get location info
-    	$userLocations = $this->getUsersLocation($userIdList);
+    	$profileModel = new Default_Model_UserProfiles();
+    	$userLocations = $profileModel->getUsersLocation($userIdList);
     	$userData = $this->intersectMergeArray($userData,$userLocations);
     	
     	//Finally we sort the $userData array to same order as our $userIdList
@@ -756,7 +757,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $final;
     }
     
-    /*
+    /**
      * sortAndFilterUsers
      * 
      * Sort and Filter Users
@@ -782,7 +783,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		
         $groupName = "";
         foreach($orderGroups as $key => $group) {
-        	if($group[$order]) {
+        	if(isset($group[$order])) {
         		$groupName = $key;
         	}
         }
@@ -793,37 +794,37 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $select = $this->select()->from($this, 'id_usr')
                                  ->order('id_usr');
                                  
-	        if($filter['city'] != "")
+	        if(isset($filter['city']) && $filter['city'] != "")
 	          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
 	
-	        if($filter['username'] != "")
+	        if(isset($filter['username']) && $filter['username'] != "")
 	          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
 	          
-	        if($filter['country'] != "0")
+	        if(isset($filter['country']) && $filter['country'] != "0")
 	          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
 	        
-	        if($filter['group'] != "")
+	        if(isset($filter['group']) && $filter['group'] != "")
 	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
-	                                 
-        $result = $this->_db->fetchAll($select);
 
-        if(!$result) return array();
-        
-        $userIDList = $this->simplifyArray($result,'id_usr');
-        $output = $userIDList;
+	    if(!$order && !$list) {
+	         $result = $this->_db->fetchAll($select);         
+	         if(!$result) return array();
+	         $output = $this->simplifyArray($result,'id_usr');
+        }
+        else $output = array();
         
         if($groupName == "userInfo")
-       		$output = $this->sortByUserInfo($userIDList, $sort, $list);
+       		$output = $this->sortByUserInfo($select, $sort, $list);
         elseif($groupName == "contentInfo")
-        	$output = $this->sortUsersByContentInfo($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByContentInfo($select, $sort, $list, null);
         elseif($groupName == "contentViews")
-        	$output = $this->sortUsersByViews($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByViews($select, $sort, $list, null);
         elseif($groupName == "contentRatings")
-        	$output = $this->sortUsersByRating($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByRating($select, $sort, $list, null);
         elseif($groupName == "contentPopularity")
-        	$output = $this->sortUsersByPopularity($userIDList, $sort, $list, null);	
+        	$output = $this->sortUsersByPopularity($select, $sort, $list, null);	
         elseif($groupName == "contentComments")	
-        	$output = $this->sortUsersByComments($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByComments($select, $sort, $list, null);
         	
         return $output;
         
@@ -899,7 +900,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	return $final;
     }   
     
-    /*
+    /**
      * getUserIds
      * 
      * This function retrieves all user ID:s
@@ -913,81 +914,23 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr');
         return $result;
     } 
-    
-    public function getUsersWithCountry($userIdList) {
-    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
-    									array('id_usr' => 'id_usr_usp'))
-    								->joinLeft(array('usc' => 'countries_ctr'),
-                                      			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
-                                      			 array('countryName' => 'usc.printable_name_ctr',
-                                      			 	   'countryIso' => 'usc.iso_ctr'))
-	    							->where('profile_key_usp = ?','country')
-	    							->where('public_usp = ?','1')
-	    							->where('id_usr_usp IN (?)', $userIdList)
-	    							->where('usp.profile_value_usp != ?',"0")
-	    							->order('id_usr')
-    							;
-				
-        $result = $this->_db->fetchAssoc($select); 
-		return $result;
-    }
-    
-    /*
-     * getUsersLocation
+
+    /**
+     * getUserIdSearch
      * 
-     * Gets users locations (city and country)
+     * This function give SQL query to get all user IDs
      * 
-     * @param array $userIdList
-     * @return array $list
+     * @return $select
      * @author Jari Korpela
      */
-    private function getUsersLocation($userIdList) {
-    	sort($userIdList);
-    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
-                                      			array('id_usr_usp','profile_key_usp',
-                                      			'profile_value_usp'))
-                                      ->joinLeft(array('usc' => 'countries_ctr'),
-                                      			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
-                                      			 array('countryName' => 'usc.printable_name_ctr',
-                                      			 	   'countryIso' => 'usc.iso_ctr'))
-                                      ->where('usp.id_usr_usp IN (?)', $userIdList)
-                                      ->where('usp.public_usp = 1')
-                                      ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
-                                      ->group(array('usp.id_usr_usp','usp.id_usp'))
-                                      ->order('usp.id_usr_usp')
-                                      ;
-       $result = $this->_db->fetchAll($select);
-       
-	   $list = array();
-	   foreach($userIdList as $id) {
-	   	$city = "";
-	   	$country = "";
-	   	$countryIso = "";
-	   	$checks = 0;
-	   	foreach($result as $res ) {
-	   		if($res['id_usr_usp'] == $id) {
-	   			$checks++;
-	   			if($res['profile_key_usp'] == "city") {
-	   				$city = $res['profile_value_usp'];
-	   			}
-	   			elseif($res['profile_key_usp'] == "country") {
-	   				$country = $res['countryName'];
-	   				$countryIso = $res['countryIso'];
-	   			}
-	   		}
-	   		if(($country != "" && $city != "") || $checks == 2) break;
-	   	}
-	   	$list[] = array(
-   				'id_usr' => $id,
-   				'city'	=> $city,
-	   			'country' => $country,
-	   			'countryIso' => $countryIso
-   				);
-	   }
-       return $list;                             
-    }
+    public function getUserIdSearch() {
+    	$select = $this->select()->from($this, 'id_usr')
+                                 ->order('id_usr');
+        return $select;
+    } 
+
      
-    /*
+    /**
      * getUsersViews
      * 
      * gets users views count
@@ -1011,7 +954,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }    
     
-    /*
+    /**
      * getUsersPopularity
      * Popularity means how many unique users has viewed users contents
      * 
@@ -1035,7 +978,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersRating
      * 
      * Gets users rating sum
@@ -1061,7 +1004,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersCommentCount
      * 
      * Gets users comment count
@@ -1085,7 +1028,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }       
     
-    /*
+    /**
      * getUserContentRatings
      * 
      * Gets Users Content Ratings info
@@ -1125,7 +1068,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $userRatings;
     }
     
-    /*
+    /**
      * getUserInfo 
      * 
      * Gets basic user information from users_usr table
@@ -1146,7 +1089,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $this->_db->fetchAll($select);                                      
     }
 
-    /*
+    /**
      * getUsersContentCount
      * 
      *  Gets Users content counts
@@ -1184,7 +1127,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $resultList;
     }
     
-    /*
+    /**
      * getUsersContents
      * 
      *  Gets users content ID:s
@@ -1230,33 +1173,35 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;                                 
     }
     
-    /*
+    /**
      * sortUsersByContentInfo
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */    
-    public function sortUsersByContentInfo($userIDList, $sort, $list, $limit) {
+    public function sortUsersByContentInfo($search, $sort, $list, $limit) {
     	$content = new Default_Model_ContentHasUser(); 
     	$select = $content->select()->from('cnt_has_usr',
     									array('id_usr'))
-    							->where('id_usr IN (?)',$userIDList)
+    							->where('id_usr IN (?)',$search)
     							->order(array($sort,'id_usr'))
     							->group('id_usr')    							
     							;
     	if($limit) $select->limit($limit,0);
     	//print_r($select->assemble());echo "\n";
         $result = $this->simplifyArray($content->_db->fetchAll($select),'id_usr');
-		if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
-        
+		if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($content->_db->fetchAll($search),'id_usr'),
+							 $list);
+
         return $result;
     }
     
-    /*
+    /**
      * sortByUserInfo
      * 
      * Sorts $userIdList by $sort
@@ -1277,110 +1222,118 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $this->simplifyArray($result,'id_usr');
     }
     
-    /*
+    /**
      * sortUsersByViews
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByViews($userIDList, $sort, $list, $limit) {
+    public function sortUsersByViews($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('cnt_views_vws',
     									array('id_usr_vws'))
-    							->where('id_usr_vws IN (?)',$userIDList)
+    							->where('id_usr_vws IN (?)',$search)
     							->group('id_usr_vws')
     							->order(array($sort,'id_usr_vws'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws'); 
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }
     
-    /*
+    /**
      * sortUsersByComments
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByComments($userIDList, $sort, $list, $limit) {
+    public function sortUsersByComments($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('comments_cmt',
     									array('id_usr_cmt'))
-    							->where('id_usr_cmt IN (?)',$userIDList)
+    							->where('id_usr_cmt IN (?)',$search)
     							->group('id_usr_cmt')
     							->order(array($sort,'id_usr_cmt'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt'); 
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }    
     
-    /*
+    /**
      * sortUsersByPopularity
      * Popularity means how many unique users has viewed users contents
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByPopularity($userIDList, $sort, $list, $limit) {
+    public function sortUsersByPopularity($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
     									->joinLeft(array('vws' => 'cnt_views_vws'),
     											'cnt.id_cnt = vws.id_cnt_vws',
     									array('readers' => 'COUNT(id_usr_vws)'))
-    							->where('cnt.id_usr IN (?)',$userIDList)
+    							->where('cnt.id_usr IN (?)',$search)
     							->group('cnt.id_usr')
     							->order(array($sort,'id_usr'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }
      
-    /*
+    /**
      * sortUsersByRating
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByRating($userIDList, $sort, $list, $limit) {
+    public function sortUsersByRating($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
     									->joinLeft(array('crt' => 'content_ratings_crt'),
     												'crt.id_cnt_crt = cnt.id_cnt',
     												array())
-    							->where('id_usr IN (?)',$userIDList)
+    							->where('id_usr IN (?)',$search)
     							->group('id_usr')
     							->order(array($sort,'id_usr'))
     							;
     	if($limit) $select->limit($limit,0);						
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }
@@ -1733,53 +1686,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     } // end of getUserFavouriteContent
     
    
-    /*
-     * getAllUsersLocations
-     * 
-     * Gets all location info from users (Countries not yet done because they dont exist yet :p)
-     * 
-     * array(
-     * 	cities => array(
-     * 		cityindex => array(name, amount)),
-     * 	countries => array(
-     * 		countryindex => array(name, amount))
-     * )
-     * 
-     * @author Jari Korpela
-     * @return Array
-     */
-    public function getAllUsersLocations() {
-    	$result = array();
 
-        $select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
-                                      	array('profile_key_usp',
-                                      	'profile_value_usp',
-                                      	'COUNT(profile_value_usp) AS amount'))
-                                      ->joinLeft(array('usc' => 'countries_ctr'),
-                                      	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
-                                      	 array('countryName' => 'usc.printable_name_ctr',
-                                      	 		'countryIso' => 'usc.iso_ctr'))
-                                      ->where('usp.public_usp = 1')
-                                      ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
-                                      ->order('usp.id_usr_usp')
-                                      ->group('usp.profile_value_usp')
-                                      ->distinct()
-                                      ;
-       $result = $this->_db->fetchAll($select);
-       $final = array();
-       foreach($result as $res) {
-       	if($res['profile_key_usp'] == "city" && $res['profile_value_usp'] != "") {
-       		$final['cities'][] = array('name' => $res['profile_value_usp'],'amount' => $res['amount']);
-       		continue;
-       	}
-       	if($res['profile_key_usp'] == "country" && $res['countryName'] != "") {
-       		$final['countries'][] = array('name' => $res['countryName'],'amount' => $res['amount'], 'countryIso' => $res['countryIso']);
-       		continue;
-       	}
-       }
-    	
-    	return $final;
-    }
     
 
       public function getUserContentList($contentIdList, $amount) {
@@ -1800,7 +1707,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } // end of getUserContentList
     
-    /*
+    /**
      * array $statisticsList holds info about what statistics you want to have
      */
     public function getUserStatistics($userId, $contentIdList, $statisticsList) {
@@ -1830,7 +1737,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 				                                 'vws.id_cnt_vws = chu.id_cnt',
 				                                  array('views' => 'SUM(vws.views_vws)'))
                                            ->joinLeft(array('cmt' => 'comments_cmt'),
-                                                      'cnt.id_cnt = cmt.id_cnt_cmt',
+                                                      'cnt.id_cnt = cmt.id_target_cmt',
                                                       array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))
                                            ->joinLeft(array('cty' => 'content_types_cty'),
                                                   'cty.id_cty = cnt.id_cty_cnt',
@@ -1844,7 +1751,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersViewers
      * 
      * gets list of users who has read users content, sorted last viewed
@@ -1874,7 +1781,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;		   		 
     }
     
-    /*
+    /**
      * getGravatarStatus
      * @return 1 or 0 (true, false)
      * @param user id
@@ -1890,7 +1797,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result['gravatar_usr'];
     }
     
-    /*
+    /**
      * changeGravatarStatus
      * @return true, false
      * @param user id

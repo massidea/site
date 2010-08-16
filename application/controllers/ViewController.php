@@ -89,9 +89,14 @@
 
         // Get authentication
         $auth = Zend_Auth::getInstance();
+
+        // Get user_id
+        if ($auth->hasIdentity()) {
+            $usrId = $auth->getIdentity()->user_id;
+        }
         
         if ($contentData['published_cnt'] == 0 && 
-        	$auth->getIdentity()->user_id != $ownerId &&
+        	$usrId != $ownerId &&
         	!in_array("admin", $this->view->logged_user_roles))
         {
             $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');  
@@ -115,6 +120,9 @@
         // turn rating off by default
         $user_can_rate = false;
 
+        // user is not owner by default
+        $user_is_owner = false;
+
         // Comment model
         $comment = new Default_Model_Comments();
         
@@ -130,22 +138,18 @@
             if ($ownerId != $auth->getIdentity()->user_id) {
                 $user_can_rate = true;
             }
+
+            // Check if user is owner of content
+            if ($ownerId == $auth->getIdentity()->user_id) {
+                $user_is_owner = true;
+            }
             
             // generate comment form
             //$comment_form = new Default_Form_CommentForm($parentId);
      
             // if there is something in POST
-            if ($request->isPost()) {
+            /*if ($request->isPost()) {
             
-                // Get comment form data
-                $formData = $this->_request->getPost();
-                                
-                // Validate and save comment data
-                $user_id = $auth->getIdentity()->user_id;
-                $comments->addComment($id, $user_id);
-
-                    //$comment_form = new Default_Form_CommentForm($parentId);
-                 
                     if($user_id != $ownerId) {
                         $user = new Default_Model_User();
                         $comment_sender = $user->getUserNameById($user_id);
@@ -185,8 +189,7 @@
                         
                         $Default_Model_privmsg->addMessage($data);
                 } // end if
-            } // end if
-            $this->view->comment_form = $comment_form;
+            }*/ // end if
         } // end if
         
         // get content type of the specific content viewed
@@ -353,6 +356,8 @@
 		//$this->view->user_can_comment   = $user_can_comment;
 		$this->view->comments 			= $comments;
 		$this->view->user_can_rate      = $user_can_rate;
+        $this->view->user_is_owner      = $user_is_owner;
+        $this->view->usrId              = $usrId;
         $this->view->contentData        = $contentData;
         $this->view->modified			= $modified;
         $this->view->userData           = $userData;
@@ -369,7 +374,7 @@
         $this->view->rivals             = $rivals;
         //$this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
-        $this->view->count              = $count;
+        //$this->view->count              = $count;
         $this->view->campaigns          = $campaigns;
         
         // Inject title to view

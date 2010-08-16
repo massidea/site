@@ -3,7 +3,7 @@ interval = 5000;
 maxLevel = 3;
 
 $("document").ready(function () {
-	urls = JSON.parse($("#jsmetabox").text());
+	urls = jQuery.parseJSON($("#jsmetabox").text());
 	setTimeout("refreshComments(true)", interval);
 	$("#commentPostButton").click(function() {
 		postComment();
@@ -33,6 +33,19 @@ function postComment() {
 	});
 }
 
+function isScrolledIntoView(elem)
+{
+	if ($(elem).length == 0) return 0;
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+
+    var elemTop = $(elem).offset().top;
+    var elemBottom = elemTop + $(elem).height();
+
+    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom));
+}
+
+
 /** 
  * refreshComments
  * checks for new comments
@@ -40,13 +53,15 @@ function postComment() {
  * @param timer bool, if new timer should be made after running the function
  */
 function refreshComments(timer) {
-	$.getJSON(urls.commentUrls[0].getCommentsUrl, function(data) {
-		if (data != "0") {
-			$.each(data, function(key, value) {
-				addCommentRow(value.id, value.parent, value.commentDiv);
-			});
-		}
-	});
+	if (isScrolledIntoView("#content_view_comments")) {
+		$.getJSON(urls.commentUrls[0].getCommentsUrl, function(data) {
+			if (data != "0") {
+				$.each(data, function(key, value) {
+					addCommentRow(value.id, value.parent, value.commentDiv);
+				});
+			}
+		});
+	}
 	if (timer) setTimeout("refreshComments(true)", interval);
 }
 
@@ -156,3 +171,33 @@ function flagAsSpam(commentId)
 		}
 	});
 }
+
+/**
+*   deleteComment
+*
+*   Basic function for deleting comment
+*/
+/*
+deleteComment = function (cmtid)
+{
+    // Show "Are you sure..." text and "Yes / No" -link
+    $('div#content_view_comment_'+cmtid+'_textbody').hide();
+    $('div#delete_comment_text_'+cmtid).show();
+
+    return false;
+}*/
+
+/**
+*   undodeleteComment
+*
+*   Basic function for forget deleting comment
+*/
+/*
+undodeleteComment = function (cmtid)
+{
+    // Show "Are you sure..." text and "Yes / No" -link
+    $('div#content_view_comment_'+cmtid+'_textbody').show();
+    $('div#delete_comment_text_'+cmtid).hide();
+
+    return false;
+}*/

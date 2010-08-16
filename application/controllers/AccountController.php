@@ -306,7 +306,7 @@ class AccountController extends Oibs_Controller_CustomController
                 unset($contentList[$k]);
             // Else if user logged in and not owner of unpublished content,
             // remove content from list
-            } else if ($auth->hasIdentity() &&
+            } else if (isset($c['id_usr']) && $auth->hasIdentity() &&
                        $c['id_usr'] != $auth->getIdentity()->user_id &&
                        $c['published_cnt'] == 0) {
                 unset($contentList[$k]);
@@ -362,7 +362,7 @@ class AccountController extends Oibs_Controller_CustomController
         		 * unset from Favouritelist and remove all lines from user_has_favourites table that
         		 * refers to this content id
         		 */
-        		if ($favourite['id_cnt'] == '') {
+        		if (isset($favourite['id_cnt_fvr']) && $favourite['id_cnt'] == '') {
                 	unset($favouriteList[$k]);
                 	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
             	}
@@ -427,6 +427,18 @@ class AccountController extends Oibs_Controller_CustomController
 			->addTab("Readers", "readers", "all selected");
 			
 		$boxes[] = $box;
+		
+		/*Box for user profile custom layout settings*/
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("Custom Layout")
+			->setClass("center")
+			->setName("my-custom-layout")
+			->addTab("Fonts", "fonts", "all selected") //Header, type, class, extra
+			->addTab("Colors", "colors", "colors")
+			->addTab("Background", "background", "background");
+		$boxes[] = $box;
+		
+		$customLayoutForm = new Default_Form_AccountCustomLayoutSettings();
 			
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
@@ -438,6 +450,7 @@ class AccountController extends Oibs_Controller_CustomController
         //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
+        $this->view->customLayoutSettingsForm = $customLayoutForm;
 
         /* Waiting for layout that is maybe coming 
         // MyViews
@@ -957,6 +970,7 @@ class AccountController extends Oibs_Controller_CustomController
         $action = $this->getRequest()->isPost() ? 'submit' : $this->getRequest()->getQuery('action');
         $submittedForm = $this->getRequest()->getPost('submittedform');
         $key = $this->getRequest()->getParam('key');
+        $error = null;
 
         /** check in what stage the process of password reset is
             (according to variables $action, $_POST['passwordgiven'] and $_GET['key']) **/
@@ -1312,6 +1326,19 @@ class AccountController extends Oibs_Controller_CustomController
         $formData['group'] = str_replace($pat_def,$pat_sql,$formData['group']);
         
         $userModel = new Default_Model_User();
+        
+        //variable initializings (to avoid notice errors :p)
+        $pageCount = null;
+        $userContents = null;
+        $listSize = null;
+        $userIdList = null;
+        $userListing = null;
+        $topNames = null;
+        $topList = null;
+        $topCountry = null;
+        $topGroup = null;
+        $topCity = null;
+        
         //This is code to fetch search results
         if($url != $this->_urlHelper->url()) {
 	        $listSize = 1;
@@ -1344,23 +1371,17 @@ class AccountController extends Oibs_Controller_CustomController
         } else { //Here is Top list code :)
         
         	$auth = Zend_Auth::getInstance();
+        	$userid = null;
 			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
         	$cache = Zend_Registry::get('cache');
         	
-        	$top = new Oibs_Controller_Plugin_TopList();
-        	
+        	$top = new Oibs_Controller_Plugin_Toplist_Users();
+
 			if(!$resultList = $cache->load('UserTopList')) {
 				
 				$top->setLimit(10)
-					->setTop("Count")
-					->setTop("View")
-					->setTop("Popularity")
-					->setTop("Rating")
-					->setTop("Comment")
-					->addTitleLinks()
-					->addTitles()
-					->addDescriptions()
+					->autoSet()
 					;
 
 				$cache->save($top, 'UserTopList');
@@ -1368,24 +1389,10 @@ class AccountController extends Oibs_Controller_CustomController
 			} else {
 				$top = $resultList;
 			}
+			
+			if($userid) $top->addUser($userid);
 			$topList = $top->getTopList();
-			
-			if($userid) $userTop = $top->addUser($userid)->getAddedUser();
-			
-			$topListMerge = array();
 
-			if($userid) {
-				foreach($topList as $key1 => $list1) {
-					foreach($userTop as $key2 => $top1) {
-						if($key1 == $key2) {
-							$topListMerge[$key1] = array_merge($list1,array('addedUsers' => $top1));
-							continue 2;
-						}
-					}
-					$topListMerge[] = $list1;
-				}
-				$topList = $topListMerge;
-			}
 			//print_r($top->test());die;
 			//print_r($topList);die;
 
@@ -1393,21 +1400,35 @@ class AccountController extends Oibs_Controller_CustomController
         	foreach($topList as $top) {
         		$topNames[] = $top['name'];
         	}
+        	$topNames[] = "Amount";
         	
-        	$topListCountries = new Oibs_Controller_Plugin_TopList();
+        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
 	        $topListCountries->fetchUserCountries()
-	        	->setCountryTop("Count")
-	        	->setCountryTop("View")
-				->setCountryTop("Popularity")
-				->setCountryTop("Rating")
-				->setCountryTop("Comment")
-				->addTitleLinks()
-				->addTitles()
-				->addDescriptions()
+	        ->setTopAmount()
+	        	->autoSet()
 				;
+			if($userid) $topListCountries->addUser($userid);
+			$topCountry = $topListCountries->getTopList();
+
 			
-			$topCountry = $topListCountries->getCountryGroups();
-			        	
+			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+			$topListGroups->fetchUsersInGroups()
+			->setTopAmount()
+							->autoSet()
+							;
+							
+							
+			$topGroup = $topListGroups->getTopList();
+			
+			
+			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+			$topListCities->fetchUsersWithCity()
+			->setTopAmount()
+							->autoSet()
+							;
+			if($userid) $topListCities->addUser($userid);
+			$topCity = $topListCities->getTopList();
+			
         }
         
         if(!$topNames) {
@@ -1416,12 +1437,16 @@ class AccountController extends Oibs_Controller_CustomController
 			$topNames[] = "Popularity";
 			$topNames[] = "Rating";
 			$topNames[] = "Comment";
+			$topNames[] = "Amount";
         }
         
         $topListBoxes = array(
         	'Users' => $topList,
-        	'Countries' => $topCountry
+       		'Groups' => $topGroup,
+       		'Cities' => $topCity,
+        	'Countries' => $topCountry,
         );
+        //print_r($topListBoxes);die;
       
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
@@ -1479,7 +1504,7 @@ class AccountController extends Oibs_Controller_CustomController
 
 		// Load user locations from cache
 		if(!$resultList = $cache->load('UserLocationsList')) {
-			$userModel = new Default_Model_User();
+			$userModel = new Default_Model_UserProfiles();
 			$locations = $userModel->getAllUsersLocations();
 			$cache->save($locations, 'UserLocationsList');
 
@@ -1820,5 +1845,31 @@ class AccountController extends Oibs_Controller_CustomController
 	    	$i++;
     	}
     	return $recentposts;
+    }
+    
+    public function onlineAction() {
+    	$this->_helper->viewRenderer->setNoRender(true);
+    	$this->_helper->layout()->disableLayout();
+    	
+    	$timer = 180;
+    	
+    	$cache = Zend_Registry::get('cache');
+    	$userList = array();
+    	$userList = $cache->load('onlineUsers');
+
+    	if ($userList) {
+    		foreach ($userList as $user) {
+    			
+    			if (time() - $user['time'] >= $timer) {
+   					unset($userList[$user['id_usr']]);
+    			} else {   				
+    				echo $user['login_name_usr'].":";
+    				echo time()-$user['time'].":";
+    				echo $user['mode']."<br />";
+    			}
+    		}
+    		$cache->save($userList, 'onlineUsers');
+    	}
+    	//Zend_Debug::dump($userList);	
     }
 } // end of class

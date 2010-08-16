@@ -11,18 +11,21 @@ echo $this->doctype();
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix_new.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix_new.css'), 'screen', 'IE 6');
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/farbtastic.css'));	// Used for farbtastic custom color picker
 
     $this->headLink()->headLink(array(  'rel'   => 'shortcut icon',
                                         'href'  => $this->baseUrl('/images/favicon.png'),
                                         'type'  => 'image/x-icon'),
                                         'PREPEND'
                                );
-    $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
+	$this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/auto_translate.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/functions.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
+    
     $this->headScript()->prependFile('http://maps.google.com/jsapi');
     
     echo $this->headLink();
@@ -493,6 +496,9 @@ echo $this->doctype();
                 <div class="dot-line-720 clear"></div>
             </div>
         </div>
+    </div>
+        <div id="jsmetabox" style="display:none;">
+    	<?php echo $this->jsmetabox->output(); ?>
     </div>
 </body>
 </html>
