@@ -68,11 +68,15 @@ function expandText(key)
 	$(".biographyrow:eq("+key+")").html("<span>"+ biographyBody +"</span>");
 }
 
+$(document).ready(function() {
+	$('#picker').farbtastic('#customfontcolor');
+});
+
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
-//$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
+//$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css'));?>
 <?php
     $admin = false;
     if(in_array("admin", $this->logged_user_roles)):

@@ -9,7 +9,7 @@ function deleteconfirmation(url) {
     }
 }
 <?php $this->headScript()->captureEnd(); ?>
-
+<?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
@@ -223,5 +223,6 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                 </div>
             </div>
         </div>
+ 		<?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
     </div>
 </div>

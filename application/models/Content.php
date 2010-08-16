@@ -2,7 +2,7 @@
 /**
  *  Content -> Content database model for content table.
  *
- *  Copyright (c) <2009>, Markus Riihel√§
+ *  Copyright (c) <2009>, Markus Riihel‰
  *  Copyright (c) <2009>, Mikko Sallinen
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
@@ -22,8 +22,8 @@
  *  Content - class
  *
  *  @package    models
- *  @author     Markus Riihel√§ & Mikko Sallinen
- *  @copyright  2009 Markus Riihel√§ & Mikko Sallinen
+ *  @author     Markus Riihel‰ & Mikko Sallinen
+ *  @copyright  2009 Markus Riihel‰ & Mikko Sallinen
  *  @license    GPL v2
  *  @version    1.0
  */
@@ -103,11 +103,9 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			case 'header':
 				$order = 'title_cnt';
 				break;
-				/*
-				 case 'views':
-				 $order = 'viewCount DESC';
-				 break;
-				 */
+		 	case 'views':
+				$order = 'viewCount ASC';
+		 		break;
 			default:
 				$order = 'created_cnt DESC';
 		}
@@ -166,6 +164,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 								->where('contents_cnt.id_cnt IN (?)', $ids)
 								;
 		$data = $this->_db->fetchAll($select);
+
 		if ($sort) {
 			$idList = array();
 			foreach ($ids as $id) {
@@ -317,7 +316,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 //return $result;
 	 }
 	 */
-	
+
+
 	/* getRelatedContents
 	 * 
 	 * gets all contents that share tags with specified content
@@ -399,6 +399,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 	    return $ids;
     }
+
     /**
 	 *   getByName
 	 *
@@ -619,6 +620,31 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
             $tagModel->addTagsToContent(
                 $content->id_cnt, $data['content_keywords']
             );
+        
+            // Go through all given keywords
+            // This should be in Tags model
+            /*
+            foreach($data['content_keywords'] as $tag) {
+                $tagRow = new Default_Model_Tags();
+                $tag = strip_tags($tag);
+                
+                // Check if given keyword does not exists in database
+                if($tagRow->tagExists($tag)) {
+                    // Create new keyword
+                    $tag = $tagRow->createTag($tag);
+                } else {
+                    // Get keyword
+                    $tag = $tagRow->getTag($tag);
+                } // end else
+                
+                // echo '<pre>';echo $tag->id_tag.'    '.$content->id_cnt;echo '</pre>';
+                //die();
+                
+                // Add keywords to content
+                $contentHasTag = new Default_Model_ContentHasTag();
+                $contentHasTag->addTagToContent($tag->id_tag, $content->id_cnt);
+            } // end foreach 
+            */
         } // end if
         
         // Check if user has given related companies
@@ -627,6 +653,58 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
             $recModel->addRelatedCompaniesToContent(
                 $content->id_cnt, $data['content_related_companies']
             );
+            // Go through all given related companies
+            // FIX: This should be in RelatedCompanies model
+            /*foreach($data['content_related_companies'] as $relComp) {
+                $relCompRow = new Default_Model_RelatedCompanies();
+                $relComp = strip_tags($relComp);
+                
+                // Check if given related company does not exists in database
+                if($relCompRow->relCompExists($relComp)) {
+                    // Create new related company
+                    $relComp = $relCompRow->createRelComp($relComp);
+                } else {
+                    // Get related company
+                    $relComp = $relCompRow->getRelComp($relComp);
+                } // end else
+                
+                // echo '<pre>';echo $tag->id_tag.'    '.$content->id_cnt;echo '</pre>';
+                //die();
+                
+                // Add related companies to content
+                $contentHasRelatedCompany = new Default_Model_ContentHasRelatedCompany();
+                $contentHasRelatedCompany->addRelCompToContent($relComp->id_rec, $content->id_cnt);
+            } // end foreach */
+        } // end if
+        
+        // Check if user has given campaigns
+        if(!empty($data['content_campaigns'])) {
+            $cmpModel = new Default_Model_Campaigns();
+            $cmpModel->addCampaignsToContent(
+                $content->id_cnt, $data['content_campaigns']
+            );
+            // Go through all given campaigns
+            // FIX: This should be in Campaigns model
+            /*foreach($data['content_campaigns'] as $campaign) {
+                $campaignRow = new Default_Model_Campaigns();
+                $campaign = strip_tags($campaign);
+                
+                // Check if given campaign does not exists in database
+                if($campaignRow->campaignExists($campaign)) {
+                    // Create new campaign
+                    $campaign = $campaignRow->createCampaign($campaign);
+                } else {
+                    // Get campaign
+                    $campaign = $campaignRow->getCampaign($campaign);
+                } // end else
+                
+                // echo '<pre>';echo $tag->id_tag.'    '.$content->id_cnt;echo '</pre>';
+                //die();
+                
+                // Add related companies to content
+                $contentHasCampaign = new Default_Model_ContentHasCampaign();
+                $contentHasCampaign->addCampaignToContent($campaign->id_cmp, $content->id_cnt);
+            } // end foreach */
         } // end if
         
         // Add industry to content
@@ -665,11 +743,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 $contentHasInnovationType->addInnovationTypeToContent($content->id_cnt, $data['innovation_type']);
             }
         }
-        
-        // Reset and save latest post time hash in cache 
-        $cache = Zend_Registry::get('cache');
-        $cache->remove('LatestPostHash');
-        $cache->save('LatestPostHash', md5(time()));
         
         return $return;
     } // end of addContent
@@ -730,7 +803,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		$where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
 
-		// MIK√Ñ VITTU T√ÑSS√Ñ KUSEE?
+		// MIKƒ VITTU TƒSSƒ KUSEE?
 		if(!$this->update($content, $where)) {
 			$return = false;
 		} else {
@@ -751,6 +824,61 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			$modelTags->addTagsToContent(
 			$data['content_id'], $data['content_keywords'], $existingTags
 			);
+
+			/*
+			 $i = 0;
+			 // Go through all existing keywords
+			 // This belongs to contentHasTags model
+			 foreach($existingTags as $existingTag) {
+			 // If some of the existing keywords aren't found in sent keywords,
+			 // that keyword is deleted the from content and maybe even from the
+			 // database
+			 if(!in_array($existingTag['name_tag'], $data['content_keywords'])) {
+			 // Removing tag from content
+			 $cntHasTag->deleteTagFromContent($existingTag['id_tag'], $data['content_id']);
+
+			 // If other content(s) doesn't have this tag, the whole
+			 // tag is going to be removed from the database
+			 if(!$cntHasTag->checkIfOtherContentHasTag($existingTag['id_tag'], $data['content_id'])) {
+			 $modelTags->removeTag($existingTag['id_tag']);
+			 }
+
+			 // Remove tag from existingTags array
+			 unset($existingTags[$i]);
+			 }
+			 $i++;
+			 }
+			 */
+
+			/*
+			 // Go through all sent keywords
+			 // This belongs to Tags model
+			 foreach($data['content_keywords'] as $tag) {
+			 $tag = strip_tags($tag);
+
+			 $foundTag = false;
+			 foreach($existingTags as $existingTag) {
+			 if($tag == $existingTag['name_tag']) {
+			 $foundTag = true;
+			 }
+			 }
+
+			 // If tag is not found in existing tags
+			 if(!$foundTag) {
+			 // Check if given keyword does not exists in database
+			 if($modelTags->tagExists($tag)) {
+			 // Create new keyword
+			 $tag = $modelTags->createTag($tag);
+			 } else {
+			 // Get keyword
+			 $tag = $modelTags->getTag($tag);
+			 } // end else
+
+			 // Add keywords to content
+			 $cntHasTag->addTagToContent($tag->id_tag, $data['content_id']);
+			 }
+			 } // end foreach
+			 */
 		} // end if
 
 		// Check if user has related companies
@@ -766,13 +894,141 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			$modelRecs->addRelatedCompaniesToContent(
 			$data['content_id'], $data['content_related_companies'], $existingCompanies
 			);
+			/*
+			 $i = 0;
+			 // Go through all existing related companies
+			 // FIX: This belongs to ContentHasRelatedCompany model
+			 foreach($existingRecs as $existingRec) {
+			 // If some of the existing related companies aren't found in sent
+			 // related companies, that related company is deleted from the
+			 // content and maybe even from thedatabase
+			 // FIXED: Could have caused mismatches when adding,
+			 // since when related company is added strip_tags is used
+			 // but not when doing comparisons here.
+			 // This goes for campaigns as well.
+			 if(!in_array($existingRec['name_rec'], $data['content_related_companies'])) {
+			 // Removing rec from content
+			 $cntHasRec->deleteRelCompFromContent($existingRec['id_rec'], $data['content_id']);
+
+			 // If other content(s) doesn't have this related company, the whole
+			 // related company is going to be removed from the database
+			 if(!$cntHasRec->checkIfOtherContentHasRelComp($existingRec['id_rec'], $data['content_id'])) {
+			 $modelRecs->removeRelComp($existingRec['id_rec']);
+			 }
+
+			 // Remove related company from existingRecs array
+			 unset($existingRecs[$i]);
+			 }
+			 $i++;
+			 }
+			 */
+
+			/*
+			 // Go through all sent related companies
+			 // FIX: This belongs to RelatedCompany model
+			 foreach($data['content_related_companies'] as $rec) {
+			 //$rec = strip_tags($rec);
+
+			 $foundRec = false;
+			 foreach($existingRecs as $existingRec) {
+			 if($rec == $existingRec['name_rec']) {
+			 $foundRec = true;
+			 }
+			 }
+
+			 // If related company is not found in existing related companies
+			 if(!$foundRec) {
+			 // Check if given related company does not exists in database
+			 if($modelRecs ->relCompExists($rec)) {
+			 // Create new related company
+			 $rec = $modelRecs ->createRelComp($rec);
+			 } else {
+			 // Get related company
+			 $rec = $modelRecs ->getRelComp($rec);
+			 } // end else
+
+			 // Add related company to content
+			 $cntHasRec->addRelCompToContent($rec->id_rec, $data['content_id']);
+			 }
+			 } // end foreach
+			 */
 		} // end if
 
 		/*
 		 if($_FILES['content_file_upload']['size'] != 0) {
 		 $files = new Default_Model_Files();
 		 $files->newFile($content->id_cnt, $auth->getIdentity()->user_id);
+		 }
 		 */
+		// Check if user has given campaigns
+		if(!empty($data['content_campaigns'])) {
+			// Get existing campaigns of the content
+			$cntHasCmp = new Default_Model_ContentHasCampaign();
+			$existingCampaigns = $cntHasCmp->checkExistingCampaigns(
+			$data['content_id'], $data['content_campaigns']
+			);
+			//$existingCmps = $cntHasCmp->getContentCampaigns($data['content_id']);
+
+			$modelCmps = new Default_Model_Campaigns();
+			$modelCmps->addCampaignsToContent(
+			$data['content_id'], $data['content_campaigns'], $existingCampaigns
+			);
+
+			/*
+			 $i = 0;
+			 // Go through all existing campaigns
+			 // FIX: This belongs to ContentHasCampaign moodel
+			 foreach($existingCmps as $existingCmp) {
+			 // If some of the existing campaigns aren't found in sent campaigns,
+			 // that campaign is deleted the from content and maybe even from the
+			 // database
+			 if(!in_array($existingCmp['name_cmp'], $data['content_campaigns'])) {
+			 // Removing campaign from content
+			 $cntHasCmp->deleteCampaignFromContent($existingCmp['id_cmp'], $data['content_id']);
+
+			 // If other content(s) doesn't have this campaign, the whole
+			 // campaign is going to be removed from the database
+			 if(!$cntHasCmp->checkIfOtherContentHasCampaign($existingCmp['id_cmp'], $data['content_id'])) {
+			 $modelCmps->removeCampaign($existingCmp['id_cmp']);
+			 }
+
+			 // Remove campaign from existingCmps array
+			 unset($existingCmps[$i]);
+			 }
+			 $i++;
+			 }
+			 */
+
+			/*
+			 // Go through all sent campaigns
+			 // FIX: This belongs to Campaigns model
+			 foreach($data['content_campaigns'] as $cmp) {
+			 //$cmp = strip_tags($cmp);
+
+			 $foundCmp = false;
+			 foreach($existingCmps as $existingCmp) {
+			 if($cmp == $existingCmp['name_cmp']) {
+			 $foundCmp = true;
+			 }
+			 }
+
+			 // If campaign is not found in existing tags
+			 if(!$foundCmp) {
+			 // Check if given campaign does not exists in database
+			 if($modelCmps->campaignExists($cmp)) {
+			 // Create new campaign
+			 $cmp = $modelCmps->createCampaign($cmp);
+			 } else {
+			 // Get campaign
+			 $cmp = $modelCmps->getCampaign($cmp);
+			 } // end else
+
+			 // Add campaigns to content
+			 $cntHasCmp->addCampaignToContent($cmp->id_cmp, $data['content_id']);
+			 }
+			 } // end foreach
+			 */
+		} // end if
 
 		/*// Update industry to content
 		 $contentHasIndustry = new Default_Model_ContentHasIndustries();
@@ -869,6 +1125,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
         public function removeContentAndDepending($id_cnt = 0)
         {
             $contentRemoveChecker = array(
+                'removeContentFromCampaign' =>          true,
                 'removeContentFromContent' =>           true,
                 'removeContentFromFutureinfoClasses' => true,
                 'removeContentFromIndustries' =>        true,
@@ -887,6 +1144,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 'removeContent' =>                      true,
                 'removeContentComments' =>              true
             );
+
+            // cnt_has_cmp
+            $cntHasCmp = new Default_Model_ContentHasCampaign();
+            if (!$cntHasCmp->removeContentCampaigns($id_cnt))
+                $contentRemoveChecker['removeContentFromCampaign'] = false;
 
             // cnt_has_cnt
             $cntHasCnt = new Default_Model_ContentHasContent();
@@ -1215,22 +1477,101 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 */
 	public function getMostViewed ($limit = 20)
 	{
-		$select = $this->_db->select()
-		->from(array('cnt' => 'contents_cnt'),
+		$select = $this->_db->select()->from(array('cnt' => 'contents_cnt'),
 		array('cnt.id_cnt', 'cnt.title_cnt'))
 		->join(array('vws' => 'cnt_views_vws'),
-                                   'cnt.id_cnt = vws.id_cnt_vws',
+		'cnt.id_cnt = vws.id_cnt_vws',
 		array('totalViews' => 'COUNT(vws.id_usr_vws)'))
 		->group('cnt.id_cnt')
 		->limit($limit)
 		->order('totalViews');
-
+		
 		$result = $this->_db->fetchAll($select);
 
 		// Zend_Debug::dump($result);
 
 		return $result;
 	}
+	
+
+	/**
+	 * getMostViewedType
+	 *
+	 *
+	 */
+	public function getMostViewedType ($cty = 'all', $page = 1, $count = -1, $order = 'views', $lang = 'en', $ind = 0)
+	{
+		switch ($order) {
+			case 'author':
+				$order = 'usr.login_name_usr';
+				break;
+			case 'header':
+				$order = 'cnt.title_cnt';
+				break;
+		 	case 'views':
+				$order = 'viewCount DESC';
+		 		break;
+			default:
+				$order = 'cnt.created_cnt DESC';
+		}
+
+		/*
+		 $industry = 1;
+		 if ($ind > 0) {
+		 $industry = $this->_db->quoteInto('chi.id_ind = ?', $ind);
+		 }
+		 */
+
+		// Needs more optimization
+		$select = $this->_db->select()->from(array('cty' => 'content_types_cty'),
+		array('cty.id_cty', 'cty.key_cty'))
+		->join(array('cnt' => 'contents_cnt'),
+                                            'cnt.id_cty_cnt = cty.id_cty',
+		array('cnt.id_cnt',
+                                                  'cnt.title_cnt',
+                                                  'cnt.lead_cnt',
+                                                  'cnt.created_cnt',
+                                                  'cnt.language_cnt'))
+		->joinLeft(array('chu' => 'cnt_has_usr'),
+                                            'chu.id_cnt = cnt.id_cnt',
+		array())
+		->joinLeft(array('usr' => 'users_usr'),
+                                            'usr.id_usr = chu.id_usr',
+		array('usr.id_usr',
+                                                  'usr.login_name_usr'))
+		
+		 ->joinLeft(array('chi' => 'cnt_has_ind'),
+		 'chi.id_cnt = cnt.id_cnt',
+		 array())
+
+		 ->joinLeft(array('vws' => 'cnt_views_vws'),
+		 'vws.id_cnt_vws = cnt.id_cnt',
+		 array('viewCount' => 'COUNT(vws.id_usr_vws)'))
+		/*
+		 ->joinLeft(array('ind' => 'industries_ind'),
+		 'ind.id_ind = chi.id_ind',
+		 array())*/
+		->group('cnt.id_cnt')
+		->where('cnt.published_cnt = 1')
+		//->where('cnt.language_cnt = ?', $lang)
+		->order($order);
+
+		if ($cty != 'all' && $cty != 'All') {
+			$select->where('cty.key_cty = ?', $cty);
+		}
+
+		if ($count > 0){
+			$select->limitPage($page, $count);
+		} else {
+			$select->limit($page);
+		}
+
+		// Content data
+		$data = $this->_db->fetchAll($select);	
+
+		return $data;
+	}
+	
 	
 	public function getRecentByLangAndType($lang, $type, $limit=10) {
 		$order = 'contents_cnt.created_cnt DESC';
@@ -1246,9 +1587,12 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		if($type != "all") {
 			$select->where('key_cty = ?', $type);
 		}
-
+		
 		// Content data
 		$data = $this->_db->fetchAll($select);
+		
 		return $data;
 	}
+
 } // end of class
+

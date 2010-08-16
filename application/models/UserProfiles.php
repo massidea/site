@@ -1280,4 +1280,161 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         }
     }
     
+    public function getUsersWithCountry($userIdList) {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+    									array('id_usr' => 'id_usr_usp'))
+    								->joinLeft(array('usc' => 'countries_ctr'),
+                                      			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      			 array('countryName' => 'usc.printable_name_ctr',
+                                      			 	   'countryIso' => 'usc.iso_ctr'))
+	    							->where('profile_key_usp = ?','country')
+	    							->where('public_usp = ?','1')
+	    							->where('id_usr_usp IN (?)', $userIdList)
+	    							->where('usp.profile_value_usp != ?',"0")
+	    							->order('id_usr')
+    							;
+				
+        $result = $this->_db->fetchAssoc($select); 
+		return $result;
+    }
+        
+    public function getUsersWithCity($userIdList) {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+    									array('id_usr' => 'id_usr_usp',
+    										 'city' => 'profile_value_usp'))
+	    							->where('profile_key_usp = ?','city')
+	    							->where('public_usp = ?','1')
+	    							->where('id_usr_usp IN (?)', $userIdList)
+	    							->where('usp.profile_value_usp != ?',"")
+	    							->order('id_usr')
+    							;
+				
+        $result = $this->_db->fetchAssoc($select); 
+		return $result;
+    }
+    
+    /**
+     * getUsersLocation
+     * 
+     * Gets users locations (city and country)
+     * 
+     * @param array $userIdList
+     * @return array $list
+     * @author Jari Korpela
+     */
+    public function getUsersLocation($userIdList) {
+    	sort($userIdList);
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      			array('id_usr_usp','profile_key_usp',
+                                      			'profile_value_usp'))
+                                      ->joinLeft(array('usc' => 'countries_ctr'),
+                                      			 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      			 array('countryName' => 'usc.printable_name_ctr',
+                                      			 	   'countryIso' => 'usc.iso_ctr'))
+                                      ->where('usp.id_usr_usp IN (?)', $userIdList)
+                                      ->where('usp.public_usp = 1')
+                                      ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
+                                      ->group(array('usp.id_usr_usp','usp.id_usp'))
+                                      ->order('usp.id_usr_usp')
+                                      ;
+       $result = $this->_db->fetchAll($select);
+       
+	   $list = array();
+	   foreach($userIdList as $id) {
+	   	$city = "";
+	   	$country = "";
+	   	$countryIso = "";
+	   	$checks = 0;
+	   	foreach($result as $res ) {
+	   		if($res['id_usr_usp'] == $id) {
+	   			$checks++;
+	   			if($res['profile_key_usp'] == "city") {
+	   				$city = $res['profile_value_usp'];
+	   			}
+	   			elseif($res['profile_key_usp'] == "country") {
+	   				$country = $res['countryName'];
+	   				$countryIso = $res['countryIso'];
+	   			}
+	   		}
+	   		if(($country != "" && $city != "") || $checks == 2) break;
+	   	}
+	   	$list[] = array(
+   				'id_usr' => $id,
+   				'city'	=> $city,
+	   			'country' => $country,
+	   			'countryIso' => $countryIso
+   				);
+	   }
+       return $list;                             
+    }
+    
+    /*
+     * getAllUsersLocations
+     * 
+     * Gets all location info from users (Countries not yet done because they dont exist yet :p)
+     * 
+     * array(
+     * 	cities => array(
+     * 		cityindex => array(name, amount)),
+     * 	countries => array(
+     * 		countryindex => array(name, amount))
+     * )
+     * 
+     * @author Jari Korpela
+     * @return Array
+     */
+    public function getAllUsersLocations() {
+    	$result = array();
+
+        $select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      	array('profile_key_usp',
+                                      	'profile_value_usp',
+                                      	'COUNT(profile_value_usp) AS amount'))
+                                      ->joinLeft(array('usc' => 'countries_ctr'),
+                                      	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      	 array('countryName' => 'usc.printable_name_ctr',
+                                      	 		'countryIso' => 'usc.iso_ctr'))
+                                      ->where('usp.public_usp = 1')
+                                      ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
+                                      ->order('usp.id_usr_usp')
+                                      ->group('usp.profile_value_usp')
+                                      ->distinct()
+                                      ;
+       $result = $this->_db->fetchAll($select);
+       $final = array();
+       foreach($result as $res) {
+       	if($res['profile_key_usp'] == "city" && $res['profile_value_usp'] != "") {
+       		$final['cities'][] = array('name' => $res['profile_value_usp'],'amount' => $res['amount']);
+       		continue;
+       	}
+       	if($res['profile_key_usp'] == "country" && $res['countryName'] != "") {
+       		$final['countries'][] = array('name' => $res['countryName'],'amount' => $res['amount'], 'countryIso' => $res['countryIso']);
+       		continue;
+       	}
+       }
+    	
+    	return $final;
+    }
+    
+    
+    public function getCountryAmounts() {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      	array('profile_value_usp as countryIso',
+                                      	'COUNT(profile_value_usp) AS value'))
+                                      ->joinLeft(array('usc' => 'countries_ctr'),
+                                      	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
+                                      	 array('name' => 'usc.printable_name_ctr'))
+                                      ->where('usp.public_usp = 1')
+                                      ->where('usp.profile_key_usp = "country"')
+                                      ->where('usp.profile_value_usp != "0"')
+                                      ->order('value desc')
+                                      ->order('usp.id_usr_usp')
+                                      ->group('usp.profile_value_usp')
+                                      ;
+                                      
+       $result = $this->_db->fetchAssoc($select);
+
+       return $result;
+    }
+    
 } // end of class

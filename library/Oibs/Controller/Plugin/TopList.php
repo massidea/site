@@ -1,6 +1,6 @@
 <?php
 /**
- *  TopList - Class to make toplist
+ *  TopList - Abstract Class to make toplist
  *
  *   Copyright (c) <2010>, Jari Korpela <jari.korpela@student.samk.fi>
  *
@@ -18,7 +18,7 @@
  */
 
 /**
- *  TopList - class
+ *  TopList - abstract class
  *
  *  @package    plugins
  *  @author     Jari Korpela
@@ -26,19 +26,20 @@
  *  @license    GPL v2
  *  @version    1.0
  */
-class Oibs_Controller_Plugin_TopList {
+abstract class Oibs_Controller_Plugin_TopList {
 
 	protected		$_userModel; //Models
+	protected		$_userProfileModel;
 	protected		$_url;
 	protected		$_translate;
 
-	protected		$_userList = array();
+	protected		$_userList = array(); //SQL query, ID Search
 	protected		$_topLists = array();
 	protected		$_topListsLinks = array();
 	protected		$_descriptions = array();
 	protected		$_titles = array();
 	
-	protected		$_topList = array();
+	protected		$_topList = array(); //The main toplist
 	protected		$_topListIds = array();
 	protected		$_addedTops = array();
 	protected		$_addedUser = array();
@@ -47,9 +48,10 @@ class Oibs_Controller_Plugin_TopList {
 
 	public function __construct() {
 		$this->_userModel = new Default_Model_User();
+		$this->_userProfileModel = new Default_Model_UserProfiles();
 		$this->_url = new Zend_View_Helper_Url();
 		$this->_translate = new Zend_View_Helper_Translate();
-		$this->_userList = $this->_userModel->getUserIds();
+		$this->_userList = $this->_userModel->getUserIdSearch();
 		$this->_topLists = array(
     		'Count' => 'COUNT(id_cnt) desc',
 			'View' => 'COUNT(id_cnt_vws) desc',
@@ -75,10 +77,16 @@ class Oibs_Controller_Plugin_TopList {
 			$this->_topListIds[$name] = null;
 			$this->_topList[$name] = null;
 		}
-		
+		$this->_topListsLinks['Amount'] = $this->_url->url(array('controller' => 'account',
+							 'action' => 'userlist'), 
+							 'lang_default', true);
+		$this->_descriptions['Amount'] = "Has member count of ";
+		$this->_titles['Amount'] = "Most members";
 		
 	}
-		
+
+	abstract protected function setTop($choice);
+	
 	public function setUserIdList($list) {
 		if(is_array($list)) $this->_userList = $list;
 		else return "error";
@@ -104,8 +112,8 @@ class Oibs_Controller_Plugin_TopList {
 		
 	public function addTitles() {
 		if($this->_topList) {
-			foreach($this->_titles as $name => $list) {
-			    $this->_topList[$name]['title'] = $list;
+			foreach($this->_topList as $name => $data) {
+				$this->_topList[$name]['title'] = $this->_titles[$name];
 			}
 		}
 		return $this;
@@ -113,8 +121,8 @@ class Oibs_Controller_Plugin_TopList {
 	
 	public function addDescriptions() {
 		if($this->_topList) {
-			foreach($this->_descriptions as $name => $list) {
-			    $this->_topList[$name]['description'] = $list;
+		foreach($this->_topList as $name => $data) {
+				$this->_topList[$name]['description'] = $this->_descriptions[$name];
 			}
 		}
 		return $this;
@@ -141,6 +149,32 @@ class Oibs_Controller_Plugin_TopList {
 		return $this->_topList;
 	}
 
+	protected function _cutToLimit($list,$choice) {
+		if(sizeof($this->_topList[$choice][$list]) > $this->_limit) {
+			$temp = $this->_topList[$choice][$list];
+			$this->_topList[$choice][$list] = array();
+			$i = 0;
+			foreach($temp as $iso => $data) {
+				if($i >= $this->_limit) break;
+				$i++;
+				$this->_topList[$choice][$list][$iso] = $data;
+			}
+		}
+		return;
+	}
+	
+	protected function _valueSort($listName,$choice) {
+		foreach($this->_topList[$choice][$listName] as $info) {
+			if(isset($info['name'])) $list[] = $info['name'];
+			else $list[] = null;
+			if(isset($info['value'])) $value[] = $info['value'];
+			else $value[] = null;
+		}
+		
+		array_multisort($value, SORT_DESC, $list, SORT_ASC, $this->_topList[$choice][$listName]);	
+		return;
+	}
+	
 	protected function _initializeTop($choice) {
 		if(array_key_exists($choice,$this->_topLists)) {
 			return true;

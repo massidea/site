@@ -89,7 +89,8 @@ class Oibs_Controller_Plugin_Comments {
 	 * @return array Urls
 	 */
 	public function getUrls() {
-		return $this->_urls;
+		if (isset($this->_urls)) return $this->_urls;
+		return false;
 	}
 	
 	/**

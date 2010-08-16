@@ -178,14 +178,13 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     }
     
     public function getComments($type, $id, $id_usr, $time) {
-    	//Zend_Debug::dump($time);
     	$select = $this->select()
     					   ->setIntegrityCheck(false)	
     					   ->from($this, array('*'))
     					   ->joinInner(	'users_usr', 'id_usr_cmt = id_usr',
     					   			array('id_usr', 'login_name_usr'))
     					   ->where('id_target_cmt = ?', $id)
-    					   ->where('type_cmt = ?' , 1)
+    					   ->where('type_cmt = ?' , $type)
     					   ->order('created_cmt DESC')
     					   ;
     	//Zend_Debug::dump($select->__toString());
@@ -224,7 +223,7 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             
             // Set columns values
             $comment->id_target_cmt = $content_id;
-            $comment->type_cmt = 1;
+            $comment->type_cmt = $type;
             $comment->id_usr_cmt = $user_id;
             $comment->id_parent_cmt = $parent;
             $comment->title_cmt = '';//strip_tags($data['comment_subject']);

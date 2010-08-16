@@ -143,6 +143,21 @@ div.massidea_dev_info a:visited {text-decoration: none; color: #0089CF;}
 div.massidea_dev_info a:hover {text-decoration: none; color: #0089CF;}
 div.massidea_dev_info a:active {text-decoration: none; color: #0089CF;}
 
+div.see_also_links a:link {text-decoration: none; color: #0089CF;}
+div.see_also_links a:visited {text-decoration: none; color: #0089CF;}
+div.see_also_links a:active {text-decoration: none; color: #0089CF;}
+div.see_also_links a:hover {text-decoration: none; color: #0089CF;}
+
+div.tag_alphanum_row a:link {text-decoration: none; color: #0089CF;}
+div.tag_alphanum_row a:visited {text-decoration: none; color: #0089CF;}
+div.tag_alphanum_row a:active {text-decoration: none; color: #0089CF;}
+div.tag_alphanum_row a:hover {text-decoration: none; color: #0089CF;}
+
+#tag_list_type_row a:link {text-decoration: none; color: #0089CF;}
+#tag_list_type_row a:visited {text-decoration: none; color: #0089CF;}
+#tag_list_type_row a:active {text-decoration: none; color: #0089CF;}
+#tag_list_type_row a:hover {text-decoration: none; color: #0089CF;}
+
 p.show_more a:link {text-decoration: none; color: #0089CF;}
 p.show_more a:visited {text-decoration: none; color: #0089CF;}
 p.show_more a:hover {text-decoration: none; color: #0089CF;}
@@ -250,8 +265,24 @@ div.top_row_center_right_search img{
 div.top_row_center_right_language{
 	text-align: left; 
 	padding-top: 3px; 
-	width: 450px;
+	width: 335px;
 }
+
+div.top_row_center_right_layout{
+	float: right;
+	text-align: right; 
+	padding-top: 3px;
+	padding-right: 100px;
+	width: 115px;
+}
+
+div.top_row_center_right_selection_text{
+	float: left;
+	text-align: right;
+	font-size: 12px;
+	padding-top: 4px;
+}
+
 
 /* Middle section, content area */
 
@@ -427,6 +458,12 @@ div.hidden_menu_yellow{
 	margin-right: 6px;
 }
 
+div.tag_filters_left{
+	float:left;
+	margin-bottom: -20px;
+	padding-top: 3px;
+}
+
 /* The actual content area */
 
 div.content{
@@ -468,6 +505,18 @@ div.user_image_list{
 	float: left; 
 }
 
+div.mini_content_row{
+	width: 160px;
+	margin-left: -5px;
+	margin-right: 10px;
+	padding-bottom: 5px;
+	font-size: 12px;
+}
+
+div.mini_content_row a{
+	font-size: 12px;
+}
+
 div.user_summary_list_with_stats{
 	text-align: left;
 	width: 300px;
@@ -483,6 +532,13 @@ div.user_summary_list_without_stats{
 	padding-left: 11px;
 	padding-top: 6px;
 	margin-bottom: -1px;
+	float: left;
+}
+
+div.mini_content_row_stats{
+	text-align: left;
+	padding-left: 6px;
+	width: 160px;
 	float: left;
 }
 
@@ -509,19 +565,38 @@ div.user_content_spacer img{
     width: 98%;
 }
 
+div.tag_filters_left a{
+	text-decoration: none;
+}
+
+div.tag_alphanum_row{
+	margin-bottom: -6px;
+}
+
 /* Right side of the content area */
 
 div.right_side{
 	float: right;
 	width: 205px;
-	margin-top: -52px;
+	margin: 0px;
+	margin-top: 0px;
 	margin-right: 0px;
 	font-size: 12px;
+	padding: 0px;
 }
 
 div.right_side p{
 	padding: 5px 5px;
+	padding-bottom: 0px;
 	margin: 0px;
+}
+
+div.right_side_title_small{
+	font-size: 14px;
+	font-weight: bold;
+	padding-top: 0px;
+	margin-bottom: 6px;
+	margin-top: 8px;
 }
 
 div.top_right_box_links_users{
@@ -579,10 +654,55 @@ div.top_right_box{
 	width: 175px;
 }
 
+div.top_right_box p{
+	padding: 0px 0px 10px 0px;
+}
+
+
 div.user_listing_top_menu p{
 	padding: 0px;
 	margin: 0px;
 	padding-top: 2px;
+}
+
+div.see_also_title{
+	padding-top: 3px;
+	padding-left: 6px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+div.see_also_links {
+	margin-top: 3px;
+	color: #0089CF;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+div.see_also_links a{
+	margin-top: 3px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+div.recent_campaigns_title a{
+	padding-top: 3px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #0089CF;
+}
+
+#right_side_content_container{
+	border: 1px solid #cccccc;
+	padding: 12px;
+	background: #fff;
+	text-align: left;
+	font-size: 12px;
+	margin-right: 0px;
+	margin-top: 0px;
+	width: 175px;
+	height: 225px;
+    overflow: auto;
 }
 
 /* The footer */
@@ -1983,6 +2103,7 @@ div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; 
     list-style:none;}
 #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
 
+
 /*
  * Fetchpassword
  */
@@ -1998,3 +2119,4 @@ p.fetchpassword-error {
     font-weight: bold;
     width: 430px;
 }
+

@@ -427,6 +427,18 @@ class AccountController extends Oibs_Controller_CustomController
 			->addTab("Readers", "readers", "all selected");
 			
 		$boxes[] = $box;
+		
+		/*Box for user profile custom layout settings*/
+		$box = new Oibs_Controller_Plugin_AccountViewBox();
+		$box->setHeader("Custom Layout")
+			->setClass("center")
+			->setName("my-custom-layout")
+			->addTab("Fonts", "fonts", "all selected") //Header, type, class, extra
+			->addTab("Colors", "colors", "colors")
+			->addTab("Background", "background", "background");
+		$boxes[] = $box;
+		
+		$customLayoutForm = new Default_Form_AccountCustomLayoutSettings();
 			
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
@@ -438,6 +450,7 @@ class AccountController extends Oibs_Controller_CustomController
         //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->type = $type;
+        $this->view->customLayoutSettingsForm = $customLayoutForm;
 
         /* Waiting for layout that is maybe coming 
         // MyViews
@@ -1294,6 +1307,7 @@ class AccountController extends Oibs_Controller_CustomController
         $topNames = null;
         $topList = null;
         $topCountry = null;
+        $topGroup = null;
         
         //This is code to fetch search results
         if($url != $this->_urlHelper->url()) {
@@ -1333,7 +1347,7 @@ class AccountController extends Oibs_Controller_CustomController
         	$cache = Zend_Registry::get('cache');
         	
         	$top = new Oibs_Controller_Plugin_Toplist_Users();
-        	
+
 			if(!$resultList = $cache->load('UserTopList')) {
 				
 				$top->setLimit(10)
@@ -1356,14 +1370,27 @@ class AccountController extends Oibs_Controller_CustomController
         	foreach($topList as $top) {
         		$topNames[] = $top['name'];
         	}
+        	$topNames[] = "Amount";
         	
         	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
 	        $topListCountries->fetchUserCountries()
+	        ->setTopAmount()
 	        	->autoSet()
 				;
-			
+			if($userid) $topListCountries->addUser($userid);
 			$topCountry = $topListCountries->getTopList();
-			        	
+
+			
+			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+			$topListGroups->fetchUsersInGroups()
+							->autoSet()
+							;
+							
+							
+			$topGroup = $topListGroups->getTopList();
+			//$test = new Oibs_Controller_Plugin_Toplist_Groups();
+			//$test->fetchUsersInGroups()->autoSet();die;
+			
         }
         
         if(!$topNames) {
@@ -1372,12 +1399,15 @@ class AccountController extends Oibs_Controller_CustomController
 			$topNames[] = "Popularity";
 			$topNames[] = "Rating";
 			$topNames[] = "Comment";
+			$topNames[] = "Amount";
         }
         
         $topListBoxes = array(
         	'Users' => $topList,
-        	'Countries' => $topCountry
+       		'Groups' => $topGroup,
+        	'Countries' => $topCountry,
         );
+        //print_r($topListBoxes);die;
       
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
@@ -1435,7 +1465,7 @@ class AccountController extends Oibs_Controller_CustomController
 
 		// Load user locations from cache
 		if(!$resultList = $cache->load('UserLocationsList')) {
-			$userModel = new Default_Model_User();
+			$userModel = new Default_Model_UserProfiles();
 			$locations = $userModel->getAllUsersLocations();
 			$cache->save($locations, 'UserLocationsList');
 
@@ -1795,6 +1825,7 @@ class AccountController extends Oibs_Controller_CustomController
    					unset($userList[$user['id_usr']]);
     			} else {   				
     				echo $user['login_name_usr'].":";
+    				echo time()-$user['time'].":";
     				echo $user['mode']."<br />";
     			}
     		}

@@ -246,7 +246,14 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmpHasCmpModel = new Default_Model_CampaignHasCampaign();
         $linkedcampaigns = $cmpHasCmpModel->getCampaignCampaigns($cmpid);
         $linkedcampaigns = array_merge($linkedcampaigns['parents'], $linkedcampaigns['childs']);
+        
 
+        $comments = new Oibs_Controller_Plugin_Comments("campaign", $cmpid);
+        if ($this->view->identity) $comments->allowComments(true);
+  		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+		$comments->loadComments();
+        
+		$this->view->comments		 = $comments;
         $this->view->campaign        = $cmp;
         $this->view->cmpcnts         = $cnts;
         $this->view->grpname         = $grpname;
