@@ -26,6 +26,7 @@ $autoloader = new Zend_Application_Module_Autoloader(array(
 	'basePath'  => '../../application/'
 ));
 
+// Get database
 $application->getBootstrap()->bootstrap('db');
 
 // Enable cache
@@ -36,5 +37,6 @@ $cache = Zend_Cache::factory('core', 'File', $frontend, $backend);
 Zend_Registry::set('cache', $cache);
 
 // Execute service
+
 require_once 'api.inc';
 launchService();
