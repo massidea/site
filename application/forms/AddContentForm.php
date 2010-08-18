@@ -388,8 +388,7 @@ class Default_Form_AddContentForm extends Zend_Form
         $preview = new Zend_Form_Element_Button('content_preview_button');
         $preview->setLabel($translate->_("content-add-preview"))
                 ->removeDecorator('DtDdWrapper')
-                ->setAttrib('class', 'content_manage_button')
-                ->setAttrib('onclick', 'generatePreview();');
+                ->setAttrib('class', 'content_manage_button');
         
         // Set custom form layout
         $this->setDecorators(array(array('ViewScript', array(

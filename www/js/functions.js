@@ -464,21 +464,6 @@ $(document).ready(function() {
         }
 	});
 	
-	/**
-	 * Set content publish button to disabled after click
-	 * and submit form.
-	 */
-	$('.content_manage_button').click(function() {	
-		if($(this).attr('id') == "content_publish_button") {
-			$("#content_publish").val('1');
-			$('.content_manage_button').attr('disabled', 'disabled');
-			$('#add_content_form').submit();
-		} else if($(this).attr('id') == "content_save_button") {
-			$("#content_save").val('1');
-			$('.content_manage_button').attr('disabled', 'disabled');
-			$('#add_content_form').submit();
-		}
-	});
 	idleInterval = 181000;
 	setTimeout("onlineIdle()", idleInterval);
 });

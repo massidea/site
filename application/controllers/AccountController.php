@@ -914,7 +914,35 @@ class AccountController extends Oibs_Controller_CustomController
          $code .= substr($possible, mt_rand(0, strlen($possible)-1), 1);
       } // end for
       return $code;
-   } // end of generateCode()
+	} // end of generateCode()
+
+	/**
+	 * Generate Api key -action
+	 * 
+	 */
+	public function apikeyAction()
+	{
+		$auth = Zend_Auth::getInstance();
+		$hasApiKey = false;
+		$apiKey = null;
+		if($auth->hasIdentity())
+		{
+			$id = $auth->getIdentity()->user_id;
+			$model = new Default_Model_UserApiKey();
+			$hasApiKey = $model->hasApiKey($id);
+			if(!$hasApiKey && $this->_hasParam('generate'))
+			{
+				$apiKey = $model->addApiKey($id, true);
+				$hasApiKey = true;
+			}
+			else
+			{
+				$apiKey = $model->getApiKeyById($id);
+			}
+		}
+		$this->view->hasApiKey = $hasApiKey;
+		$this->view->apikey = $apiKey;
+	}
 
     /**
     *    fetch forgotten password page:
