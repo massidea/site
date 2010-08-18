@@ -426,10 +426,10 @@ class Default_Form_AddContentForm extends Zend_Form
                 $this->addElements(array($research));
                 break;
             case 'finfo':
-                $this->addElements(array($opportunity, $threat, $finfoClasses));
+                $this->addElements(array($opportunity, $threat, /*$finfoClasses*/));
                 break;
             case 'idea':
-                $this->addElements(array($solution, $innovation));
+                $this->addElements(array($solution, /*$innovation*/));
                 break;
             default:
                 break;

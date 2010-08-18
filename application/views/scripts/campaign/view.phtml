@@ -217,7 +217,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                     <div class="clear"></div>
 
                     <div class="scroll-box">
-                        <?php if (is_array($this->cmpcnts) && $this->cmpcnts[0]['id_cnt'] != null): ?>
+                        <?php if (is_array($this->cmpcnts) && isset($this->cmpcnts[0]) && $this->cmpcnts[0]['id_cnt'] != null): ?>
                         <ul>
                             <?php  echo $this->partialLoop('partials/content_row_new.phtml', $this->cmpcnts); ?>
                         </ul>

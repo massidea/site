@@ -213,8 +213,8 @@ class TagController extends Oibs_Controller_CustomController
         */
         
 		$this->view->content = $contentList;
-        	$this->view->tagName = $tagName;
-        	$this->view->campaignGroupList = $campaignGrouList;
+        $this->view->tagName = $tagName;
+        $this->view->campaignGroupList = $campaignGroupList;
 		$this->view->userList = $userList;
 	} // end of viewAction
 	
