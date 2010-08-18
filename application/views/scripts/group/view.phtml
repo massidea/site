@@ -38,7 +38,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
         </ul>
         <h4><?php echo $this->translate('group-members'); ?></h4>
-        <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
+        <span class="more"><strong><a href="<?php echo $this->url(array('controller' => 'account',
+                                                        'action' => 'userlist',
+        												'group' => $this->grpData["group_name_grp"],
+        												'exactg' => "1",
+                                                        'language' => $this->language),
+                                                        'lang_default', true); ?>">Show all</a></strong></span>
         <div class="clear"></div>
         <ul>
            <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>

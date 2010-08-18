@@ -28,46 +28,52 @@ function blurMenu(target, color, baseurl)
 }
 
 $(document).ready(function(){
-	$("#login_link_in_box").click(
-			function () {$("#login_box").fadeIn();}
-	);
+	$("#login_box").dialog({
+		closeOnEscape: true,
+		draggable: false,
+		modal: true,
+		resizable: false,
+		title: 'Login to Massidea',
+		autoOpen: false
+	});
+
+	$("#login_box_openid").dialog({
+		closeOnEscape: true,
+		draggable: false,
+		modal: true,
+		resizable: false,
+		title: 'Login with OpenID',
+		autoOpen: false
+	});
 	
+	$("#login_link").click(function () {
+		$("#login_box").dialog("open");
+		$("#login_box > form > div:nth-child(2) > input").focus();
+	});
 
-	$("#login_link_in_box").click(
-			function () {$("#login_box_openid").fadeOut();}
-	);
+	$("#login_link_openid").click(function () {
+		$("#login_box").dialog("close");
+		$("#login_box_openid").dialog("open");
+		$("#login_box_openid > form > div:nth-child(2) > input").focus();
+	});
+	
+	$("#login_link_in_box").click(function () {
+		$("#login_box_openid").dialog("close");
+		$("#login_box").dialog("open");
+		$("#login_box > form > div:nth-child(2) > input").focus();
+	});
+	
+	
+	 $("#add_content_button").hover(
+			 function () {$("#add_content_menu").fadeIn();},
+			 function () {}
+			 );
 
-	$("#login_link").click(
-			function () {$("#login_box").fadeIn();}
-	);
-
-	$("#login_link_openid").click(
-			function () {$("#login_box_openid").fadeIn();}
-	);
-
-	$("#login_link_openid").click(
-			function () {$("#login_box").fadeOut();}
-	);
-
-	$("#login_box").hover(
-			function () {}, 
-			function () {$("#login_box").fadeOut();}
-	);
-
-	$("#login_box_openid").hover(
-			function () {}, 
-			function () {$("#login_box_openid").fadeOut();}
-	);
-  
-	$("#add_content_button").hover(
-			function () {$("#add_content_menu").fadeIn();}, 
-			function () {}
-	);
-
-	$(".sub_menu_right").hover(
-			function () {}, 
-			function () {$("#add_content_menu").fadeOut();}
-	);
+	 $(".sub_menu_right").hover(
+			 function () {},
+			 function () {$("#add_content_menu").fadeOut();}
+			 );
+	
 });
 
 function highlightContentMenuItem(target)

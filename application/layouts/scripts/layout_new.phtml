@@ -10,7 +10,8 @@ echo $this->doctype();
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix_new.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix_new.css'), 'screen', 'IE 6');
-    $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/custom-theme/jquery-ui-1.8.2.custom.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('/css/farbtastic.css'));	// Used for farbtastic custom color picker
 
     $this->headLink()->headLink(array(  'rel'   => 'shortcut icon',
@@ -118,7 +119,10 @@ echo $this->doctype();
                                         <input style="margin-right: 6px; width: 70px;" type="submit"
                                             value="<?php echo $this->translate('account-login-submit'); ?>" />
                                         <span class="top_right_box_links" style="font-size: 12px;">
-                                            <a href="#">
+                                            <a href="<?php echo $this->url(array('controller' => 'account',
+                                            									'action' => 'fetchpassword',
+                                            									'language' => $this->language),
+                                        										'lang_default', true); ?>">
                                                 <?php echo $this->translate('account-login-problems'); ?>
                                             </a>
                                         </span>

@@ -819,41 +819,37 @@ p.top_right_box_links_learn_more{
 /* ELEMENT ID DEFINITIONS */
 
 #login_box{
-	position: absolute;
 	text-align: left;
 	display: none;
 	border: 1px solid #cccccc;
 	background: #eeeeee;
 	color: #333333;
-	width: 240px;
-	height: 156px;
 	font-family: Arial;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 6px;
 	padding-left: 8px;
-	z-index: 1000;
+	height: 213px;
+	width: 288px;
 }
 
 #login_box input{
-	width: 232px;
+	width: 222px;
 }
 
 #login_box_openid{
-	position: absolute;
 	text-align: left;
 	border: 1px solid #cccccc;
 	color: #333333;
 	display: none;
 	background: #eeeeee;
-	width: 240px;
-	height: 90px;
 	font-family: Arial;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 6px;
 	padding-left: 8px;
-	z-index: 1000;
+	height: 123px;
+	width: 268px;
 }
 
 #sign_up_now{

@@ -6,14 +6,21 @@ $url = $this->url(array('controller' => 'account',
                         'language' => $language),
                         'lang_default',
                         true);
+                        
+$cityUrl = $this->url(array('controller' => 'account',
+                        'action' => 'userlist',
+                        'city' => $this->city,
+                        'language' => $language),
+                        'lang_default',
+                        true);
 ?>
 <li><a href="<?php echo $url ?>"><?php echo $this->login_name_usr; ?></a>
 <?php
 if(isset($this->count)) {
     echo "($this->count)";
 }
-if (isset($this->city)) {
-    echo " | $this->city";
+if (isset($this->city) && !empty($this->city)) {
+   echo " | "; ?> <a href="<?php echo $cityUrl; ?>"><?php echo $this->city; ?></a><?php
 }
 ?>
 </li>

@@ -1299,7 +1299,7 @@ class AccountController extends Oibs_Controller_CustomController
         
         $userModel = new Default_Model_User();
         
-        //variable initializings (to avoid notice errors :p)
+        //variable initializations (to avoid notice errors :p)
         $pageCount = null;
         $userContents = null;
         $listSize = null;
@@ -1367,12 +1367,6 @@ class AccountController extends Oibs_Controller_CustomController
 
 			//print_r($top->test());die;
 			//print_r($topList);die;
-
-        	$topNames = array();
-        	foreach($topList as $top) {
-        		$topNames[] = $top['name'];
-        	}
-        	$topNames[] = "Amount";
         	
         	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
 	        $topListCountries->fetchUserCountries()
