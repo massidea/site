@@ -71,6 +71,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			}
 
 			$this->view->privmsgs = $privmsgs;
+			$this->view->user 	  = $auth->getIdentity()->username;
 
 			$Default_Model_privmsg->markUnreadMessagesAsRead($auth->getIdentity()->user_id);
 		}
