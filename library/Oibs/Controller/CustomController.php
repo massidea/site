@@ -143,19 +143,28 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			
 		$this->view->searchForm = $simpleSearchForm;
 
-		if (get_magic_quotes_gpc()) { function stripslashes_deep($value) { $value = is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value); return $value; } $_POST = array_map('stripslashes_deep', $_POST); $_GET = array_map('stripslashes_deep', $_GET); $_COOKIE = array_map('stripslashes_deep', $_COOKIE); } 
-		
 		if ($params['controller'] != 'ajax') {
 			$this->setActiveOnline();
 		}
+
+		$this->view->jsmetabox->append('idleRefreshUrl', $this->_urlHelper->url(array('controller' => 'ajax', 'action' => 'idlerefresh'), 'lang_default', true));
+		$this->view->jsmetabox->append('baseUrl', $this->view->baseUrl);
 		
-		$this->view->jsmetabox->append('idleRefreshUrl', $this->_urlHelper->url(array('controller' => 'ajax', 'action' => 'idlerefresh')));
+		$id_target = "";
+		switch($params['controller']) {
+			case ('campaign'): $id_target = "cmpid"; break;
+			case ('content'): $id_target = "content_id"; break;
+			case ('account'): $id_target = "user"; break;
+			case ('group'): $id_target = "groupid"; break;
+		}
+		
+		if (isset($params[$id_target])) $this->view->jsmetabox->append('currentPage', array('id' => $params[$id_target], 'type' => $params['controller']));
 		/*
 		echo '<pre>';
 		print_r($params);
 		echo '</pre>';
 		*/
-		
+
 	} // end of init
 		
 	/**
@@ -323,4 +332,13 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
     		$userList[$id]['browsers']--;
     	}
     }*/
+    
+    /**
+     * Multibyte uppercase first character function
+     * @param $string
+     */
+    function mb_ucfirst($string) {
+        $string = mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
+        return $string;
+    }
 } // end of class

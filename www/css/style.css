@@ -35,6 +35,10 @@ h3.recent_posts{
 	color: #C0C0C0;
 }
 
+h3.recent_posts a {
+	text-decoration: none;
+}
+
 h3{
 	padding: 0px;
 	margin-top: 0px;
@@ -489,7 +493,6 @@ div.user_content_list{
 
 div.user_content_row{
 	width: 500px;
-    border-top: 1px dotted #DDDDDD;
     margin: 10px 0 10px 0;
 }
 

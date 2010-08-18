@@ -479,12 +479,12 @@ $(document).ready(function() {
 			$('#add_content_form').submit();
 		}
 	});
-	idleInterval = 180000;
+	idleInterval = 181000;
 	setTimeout("onlineIdle()", idleInterval);
 });
 
 function onlineIdle() {
-	var json = JSON.parse($('#jsmetabox').text());
+	var json = jQuery.parseJSON($('#jsmetabox').text());
 	var url = json.idleRefreshUrl;
 	$.ajax({
 		type: "POST",

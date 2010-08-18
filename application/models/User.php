@@ -684,7 +684,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $data[0];
     }
     
-    /*
+    /**
     *   getUserListing
     *
     *   Gets user listing with filtering options.
@@ -757,7 +757,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $final;
     }
     
-    /*
+    /**
      * sortAndFilterUsers
      * 
      * Sort and Filter Users
@@ -805,26 +805,26 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	        
 	        if(isset($filter['group']) && $filter['group'] != "")
 	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
-	                                 
-        $result = $this->_db->fetchAll($select);
 
-        if(!$result) return array();
-        
-        $userIDList = $this->simplifyArray($result,'id_usr');
-        $output = $userIDList;
+	    if(!$order && !$list) {
+	         $result = $this->_db->fetchAll($select);         
+	         if(!$result) return array();
+	         $output = $this->simplifyArray($result,'id_usr');
+        }
+        else $output = array();
         
         if($groupName == "userInfo")
-       		$output = $this->sortByUserInfo($userIDList, $sort, $list);
+       		$output = $this->sortByUserInfo($select, $sort, $list);
         elseif($groupName == "contentInfo")
-        	$output = $this->sortUsersByContentInfo($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByContentInfo($select, $sort, $list, null);
         elseif($groupName == "contentViews")
-        	$output = $this->sortUsersByViews($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByViews($select, $sort, $list, null);
         elseif($groupName == "contentRatings")
-        	$output = $this->sortUsersByRating($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByRating($select, $sort, $list, null);
         elseif($groupName == "contentPopularity")
-        	$output = $this->sortUsersByPopularity($userIDList, $sort, $list, null);	
+        	$output = $this->sortUsersByPopularity($select, $sort, $list, null);	
         elseif($groupName == "contentComments")	
-        	$output = $this->sortUsersByComments($userIDList, $sort, $list, null);
+        	$output = $this->sortUsersByComments($select, $sort, $list, null);
         	
         return $output;
         
@@ -900,7 +900,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	return $final;
     }   
     
-    /*
+    /**
      * getUserIds
      * 
      * This function retrieves all user ID:s
@@ -914,10 +914,23 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr');
         return $result;
     } 
-        
+
+    /**
+     * getUserIdSearch
+     * 
+     * This function give SQL query to get all user IDs
+     * 
+     * @return $select
+     * @author Jari Korpela
+     */
+    public function getUserIdSearch() {
+    	$select = $this->select()->from($this, 'id_usr')
+                                 ->order('id_usr');
+        return $select;
+    } 
 
      
-    /*
+    /**
      * getUsersViews
      * 
      * gets users views count
@@ -941,7 +954,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }    
     
-    /*
+    /**
      * getUsersPopularity
      * Popularity means how many unique users has viewed users contents
      * 
@@ -965,7 +978,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersRating
      * 
      * Gets users rating sum
@@ -991,7 +1004,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersCommentCount
      * 
      * Gets users comment count
@@ -1015,7 +1028,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }       
     
-    /*
+    /**
      * getUserContentRatings
      * 
      * Gets Users Content Ratings info
@@ -1055,7 +1068,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $userRatings;
     }
     
-    /*
+    /**
      * getUserInfo 
      * 
      * Gets basic user information from users_usr table
@@ -1076,7 +1089,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $this->_db->fetchAll($select);                                      
     }
 
-    /*
+    /**
      * getUsersContentCount
      * 
      *  Gets Users content counts
@@ -1114,7 +1127,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $resultList;
     }
     
-    /*
+    /**
      * getUsersContents
      * 
      *  Gets users content ID:s
@@ -1160,33 +1173,35 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;                                 
     }
     
-    /*
+    /**
      * sortUsersByContentInfo
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */    
-    public function sortUsersByContentInfo($userIDList, $sort, $list, $limit) {
+    public function sortUsersByContentInfo($search, $sort, $list, $limit) {
     	$content = new Default_Model_ContentHasUser(); 
     	$select = $content->select()->from('cnt_has_usr',
     									array('id_usr'))
-    							->where('id_usr IN (?)',$userIDList)
+    							->where('id_usr IN (?)',$search)
     							->order(array($sort,'id_usr'))
     							->group('id_usr')    							
     							;
     	if($limit) $select->limit($limit,0);
     	//print_r($select->assemble());echo "\n";
         $result = $this->simplifyArray($content->_db->fetchAll($select),'id_usr');
-		if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
-        
+		if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($content->_db->fetchAll($search),'id_usr'),
+							 $list);
+
         return $result;
     }
     
-    /*
+    /**
      * sortByUserInfo
      * 
      * Sorts $userIdList by $sort
@@ -1207,110 +1222,118 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $this->simplifyArray($result,'id_usr');
     }
     
-    /*
+    /**
      * sortUsersByViews
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByViews($userIDList, $sort, $list, $limit) {
+    public function sortUsersByViews($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('cnt_views_vws',
     									array('id_usr_vws'))
-    							->where('id_usr_vws IN (?)',$userIDList)
+    							->where('id_usr_vws IN (?)',$search)
     							->group('id_usr_vws')
     							->order(array($sort,'id_usr_vws'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws'); 
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }
     
-    /*
+    /**
      * sortUsersByComments
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByComments($userIDList, $sort, $list, $limit) {
+    public function sortUsersByComments($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('comments_cmt',
     									array('id_usr_cmt'))
-    							->where('id_usr_cmt IN (?)',$userIDList)
+    							->where('id_usr_cmt IN (?)',$search)
     							->group('id_usr_cmt')
     							->order(array($sort,'id_usr_cmt'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt'); 
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }    
     
-    /*
+    /**
      * sortUsersByPopularity
      * Popularity means how many unique users has viewed users contents
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByPopularity($userIDList, $sort, $list, $limit) {
+    public function sortUsersByPopularity($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
     									->joinLeft(array('vws' => 'cnt_views_vws'),
     											'cnt.id_cnt = vws.id_cnt_vws',
     									array('readers' => 'COUNT(id_usr_vws)'))
-    							->where('cnt.id_usr IN (?)',$userIDList)
+    							->where('cnt.id_usr IN (?)',$search)
     							->group('cnt.id_usr')
     							->order(array($sort,'id_usr'))
     							;
     	if($limit) $select->limit($limit,0);
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }
      
-    /*
+    /**
      * sortUsersByRating
      * 
      * Sorts $userIdList by $sort
      * 
-     * @param array $userIDList
+     * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
      */   
-    public function sortUsersByRating($userIDList, $sort, $list, $limit) {
+    public function sortUsersByRating($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
     									->joinLeft(array('crt' => 'content_ratings_crt'),
     												'crt.id_cnt_crt = cnt.id_cnt',
     												array())
-    							->where('id_usr IN (?)',$userIDList)
+    							->where('id_usr IN (?)',$search)
     							->group('id_usr')
     							->order(array($sort,'id_usr'))
     							;
     	if($limit) $select->limit($limit,0);						
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
-        if($list) $result = $this->addMissingIdsToResult($result, $userIDList, $list);
+        if($list) $result = $this->addMissingIdsToResult($result,
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
+							 $list);
         
 		return $result;
     }
@@ -1684,7 +1707,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } // end of getUserContentList
     
-    /*
+    /**
      * array $statisticsList holds info about what statistics you want to have
      */
     public function getUserStatistics($userId, $contentIdList, $statisticsList) {
@@ -1728,7 +1751,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;
     }
     
-    /*
+    /**
      * getUsersViewers
      * 
      * gets list of users who has read users content, sorted last viewed
@@ -1758,7 +1781,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		return $result;		   		 
     }
     
-    /*
+    /**
      * getGravatarStatus
      * @return 1 or 0 (true, false)
      * @param user id
@@ -1774,7 +1797,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result['gravatar_usr'];
     }
     
-    /*
+    /**
      * changeGravatarStatus
      * @return true, false
      * @param user id

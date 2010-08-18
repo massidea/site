@@ -1417,13 +1417,13 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     }
     
     
-    public function getCountryAmounts() {
+    public function getCountryAmounts($userIdList = null) {
     	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
                                       	array('profile_value_usp as countryIso',
                                       	'COUNT(profile_value_usp) AS value'))
                                       ->joinLeft(array('usc' => 'countries_ctr'),
                                       	 'usc.iso_ctr = usp.profile_value_usp AND usp.profile_key_usp = "country"',
-                                      	 array('countryName' => 'usc.printable_name_ctr'))
+                                      	 array('name' => 'usc.printable_name_ctr'))
                                       ->where('usp.public_usp = 1')
                                       ->where('usp.profile_key_usp = "country"')
                                       ->where('usp.profile_value_usp != "0"')
@@ -1431,7 +1431,24 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
                                       ->order('usp.id_usr_usp')
                                       ->group('usp.profile_value_usp')
                                       ;
-                                      
+       if($userIdList) $select->where('usp.id_usr_usp IN (?)', $userIdList);                                
+       $result = $this->_db->fetchAssoc($select);
+
+       return $result;
+    }
+    
+    public function getCityAmounts($userIdList = null) {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      	array('profile_value_usp as name',
+                                      	'COUNT(profile_value_usp) AS value'))
+                                      ->where('usp.public_usp = 1')
+                                      ->where('usp.profile_key_usp = "city"')
+                                      ->where('usp.profile_value_usp != ""')
+                                      ->order('value desc')
+                                      ->order('usp.id_usr_usp')
+                                      ->group('usp.profile_value_usp')
+                                      ;
+       if($userIdList) $select->where('usp.id_usr_usp IN (?)', $userIdList);                          
        $result = $this->_db->fetchAssoc($select);
 
        return $result;

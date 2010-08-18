@@ -4,6 +4,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	
 	private		$_topListUsersCountry = array();
 	private		$_usersWithCountry = array();
+	private		$_name = "countries";
 	
 	public function __construct() {
 		parent::__construct();
@@ -35,14 +36,14 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 		$userCountry = $user[0]['countryIso'];
 		
 		foreach($this->_topList as $name => $data) {
-			$iso = array_keys($data['countries']);
+			$iso = array_keys($data[$this->_name]);
 			$value = array_search($userCountry, $iso);
 			if($value !== false) {
 				$user = $this->_intersectMergeArray($user,array(0 => array('rank' => $value)));
 				$this->_addedUser[$name] = $user;
 			}
 		}
-		
+
 		return;
 	}
 	
@@ -55,8 +56,9 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	}
 	
 	public function setTopAmount() {
+		$choice = "Amount";
 
-		$countries = $this->_userProfileModel->getCountryAmounts();
+		$countries = $this->_userProfileModel->getCountryAmounts($this->_userList);
 		
 		/* Couldnt decide between sql query or loop... I'll leave this here if someone notices it to be faster.
 		$countries = array();
@@ -65,8 +67,10 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 			else $countries[$data['countryIso']] += 1;
 		}
 		*/
-		$this->_topList['Amount']['countries'] = $countries;
-		$this->_topList['Amount']['name'] = "Amount";
+		
+		$this->_topList[$choice][$this->_name] = $countries;
+		$this->_topList[$choice]['name'] = $choice;
+		$this->_cutToLimit($this->_name,$choice);
 		return $this;
 
 	}
@@ -80,6 +84,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 				$getIds = array_keys($this->_usersWithCountry);
 				$this->_topListIds[$choice] = $this->_getChoiceValue($choice,$getIds);
 				$final = array();
+				//print_r($this->_usersWithCountry);die;
 				foreach($this->_topListIds[$choice] as $userValue) {
 					foreach(array_values($this->_usersWithCountry) as $userInfo) {
 						if($userValue['id_usr'] == $userInfo['id_usr']) {
@@ -110,47 +115,29 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	
 	private function _makeToCountryGroups($choice) {
 		if($this->_topListUsersCountry[$choice]['users']) {
-			$this->_topList[$choice]['countries'] = null;
+			$this->_topList[$choice][$this->_name] = null;
 			foreach($this->_topListUsersCountry[$choice]['users'] as $user) {
 					$countryIso = $user['countryIso'];
-					if(isset($this->_topList[$choice]['countries'][$countryIso]))
-						$arrayIso = $this->_topList[$choice]['countries'][$countryIso];
+					if(isset($this->_topList[$choice][$this->_name][$countryIso]))
+						$arrayIso = $this->_topList[$choice][$this->_name][$countryIso];
 					else $arrayIso = null;
 					
-					if(!$arrayIso['value']) $this->_topList[$choice]['countries'][$countryIso]['value'] = 0;
+					if(!$arrayIso['value']) $this->_topList[$choice][$this->_name][$countryIso]['value'] = 0;
 					
 					if($user['countryName']) $countryName = $user['countryName'];
 					else $countryName = null;
 					
-					$this->_topList[$choice]['countries'][$countryIso]['countryName'] = $countryName;
-					$this->_topList[$choice]['countries'][$countryIso]['value'] += $user['value'];
+					$this->_topList[$choice][$this->_name][$countryIso]['name'] = $countryName;
+					$this->_topList[$choice][$this->_name][$countryIso]['value'] += $user['value'];
 				
 			}
-						
-			foreach($this->_topList[$choice]['countries'] as $info) {
-				if($info['countryName']) $country[] = $info['countryName'];
-				else $country[] = null;
-				if($info['value']) $value[] = $info['value'];
-				else $value[] = null;
-			}
-			
 
-			array_multisort($value, SORT_DESC, $country, SORT_ASC, $this->_topList[$choice]['countries']);	
-			
-			if(sizeof($this->_topList[$choice]['countries']) > $this->_limit) {
-				$temp = $this->_topList[$choice]['countries'];
-				$this->_topList[$choice]['countries'] = array();
-				$i = 0;
-				foreach($temp as $iso => $data) {
-					if($i >= $this->_limit) break;
-					$i++;
-					$this->_topList[$choice]['countries'][$iso] = $data;
-				}
-			}
+			$this->_valueSort($this->_name,$choice);
+			$this->_cutToLimit($this->_name,$choice);
 			
 		}
 		else {
-			$this->_topList[$choice]['countries'] = array("No users");
+			$this->_topList[$choice][$this->_name] = array("No users");
 		}
 		$this->_topList[$choice]['name'] = $choice; 
 		return;

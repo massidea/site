@@ -89,7 +89,8 @@ class Oibs_Controller_Plugin_Comments {
 	 * @return array Urls
 	 */
 	public function getUrls() {
-		return $this->_urls;
+		if (isset($this->_urls)) return $this->_urls;
+		return false;
 	}
 	
 	/**
@@ -288,8 +289,8 @@ class Oibs_Controller_Plugin_Comments {
 	 * @return int
 	 */
 	private function getTypeFromDatabase($id) {
-		$commentTypeModel = new Default_Model_CommentTypes();
-		return $commentTypeModel->getId($id);
+		$pageTypeModel = new Default_Model_PageTypes();
+		return $pageTypeModel->getId($id);
 	}
 	
 	/**

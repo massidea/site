@@ -78,4 +78,5 @@
 		$layoutSession = new Zend_Session_Namespace('layout');
 		return $layoutSession->translateTo;
 	}
+
 }

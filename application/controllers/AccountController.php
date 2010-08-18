@@ -942,6 +942,7 @@ class AccountController extends Oibs_Controller_CustomController
         $action = $this->getRequest()->isPost() ? 'submit' : $this->getRequest()->getQuery('action');
         $submittedForm = $this->getRequest()->getPost('submittedform');
         $key = $this->getRequest()->getParam('key');
+        $error = null;
 
         /** check in what stage the process of password reset is
             (according to variables $action, $_POST['passwordgiven'] and $_GET['key']) **/
@@ -1307,6 +1308,8 @@ class AccountController extends Oibs_Controller_CustomController
         $topNames = null;
         $topList = null;
         $topCountry = null;
+        $topGroup = null;
+        $topCity = null;
         
         //This is code to fetch search results
         if($url != $this->_urlHelper->url()) {
@@ -1346,7 +1349,7 @@ class AccountController extends Oibs_Controller_CustomController
         	$cache = Zend_Registry::get('cache');
         	
         	$top = new Oibs_Controller_Plugin_Toplist_Users();
-        	
+
 			if(!$resultList = $cache->load('UserTopList')) {
 				
 				$top->setLimit(10)
@@ -1378,7 +1381,26 @@ class AccountController extends Oibs_Controller_CustomController
 				;
 			if($userid) $topListCountries->addUser($userid);
 			$topCountry = $topListCountries->getTopList();
-			        	
+
+			
+			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+			$topListGroups->fetchUsersInGroups()
+			->setTopAmount()
+							->autoSet()
+							;
+							
+							
+			$topGroup = $topListGroups->getTopList();
+			
+			
+			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+			$topListCities->fetchUsersWithCity()
+			->setTopAmount()
+							->autoSet()
+							;
+			if($userid) $topListCities->addUser($userid);
+			$topCity = $topListCities->getTopList();
+			
         }
         
         if(!$topNames) {
@@ -1392,8 +1414,11 @@ class AccountController extends Oibs_Controller_CustomController
         
         $topListBoxes = array(
         	'Users' => $topList,
-        	'Countries' => $topCountry
+       		'Groups' => $topGroup,
+       		'Cities' => $topCity,
+        	'Countries' => $topCountry,
         );
+        //print_r($topListBoxes);die;
       
         // User list search form
         $userSearch = new Default_Form_UserListSearchForm(null, $formData);
@@ -1811,6 +1836,7 @@ class AccountController extends Oibs_Controller_CustomController
    					unset($userList[$user['id_usr']]);
     			} else {   				
     				echo $user['login_name_usr'].":";
+    				echo time()-$user['time'].":";
     				echo $user['mode']."<br />";
     			}
     		}

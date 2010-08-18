@@ -203,8 +203,8 @@ class AjaxController extends Oibs_Controller_CustomController
 		$params = $this->getRequest()->getParams();
 		$userModel = new Default_Model_User();
 		$userIds = $userModel->sortAndFilterUsers($params,null,null);
-		
 		if(!$userIds) die; 
+		
 		$top = new Oibs_Controller_Plugin_Toplist_Users();
 		$top->setUserIdList($userIds)
 			->autoSet();
@@ -218,15 +218,32 @@ class AjaxController extends Oibs_Controller_CustomController
         	->fetchUserCountries()
         	->setTopAmount()
         	->autoSet()
-        	
 			;
 		if($userid) $topListCountries->addUser($userid);
 		$topCountry = $topListCountries->getTopList();
+
+		$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+		$topListGroups->setUserIdList($userIds)
+						->fetchUsersInGroups()
+						->setTopAmount()
+						->autoSet()
+						;		
+		$topGroup = $topListGroups->getTopList();
 		
+		$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+		$topListCities->setUserIdList($userIds)
+						->fetchUsersWithCity()
+						->setTopAmount()
+						->autoSet()
+						;
+		if($userid) $topListCities->addUser($userid);
+		$topCity = $topListCities->getTopList();
 		
 		$topListBoxes = array(
         	'Users' => $topList,
-			'Countries' => $topCountry
+			'Groups' => $topGroup,
+			'Cities' => $topCity,
+			'Countries' => $topCountry,
         ); 
 	
 		$this->view->topListBoxes = $topListBoxes;
@@ -386,5 +403,16 @@ class AjaxController extends Oibs_Controller_CustomController
 		if ($auth->hasIdentity()) {
 			$this->setOnline($auth->getIdentity()->user_id, 2);
 		}
+	}
+	
+	public function readrssAction() {
+		
+		$this->_helper->viewRenderer->setNoRender(true);
+		if (!isset($this->params['type']) || !isset($this->params['id'])) return; 
+		$reader = new Oibs_Controller_Plugin_RssReader();
+		$data = $reader->read($this->params['id'], $this->params['type']);
+		//echo strlen(json_encode($data));
+		//echo strlen($this->view->partial('partials/rssreader.phtml', array("data" => $data)));
+		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data));
 	}
 }

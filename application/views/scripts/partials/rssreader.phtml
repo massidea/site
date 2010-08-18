@@ -1,0 +1,10 @@
+<?php if($this->data !== false): ?>
+<p><strong>Feed:</strong><br /></p>
+<div class='rss-reader clear'><div class='rss-channel'><h1><?php //echo $this->data['title'];?></h1></div><ul>
+<?php foreach($this->data['items'] as $item): ?>
+	<li style="display:block;"><div class='rss-item'><a href="<?php echo $item['link']; ?>"><?php echo $item['title']; ?></a><br />
+	<div class="rss-item-desc" style="display:none"><?php echo $item['desc']; ?></div>
+	</div></li>
+<?php endforeach; ?>
+</ul></div>
+<?php endif; ?>
