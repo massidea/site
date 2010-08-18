@@ -43,7 +43,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 				$this->_addedUser[$name] = $user;
 			}
 		}
-		
+
 		return;
 	}
 	
@@ -56,8 +56,9 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	}
 	
 	public function setTopAmount() {
+		$choice = "Amount";
 
-		$countries = $this->_userProfileModel->getCountryAmounts();
+		$countries = $this->_userProfileModel->getCountryAmounts($this->_userList);
 		
 		/* Couldnt decide between sql query or loop... I'll leave this here if someone notices it to be faster.
 		$countries = array();
@@ -66,8 +67,10 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 			else $countries[$data['countryIso']] += 1;
 		}
 		*/
-		$this->_topList['Amount'][$this->_name] = $countries;
-		$this->_topList['Amount']['name'] = "Amount";
+		
+		$this->_topList[$choice][$this->_name] = $countries;
+		$this->_topList[$choice]['name'] = $choice;
+		$this->_cutToLimit($this->_name,$choice);
 		return $this;
 
 	}

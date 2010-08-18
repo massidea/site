@@ -218,7 +218,6 @@ class AjaxController extends Oibs_Controller_CustomController
         	->fetchUserCountries()
         	->setTopAmount()
         	->autoSet()
-        	
 			;
 		if($userid) $topListCountries->addUser($userid);
 		$topCountry = $topListCountries->getTopList();
@@ -226,14 +225,24 @@ class AjaxController extends Oibs_Controller_CustomController
 		$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
 		$topListGroups->setUserIdList($userIds)
 						->fetchUsersInGroups()
+						->setTopAmount()
+						->autoSet()
+						;		
+		$topGroup = $topListGroups->getTopList();
+		
+		$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+		$topListCities->setUserIdList($userIds)
+						->fetchUsersWithCity()
+						->setTopAmount()
 						->autoSet()
 						;
-						
-						
-		$topGroup = $topListGroups->getTopList();
+		if($userid) $topListCities->addUser($userid);
+		$topCity = $topListCities->getTopList();
+		
 		$topListBoxes = array(
         	'Users' => $topList,
 			'Groups' => $topGroup,
+			'Cities' => $topCity,
 			'Countries' => $topCountry,
         ); 
 	
@@ -396,12 +405,14 @@ class AjaxController extends Oibs_Controller_CustomController
 		}
 	}
 	
-	public function readAction() {
-		$url = $this->params['url'];
+	public function readrssAction() {
+		
 		$this->_helper->viewRenderer->setNoRender(true);
-
+		if (!isset($this->params['type']) || !isset($this->params['id'])) return; 
 		$reader = new Oibs_Controller_Plugin_RssReader();
-		$data = $reader->read($url);
+		$data = $reader->read($this->params['id'], $this->params['type']);
+		//echo strlen(json_encode($data));
+		//echo strlen($this->view->partial('partials/rssreader.phtml', array("data" => $data)));
 		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data));
 	}
 }

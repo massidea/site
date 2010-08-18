@@ -26,13 +26,13 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
-class Default_Model_CommentTypes extends Zend_Db_Table_Abstract
+class Default_Model_PageTypes extends Zend_Db_Table_Abstract
 {
 	// Table name
-    protected $_name = 'comment_types_ctp';
+    protected $_name = 'page_types_ptp';
     
 	// Table primary key
-	protected $_primary = 'id_ctp';
+	protected $_primary = 'id_ptp';
 	
 	// Table dependet tables
 	protected $_dependentTables = array('Default_Model_Comments');
@@ -40,7 +40,7 @@ class Default_Model_CommentTypes extends Zend_Db_Table_Abstract
 	// Table reference map
 	protected $_referenceMap    = array(
         'CommentType' => array(
-            'columns'           => array('type_ctp'),
+            'columns'           => array('type_ptp'),
             'refTableClass'     => 'Default_Model_Comments',
             'refColumns'        => array('type_cmt')
         )
@@ -55,12 +55,12 @@ class Default_Model_CommentTypes extends Zend_Db_Table_Abstract
      * @return int
      */
     public function getId($type) {
-    	$select = $this->select()->from($this, array('type_ctp'))
-    							->where("type_name_ctp = ?", $type)
-    							->orWhere("type_ctp = ?", $type)
+    	$select = $this->select()->from($this, array('type_ptp'))
+    							->where("type_name_ptp = ?", $type)
+    							->orWhere("type_ptp = ?", $type)
     							;
     	$result = $this->fetchAll($select)->toArray();
-    	return $result[0]['type_ctp'];
+    	return $result[0]['type_ptp'];
     							
     }
 } // end of class

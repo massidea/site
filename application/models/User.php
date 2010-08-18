@@ -1243,7 +1243,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws'); 
         if($list) $result = $this->addMissingIdsToResult($result,
-							 $this->simplifyArray($content->_db->fetchAll($search),'id_usr'),
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
         
 		return $result;
@@ -1270,7 +1270,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	if($limit) $select->limit($limit,0);
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt'); 
         if($list) $result = $this->addMissingIdsToResult($result,
-							 $this->simplifyArray($content->_db->fetchAll($search),'id_usr'),
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
         
 		return $result;
@@ -1301,7 +1301,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
         if($list) $result = $this->addMissingIdsToResult($result,
-							 $this->simplifyArray($content->_db->fetchAll($search),'id_usr'),
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
         
 		return $result;
@@ -1332,7 +1332,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->_db->fetchAll($select);
         $result = $this->simplifyArray($result,'id_usr');
         if($list) $result = $this->addMissingIdsToResult($result,
-							 $this->simplifyArray($content->_db->fetchAll($search),'id_usr'),
+							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
         
 		return $result;

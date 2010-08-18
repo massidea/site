@@ -340,7 +340,7 @@ class AdminController extends Oibs_Controller_CustomController
     		$comment = $commentmodel->getById($cmt_id);
     		$comment = $comment['Data']['body_cmt'];
     		$content_id = $commentmodel->getContentIdsByCommentId($cmt_id);
-    		$content_id = $content_id[0]['id_cnt_cmt'];
+    		$content_id = $content_id[0]['id_target_cmt'];
     		$content_url = $this->_urlHelper->url(array('controller' => 'view', 
 														'action' => $content_id,
 														'language' => $this->view->language),
