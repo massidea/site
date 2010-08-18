@@ -74,11 +74,11 @@ class Oibs_Form_Decorator_ColorPickerDecorator extends Zend_Form_Decorator_Abstr
 
         $output = '<div class="input-column3">'
                 . $label
-                . '</div>'
-                . '<div class="input-column4">'
                 . $input
                 . $desc
                 . $errors
+                . '</div>'
+                . '<div class="input-column4">'                
                 .'<div id="picker"></div>'
                 . '</div>';
 

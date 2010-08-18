@@ -26,7 +26,7 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */
- class Default_Form_AccountCustomLayoutSettings extends Zend_Form
+ class Default_Form_AccountCustomLayoutSettingsForm extends Zend_Form
 {
 	public function __construct($options = null) 
 	{ 
@@ -37,7 +37,6 @@
                                 'Oibs/Form/Decorator/',
                                 'decorator');
 		
-		//echo '<div class="clear"></div>';
 		$clear = new Oibs_Form_Element_Note('clear');
         $clear->setValue('<div class="clear"></div>');
 
@@ -45,35 +44,60 @@
 		$customfont = new Zend_Form_Element_Select('customfont');
 		$customfont->setLabel('Custom Font')
 				   ->setAttrib('id', 'customfont')
+				   ->setAttrib('style', 'margin-top:-1px;')
 				   ->addMultiOptions(array('Arial', 'Castellar', 'Times New Roman', 'Microsoft Sans Serif', 'Harrington'));
 		
+		$customfontclear = new Oibs_Form_Element_Note('customfontclear');
+        $customfontclear->setValue('<div style="clear:both;"></div>');
+		
+		// Custom font preview text
+		$customfontpreviewtext = new Oibs_Form_Element_Note('custompreviewtext');
+		$customfontpreviewtext->setValue('<div style="float:right; width:250px; display:block; padding-right:50px;">
+											Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</div>');
+				   
 		// Font size
 		$customfontsize = new Zend_Form_Element_Select('customfontsize');
 		$customfontsize->setLabel('Font Size')
 				   ->setAttrib('id', 'customfontsize')
+				   ->setAttrib('style', 'margin-top:-1px;')
 				   ->addMultiOptions(array('8', '10', '12', '14', '16'));
 
 		$customsizeclear = new Oibs_Form_Element_Note('customsizeclear');
         $customsizeclear->setValue('<div class="clear"></div>');
 		
         // Font color
-		$customfontcolor = $openid = new Zend_Form_Element_Text('customfontcolor');
+		$customfontcolor = new Zend_Form_Element_Text('customfontcolor');
         $customfontcolor->setLabel('Font Color')
                ->setAttrib('id', 'customfontcolor')
+               ->setAttrib('style', 'margin-top:-1px;')
                ->setValue('#000000');
         				   
-		// Add elements to form
-		$this->addElements(array($customfont,
+
+        $customfontcolorclear = new Oibs_Form_Element_Note('customfontcolorlear');
+        $customfontcolorclear->setValue('<div class="clear"></div>');
+        
+        // Font color picker script
+        $customfontcolorpicker = new Oibs_Form_Element_Note('customfontcolorpicker');
+        $customfontcolorpicker->setValue('<div id="picker" style="margin-top:-20px; margin-left:10px; /*border:1px solid silver;*/"></div>');
+        
+        // Add elements to form
+		$this->addElements(array(//$customfontpreviewtext,
+								 //$customfontclear,						 
+								 $customfont,
 								 $clear,
 								 $customfontsize,
-								 //$customsizeclear,
-								 $customfontcolor));
+								 $customsizeclear,
+								 $customfontcolor,
+								 $customfontcolorclear,
+								 $customfontcolorpicker));
 		
 		
 		// Add decorators
 		$customfont->setDecorators(array('InputDecorator'));
+		//$customfontpreviewtext->setDecorators(array(''));
 		$customfontsize->setDecorators(array('InputDecorator'));
-		$customfontcolor->setDecorators(array('ColorPickerDecorator'));
+		//$customfontcolor->setDecorators(array('ColorPickerDecorator'));
+		$customfontcolor->setDecorators(array('InputDecorator'));
 		
 		$this->setDecorators(array(
             'FormElements',

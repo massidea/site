@@ -26,7 +26,7 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */
- class Default_Form_AccountCustomLayout extends Zend_Form
+ class Default_Form_AccountCustomLayoutForm extends Zend_Form
 {
 	public function __construct($options = null) 
 	{ 

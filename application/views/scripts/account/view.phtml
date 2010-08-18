@@ -70,7 +70,12 @@ function expandText(key)
 
 $(document).ready(function() {
 	$('#picker').farbtastic('#customfontcolor');
+	
+	$("#customfontcolor").change(function() {
+  		alert('Handler for .change() called.');
+	});	
 });
+
 
 <?php $this->headScript()->captureEnd(); ?>
 

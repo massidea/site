@@ -431,14 +431,14 @@ class AccountController extends Oibs_Controller_CustomController
 		/*Box for user profile custom layout settings*/
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box->setHeader("Custom Layout")
-			->setClass("center")
+			->setClass("wide")
 			->setName("my-custom-layout")
 			->addTab("Fonts", "fonts", "all selected") //Header, type, class, extra
 			->addTab("Colors", "colors", "colors")
 			->addTab("Background", "background", "background");
 		$boxes[] = $box;
 		
-		$customLayoutForm = new Default_Form_AccountCustomLayoutSettings();
+		$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm();
 			
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
