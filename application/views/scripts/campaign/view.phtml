@@ -10,6 +10,8 @@ function deleteconfirmation(url) {
 }
 <?php $this->headScript()->captureEnd(); ?>
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/rssfeeds.js')); ?>
+
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $cmpstart = new Zend_Date($this->campaign['start_time_cmp'], Zend_Date::ISO_8601);
@@ -131,7 +133,11 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                 <p><a href="<?php echo $editcampaignlinks; ?>">Edit campaign links</a></p>
             <?php endif; ?>
         </div>
+        <div id='rss'>
+    	
+    	</div>
     </div>
+    
     <div id="activity" class="right">
         <div class="left">
             <div id="campaign-info">

@@ -30,33 +30,53 @@
 class Oibs_Controller_Plugin_RssReader {
 	private $_limit = 10;
 	
-    public function read($url = "") {
-    	try {
-	    	$feed = Zend_Feed_Reader::import($url);
-	    	$data = $this->sortFeed($feed);
-	    	return $data;
-    	} catch (Exception $e) {
-    		echo "Error with feed";
-    		return false;
-    	} 
+    public function read($id, $type) {
+    	$rssModel = new Default_Model_RssFeeds();
+    	$pageTypeModel = new Default_Model_PageTypes();
+    	$type = $pageTypeModel->getId($type);
+    	$urls = $rssModel->getUrls($id, $type);
+
+    	$feeds = array();
+    	foreach($urls as $url) {
+	    	try {
+		    	$feed = Zend_Feed_Reader::import($url['url_rss']);
+		    	//echo $feed->getEncoding();
+		    	$feeds[] = $feed;
+	    	} catch (Exception $e) {
+	    		echo "Error with feed";
+	    	}
+    	}
+    	if (count($feeds) != 0) $data = $this->sortFeed($feeds);
+    	else return false;
     	
+    	return $data;
     }
     
-    private function sortFeed($channel) {
+    private function sortFeed($channels) {
     	$feedData = array();
-    	$feedData['title'] = $channel->getTitle();
-    	$i = 0;
-    	foreach ($channel as $item) {
-    		$tempItem = array();
-    		$tempItem['title'] = $item->getTitle();
-    		$tempItem['link'] =  $item->getLink();
-			$tempItem['desc'] = $item->getContent();
-    		$feedData['items'][] = $tempItem;
-    		if ($i >= $this->_limit) break;
-    		$i++;
-    		
-    	}
+    	foreach ($channels as $channel) {
+	
+	    	$feedData['titles'][] = $channel->getTitle();
+	    	$i = 0;
+	    	foreach ($channel as $item) {
+	    		$tempItem = array();
+	    		$tempItem['title'] = $item->getTitle();
+	    		$tempItem['link'] =  $item->getLink();
+				$tempItem['desc'] = $item->getContent();
+				$tempItem['date'] = $item->getDateCreated()->get();
+	    		$feedData['items'][] = $tempItem;
+	    		$i++;	
+        		if ($i >= $this->_limit/count($channels)) break;
 
-    	return $feedData;
+	    	}
+    	}
+		usort($feedData['items'], array('Oibs_Controller_Plugin_RssReader', 'cmp'));
+	    return $feedData;
     }
+	private function cmp($a, $b) {
+    	if ($a['date'] == $b['date']) return 0;
+    	return $a['date'] > $b['date'] ? -1 : 1;
+    }
+    
 }
+    

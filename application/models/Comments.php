@@ -48,6 +48,11 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
             'refTableClass'     => 'Default_Model_Comments',
             'refColumns'        => array('id_cmt')
         ),
+        'CommentCType' => array(
+        	'columns'		    => array('type_cmt'),
+        	'refTableClass'		=> 'Default_Model_PageTypes',
+        	'refColumns'		=> array('type_ptp')
+        )
         // TEST END
     );
 
@@ -252,7 +257,8 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     {
         $select = $this->_db->select()
                         ->from('comments_cmt', array('id_cmt'))
-                        ->where('id_cnt_cmt = ?', (int)$id_cnt);
+                        ->where('id_target_cmt = ?', (int)$id_cnt)
+                        ->where('type_cmt = ?', $this->getCommentType("content"));
                         
         $result = $this->_db->fetchAll($select);
         
@@ -261,9 +267,11 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     
     public function getContentIdsByCommentId($id_cmt = 0)
     {
-        $select = $this->_db->select('id_cnt_cmt')
-                        ->from('comments_cmt', array('id_cnt_cmt'))
-                        ->where('id_cmt = ?', (int)$id_cmt);
+    	$type = $this->getCommentType("content");
+        $select = $this->_db->select('id_target_cmt')
+                        ->from('comments_cmt', array('id_target_cmt'))
+                        ->where('id_cmt = ?', (int)$id_cmt)
+                        ->where('type_cmt = ?', $type);
                         
         $result = $this->_db->fetchAll($select);
         
@@ -373,4 +381,8 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
         return false;
     }
 
+	private function getCommentType($type) {
+		$ptpModel = new Default_Model_PageTypes();
+		return $ptpModel->getId($type);
+	}
 } // end of class
