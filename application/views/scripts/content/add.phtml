@@ -1,5 +1,4 @@
-<?php $this->headScript()->appendFile($this->baseUrl('/js/CheckContentForm.js')); ?>
-<?php $this->headScript()->appendFile($this->baseUrl('/js/ContentPreview.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/ContentForm.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-min.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-unicode-base.js')); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
@@ -24,7 +23,6 @@ var previewUrl = '<?php echo $previewUrl; ?>';
 	    $this->headScript()->captureEnd(); 
     }
 ?>
-
 <div id="form_content_add_container" style="float: left;">
 	
 	<div id="form_content_realcontent" style="display: block">
