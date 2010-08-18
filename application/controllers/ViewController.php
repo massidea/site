@@ -91,6 +91,7 @@
         $auth = Zend_Auth::getInstance();
 
         // Get user_id
+        $usrId = 0;
         if ($auth->hasIdentity()) {
             $usrId = $auth->getIdentity()->user_id;
         }

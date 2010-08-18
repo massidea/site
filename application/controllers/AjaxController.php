@@ -405,12 +405,14 @@ class AjaxController extends Oibs_Controller_CustomController
 		}
 	}
 	
-	public function readAction() {
-		$url = $this->params['url'];
+	public function readrssAction() {
+		
 		$this->_helper->viewRenderer->setNoRender(true);
-
+		if (!isset($this->params['type']) || !isset($this->params['id'])) return; 
 		$reader = new Oibs_Controller_Plugin_RssReader();
-		$data = $reader->read($url);
+		$data = $reader->read($this->params['id'], $this->params['type']);
+		//echo strlen(json_encode($data));
+		//echo strlen($this->view->partial('partials/rssreader.phtml', array("data" => $data)));
 		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data));
 	}
 }

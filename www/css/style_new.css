@@ -523,7 +523,8 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 
 #content #user-page #profile-meta,
 #content #group-page #profile-meta,
-#content #campaign-page #profile-meta { width:200px; float:left; }
+#content #campaign-page #profile-meta,
+#content #campaign-page #rss-reader { width:200px; float:left; }
 
 /** Group members module */
 #content #members { background:transparent url("../images/gray_dot_line_200.png") top no-repeat; padding-top:5px; }

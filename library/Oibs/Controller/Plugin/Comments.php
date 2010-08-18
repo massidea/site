@@ -289,8 +289,8 @@ class Oibs_Controller_Plugin_Comments {
 	 * @return int
 	 */
 	private function getTypeFromDatabase($id) {
-		$commentTypeModel = new Default_Model_CommentTypes();
-		return $commentTypeModel->getId($id);
+		$pageTypeModel = new Default_Model_PageTypes();
+		return $pageTypeModel->getId($id);
 	}
 	
 	/**
