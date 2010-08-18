@@ -227,16 +227,18 @@ if (isset($this->parent_siblings[0])) {
                 	</a>
                 </span>
                 <?php $i = count($this->tags) - 1; ?>
-                <?php foreach($this->tags as $tag): ?>
-                    <a href="<?php echo $this->url(array('controller' => 'tag', 
-                                                         'action' => 'view', 
-                                                         'id' => $tag['id_tag'], 
-                                                         'language' => $this->language), 
-                                                   		 'lang_default', true); ?>">
-                        <?php echo stripslashes($tag['name_tag']); ?>
-                    </a>
-                    <?php echo $i-- > 0 ? ', ' : ''; ?>
-                <?php endforeach; ?>	
+                <?php if(!count($this->tags)): ?>
+	                <?php foreach($this->tags as $tag): ?>
+	                    <a href="<?php echo $this->url(array('controller' => 'tag', 
+	                                                         'action' => 'view', 
+	                                                         'id' => $tag['id_tag'], 
+	                                                         'language' => $this->language), 
+	                                                   		 'lang_default', true); ?>">
+	                        <?php echo stripslashes($tag['name_tag']); ?>
+	                    </a>
+	                    <?php echo $i-- > 0 ? ', ' : ''; ?>
+	                <?php endforeach; ?>
+				<?php endif; ?>
             </div>
             <p><?php echo stripslashes(nl2br($this->contentData['body_cnt'])); ?></p>
             
@@ -385,7 +387,8 @@ if (isset($this->parent_siblings[0])) {
         		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
         	</div>
 		<?php endif; ?>
+		<?php if(isset($this->comments)): ?>
 		        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
-
+		<?php endif; ?>
 	</div>
 </div>

@@ -937,15 +937,15 @@ class ContentController extends Oibs_Controller_CustomController
 				$contentData =
 				array('id_cnt' 					=> 'preview',
 						  'id_cty_cnt' 				=> $postData['content_type'],
-						  'title_cnt' 				=> $postData['content_header'],
-						  'lead_cnt' 				=> $postData['content_textlead'],
-						  'language_cnt' 			=> $postData['content_language'],
-						  'body_cnt' 				=> $postData['content_text'],
-						  'research_question_cnt' 	=> $postData['content_research'],
-						  'opportunity_cnt' 		=> $postData['content_opportunity'],
-						  'threat_cnt' 				=> $postData['content_threat'],
-						  'solution_cnt' 			=> $postData['content_solution'],
-						  'references_cnt' 			=> $postData['content_references'],
+						  'title_cnt' 				=> (isset($postData['content_header'])) ? $postData['content_header'] : '',
+						  'lead_cnt' 				=> (isset($postData['content_textlead'])) ? $postData['content_textlead'] : '',
+						  'language_cnt' 			=> (isset($postData['content_language'])) ? $postData['content_language'] : '',
+						  'body_cnt' 				=> (isset($postData['content_text'])) ? $postData['content_text'] : '',
+						  'research_question_cnt' 	=> (isset($postData['content_research'])) ? $postData['content_research'] : '',
+						  'opportunity_cnt' 		=> (isset($postData['content_opportunity'])) ? $postData['content_opportunity'] : '',
+						  'threat_cnt' 				=> (isset($postData['content_threat'])) ? $postData['content_threat'] : '',
+						  'solution_cnt' 			=> (isset($postData['content_solution'])) ? $postData['content_solution'] : '',
+						  'references_cnt' 			=> (isset($postData['content_references'])) ? $postData['content_references'] : '',
 						  'views_cnt' 				=> 0,
 						  'published_cnt' 			=> 1,
 						  'created_cnt' 			=> $today,
@@ -958,6 +958,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 				// Reformat tags
 				$rawtags = explode(",", $postData['content_keywords']);
+				$tags = null;
 				foreach($rawtags as $rawtag)
 					$tags[count($tags)]['name_tag'] = $rawtag;
 	
