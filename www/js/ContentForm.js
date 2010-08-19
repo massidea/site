@@ -141,12 +141,12 @@ $(document).ready(function() {
 			canExit = 1;
 			$("#content_publish").val('1');
 			$('.content_manage_button').attr('disabled', 'disabled');
-			$('#add_content_form').submit();
+			$('#form_content_realcontent').has(this).children('form').submit();
 		} else if($(this).attr('id') == "content_save_button") {
 			canExit = 1;
 			$("#content_save").val('1');
 			$('.content_manage_button').attr('disabled', 'disabled');
-			$('#add_content_form').submit();
+			$('#form_content_realcontent').has(this).children('form').submit();
 		} else if($(this).attr('id') == "content_preview_button") {
 			canExit = 0;
 			generatePreview();
