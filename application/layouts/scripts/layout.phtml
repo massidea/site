@@ -41,15 +41,15 @@ echo $this->doctype();
         'PREPEND'
     );
 
+    $this->headScript()->prependFile($this->baseUrl('/js/auto_translate.js'));                                    
+    $this->headScript()->prependFile($this->baseUrl('/js/functions.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
+    $this->headScript()->prependFile('http://maps.google.com/jsapi');
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.min.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
-    $this->headScript()->appendFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
-    $this->headScript()->appendFile($this->baseUrl('/js/auto_translate.js'));                                    
-    $this->headScript()->appendFile($this->baseUrl('/js/functions.js'));
-    $this->headScript()->appendFile($this->baseUrl('/js/OibsUtils.js'));
-    $this->headScript()->appendFile($this->baseUrl('/js/scripts.js'));
-    $this->headScript()->appendFile($this->baseUrl('/js/farbtastic.js'));
-    $this->headScript()->appendFile('http://maps.google.com/jsapi');
 
     echo $this->headLink();
     echo $this->headMeta();
