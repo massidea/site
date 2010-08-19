@@ -37,13 +37,13 @@
 		<tuv xml:lang="en"><seg>By default the filled information will be shown to other users.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lisätyt tiedot näytetään muille käyttäjille.</seg></tuv>
 	</tu>
-	<tu tuid='account-registercomplete-p2'>
-		<tuv xml:lang="en"><seg>You can update your profile later on by clicking the <a href="/en/account/settings">edit profile</a> link in your <a href="/en/account/">own user page</a>.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Voit päivittää profiiliasi myöhemmin <a href="/en/account/">omalla profiilisivullasi</a> näkyvän <a href="/fi/account/settings">"muokkaa tiliä"-linkin</a> kautta.</seg></tuv>
-	</tu>
 	<tu tuid='account-registercomplete-p1'>
 		<tuv xml:lang="en"><seg>You are logged in and you can immediately start commenting and adding content to Massidea.org.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Olet kirjautuneena sisään ja voit välittömästi aloittaa kommentoimisen ja sisällön lisäämisen.</seg></tuv>
+	</tu>
+	<tu tuid='account-registercomplete-p2'>
+		<tuv xml:lang="en"><seg>You can update your profile later on from your own user page.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Voit päivittää profiiliasi myöhemmin omalta profiilisivultasi.</seg></tuv>
 	</tu>
 	<tu tuid='account-registercomplete-header'>
 		<tuv xml:lang="en"><seg>Signing up was successful!</seg></tuv>
