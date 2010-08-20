@@ -1,0 +1,66 @@
+<script type="text/javascript">
+
+function submitFeeds() {
+	$("#feeds > option").attr("selected", "selected");
+	$('form').submit();
+	$("#feeds > option").removeAttr("selected");
+}
+
+function addFeed(url) {
+	var exists = false;
+	$('#feeds > option').each(function () {
+		if ($(this).html() == url) 
+				exists = true;
+	});
+	if (exists) return true;
+	$('#feeds').append($('<option ondblclick="$(this).remove()"></option>').val(url).html(url));
+	var size = $('#feeds').attr('size');
+	$('#feeds').attr('size', size+1);
+	$('#rss-input-feed-url').val('');
+}
+
+function removeFeed(obj) {
+	$(obj).remove();
+	var size = $('#feeds').attr('size');
+	if (size > 1)
+		$('#feeds').attr('size', size-1);
+}
+
+function validateFeed() {
+	var url = $('#rss-input-feed-url').val();
+	jsmeta = jQuery.parseJSON($("#jsmetabox").text());
+	var isValid = false;
+	$.ajax({
+		type: "POST",
+		async: true,
+		url: jsmeta.baseUrl + "/en/ajax/validaterss", //urls.commentUrls[0].postCommentUrl,
+		data: { 'url': url },
+		success: function(msg) {
+			if (msg == '1') {
+				addFeed(url)
+			}
+		}
+	});
+}
+</script>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<?php if(!$this->admin): ?>
+	<h2>You are not an admin of selected page</h2>
+<?php else:?>
+<h2>Feeds for '<?php echo $this->pageTitle; ?>'</h2><br />
+<div id="rss-editfeeds" class="left">
+	<div id="rss-input-feed">Enter feed URL<br />
+	<input id="rss-input-feed-url" type="text" name="feed"/><input id="rss-input-feed-add" onclick="validateFeed()" type="button" value="Add"/></div><br />
+	<div id="rss-list-feeds">
+	<form method="post">
+		<select id="feeds" name="feeds[]" size="<?php echo count($this->urls); ?>" multiple="true">
+			<?php foreach ($this->urls as $url): ?>
+				<option ondblclick="removeFeed(this);"><?php echo $url['url_rss'];?></option>
+			<?php endforeach; ?>
+		</select> <br />
+		*Double click to remove feed
+	</div><br /><br />
+	<input id="submit-feeds" type="button" value="Save" onclick="submitFeeds();"/><a href="<?php echo $this->linkback;?>" style="float:right">Cancel</a>
+	</form>
+</div>
+<?php endif;?>

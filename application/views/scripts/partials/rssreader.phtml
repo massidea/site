@@ -1,3 +1,7 @@
+<div class="clear dot-line-200"></div>
+<?php if($this->admin): ?>
+<a href="<?php echo $this->link; ?>">Edit feeds</a>
+<?php endif;?>
 <?php if($this->data !== false): ?>
 <p><strong>Feed:</strong><br /></p>
 <div class='rss-reader clear'><div class='rss-channel'><h1><?php //echo $this->data['title'];?></h1></div><ul>

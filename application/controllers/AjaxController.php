@@ -410,9 +410,28 @@ class AjaxController extends Oibs_Controller_CustomController
 		$this->_helper->viewRenderer->setNoRender(true);
 		if (!isset($this->params['type']) || !isset($this->params['id'])) return; 
 		$reader = new Oibs_Controller_Plugin_RssReader();
+		//$admin = groupadmins->userIsAdmin
 		$data = $reader->read($this->params['id'], $this->params['type']);
+		$auth = Zend_Auth::getInstance();
+
+		$isAdmin = false;
+		if ($auth->hasIdentity()) $isAdmin = $reader->isAdmin($auth->getIdentity()->user_id);
+		
 		//echo strlen(json_encode($data));
 		//echo strlen($this->view->partial('partials/rssreader.phtml', array("data" => $data)));
-		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data));
+		
+		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data, "admin" => $isAdmin, 'link' => $reader->getEditLink()));
+	}
+	
+	public function validaterssAction() {
+		$this->_helper->viewRenderer->setNoRender(true);
+		$params = $this->getRequest()->getParams();
+	   	try {
+	    	Zend_Feed_Reader::import($params['url']);
+	    	echo "1";
+    	} catch (Exception $e) {
+    		echo "0";
+    	}
+		
 	}
 }

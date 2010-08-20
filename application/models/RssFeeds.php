@@ -26,4 +26,36 @@ class Default_Model_RssFeeds extends Zend_Db_Table_Abstract {
     	$result = $this->fetchAll($select)->toArray();
     	return $result;
     }
+    
+    public function addUrls($urls, $id, $type) {
+    	
+    	$this->removeFeeds($id, $type);
+    	foreach ($urls as $url) {
+    		if (!$this->feedExists($url, $id, $type)) {
+	    		$rssUrl = $this->createRow();
+	    		$rssUrl->url_rss = $url;
+	    		$rssUrl->id_target_rss = $id;
+	    		$rssUrl->type_rss = $type;
+	    		$rssUrl->created_rss = new Zend_Db_Expr('NOW()');
+                $rssUrl->modified_rss = new Zend_Db_Expr('NOW()');
+	    		$rssUrl->save();
+    		}
+    	}
+    }
+    
+    public function removeFeeds($id, $type) {
+    	$stmt = $this->_db->prepare("DELETE FROM ". $this->_name . " WHERE id_target_rss = ? and type_rss = ?");
+		$stmt->execute(array($id, $type));    	
+    }
+    
+    public function feedExists($url, $id, $type) {
+    	$select = $this->select()->from($this, 'id_rss')
+    							 ->where("type_rss = ?", $type)
+    							 ->where("id_target_rss = ?", $id)
+    							 ->where("url_rss = ?", $url);
+    							 
+    	$result = $this->fetchAll($select)->toArray();
+    	if (isset($result[0])) return true;
+    	return false;
+    }
 }
