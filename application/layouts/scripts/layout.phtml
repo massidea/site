@@ -76,7 +76,7 @@ echo $this->doctype();
 						<?php if($this->authenticated) : ?>
                         <div style="float: left; width: 14px;">&nbsp;</div>
 						<div style="text-align: right; float: left; width: 50px;">
-                                <div style="width: 337px;">
+                                <div id="search-top" style="width: 337px;">
 							            <?php //$auth = Zend_Auth::getInstance(); ?>
 								        <?php if (in_array("admin", $this->logged_user_roles)): ?>
 											<a href="<?php echo $this->url(array('controller' => 'admin',
@@ -88,12 +88,45 @@ echo $this->doctype();
 							            <?php endif; ?>
 
                                     <?php echo $this->translate('index-logged_in'); ?>
-                                    <a href="<?php echo $this->url(array('controller' => 'account',
-                                                                         'action' => 'view',
-                                                                         'user' => $this->username,
-                                                                         'language' => $this->language),
-                                                                   'lang_default', true); ?>">
-                                        <?php echo $this->username; ?></a>
+                                    <a id="login_link" href="<?php echo $this->url(array('controller' => 'account',
+                                                                     'action' => 'view',
+                                                                     'user' => $this->username,
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">
+                                        <?php echo $this->username; ?>
+                                    </a>
+                                	<ul id="user_options">
+                                		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
+                                                                     'action' => 'view',
+                                                                     'user' => $this->username,
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">View Profile</a></li>
+                                		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
+                                                                     'action' => 'settings',
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">Edit Profile</a></li>
+                                		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'privmsg',
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">Private messages</a></li>
+                                		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
+                                                                'action' => 'images',     
+                                        						'language' => $this->language),
+                                                               'lang_default', true); ?>">Profile image</a></li>
+                                        <?php /* 
+                                        <li id="user_options_groups">
+                                        <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+                                        <span>Manage Groups</span>
+                                        	<ul id="user_options_sub_1">
+                                        		<li>
+                                        		<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'group',
+                                                                'action' => 'create',     
+                                        						'language' => $this->language),
+                                                               'lang_default', true); ?>">Create</a>
+                                        		</li>
+                                        	</ul>
+                                        </li>
+                                        */ ?>
+                                	</ul>
                                     <?php
                                     if($this->unread_privmsgs > 0) {
                                         if($this->controller == "privmsg" && $this->action == "index") {

@@ -17,3 +17,4 @@ div.top_row_center_right_login_links, div.user_content_spacer, div.user_content_
 .user_list_top_box_runnerups_title_points { margin-top: -15px; }
 .user_list_top_column { display: inline; }
 .user_list_top_box { margin-right: 4px; }
+#user_options { top: 25px; }

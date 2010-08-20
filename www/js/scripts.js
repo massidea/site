@@ -63,17 +63,42 @@ $(document).ready(function(){
 		$("#login_box > form > div:nth-child(2) > input").focus();
 	});
 	
+	$("#login_link").hover(
+			function(){
+				var optPos = $("#login_link").position().left;
+				$("#user_options").clearQueue().css("left",optPos).slideDown();
+			},
+			function(){$("#user_options").delay(1000).slideUp();}
+	);
 	
+	$("#user_options").hover(
+			function(){$("#user_options").clearQueue()},
+			function(){$("#user_options").delay(1000).slideUp();}
+			);
+	
+	/*
+	$("#user_options > ul > #user_options_groups").hover(
+			function() {
+				var optPos1 = $("#user_options > ul").width() *-1;
+				$("#user_options_sub_1").css("left",optPos1).css("top",81).show();
+				},
+			function() {
+					$("#user_options_sub_1").hide();
+				}
+		
+	);
+	*/
 	 $("#add_content_button").hover(
 			 function () {$("#add_content_menu").fadeIn();},
 			 function () {}
 			 );
 
 	 $(".sub_menu_right").hover(
-			 function () {},
-			 function () {$("#add_content_menu").fadeOut();}
+			 function () {$("#add_content_menu").clearQueue();},
+			 function () {$("#add_content_menu").delay(1000).fadeOut();}
 			 );
-	
+
+	 
 });
 
 function highlightContentMenuItem(target)

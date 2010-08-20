@@ -1000,6 +1000,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							;
 					
         $result = $this->_db->fetchAll($select);
+        foreach($result as $key => $data) {
+        	if(empty($data['value'])) unset($result[$key]);
+        }
+        $result = array_values($result);
 
 		return $result;
     }
