@@ -44,7 +44,7 @@ class Oibs_Validators_EnddateValidator extends Zend_Validate_Abstract
 	{
 	    $end = (string) $endDay;
         // If end day is empty return true, Campaings-model set 0000-00-00
-        if (empty($end)) {
+        if (empty($end) || $end == '0000-00-00') {
             return true;
         } else {
             $end = new Zend_Date($end, Zend_Date::ISO_8601);
@@ -74,8 +74,8 @@ class Oibs_Validators_EnddateValidator extends Zend_Validate_Abstract
                 $start = date("Y-m-d", time());
             } else {
                 $start = $startDay;
-                $start = new Zend_Date($start, Zend_Date::ISO_8601);
             }
+            $start = new Zend_Date($start, Zend_Date::ISO_8601);
             if ($end->compare($start) == 1) {
                 return true;
             }

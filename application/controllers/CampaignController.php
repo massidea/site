@@ -201,13 +201,6 @@ class CampaignController extends Oibs_Controller_CustomController
     {
         $auth = Zend_Auth::getInstance();
 
-        // If user has identity
-        if ($auth->hasIdentity()) {
-            $this->view->identity = true;
-        } else {
-            $this->view->identity = false;
-        }
-
         $user = $auth->getIdentity();
         $cmpid = $this->_request->getParam('cmpid');
 
@@ -218,6 +211,21 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmp['description_cmp'] = str_replace("\n", '<br>', $cmp['description_cmp']);
         $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
 
+        // If user has identity
+        if ($auth->hasIdentity()) {
+            $this->view->identity = true;
+
+            $uhgModel = new Default_Model_UserHasGroup();
+            $this->view->userHasGroup = $uhgModel->userHasGroup($cmp['id_grp_cmp'], $user->user_id);
+
+            // Get group admins.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
+            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+        } else {
+            $this->view->identity = false;
+        }
+        
         // Campaign weblinks
         $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
         $cmp['campaignWeblinks'] = $campaignWeblinksModel->getCampaignWeblinks($cmpid);
@@ -228,14 +236,6 @@ class CampaignController extends Oibs_Controller_CustomController
             }
             $i++;
         }
-
-        $uhgModel = new Default_Model_UserHasGroup();
-        $this->view->userHasGroup = $uhgModel->userHasGroup($cmp['id_grp_cmp'], $user->user_id);
-
-        // Get group admins.
-        $grpAdminsModel = new Default_Model_GroupAdmins();
-        $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
-        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
 
         // Get group info.
         $grpmodel = new Default_Model_Groups();
@@ -300,11 +300,17 @@ class CampaignController extends Oibs_Controller_CustomController
             }
 
             // Create & populate the form.
-            $form = new Default_Form_AddCampaignForm($this, 'edit');
+            $form = new Default_Form_AddCampaignForm($this, array(
+                'mode'     => 'edit',
+                'startdate' => $cmp['start_time_cmp'],
+            ));
             $formData = array();
             $formData['campaign_name'] = $cmp['name_cmp'];
             $formData['campaign_ingress'] = $cmp['ingress_cmp'];
             $formData['campaign_desc'] = $cmp['description_cmp'];
+            $formData['campaign_start'] = $cmp['start_time_cmp'];
+            if ($cmp['end_time_cmp'] != '0000-00-00')
+                $formData['campaign_end'] = $cmp['end_time_cmp'];
 
             // Get campaign weblinks
             $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
@@ -330,7 +336,9 @@ class CampaignController extends Oibs_Controller_CustomController
                         $cmpId,
                         $post['campaign_name'],
                         $post['campaign_ingress'],
-                        $post['campaign_desc']
+                        $post['campaign_desc'],
+                        $post['campaign_start'],
+                        $post['campaign_end']
                     );
 
                     // Set weblinks

@@ -132,7 +132,9 @@ class Default_Form_AddCampaignForm extends Zend_Form
             //->setRequired(true)
             ->setAttrib('invalidMessage', 'Invalid date specified')
             ->setAttrib('formalLength', 'long')
-            ->setValidators(array(new Zend_Validate_Date('yyyy-MM-dd')))
+            ->setValidators(array(
+                new Zend_Validate_Date('yyyy-MM-dd'),
+                new Oibs_Validators_StartdateValidator('campaign_start')))
             ->setDecorators(array('FieldDecorator'));
         
         $campaignstart_clear = new Oibs_Form_Element_Note('campaignstart_clear');
@@ -286,37 +288,67 @@ class Default_Form_AddCampaignForm extends Zend_Form
         $save->setAttrib('id', 'publish')
              ->setAttrib('class', 'submit-button')
              ->setAttrib('style', 'float: none;');
-        if ($options == 'edit')
+        if ($options['mode'] == 'edit')
             $save->setLabel('Save');
         else
             $save->setLabel('Create');
 
-        $this->addElements(array(
-            $campaignname,
-            $campaignname_clear,
-            $campaigningress,
-            $campaigningress_clear,
-            $campaigndesc,
-            $campaigndesc_clear,
-            $campaignstart,
-            $campaignstart_clear,
-            $campaignend,
-            $campaignend_clear,
-            $weblinks_websites,
-            $weblinks_name,
-            $weblinks_url,
-            $weblinks_name_site1,
-            $weblinks_url_site1,
-            $weblinks_name_site2,
-            $weblinks_url_site2,
-            $weblinks_name_site3,
-            $weblinks_url_site3,
-            $weblinks_name_site4,
-            $weblinks_url_site4,
-            $weblinks_name_site5,
-            $weblinks_url_site5,
-            $save,
-        ));
+        // Group admin can edit campaign start and end day only before campaign has started
+
+        $date = new Zend_Date(date("Y-m-d", time()), Zend_Date::ISO_8601);
+        $startdate = new Zend_Date($options['startdate'], Zend_Date::ISO_8601);
+
+        if ($date->compare($startdate) == -1) {
+            $this->addElements(array(
+                $campaignname,
+                $campaignname_clear,
+                $campaigningress,
+                $campaigningress_clear,
+                $campaigndesc,
+                $campaigndesc_clear,
+                $campaignstart,
+                $campaignstart_clear,
+                $campaignend,
+                $campaignend_clear,
+                $weblinks_websites,
+                $weblinks_name,
+                $weblinks_url,
+                $weblinks_name_site1,
+                $weblinks_url_site1,
+                $weblinks_name_site2,
+                $weblinks_url_site2,
+                $weblinks_name_site3,
+                $weblinks_url_site3,
+                $weblinks_name_site4,
+                $weblinks_url_site4,
+                $weblinks_name_site5,
+                $weblinks_url_site5,
+                $save,
+            ));
+        } else {
+            $this->addElements(array(
+                $campaignname,
+                $campaignname_clear,
+                $campaigningress,
+                $campaigningress_clear,
+                $campaigndesc,
+                $campaigndesc_clear,
+                $weblinks_websites,
+                $weblinks_name,
+                $weblinks_url,
+                $weblinks_name_site1,
+                $weblinks_url_site1,
+                $weblinks_name_site2,
+                $weblinks_url_site2,
+                $weblinks_name_site3,
+                $weblinks_url_site3,
+                $weblinks_name_site4,
+                $weblinks_url_site4,
+                $weblinks_name_site5,
+                $weblinks_url_site5,
+                $save,
+            ));
+        }
 
         $save->setDecorators(array(
             'ViewHelper',

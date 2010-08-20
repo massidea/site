@@ -50,11 +50,19 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
         </p>
         -->
         <p>
-            <strong>Campaign has started: </strong>
+            <?php if ($this->status === 'open' || $this->status === 'ended') : ?>
+            <strong>Has started: </strong>
+            <?php else : ?>
+            <strong>Will start: </strong>
+            <?php endif; ?>
             <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
         </p>
         <p>
-            <strong>Campaign is ending: </strong>
+            <?php if ($this->status === 'ended') : ?>
+            <strong>Has ended: </strong>
+            <?php else : ?>
+            <strong>Is ending: </strong>
+            <?php endif; ?>
             <?php echo $cmpend; ?>
         </p>
         <?php if (is_array($this->cmpAdmins)): ?>

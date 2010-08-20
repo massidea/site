@@ -16,10 +16,10 @@ if ($this->end_time_cmp == '0000-00-00') {
 ?>
 <li>
     <span>
+        <strong><a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a></strong><!--
         <?php if ((isset($this->group_name_grp)) && (isset($this->id_grp_cmp))): ?>
-            <a href="<?php echo $grpurl; ?>"><?php echo $this->group_name_grp; ?></a>:
-        <?php endif; ?>
-        <strong><a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a></strong>
+            by <a href="<?php echo $grpurl; ?>"><?php echo $this->group_name_grp; ?></a>
+        <?php endif; ?>-->
     </span>
     <div class="clear"></div>
 </li>

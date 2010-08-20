@@ -127,7 +127,10 @@
         $this->view->grpAdmins = $grpAdmins;
         $this->view->userHasGroup = $usrHasGrpModel;
         $this->view->userHasGroupWaiting = $usrHasGrpWaitingModel;
-        $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
+        //$this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
+        $this->view->openCampaigns = $campaignModel->getOpenCampaignsByGroup($grpId);
+        $this->view->notstartedCampaigns = $campaignModel->getNotstartedCampaignsByGroup($grpId);
+        $this->view->endedCampaigns = $campaignModel->getEndedCampaignsByGroup($grpId);
         $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
         $this->view->linkedgroups = $linkedgroups;
         $this->view->isClosed = $isClosed;

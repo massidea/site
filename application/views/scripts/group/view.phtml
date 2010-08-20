@@ -244,7 +244,19 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             <div class="clear"></div>
             <div class="scroll-box">
                 <ul>
-                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
+                    <?php //echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
+                    <?php if (count($this->openCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Open:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->openCampaigns); ?>
+                    <?php endif;
+                    if (count($this->notstartedCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Not started:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->notstartedCampaigns); ?>
+                    <?php endif;
+                    if (count($this->endedCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Ended:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->endedCampaigns); ?>
+                    <?php endif; ?>
                 </ul>
             </div>
             <div class="clear"></div>

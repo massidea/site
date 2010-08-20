@@ -100,6 +100,64 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     }
 
     /**
+     * getOpenCampaignsByGroup
+     *
+     * Get open campaigns by group id.
+     *
+     * @author Mikko Korpinen
+     * @param $groupid id of the group
+     */
+    public function getOpenCampaignsByGroup($groupid)
+    {
+        $thisDay = date("Y-m-d", time());
+        $select = $this->select()
+                ->where('id_grp_cmp = ?', $groupid)
+                ->where('start_time_cmp <= ?', $thisDay)
+                ->where('end_time_cmp >= ? OR end_time_cmp = 0000-00-00', $thisDay)
+                ->order('id_cmp ASC');
+
+        return $this->fetchAll($select)->toArray();
+    }
+
+    /**
+     * getNotstartedCampaignsByGroup
+     *
+     * Get not started campaigns by group id.
+     *
+     * @author Mikko Korpinen
+     * @param $groupid id of the group
+     */
+    public function getNotstartedCampaignsByGroup($groupid)
+    {
+        $thisDay = date("Y-m-d", time());
+        $select = $this->select()
+                ->where('id_grp_cmp = ?', $groupid)
+                ->where('start_time_cmp > ?', $thisDay)
+                ->order('id_cmp ASC');
+
+        return $this->fetchAll($select)->toArray();
+    }
+
+    /**
+     * getEndedCampaignsByGroup
+     *
+     * Get ended campaigns by group id.
+     *
+     * @author Mikko Korpinen
+     * @param $groupid id of the group
+     */
+    public function getEndedCampaignsByGroup($groupid)
+    {
+        $thisDay = date("Y-m-d", time());
+        $select = $this->select()
+                ->where('id_grp_cmp = ?', $groupid)
+                ->where('end_time_cmp < ? AND end_time_cmp != 0000-00-00', $thisDay)
+                ->order('id_cmp ASC');
+
+        return $this->fetchAll($select)->toArray();
+    }
+
+    /**
     *   createCampaign
     *
     *   Adds a given campaign to database and returns the created row
@@ -155,12 +213,14 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         return $row;
     } // end of createCampaign
 
-    public function editCampaign($id, $name, $ingress, $desc)
+    public function editCampaign($id, $name, $ingress, $desc, $start, $end)
     {
 		$data = array(
             'name_cmp' => $name,
             'ingress_cmp' => $ingress,
             'description_cmp' => $desc,
+            'start_time_cmp' => $start,
+            'end_time_cmp' => $end,
         );
 
 		$where = $this->getAdapter()->quoteInto('id_cmp = ?', $id);
