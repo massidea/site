@@ -14,16 +14,21 @@ function addFeed(url) {
 	});
 	if (exists) return true;
 	$('#feeds').append($('<option ondblclick="$(this).remove()"></option>').val(url).html(url));
-	var size = $('#feeds').attr('size');
-	$('#feeds').attr('size', size+1);
+
+	setSelectSize();
 	$('#rss-input-feed-url').val('');
+}
+
+function setSelectSize() {
+	var options = $("#feeds > option").length; 
+	if ( options == 0) options = 1; 
+	
+	$('#feeds').attr('size', options);
 }
 
 function removeFeed(obj) {
 	$(obj).remove();
-	var size = $('#feeds').attr('size');
-	if (size > 1)
-		$('#feeds').attr('size', size-1);
+	setSelectSize();
 }
 
 function validateFeed() {
@@ -53,7 +58,7 @@ function validateFeed() {
 	<input id="rss-input-feed-url" type="text" name="feed"/><input id="rss-input-feed-add" onclick="validateFeed()" type="button" value="Add"/></div><br />
 	<div id="rss-list-feeds">
 	<form method="post">
-		<select id="feeds" name="feeds[]" size="<?php echo count($this->urls); ?>" multiple="true">
+		<select id="feeds" name="feeds[]" size="<?php echo $this->count; ?>" multiple="true">
 			<?php foreach ($this->urls as $url): ?>
 				<option ondblclick="removeFeed(this);"><?php echo $url['url_rss'];?></option>
 			<?php endforeach; ?>

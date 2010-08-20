@@ -124,13 +124,17 @@ class RssController extends Oibs_Controller_CustomController
     	$auth = Zend_Auth::getInstance();
     	if (!$auth->hasIdentity()) return false;
     	
+    	
+    	
     	$userId = $auth->getIdentity()->user_id;
     	$admin = false;
     	if (!$admin = $reader->isAdmin($userId)) return false;
     	$rssModel = new Default_Model_RssFeeds();
     	$request = $this->getRequest();
     	if ($request->isPost()) {
-    		if (isset($params['feeds'])) $rssModel->addUrls($params['feeds'], $params['id'], $params['type']);
+    		$urls = array();
+    		if (isset($params['feeds'])) $urls = $params['feeds']; 
+    		$rssModel->addUrls($urls, $params['id'], $params['type']);
     		$this->_redirect($reader->getLinkBack());
     	}
     	$urls = $rssModel->getUrls($params['id'], $params['type']);
@@ -138,6 +142,7 @@ class RssController extends Oibs_Controller_CustomController
     	$this->view->pageTitle = $reader->getTitle();
     	$this->view->linkback = $reader->getLinkBack();
     	$this->view->admin = $admin;
+    	$this->view->count = (count($urls) != 0) ? count($urls) : 1;
     	$this->view->urls = $urls;
     }
 } // end of class
