@@ -139,7 +139,8 @@ class Oibs_Controller_Plugin_RssReader {
 	    		$tempItem['title'] = $item->getTitle();
 	    		$tempItem['link'] =  $item->getLink();
 				$tempItem['desc'] = $item->getContent();
-				$tempItem['date'] = $item->getDateCreated()->get();
+				if ($item->getDateCreated() == null) $tempItem['date'] = 0;
+				else $tempItem['date'] = $item->getDateCreated()->get();
 	    		$feedData['items'][] = $tempItem;
 	    		$i++;	
         		if ($i >= $this->limit/count($channels)) break;

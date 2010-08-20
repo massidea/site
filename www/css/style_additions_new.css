@@ -403,3 +403,7 @@ p#replying_to {
 #rss-input-feed-url {
 	width: 405px;	
 }
+
+#rss {
+	border-top: 1px dotted #CCCCCC;	
+}
