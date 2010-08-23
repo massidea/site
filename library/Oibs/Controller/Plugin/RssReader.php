@@ -73,7 +73,7 @@ class Oibs_Controller_Plugin_RssReader {
 		    	$feed = Zend_Feed_Reader::import($url['url_rss']);
 		    	$feeds[] = $feed;
 	    	} catch (Exception $e) {
-	    		echo "Error with feed";
+	    		echo "Error with feed: ".$url['url_rss'];
 	    	}
     	}
     	if (count($feeds) != 0) $data = $this->sortFeed($feeds);

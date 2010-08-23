@@ -1768,7 +1768,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							 ->where('cnt_has_usr.id_usr = ?', $id)
     							 ->join('cnt_views_vws', 
     							 		'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt',
-    							  		array('latest' => 'max(modified_vws)', 'id_usr_vws' ))
+    							  		array('latest' => 'max(modified_vws)', 'id_usr' => 'id_usr_vws' ))
     							 ->join('users_usr', 'id_usr_vws = users_usr.id_usr', array('login_name_usr'))
     							 ->where('users_usr.id_usr != ?', $id)
     							 ->where('cnt_has_usr.id_usr != 0')

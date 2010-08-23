@@ -377,10 +377,16 @@
         $this->view->contentType        = $contentType;
         //$this->view->count              = $count;
         $this->view->campaigns          = $campaigns;
+        $this->view->viewers			= $this->getViewers($id);
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
 	} // end of view2Action
     
 
+	private function getViewers($id_cnt) {
+		$cntVwModel = new Default_Model_ContentViews();
+		//getContentViewers
+		return $cntVwModel->getContentViewers($id_cnt, 10);
+	} 
 }

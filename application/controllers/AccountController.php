@@ -244,7 +244,7 @@ class AccountController extends Oibs_Controller_CustomController
         // Get public user data from UserProfiles Model
 		$userProfile = new Default_Model_UserProfiles();
         $dataa = $userProfile->getPublicData($id);
-        $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
+        if (isset($dataa['biography'])) $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
 
         // User weblinks
         $userWeblinksModel = new Default_Model_UserWeblinks();

@@ -40,6 +40,24 @@ if (isset($this->parent_siblings[0])) {
     }
 }
 ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#content-view-viewers-list > a").click(function(event) {
+		event.preventDefault();
+	});
+	$("#content-view-viewers-list").mouseover(function () {
+		$(this).css('cursor', 'pointer');
+	});
+	$("#content-view-viewers-list").qtip(
+		{
+			content: $("#content-view-viewers-list-content").html().replace(/%7E/g, '~'),
+			show: 'click',
+			hide: 'click',
+			style: { width: { min: 250, max: 500 }} 
+		}
+	);
+});
+</script>
 <div class="user_content_row" style="float: left;">
     <div style="padding: 10px;">
         <div class="view_content_left_header">
@@ -166,7 +184,8 @@ if (isset($this->parent_siblings[0])) {
                 <!--  <div style="float:left; padding:5px;">
                 	<div id="content_view_favourite"></div>
                 </div>  -->                
-                <div style="float:right; padding:5px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
+                <div id="content-view-viewers-list" style="float:right; padding:5px;"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div>
+                <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>
                 <div style="clear: both;">
 	                <?php if($this->contentData['language_cnt'] != $this->gtranslateLangPair['to']): ?>
 	                	<?php if($this->isTranslated): ?>

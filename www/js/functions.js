@@ -479,6 +479,9 @@ $(document).ready(function() {
 			$('#add_content_form').submit();
 		}
 	});
+});
+
+$(document).ready(function() {
 	idleInterval = 181000;
 	setTimeout("onlineIdle()", idleInterval);
 });

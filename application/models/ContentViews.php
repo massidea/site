@@ -205,19 +205,24 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     }
     
     public function getContentViewers($id_cnt, $limit = 10) {
-    	$select = $this->select()->from($this, 'id_usr_vws')
+    	$select = $this->select()->from($this, array('id_usr' => 'id_usr_vws'))
     							 ->where('id_cnt_vws = ?', $id_cnt)
     							 ->where('id_usr_vws != 0')
     							 ->limit($limit);
     							 
     	$rowset = $this->fetchAll($select);
     	
-    	$results = array();
+    	//$results = array();
     	
-    	foreach ($rowset as $row) {
+    	/*foreach ($rowset as $row) {
     		$results[] = $row->id_usr_vws;
-    	}
-    	return $results;
+    	}*/
+    	
+   		$usrModel = new Default_Model_User();
+   		//Zend_Debug::dump($usrModel->getUserInfo($rowset->toArray())); die;
+    	
+    	return $usrModel->getUserInfo($rowset->toArray());
+    	
     }
 } // end of class
 ?>

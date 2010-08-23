@@ -2,7 +2,7 @@
 /**
  *  Content -> Content database model for content table.
  *
- *  Copyright (c) <2009>, Markus Riihelä
+ *  Copyright (c) <2009>, Markus Riihelï¿½
  *  Copyright (c) <2009>, Mikko Sallinen
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
@@ -22,8 +22,8 @@
  *  Content - class
  *
  *  @package    models
- *  @author     Markus Riihelä & Mikko Sallinen
- *  @copyright  2009 Markus Riihelä & Mikko Sallinen
+ *  @author     Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright  2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license    GPL v2
  *  @version    1.0
  */
@@ -803,7 +803,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		$where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
 
-		// MIKÄ VITTU TÄSSÄ KUSEE?
+		// MIKï¿½ VITTU Tï¿½SSï¿½ KUSEE?
 		if(!$this->update($content, $where)) {
 			$return = false;
 		} else {
