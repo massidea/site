@@ -53,18 +53,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                     <?php //var_dump($this->linkedgroups); ?>
                     <?php
                     foreach($this->linkedgroups as $group) {
-                        $usrurl = $this->url(array('controller' => 'account',
-                                                   'action' => 'view',
-                                                   'user' => $group['login_name_usr'],
-                                                   'language' => $this->language),
-                                             'lang_default', true);
                         $grpurl = $this->url(array('groupid'    => $group['id_grp'],
                                                    'language'   => $this->language),
                                              'group_shortview', true);
                         ?>
                         <li class="linked_groups">
                             <div class="linked_groups">
-                                <a href="<?php echo $usrurl; ?>"><?php echo $group['login_name_usr']; ?></a> :
                                 <strong><a href="<?php echo $grpurl; ?>"><?php echo $group['group_name_grp']; ?></a></strong>
                             </div>
                         </li>
