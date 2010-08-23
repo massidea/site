@@ -89,8 +89,7 @@ $(document).ready(function(){
 	);
 	*/
 	 $("#add_content_button").hover(
-			 function () {$("#add_content_menu").fadeIn();},
-			 function () {}
+			 function () {$("#add_content_menu").fadeIn();}
 			 );
 
 	 $(".sub_menu_right").hover(

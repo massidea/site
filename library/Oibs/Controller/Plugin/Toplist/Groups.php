@@ -26,6 +26,7 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 	public function fetchUsersInGroups() {
 		$this->_usersInGroups = $this->_usrHasGroupModel->getAllUsers($this->_userList);
 		$this->_groupsWithIds = $this->_usrHasGroupModel->getAllGroupsWithUsers($this->_userList);
+		if(empty($this->_usersInGroups)) $this->_usersInGroups = 1;
 		return $this;
 	}
 	
@@ -33,11 +34,12 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 		$choice = "Amount";
 
 		$groups = $this->_usrHasGroupModel->getGroupAmounts($this->_userList);
-
-		$this->_topList[$choice][$this->_name] = $groups;
-		$this->_topList[$choice]['name'] = $choice;
-		$this->_cutToLimit($this->_name,$choice);
-				
+		if(empty($groups)) $this->_topList[$choice][$this->_name] = array("No groups");
+		else {
+			$this->_topList[$choice][$this->_name] = $groups;
+			$this->_cutToLimit($this->_name,$choice);
+		}
+		$this->_topList[$choice]['name'] = $choice;	
 		return $this;
 	}	
 	
@@ -47,14 +49,19 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 	
 		try {
 			if(!empty($this->_usersInGroups)) {
-				$temp = $this->_getChoiceValue($choice,$this->_usersInGroups);
-				$final = array();
-				foreach($temp as $value) {
-					$final[$value['id_usr']]['value'] = $value['value'];
+				if($this->_usersInGroups != 1) {
+					$temp = $this->_getChoiceValue($choice,$this->_usersInGroups);
+					$final = array();
+					foreach($temp as $value) {
+						$final[$value['id_usr']]['value'] = $value['value'];
+					}
+					$this->_topListIds[$choice]['users'] = $final;
+					$this->_makeToGroupTops($choice);
 				}
-				$this->_topListIds[$choice]['users'] = $final;
-				$this->_makeToGroupTops($choice);
-				
+				else {
+					$this->_topListIds[$choice]['users'] = null;
+					$this->_makeToGroupTops($choice);
+				}
 			}
 			else {
 				$error = "Groups not fetched.";
@@ -68,10 +75,11 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 	}
 	
 	private function _makeToGroupTops($choice) {
-		if(isset($this->_topListIds[$choice])) {
+		if(!empty($this->_topListIds[$choice]['users'])) {
 			$final = array();
 			foreach($this->_groupsWithIds as $data) {
 				if(!isset($final[$this->_name][$data['id_grp']])) {
+					if(isset($this->_topListIds[$choice]['users'][$data['id_usr']]['value']))
 					$final[$this->_name][$data['id_grp']] = array('name' => $data['group_name_grp'],
 															'id' => $data['id_grp'],
 															'value' => $this->_topListIds[$choice]['users'][$data['id_usr']]['value']
@@ -81,14 +89,16 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 					$final[$this->_name][$data['id_grp']]['value'] += $this->_topListIds[$choice]['users'][$data['id_usr']]['value'];
 				}
 			}
+			if(empty($final)) $final[$this->_name] = null;
 			$this->_topList[$choice] = $final;
-			
-			$this->_valueSort($this->_name,$choice);
-			$this->_cutToLimit($this->_name,$choice);
+			if($final[$this->_name]) {
+				$this->_valueSort($this->_name,$choice);
+				$this->_cutToLimit($this->_name,$choice);
+			}
 			
 		}
 		else {
-			$this->_topList[$choice][$this->_name] = array("No users");
+			$this->_topList[$choice][$this->_name] = array("No groups");
 		}
 		$this->_topList[$choice]['name'] = $choice; 
 		return;

@@ -119,13 +119,13 @@ input.submit-button {
 #header #search input.top_search_field { width:350px; margin:0px 10px 10px 0px; padding:2px; float:left; }
 #header #search #search-top { text-align:right; width:358px; margin:4px 0px 4px 0px; }
 
-#header #search #search-top #user_options { position: absolute; display: none; width: 130px; background: none repeat scroll 0 0 #FFFFFF; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; }
+#header #search #search-top #user_options { padding:1px; border-right: 1px solid #CCCCCC;  border-top: 1px solid #CCCCCC; position: absolute; display: none; width: 130px; background: none repeat scroll 0 0 #FFFFFF; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; }
 #header #search #search-top #user_options ul { list-style:none outside none; }
-#header #search #search-top #user_options ul li { border-bottom: 1px solid #0089CF; padding-bottom: 1px; padding-top: 1px; }
+#header #search #search-top #user_options ul li { border-bottom: 1px solid #CCCCCC; padding-bottom: 1px; padding-top: 1px; }
 #header #search #search-top #user_options ul li img { vertical-align: middle; }
 #header #search #search-top #user_options ul li:hover { background: #0089CF; }
 #header #search #search-top #user_options ul li span { color: #003580;padding-left: 2px; }
-#header #search #search-top #user_options ul li a { color: #003580;padding-left: 2px; text-decoration: none;}
+#header #search #search-top #user_options ul li a { color: #333333; padding-left: 2px; text-decoration: none;}
 /*
 #header #search #search-top #user_options ul li #user_options_sub_1 { display:none; position: absolute; width:130px; z-index: 9999; background: none repeat scroll 0 0 #FFFFFF; border-top: 1px solid #0089CF; border-left: 1px solid #0089CF; }
 */

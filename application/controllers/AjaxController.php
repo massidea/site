@@ -238,14 +238,14 @@ class AjaxController extends Oibs_Controller_CustomController
 						;
 		if($userid) $topListCities->addUser($userid);
 		$topCity = $topListCities->getTopList();
-		
+
 		$topListBoxes = array(
         	'Users' => $topList,
 			'Groups' => $topGroup,
 			'Cities' => $topCity,
 			'Countries' => $topCountry,
         ); 
-	
+        //print_r($topListBoxes);die;
 		$this->view->topListBoxes = $topListBoxes;
 	}
 	
