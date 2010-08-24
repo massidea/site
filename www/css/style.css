@@ -288,7 +288,7 @@ div.top_row_center_right_selection_text{
 }
 
 #user_options { list-style:none outside none; position: absolute; display: none; width: 130px; background: none repeat scroll 0 0 #EEEEEE; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px;}
-#user_options li { border-bottom: 1px solid #CCCCCC; padding-bottom: 1px; padding-top: 1px; }
+#user_options li { border: 2px outset #CCCCCC; padding-bottom: 1px; padding-top: 1px; }
 #user_options li img { vertical-align: middle; }
 #user_options li:hover { background: #0089CF; }
 #user_options li a { color: #333333;padding-left: 2px; text-decoration: none;}
