@@ -119,7 +119,11 @@
   		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
 		$comments->loadComments();
         
+
+		
 		$this->view->comments		 = $comments;
+		$this->view->hasFeeds 		 = Oibs_Controller_Plugin_RssReader::hasFeeds($grpId, "group");
+		
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;

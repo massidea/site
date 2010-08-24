@@ -134,7 +134,10 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <?php endif; ?>
         </div>
         <div id='rss'>
-    	
+    		<?php if ($this->hasFeeds): ?>  	
+        		<p><strong>Feed: </strong>
+        		<img src="<?php echo $this->baseUrl;?>/images/ajax-loader-black.gif" style="float: right; vertical-align:text-top;"/></p>
+        	<?php endif;?>
     	</div>
     </div>
     

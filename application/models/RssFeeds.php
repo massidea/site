@@ -58,4 +58,14 @@ class Default_Model_RssFeeds extends Zend_Db_Table_Abstract {
     	if (isset($result[0])) return true;
     	return false;
     }
+    
+    public function hasFeeds($id, $type) {
+    	$select = $this->select()->from($this, 'id_rss')
+    							 ->where('type_rss = ?', $type)
+    							 ->where('id_target_rss = ?', $id);
+    	$count = count($this->fetchAll($select)->toArray());
+    	//Zend_Debug::dump($count); die; 
+    	if ($count) return true;
+    	return false;
+    }
 }

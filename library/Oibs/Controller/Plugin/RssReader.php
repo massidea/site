@@ -235,5 +235,11 @@ class Oibs_Controller_Plugin_RssReader {
     	return $cnt['title_cnt'];
     }
     
+    public static function hasFeeds($id, $type) {
+    	$feedModel = new Default_Model_RssFeeds();
+    	$pageTypeModel = new Default_Model_PageTypes();
+    	return $feedModel->hasFeeds($id, $pageTypeModel->getId($type));
+    }
+    
 }
     
