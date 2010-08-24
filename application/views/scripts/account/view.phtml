@@ -70,11 +70,17 @@ function expandText(key)
 
 $(document).ready(function() {
 	$('#picker').farbtastic('#customfontcolor');
+	//$('#picker').farbtastic('#custompreviewtext');
 	
-	$("#customfontcolor").change(function() {
-  		alert('Handler for .change() called.');
-	});	
+	$('#custombgcolorpicker').farbtastic('#custombgcolor');
+	
+	$('#custom_layout_button').click(function() {
+			alert("save button hit!");
+			//$(#customfontcolor).css('font-weight' : 'bold;');
+	});
 });
+
+
 
 
 <?php $this->headScript()->captureEnd(); ?>

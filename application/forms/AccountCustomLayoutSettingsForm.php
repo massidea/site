@@ -1,8 +1,8 @@
 <?php
 /**
- *  ChangeTranslationLanguageForm -> Form for changing translation language
+ *  AccountCustomLayoutSettingsForm -> Form for inserting custom layout parameters
  *
- * 	Copyright (c) <2010>, Jaakko Paukamainen
+ * 	Copyright (c) <2010>, Janne Vaaraniemi
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -39,10 +39,32 @@
 		
 		$clear = new Oibs_Form_Element_Note('clear');
         $clear->setValue('<div class="clear"></div>');
+        
+        $bgimageclear = new Oibs_Form_Element_Note('clear');
+        $bgimageclear->setValue('<div style="clear:both;"></div>');
+        
+        $testdivstart = new Oibs_Form_Element_Note('testdivstart');
+        $testdivstart->setValue('<div class="backgrounddiv" style="float:right; width:410px; margin-top:-5px; padding-left:20px; border-left:1px solid silver;">');
+        
+        $testdivend = new Oibs_Form_Element_Note('testdivend');
+        $testdivend->setValue('</div>');
 
+        $testdiv2start = new Oibs_Form_Element_Note('testdiv2start');
+        $testdiv2start->setValue('<div class="fontdiv" style="float:left; width:280px; /*border:1px solid black;*/ margin-top:-25px;">');
+        
+        $testdiv2end = new Oibs_Form_Element_Note('testdiv2end');
+        $testdiv2end->setValue('</div>');
+        
+        // Headers
+        $fontheader = new Oibs_Form_Element_Note('fontheader');
+        $fontheader->setValue('<center><div style="font-weight:bold; font-size:1.35em; margin-top:-20px;"><label>Custom font</label></div></center>');
+        
+        $bgheader = new Oibs_Form_Element_Note('bgheader');
+        $bgheader->setValue('<center><div style="font-weight:bold; font-size:1.35em; margin-top:-20px;"><label>Custom background</label></div></center>');
+        
 		// Font
 		$customfont = new Zend_Form_Element_Select('customfont');
-		$customfont->setLabel('Custom Font')
+		$customfont->setLabel('Font')
 				   ->setAttrib('id', 'customfont')
 				   ->setAttrib('style', 'margin-top:-1px;')
 				   ->addMultiOptions(array('Arial', 'Castellar', 'Times New Roman', 'Microsoft Sans Serif', 'Harrington'));
@@ -57,9 +79,10 @@
 				   
 		// Font size
 		$customfontsize = new Zend_Form_Element_Select('customfontsize');
-		$customfontsize->setLabel('Font Size')
+		//$customfontsize->setLabel('Font Size')
+		$customfontsize->setLabel('')
 				   ->setAttrib('id', 'customfontsize')
-				   ->setAttrib('style', 'margin-top:-1px;')
+				   ->setAttrib('style', 'float:left; text-align:left; margin-bottom:5px; margin-left:10px; margin-top:-8px;')
 				   ->addMultiOptions(array('8', '10', '12', '14', '16'));
 
 		$customsizeclear = new Oibs_Form_Element_Note('customsizeclear');
@@ -67,7 +90,7 @@
 		
         // Font color
 		$customfontcolor = new Zend_Form_Element_Text('customfontcolor');
-        $customfontcolor->setLabel('Font Color')
+        $customfontcolor->setLabel('Color')
                ->setAttrib('id', 'customfontcolor')
                ->setAttrib('style', 'margin-top:-1px;')
                ->setValue('#000000');
@@ -76,28 +99,135 @@
         $customfontcolorclear = new Oibs_Form_Element_Note('customfontcolorlear');
         $customfontcolorclear->setValue('<div class="clear"></div>');
         
-        // Font color picker script
+        // For font color picker script
         $customfontcolorpicker = new Oibs_Form_Element_Note('customfontcolorpicker');
-        $customfontcolorpicker->setValue('<div id="picker" style="margin-top:-20px; margin-left:10px; /*border:1px solid silver;*/"></div>');
+        $customfontcolorpicker->setValue('<center><div id="picker" style="margin-top:0px; margin-left:10px; /*border:1px solid silver;*/"></div></center>');
         
+        // 
+        $backgroundimage =  new Zend_Form_Element_File('backgroundimage');
+		$backgroundimage->setLabel('Image :')
+				->setDestination('../www/upload')
+				->addValidator('Count', false, 1)
+				->addValidator('Size', false, 524288)				// Max file size from 512KB
+				->addValidator('Extension', false, 'jpg,png,gif')
+                ->removeDecorator('DtDdWrapper')
+                ->removeDecorator('DefaultDecorator')
+                //->addDecorator('HtmlTag',array('style' => 'margin-top:-11px'))
+                ->addDecorator('HtmlTag',array('tag' => 'div', 'class' => 'form_addcontent_row', 'style' => '/*float:right;*/ margin-top:6px'))
+                ->addDecorator('Label',array('tag' => 'div', 'class' => 'form_addcontent_row', 'style' => 'font-weight:bold; float:left; padding-right:10px; margin-top:6px; width:60px'))
+                ;
+               
+        // Background color input
+		$custombgcolor = new Zend_Form_Element_Text('custombgcolor');
+		$custombgcolor->setLabel('Color')
+               ->setAttrib('id', 'custombgcolor')
+               ->setAttrib('style', 'margin-top:-1px;')
+               ->setValue('#ffffff');
+
+		// For background color picker script
+        $custombgcolorpicker = new Oibs_Form_Element_Note('custombgcolorpicker');
+        $custombgcolorpicker->setValue('<center><div id="custombgcolorpicker" style="margin-top:20px; margin-left:10px; /*border:1px solid silver;*/"></div></center>');
+
+        // Submit button
+        $submit = new Zend_Form_Element_Button('custom_layout_button');
+		//$submit->setLabel($translate->_("account-register-submit"))
+		$submit->setLabel('Save')
+				->setAttrib('style', 'width:60px; float:right; margin-right:10px')
+        		->removeDecorator('DefaultDecorator')
+        		->removeDecorator('DtDdWrapper');
+        $submitclear = new Oibs_Form_Element_Note('submitclear');
+        $submitclear->setValue('<div style="clear:both;"></div>');
+        
+        $savebgimagebutton = new Zend_Form_Element_Button('savebgimagebutton');
+		//$savebgimagebutton->setLabel($translate->_("account-register-submit"))
+		$savebgimagebutton->setLabel('Upload')
+				->setAttrib('style', 'float:right; margin-right:50px; margin-top:6px; width:60px')
+        		->removeDecorator('DefaultDecorator')
+        		->removeDecorator('DtDdWrapper');
+        
+        $bgimageinuse = new Zend_Form_Element_CheckBox('bgimage_in_use');
+        $bgimageinuse->setLabel(' Use < no imagefile uploaded>');
+        
+        $bgcolorinuse = new Zend_Form_Element_CheckBox('bgcolor_in_use');
+        $bgcolorinuse->setLabel(' Use');
+		
+        // Block separator
+		$blockseparator = new Oibs_Form_Element_Note('blockseparator');
+        $blockseparator->setValue('<center><div style="width:696px; height:1px; border-bottom:1px solid silver; margin-bottom:10px;"></div></center>');         
+         
         // Add elements to form
-		$this->addElements(array(//$customfontpreviewtext,
+		/*$this->addElements(array(//$customfontpreviewtext,
 								 //$customfontclear,						 
 								 $customfont,
-								 $clear,
+								 //$clear,
 								 $customfontsize,
 								 $customsizeclear,
 								 $customfontcolor,
 								 $customfontcolorclear,
-								 $customfontcolorpicker));
+								 $customfontcolorpicker,
+								 $backgroundimage));
 		
-		
+		*/
+         /*
+         $this->addElements(array(//$customfontpreviewtext,
+								 //$customfontclear,
+								 $testdivstart,
+								 $backgroundimage,
+								 $custombgcolor,
+								 $testdivend,
+								 //$clear,
+								 $testdiv2start,
+								 $customfont,
+								 //$clear,
+								 $customfontsize,
+								 $customsizeclear,
+								 $customfontcolor,
+								 $testdiv2end,
+								 $customfontcolorclear,
+								 $customfontcolorpicker,
+								 $clear));
+*/
+		$this->addElements(array($testdivstart,
+								 //$bgheader,
+								 $savebgimagebutton,
+								 $backgroundimage,
+								 //$bgimageclear,
+								 $bgimageinuse,
+								 //$clear,
+								 $custombgcolor,
+								 //$bgcolorinuse,
+								 //$clear,
+								 $custombgcolorpicker,
+								 //$clear,
+								 $testdivend,
+								 //$clear,
+								 $testdiv2start,
+								 //$fontheader,
+								 $customfont,
+								 //$clear,
+								 $customfontsize,
+								 $customsizeclear,
+								 $customfontcolor,
+								 //$testdiv2end,
+								 $customfontcolorclear,
+								 $customfontcolorpicker,
+								 $testdiv2end,
+								 $submitclear,
+								 $blockseparator,
+								 $submit
+								 //$clear
+								 ));
+								 
 		// Add decorators
-		$customfont->setDecorators(array('InputDecorator'));
+		$customfont->setDecorators(array('InputDecorator2'));
 		//$customfontpreviewtext->setDecorators(array(''));
-		$customfontsize->setDecorators(array('InputDecorator'));
+		//$customfontsize->setDecorators(array('InputDecorator'));
 		//$customfontcolor->setDecorators(array('ColorPickerDecorator'));
-		$customfontcolor->setDecorators(array('InputDecorator'));
+		$customfontcolor->setDecorators(array('InputDecorator2'));
+		//$backgroundimage->setDecorators(array('UploadDecorator'));
+		$custombgcolor->setDecorators(array('InputDecorator3'));
+		$bgimageinuse->setDecorators(array('CheckBoxDecorator'));
+		$bgcolorinuse->setDecorators(array('CheckBoxDecorator'));
 		
 		$this->setDecorators(array(
             'FormElements',
