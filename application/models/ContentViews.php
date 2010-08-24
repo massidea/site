@@ -192,7 +192,7 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     public function getUserViewedContents($id_usr, $limit = 10) {
     	$select = $this->select()->from($this, 'id_cnt_vws')
     				   ->setIntegrityCheck(false)
-    				   ->joinLeft('cnt_has_usr', 'id_cnt_vws = id_cnt')
+    				   ->joinLeft('cnt_has_usr', 'id_cnt_vws = id_cnt', array())
     				   ->where('id_usr != ?', $id_usr)
     				   ->where('id_usr_vws = ?', $id_usr)
     				   ->where('modified_vws is not null')
@@ -201,6 +201,7 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     				   
     	$rowset = $this->fetchAll($select);
     	$contentModel = new Default_Model_Content();
+
     	return $contentModel->getContentRows($rowset->toArray(), 'id_cnt_vws', true);
     }
     
