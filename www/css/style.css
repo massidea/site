@@ -664,6 +664,8 @@ div.top_right_box{
 	width: 175px;
 }
 
+div.top_right_box div { display:inline; }
+
 div.top_right_box p{
 	padding: 0px 0px 10px 0px;
 }
@@ -1353,7 +1355,6 @@ form #uploadedFiles_div .form_element_input label {
 	position: fixed;
 	background-color: #000000;
 	opacity: 0.65;
-	filter:alpha(opacity=65);
 	z-index: 9001;
 	top:0px;
 	left:0px;
@@ -1361,25 +1362,11 @@ form #uploadedFiles_div .form_element_input label {
 	height: 100%;
 }
 
-.popup {
-	position: fixed;
-	background-color:#fff;
-	width:300px;
-	height:300px;
-	z-index: 9002;
-	padding: 10px;
-	overflow-y: auto;
-    border: 2px double #C3C3C3;
-    margin: -150px;
-    top: 50%;
-    left: 50%;
-}  
-
 .popup_terms {
 	position: fixed;
 	background-color:#fff;
 	width:600px;
-	height:600px;
+	height:70%;
 	z-index: 9002;
 	padding: 10px;
 	overflow-y: auto;
@@ -1387,12 +1374,12 @@ form #uploadedFiles_div .form_element_input label {
     margin: -150px;
     top: 40%;
     left: 40%;
-} 
+}
 
 .popup_close {
     padding: 0px;
     width: 590px;
-    position: inherit;
+    position: fixed;
     margin-left: auto;
     margin-right: auto;
 }

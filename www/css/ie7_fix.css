@@ -3,7 +3,7 @@
 */
 
 div.right_side{ width: 200px !important; }
-div.top_row_center_right_login_links, div.user_content_spacer, div.user_content_spacer img, div.user_content_row, div.linking_content, #form_content_add_container, .form_element, .form_helptext_line, .form_addcontent_row , #content_production_container_left, div.top_row_center_right_login_links{ width: 490px !important;}
+div.top_row_center_right_login_links, div.user_content_spacer, div.user_content_spacer img, div.user_content_row, div.linking_content, #form_content_add_container, .form_helptext_line, .form_addcontent_row , #content_production_container_left, div.top_row_center_right_login_links{ width: 490px !important;}
 .add_content_button {cursor: pointer;}
 #add_content_menu { margin-left: -132px; margin-top: 27px;}
 .rsslogo {margin-top: -10px;}
@@ -18,3 +18,8 @@ div.top_row_center_right_login_links, div.user_content_spacer, div.user_content_
 .user_list_top_column { display: inline; }
 .user_list_top_box { margin-right: 4px; }
 #user_options { top: 25px; }
+.search_result_details_left div, .search_result_details div { display: inline; }
+.search_result_details_left { float: left; }
+#current_rating div { display: inline; }
+.view_content_left_header_btm { padding: 0px; padding-top: 2px; }
+.top_right_box div { float: left; margin-bottom: 10px; }

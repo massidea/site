@@ -1038,3 +1038,49 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 #footer .left { float:left; width:340px; margin-bottom:10px; padding-left:10px; }
 #footer .right { float:right; width:360px; margin-bottom:10px; }
+
+#backdrop {
+	display: none;
+	position: fixed;
+	background-color: #000000;
+	opacity: 0.65;
+	z-index: 9001;
+	top:0px;
+	left:0px;
+	width:100%;
+	height: 100%;
+}
+
+.popup_terms {
+	position: fixed;
+	background-color:#fff;
+	width:600px;
+	height:70%;
+	z-index: 9002;
+	padding: 10px;
+	overflow-y: auto;
+    border: 2px double #C3C3C3;
+    margin: -150px;
+    top: 40%;
+    left: 40%;
+} 
+
+.popup_close {
+    padding: 0px;
+    width: 590px;
+    position: fixed;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.privacy {
+    font-family: Arial, Times New Roman;
+    color: #232323;
+    clear: both;
+    padding-top: 10px;
+}
+div.privacy h1 { margin: 0px 0px 9px 0px; font-size: 23px; }
+div.privacy h2 { margin: 20px 0px 6px 0px; font-size: 18px; }
+div.privacy h3 { margin: 12px 0px 4px 0px; font-size: 16px; }
+div.privacy p { margin: 2px 0px 3px 6px; font-size: 14px; line-height: 15px; }
+div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; lin-height: 15px; }

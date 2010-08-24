@@ -459,7 +459,34 @@ echo $this->doctype();
                         </li>
                     </ul>
                 </div>
-
+                
+ 				<div id="backdrop" style="filter:alpha(opacity=65);zoom:1;" onclick="popup_close(); popup_terms_close()"></div>  
+ 				<div id="popup_privacy_" class="popup_terms" style="display:none;">
+			        <div class="popup_close">
+			            <div style="float:right;">
+			                <a href="#" onclick="popup_terms_close(''); return false;">
+			                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" />
+			                </a>
+			            </div>
+			        </div>
+			        
+			        <div class="privacy">
+			            <?php echo $this->translate('register-description'); ?>
+			        </div>
+		    	</div>
+		    	<div id="popup_terms_" class="popup_terms" style="display:none;">
+			        <div class="popup_close" style="">  
+			            <div style="float:right;">
+			                <a href="#" onclick="popup_terms_close(''); return false;">
+			                    <img src="<?php echo $this->baseUrl('/images/icon_close.png') ?>" alt="Close" />
+			                </a>
+			            </div>       
+			        </div>
+			        
+			        <div class="privacy">
+			            <?php echo $this->translate('network-service-agreement'); ?>
+			        </div>      
+			    </div>
                 <div class="dot-line-720 clear"></div>
                 <div class="left">
                     <p><?php echo $this->translate('index-funded'); ?></p>

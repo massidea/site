@@ -48,14 +48,14 @@ $(document).ready(function() {
 
 		$(this).parent().siblings().removeClass('selected');
 		$(this).parent().removeClass('selected');
-				class = $(this).parent().attr('class'); 
+		classi = $(this).parent().attr('class'); 
 		$(this).parent().addClass('selected');
 		box = $(this).parent().parent().parent().parent().attr('id');
 		$("#" + box + " > .scroll-box > ul > li").each(function() {
 			curClass =$(this).attr('class');
-			if( !$(this).hasClass(class) && !$(this).hasClass('popup')) {
+			if( !$(this).hasClass(classi) && !$(this).hasClass('popup')) {
 				$(this).hide();
-			} else if ($(this).hasClass(class) && !$(this).hasClass('popup')) {
+			} else if ($(this).hasClass(classi) && !$(this).hasClass('popup')) {
 				$(this).show();
 				$(this).scrollTop();
 			}

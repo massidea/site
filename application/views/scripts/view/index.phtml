@@ -160,13 +160,14 @@ function flagContent()
 <div class="right_side" style="float: right; padding: 0px; margin: 0px; margin-top: 0px;">
     <p class="right_side_title_small" style="padding: 11px 0px 3px 10px; font-weight: bold;"><?php echo $this->translate('content-view-author'); ?></p>
     <div class="top_right_box" style="margin-bottom:10px;">
-            <img src="<?php echo $this->url(array('controller' => 'account',
+            <div><img src="<?php echo $this->url(array('controller' => 'account',
                                                   'action' => 'profilethumb',
                                                   'id' => $this->userData['id_usr'],
                                                   'language' => $this->language,
                                                   'thumb' => 'true'),
                                             'lang_default', true); ?>" 
                 alt="User image" class="profile_image_smallsize" />
+            </div>
 		<div style="float: right;">
             <a href="<?php echo $this->url(array('controller' => 'account',
                                                  'action' => 'view', 
