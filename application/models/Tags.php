@@ -353,7 +353,7 @@ class Default_Model_Tags extends Zend_Db_Table_Abstract
     /**
     * gets the most used tags
     * @param limit how many - default 10
-    * @author Joel Peltonen
+    * @author Joel Peltonen, Jari Korpela
     */
     public function getPopular($limit = 10){
         $select = $this->_db->select()
@@ -367,10 +367,19 @@ class Default_Model_Tags extends Zend_Db_Table_Abstract
                                    array('tag.id_tag', 'tag.name_tag')
                             )
                             ->limit($limit)
+                            ->order('count desc')
                             ->group('tag.id_tag');
 
         // get results
         $tagList = $this->_db->fetchAll($select);
+        
+        $name = array();
+        $count = array();
+	    foreach ($tagList as $key => $row) {
+		    $name[$key]  = mb_strtolower($row['name_tag']);
+		    $count[$key] = $row['count'];
+		}
+		array_multisort($name, SORT_ASC, $count, SORT_DESC, $tagList);
         // return results
         return $tagList;
     }

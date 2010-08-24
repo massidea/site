@@ -8,6 +8,7 @@ echo $this->doctype();
     <?php
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_new.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/ie8_fix_new.css'), 'screen', 'IE 8');
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix_new.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix_new.css'), 'screen', 'IE 6');
     //$this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
@@ -460,7 +461,7 @@ echo $this->doctype();
                     </ul>
                 </div>
                 
- 				<div id="backdrop" style="filter:alpha(opacity=65);zoom:1;" onclick="popup_close(); popup_terms_close()"></div>  
+ 				<div id="backdrop" onclick="popup_close(); popup_terms_close()"></div>  
  				<div id="popup_privacy_" class="popup_terms" style="display:none;">
 			        <div class="popup_close">
 			            <div style="float:right;">

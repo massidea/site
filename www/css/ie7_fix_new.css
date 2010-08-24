@@ -73,3 +73,5 @@
 #content #content-page-additional-functions #linking-contents ul li strong { float:right; margin-top:-17px;}
 	
 #my_groups .scroll-box ul li { width:155px;}
+
+#backdrop { filter:alpha(opacity=65) !important;zoom:1 !important; }
