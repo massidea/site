@@ -1409,6 +1409,11 @@ form #uploadedFiles_div .form_element_input label {
 
 .content_view_content_modified p { font-style: italic; }
 
+.content_view_linked_content_extra { display: none; }
+#content_view_linked_content_challenges_more,
+#content_view_linked_content_visions_more { cursor: pointer; vertical-align: middle; }
+
+
 /** comment stuff **/
 #content_view_comment_form_container {
     margin: 1em 0 0 0;

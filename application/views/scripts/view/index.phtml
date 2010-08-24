@@ -76,11 +76,25 @@ function ajaxLoad_moreRelated(type, more){
 	});
 };
 
+function initLinkedContent(type) {
+	var target = "#content_view_linked_content_"+type+"_extra";
+	var expandButton = "#content_view_linked_content_"+type+"_more";
+	if ($(target).is(':hidden')){
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
+	} else {
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
+	}
+	$("#content_view_linked_content_"+type+"_extra").slideToggle();
+}
+
 $(document).ready(function(){
 		ajaxLoad_moreRelated("user", false);
 		ajaxLoad_moreRelated("content", false);
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
 		//$("#content_view_favourite").load("?page=add_favourite&format=html");
+		
+		$("#content_view_linked_content_challenges_more").click(function(){initLinkedContent("challenges");});
+		$("#content_view_linked_content_visions_more").click(function(){initLinkedContent("visions");});
 });
 
 

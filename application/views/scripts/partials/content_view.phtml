@@ -70,7 +70,8 @@ if (isset($this->parent_siblings[0])) {
             <div class="box_468_light">
                 <div style="width:100%; float: left; overflow:hidden;">
                     <div style="float: left; padding-bottom: 3px;">
-                        <span style="font-weight: bold; color: #d21034;"><?php echo $this->translate('content-linked-challenges'); ?></span>
+                        <span style="font-weight: bold; color: #d21034; vertical-align: middle;"><?php echo $this->translate('content-linked-challenges'); if(isset($linked_problems)) echo "(".sizeof($linked_problems).")"; ?></span>
+                        <?php if(isset($linked_problems) && sizeof($linked_problems) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_challenges_more" /><?php endif; ?>
                     </div>
                     <?php if ($authenticated): ?>
                     <div style="float: right;">
@@ -97,7 +98,9 @@ if (isset($this->parent_siblings[0])) {
                 </div><br clear="all" />
                 <div style="width:300px;">
                     <?php if (isset($linked_problems)): ?>
-                        <?php foreach ($linked_problems as $problem): ?>
+                        <?php $i = 0; foreach ($linked_problems as $problem): $i++; ?>
+                        	<?php if($i == 4): ?> <div id="content_view_linked_content_challenges_extra" class="content_view_linked_content_extra"> <?php endif; ?>
+                        	<div>
                             <span style="font-weight: bold;">
                                 <a href=""><?php echo $problem['login_name_usr'] . ': '; ?></a>
                             </span>
@@ -107,7 +110,9 @@ if (isset($this->parent_siblings[0])) {
                                 <?php echo $problem['title_cnt']; ?>
                             </a>
                             <br />
+                            </div>
                         <?php endforeach; ?>
+                        </div>
                     <?php else: ?>
                         <span><?php echo $this->translate('content-box-no-linked-challenges'); ?></span>
                     <?php endif; ?>
@@ -116,7 +121,8 @@ if (isset($this->parent_siblings[0])) {
             <div class="box_468_medium">
                 <div style="width:100%; float: left; overflow:hidden;">
                     <div style="float: left; padding-bottom: 3px;">
-                        <span style="font-weight: bold; color: #ffc726"><?php echo $this->translate('content-linked-visions'); ?></span>
+                        <span style="font-weight: bold; color: #ffc726"><?php echo $this->translate('content-linked-visions'); if(isset($linked_problems)) echo "(".sizeof($linked_futures).")";?></span>
+                    	<?php if(isset($linked_problems) && sizeof($linked_futures) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_visions_more" /><?php endif; ?>
                     </div>
                     <?php if ($authenticated): ?>
                     <div style="float: right;">
@@ -143,7 +149,9 @@ if (isset($this->parent_siblings[0])) {
                 </div><br clear="all" />
                 <div style="width:300px;">
                     <?php if (isset($linked_futures)): ?>
-                        <?php foreach ($linked_futures as $future): ?>
+                        <?php $i= 0; foreach ($linked_futures as $future): $i++; ?>
+                        <?php if($i == 4): ?> <div id="content_view_linked_content_visions_extra" class="content_view_linked_content_extra"> <?php endif; ?>
+                        <div>
                             <span style="font-weight: bold;">
                                 <a href=""><?php echo $future['login_name_usr'] . ': '; ?></a>
                             </span>
@@ -153,7 +161,9 @@ if (isset($this->parent_siblings[0])) {
                                 <?php echo $future['title_cnt']; ?>
                             </a>
                             <br />
+                         </div>
                         <?php endforeach; ?>
+                        </div>
                     <?php else: ?>
                         <span><?php echo $this->translate('content-box-no-linked-visions'); ?></span>
                     <?php endif; ?>
