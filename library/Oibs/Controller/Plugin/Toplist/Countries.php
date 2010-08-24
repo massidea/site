@@ -28,6 +28,15 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	}
 	
 	private function _addUserRank($id) {
+		$found = false;
+		foreach($this->_userList as $_id) {
+			if($id == $_id ) {
+				$found = true;
+				break;
+			}
+		}
+		if(!$found) return;
+		
 		if(!is_array($id)) $id = array($id);
 		
 		$user = $this->_intersectMergeArray($this->_userModel->getUserInfo($id),
@@ -36,6 +45,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 		$userCountry = $user[0]['countryIso'];
 		
 		foreach($this->_topList as $name => $data) {
+			if(empty($data[$this->_name])) continue;
 			$iso = array_keys($data[$this->_name]);
 			$value = array_search($userCountry, $iso);
 			if($value !== false) {
@@ -52,6 +62,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	*/
 	public function fetchUserCountries() {
 		$this->_usersWithCountry = $this->_userProfileModel->getUsersWithCountry($this->_userList);
+		if(empty($this->_usersWithCountry)) $this->_usersWithCountry = 1;
 		return $this;
 	}
 	
@@ -67,10 +78,14 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 			else $countries[$data['countryIso']] += 1;
 		}
 		*/
-		
-		$this->_topList[$choice][$this->_name] = $countries;
+		if(empty($countries)) $this->_topList[$choice][$this->_name] = array("No countries");
+		else { 
+			$this->_topList[$choice][$this->_name] = $countries;
+			$this->_cutToLimit($this->_name,$choice);
+		}
 		$this->_topList[$choice]['name'] = $choice;
-		$this->_cutToLimit($this->_name,$choice);
+		
+		
 		return $this;
 
 	}
@@ -81,27 +96,32 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 		
 		try {
 			if(!empty($this->_usersWithCountry)) {
-				$getIds = array_keys($this->_usersWithCountry);
-				$this->_topListIds[$choice] = $this->_getChoiceValue($choice,$getIds);
-				$final = array();
-				//print_r($this->_usersWithCountry);die;
-				foreach($this->_topListIds[$choice] as $userValue) {
-					foreach(array_values($this->_usersWithCountry) as $userInfo) {
-						if($userValue['id_usr'] == $userInfo['id_usr']) {
-							$final[] = array_merge($userValue,$userInfo);
-							continue 2;
+				if($this->_usersWithCountry != 1) {
+					$getIds = array_keys($this->_usersWithCountry);
+					$this->_topListIds[$choice] = $this->_getChoiceValue($choice,$getIds);
+					$final = array();
+					//print_r($this->_usersWithCountry);die;
+					foreach($this->_topListIds[$choice] as $userValue) {
+						foreach(array_values($this->_usersWithCountry) as $userInfo) {
+							if($userValue['id_usr'] == $userInfo['id_usr']) {
+								$final[] = array_merge($userValue,$userInfo);
+								continue 2;
+							}
 						}
 					}
 				}
-				
+				else {
+					$final = null;
+				}
+					
 				$this->_topListUsersCountry[$choice] = array(
 					'users' => $final,
 					'name' => $choice
 				);
-							
-				$this->_makeToCountryGroups($choice);
 				
+				$this->_makeToCountryGroups($choice);
 				return $this;
+				
 			}
 			else {
 				$error = "Countries not fetched.";
@@ -137,7 +157,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 			
 		}
 		else {
-			$this->_topList[$choice][$this->_name] = array("No users");
+			$this->_topList[$choice][$this->_name] = array("No countries");
 		}
 		$this->_topList[$choice]['name'] = $choice; 
 		return;

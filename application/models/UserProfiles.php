@@ -262,6 +262,7 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
         // User country
         if (isset($collection['country'])) {
             $country_model = new Default_Model_Countries();
+            $collection['countryIso'] = $collection['country'];
             $collection['country'] = $country_model->getCountryPrintableNameByIso($collection['country']);
         }
 

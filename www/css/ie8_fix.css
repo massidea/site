@@ -13,3 +13,4 @@
 .user_list_top_box .user_list_top_box_left, .user_list_top_box .user_list_top_box_right { background-color: #EEEEEE; }
 .user_list_top_box_right { margin-bottom: 5px; }
 .user_list_top_box_runnerupsbox div { display: block; }
+#backdrop { filter:alpha(opacity=65) !important;zoom:1 !important; }

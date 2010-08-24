@@ -287,7 +287,14 @@ div.top_row_center_right_selection_text{
 	padding-top: 4px;
 }
 
-
+#user_options { list-style:none outside none; position: absolute; display: none; width: 130px; background: none repeat scroll 0 0 #EEEEEE; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px;}
+#user_options li { border-bottom: 1px solid #CCCCCC; padding-bottom: 1px; padding-top: 1px; }
+#user_options li img { vertical-align: middle; }
+#user_options li:hover { background: #0089CF; }
+#user_options li a { color: #333333;padding-left: 2px; text-decoration: none;}
+/*
+#user_options li #user_options_sub_1 { display:none; position: absolute; }
+*/
 /* Middle section, content area */
 
 div.middle_row{
@@ -657,6 +664,8 @@ div.top_right_box{
 	width: 175px;
 }
 
+div.top_right_box div { display:inline; }
+
 div.top_right_box p{
 	padding: 0px 0px 10px 0px;
 }
@@ -819,41 +828,37 @@ p.top_right_box_links_learn_more{
 /* ELEMENT ID DEFINITIONS */
 
 #login_box{
-	position: absolute;
 	text-align: left;
 	display: none;
 	border: 1px solid #cccccc;
 	background: #eeeeee;
 	color: #333333;
-	width: 240px;
-	height: 156px;
 	font-family: Arial;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 6px;
 	padding-left: 8px;
-	z-index: 1000;
+	height: 213px;
+	width: 288px;
 }
 
 #login_box input{
-	width: 232px;
+	width: 222px;
 }
 
 #login_box_openid{
-	position: absolute;
 	text-align: left;
 	border: 1px solid #cccccc;
 	color: #333333;
 	display: none;
 	background: #eeeeee;
-	width: 240px;
-	height: 90px;
 	font-family: Arial;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 6px;
 	padding-left: 8px;
-	z-index: 1000;
+	height: 123px;
+	width: 268px;
 }
 
 #sign_up_now{
@@ -1350,7 +1355,6 @@ form #uploadedFiles_div .form_element_input label {
 	position: fixed;
 	background-color: #000000;
 	opacity: 0.65;
-	filter:alpha(opacity=65);
 	z-index: 9001;
 	top:0px;
 	left:0px;
@@ -1358,25 +1362,11 @@ form #uploadedFiles_div .form_element_input label {
 	height: 100%;
 }
 
-.popup {
-	position: fixed;
-	background-color:#fff;
-	width:300px;
-	height:300px;
-	z-index: 9002;
-	padding: 10px;
-	overflow-y: auto;
-    border: 2px double #C3C3C3;
-    margin: -150px;
-    top: 50%;
-    left: 50%;
-}  
-
 .popup_terms {
 	position: fixed;
 	background-color:#fff;
 	width:600px;
-	height:600px;
+	height:70%;
 	z-index: 9002;
 	padding: 10px;
 	overflow-y: auto;
@@ -1384,12 +1374,12 @@ form #uploadedFiles_div .form_element_input label {
     margin: -150px;
     top: 40%;
     left: 40%;
-} 
+}
 
 .popup_close {
     padding: 0px;
     width: 590px;
-    position: inherit;
+    position: fixed;
     margin-left: auto;
     margin-right: auto;
 }

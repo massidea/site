@@ -16,8 +16,8 @@ $("document").ready(function () {
  * functionality of the post comment button
  */
 function postComment() {
-	message = $("#commentTextarea").val();
-	parent = $("#comment_parent").val();
+	var message = $("#commentTextarea").val();
+	var parent = $("#comment_parent").val();
 	clearForm();
 	data = new Array();
 

@@ -8,9 +8,11 @@ echo $this->doctype();
     <?php
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_new.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/ie8_fix_new.css'), 'screen', 'IE 8');
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix_new.css'), 'screen', 'IE 7');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie6_fix_new.css'), 'screen', 'IE 6');
-    $this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
+    //$this->headLink()->appendStylesheet($this->baseUrl('/css/ui-lightness/jquery-ui-1.7.2.custom.css'));
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/custom-theme/jquery-ui-1.8.2.custom.css'));
     $this->headLink()->appendStylesheet($this->baseUrl('/css/farbtastic.css'));	// Used for farbtastic custom color picker
 
     $this->headLink()->headLink(array(  'rel'   => 'shortcut icon',
@@ -49,13 +51,47 @@ echo $this->doctype();
                     <div id="search-top">
                         <?php if($this->authenticated) : ?>
                             <?php echo $this->translate('index-logged_in'); ?>
-                                <a href="<?php echo $this->url(array('controller' => 'account',
+                                <a id="login_link" href="<?php echo $this->url(array('controller' => 'account',
                                                                      'action' => 'view',
                                                                      'user' => $this->username,
                                                                      'language' => $this->language),
                                                                'lang_default', true); ?>">
                                     <?php echo $this->username; ?>
                                 </a>
+                                <div id="user_options">
+                                	<ul>
+                                		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
+                                                                     'action' => 'view',
+                                                                     'user' => $this->username,
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">View Profile</a></li>
+                                		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
+                                                                     'action' => 'settings',
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">Edit Profile</a></li>
+                                		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'privmsg',
+                                                                     'language' => $this->language),
+                                                               'lang_default', true); ?>">Private messages</a></li>
+                                        <li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
+                                                                'action' => 'images',     
+                                        						'language' => $this->language),
+                                                               'lang_default', true); ?>">Profile image</a></li>
+                                		<?php /* 
+                                		<li id="user_options_groups">
+	                                        <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+	                                        <span>Manage Groups</span>
+	                                        <ul id="user_options_sub_1">
+	                                        		<li>
+	                                        		<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'group',
+	                                                                'action' => 'create',     
+	                                        						'language' => $this->language),
+	                                                               'lang_default', true); ?>">Create</a>
+	                                        		</li>
+	                                        </ul>
+                                        </li>
+                                        */ ?>
+                                	</ul>
+                                </div>
                             <?php
                                 if($this->unread_privmsgs > 0) {
                                     if($this->controller == "privmsg" && $this->action == "index") {
@@ -118,7 +154,10 @@ echo $this->doctype();
                                         <input style="margin-right: 6px; width: 70px;" type="submit"
                                             value="<?php echo $this->translate('account-login-submit'); ?>" />
                                         <span class="top_right_box_links" style="font-size: 12px;">
-                                            <a href="#">
+                                            <a href="<?php echo $this->url(array('controller' => 'account',
+                                            									'action' => 'fetchpassword',
+                                            									'language' => $this->language),
+                                        										'lang_default', true); ?>">
                                                 <?php echo $this->translate('account-login-problems'); ?>
                                             </a>
                                         </span>
@@ -421,7 +460,34 @@ echo $this->doctype();
                         </li>
                     </ul>
                 </div>
-
+                
+ 				<div id="backdrop" onclick="popup_close(); popup_terms_close()"></div>  
+ 				<div id="popup_privacy_" class="popup_terms" style="display:none;">
+			        <div class="popup_close">
+			            <div style="float:right;">
+			                <a href="#" onclick="popup_terms_close(''); return false;">
+			                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" />
+			                </a>
+			            </div>
+			        </div>
+			        
+			        <div class="privacy">
+			            <?php echo $this->translate('register-description'); ?>
+			        </div>
+		    	</div>
+		    	<div id="popup_terms_" class="popup_terms" style="display:none;">
+			        <div class="popup_close" style="">  
+			            <div style="float:right;">
+			                <a href="#" onclick="popup_terms_close(''); return false;">
+			                    <img src="<?php echo $this->baseUrl('/images/icon_close.png') ?>" alt="Close" />
+			                </a>
+			            </div>       
+			        </div>
+			        
+			        <div class="privacy">
+			            <?php echo $this->translate('network-service-agreement'); ?>
+			        </div>      
+			    </div>
                 <div class="dot-line-720 clear"></div>
                 <div class="left">
                     <p><?php echo $this->translate('index-funded'); ?></p>

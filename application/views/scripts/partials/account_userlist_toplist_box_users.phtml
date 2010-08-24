@@ -11,20 +11,20 @@ $url_defaultImage = $this->url(array('controller' => 'account',
           'language' => $this->language), 
           'lang_default', true);
 
-$url_firstImage = $this->url(array('controller' => 'account', 
+if($usersFound) $url_firstImage = $this->url(array('controller' => 'account', 
                                    'action' => 'profilethumb', 
                                    'thumb' => true, 
                                    'id' => $this->users[0]['id_usr'], 
                                    'language' => $this->language), 
                                    'lang_default', true); 
 
-$url_userFirst = $this->url(array('controller' => 'account',
+if($usersFound) $url_userFirst = $this->url(array('controller' => 'account',
 							 'action' => 'view',
 							 'user' => $this->users[0]['login_name_usr'],
 							 'language' => $this->language), 
 							 'lang_default', true);
 
-if($usersFound == false) $url_firstImage = $url_defaultImage;
+else $url_firstImage = $url_defaultImage;
 
 $color = "";
 $colorFirst = "";

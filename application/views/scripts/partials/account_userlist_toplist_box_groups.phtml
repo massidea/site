@@ -1,14 +1,8 @@
 <?php 
-
 //print_r($this);die;
 $language = Zend_Layout::getMvcInstance()->getView()->language;
-if(!empty($this->groups)) $usersFound = true;
+if($this->groups[0] != "No groups") $usersFound = true;
 else $usersFound = false;
-
-$url_userFirst = $this->url(
-						array('groupid' => $this->groups[0]['id'],
-                           'language' => $language),
-                     'group_shortview', true);
 
 $url_defaultImage = $this->url(array('controller' => 'account', 
           'action' => 'profilethumb', 
@@ -16,6 +10,12 @@ $url_defaultImage = $this->url(array('controller' => 'account',
           'id' => "0", 
           'language' => $this->language), 
           'lang_default', true);
+
+if($usersFound) $url_userFirst = $this->url(
+						array('groupid' => $this->groups[0]['id'],
+                           'language' => $language),
+                     'group_shortview', true);
+
 
 $url_firstImage = $url_defaultImage;
 $onlist = true;

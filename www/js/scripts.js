@@ -28,46 +28,76 @@ function blurMenu(target, color, baseurl)
 }
 
 $(document).ready(function(){
-	$("#login_link_in_box").click(
-			function () {$("#login_box").fadeIn();}
+	$("#login_box").dialog({
+		closeOnEscape: true,
+		draggable: false,
+		modal: true,
+		resizable: false,
+		title: 'Login to Massidea',
+		autoOpen: false
+	});
+
+	$("#login_box_openid").dialog({
+		closeOnEscape: true,
+		draggable: false,
+		modal: true,
+		resizable: false,
+		title: 'Login with OpenID',
+		autoOpen: false
+	});
+	
+	$("#login_link").click(function () {
+		$("#login_box").dialog("open");
+		$("#login_box > form > div:nth-child(2) > input").focus();
+	});
+
+	$("#login_link_openid").click(function () {
+		$("#login_box").dialog("close");
+		$("#login_box_openid").dialog("open");
+		$("#login_box_openid > form > div:nth-child(2) > input").focus();
+	});
+	
+	$("#login_link_in_box").click(function () {
+		$("#login_box_openid").dialog("close");
+		$("#login_box").dialog("open");
+		$("#login_box > form > div:nth-child(2) > input").focus();
+	});
+	
+	$("#login_link").hover(
+			function(){
+				var optPos = $("#login_link").position().left;
+				$("#user_options").clearQueue().css("left",optPos).slideDown();
+			},
+			function(){$("#user_options").delay(1000).slideUp();}
 	);
 	
+	$("#user_options").hover(
+			function(){$("#user_options").clearQueue()},
+			function(){$("#user_options").delay(1000).slideUp();}
+			);
+	
+	/*
+	$("#user_options > ul > #user_options_groups").hover(
+			function() {
+				var optPos1 = $("#user_options > ul").width() *-1;
+				$("#user_options_sub_1").css("left",optPos1).css("top",81).show();
+				},
+			function() {
+					$("#user_options_sub_1").hide();
+				}
+		
+	);
+	*/
+	 $("#add_content_button").hover(
+			 function () {$("#add_content_menu").fadeIn();}
+			 );
 
-	$("#login_link_in_box").click(
-			function () {$("#login_box_openid").fadeOut();}
-	);
+	 $(".sub_menu_right").hover(
+			 function () {$("#add_content_menu").clearQueue();},
+			 function () {$("#add_content_menu").delay(1000).fadeOut();}
+			 );
 
-	$("#login_link").click(
-			function () {$("#login_box").fadeIn();}
-	);
-
-	$("#login_link_openid").click(
-			function () {$("#login_box_openid").fadeIn();}
-	);
-
-	$("#login_link_openid").click(
-			function () {$("#login_box").fadeOut();}
-	);
-
-	$("#login_box").hover(
-			function () {}, 
-			function () {$("#login_box").fadeOut();}
-	);
-
-	$("#login_box_openid").hover(
-			function () {}, 
-			function () {$("#login_box_openid").fadeOut();}
-	);
-  
-	$("#add_content_button").hover(
-			function () {$("#add_content_menu").fadeIn();}, 
-			function () {}
-	);
-
-	$(".sub_menu_right").hover(
-			function () {}, 
-			function () {$("#add_content_menu").fadeOut();}
-	);
+	 
 });
 
 function highlightContentMenuItem(target)
