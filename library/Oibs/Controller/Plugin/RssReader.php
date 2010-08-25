@@ -249,5 +249,20 @@ class Oibs_Controller_Plugin_RssReader {
     	return $feedModel->hasFeeds($id, $pageTypeModel->getId($type));
     }
     
+    private function resetCache() {
+    	$feedModel = new Default_Model_RssFeeds();
+    	
+    	$cache = Zend_Registry::get('short_cache');
+    	$cacheTag = 'rss_feed_'.$this->typename."_".$this->id;
+    	if ($data = $cache->load($cacheTag)) {
+    		$cache->remove($cacheTag);
+    	}
+    }
+    
+    public function addUrls($urls) {
+    	$rssModel = new Default_Model_RssFeeds();
+    	$rssModel->addUrls($urls, $this->id, $this->typename);
+    	$this->resetCache();
+    }
 }
     

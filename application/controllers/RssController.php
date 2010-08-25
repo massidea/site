@@ -134,7 +134,7 @@ class RssController extends Oibs_Controller_CustomController
     	if ($request->isPost()) {
     		$urls = array();
     		if (isset($params['feeds'])) $urls = $params['feeds']; 
-    		$rssModel->addUrls($urls, $params['id'], $params['type']);
+    		$reader->addUrls($urls, $params['id'], $params['type']);
     		$this->_redirect($reader->getLinkBack());
     	}
     	$urls = $rssModel->getUrls($params['id'], $params['type']);

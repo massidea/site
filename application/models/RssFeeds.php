@@ -28,7 +28,8 @@ class Default_Model_RssFeeds extends Zend_Db_Table_Abstract {
     }
     
     public function addUrls($urls, $id, $type) {
-    	
+    	$pageTypeModel = new Default_Model_PageTypes();
+    	$type = $pageTypeModel->getId($type);
     	$this->removeFeeds($id, $type);
     	foreach ($urls as $url) {
     		if (!$this->feedExists($url, $id, $type)) {
