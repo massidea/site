@@ -245,6 +245,10 @@
         $children = array();
         $children_siblings = array();
         
+        //TODO: It would be best effiency to send just an array of childs to ContentModel
+        //		and get all data in 1 query rather than querying many times. New function
+        //		to models is needed for this or then edit the one we have now and allow it
+        //		to have a possibility to receive ids as array.
         if (isset($family['children'])) {
             foreach ($family['children'] as $child) {
                 $contenttypeid = $contentModel->getContentTypeIdByContentId((int)$child);

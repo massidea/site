@@ -2,7 +2,7 @@
 /**
  *  Content -> Content database model for content table.
  *
- *  Copyright (c) <2009>, Markus Riihelä
+ *  Copyright (c) <2009>, Markus Riihelï¿½
  *  Copyright (c) <2009>, Mikko Sallinen
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
@@ -22,8 +22,8 @@
  *  Content - class
  *
  *  @package    models
- *  @author     Markus Riihelä & Mikko Sallinen
- *  @copyright  2009 Markus Riihelä & Mikko Sallinen
+ *  @author     Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright  2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license    GPL v2
  *  @version    1.0
  */
@@ -803,7 +803,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		$where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
 
-		// MIKÄ VITTU TÄSSÄ KUSEE?
+		// MIKï¿½ VITTU Tï¿½SSï¿½ KUSEE?
 		if(!$this->update($content, $where)) {
 			$return = false;
 		} else {
@@ -1269,7 +1269,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	public function checkIfContentExists($id_cnt = 0)
 	{
 		$return = false;
-
 		if((int)$id_cnt != 0) {
 			$select = $this->select()
 			->from($this, array('*'))
@@ -1592,6 +1591,33 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$data = $this->_db->fetchAll($select);
 		
 		return $data;
+	}
+	/**
+	 * 
+	 * @param int $content_id, id $user
+	 * @return boolean
+	 */
+	public function checkIfUserIsOwner($id = -1,$user = 0)
+	{
+		if((int)$id != -1 && $user != 0) {
+			$select = $this->_db->select()
+							->from(array('cnt' => 'contents_cnt'),
+									array())
+							->joinLeft(array('chu' => 'cnt_has_usr'),
+                                    'chu.id_cnt = cnt.id_cnt',
+									array())
+							->joinLeft(array('usr' => 'users_usr'),
+                                    'usr.id_usr = chu.id_usr',
+									array('usr.id_usr'))
+							->where('cnt.id_cnt = ?', (int)$id)
+							->where('usr.id_usr = ?', $user)
+			;
+
+			$result = $this->_db->fetchAll($select);
+			if($result) return true;
+		}
+
+		return false;
 	}
 
 } // end of class

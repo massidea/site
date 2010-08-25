@@ -59,15 +59,13 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
 		// If id values not 0
 		if($id_parent_cnt != 0 && $id_child_cnt != 0)
 		{
-			// Create a new row
-			$row = $this->createRow();
-			
-			// Set id values
-			$row->id_parent_cnt = $id_parent_cnt;
-			$row->id_child_cnt = $id_child_cnt;
-			
-			// Add row to database
-			$row->save();
+			$data = array(
+					'id_parent_cnt' => $id_parent_cnt,
+					'id_child_cnt' => $id_child_cnt,
+					'created_cnt' => new Zend_Db_Expr('NOW()')
+			);
+			$this->insert($data);
+
 		} // end if
 	} // end of addContentToContent
     
@@ -89,6 +87,7 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
                                        array())
                             ->where('id_child_cnt = ?', $id)
                             ->where('cnt.published_cnt = 1')
+                            ->order('cnt_has_cnt.created_cnt desc')
         ;
         $parents = $this->_db->fetchAll($selectParents);
         
@@ -107,6 +106,7 @@ class Default_Model_ContentHasContent extends Zend_Db_Table_Abstract
                                        array())
                             ->where('id_parent_cnt = ?', $id)
                             ->where('cnt.published_cnt = 1')
+                            ->order('cnt_has_cnt.created_cnt desc')
         ;
         $children = $this->_db->fetchAll($selectChildren);
         

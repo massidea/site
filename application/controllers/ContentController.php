@@ -626,20 +626,25 @@ class ContentController extends Oibs_Controller_CustomController
 			$linkedcontentid = isset($params['childid'])
 			? $params['childid'] : '';
 
-			$model_cnt_has_cnt = new Default_Model_ContentHasContent();
-			$model_cnt_has_cnt->removeContentFromContent($relatestoid, $linkedcontentid);
-
-			$message = 'content-unlink-successful';
+			$id_usr = $auth->getIdentity()->user_id;
+			$model_content = new Default_Model_Content();
+			$isOwner = $model_content->checkIfUserIsOwner($relatestoid,$id_usr);
+			if($isOwner) {
+				$model_cnt_has_cnt = new Default_Model_ContentHasContent();
+				$model_cnt_has_cnt->removeContentFromContent($relatestoid, $linkedcontentid);
+			}
+			
+			//$message = 'content-unlink-successful';
 
             // TODO:
             // Tell the user that the unlink was created.
 
             // Redirect back to the user page
-            $redirectUrl = $this->_urlHelper->url(array('controller' => 'account',
-                                                        'action' => 'view',
-                                                        'user' => $auth->getIdentity()->username,
-                                                        'language' => $this->language),
-                                                  'lang_default', true);
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'content',
+                                                         'action' => 'unlink',
+        												 'relatestoid' => $relatestoid,
+                                                         'language' => $this->view->language),
+                                                         'unlinkcontent', true);
             $this->_redirector->gotoUrl($redirectUrl);
 
             /*
@@ -749,13 +754,17 @@ class ContentController extends Oibs_Controller_CustomController
 			$relatestoid = isset($params['relatestoid'])
 			? $params['relatestoid'] : '';
 
+			$id_usr = $auth->getIdentity()->user_id;
+			
 			$contenttype = '';
 			$contents = array();
 
 			$model_content = new Default_Model_Content();
 			$contentexists = $model_content->checkIfContentExists($relatestoid);
+			$isOwner = $model_content->checkIfUserIsOwner($relatestoid,$id_usr);
 
-			if ($contentexists) {
+			if ($contentexists && $isOwner) {
+				
 				$relatesToContent = $model_content->getDataAsSimpleArray($relatestoid);
 				$this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
 
@@ -766,8 +775,8 @@ class ContentController extends Oibs_Controller_CustomController
 
 				$contentContents = $model_cnt_has_cnt->getContentContents($relatestoid);
 
-				$id_usr = $auth->getIdentity()->user_id;
 			}
+			if(!$isOwner) $contentexists = false;
 			$this->view->contentexists = $contentexists;
 			$this->view->relatesToId = $relatestoid;
 			$this->view->linkingContentType = $contenttype;
@@ -1586,6 +1595,7 @@ class ContentController extends Oibs_Controller_CustomController
 	/**
 	 *   divisionAction  Imports data for ajax
 	 */
+	/*
 	public function divisionAction()
 	{
 		// Set views layout to empty
@@ -1604,10 +1614,11 @@ class ContentController extends Oibs_Controller_CustomController
 		$divisions = $modelIndustries->getNamesAndIdsById($industryid, $idLngInd);
 		$this->view->divisions = $divisions;
 	}
-
+/*
 	/**
 	 *   groupAction Imports data for ajax
 	 */
+/*
 	public function groupAction()
 	{
 		// Set views layout to empty
@@ -1626,10 +1637,11 @@ class ContentController extends Oibs_Controller_CustomController
 		$groups = $modelIndustries->getNamesAndIdsById($divisionid, $idLngInd);
 		$this->view->groups = $groups;
 	}
-
+*/
 	/**
 	 *   classAction Imports data for ajax
 	 */
+	/*
 	public function classAction()
 	{
 		// Set views layout to empty
@@ -1648,7 +1660,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$classes = $modelIndustries->getNamesAndIdsById($groupid, $idLngInd);
 		$this->view->classes = $classes;
 	}
-
+*/
 	public function flagAction()
 	{
 		// Set an empty layout for view
@@ -1695,6 +1707,7 @@ class ContentController extends Oibs_Controller_CustomController
 	 * classAction, divisionAction and groupAction,
 	 * since it's bad to have 3 functions for the same thing.
 	 */
+	/*
 	public function ajaxindustryAction()
 	{
 		// Set views layout to empty
@@ -1717,5 +1730,6 @@ class ContentController extends Oibs_Controller_CustomController
 			$this->view->type = $type;
 		}
 	}
+	*/
 }
 

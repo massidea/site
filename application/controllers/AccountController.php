@@ -1280,14 +1280,19 @@ class AccountController extends Oibs_Controller_CustomController
         	"comments" => $this->view->translate('userlist-orderlist-comments',$listName),
 		);
 		
+		$userCountries = null;
+		$userCities= null;
+		
         $userLocations = $this->getAllCitiesAndCountries();
-        $userCities = json_encode($userLocations['cities']);
-        $userCountries = json_encode($userLocations['countries']);
+        if(isset($userLocations['countries'])) $userCountries = json_encode($userLocations['countries']);
+        if(isset($userLocations['cities'])) $userCities = json_encode($userLocations['cities']);
 
         $formData['countries'][] = $this->view->translate('userlist-filter-country-all');
-        foreach($userLocations['countries'] as $country) {
-        	$formData['countries'][$country['countryIso']] = $country['name'];
-        }        
+        if(isset($userLocations['countries'])) {
+	        foreach($userLocations['countries'] as $country) {
+	        	$formData['countries'][$country['countryIso']] = $country['name'];
+	        }
+        }       
         
         $pat_sql = array("%","_");
         $pat_def = array("*","?");
@@ -1347,54 +1352,55 @@ class AccountController extends Oibs_Controller_CustomController
 			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
         	$cache = Zend_Registry::get('cache');
-        	
-        	$top = new Oibs_Controller_Plugin_Toplist_Users();
-
-			if(!$resultList = $cache->load('UserTopList')) {
-				
-				$top->setLimit(10)
-					->autoSet()
-					;
-
-				$cache->save($top, 'UserTopList');
-	
-			} else {
-				$top = $resultList;
-			}
 			
-			if($userid) $top->addUser($userid);
-			$topList = $top->getTopList();
-
-			//print_r($top->test());die;
-			//print_r($topList);die;
+        	if(!$cacheResult = $cache->load('UserTopList')) {
+				$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
+				$topListUsers->setLimit(10)
+							->autoSet()
+							;
+	        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
+		        $topListCountries->fetchUserCountries()
+						        	->setTopAmount()
+						        	->autoSet()
+									;	
+				$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+				$topListGroups->fetchUsersInGroups()
+								->setTopAmount()
+								->autoSet()
+								;
+				$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+				$topListCities->fetchUsersWithCity()
+								->setTopAmount()
+								->autoSet()
+								;
+				
+				$topListClasses = array(
+		        	'Users' => $topListUsers,
+		       		'Groups' => $topListGroups,
+		       		'Cities' => $topListCities,
+		        	'Countries' => $topListCountries,
+		        );
+		        $cache->save($topListClasses, 'UserTopList');
+        	}
+        	else {
+        		$topListClasses = $cacheResult;
+        	}
         	
-        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
-	        $topListCountries->fetchUserCountries()
-	        ->setTopAmount()
-	        	->autoSet()
-				;
+        	$topListUsers = $topListClasses['Users'];
+        	$topListCountries = $topListClasses['Countries'];
+        	$topListCities = $topListClasses['Cities'];
+        	$topListGroups = $topListClasses['Groups'];
+        	
+        	if($userid) $topListUsers->addUser($userid);
+			$topList = $topListUsers->getTopList();
+			
 			if($userid) $topListCountries->addUser($userid);
 			$topCountry = $topListCountries->getTopList();
-
 			
-			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
-			$topListGroups->fetchUsersInGroups()
-			->setTopAmount()
-							->autoSet()
-							;
-							
-							
-			$topGroup = $topListGroups->getTopList();
-			
-			
-			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
-			$topListCities->fetchUsersWithCity()
-			->setTopAmount()
-							->autoSet()
-							;
 			if($userid) $topListCities->addUser($userid);
 			$topCity = $topListCities->getTopList();
 			
+			$topGroup = $topListGroups->getTopList();
         }
         
         if(!$topNames) {

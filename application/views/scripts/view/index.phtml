@@ -95,6 +95,11 @@ $(document).ready(function(){
 		
 		$("#content_view_linked_content_challenges_more").click(function(){initLinkedContent("challenges");});
 		$("#content_view_linked_content_visions_more").click(function(){initLinkedContent("visions");});
+		
+		$(".user_content_edit").hover(
+			function(){ $(".user_content_edit > ul").clearQueue().slideDown(); },
+			function(){ $(".user_content_edit > ul").delay(1000).slideUp(); }
+		);
 });
 
 
