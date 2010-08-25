@@ -68,17 +68,25 @@ class Oibs_Controller_Plugin_RssReader {
     	$this->id = $id;
     	if (!$urls = $rssModel->getUrls($id, $type)) return false;
     	$feeds = array();
-    	foreach($urls as $url) {
-	    	try {
-		    	$feed = Zend_Feed_Reader::import($url['url_rss']);
-		    	$feeds[] = $feed;
-	    	} catch (Exception $e) {
-	    		echo "Error with feed: ".$url['url_rss'];
-	    	}
-    	}
-    	if (count($feeds) != 0) $data = $this->sortFeed($feeds);
-    	else return false;
     	
+    	$cache = Zend_Registry::get('short_cache');
+    	$cacheTag = 'rss_feed_'.$this->typename."_".$this->id;
+    	if (!($data = $cache->load($cacheTag))) {
+    		foreach($urls as $url) {
+		    	try {
+			    	$feed = Zend_Feed_Reader::import($url['url_rss']);
+				    $feeds[] = $feed;	
+		    	} catch (Exception $e) {
+		    		echo "Error with feed: ".$url['url_rss'];
+		    		echo $e->getMessage();
+		    	}
+	    	}
+	    	if (count($feeds) != 0) {
+	    		$data = $this->sortFeed($feeds);
+	    	} 
+	    	else return false;
+	    	$cache->save($data, $cacheTag);
+    	}
     	return $data;
     }
     
