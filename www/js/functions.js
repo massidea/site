@@ -579,14 +579,15 @@ function multiFile(obj, message) {
 		'.divx' 	: 1,
 		'.flv' 		: 1,
 		'.ogg'	 	: 1,
-		'.3gp' 		: 1
+		'.3gp' 		: 1,
+		'.txt'		: 1
 	}
 	
 	var file = $(obj).val();
 
 	var re = /\..+$/;
     var ext = file.match(re);
-    
+
 	if ( $(":file[value="+file+"]").length == 1 && allowedFiles[ext]) {
 		if ($(obj).is(':visible')) {
 			$(obj).hide();
@@ -599,7 +600,7 @@ function multiFile(obj, message) {
 		}
 	}
 	else {
-		obj.value = "";
+		$(obj).val("");
 		alert("Error: \nDuplicate file or invalid filetype");
 	}
 }
