@@ -558,15 +558,17 @@ function onlineIdle() {
  * @param  message    translated text for remove file button
  */
 function multiFile(obj, message) {
-	var file = obj.value;
+	var file = $(obj).val();
 	if ( $(":file[value="+file+"]").length == 1) {
-		$(obj).hide();
-		$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
-		$(obj).parent().after("<div class='clear'><input id='removeFile' type='button' value='" + message + "' /><div class='content_file_list_file'>"+ file + "</div></div>");
-		$("#removeFile").click(function() {
-			$(this).parent().remove();
-			$(obj).remove();
-		});
+		if ($(obj).is(':visible')) {
+			$(obj).hide();
+			$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
+			$(obj).parent().after("<div class='clear'><input id='removeFile' type='button' value='" + message + "' /><div class='content_file_list_file'>"+ file + "</div></div>");
+			$("#removeFile").click(function() {
+				$(this).parent().remove();
+				$(obj).remove();
+			});
+		}
 	}
 	else {
 		obj.value = "";
