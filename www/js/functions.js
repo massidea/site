@@ -558,8 +558,36 @@ function onlineIdle() {
  * @param  message    translated text for remove file button
  */
 function multiFile(obj, message) {
+	
+	var allowedFiles = {
+		'.doc' 		: 1,
+		'.docx' 	: 1,
+		'.png' 		: 1,
+		'.gif' 		: 1,
+		'.jpg' 		: 1,
+		'.jpeg' 	: 1,
+		'.zip' 		: 1,
+		'.xls' 		: 1,
+		'.mpp' 		: 1,
+		'.pdf' 		: 1,
+		'.wmv' 		: 1,
+		'.avi' 		: 1,
+		'.mkv' 		: 1,
+		'.mov' 		: 1,
+		'.mpeg' 	: 1,
+		'.mp4' 		: 1,
+		'.divx' 	: 1,
+		'.flv' 		: 1,
+		'.ogg'	 	: 1,
+		'.3gp' 		: 1
+	}
+	
 	var file = $(obj).val();
-	if ( $(":file[value="+file+"]").length == 1) {
+
+	var re = /\..+$/;
+    var ext = file.match(re);
+    
+	if ( $(":file[value="+file+"]").length == 1 && allowedFiles[ext]) {
 		if ($(obj).is(':visible')) {
 			$(obj).hide();
 			$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
@@ -572,6 +600,7 @@ function multiFile(obj, message) {
 	}
 	else {
 		obj.value = "";
+		alert("Error: \nDuplicate file or invalid filetype");
 	}
 }
 /*
