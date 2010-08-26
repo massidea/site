@@ -61,6 +61,17 @@ $(document).ready(function() {
 			}
 		}); // endof li.each
 	}); // Endof a.click
+	
+	$("#user_profile_toplist_title").click(function(){
+		if($(".user_profile_toplist_rank").is(":visible")) {
+			$("#user_profile_toplist_title").html("Points");
+			$(".user_profile_toplist_rank").slideUp(function(){$(".user_profile_toplist_points").slideDown();});
+		}
+		else {
+			$("#user_profile_toplist_title").html("Rank");
+			$(".user_profile_toplist_points").slideUp(function(){$(".user_profile_toplist_rank").slideDown();});
+		}
+	});
 }); // Endof document ready
 
 function expandText(key)
@@ -107,6 +118,17 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                                 date("d.m.Y H:i", strtotime($this->user['last_login_usr'])) :
                                 'Never logged in'; ?></li>
             <!-- <li><strong>Page views:</strong> 1,200</li> -->
+            
+            <ul class="user_profile_toplist">
+            <li><strong>User ranking in:</strong><a href="#" onClick="return false;" style="float:right;" id="user_profile_toplist_title">Rank</a></li>
+            	<?php 
+            	foreach($this->topList as $key => $value) :
+            	 $rank = $value['addedUsers'][0]['rank']+1; 
+            	 if($rank != 0) $points = $value['addedUsers'][0]['value'];
+            	 if($rank == 0) { $rank = "Not ranked"; $points = "Not ranked"; } ?>
+            		<li><strong><?php echo $value['title']; ?>: </strong><span class="user_profile_toplist_rank"><?php echo $rank; ?></span><span class="user_profile_toplist_points"><?php echo $points; ?></span></li>
+            	<?php endforeach; ?>
+            </ul>
         </ul>
     </div>
     <div id="profile-info">

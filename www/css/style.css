@@ -610,8 +610,15 @@ div.right_side_title_small{
 }
 
 div.top_right_box_links_users{
-	padding-left: 7px; 
 	font-size: 12px;
+	padding-left: 2px;
+	margin-top: -5px;
+}
+
+div.top_right_box_links_users ul {
+	list-style-position: outside;
+	list-style-type: none;
+	padding-left: 2px;
 }
 
 div.massidea_dev_info{
@@ -627,8 +634,7 @@ div.before_footer{
 
 div.top_right_box_links_show_all_users{
 	margin-bottom: -4px; 
-	padding-left: 5px; 
-	padding-top: 10px;
+	text-align: center;
 	font-size: 12px; 
 	font-weight: bold;
 }
@@ -1372,7 +1378,7 @@ form #uploadedFiles_div .form_element_input label {
 	overflow-y: auto;
     border: 2px double #C3C3C3;
     margin: -150px;
-    top: 40%;
+    top: 170px;
     left: 40%;
 }
 

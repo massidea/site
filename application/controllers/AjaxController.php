@@ -151,7 +151,7 @@ class AjaxController extends Oibs_Controller_CustomController
 				$newContents = array();
 				$userModel = new Default_Model_User();
 				for($i = $start; $i < $start +3; $i++) {
-					if($resultList[$i])
+					if(isset($resultList[$i]))
 						$newContents[] = $resultList[$i];
 				}
 				if(!sizeof($newContents) == 0)
@@ -201,41 +201,65 @@ class AjaxController extends Oibs_Controller_CustomController
 		if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
 		$params = $this->getRequest()->getParams();
+				
 		$userModel = new Default_Model_User();
 		$userIds = $userModel->sortAndFilterUsers($params,null,null);
 		if(!$userIds) die; 
 		
-		$top = new Oibs_Controller_Plugin_Toplist_Users();
-		$top->setUserIdList($userIds)
-			->autoSet();
-			;
+		$serializedParams = serialize($params);
+		$cacheFile = md5($serializedParams);
+		$cache = Zend_Registry::get('cache');
 		
-		if($userid) $top->addUser($userid);
-		$topList = $top->getTopList();
-		
-		$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
-        $topListCountries->setUserIdList($userIds)
-        	->fetchUserCountries()
-        	->setTopAmount()
-        	->autoSet()
-			;
-		if($userid) $topListCountries->addUser($userid);
-		$topCountry = $topListCountries->getTopList();
-
-		$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
-		$topListGroups->setUserIdList($userIds)
-						->fetchUsersInGroups()
-						->setTopAmount()
-						->autoSet()
-						;		
-		$topGroup = $topListGroups->getTopList();
-		
-		$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
-		$topListCities->setUserIdList($userIds)
+		if(!$cacheResult = $cache->load('UserTopList_'.$cacheFile)) {
+			$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
+			$topListUsers->setUserIdList($userIds)
+				->autoSet();
+				;
+			
+			$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
+	        $topListCountries->setUserIdList($userIds)
+	        	->fetchUserCountries()
+	        	->setTopAmount()
+	        	->autoSet()
+				;
+				
+			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+			$topListGroups->setUserIdList($userIds)
+							->fetchUsersInGroups()
+							->setTopAmount()
+							->autoSet()
+							;
+			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+			$topListCities->setUserIdList($userIds)
 						->fetchUsersWithCity()
 						->setTopAmount()
 						->autoSet()
 						;
+			$topListClasses = array(
+		        	'Users' => $topListUsers,
+		       		'Groups' => $topListGroups,
+		       		'Cities' => $topListCities,
+		        	'Countries' => $topListCountries,
+		        );
+		    $cache->save($topListClasses, 'UserTopList_'.$cacheFile);
+		}
+		else {
+			$topListClasses = $cacheResult;
+		}
+		
+		$topListUsers = $topListClasses['Users'];
+        $topListCountries = $topListClasses['Countries'];
+        $topListCities = $topListClasses['Cities'];
+        $topListGroups = $topListClasses['Groups'];
+        	
+		if($userid) $topListUsers->addUser($userid);
+		$topList = $topListUsers->getTopList();
+				
+		if($userid) $topListCountries->addUser($userid);
+		$topCountry = $topListCountries->getTopList();
+				
+		$topGroup = $topListGroups->getTopList();
+		
 		if($userid) $topListCities->addUser($userid);
 		$topCity = $topListCities->getTopList();
 

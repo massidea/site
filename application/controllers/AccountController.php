@@ -240,11 +240,17 @@ class AccountController extends Oibs_Controller_CustomController
 
         $this->view->user = $data;
 		$id = $data['id_usr'];
+		
+		$topListClasses = $user->getUserTopList();
+	    $topListUsers = $topListClasses['Users'];
+        
+        if($id != 0) $topListUsers->addUser($id);
+		$topList = $topListUsers->getTopList();
 
         // Get public user data from UserProfiles Model
 		$userProfile = new Default_Model_UserProfiles();
         $dataa = $userProfile->getPublicData($id);
-        $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
+        if(isset($dataa['biography'])) $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
 
         // User weblinks
         $userWeblinksModel = new Default_Model_UserWeblinks();
@@ -439,7 +445,7 @@ class AccountController extends Oibs_Controller_CustomController
 		$boxes[] = $box;
 		
 		$customLayoutForm = new Default_Form_AccountCustomLayoutSettings();
-			
+		//print_r($topList);die;
         // Set to view
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
@@ -449,6 +455,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->myReaders = $myReaders;
         //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
+        $this->view->topList = $topList;
         $this->view->type = $type;
         $this->view->customLayoutSettingsForm = $customLayoutForm;
 
@@ -1351,40 +1358,7 @@ class AccountController extends Oibs_Controller_CustomController
         	$userid = null;
 			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
-        	$cache = Zend_Registry::get('cache');
-			
-        	if(!$cacheResult = $cache->load('UserTopList')) {
-				$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
-				$topListUsers->setLimit(10)
-							->autoSet()
-							;
-	        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
-		        $topListCountries->fetchUserCountries()
-						        	->setTopAmount()
-						        	->autoSet()
-									;	
-				$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
-				$topListGroups->fetchUsersInGroups()
-								->setTopAmount()
-								->autoSet()
-								;
-				$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
-				$topListCities->fetchUsersWithCity()
-								->setTopAmount()
-								->autoSet()
-								;
-				
-				$topListClasses = array(
-		        	'Users' => $topListUsers,
-		       		'Groups' => $topListGroups,
-		       		'Cities' => $topListCities,
-		        	'Countries' => $topListCountries,
-		        );
-		        $cache->save($topListClasses, 'UserTopList');
-        	}
-        	else {
-        		$topListClasses = $cacheResult;
-        	}
+        	$topListClasses = $userModel->getUserTopList();
         	
         	$topListUsers = $topListClasses['Users'];
         	$topListCountries = $topListClasses['Countries'];

@@ -769,7 +769,13 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      */
     public function sortAndFilterUsers(&$filter, $order, $list) {
 
-		$orderGroups = array(
+   	 	$serializedParams = serialize($filter).$order.$list;
+		$cacheFile = md5($serializedParams);
+		$cache = Zend_Registry::get('cache');
+		
+		if(!$cacheResult = $cache->load('UserList_'.$cacheFile)) {
+			
+			$orderGroups = array(
 			'userInfo' => array(
 						'username' => 'login_name_usr',
 						'joined' => 'created_usr',
@@ -779,53 +785,59 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 			'contentPopularity' => array('popularity' => 'COUNT(id_usr_vws)'),
 			'contentRatings' => array('rating' => 'SUM(rating_crt)'),
 			'contentComments' => array('comments' => 'COUNT(id_cmt)')
-		);
-		
-        $groupName = "";
-        foreach($orderGroups as $key => $group) {
-        	if(isset($group[$order])) {
-        		$groupName = $key;
-        	}
-        }
-
-   		if($order) $sort = $orderGroups[$groupName][$order]." ".$list;
-        else $sort = "id_usr";
-
-        $select = $this->select()->from($this, 'id_usr')
-                                 ->order('id_usr');
-                                 
-	        if(isset($filter['city']) && $filter['city'] != "")
-	          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
+			);
+			
+	        $groupName = "";
+	        foreach($orderGroups as $key => $group) {
+	        	if(isset($group[$order])) {
+	        		$groupName = $key;
+	        	}
+	        }
 	
-	        if(isset($filter['username']) && $filter['username'] != "")
-	          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
-	          
-	        if(isset($filter['country']) && $filter['country'] != "0")
-	          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
+	   		if($order) $sort = $orderGroups[$groupName][$order]." ".$list;
+	        else $sort = "id_usr";
+	
+	        $select = $this->select()->from($this, 'id_usr')
+	                                 ->order('id_usr');
+	                                 
+		        if(isset($filter['city']) && $filter['city'] != "")
+		          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
+		
+		        if(isset($filter['username']) && $filter['username'] != "")
+		          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
+		          
+		        if(isset($filter['country']) && $filter['country'] != "0")
+		          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
+		        
+		        if(isset($filter['group']) && $filter['group'] != "")
+		          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
+	
+		    if(!$order && !$list) {
+		         $result = $this->_db->fetchAll($select);         
+		         if(!$result) { $cache->save(array(), 'UserList_'.$cacheFile); return array(); }
+		         $output = $this->simplifyArray($result,'id_usr');
+	        }
+	        else $output = array();
 	        
-	        if(isset($filter['group']) && $filter['group'] != "")
-	          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
-
-	    if(!$order && !$list) {
-	         $result = $this->_db->fetchAll($select);         
-	         if(!$result) return array();
-	         $output = $this->simplifyArray($result,'id_usr');
-        }
-        else $output = array();
-        
-        if($groupName == "userInfo")
-       		$output = $this->sortByUserInfo($select, $sort, $list);
-        elseif($groupName == "contentInfo")
-        	$output = $this->sortUsersByContentInfo($select, $sort, $list, null);
-        elseif($groupName == "contentViews")
-        	$output = $this->sortUsersByViews($select, $sort, $list, null);
-        elseif($groupName == "contentRatings")
-        	$output = $this->sortUsersByRating($select, $sort, $list, null);
-        elseif($groupName == "contentPopularity")
-        	$output = $this->sortUsersByPopularity($select, $sort, $list, null);	
-        elseif($groupName == "contentComments")	
-        	$output = $this->sortUsersByComments($select, $sort, $list, null);
-        	
+	        if($groupName == "userInfo")
+	       		$output = $this->sortByUserInfo($select, $sort, $list);
+	        elseif($groupName == "contentInfo")
+	        	$output = $this->sortUsersByContentInfo($select, $sort, $list, null);
+	        elseif($groupName == "contentViews")
+	        	$output = $this->sortUsersByViews($select, $sort, $list, null);
+	        elseif($groupName == "contentRatings")
+	        	$output = $this->sortUsersByRating($select, $sort, $list, null);
+	        elseif($groupName == "contentPopularity")
+	        	$output = $this->sortUsersByPopularity($select, $sort, $list, null);	
+	        elseif($groupName == "contentComments")	
+	        	$output = $this->sortUsersByComments($select, $sort, $list, null);
+			
+	        $cache->save($output, 'UserList_'.$cacheFile);
+		}
+		else {
+			$output = $cacheResult;
+		}
+ 	
         return $output;
         
     }
@@ -1817,4 +1829,48 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		if ($this->update($data, $where)) return true;
 		return false;
     }
+    
+    
+    /**
+     * 
+     * @return array of toplist classes
+     */
+    public function getUserTopList() {
+    		$cache = Zend_Registry::get('cache');
+			
+        	if(!$cacheResult = $cache->load('UserTopList')) {
+				$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
+				$topListUsers->setLimit(10)
+							->autoSet()
+							;
+	        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
+		        $topListCountries->fetchUserCountries()
+						        	->setTopAmount()
+						        	->autoSet()
+									;	
+				$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+				$topListGroups->fetchUsersInGroups()
+								->setTopAmount()
+								->autoSet()
+								;
+				$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+				$topListCities->fetchUsersWithCity()
+								->setTopAmount()
+								->autoSet()
+								;
+				
+				$topListClasses = array(
+		        	'Users' => $topListUsers,
+		       		'Groups' => $topListGroups,
+		       		'Cities' => $topListCities,
+		        	'Countries' => $topListCountries,
+		        );
+		        $cache->save($topListClasses, 'UserTopList');
+        	}
+        	else {
+        		$topListClasses = $cacheResult;
+        	}
+        return $topListClasses;
+    }
+    
 } // end of class

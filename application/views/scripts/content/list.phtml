@@ -91,7 +91,12 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         
         <p id="tags_link" style="margin-top: 1px;" class="top_right_box_links">
             <?php echo $this->translate('index-most-popular')?>
-            <a href="<?php echo $url_tag_cloud; ?>">
+            <a href="<?php echo $this->url(array('controller' => 'tag',
+                                             'action' => 'index',
+        									 'order' => 'popularity',
+        									 'direction' => 'desc',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
                 <?php echo $this->translate('index-tags')?>
             </a>
         </p>

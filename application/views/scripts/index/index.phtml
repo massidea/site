@@ -144,7 +144,9 @@ Commented to fix temporary problem, will be researched further later
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
     
     <div class="top_right_box_links_users">
+    <ul>
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
+	</ul>
     </div>
     
     <div class="top_right_box_links_show_all_users">
