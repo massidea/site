@@ -240,11 +240,11 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 <ul>
                     <?php //echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
                     <?php if (count($this->openCampaigns) != 0) : ?>
-                    <li style="border: none;"><h4 style="margin-bottom: 0;">Open:</h4></li>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Active:</h4></li>
                     <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->openCampaigns); ?>
                     <?php endif;
                     if (count($this->notstartedCampaigns) != 0) : ?>
-                    <li style="border: none;"><h4 style="margin-bottom: 0;">Not started:</h4></li>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Forthcoming:</h4></li>
                     <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->notstartedCampaigns); ?>
                     <?php endif;
                     if (count($this->endedCampaigns) != 0) : ?>

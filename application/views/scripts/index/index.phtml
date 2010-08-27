@@ -173,7 +173,7 @@ Commented to fix temporary problem, will be researched further later
     </div>
     <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
         <?php $cmpurl = $this->url(array('controller' => 'campaign',
-                                         'action' => 'list',
+                                         'action' => 'index',
                                          'language' => $this->language),
                                    'lang_default', true); ?>
         <strong><a href="<?php echo $cmpurl; ?>">Show more</a></strong>
@@ -187,7 +187,7 @@ Commented to fix temporary problem, will be researched further later
     </div>
     <div style="text-align: center; margin-top: 20px;">
         <?php $grpurl = $this->url(array('controller' => 'group',
-                                         'action' => 'list',
+                                         'action' => 'index',
                                          'language' => $this->language),
                                    'lang_default', true); ?>
         <strong><a href="<?php echo $grpurl; ?>">Show more</a></strong>

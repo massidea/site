@@ -15,19 +15,26 @@
     padding-top: 10px;
 }
 
+#content .campaign-status { color: #C0C0C0; font-size: 12px; }
+
 #content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
 #content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
 #gaccampaignlist { float:left; width:520px; }
-#gaccampaignlist h3 { color: #C0C0C0; }
-#content .campaign-list p { fdsmargin-left:15px; }
-#content .campaign-list ul li {
+#gaccampaignlist h3 { color: #C0C0C0; font-size: 16; font-weight: bold; }
+#content .campaign-list p,
+#content .group-list p { fdsmargin-left:15px; }
+#content .campaign-list ul li,
+#content .group-list ul li {
 margin:8px 30px 0px 0px;
 padding:0px 0px 10px 0px;
 list-style:none;
 background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom;}
-#content .campaign-list ul li p { display:block; padding:2px 2px 2px 0px; margin:0px; }
-#content .campaign-list ul li span.left { width:200px !important; margin:3px 0px 0px 0px; }
-#content .campaign-list ul li span.right {width:200px !important; text-align:right; margin:5px 0px 0px 0px;   }
+#content .campaign-list ul li p,
+#content .group-list ul li p { display:block; padding:2px 2px 2px 0px; margin:0px; }
+#content .campaign-list ul li span.left,
+#content .group-list ul li span.left { width:200px !important; margin:3px 0px 0px 0px; }
+#content .campaign-list ul li span.right,
+#content .group-list ul li span.right {width:200px !important; text-align:right; margin:5px 0px 0px 0px;   }
 
 #gacsidebar { float:right; width:200px; }
 #gacsidebar .box h2 { font-size:1.2em; margin:3px 3px 4px 0px; padding:0px; background:none;}

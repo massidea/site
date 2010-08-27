@@ -28,13 +28,13 @@
  */ 
 class CampaignController extends Oibs_Controller_CustomController
 {
-    public function indexAction() 
+    public function indexAction()
     {
-        $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
-                                                    'action' => 'list',
-                                                    'language' => $this->view->language),
-                                              'lang_default', true);
-        $this->_redirector->gotoUrl($redirectUrl);
+        $auth = Zend_Auth::getInstance();
+        $logged_in = $auth->hasIdentity();
+
+        $this->view->logged_in = $logged_in;
+        $this->view->groups = $grps_new;
     }
     
     /**
@@ -385,6 +385,12 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     function listAction()
     {
+        $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
+                                              'lang_default', true);
+        $this->_redirector->gotoUrl($redirectUrl);
+        /*
         $grpmodel = new Default_Model_Groups();
         $cmpmodel = new Default_Model_Campaigns();
 
@@ -398,6 +404,7 @@ class CampaignController extends Oibs_Controller_CustomController
         }
 
         $this->view->campaigns = $cmps_new;
+        */
     }
 
     /**
@@ -984,6 +991,7 @@ class CampaignController extends Oibs_Controller_CustomController
 
             $cmphascmpmodel = new Default_Model_CampaignHasCampaign();
             $cmphascmpmodel->removeCampaignFromCampaign($parentCmpId, $childCmpId);
+            $cmphascmpmodel->removeCampaignFromCampaign($childCmpId, $parentCmpId);
 
             // TODO:
             // Tell the user that the unlink was created.

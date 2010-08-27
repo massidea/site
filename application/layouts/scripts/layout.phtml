@@ -355,13 +355,28 @@ echo $this->doctype();
                 class="sub_menu_item_blue"
             >
                 <a href="<?php echo $this->url(array('language'   => $this->language,
-                                                     'controller' => 'groupsandcampaigns',
+                                                     'controller' => 'group',
                                                      'action'     => 'index',
                                                ), 'lang_default', true); ?>">
-                    <?php echo $this->translate('index-groups-campaigns');?>
+                    <?php echo $this->translate('index-groups');?>
                 </a>
             </div>
             
+            <div class="sub_menu_left_space">&nbsp;</div>
+
+            <div id="groups_campaigns"
+                onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')"
+                onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');"
+                class="sub_menu_item_blue"
+            >
+                <a href="<?php echo $this->url(array('language'   => $this->language,
+                                                     'controller' => 'campaign',
+                                                     'action'     => 'index',
+                                               ), 'lang_default', true); ?>">
+                    <?php echo $this->translate('index-campaigns');?>
+                </a>
+            </div>
+
             <div class="sub_menu_left_space">&nbsp;</div>
             
             <div id="users" 

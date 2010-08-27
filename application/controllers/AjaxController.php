@@ -60,20 +60,62 @@ class AjaxController extends Oibs_Controller_CustomController
     function getrecentcampaignsAction()
     {
         $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
+        $status = isset($this->params['status']) ? $this->params['status'] : 'active';
 
         $grpmodel = new Default_Model_Groups();
         $campaignModel = new Default_Model_Campaigns();
 
         // If you find (time to think of) a better way to do this, be my guest.
-    	$recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
-        $cmps_new = array();
-        foreach ($recentcampaigns as $cmp) {
-            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-            $cmp['group_name_grp'] = $grp['group_name_grp'];
-            $cmps_new[] = $cmp;
+        if ($status === 'forthcoming') {
+            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 10);
+            $cmps_new = array();
+            foreach ($recentcampaigns as $cmp) {
+                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+                $cmp['group_name_grp'] = $grp['group_name_grp'];
+                $cmps_new[] = $cmp;
+            }
+        } else if ($status === 'ended') {
+            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 10);
+            $cmps_new = array();
+            foreach ($recentcampaigns as $cmp) {
+                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+                $cmp['group_name_grp'] = $grp['group_name_grp'];
+                $cmps_new[] = $cmp;
+            }
+        } else {
+            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
+            $cmps_new = array();
+            foreach ($recentcampaigns as $cmp) {
+                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+                $cmp['group_name_grp'] = $grp['group_name_grp'];
+                $cmps_new[] = $cmp;
+            }
         }
 
     	$this->view->recentcampaigns = $cmps_new;
+    }
+
+    function getrecentgroupsAction()
+    {
+        $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
+
+        $grpmodel = new Default_Model_Groups();
+        $grpadm = new Default_Model_GroupAdmins();
+        $usrHasGrp = new Default_Model_UserHasGroup();
+        $cmpmodel = new Default_Model_Campaigns();
+
+        $grps = $grpmodel->getRecentFromOffset($offset, 10);
+        $grps_new = array();
+        foreach ($grps as $grp) {
+            $adm = $grpadm->getGroupAdmins($grp['id_grp']);
+            $grp['id_admin'] = $adm[0]['id_usr'];
+            $grp['login_name_admin'] = $adm[0]['login_name_usr'];
+            $grp['campaign_count'] = count($cmpmodel->getCampaignsByGroup($grp['id_grp']));
+            $grp['member_count'] = count($usrHasGrp->getAllUsersInGroup($grp['id_grp']));
+            $grps_new[] = $grp;
+        }
+
+    	$this->view->recentgroups = $grps_new;
     }
 
 	function getrecentcontentAction()

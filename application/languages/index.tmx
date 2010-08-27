@@ -29,6 +29,14 @@
 		<tuv xml:lang="en"><seg>Groups and campaigns</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ryhmät ja kampanjat</seg></tuv>
 	</tu>
+    <tu tuid='index-groups'>
+		<tuv xml:lang="en"><seg>Groups</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ryhmät</seg></tuv>
+	</tu>
+    <tu tuid='index-campaigns'>
+		<tuv xml:lang="en"><seg>Campaigns</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kampanjat</seg></tuv>
+	</tu>
 	<tu tuid='index-most-active'>
 		<tuv xml:lang="en"><seg>Most active</seg></tuv>
 		<tuv xml:lang="fi"><seg>Aktiivisimmat</seg></tuv>

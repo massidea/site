@@ -1,0 +1,5 @@
+<?php if (isset($this->recentgroups) && $this->recentgroups != null && $this->recentgroups != ''): ?>
+<ul>
+	<?php echo $this->partialLoop('partials/group_row.phtml', $this->recentgroups); ?>
+</ul>
+<?php endif; ?>

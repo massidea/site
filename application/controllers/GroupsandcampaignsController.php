@@ -30,6 +30,12 @@ class GroupsandcampaignsController extends Oibs_Controller_CustomController
 {
     public function indexAction() 
     {
+        $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
+                                              'lang_default', true);
+        $this->_redirector->gotoUrl($redirectUrl);
+        /*
         $auth = Zend_Auth::getInstance();
         $logged_in = $auth->hasIdentity();
 
@@ -48,5 +54,6 @@ class GroupsandcampaignsController extends Oibs_Controller_CustomController
 
         $this->view->logged_in = $logged_in;
         $this->view->groups = $grps_new;
+        */
     }
 }

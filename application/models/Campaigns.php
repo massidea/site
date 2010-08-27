@@ -257,7 +257,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
             $select = $this->select()
                     ->where('start_time_cmp <= ?', $thisDay)
                     ->where('end_time_cmp >= ? OR end_time_cmp = 0000-00-00', $thisDay)
-                    ->order('id_cmp DESC')
+                    ->order('start_time_cmp DESC')
                     ->limit($limit);
         } else {
             $select = $this->select()
@@ -285,13 +285,55 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
             $select = $this->select()
                     ->where('start_time_cmp <= ?', $thisDay)
                     ->where('end_time_cmp >= ? OR end_time_cmp = 0000-00-00', $thisDay)
-                    ->order('id_cmp DESC')
+                    ->order('start_time_cmp DESC')
                     ->limitPage($page, $count);
         } else {
             $select = $this->select()
                     ->order('id_cmp DESC')
                     ->limitPage($page, $count);
         }
+
+        return $this->fetchAll($select)->toArray();
+    }
+
+    /**
+     * getRecentForthcomingFromOffset
+     *
+     * Gets a specified number of recent forthcoming campaigns
+     * starting from a specified offset.
+     *
+     * @param int $page
+     * @param int $count
+     */
+    public function getRecentForthcomingFromOffset($page, $count)
+    {
+
+        $thisDay = date("Y-m-d", time());
+        $select = $this->select()
+                ->where('start_time_cmp > ?', $thisDay)
+                ->order('start_time_cmp ASC')
+                ->limitPage($page, $count);
+
+        return $this->fetchAll($select)->toArray();
+    }
+
+    /**
+     * getRecentEndedFromOffset
+     *
+     * Gets a specified number of recent ended campaigns
+     * starting from a specified offset.
+     *
+     * @param int $page
+     * @param int $count
+     */
+    public function getRecentEndedFromOffset($page, $count)
+    {
+
+        $thisDay = date("Y-m-d", time());
+        $select = $this->select()
+                ->where('end_time_cmp < ? AND end_time_cmp != 0000-00-00', $thisDay)
+                ->order('end_time_cmp DESC')
+                ->limitPage($page, $count);
 
         return $this->fetchAll($select)->toArray();
     }
