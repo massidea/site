@@ -1,27 +1,33 @@
-<?php // Part of the ajax funtionalities ?>
-<?php $flagContentUrl = $this->url(array('controller' => 'content',
+<?php // Part of the ajax funtionalities 
+$flagContentUrl = $this->url(array('controller' => 'content',
 										'action' => 'flag',
 										'language' => $this->language),
 										'lang_default', true); 
-?>
-<?php $contentRatingUrl = $this->url(array('controller' => 'ajax',
+
+$contentRatingUrl = $this->url(array('controller' => 'ajax',
 										   'action' => 'contentrating',
 										   'id_cnt' => $this->contentData['id_cnt'],
 										   'language' => $this->language),
 										   'lang_default', true);
-?>
-<?php $moreFromUserUrl = $this->url(array('controller' => 'ajax',
+
+$moreFromUserUrl = $this->url(array('controller' => 'ajax',
 										  'action' => 'morefromuser',
 										  'id_usr' => $this->contentData['id_usr'],
 										  'id_cnt' => $this->contentData['id_cnt'],
 										  'language' => $this->language),
 										  'lang_default', true); 
-?>
-<?php $relatedContentUrl = $this->url(array('controller' => 'ajax',
+
+$relatedContentUrl = $this->url(array('controller' => 'ajax',
 											'action' => 'relatedcontent',
 											'id_cnt' => $this->contentData['id_cnt'],
 											'language' => $this->language),
 											'lang_default', true); 
+
+$contentFavouriteUrl = $this->url(array('controller' => 'ajax',
+										   'action' => 'contentfavourite',
+										   'id_cnt' => $this->contentData['id_cnt'],
+										   'language' => $this->language),
+										   'lang_default', true);
 ?>
 
 <?php $this->headScript()->captureStart() ?>
@@ -91,7 +97,7 @@ $(document).ready(function(){
 		ajaxLoad_moreRelated("user", false);
 		ajaxLoad_moreRelated("content", false);
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
-		//$("#content_view_favourite").load("?page=add_favourite&format=html");
+		$("#content_view_favourite").load("<?php echo $contentFavouriteUrl; ?>");
 		
 		$("#content_view_linked_content_challenges_more").click(function(){initLinkedContent("challenges");});
 		$("#content_view_linked_content_visions_more").click(function(){initLinkedContent("visions");});
@@ -105,7 +111,7 @@ $(document).ready(function(){
 
 
 
-/*
+
 function ajaxLoad_favourite(method){
 	$.ajax({
 		type: "POST",
@@ -113,14 +119,14 @@ function ajaxLoad_favourite(method){
 			if (method == "add") $("#favouriteadd").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 			if (method == "remove") $("#favouriteremove").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 		},
-		url: "?favourite="+method,
+		url: "<?php echo $contentFavouriteUrl; ?>/method/"+method,
 		success: function(result){
 			$("#content_view_favourite").html(result);
-			$("#current_favourites").animate({backgroundColor: "red"}, 1).animate({backgroundColor: "#ffffff"}, 1400);
+			$("#content_view_favourite").animate({backgroundColor: "red"}, 1).animate({backgroundColor: "#ffffff"}, 1400);
 		}
 	});
 };
-*/
+
 
 function ajaxLoad_vote(score){
 	$.ajax({

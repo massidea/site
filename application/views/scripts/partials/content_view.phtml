@@ -181,11 +181,11 @@ if (isset($this->parent_siblings[0])) {
             <div class="view_content_left_header_btm">
                 <div style="float:left;">
                 	<div id="content_view_content_info_container"></div>
-                </div>  
-                <!--  <div style="float:left; padding:5px;">
-                	<div id="content_view_favourite"></div>
-                </div>  -->                
-                <div style="float:right; padding:5px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
+                </div>              
+                <div style="float:right; padding-top:2px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
+          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
+	           <div id="content_view_favourite" style="clear: both;"></div>
+	     <?php endif; ?>
                 <div style="clear: both;">
 	                <?php if($this->contentData['language_cnt'] != $this->gtranslateLangPair['to']): ?>
 	                	<?php if($this->isTranslated): ?>

@@ -1012,8 +1012,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							;
 					
         $result = $this->_db->fetchAll($select);
+
         foreach($result as $key => $data) {
-        	if(empty($data['value'])) unset($result[$key]);
+        	if($data['value'] == "") unset($result[$key]);
         }
         $result = array_values($result);
 
@@ -1660,36 +1661,41 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * @param integer $author_id id of whose favourite content to get
     * @return array
     */    
-    public function getUserFavouriteContent($author_id = 0, $type = 0)
+    public function getUserFavouriteContent($author_id = 0)
     {
         $result = array();  // container for final results array
         
-        $whereType = 1;
-        if($type !== 0) {
-            $whereType = $this->_db->quoteInto('cty.key_cty = ?', $type);
-        }
         // If author id is set get users content
         if ($author_id != 0) {
 
                 $contentSelect = $this->_db->select()
 	                ->from(array('uhf' => 'usr_has_fvr'),
-	                			array('id_usr','id_cnt','content_edited'))
+	                			array('id_usr','id_cnt','last_checked'))
 	                ->joinLeft(array('cnt' => 'contents_cnt'),
 	                			'uhf.id_cnt = cnt.id_cnt',
 	                			array('id_cnt', 'id_cty_cnt', 'title_cnt', 
-	                                  'lead_cnt', 'published_cnt', 'created_cnt'))
+	                                  'lead_cnt', 'language_cnt' ,'published_cnt', 'modified_cnt'))
 	                ->joinLeft(array('cty' => 'content_types_cty'),    
 	                                  'cty.id_cty = cnt.id_cty_cnt',  
 	                                  array('key_cty'))
-	                ->joinLeft(array('vws' => 'cnt_views_vws'),
+	                ->joinLeft(array('chs' => 'cnt_has_usr'),
+	                				'chs.id_cnt = cnt.id_cnt',
+	                				array())
+	                ->joinLeft(array('chs2' => 'cnt_has_usr'),
+	                				'chs2.id_usr = chs.id_usr',
+	                				array('COUNT(chs2.id_cnt) as count'))
+	                ->joinLeft(array('usr' => 'users_usr'),    
+	                                  'chs.id_usr = usr.id_usr',  
+	                                  array('login_name_usr'))
+	                /*->joinLeft(array('vws' => 'cnt_views_vws'),
 	                                 'vws.id_cnt_vws = cnt.id_cnt',
-	                                  array('views' => 'COUNT(DISTINCT vws.views_vws)'))
-	                ->joinLeft(array('crt' => 'content_ratings_crt'),
+	                                  array('views' => 'COUNT(DISTINCT vws.views_vws)'))*/
+	                /*->joinLeft(array('crt' => 'content_ratings_crt'),
 	                                 'cnt.id_cnt = crt.id_cnt_crt',
-	                                 array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))
-	                ->joinLeft(array('cmt' => 'comments_cmt'),
+	                                 array('ratings' => 'COUNT(DISTINCT crt.id_crt)'))*/
+	                /*->joinLeft(array('cmt' => 'comments_cmt'),
 	                                 'cnt.id_cnt = cmt.id_target_cmt and type_cmt=1',
-	                                 array('comments' => 'COUNT(DISTINCT cmt.id_cmt)'))   
+	                                 array('comments' => 'COUNT(DISTINCT cmt.id_cmt)')) */
 	                ->where('uhf.id_usr = ?', $author_id)
 	                ->order('cnt.id_cty_cnt ASC')
 	                ->order('cnt.created_cnt DESC')
@@ -1697,6 +1703,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	                ;
                 
                 $result = $this->_db->fetchAll($contentSelect);
+               
         } 
         return $result;
     } // end of getUserFavouriteContent

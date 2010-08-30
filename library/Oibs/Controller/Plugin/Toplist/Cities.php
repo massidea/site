@@ -28,12 +28,14 @@ class Oibs_Controller_Plugin_Toplist_Cities extends Oibs_Controller_Plugin_TopLi
 	
 	private function _addUserRank($id) {
 		$found = false;
-		foreach($this->_userList as $_id) {
+		
+		foreach($this->_usersWithCity as $_id => $data) {
 			if($id == $_id ) {
 				$found = true;
 				break;
 			}
 		}
+		
 		if(!$found) return;
 		
 		if(!is_array($id)) $id = array($id);
@@ -41,7 +43,7 @@ class Oibs_Controller_Plugin_Toplist_Cities extends Oibs_Controller_Plugin_TopLi
 		$user = $this->_intersectMergeArray($this->_userModel->getUserInfo($id),
 									$this->_userProfileModel->getUsersLocation($id));
 		$city = $user[0]['city'];
-		foreach($this->_topList as $name => $data) {
+		foreach($this->_topListIds as $name => $data) {
 			if(empty($data[$this->_name])) continue;
 			$value = array();
 			foreach($data[$this->_name] as $rank => $data) {
@@ -69,6 +71,7 @@ class Oibs_Controller_Plugin_Toplist_Cities extends Oibs_Controller_Plugin_TopLi
 		if(empty($cities)) $this->_topList[$choice][$this->_name] = "No cities";
 		else {
 			$this->_topList[$choice][$this->_name] = $cities;
+			$this->_topListIds[$choice] = $this->_topList[$choice];
 			$this->_cutToLimit($this->_name,$choice);
 			
 			foreach($this->_topList[$choice][$this->_name] as $key => $city) {
@@ -129,6 +132,8 @@ class Oibs_Controller_Plugin_Toplist_Cities extends Oibs_Controller_Plugin_TopLi
 			if(!empty($final)) {
 				$this->_topList[$choice][$this->_name] = $final;
 				$this->_valueSort($this->_name,$choice);
+				$this->_topListIds[$choice] = $this->_topList[$choice];
+				$this->_topListIds[$choice][$this->_name] = array_values($this->_topListIds[$choice][$this->_name]);
 				$this->_cutToLimit($this->_name,$choice);
 				$this->_topList[$choice][$this->_name] = array_values($this->_topList[$choice][$this->_name]);
 			}

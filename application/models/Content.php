@@ -173,7 +173,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			$idList = array_flip($idList);
 			$sortedData = array();
 			foreach ($data as $row) {
-				$sortedData[$idList[$row['id_cnt']]] = $row;
+				if(isset($idList[$row['id_cnt']])) $sortedData[$idList[$row['id_cnt']]] = $row;
 			}
 			ksort($sortedData);
 			return $sortedData;

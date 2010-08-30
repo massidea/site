@@ -105,10 +105,7 @@
    
         // get rating from params (if set)
         $rate = isset($params['rate']) ? $params['rate'] : "NONE";
-        
-        // get favourite method, "add" or "remove"
-        //$favouriteMethod = isset($params['favourite']) ? $params['favourite'] : "NONE";
-        
+                
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
         

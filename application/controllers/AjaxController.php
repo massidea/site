@@ -340,35 +340,36 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function contentfavouriteAction() {
         // Get authentication
         $auth = Zend_Auth::getInstance();
+		$favouriteUserId = 0;
+		if($auth->hasIdentity()) $favouriteUserId = $auth->getIdentity()->user_id;
 		
+        $params = $this->getRequest()->getParams();
+		// get favourite method, "add" or "remove"
+        $favouriteMethod = isset($params['method']) ? $params['method'] : "NONE";
+        $id = isset($params['id_cnt']) ? $params['id_cnt'] : "0";
         // Get contents total favourites
         $userFavouritesModel = new Default_Model_UserHasFavourites();
+        $contentModel = new Default_Model_Content();
         $totalFavourites = $userFavouritesModel->getUsersCountByFavouriteContent($id);
         $totalFavourites = $totalFavourites[0]['users_count_fvr'];
-        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$auth->getIdentity()->user_id);
-
-        /*
-         * favouritemethod comes from parameters sent by
-         * ajax function (ajaxLoad_favourite(method)) in index.phtml in /view/.
-         * this function gets parameter "method" (add/remove) from onClick event that is in index.ajax.phtml.
-         * if this onClick event is activated by clicking "heart" (icon_fav_on/off) icon in content view page,
-         * it runs the ajaxLoad_favourite(method) function which sends parameter "favourite" (add/remove) to
-         * this viewController which then handles the adding or removing the content from favourites.
-         */
-        if($favouriteMethod != "NONE" && $auth->hasIdentity()) {
-        	$favouriteUserId = $auth->getIdentity()->user_id;
+        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$favouriteUserId);
+		$isOwner = $contentModel->checkIfUserIsOwner($id,$favouriteUserId);
+		
+        if($favouriteMethod != "NONE" && $auth->hasIdentity() && !$isOwner) {
         	//If favourite method was "add", then add content to user favourites
         	if($favouriteMethod == "add" && !$isFavourite) 
         		{
         		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
+        			$isFavourite = true;
+        			$totalFavourites++;
         		} else $this->flash('favourite-adding-failed',$baseUrl.'/en/msg');
         	} 
         	//If favourite method was "remove" then remove content from user favourites.
         	elseif ($favouriteMethod == "remove" && $isFavourite)
         		{
         		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
+        			$isFavourite = false;
+        			$totalFavourites--;
         		} else $this->flash('favourite-removing-failed',$baseUrl.'/en/msg');
         	} else unset($favouriteMethod);
         }
@@ -377,7 +378,7 @@ class AjaxController extends Oibs_Controller_CustomController
         	'total_favourites' 	=> $totalFavourites,
         	'is_favourite'		=> $isFavourite,
         );
-        
+        $thie->view->userid = $favouriteUserId;
         $this->view->favourite = $favourite;
 	}
 	

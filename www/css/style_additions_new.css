@@ -125,8 +125,8 @@ border-left:5px solid #0089CF;}
 
 div.user_content_row{
 	width: 500px;
-    border-bottom: 1px dotted #DDDDDD;
-    margin: 10px 0 10px 0;
+    /*border-bottom: 1px dotted #DDDDDD;
+    margin: 10px 0 10px 0; */
     padding-left: 5px;
 }
 

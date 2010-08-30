@@ -350,45 +350,10 @@ class AccountController extends Oibs_Controller_CustomController
             }
         }
 
-        if ($auth->hasIdentity() && $data['id_usr'] == $auth->getIdentity()->user_id) {
-        	$favouriteModel = new Default_Model_UserHasFavourites();
-        	$favouriteType = isset($params['favourite']) ? $params['favourite'] : 0;
-        	$favouriteList = $user->getUserFavouriteContent($data['id_usr']);
-
-        	// Initialize Favourite counts
-        	$dataa['favouriteCounts']['totalCount'] = 0;
-
-        	$dataa['favouriteCounts']['problem'] = 0;
-        	$dataa['favouriteCounts']['finfo'] = 0;
-        	$dataa['favouriteCounts']['idea'] = 0;
-
-        	foreach($favouriteList as $k => $favourite) {
-        		/*
-        		 * If content Id doesn't exist anymore:
-        		 * unset from Favouritelist and remove all lines from user_has_favourites table that
-        		 * refers to this content id
-        		 */
-        		if (isset($favourite['id_cnt_fvr']) && $favourite['id_cnt'] == '') {
-                	unset($favouriteList[$k]);
-                	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
-            	}
-
-        	    if (isset($favourite['key_cty'])) {
-
-                    // Increase total count
-                    $dataa['favouriteCounts']['totalCount']++;
-
-                    // Set content type count to 0 if count is not set
-                    if (!isset($dataa['favouriteCounts'][$favourite['key_cty']] )) {
-                        $dataa['favouriteCounts'][$favourite['key_cty']] = 0;
-                    }
-
-                    // Increase content type count
-                    $dataa['favouriteCounts'][$favourite['key_cty']]++;
-                }
-        	}
+       // if ($auth->hasIdentity() && $data['id_usr'] == $auth->getIdentity()->user_id) {
+        	$myFavourites = $this->getFavouriteRows($data['id_usr']);
         	//print_r($dataa);print_r($favouriteList);die;
-        }
+        //}
         //Zend_Debug::dump("" === null);
 		//Zend_Debug::dump($dataa['contentCounts']['idea']);
 		//Zend_Debug::dump($dataa['contentCounts']['idea'] == "");
@@ -418,11 +383,17 @@ class AccountController extends Oibs_Controller_CustomController
 		
 		$views = new Default_Model_ContentViews();
 		$myViews = $this->getViewRows($data['id_usr']);
+		$myViews = array_merge($myViews,$myFavourites['contents']);
+		//print_r($myViews);die;
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box	->setHeader("My Views")
+		$box	->setHeader("My Views & Favourites")
 				->setName("my-views")
 				->setClass("right")
-				->addTab("Views", "views", "all selected");			
+				->addTab("Views", "views", "views selected")
+				->addTab("Updated","updated","fvr_updated",$myFavourites['counts']['updated'])
+				->addTab("Challenges","problem","fvr_problem",$myFavourites['counts']['problem'])
+				->addTab("Ideas","idea","fvr_idea",$myFavourites['counts']['idea'])
+				->addTab("Visions","finfo","fvr_finfo",$myFavourites['counts']['finfo']);
 		$boxes[] = $box;
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
@@ -453,7 +424,6 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->boxes = $boxes;
         $this->view->myViews = $myViews;
         $this->view->myReaders = $myReaders;
-        //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
         $this->view->topList = $topList;
         $this->view->type = $type;
@@ -1781,6 +1751,7 @@ class AccountController extends Oibs_Controller_CustomController
 	    	$this->gtranslate->setLangFrom($post['language_cnt']);
 	    	$translang = $this->gtranslate->getLangPair();
 
+	    	$recentposts[$i]['class'] = 'views';
 	    	$recentposts[$i]['original'] = $post;
 	    	$recentposts[$i]['translated'] = $this->gtranslate->translateContent($post);
 	    	$recentposts[$i]['original']['tags'] = $tags;
@@ -1791,6 +1762,85 @@ class AccountController extends Oibs_Controller_CustomController
 	    	$i++;
     	}
     	return $recentposts;
+    }
+    
+    private function getFavouriteRows($id_usr) {
+   			$favouriteModel = new Default_Model_UserHasFavourites();
+   			$contentHasTagModel = new Default_Model_ContentHasTag();
+   			$user = new Default_Model_User();
+        	$favouriteList = $user->getUserFavouriteContent($id_usr);
+
+        	// Initialize Favourite counts
+        	$dataa['favouriteCounts'] = null;
+        	$dataa['favouriteCounts']['totalCount'] = 0;
+        	$dataa['favouriteCounts']['updated'] = 0;
+        	$dataa['favouriteCounts']['problem'] = 0;
+        	$dataa['favouriteCounts']['finfo'] = 0;
+        	$dataa['favouriteCounts']['idea'] = 0;
+
+        	foreach($favouriteList as $k => $favourite) {
+        		/*
+        		 * If content Id doesn't exist anymore:
+        		 * unset from Favouritelist and remove all lines from user_has_favourites table that
+        		 * refers to this content id
+        		 */
+        		if (isset($favourite['id_cnt_fvr']) && $favourite['id_cnt'] == '') {
+                	unset($favouriteList[$k]);
+                	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
+                	continue;
+            	}
+
+        	    if (isset($favourite['key_cty'])) {  
+                    $dataa['favouriteCounts']['totalCount']++; // Increase total count
+                    $dataa['favouriteCounts'][$favourite['key_cty']]++; // Increase content type count
+                }
+                
+                if(isset($favourite['last_checked']) && isset($favourite['modified_cnt'])) {
+                	if(strtotime($favourite['last_checked']) < strtotime($favourite['modified_cnt'])) {
+                		$dataa['favouriteCounts']['updated']++;
+                		$favouriteList[$k] = array_merge($favourite,array('updated' => '1'));
+                	}
+                	else $favouriteList[$k] = array_merge($favourite,array('updated' => '0'));
+                }  
+        	}
+
+        	$newList = array(
+        		'counts' => array(
+        			'total' => $dataa['favouriteCounts']['totalCount'],
+        			'updated' => $dataa['favouriteCounts']['updated'],
+        			'problem' => $dataa['favouriteCounts']['problem'],
+        			'finfo'	=> $dataa['favouriteCounts']['finfo'],
+        			'idea'	=> $dataa['favouriteCounts']['idea']
+        		),
+        		'contents' => array()
+        	);
+        	
+        	$k = 0;
+        	foreach($favouriteList as $key => $favourite) {
+        	
+        	    $tags = $contentHasTagModel->getContentTags($favourite['id_cnt']);
+
+		    	// Action helper for define is tag running number divisible by two
+				$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+	
+		    	$this->gtranslate->setLangFrom($favourite['language_cnt']);
+		    	$translang = $this->gtranslate->getLangPair();
+	
+		    	
+		    	$newList['contents'][$k]['class'] = "fvr_".$favourite['key_cty'];
+		    	if($favourite['updated'] === "1") 
+		    		$newList['contents'][$k]['class'] = "fvr_updated ".$newList['contents'][$k]['class'];
+		    	$newList['contents'][$k]['original'] = $favourite;
+		    	$newList['contents'][$k]['translated'] = $this->gtranslate->translateContent($favourite);
+		    	$newList['contents'][$k]['original']['tags'] = $tags;
+		    	$newList['contents'][$k]['translated']['tags'] = $tags;
+		    	$newList['contents'][$k]['original']['translang'] = $translang;
+		    	$newList['contents'][$k]['translated']['translang'] = $translang;
+		    	$k++;
+        	}
+        	
+        	return $newList;
+        	
     }
     
     public function onlineAction() {

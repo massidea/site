@@ -1315,6 +1315,7 @@ class ContentController extends Oibs_Controller_CustomController
 							// Get user id
 							$data['User']['id_usr'] = $auth->getIdentity()->user_id;
 
+							/*
 							if($data['content_division'] == 0) {
 								$data['content_industry_id'] = $data['content_industry'];
 							} elseif($data['content_group'] == 0) {
@@ -1323,7 +1324,7 @@ class ContentController extends Oibs_Controller_CustomController
 								$data['content_industry_id'] = $data['content_group'];
 							} elseif($data['content_class'] != 0) {
 								$data['content_industry_id'] = $data['content_class'];
-							}
+							}*/
 
 							if($data['content_language'] == 0) {
 								$data['content_language'] = $this->view->language;
@@ -1345,8 +1346,8 @@ class ContentController extends Oibs_Controller_CustomController
                                                           		'lang_default', true);
 
 							if($edit) {
-								$favourite = new Default_Model_UserHasFavourites();
-								$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
+								//$favourite = new Default_Model_UserHasFavourites();
+								//$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
 
 								if($data['publish'] == 1) {
 									$url = $this->_urlHelper->url(array('content_id' => $edit,

@@ -29,7 +29,8 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	
 	private function _addUserRank($id) {
 		$found = false;
-		foreach($this->_userList as $_id) {
+		
+		foreach($this->_usersWithCountry as $_id => $data) {
 			if($id == $_id ) {
 				$found = true;
 				break;
@@ -43,8 +44,8 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 									$this->_userProfileModel->getUsersLocation($id));
 
 		$userCountry = $user[0]['countryIso'];
-		
-		foreach($this->_topList as $name => $data) {
+
+		foreach($this->_topListIds as $name => $data) {
 			if(empty($data[$this->_name])) continue;
 			$iso = array_keys($data[$this->_name]);
 			$value = array_search($userCountry, $iso);
@@ -81,6 +82,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 		if(empty($countries)) $this->_topList[$choice][$this->_name] = array("No countries");
 		else { 
 			$this->_topList[$choice][$this->_name] = $countries;
+			$this->_topListIds[$choice] = $this->_topList[$choice];
 			$this->_cutToLimit($this->_name,$choice);
 		}
 		$this->_topList[$choice]['name'] = $choice;
@@ -153,6 +155,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 			}
 
 			$this->_valueSort($this->_name,$choice);
+			$this->_topListIds[$choice] = $this->_topList[$choice];
 			$this->_cutToLimit($this->_name,$choice);
 			
 		}
