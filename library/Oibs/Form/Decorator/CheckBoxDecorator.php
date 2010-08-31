@@ -1,31 +1,31 @@
 <?php
 /**
- * Label into input-column3 and input into input-column4
+ * Input and label into input-column3.
  *
  * @author Janne Vaaraniemi
  */
-class Oibs_Form_Decorator_ColorPickerDecorator extends Zend_Form_Decorator_Abstract
+class Oibs_Form_Decorator_CheckBoxDecorator extends Zend_Form_Decorator_Abstract
 {
 
     public function buildLabel()
     {
         $element = $this->getElement();
         $label = $element->getLabel();
-        $temp = '';
 
         if ($translator = $element->getTranslator()) {
             $label = $translator->translate($label);
         }
-        
-        $label = '<strong>'.$label.': </strong>';
 
-        return '<label>'.$label.'</label>';
+        return '<span class="inuse">'.$label.'</span>';
+        return $element->getView()
+                       ->formLabel($element->getName(), $label);
     }
 
     public function buildInput()
     {
         $element = $this->getElement();
         $helper  = $element->helper;
+        $element->setAttrib('class', 'checkbox');
         return $element->getView()->$helper(
             $element->getName(),
             $element->getValue(),
@@ -72,15 +72,12 @@ class Oibs_Form_Decorator_ColorPickerDecorator extends Zend_Form_Decorator_Abstr
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
 
-        $output = '<div class="input-column3">'
-                . $label
+        $output = '<div class="input-column3"> '
                 . $input
-                . $desc
-                . $errors
+                . $label
                 . '</div>'
-                . '<div class="input-column4">'                
-                .'<div id="picker"></div>'
-                . '</div>';
+                . '<div class="clear"></div>'
+                . $errors;
 
         switch ($placement) {
             case (self::PREPEND):

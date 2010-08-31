@@ -1,10 +1,10 @@
 <?php
 /**
- * Label into input-column3 and input into input-column4
+ * Label into input-column1 and input into input-column2
  *
  * @author Janne Vaaraniemi
  */
-class Oibs_Form_Decorator_ColorPickerDecorator extends Zend_Form_Decorator_Abstract
+class Oibs_Form_Decorator_InputDecorator2 extends Zend_Form_Decorator_Abstract
 {
 
     public function buildLabel()
@@ -16,10 +16,18 @@ class Oibs_Form_Decorator_ColorPickerDecorator extends Zend_Form_Decorator_Abstr
         if ($translator = $element->getTranslator()) {
             $label = $translator->translate($label);
         }
-        
-        $label = '<strong>'.$label.': </strong>';
+        if ($element->isRequired()) {
+            $temp = '<strong><span class="required">*) </span>'.$label.': </strong>';
+        } else {
+            $temp = '<strong>'.$label.': </strong>';
+        }
+        $label = $temp;
 
         return '<label>'.$label.'</label>';
+
+        // This is right way to do this but it will mess up html tags. Better solutions for that?
+        //return $element->getView()
+        //               ->formLabel($element->getName(), $label);
     }
 
     public function buildInput()
@@ -72,14 +80,13 @@ class Oibs_Form_Decorator_ColorPickerDecorator extends Zend_Form_Decorator_Abstr
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
 
-        $output = '<div class="input-column3">'
+        $output = '<div class="input-column1">'
                 . $label
-                . $input
+                . '</div>'
+                . '<div class="input-column2">'
+                . $input                
                 . $desc
                 . $errors
-                . '</div>'
-                . '<div class="input-column4">'                
-                .'<div id="picker"></div>'
                 . '</div>';
 
         switch ($placement) {
