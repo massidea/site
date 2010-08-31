@@ -101,8 +101,9 @@ class Oibs_Controller_Plugin_Comments {
 	 * @param string $username
 	 * @return string
 	 */
-	public function getUserUrl($username) {
-		return $this->_helper->url(array('controller' => 'account',
+	public static function getUserUrl($username) {
+		$helper = new Zend_View_Helper_Url();
+		return $helper->url(array('controller' => 'account',
 										 'action' => 'view',
 										 'user' => $username ),
 										 'lang_default', true);

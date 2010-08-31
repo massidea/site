@@ -3,20 +3,12 @@
                 class="content_view_comment_container_<?php echo $this->level; ?>">
 				<div id="content_view_comment_<?php echo $this->id_cmt; ?>_header" class="content_view_comment_header">
 					<div id="content_view_comment_<?php echo $this->id_cmt; ?>_username" class="content_view_comment_username">
-                            <a href="<?php echo $this->userUrl;?>"><?php echo $this->login_name_usr; ?></a>
+                            <a href="<?php echo Oibs_Controller_Plugin_Comments::getUserUrl($this->login_name_usr);?>"><?php echo $this->login_name_usr; ?></a>
                     </div>
                     <div id="content_view_comment_<?php echo $this->id_cmt; ?>_date" class="content_view_comment_date">
                         <?php echo date('(d M Y)', strtotime($this->created_cmt)); ?>
                     </div>
                     <div id="content_view_comment_<?php echo $this->id_cmt; ?>_reply" class="content_view_comment_reply">
-                        <?php /*
-                        <?php if ($this->user_is_owner || $this->usrId == $this->id_usr_cmt) : ?>
-                        <a id="deleteComment_<?php echo $this->id_cmt; ?>" href="#"
-                           onclick="javascript:deleteComment('<?php echo $this->id_cmt; ?>');return false;">
-                            Delete
-                        </a> /
-                        <?php endif; ?>
-                        */ ?>
                     	<a id="flagSpamLink_<?php echo $this->id_cmt; ?>" href="#"
                     	   onclick="flagAsSpam('<?php echo $this->id_cmt; ?>'); return false;">
                     		Spam
@@ -35,23 +27,5 @@
                     <div id="unmodified_<?php echo $this->id_cmt; ?>" style="display:none;">
                         <?php echo $this->body_cmt; ?>
                     </div>
-                    <?php /*
-                    <div id="delete_comment_text_<?php echo $this->id_cmt; ?>" style="display: none;">
-                        <p><strong>Comment will be removed from the system. Are you sure?</strong></p>
-                        <?php
-                        $deleteCommentYes = $this->url(array('controller' => 'comment',
-                                                             'action' => 'remove',
-                                                             'cmtid' => $this->id_cmt,
-                                                             'cntid' => $this->id,
-                                                             'language' => $this->language),
-                                                       'lang_default', true);
-                        ?>
-                        <p><a href="<?php echo $deleteCommentYes; ?>">Yes</a> /
-                            <a href="#"
-                               onclick="javascript:undodeleteComment('<?php echo $this->id_cmt; ?>');return false;">
-                                No
-                            </a></p>
-                    </div>
-                    */ ?>
 				</div>
             </div>
