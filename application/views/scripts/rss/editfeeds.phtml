@@ -43,6 +43,9 @@ function validateFeed() {
 		success: function(msg) {
 			if (msg == '1') {
 				addFeed(url)
+			} else {
+				alert("Feed does not validate!");
+				$('#rss-input-feed-url').val("");
 			}
 		}
 	});
