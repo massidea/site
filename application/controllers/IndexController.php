@@ -2,7 +2,7 @@
 /**
  *  IndexController -> main pages
  *
-* 	Copyright (c) <2008>, Matti Särkikoski <matti.sarkikoski@cs.tamk.fi>
+* 	Copyright (c) <2008>, Matti Sï¿½rkikoski <matti.sarkikoski@cs.tamk.fi>
 * 	Copyright (c) <2008>, Jani Palovuori <jani.palovuori@cs.tamk.fi>
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -21,8 +21,8 @@
  *  IndexController - class
  *
  *  @package 	controllers
- *  @author 	Matti Särkikoski & Jani Palovuori
- *  @copyright 	2008 Matti Särkikoski & Jani Palovuori
+ *  @author 	Matti Sï¿½rkikoski & Jani Palovuori
+ *  @copyright 	2008 Matti Sï¿½rkikoski & Jani Palovuori
  *  @license 	GPL v2
  *  @version 	1.0
  */
@@ -132,7 +132,7 @@ class IndexController extends Oibs_Controller_CustomController
         // Get recent campaigns
         $grpmodel = new Default_Model_Groups();
         $campaignModel = new Default_Model_Campaigns();
-    	$recentcampaigns = $campaignModel->getRecent(10);
+    	$recentcampaigns = $campaignModel->getRecent(5);
         // If you find (time to think of) a better way to do this, be my guest.
         $cmps_new = array();
         foreach ($recentcampaigns as $cmp) {
@@ -141,7 +141,19 @@ class IndexController extends Oibs_Controller_CustomController
             $cmps_new[] = $cmp;
         }
 
+        // Get recent groups
+        $grps = $grpmodel->getRecent(5);
+        $grps_new = array();
+        $grpadm = new Default_Model_GroupAdmins();
+        foreach ($grps as $grp) {
+            $adm = $grpadm->getGroupAdmins($grp['id_grp']);
+            $grp['id_admin'] = $adm[0]['id_usr'];
+            $grp['login_name_admin'] = $adm[0]['login_name_usr'];
+            $grps_new[] = $grp;
+        }
+
         $this->view->campaigns = $cmps_new;
+        $this->view->groups = $grps_new;
         $this->view->poptags = $tags;
         $this->view->activeusers = $activeusers;
         $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();

@@ -28,13 +28,13 @@
  */ 
 class CampaignController extends Oibs_Controller_CustomController
 {
-    public function indexAction() 
+    public function indexAction()
     {
-        $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
-                                                    'action' => 'list',
-                                                    'language' => $this->view->language),
-                                              'lang_default', true);
-        $this->_redirector->gotoUrl($redirectUrl);
+        $auth = Zend_Auth::getInstance();
+        $logged_in = $auth->hasIdentity();
+
+        $this->view->logged_in = $logged_in;
+        $this->view->groups = $grps_new;
     }
     
     /**
@@ -201,13 +201,6 @@ class CampaignController extends Oibs_Controller_CustomController
     {
         $auth = Zend_Auth::getInstance();
 
-        // If user has identity
-        if ($auth->hasIdentity()) {
-            $this->view->identity = true;
-        } else {
-            $this->view->identity = false;
-        }
-
         $user = $auth->getIdentity();
         $cmpid = $this->_request->getParam('cmpid');
 
@@ -218,6 +211,21 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmp['description_cmp'] = str_replace("\n", '<br>', $cmp['description_cmp']);
         $cnts = $cmpmodel->getAllContentsInCampaign($cmpid);
 
+        // If user has identity
+        if ($auth->hasIdentity()) {
+            $this->view->identity = true;
+
+            $uhgModel = new Default_Model_UserHasGroup();
+            $this->view->userHasGroup = $uhgModel->userHasGroup($cmp['id_grp_cmp'], $user->user_id);
+
+            // Get group admins.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
+            $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+        } else {
+            $this->view->identity = false;
+        }
+        
         // Campaign weblinks
         $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
         $cmp['campaignWeblinks'] = $campaignWeblinksModel->getCampaignWeblinks($cmpid);
@@ -228,14 +236,6 @@ class CampaignController extends Oibs_Controller_CustomController
             }
             $i++;
         }
-
-        $uhgModel = new Default_Model_UserHasGroup();
-        $this->view->userHasGroup = $uhgModel->userHasGroup($cmp['id_grp_cmp'], $user->user_id);
-
-        // Get group admins.
-        $grpAdminsModel = new Default_Model_GroupAdmins();
-        $grpAdmins = $grpAdminsModel->getGroupAdmins($cmp['id_grp_cmp']);
-        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
 
         // Get group info.
         $grpmodel = new Default_Model_Groups();
@@ -259,6 +259,7 @@ class CampaignController extends Oibs_Controller_CustomController
         $this->view->cmpcnts         = $cnts;
         $this->view->grpname         = $grpname;
         $this->view->linkedcampaigns = $linkedcampaigns;
+        $this->view->status          = $cmpmodel->getStatus($cmpid);
     }
 
     function editAction() {
@@ -300,11 +301,17 @@ class CampaignController extends Oibs_Controller_CustomController
             }
 
             // Create & populate the form.
-            $form = new Default_Form_AddCampaignForm($this, 'edit');
+            $form = new Default_Form_AddCampaignForm($this, array(
+                'mode'     => 'edit',
+                'startdate' => $cmp['start_time_cmp'],
+            ));
             $formData = array();
             $formData['campaign_name'] = $cmp['name_cmp'];
             $formData['campaign_ingress'] = $cmp['ingress_cmp'];
             $formData['campaign_desc'] = $cmp['description_cmp'];
+            $formData['campaign_start'] = $cmp['start_time_cmp'];
+            if ($cmp['end_time_cmp'] != '0000-00-00')
+                $formData['campaign_end'] = $cmp['end_time_cmp'];
 
             // Get campaign weblinks
             $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
@@ -330,7 +337,9 @@ class CampaignController extends Oibs_Controller_CustomController
                         $cmpId,
                         $post['campaign_name'],
                         $post['campaign_ingress'],
-                        $post['campaign_desc']
+                        $post['campaign_desc'],
+                        $post['campaign_start'],
+                        $post['campaign_end']
                     );
 
                     // Set weblinks
@@ -377,6 +386,12 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     function listAction()
     {
+        $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
+                                              'lang_default', true);
+        $this->_redirector->gotoUrl($redirectUrl);
+        /*
         $grpmodel = new Default_Model_Groups();
         $cmpmodel = new Default_Model_Campaigns();
 
@@ -390,6 +405,7 @@ class CampaignController extends Oibs_Controller_CustomController
         }
 
         $this->view->campaigns = $cmps_new;
+        */
     }
 
     /**
@@ -412,10 +428,19 @@ class CampaignController extends Oibs_Controller_CustomController
                                                       'lang_default', true);
                 $this->_redirector->gotoUrl($redirectUrl);
             }
+
+            // Check if campaign is open
+            $cmpmodel = new Default_Model_Campaigns();
+            if (!$cmpmodel->isOpen($cmpId)) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
             
             $this->view->cmpid = $cmpId;
 
-            $cmpmodel = new Default_Model_Campaigns();
             $cmp = $cmpmodel->getCampaignById($cmpId);
 
             // Only members of the group that created the campaign are allowed
@@ -739,7 +764,17 @@ class CampaignController extends Oibs_Controller_CustomController
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector($redirectUrl);
+            $this->_redirector->gotoUrl($redirectUrl);
+        }
+
+        // Check if campaign is open
+        $cmpModel = new Default_Model_Campaigns();
+        if (!$cmpModel->isOpen($cmpId)) {
+            $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                        'action' => 'index',
+                                                        'language' => $this->view->language),
+                                                  'lang_default', true);
+            $this->_redirector->gotoUrl($redirectUrl);
         }
 
         $cmphascntmodel = new Default_Model_CampaignHasContent();
@@ -771,7 +806,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector($redirectUrl);
+            $this->_redirector->gotoUrl($redirectUrl);
         }
 
         $cmphascmpmodel = new Default_Model_CampaignHasCampaign();
@@ -812,7 +847,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector($redirectUrl);
+                $this->_redirector->gotoUrl($redirectUrl);
             }
 
             $cntHasUsrModel = new Default_Model_ContentHasUser();
@@ -877,7 +912,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector($redirectUrl);
+                $this->_redirector->gotoUrl($redirectUrl);
             }
 
             $cmpModel = new Default_Model_Campaigns();
@@ -938,7 +973,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector($redirectUrl);
+                $this->_redirector->gotoUrl($redirectUrl);
             }
 
             $cmpModel = new Default_Model_Campaigns();
@@ -957,6 +992,7 @@ class CampaignController extends Oibs_Controller_CustomController
 
             $cmphascmpmodel = new Default_Model_CampaignHasCampaign();
             $cmphascmpmodel->removeCampaignFromCampaign($parentCmpId, $childCmpId);
+            $cmphascmpmodel->removeCampaignFromCampaign($childCmpId, $parentCmpId);
 
             // TODO:
             // Tell the user that the unlink was created.

@@ -31,11 +31,10 @@
 {
     function indexAction()
     {
-        $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
-                                                    'action' => 'list',
-                                                    'language' => $this->view->language),
-                                              'lang_default', true);
-        $this->_redirector->gotoUrl($redirectUrl);
+        $auth = Zend_Auth::getInstance();
+        $logged_in = $auth->hasIdentity();
+
+        $this->view->logged_in = $logged_in;
     }
 
     /**
@@ -43,6 +42,12 @@
      */
     function listAction()
     {
+        $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
+                                              'lang_default', true);
+        $this->_redirector->gotoUrl($redirectUrl);
+        /*
         $grpmodel = new Default_Model_Groups();
         $cmpmodel = new Default_Model_Campaigns();
         $grpadm = new Default_Model_GroupAdmins();
@@ -59,6 +64,7 @@
         }
 
         $this->view->groups = $grps_new;
+        */
     }
 
     /**
@@ -131,8 +137,11 @@
         $this->view->grpAdmins = $grpAdmins;
         $this->view->userHasGroup = $usrHasGrpModel;
         $this->view->userHasGroupWaiting = $usrHasGrpWaitingModel;
-        $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
-        $this->view->userIsGroupAdmin = (isset($user->user_id)) ? $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id) : false;
+        //$this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
+        $this->view->openCampaigns = $campaignModel->getOpenCampaignsByGroup($grpId);
+        $this->view->notstartedCampaigns = $campaignModel->getNotstartedCampaignsByGroup($grpId);
+        $this->view->endedCampaigns = $campaignModel->getEndedCampaignsByGroup($grpId);
+        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
         $this->view->linkedgroups = $linkedgroups;
         $this->view->isClosed = $isClosed;
         $this->view->usrWaitingCount = $usrWaitingCount;
@@ -716,7 +725,7 @@
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector($redirectUrl);
+            $this->_redirector->gotoUrl($redirectUrl);
         }
 
         $grphasgrpmodel = new Default_Model_GroupHasGroup();
@@ -748,11 +757,12 @@
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector($redirectUrl);
+            $this->_redirector->gotoUrl($redirectUrl);
         }
 
         $grphasgrpmodel = new Default_Model_GroupHasGroup();
         $grphasgrpmodel->removeGroupFromGroup($parentGrpId, $childGrpId);
+        $grphasgrpmodel->removeGroupFromGroup($childGrpId, $parentGrpId);
 
         // TODO:
         // Tell the user that the unlink was created.
@@ -790,25 +800,48 @@
             $usrHasGrpModel = new Default_Model_UserHasGroup();
             $usrHasGrpWaitingModel = new Default_Model_UserHasGroupWaiting();
 
+            $grpmodel = new Default_Model_Groups();
+            $grp = $grpmodel->getGroupData($grpId);
+
             // Accept or deny button was pressed
        		if ($this->getRequest()->isPost()) {
 				// Get the IDs of the first and last selected user
 				$firstUsrId = $this->getRequest()->getPost('accept_or_deny_first');
 				$lastUsrId = $this->getRequest()->getPost('accept_or_deny_last');
 
+                $privateMessagesModel = new Default_Model_PrivateMessages();
 				// Accept or deny selected user
         		for ($i = $firstUsrId; $i <= $lastUsrId; $i++) {
         			if ($this->getRequest()->getPost('select_'.$i) == 'accept') {
                         $usrHasGrpWaitingModel->removeUserWaitingFromGroup($grpId, $i);
                         $usrHasGrpModel->addUserToGroup($grpId, $i);
+                        // Send privamessage
+                        $usermessage = Array();
+                        $usermessage['privmsg_sender_id'] = 0;
+                        $usermessage['privmsg_receiver_id'] = $i;
+                        $usermessage['privmsg_header'] = $grp['group_name_grp'].' waiting list';
+                        $link = $this->_urlHelper->url(array('groupid'    => $grpId,
+                                                             'language'   => $this->view->language),
+                                                       'group_shortview', true);
+                        $usermessage['privmsg_message'] = 'You have been accepted to <a href="'.$link.'">'
+                                                      .$grp['group_name_grp'].' group.</a>';
+                        $privateMessagesModel->addMessage($usermessage);
         			} else if ($this->getRequest()->getPost('select_'.$i) == 'deny') {
         				$usrHasGrpWaitingModel->removeUserWaitingFromGroup($grpId, $i);
+                        // Send privamessage
+                        $usermessage = Array();
+                        $usermessage['privmsg_sender_id'] = 0;
+                        $usermessage['privmsg_receiver_id'] = $i;
+                        $usermessage['privmsg_header'] = $grp['group_name_grp'].' waiting list';
+                        $link = $this->_urlHelper->url(array('groupid'    => $grpId,
+                                                             'language'   => $this->view->language),
+                                                       'group_shortview', true);
+                        $usermessage['privmsg_message'] = 'You have not been approved by the <a href="'.$link.'">'
+                                                      .$grp['group_name_grp'].' group.</a>';
+                        $privateMessagesModel->addMessage($usermessage);
         			}
         		}
 			}
-
-            $grpmodel = new Default_Model_Groups();
-            $grp = $grpmodel->getGroupData($grpId);
 
             $users = $usrHasGrpWaitingModel->getAllWaitingUsersInGroup($grpId);
 

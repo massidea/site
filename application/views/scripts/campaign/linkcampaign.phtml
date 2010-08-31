@@ -37,11 +37,13 @@ if($this->cmpid != 0 && $this->hasUserCampaigns == true) {
                                                'language'   => $this->language),
                                          'group_shortview', true);
                     ?>
-                    <div class="linking_from_campaign">
-                        <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
+                    <p class="campaign_list_paragraph">
                         <strong><a href="<?php echo $cmpurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
-                        <p class="linking_from_text"><?php echo $campaign['ingress_cmp']; ?></p>
-                    </div>
+                        <?php if ((isset($campaign['group_name_grp']))): ?>
+                            <br />by <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> group
+                        <?php endif; ?>
+                    </p>
+                    <p class="linking_from_text"><?php echo $campaign['ingress_cmp']; ?></p>
                 </div>
                 <div class="linking_from_link">
                     <?php

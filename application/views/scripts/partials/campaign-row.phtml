@@ -17,18 +17,18 @@ if ($this->end_time_cmp == '0000-00-00') {
 ?>
 <li>
     <div>
-        <p>
-            <?php if ((isset($this->group_name_grp)) && (isset($this->id_grp_cmp))): ?>
-                <a href="<?php echo $grpurl; ?>"><?php echo $this->group_name_grp; ?></a>:
-            <?php endif; ?>
+        <p class="campaign_list_paragraph">
             <strong><a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a></strong>
+            <?php if ((isset($this->group_name_grp)) && (isset($this->id_grp_cmp))): ?>
+                <br />by <a href="<?php echo $grpurl; ?>"><?php echo $this->group_name_grp; ?></a> group
+            <?php endif; ?>
         </p>
         <p>
             <?php echo $this->ingress_cmp; ?>
         </p>
         <span class="left">
-            <?php // <strong>Ending:</strong> ?>
-            <?php // echo $date;?>
+            <strong>Ending:</strong>
+            <?php echo $date;?>
         </span>
         <span class="right">
             <!--
