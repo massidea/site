@@ -234,6 +234,12 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		return $return;
 	}
 	
+	public function updateLastChecked($id_usr, $id_cnt) {
+		$this->update(array('last_checked' => new Zend_Db_Expr('NOW()')),
+					"id_usr = $id_usr and id_cnt = $id_cnt");
+		return;
+	}
+	
 } // end of class
 
 ?>

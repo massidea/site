@@ -124,6 +124,11 @@
         // Comment model
         $comment = new Default_Model_Comments();
         
+        $favouriteModel = new Default_Model_UserHasFavourites();
+        if($favouriteModel->checkIfContentIsUsersFavourite($id,$usrId)) {
+        	$favouriteModel->updateLastChecked($usrId,$id);
+        }
+        
         //$parentId = isset($params['replyto']) ? $params['replyto'] : 0;
         
         // If user has identity
