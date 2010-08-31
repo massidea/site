@@ -14,7 +14,7 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 ** PLEASE DON'T USE FORK QUEUE. HOWTO MERGE LATEST CHANGES FROM UPSTREAM, READ: [http://help.github.com/forking/#pulling_in_upstream_changes](http://help.github.com/forking/#pulling_in_upstream_changes) **
 
 ### Push note
-** AFTER YOU PUSH OUR CHANGES TO GITHUB. SEND PULL REQUEST TO ACCOUNT: iiuusit **
+** AFTER YOU PUSH OUR CHANGES TO GITHUB. SEND PULL REQUEST TO ACCOUNT: massidea **
 ![GitHub - Pull request](http://www.massidea.org/wiki/images/e/ec/Pull_request.png "")
 
 
