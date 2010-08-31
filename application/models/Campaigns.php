@@ -254,7 +254,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         
         $result = $this->_db->fetchAll($data);
         // this is a horrible way to do this
-        if(is_array($result) && $result[0]['id_cnt'] != NULL) {
+        if(is_array($result) && isset($result[0]) && $result[0]['id_cnt'] != NULL) {
             $data = array();
             $contentHasTagModel = new Default_Model_ContentHasTag();
             $i = 0;

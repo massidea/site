@@ -119,7 +119,11 @@
   		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
 		$comments->loadComments();
         
+
+		
 		$this->view->comments		 = $comments;
+		$this->view->hasFeeds 		 = Oibs_Controller_Plugin_RssReader::hasFeeds($grpId, "group");
+		
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;
@@ -128,7 +132,7 @@
         $this->view->userHasGroup = $usrHasGrpModel;
         $this->view->userHasGroupWaiting = $usrHasGrpWaitingModel;
         $this->view->campaigns = $campaignModel->getCampaignsByGroup($grpId);
-        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+        $this->view->userIsGroupAdmin = (isset($user->user_id)) ? $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id) : false;
         $this->view->linkedgroups = $linkedgroups;
         $this->view->isClosed = $isClosed;
         $this->view->usrWaitingCount = $usrWaitingCount;

@@ -287,7 +287,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$cache = Zend_Registry::get('cache');
 			$formDataCacheTag = 'formData_'.$contentType.'_'.$this->view->language;
 
-			if (!($formData = $cache->load($formDataCacheTag) )) {
+			if (!($formData = $cache->load($formDataCacheTag) ) || $relatesToId != 0) {
 				// Creating array for form data
 				$formData = array();
 

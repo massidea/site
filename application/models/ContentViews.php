@@ -192,7 +192,7 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     public function getUserViewedContents($id_usr, $limit = 10) {
     	$select = $this->select()->from($this, 'id_cnt_vws')
     				   ->setIntegrityCheck(false)
-    				   ->joinLeft('cnt_has_usr', 'id_cnt_vws = id_cnt')
+    				   ->joinLeft('cnt_has_usr', 'id_cnt_vws = id_cnt', array())
     				   ->where('id_usr != ?', $id_usr)
     				   ->where('id_usr_vws = ?', $id_usr)
     				   ->where('modified_vws is not null')
@@ -201,23 +201,29 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     				   
     	$rowset = $this->fetchAll($select);
     	$contentModel = new Default_Model_Content();
+
     	return $contentModel->getContentRows($rowset->toArray(), 'id_cnt_vws', true);
     }
     
     public function getContentViewers($id_cnt, $limit = 10) {
-    	$select = $this->select()->from($this, 'id_usr_vws')
+    	$select = $this->select()->from($this, array('id_usr' => 'id_usr_vws'))
     							 ->where('id_cnt_vws = ?', $id_cnt)
     							 ->where('id_usr_vws != 0')
     							 ->limit($limit);
     							 
     	$rowset = $this->fetchAll($select);
     	
-    	$results = array();
+    	//$results = array();
     	
-    	foreach ($rowset as $row) {
+    	/*foreach ($rowset as $row) {
     		$results[] = $row->id_usr_vws;
-    	}
-    	return $results;
+    	}*/
+    	
+   		$usrModel = new Default_Model_User();
+   		//Zend_Debug::dump($usrModel->getUserInfo($rowset->toArray())); die;
+    	
+    	return $usrModel->getUserInfo($rowset->toArray());
+    	
     }
 } // end of class
 ?>

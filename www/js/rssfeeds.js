@@ -18,6 +18,7 @@ function getFeed() {
 				$(this).qtip({
 					content: $(this).children(".rss-item-desc").html(),
 					show: 'mouseover',
+					style: { width: { min: 250, max: 500}}, 
 					position: { target: $(this).parent(), corner: { target: 'topRight', tooltip: 'topLeft' }},
 					hide: 'mouseout'
 				});

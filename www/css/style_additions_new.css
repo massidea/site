@@ -384,3 +384,26 @@ p#replying_to {
 	background:#CCCCCC none repeat scroll 0 0;
 	height:2em;
 }
+
+.rss-reader {
+	border: 1px solid #CCCCCC;
+}
+
+.rss-reader ul {
+	margin: 5px !important;
+}
+
+.rss-item {
+	border-bottom: 1px dotted #CCCCCC;	
+}
+
+#rss-list-feeds #feeds {
+	width: 450px;	
+}
+#rss-input-feed-url {
+	width: 405px;	
+}
+
+#rss {
+	border-top: 1px dotted #CCCCCC;	
+}

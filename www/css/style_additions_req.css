@@ -976,3 +976,31 @@ p#replying_to {
 	margin: 0;
 	float: right;
 }
+
+.reader_user .photo {
+	width: 48px;
+	display: inline;
+}
+
+.reader_user .photo img {
+	width: 48px;
+}
+
+.reader_user .context {
+	min-height: 48px;
+	display: inline;
+	vertical-align: top;
+	padding-left: 5px;
+}
+
+.qtip-content ul {
+	padding: 0;	
+}
+
+.qtip-content ul li {
+	padding: 5px;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	border-bottom: 1px dotted #CCC;
+}

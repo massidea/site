@@ -253,6 +253,7 @@ class CampaignController extends Oibs_Controller_CustomController
   		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
 		$comments->loadComments();
         
+		$this->view->hasFeeds 		 = Oibs_Controller_Plugin_RssReader::hasFeeds($cmpid, "campaign");
 		$this->view->comments		 = $comments;
         $this->view->campaign        = $cmp;
         $this->view->cmpcnts         = $cnts;

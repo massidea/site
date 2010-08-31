@@ -40,6 +40,24 @@ if (isset($this->parent_siblings[0])) {
     }
 }
 ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#content-view-viewers-list > a").click(function(event) {
+		event.preventDefault();
+	});
+	$("#content-view-viewers-list").mouseover(function () {
+		$(this).css('cursor', 'pointer');
+	});
+	$("#content-view-viewers-list").qtip(
+		{
+			content: $("#content-view-viewers-list-content").html().replace(/%7E/g, '~'),
+			show: 'click',
+			hide: 'click',
+			style: { width: { min: 250, max: 500 }} 
+		}
+	);
+});
+</script>
 <div class="user_content_row" style="float: left;">
     <div style="padding: 10px;">
         <div class="view_content_left_header">
@@ -419,9 +437,6 @@ if (isset($this->parent_siblings[0])) {
 				<?php endforeach; ?>
 				</ul>
 			</div>
-			<div class="user_content_spacer">
-        		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
-        	</div>
 		<?php endif; ?>
 		        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
 

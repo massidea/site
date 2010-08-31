@@ -342,9 +342,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
    		$contents = $cntHasTagModel->fetchAll($select)->toArray();
    		
    		$cnthascntModel = new Default_Model_ContentHasContent();
-
    		$contents = array_merge($contents, $cnthascntModel->getContentLinkIds($id));
-		
+
    		$linkedContents = $this->find($contents);
  	
     	$viewsModel = new Default_Model_ContentViews();
@@ -358,6 +357,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
     		$tempRow['viewCount']   = $viewsModel->getViewsByContentId($row->id_cnt);
     		$tempRow['contentType'] = $row->findDependentRowset('Default_Model_ContentTypes', 'ContentType')->current()->key_cty;
     		array_push($rows, $tempRow);
+    		if ($limit != -1 && count($rows) >= $limit) break;
     	}
 
     	return $rows;

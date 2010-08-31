@@ -10,6 +10,7 @@ function deleteconfirmation(url) {
 }
 <?php $this->headScript()->captureEnd(); ?>
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/rssfeeds.js')); ?>
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601);
@@ -100,6 +101,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             <?php if ($this->userIsGroupAdmin): ?>
                 <p><a href="<?php echo $editgrouplinks; ?>">Edit group links</a></p>
             <?php endif; ?>
+        <div id='rss'>
+        	<?php if ($this->hasFeeds): ?>  	
+        		<p><strong>Feed: </strong>
+        		<img src="<?php echo $this->baseUrl;?>/images/ajax-loader-black.gif" style="float: right; vertical-align:text-top;"/></p>
+        	<?php endif;?>
+        </div>
         </div>
     </div>
     <div id="activity" class="right">
