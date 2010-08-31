@@ -50,6 +50,9 @@ echo $this->doctype();
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
     $this->headScript()->prependFile('http://maps.google.com/jsapi');
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.min.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
 
     echo $this->headLink();
     echo $this->headMeta();

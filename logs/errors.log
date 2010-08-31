@@ -1,0 +1,279 @@
+2010-08-19T11:01:58+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T11:02:02+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T11:02:05+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T11:02:10+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T11:02:12+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T11:02:15+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T11:02:43+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/CheckContentForm.js
+MESSAGE: Invalid controller specified (CheckContentForm.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T11:02:43+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:02:31+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:02:32+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/CheckContentForm.js
+MESSAGE: Invalid controller specified (CheckContentForm.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:02:38+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:05:45+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:05:45+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:05:50+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:05:52+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:11:37+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:11:42+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:11:45+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:11:46+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/images/submit.jpg
+MESSAGE: Invalid controller specified (submit.jpg). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:11:48+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:12:06+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:14:02+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:21:29+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:25:19+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:25:34+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:25:39+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:25:43+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:28:08+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:45:09+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:45:09+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}
+2010-08-19T13:45:55+03:00 NOTICE (5): FROM: 10.150.9.186. 
+URI: /~jaakkop/js/auto_translate.js
+MESSAGE: Invalid controller specified (auto_translate.js). 
+STACK TRACE:
+#0 /home/jaakkop/massidea/library/Zend/Controller/Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 /home/jaakkop/massidea/library/Zend/Application/Bootstrap/Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 /home/jaakkop/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 /home/jaakkop/massidea/www/index.php(30): Zend_Application->run()
+#4 {main}

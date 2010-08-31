@@ -170,7 +170,7 @@ function flagContent()
 <?php 
     // change background color
     if (isset($this->contentType)) {
-	    $this->headScript()->captureStart(); 
+	    $this->headScript()->captureStart();
 	    ?> changeBack('<?php echo $this->contentType; ?>'); <?php
 	    $this->headScript()->captureEnd(); 
     }

@@ -249,4 +249,24 @@
 		<tuv xml:lang="en"><seg>No flags found</seg></tuv>
 		<tuv xml:lang="fi"><seg>Merkintöjä ei löytynyt</seg></tuv>
 	</tu>
+	<tu tuid='admin-cachemanager-title'>
+		<tuv xml:lang="en"><seg>Cache manager</seg></tuv>
+		<tuv xml:lang="fi"><seg>Välimuistin hallinta</seg></tuv>
+	</tu>
+	<tu tuid='admin-cachemanager-status'>
+		<tuv xml:lang="en"><seg>Cache status</seg></tuv>
+		<tuv xml:lang="fi"><seg>Välimuistin tila</seg></tuv>
+	</tu>
+	<tu tuid='admin-cachemanager-filling-percentage'>
+		<tuv xml:lang="en"><seg>Filling percentage: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Täyttöprosentti: </seg></tuv>
+	</tu>
+	<tu tuid='admin-cachemanager-number-of-files'>
+		<tuv xml:lang="en"><seg>Number of files: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Tiedostojen määrä: </seg></tuv>
+	</tu>
+	<tu tuid='admin-cachemanager-total-size'>
+		<tuv xml:lang="en"><seg>Total size: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Koko yhteensä: </seg></tuv>
+	</tu>
 </body>
