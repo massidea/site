@@ -15,9 +15,12 @@
             
     // some variable initiation
     $url_tag_cloud = $this->url(array('controller' => 'tag',
-        'action' => 'index',
-        'language' => $this->language), 
-        'lang_default', true);
+                                      'action' => 'index',
+                                      'ctype' => $this->type,
+                                      'order' => 'popularity',
+                                      'direction' => 'desc',
+                                      'language' => $this->language),
+                                      'lang_default', true);
         
     $url_sign_up = $this->url(array('controller' => 'account',
         'action' => 'register',

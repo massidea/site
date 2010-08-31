@@ -1006,7 +1006,6 @@ div.privmsg_userinfo {
 	padding: 5px;
 	float: left; 
 	position: relative; 
-	height: 140px; 
 	width:590px;
 }
 
@@ -1014,6 +1013,11 @@ div.privmsg_userinfo {
 	position: absolute; 
 	right:0px; 
 	top: 5px;	
+}
+
+p.privmsg_p {
+	margin: 0px;
+	padding: 0px;
 }
 	
 /** LOGIN **/
