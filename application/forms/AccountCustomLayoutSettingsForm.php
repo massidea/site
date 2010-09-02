@@ -40,17 +40,20 @@
 		$clear = new Oibs_Form_Element_Note('clear');
         $clear->setValue('<div class="clear"></div>');
         
+        $clearall = new Oibs_Form_Element_Note('clearall');
+        $clearall->setValue('<div style="clear:both;"></div>');
+        
         $bgimageclear = new Oibs_Form_Element_Note('clear');
         $bgimageclear->setValue('<div style="clear:both;"></div>');
         
         $testdivstart = new Oibs_Form_Element_Note('testdivstart');
-        $testdivstart->setValue('<div class="backgrounddiv" style="float:right; width:410px; margin-top:-5px; padding-left:20px; border-left:1px solid silver;">');
-        
+        $testdivstart->setValue('<div class="backgrounddiv" style="float:right; min-width:410px; min-height:150px; height:auto !important; height:300px; margin-top:-5px; padding-left:20px; border-left:1px solid silver;">');
+
         $testdivend = new Oibs_Form_Element_Note('testdivend');
         $testdivend->setValue('</div>');
 
         $testdiv2start = new Oibs_Form_Element_Note('testdiv2start');
-        $testdiv2start->setValue('<div class="fontdiv" style="float:left; width:280px; /*border:1px solid black;*/ margin-top:-25px;">');
+        $testdiv2start->setValue('<div class="fontdiv" style="float:left; min-width:280px; min-height:150px; height:auto !important; height:300px; margin-top:-25px;">');
         
         $testdiv2end = new Oibs_Form_Element_Note('testdiv2end');
         $testdiv2end->setValue('</div>');
@@ -112,9 +115,8 @@
 				->addValidator('Extension', false, 'jpg,png,gif')
                 ->removeDecorator('DtDdWrapper')
                 ->removeDecorator('DefaultDecorator')
-                //->addDecorator('HtmlTag',array('style' => 'margin-top:-11px'))
-                ->addDecorator('HtmlTag',array('tag' => 'div', 'class' => 'form_addcontent_row', 'style' => '/*float:right;*/ margin-top:6px'))
-                ->addDecorator('Label',array('tag' => 'div', 'class' => 'form_addcontent_row', 'style' => 'font-weight:bold; float:left; padding-right:10px; margin-top:6px; width:60px'))
+                ->addDecorator('HtmlTag',array('tag' => 'div', /*'class' => 'form_addcontent_row',*/ 'style' => '/*float:right;*/ margin-top:6px'))
+                ->addDecorator('Label',array('tag' => 'div', /*'class' => 'form_addcontent_row',*/ 'style' => 'font-weight:bold; float:left; padding-right:10px; margin-top:6px; width:60px'))
                 ;
                
         // Background color input
@@ -156,18 +158,6 @@
         $blockseparator->setValue('<center><div style="width:696px; height:1px; border-bottom:1px solid silver; margin-bottom:10px;"></div></center>');         
          
         // Add elements to form
-		/*$this->addElements(array(//$customfontpreviewtext,
-								 //$customfontclear,						 
-								 $customfont,
-								 //$clear,
-								 $customfontsize,
-								 $customsizeclear,
-								 $customfontcolor,
-								 $customfontcolorclear,
-								 $customfontcolorpicker,
-								 $backgroundimage));
-		
-		*/
          /*
          $this->addElements(array(//$customfontpreviewtext,
 								 //$customfontclear,
@@ -187,35 +177,27 @@
 								 $customfontcolorpicker,
 								 $clear));
 */
-		$this->addElements(array($testdivstart,
-								 //$bgheader,
-								 $savebgimagebutton,
-								 $backgroundimage,
-								 //$bgimageclear,
-								 $bgimageinuse,
-								 //$clear,
-								 $custombgcolor,
-								 //$bgcolorinuse,
-								 //$clear,
-								 $custombgcolorpicker,
-								 //$clear,
+		$this->addElements(array(//$clearall,
+								 $testdivstart,
+								 	$savebgimagebutton,
+								 	$backgroundimage,
+								 	$bgimageinuse,
+								 	$custombgcolor,
+								 	$custombgcolorpicker,
 								 $testdivend,
-								 //$clear,
+								 
 								 $testdiv2start,
-								 //$fontheader,
-								 $customfont,
-								 //$clear,
-								 $customfontsize,
-								 $customsizeclear,
-								 $customfontcolor,
-								 //$testdiv2end,
-								 $customfontcolorclear,
-								 $customfontcolorpicker,
+								 	$customfont,
+								 	$customfontsize,
+								 	$customsizeclear,
+								 	$customfontcolor,
+								 	$customfontcolorclear,
+								 	$customfontcolorpicker,
 								 $testdiv2end,
+								 
 								 $submitclear,
 								 $blockseparator,
 								 $submit
-								 //$clear
 								 ));
 								 
 		// Add decorators

@@ -61,14 +61,7 @@ $(document).ready(function() {
 			}
 		}); // endof li.each
 	}); // Endof a.click
-}); // Endof document ready
-
-function expandText(key)
-{
-	$(".biographyrow:eq("+key+")").html("<span>"+ biographyBody +"</span>");
-}
-
-$(document).ready(function() {
+	
 	$('#picker').farbtastic('#customfontcolor');
 	//$('#picker').farbtastic('#custompreviewtext');
 	
@@ -78,7 +71,12 @@ $(document).ready(function() {
 			alert("save button hit!");
 			//$(#customfontcolor).css('font-weight' : 'bold;');
 	});
-});
+}); // Endof document ready
+
+function expandText(key)
+{
+	$(".biographyrow:eq("+key+")").html("<span>"+ biographyBody +"</span>");
+}
 
 
 
