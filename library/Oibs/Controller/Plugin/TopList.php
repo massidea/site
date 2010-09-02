@@ -214,13 +214,13 @@ abstract class Oibs_Controller_Plugin_TopList {
 		return $value;		
 	}
 	
-	protected function _getChoicesSortedUserList($choice,$idList) {
+	protected function _getChoicesSortedUserList($choice,$sort) {
 		$sortedUsers = null;
-		if($choice == 'Count') $sortedUsers = $this->_userModel->sortUsersByContentInfo($this->_userList,$idList,null,null);
-		elseif($choice == 'View') $sortedUsers = $this->_userModel->sortUsersByViews($this->_userList,$idList,null,null);
-		elseif($choice == 'Popularity') $sortedUsers = $this->_userModel->sortUsersByPopularity($this->_userList,$idList,null,null);
-		elseif($choice == 'Rating') $sortedUsers = $this->_userModel->sortUsersByRating($this->_userList,$idList,null,null);
-		elseif($choice == 'Comment') $sortedUsers = $this->_userModel->sortUsersByComments($this->_userList,$idList,null,null);
+		if($choice == 'Count') $sortedUsers = $this->_userModel->sortUsersByContentInfo($this->_userList,$sort,null,null);
+		elseif($choice == 'View') $sortedUsers = $this->_userModel->sortUsersByViews($this->_userList,$sort,null,null);
+		elseif($choice == 'Popularity') $sortedUsers = $this->_userModel->sortUsersByPopularity($this->_userList,$sort,null,null);
+		elseif($choice == 'Rating') $sortedUsers = $this->_userModel->sortUsersByRating($this->_userList,$sort,null,null);
+		elseif($choice == 'Comment') $sortedUsers = $this->_userModel->sortUsersByComments($this->_userList,$sort,null,null);
 		return $sortedUsers;	
 	}
 	

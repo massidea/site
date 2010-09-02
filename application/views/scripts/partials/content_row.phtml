@@ -1,6 +1,9 @@
+<?php if(isset($this->class)): ?><li class="<?php echo $this->class; ?>"><?php endif; ?>
+
 <div class="user_content_row user_content_row_new" id="postid_<?php echo $this->original['id_cnt']; ?>" style="display: block;">
 	<?php echo $this->partial('partials/content_row_single.phtml', $this->translated);?>
 </div>
 <div class="user_content_row user_content_row_hidden" id="hidden_postid_<?php echo $this->original['id_cnt']; ?>" style="display: none;">
 	<?php echo $this->partial('partials/content_row_single.phtml', $this->original);?>
 </div>
+<?php if(isset($this->class)): ?></li><?php endif; ?>

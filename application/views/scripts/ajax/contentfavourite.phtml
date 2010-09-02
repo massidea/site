@@ -1,26 +1,30 @@
-<div id="content_view_content_favourite">
-	<span id="current_favourites" style="padding: 2px;">
-		<?php echo " " . $this->translate('content-favourites'); ?>
-		<?php echo $this->favourite['total_favourites']; ?>
-	</span>
-</div>	
 
-<?php if($this->user_can_comment): // if can comment, can also add to favourites ?>
+<?php if($this->userid != 0): ?>
 	<div id="content_view_content_add_favourite" style="padding: 2px;">
 		<?php if(!$this->favourite['is_favourite']):?>
 			<div onclick="ajaxLoad_favourite('add');">
 				<img id="favouriteadd" src="<?php echo $this->baseUrl('/images/icon_fav_on.png'); ?>" alt="Add to favourites" />
-				<p style="float: right;">
+				<a href="#" onClick="return false;" style="text-align: right; width:67px;">
 					<?php echo " " . $this->translate('content-favourite-add'); ?>
-				</p>
+					to favourites
+				</a>
 			</div>
 		<?php elseif($this->favourite['is_favourite']):?>
 			<div onclick="ajaxLoad_favourite('remove');">
 				<img id="favouriteremove" src="<?php echo $this->baseUrl('/images/icon_fav_off.png'); ?>" alt="Remove from favourites" />
-				<p style="float: right;">
+				<a href="#" onClick="return false;" style="text-align: right; width:67px;">
 					<?php echo " " . $this->translate('content-favourite-remove'); ?>
-				</p>
+					from favourites
+				</a>
 			</div>
 		<?php endif; ?>
 	</div>
 <?php endif; ?>
+<div id="content_view_content_favourite">
+	<span id="current_favourites" style="padding: 2px;">
+	This content has been
+		<?php echo $this->translate('content-favourites'); ?>
+		<?php echo $this->favourite['total_favourites']; ?>
+		times
+	</span>
+</div>	

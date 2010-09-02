@@ -19,6 +19,10 @@
  */	
 
 $(document).ready(function() {
+    // Datepicker for campaign create form
+    $("#campaign_start").datepicker({ showOn: 'button', buttonText: "select", dateFormat: 'yy-mm-dd' }); // , dateFormat: 'yy-mm-dd'
+    $("#campaign_end").datepicker({ showOn: 'button', buttonText: "select", dateFormat: 'yy-mm-dd' });
+    
 	// Get all input elements
 	var allInputs = $(":input[type=text], :input[type=textarea]");
 

@@ -48,28 +48,39 @@ $(document).ready(function() {
 
 		$(this).parent().siblings().removeClass('selected');
 		$(this).parent().removeClass('selected');
-				class = $(this).parent().attr('class'); 
+		classi = $(this).parent().attr('class'); 
 		$(this).parent().addClass('selected');
 		box = $(this).parent().parent().parent().parent().attr('id');
 		$("#" + box + " > .scroll-box > ul > li").each(function() {
 			curClass =$(this).attr('class');
-			if( !$(this).hasClass(class) && !$(this).hasClass('popup')) {
+			if( !$(this).hasClass(classi) && !$(this).hasClass('popup')) {
 				$(this).hide();
-			} else if ($(this).hasClass(class) && !$(this).hasClass('popup')) {
+			} else if ($(this).hasClass(classi) && !$(this).hasClass('popup')) {
 				$(this).show();
 				$(this).scrollTop();
 			}
 		}); // endof li.each
 	}); // Endof a.click
 	
+
+	$("#user_profile_toplist_title").click(function(){
+		if($(".user_profile_toplist_rank").is(":visible")) {
+			$("#user_profile_toplist_title").html("Points");
+			$(".user_profile_toplist_rank").slideUp(function(){$(".user_profile_toplist_points").slideDown();});
+		}
+		else {
+			$("#user_profile_toplist_title").html("Rank");
+			$(".user_profile_toplist_points").slideUp(function(){$(".user_profile_toplist_rank").slideDown();});
+		}
+	});
+	
 	$('#picker').farbtastic('#customfontcolor');
-	//$('#picker').farbtastic('#custompreviewtext');
 	
 	$('#custombgcolorpicker').farbtastic('#custombgcolor');
 	
 	$('#custom_layout_button').click(function() {
-			alert("save button hit!");
-			//$(#customfontcolor).css('font-weight' : 'bold;');
+		alert("save button hit!");
+		//$(#customfontcolor).css('font-weight' : 'bold;');
 	});
 }); // Endof document ready
 
@@ -77,7 +88,6 @@ function expandText(key)
 {
 	$(".biographyrow:eq("+key+")").html("<span>"+ biographyBody +"</span>");
 }
-
 
 
 
@@ -116,6 +126,19 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                                 date("d.m.Y H:i", strtotime($this->user['last_login_usr'])) :
                                 'Never logged in'; ?></li>
             <!-- <li><strong>Page views:</strong> 1,200</li> -->
+            
+            <li>
+            	<ul class="user_profile_toplist">
+	            <li><strong>User ranking in:</strong><a href="#" onClick="return false;" style="float:right;" id="user_profile_toplist_title">Rank</a></li>
+	            	<?php 
+	            	foreach($this->topList as $key => $value) :
+	            	 $rank = $value['addedUsers'][0]['rank']+1; 
+	            	 if($rank != 0) $points = $value['addedUsers'][0]['value'];
+	            	 if($rank == 0) { $rank = "Not ranked"; $points = "Not ranked"; } ?>
+	            		<li><strong><?php echo $value['title']; ?>: </strong><span class="user_profile_toplist_rank"><?php echo $rank; ?></span><span class="user_profile_toplist_points"><?php echo $points; ?></span></li>
+	            	<?php endforeach; ?>
+	            </ul>
+            </li>
         </ul>
     </div>
     <div id="profile-info">
@@ -194,12 +217,19 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
                 ?>
                 <li><strong>Gender:</strong> <?php echo $this->userprofile['gender']; ?></li>
                 <?php endif; ?>
-                <?php //display country TODO: link
+                <?php 
                 if (isset($this->userprofile['country']) && $this->userprofile['country'] != NULL) :
                 ?>
-                <li><strong>Country:</strong> <a href="#"><?php echo $this->userprofile['country']; ?></a></li>
+                <li><strong>Country:</strong> <a href="<?php echo $this->url(array('controller' => 'account',
+                                                             'action' => 'userlist',
+                											 'order' => 'username',
+                											 'list' => 'asc',
+                											 'country' => $this->userprofile['countryIso'],
+                                                             'language' => $this->language,
+                                                             ),
+                                                       'lang_default', true); ?>"><?php echo $this->userprofile['country']; ?></a></li>
                 <?php endif; ?>
-                <?php //display city TODO: link
+                <?php 
                 if (isset($this->userprofile['city']) && $this->userprofile['city'] != NULL):
                 ?>
                 <li><strong>Homecity:</strong> <a href="<?php echo $this->url(array('controller' => 'account',

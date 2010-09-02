@@ -10,6 +10,7 @@ function deleteconfirmation(url) {
 }
 <?php $this->headScript()->captureEnd(); ?>
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/rssfeeds.js')); ?>
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601);
@@ -38,7 +39,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
         </ul>
         <h4><?php echo $this->translate('group-members'); ?></h4>
-        <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
+        <span class="more"><strong><a href="<?php echo $this->url(array('controller' => 'account',
+                                                        'action' => 'userlist',
+        												'group' => $this->grpData["group_name_grp"],
+        												'exactg' => "1",
+                                                        'language' => $this->language),
+                                                        'lang_default', true); ?>">Show all</a></strong></span>
         <div class="clear"></div>
         <ul>
            <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
@@ -53,18 +59,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                     <?php //var_dump($this->linkedgroups); ?>
                     <?php
                     foreach($this->linkedgroups as $group) {
-                        $usrurl = $this->url(array('controller' => 'account',
-                                                   'action' => 'view',
-                                                   'user' => $group['login_name_usr'],
-                                                   'language' => $this->language),
-                                             'lang_default', true);
                         $grpurl = $this->url(array('groupid'    => $group['id_grp'],
                                                    'language'   => $this->language),
                                              'group_shortview', true);
                         ?>
                         <li class="linked_groups">
                             <div class="linked_groups">
-                                <a href="<?php echo $usrurl; ?>"><?php echo $group['login_name_usr']; ?></a> :
                                 <strong><a href="<?php echo $grpurl; ?>"><?php echo $group['group_name_grp']; ?></a></strong>
                             </div>
                         </li>
@@ -95,6 +95,12 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             <?php if ($this->userIsGroupAdmin): ?>
                 <p><a href="<?php echo $editgrouplinks; ?>">Edit group links</a></p>
             <?php endif; ?>
+        <div id='rss'>
+        	<?php if ($this->hasFeeds): ?>  	
+        		<p><strong>Feed: </strong>
+        		<img src="<?php echo $this->baseUrl;?>/images/ajax-loader-black.gif" style="float: right; vertical-align:text-top;"/></p>
+        	<?php endif;?>
+        </div>
         </div>
     </div>
     <div id="activity" class="right">
@@ -244,7 +250,19 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             <div class="clear"></div>
             <div class="scroll-box">
                 <ul>
-                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
+                    <?php //echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
+                    <?php if (count($this->openCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Active:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->openCampaigns); ?>
+                    <?php endif;
+                    if (count($this->notstartedCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Forthcoming:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->notstartedCampaigns); ?>
+                    <?php endif;
+                    if (count($this->endedCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Ended:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->endedCampaigns); ?>
+                    <?php endif; ?>
                 </ul>
             </div>
             <div class="clear"></div>

@@ -287,7 +287,14 @@ div.top_row_center_right_selection_text{
 	padding-top: 4px;
 }
 
-
+#user_options { list-style:none outside none; position: absolute; display: none; width: 130px; background: none repeat scroll 0 0 #EEEEEE; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px;}
+#user_options li { border: 2px outset #CCCCCC; padding-bottom: 1px; padding-top: 1px; }
+#user_options li img { vertical-align: middle; }
+#user_options li:hover { background: #0089CF; }
+#user_options li a { color: #333333;padding-left: 2px; text-decoration: none;}
+/*
+#user_options li #user_options_sub_1 { display:none; position: absolute; }
+*/
 /* Middle section, content area */
 
 div.middle_row{
@@ -603,8 +610,15 @@ div.right_side_title_small{
 }
 
 div.top_right_box_links_users{
-	padding-left: 7px; 
 	font-size: 12px;
+	padding-left: 2px;
+	margin-top: -5px;
+}
+
+div.top_right_box_links_users ul {
+	list-style-position: outside;
+	list-style-type: none;
+	padding-left: 2px;
 }
 
 div.massidea_dev_info{
@@ -620,8 +634,7 @@ div.before_footer{
 
 div.top_right_box_links_show_all_users{
 	margin-bottom: -4px; 
-	padding-left: 5px; 
-	padding-top: 10px;
+	text-align: center;
 	font-size: 12px; 
 	font-weight: bold;
 }
@@ -656,6 +669,8 @@ div.top_right_box{
 	margin-top: 0px;
 	width: 175px;
 }
+
+div.top_right_box div { display:inline; }
 
 div.top_right_box p{
 	padding: 0px 0px 10px 0px;
@@ -819,41 +834,37 @@ p.top_right_box_links_learn_more{
 /* ELEMENT ID DEFINITIONS */
 
 #login_box{
-	position: absolute;
 	text-align: left;
 	display: none;
 	border: 1px solid #cccccc;
 	background: #eeeeee;
 	color: #333333;
-	width: 240px;
-	height: 156px;
 	font-family: Arial;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 6px;
 	padding-left: 8px;
-	z-index: 1000;
+	height: 213px;
+	width: 288px;
 }
 
 #login_box input{
-	width: 232px;
+	width: 222px;
 }
 
 #login_box_openid{
-	position: absolute;
 	text-align: left;
 	border: 1px solid #cccccc;
 	color: #333333;
 	display: none;
 	background: #eeeeee;
-	width: 240px;
-	height: 90px;
 	font-family: Arial;
 	font-size: 11px;
 	font-weight: bold;
 	padding: 6px;
 	padding-left: 8px;
-	z-index: 1000;
+	height: 123px;
+	width: 268px;
 }
 
 #sign_up_now{
@@ -995,7 +1006,6 @@ div.privmsg_userinfo {
 	padding: 5px;
 	float: left; 
 	position: relative; 
-	height: 140px; 
 	width:590px;
 }
 
@@ -1003,6 +1013,11 @@ div.privmsg_userinfo {
 	position: absolute; 
 	right:0px; 
 	top: 5px;	
+}
+
+p.privmsg_p {
+	margin: 0px;
+	padding: 0px;
 }
 	
 /** LOGIN **/
@@ -1350,7 +1365,6 @@ form #uploadedFiles_div .form_element_input label {
 	position: fixed;
 	background-color: #000000;
 	opacity: 0.65;
-	filter:alpha(opacity=65);
 	z-index: 9001;
 	top:0px;
 	left:0px;
@@ -1358,38 +1372,24 @@ form #uploadedFiles_div .form_element_input label {
 	height: 100%;
 }
 
-.popup {
-	position: fixed;
-	background-color:#fff;
-	width:300px;
-	height:300px;
-	z-index: 9002;
-	padding: 10px;
-	overflow-y: auto;
-    border: 2px double #C3C3C3;
-    margin: -150px;
-    top: 50%;
-    left: 50%;
-}  
-
 .popup_terms {
 	position: fixed;
 	background-color:#fff;
 	width:600px;
-	height:600px;
+	height:70%;
 	z-index: 9002;
 	padding: 10px;
 	overflow-y: auto;
     border: 2px double #C3C3C3;
     margin: -150px;
-    top: 40%;
+    top: 170px;
     left: 40%;
-} 
+}
 
 .popup_close {
     padding: 0px;
     width: 590px;
-    position: inherit;
+    position: fixed;
     margin-left: auto;
     margin-right: auto;
 }
@@ -1418,6 +1418,11 @@ form #uploadedFiles_div .form_element_input label {
 { font-weight: bold; font-size: 14px; }
 
 .content_view_content_modified p { font-style: italic; }
+
+.content_view_linked_content_extra { display: none; }
+#content_view_linked_content_challenges_more,
+#content_view_linked_content_visions_more { cursor: pointer; vertical-align: middle; }
+
 
 /** comment stuff **/
 #content_view_comment_form_container {
@@ -2104,7 +2109,7 @@ div.privacy li { padding-bottom: 0px; margin: 2px 0px 3px 0px; font-size: 14px; 
     background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
     padding:5px 0px 5px 2px;
     list-style:none;}
-#campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
+#campaigns ul li span { padding:0; display:block;}
 
 
 /*
@@ -2123,3 +2128,13 @@ p.fetchpassword-error {
     width: 430px;
 }
 
+.user_content_edit { float:right;  }
+.user_content_edit ul { border: 1px solid #999; list-style:none outside none; position: absolute; display: none; width: 160px; background: none repeat scroll 0 0 #EEEEEE; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px; }
+.user_content_edit ul li { border: 2px outset #CCC; padding: 2px; } 
+.user_content_edit ul li img { vertical-align: middle; }
+.user_content_edit ul li:hover { background: #0089CF; }
+.user_content_edit ul li a:hover { color: #333 !important }
+.user_content_edit ul li a { color: #333333 !important; padding-left: 2px; text-decoration: none;}
+
+#content_view_favourite { padding-bottom: 2px; }
+#content_view_favourite div { display:inline; }

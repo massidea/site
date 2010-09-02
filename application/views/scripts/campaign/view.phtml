@@ -49,16 +49,22 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             </strong><?php // t�git t�h�n v�liin ?>
         </p>
         -->
-        <!--
         <p>
-            <strong>Campaign has started: </strong>
+            <?php if ($this->status === 'open' || $this->status === 'ended') : ?>
+            <strong>Has started: </strong>
+            <?php else : ?>
+            <strong>Will start: </strong>
+            <?php endif; ?>
             <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
         </p>
         <p>
-            <strong>Campaign is ending: </strong>
+            <?php if ($this->status === 'ended') : ?>
+            <strong>Has ended: </strong>
+            <?php else : ?>
+            <strong>Is ending: </strong>
+            <?php endif; ?>
             <?php echo $cmpend; ?>
         </p>
-        -->
         <?php if (is_array($this->cmpAdmins)): ?>
         <strong><?php echo $this->translate('campaign-admins') . ':'; ?></strong>
             <ul>
@@ -101,8 +107,8 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                         ?>
                         <li class="linked_campaigns">
                             <div class="linked_campaigns">
-                                <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a> :
                                 <strong><a href="<?php echo $cmpurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
+                                by <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a>
                             </div>
                         </li>
                         <?php
@@ -134,7 +140,10 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <?php endif; ?>
         </div>
         <div id='rss'>
-    	
+    		<?php if ($this->hasFeeds): ?>  	
+        		<p><strong>Feed: </strong>
+        		<img src="<?php echo $this->baseUrl;?>/images/ajax-loader-black.gif" style="float: right; vertical-align:text-top;"/></p>
+        	<?php endif;?>
     	</div>
     </div>
     
@@ -196,19 +205,24 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <div class="clear"></div>
             <div id="contribute">
                 <?php if ($this->identity == true) : ?>
-                <h2>I want to contribute:</h2>
-
-                <div class="right">
-                    <p class="link">
-                    <?php
-                    if ($this->userHasGroup):
-                    ?>
-                        <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+                    <?php if ($this->status === 'open') : ?>
+                    <h2>I want to contribute:</h2>
+                    <div class="right">
+                        <p class="link">
+                        <?php
+                        if ($this->userHasGroup):
+                        ?>
+                            <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+                        <?php endif; ?>
+                        </p>
+                        <!--<p>If you add content, you'll become a group member</p> -->
+                    </div>
+                    <?php elseif ($this->status === 'not_started') : ?>
+                    <h2>Campaign has not started</h2>
+                    <?php elseif ($this->status === 'ended') : ?>
+                    <h2>Campaign has been closed</h2>
                     <?php endif; ?>
-                    </p>
-                    <!--<p>If you add content, you'll become a group member</p> -->
-               </div>
-               <?php endif; ?>
+                <?php endif; ?>
                 <div class="clear"></div>
                 <div id="current-posts">
                     <div id="head">
@@ -217,7 +231,7 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                     <div class="clear"></div>
 
                     <div class="scroll-box">
-                        <?php if (is_array($this->cmpcnts) && $this->cmpcnts[0]['id_cnt'] != null): ?>
+                        <?php if (is_array($this->cmpcnts) && isset($this->cmpcnts[0]) && $this->cmpcnts[0]['id_cnt'] != null): ?>
                         <ul>
                             <?php  echo $this->partialLoop('partials/content_row_new.phtml', $this->cmpcnts); ?>
                         </ul>

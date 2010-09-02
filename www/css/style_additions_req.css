@@ -13,7 +13,6 @@
     border: 1px solid #ccc;
     padding: 5px;
     width:468px;
-    float:left;
 }
 
 .box_468_medium {
@@ -23,7 +22,6 @@
     padding: 5px;
     background-color: #F3F3F3;
     width:468px;
-    float:left;
 }
 
 .view_content_left_header_top,
@@ -36,11 +34,9 @@
 }
 
 .view_content_left_header_btm {
-    padding-top: 10px;
-    padding-bottom: 10px;
+	width: 478px;
+    padding-top: 2px;
     color:#A7A7A7;
-    padding-left: 3px;
-    padding-right: 3px;
 }
 
 .text_80 {
@@ -979,4 +975,32 @@ p#replying_to {
 	padding: 3px 20px 0 0;
 	margin: 0;
 	float: right;
+}
+
+.reader_user .photo {
+	width: 48px;
+	display: inline;
+}
+
+.reader_user .photo img {
+	width: 48px;
+}
+
+.reader_user .context {
+	min-height: 48px;
+	display: inline;
+	vertical-align: top;
+	padding-left: 5px;
+}
+
+.qtip-content ul {
+	padding: 0;	
+}
+
+.qtip-content ul li {
+	padding: 5px;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	border-bottom: 1px dotted #CCC;
 }

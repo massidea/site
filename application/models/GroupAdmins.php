@@ -91,7 +91,14 @@ class Default_Model_GroupAdmins extends Zend_Db_Table_Abstract
                 ->join(array('usr' =>'users_usr'),
                        'gad.id_usr = usr.id_usr',
                        array('login_name_usr'))
-                ->where('gad.id_grp = ?', $id_grp);
+                ->join('usr_profiles_usp',
+                       'usr.id_usr = usr_profiles_usp.id_usr_usp',
+                       array('city' => 'usr_profiles_usp.profile_value_usp'))
+                ->joinLeft('cnt_has_usr',
+                       'cnt_has_usr.id_usr = gad.id_usr',
+                        array('count' => 'count(*)'))
+                ->where('gad.id_grp = ?', $id_grp)
+                ->where('usr_profiles_usp.profile_key_usp = "city"');
                 
             $result = $this->_db->fetchAll($data);
             

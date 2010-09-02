@@ -1,6 +1,6 @@
 <?php 
 
-if(is_array($this->countries)) {
+if(!empty($this->countries) && !isset($this->countries[0])) {
 $first = array_values($this->countries);
 $first = $first[0];
 $firstCode = array_keys($this->countries);

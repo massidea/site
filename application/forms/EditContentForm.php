@@ -375,18 +375,20 @@ class Default_Form_EditContentForm extends Zend_Form
         
 		// Form buttons
         
-        $publish = new Zend_Form_Element_Submit('content_publish');
+        $publish = new Zend_Form_Element_Button('content_publish_button');
 		$publish->setLabel($translate->_("content-add-publish"))
+				->setAttrib('class', 'content_manage_button')
                 ->removeDecorator('DtDdWrapper');
         
-		$save = new Zend_Form_Element_Submit('content_save');
+		$save = new Zend_Form_Element_Button('content_save_button');
 		$save->setLabel($translate->_("content-add-save"))
+			 ->setAttrib('class', 'content_manage_button')
              ->removeDecorator('DtDdWrapper');
              
-        $preview = new Zend_Form_Element_Submit('preview');
+        $preview = new Zend_Form_Element_Button('content_preview_button');
         $preview->setLabel($translate->_("content-add-preview"))
+        		->setAttrib('class', 'content_manage_button')
                 ->removeDecorator('DtDdWrapper');
-                //->setAttrib('onclick',"populatePreview(); previewRoll('open')");
                 
 		// Add elements to form
         $elements = array($header, $keywords, $content_type,

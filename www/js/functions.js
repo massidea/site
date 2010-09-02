@@ -479,6 +479,9 @@ $(document).ready(function() {
 			$('#add_content_form').submit();
 		}
 	});
+});
+
+$(document).ready(function() {
 	idleInterval = 181000;
 	setTimeout("onlineIdle()", idleInterval);
 });
@@ -555,18 +558,50 @@ function onlineIdle() {
  * @param  message    translated text for remove file button
  */
 function multiFile(obj, message) {
-	var file = obj.value;
-	if ( $(":file[value="+file+"]").length == 1) {
-		$(obj).hide();
-		$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
-		$(obj).parent().after("<div class='clear'><input id='removeFile' type='button' value='" + message + "' /><div class='content_file_list_file'>"+ file + "</div></div>");
-		$("#removeFile").click(function() {
-			$(this).parent().remove();
-			$(obj).remove();
-		});
+	
+	var allowedFiles = {
+		'.doc' 		: 1,
+		'.docx' 	: 1,
+		'.png' 		: 1,
+		'.gif' 		: 1,
+		'.jpg' 		: 1,
+		'.jpeg' 	: 1,
+		'.zip' 		: 1,
+		'.xls' 		: 1,
+		'.mpp' 		: 1,
+		'.pdf' 		: 1,
+		'.wmv' 		: 1,
+		'.avi' 		: 1,
+		'.mkv' 		: 1,
+		'.mov' 		: 1,
+		'.mpeg' 	: 1,
+		'.mp4' 		: 1,
+		'.divx' 	: 1,
+		'.flv' 		: 1,
+		'.ogg'	 	: 1,
+		'.3gp' 		: 1,
+		'.txt'		: 1
+	}
+	
+	var file = $(obj).val();
+
+	var re = /\..+$/;
+    var ext = file.match(re);
+
+	if ( $(":file[value="+file+"]").length == 1 && allowedFiles[ext]) {
+		if ($(obj).is(':visible')) {
+			$(obj).hide();
+			$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
+			$(obj).parent().after("<div class='clear'><input id='removeFile' type='button' value='" + message + "' /><div class='content_file_list_file'>"+ file + "</div></div>");
+			$("#removeFile").click(function() {
+				$(this).parent().remove();
+				$(obj).remove();
+			});
+		}
 	}
 	else {
-		obj.value = "";
+		$(obj).val("");
+		alert("Error: \nDuplicate file or invalid filetype");
 	}
 }
 /*

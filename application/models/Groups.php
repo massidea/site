@@ -85,6 +85,23 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
                 ->limit($limit);
         return $this->fetchAll($select)->toArray();
     }
+
+    /**
+     * getRecentFromOffset
+     *
+     * Gets the specified number of the most recently created groups starting from a specified offset.
+     *
+     * @param int $page
+     * @param int $count
+     * @return array
+     */
+    public function getRecentFromOffset($page, $count)
+    {
+        $select = $this->select()
+                ->order('id_grp DESC')
+                ->limitPage($page, $count);
+        return $this->fetchAll($select)->toArray();
+    }
     
     /**
      * Adds a new group to the db.
