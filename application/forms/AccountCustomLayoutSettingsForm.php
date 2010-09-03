@@ -145,10 +145,10 @@
         		->removeDecorator('DefaultDecorator')
         		->removeDecorator('DtDdWrapper');
         
-        $bgimageinuse = new Zend_Form_Element_CheckBox('bgimage_in_use');
+        $bgimageinuse = new Zend_Form_Element_Checkbox('bgimage_in_use');
         $bgimageinuse->setLabel(' Use < no imagefile uploaded>');
         
-        $bgcolorinuse = new Zend_Form_Element_CheckBox('bgcolor_in_use');
+        $bgcolorinuse = new Zend_Form_Element_Checkbox('bgcolor_in_use');
         $bgcolorinuse->setLabel(' Use');
 		
         // Block separator
