@@ -994,6 +994,7 @@ p#replying_to {
 }
 
 .qtip-content ul {
+	margin: 2px;
 	padding: 0;	
 }
 

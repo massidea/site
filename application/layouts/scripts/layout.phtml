@@ -41,7 +41,7 @@ echo $this->doctype();
         'PREPEND'
     );
 
-    $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
+
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
@@ -49,6 +49,7 @@ echo $this->doctype();
     $this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
     $this->headScript()->prependFile('http://maps.google.com/jsapi');
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
 
     echo $this->headLink();
     echo $this->headMeta();
@@ -82,8 +83,7 @@ echo $this->doctype();
 																				 'action' => 'index',
 																				 'language' => $this->language),
 																				 'lang_default', true); ?>">
-												<?php echo $this->translate('index-admin-tools');?>
-											</a> | 
+												<?php echo $this->translate('index-admin-tools');?></a> | 
 							            <?php endif; ?>
 
                                     <?php echo $this->translate('index-logged_in'); ?>
@@ -92,8 +92,7 @@ echo $this->doctype();
                                                                      'user' => $this->username,
                                                                      'language' => $this->language),
                                                                'lang_default', true); ?>">
-                                        <?php echo $this->username; ?>
-                                    </a>
+                                        <?php echo $this->username; ?></a>
                                 	<ul id="user_options">
                                 		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
                                                                      'action' => 'view',

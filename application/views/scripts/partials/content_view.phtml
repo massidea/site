@@ -200,8 +200,8 @@ $(document).ready(function() {
                 <div style="float:left;">
                 	<div id="content_view_content_info_container"></div>
                 </div>              
-                <div style="float:right; padding-top:2px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
-          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
+                <div id="content-view-viewers-list" style="float:right; padding:5px;"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div>
+                <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
 	           <div id="content_view_favourite" style="clear: both;"></div>
 	     <?php endif; ?>
                 <div style="clear: both;">

@@ -398,7 +398,7 @@ class AccountController extends Oibs_Controller_CustomController
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box->setHeader("My Reads")
+		$box->setHeader("My Readers")
 			->setClass("left")
 			->setName("my-reads")
 			->addTab("Readers", "readers", "all selected");

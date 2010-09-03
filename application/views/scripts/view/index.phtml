@@ -202,7 +202,7 @@ function flagContent()
             <?php echo $this->userData['login_name_usr']; ?></a><br />
             <?php echo $this->translate('content-view-joined'); ?> <?php echo date('d M Y', strtotime($this->userData['created_usr'])); ?>
 		</div>
-		<?php if ($this->contentData[id_usr] != $this->usrId) { ?>
+		<?php if ($this->contentData['id_usr'] != $this->usrId) { ?>
             <br /><br />
             <a href="<?php echo $this->url(array('controller' => 'privmsg',
                                      'action' => 'send',
