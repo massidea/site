@@ -557,8 +557,10 @@ function onlineIdle() {
  * @param   obj      file input object
  * @param  message    translated text for remove file button
  */
-function multiFile(obj, message) {
-	
+function multiFile(obj) {
+	var json = jQuery.parseJSON($('#jsmetabox').text());
+	var baseUrl = json.baseUrl;
+
 	var allowedFiles = {
 		'.doc' 		: 1,
 		'.docx' 	: 1,
@@ -591,8 +593,8 @@ function multiFile(obj, message) {
 	if ( $(":file[value="+file+"]").length == 1 && allowedFiles[ext]) {
 		if ($(obj).is(':visible')) {
 			$(obj).hide();
-			$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this, \"" + message + "\");' name='content_file_upload[]' />");
-			$(obj).parent().after("<div class='clear'><input id='removeFile' type='button' value='" + message + "' /><div class='content_file_list_file'>"+ file + "</div></div>");
+			$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this);' name='content_file_upload[]' />");
+			$(obj).parent().after("<div class='file_row'><div class='clear' /><img id='removeFile' src='" + baseUrl + "/images/icon_red_cross.png' style='cursor: pointer'/><div class='content_file_list_file'>"+ file + "</div></div>");
 			$("#removeFile").click(function() {
 				$(this).parent().remove();
 				$(obj).remove();

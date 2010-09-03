@@ -1005,3 +1005,16 @@ p#replying_to {
 	list-style-type: none;
 	border-bottom: 1px dotted #CCC;
 }
+
+.content_file_list_file {
+	color: #808080;
+}
+#removeFile {
+	float: right;
+	
+}
+
+.file_row {
+	width: 390px;
+	padding-top: 5px;	
+}
