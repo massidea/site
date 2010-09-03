@@ -326,7 +326,7 @@ class AjaxController extends Oibs_Controller_CustomController
         }
         
         $contents = array();
-		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], $limit);
+		$rawcontents = $userModel->getUserContent($this->params['id_usr'], array('exclude' => $this->params['id_cnt'], 'limit' => $limit));
 		foreach($rawcontents as $rawcnt)
 		{
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);

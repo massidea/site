@@ -798,7 +798,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$content['solution_cnt'] = htmlspecialchars($data['content_solution']);
 		$content['references_cnt'] = htmlspecialchars($data['content_references']);
 		$content['modified_cnt'] = new Zend_Db_Expr('NOW()');
-		if ($data['publish'] == 1) 
+		if (isset($data['publish']) && $data['publish'] == 1) 
 			$content['published_cnt'] = 1;
 
 		$where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
@@ -1052,8 +1052,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 				$filesModel->newFile($data['content_id'], $data['User']['id_usr'], $file);
 			}
 				
-				
-			$filesModel->deleteFiles($data['uploadedFiles']);
+			if (isset($data['uploadedFiles'])) $filesModel->deleteFiles($data['uploadedFiles']);
+
 			//die;
 		}
 		if($contentType == "idea") {
@@ -1620,5 +1620,25 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		return false;
 	}
 
+	public function hasCntLinks($id_cnt) {
+		$select = $this->_db->select()->from('cnt_has_cnt', 'created_cnt')
+									  ->where('id_parent_cnt = ?', $id_cnt)
+									  ->orWhere('id_child_cnt = ?', $id_cnt)
+									  ;
+									  
+		//echo $select->__toString(); die;
+		$result = $this->_db->fetchAll($select);
+		return !empty($result);
+	}
+	
+	public function hasCmpLinks($id_cnt) {
+		$select = $this->_db->select()->from('cmp_has_cnt', 'id_cmp')
+									  ->where('id_cnt = ?', $id_cnt)
+									  ;
+									  
+		//echo $select->__toString(); die;
+		$result = $this->_db->fetchAll($select);
+		return !empty($result);
+	}
 } // end of class
 

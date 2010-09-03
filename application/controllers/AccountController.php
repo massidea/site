@@ -292,7 +292,7 @@ class AccountController extends Oibs_Controller_CustomController
         */
         // Get content user has released
         $type = isset($params['type']) ? $params['type'] : 0 ;
-        $contentList = $user->getUserContent($data['id_usr']);
+
         $temp = array();
 
         // Initialize content counts
@@ -305,17 +305,19 @@ class AccountController extends Oibs_Controller_CustomController
 
         // Count amount of content user has published
         // and check unpublished so only owner can see it.
-        foreach ($contentList as $k => $c) {
+        $cntModel = new Default_Model_Content();
+        $contentList = array();
+        foreach ($user->getUserContent($data['id_usr'], array('order' => 'DESC')) as $k => $c) {
             // If user not logged in and content not published,
             // remove content from list
             if (!$auth->hasIdentity() && $c['published_cnt'] == 0) {
-                unset($contentList[$k]);
+                //unset($contentList[$k]);
             // Else if user logged in and not owner of unpublished content,
             // remove content from list
             } else if (isset($c['id_usr']) && $auth->hasIdentity() &&
                        $c['id_usr'] != $auth->getIdentity()->user_id &&
                        $c['published_cnt'] == 0) {
-                unset($contentList[$k]);
+                //unset($contentList[$k]);
             // Else increase content counts and sort content by content type
             } else {
                 if (isset($c['key_cty'])) {
@@ -334,11 +336,14 @@ class AccountController extends Oibs_Controller_CustomController
                     // Increase content type count
                     $dataa['contentCounts'][$c['key_cty']]++;
                 }
+                if($c['published_cnt'] == 0) {
+             	   $dataa['contentCounts']['user_edit']++;
+            	}
+            	$c['hasCntLinks'] = $cntModel->hasCntLinks($c['id_cnt']);
+          		$c['hasCmpLinks'] = $cntModel->hasCmpLinks($c['id_cnt']);
+            	$contentList[] = $c;
             }
 
-            if($c['published_cnt'] == 0) {
-                $dataa['contentCounts']['user_edit']++;
-            }
         } // end foreach
 
         // If user is logged in, and viewing self; allow edit
@@ -368,7 +373,7 @@ class AccountController extends Oibs_Controller_CustomController
 			->addTab("Challenges", "problem", "challenges", $dataa['contentCounts']['problem'])
 			->addTab("Ideas", "idea", "ideas", $dataa['contentCounts']['idea'])
 			->addTab("Visions", "finfo", "visions", $dataa['contentCounts']['finfo']);
-			
+		//Zend_Debug::dump($dataa); die;
 		if ($dataa['contentCounts']['user_edit'] && $userEdit) {
 			$box->addTab("Saved", "user_edit", "saved", $dataa['contentCounts']['user_edit']);
 		}
@@ -417,6 +422,7 @@ class AccountController extends Oibs_Controller_CustomController
 		
 		$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm();
         // Set to view
+        
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
         $this->view->authorContents = $contentList;/*$temp*/
@@ -427,16 +433,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->topList = $topList;
         $this->view->type = $type;
         $this->view->customLayoutSettingsForm = $customLayoutForm;
-
-        /* Waiting for layout that is maybe coming 
-        // MyViews
-        $viewsModel = new Default_Model_ContentViews();
-        Zend_Debug::dump($viewsModel->getUserViewedContents($data['id_usr']));
-        
-        // MyReaders
-        Zend_Debug::dump($user->getUsersViewers($data['id_usr']));
-        die;*/
-        
+       
         $group_model = new Default_Model_UserHasGroup();
         $usergroups = $group_model->getGroupsByUserId($id);
 

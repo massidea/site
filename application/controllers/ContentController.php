@@ -1339,6 +1339,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 							// Edit content
 							$content = new Default_Model_Content();
+							$oldData = $content->getContentRow($contentId);
 							$edit = $content->editContent($data);
 
 							$url = $this->_urlHelper->url(array('controller' => 'msg',
@@ -1349,8 +1350,7 @@ class ContentController extends Oibs_Controller_CustomController
 							if($edit) {
 								//$favourite = new Default_Model_UserHasFavourites();
 								//$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
-
-								if($data['publish'] == 1) {
+								if($oldData['published_cnt'] == 1) {
 									$url = $this->_urlHelper->url(array('content_id' => $edit,
                                                                         'language' => $this->view->language), 
                                                                   'content_shortview', true);
@@ -1358,6 +1358,7 @@ class ContentController extends Oibs_Controller_CustomController
 								} else {
 									$message_ok = $this->view->translate('content-save-successful');
 									$message_ok .= ' ('.$content->getContentHeaderByContentId($edit).')';
+									
 									$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
 									$userpage = $this->_urlHelper->url(array('controller' => 'account',
                                                                              'action' => 'view', 
