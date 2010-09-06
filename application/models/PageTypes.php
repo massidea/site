@@ -60,7 +60,17 @@ class Default_Model_PageTypes extends Zend_Db_Table_Abstract
     							->orWhere("type_ptp = ?", $type)
     							;
     	$result = $this->fetchAll($select)->toArray();
-    	return $result[0]['type_ptp'];
+    	if (isset($result[0])) return $result[0]['type_ptp'];
+    	
     							
+    }
+    
+    public function getName($id) {
+    	$select = $this->select()->from($this, array('type_name_ptp'))
+    							 ->where("type_ptp = ?", $id)
+    							 ;
+
+    	$result = $this->fetchAll($select)->toArray();
+    	if (isset($result[0])) return $result[0]['type_name_ptp'];
     }
 } // end of class

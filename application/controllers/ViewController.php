@@ -105,10 +105,7 @@
    
         // get rating from params (if set)
         $rate = isset($params['rate']) ? $params['rate'] : "NONE";
-        
-        // get favourite method, "add" or "remove"
-        //$favouriteMethod = isset($params['favourite']) ? $params['favourite'] : "NONE";
-        
+                
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
         
@@ -126,6 +123,11 @@
 
         // Comment model
         $comment = new Default_Model_Comments();
+        
+        $favouriteModel = new Default_Model_UserHasFavourites();
+        if($favouriteModel->checkIfContentIsUsersFavourite($id,$usrId)) {
+        	$favouriteModel->updateLastChecked($usrId,$id);
+        }
         
         //$parentId = isset($params['replyto']) ? $params['replyto'] : 0;
         
@@ -245,6 +247,10 @@
         $children = array();
         $children_siblings = array();
         
+        //TODO: It would be best effiency to send just an array of childs to ContentModel
+        //		and get all data in 1 query rather than querying many times. New function
+        //		to models is needed for this or then edit the one we have now and allow it
+        //		to have a possibility to receive ids as array.
         if (isset($family['children'])) {
             foreach ($family['children'] as $child) {
                 $contenttypeid = $contentModel->getContentTypeIdByContentId((int)$child);
@@ -377,10 +383,16 @@
         $this->view->contentType        = $contentType;
         //$this->view->count              = $count;
         $this->view->campaigns          = $campaigns;
+        $this->view->viewers			= $this->getViewers($id);
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
 	} // end of view2Action
     
 
+	private function getViewers($id_cnt) {
+		$cntVwModel = new Default_Model_ContentViews();
+		//getContentViewers
+		return $cntVwModel->getContentViewers($id_cnt, 10);
+	} 
 }

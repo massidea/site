@@ -146,15 +146,15 @@
 		<tuv xml:lang="fi"><seg>%d Viimeisintä sisältöä</seg></tuv>
 	</tu>
 	<tu tuid='content-list-problem'>
-		<tuv xml:lang="en"><seg>Problems</seg></tuv>
+		<tuv xml:lang="en"><seg>Recent Problems</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ongelmat</seg></tuv>
 	</tu>
 	<tu tuid='content-list-idea'>
-		<tuv xml:lang="en"><seg>Ideas</seg></tuv>
+		<tuv xml:lang="en"><seg>Recent Ideas</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
 	</tu>
 	<tu tuid='content-list-finfo'>
-		<tuv xml:lang="en"><seg>Future visions</seg></tuv>
+		<tuv xml:lang="en"><seg>Recent Future visions</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymät</seg></tuv>
 	</tu>
 	<tu tuid='content-list-recent'>

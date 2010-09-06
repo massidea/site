@@ -128,11 +128,13 @@ class Default_Form_AddCampaignForm extends Zend_Form
         $campaignstart
             ->setAttrib('id', 'campaign_start')
             ->setAttrib('name', 'campaign_start')
-            ->setLabel('Start date')
-            ->setRequired(true)
+            ->setLabel('Start date (empty means current day)')
+            //->setRequired(true)
             ->setAttrib('invalidMessage', 'Invalid date specified')
             ->setAttrib('formalLength', 'long')
-            ->setValidators(array(new Zend_Validate_Date('campaign_start')))
+            ->setValidators(array(
+                new Zend_Validate_Date('yyyy-MM-dd'),
+                new Oibs_Validators_StartdateValidator('campaign_start')))
             ->setDecorators(array('FieldDecorator'));
         
         $campaignstart_clear = new Oibs_Form_Element_Note('campaignstart_clear');
@@ -140,15 +142,19 @@ class Default_Form_AddCampaignForm extends Zend_Form
             ->setValue($clear)
             ->setDecorators(array('ViewHelper'));
 
+        //$validator = new Zend_Validate_Date('yyyy-MM-dd');
         // End date
         $campaignend = new Zend_Form_Element_Text('campaign_end');
         $campaignend
             ->setAttrib('id', 'campaign_end')
-            ->setLabel('End date')
-            ->setRequired(true)
+            ->setLabel('End date (empty means permanent campaign)')
+            //->setRequired(true)
             ->setAttrib('invalidMessage', 'Invalid date specified')
             ->setAttrib('formalLength', 'long')
-            ->setValidators(array(new Zend_Validate_Date('campaign_end')))
+            ->setValidators(array(
+                //$validator('campaign_end'),
+                new Zend_Validate_Date('yyyy-MM-dd'),
+                new Oibs_Validators_EnddateValidator('campaign_start')))
             ->setDecorators(array('FieldDecorator'));
         
         $campaignend_clear = new Oibs_Form_Element_Note('campaignend_clear');
@@ -282,37 +288,67 @@ class Default_Form_AddCampaignForm extends Zend_Form
         $save->setAttrib('id', 'publish')
              ->setAttrib('class', 'submit-button')
              ->setAttrib('style', 'float: none;');
-        if ($options == 'edit')
+        if ($options['mode'] == 'edit')
             $save->setLabel('Save');
         else
             $save->setLabel('Create');
 
-        $this->addElements(array(
-            $campaignname,
-            $campaignname_clear,
-            $campaigningress,
-            $campaigningress_clear,
-            $campaigndesc,
-            $campaigndesc_clear,
-//            $campaignstart,
-//            $campaignstart_clear,
-//            $campaignend,
-//            $campaignend_clear,
-            $weblinks_websites,
-            $weblinks_name,
-            $weblinks_url,
-            $weblinks_name_site1,
-            $weblinks_url_site1,
-            $weblinks_name_site2,
-            $weblinks_url_site2,
-            $weblinks_name_site3,
-            $weblinks_url_site3,
-            $weblinks_name_site4,
-            $weblinks_url_site4,
-            $weblinks_name_site5,
-            $weblinks_url_site5,
-            $save,
-        ));
+        // Group admin can edit campaign start and end day only before campaign has started
+
+        $date = new Zend_Date(date("Y-m-d", time()), Zend_Date::ISO_8601);
+        $startdate = new Zend_Date($options['startdate'], Zend_Date::ISO_8601);
+
+        if ($date->compare($startdate) == -1) {
+            $this->addElements(array(
+                $campaignname,
+                $campaignname_clear,
+                $campaigningress,
+                $campaigningress_clear,
+                $campaigndesc,
+                $campaigndesc_clear,
+                $campaignstart,
+                $campaignstart_clear,
+                $campaignend,
+                $campaignend_clear,
+                $weblinks_websites,
+                $weblinks_name,
+                $weblinks_url,
+                $weblinks_name_site1,
+                $weblinks_url_site1,
+                $weblinks_name_site2,
+                $weblinks_url_site2,
+                $weblinks_name_site3,
+                $weblinks_url_site3,
+                $weblinks_name_site4,
+                $weblinks_url_site4,
+                $weblinks_name_site5,
+                $weblinks_url_site5,
+                $save,
+            ));
+        } else {
+            $this->addElements(array(
+                $campaignname,
+                $campaignname_clear,
+                $campaigningress,
+                $campaigningress_clear,
+                $campaigndesc,
+                $campaigndesc_clear,
+                $weblinks_websites,
+                $weblinks_name,
+                $weblinks_url,
+                $weblinks_name_site1,
+                $weblinks_url_site1,
+                $weblinks_name_site2,
+                $weblinks_url_site2,
+                $weblinks_name_site3,
+                $weblinks_url_site3,
+                $weblinks_name_site4,
+                $weblinks_url_site4,
+                $weblinks_name_site5,
+                $weblinks_url_site5,
+                $save,
+            ));
+        }
 
         $save->setDecorators(array(
             'ViewHelper',

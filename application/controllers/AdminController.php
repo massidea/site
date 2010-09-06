@@ -480,4 +480,58 @@ class AdminController extends Oibs_Controller_CustomController
 		// Go!
     	$this->view->contents = $data;
     }
+    
+    public function cachemanagerAction()
+    {
+    	$flushrequest = $this->_request->getParam('clean', false) ? true : false;
+    	$flushResponse = null;
+    	$cacheDir = '../tmp/';
+    	$cacheFiles = scandir($cacheDir);
+    	$totalSize = 0;
+    	$i = 0;
+
+    	foreach($cacheFiles as $cacheFile)
+    	{
+    		if(strstr($cacheFile, 'zend_cache---'))
+    		{
+    			$fileSize = filesize($cacheDir . $cacheFile) / 1024;
+    			
+    			if($flushrequest) 
+    			{
+	    			if(unlink($cacheDir.$cacheFile))
+	    			{
+	    				$flushResponse[$cacheFile] = 'OK';
+	    				unset($cacheFiles[$i]);
+	    			}
+	    			else
+	    			{
+	    				$flushResponse[$cacheFile] = 'Failed';
+	    				$totalSize += $fileSize;
+	    			}
+    			}
+    			else
+    			{
+    				$totalSize += $fileSize;
+    			}
+    			
+    		}
+    		else
+    		{
+    			unset($cacheFiles[$i]);
+    		}
+    		$i++;
+    	}
+    	$fileCount = count($cacheFiles);
+
+    	$cache = Zend_Registry::get('cache');
+    	$fillingPercentage = $cache->getFillingPercentage();
+    	$cleanLink = $this->_urlHelper->url(array('clean' => 'all'));
+
+    	$this->view->cacheFiles = $cacheFiles;
+    	$this->view->fillingPercentage = $fillingPercentage;
+    	$this->view->fileCount = $fileCount;
+    	$this->view->totalSize = $totalSize;
+    	$this->view->flushResponse = $flushResponse;
+    	$this->view->cleanLink = $cleanLink;
+    }
 }

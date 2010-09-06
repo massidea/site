@@ -116,7 +116,9 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
             ->where('usr_profiles_usp.profile_key_usp = "city"');
 
         $result = $this->_db->fetchAll($data);
-        
+        foreach($result as $key => $res) {
+        	if(!empty($result[$key]['city'])) $result[$key]['city'] = mb_convert_case($result[$key]['city'], MB_CASE_TITLE, "UTF-8");
+        }
         return $result;
     }
 

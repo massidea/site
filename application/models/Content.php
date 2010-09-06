@@ -2,7 +2,7 @@
 /**
  *  Content -> Content database model for content table.
  *
- *  Copyright (c) <2009>, Markus Riihelä
+ *  Copyright (c) <2009>, Markus Riihelï¿½
  *  Copyright (c) <2009>, Mikko Sallinen
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
@@ -22,8 +22,8 @@
  *  Content - class
  *
  *  @package    models
- *  @author     Markus Riihelä & Mikko Sallinen
- *  @copyright  2009 Markus Riihelä & Mikko Sallinen
+ *  @author     Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright  2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license    GPL v2
  *  @version    1.0
  */
@@ -173,7 +173,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			$idList = array_flip($idList);
 			$sortedData = array();
 			foreach ($data as $row) {
-				$sortedData[$idList[$row['id_cnt']]] = $row;
+				if(isset($idList[$row['id_cnt']])) $sortedData[$idList[$row['id_cnt']]] = $row;
 			}
 			ksort($sortedData);
 			return $sortedData;
@@ -342,9 +342,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
    		$contents = $cntHasTagModel->fetchAll($select)->toArray();
    		
    		$cnthascntModel = new Default_Model_ContentHasContent();
-
    		$contents = array_merge($contents, $cnthascntModel->getContentLinkIds($id));
-		
+
    		$linkedContents = $this->find($contents);
  	
     	$viewsModel = new Default_Model_ContentViews();
@@ -358,6 +357,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
     		$tempRow['viewCount']   = $viewsModel->getViewsByContentId($row->id_cnt);
     		$tempRow['contentType'] = $row->findDependentRowset('Default_Model_ContentTypes', 'ContentType')->current()->key_cty;
     		array_push($rows, $tempRow);
+    		if ($limit != -1 && count($rows) >= $limit) break;
     	}
 
     	return $rows;
@@ -798,12 +798,12 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$content['solution_cnt'] = htmlspecialchars($data['content_solution']);
 		$content['references_cnt'] = htmlspecialchars($data['content_references']);
 		$content['modified_cnt'] = new Zend_Db_Expr('NOW()');
-		if ($data['publish'] == 1) 
+		if (isset($data['publish']) && $data['publish'] == 1) 
 			$content['published_cnt'] = 1;
 
 		$where = $this->getAdapter()->quoteInto('`id_cnt` = ?', $data['content_id']);
 
-		// MIKÄ VITTU TÄSSÄ KUSEE?
+		// MIKï¿½ VITTU Tï¿½SSï¿½ KUSEE?
 		if(!$this->update($content, $where)) {
 			$return = false;
 		} else {
@@ -1052,8 +1052,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 				$filesModel->newFile($data['content_id'], $data['User']['id_usr'], $file);
 			}
 				
-				
-			$filesModel->deleteFiles($data['uploadedFiles']);
+			if (isset($data['uploadedFiles'])) $filesModel->deleteFiles($data['uploadedFiles']);
+
 			//die;
 		}
 		if($contentType == "idea") {
@@ -1269,7 +1269,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	public function checkIfContentExists($id_cnt = 0)
 	{
 		$return = false;
-
 		if((int)$id_cnt != 0) {
 			$select = $this->select()
 			->from($this, array('*'))
@@ -1593,6 +1592,53 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		
 		return $data;
 	}
+	/**
+	 * 
+	 * @param int $content_id, id $user
+	 * @return boolean
+	 */
+	public function checkIfUserIsOwner($id = -1,$user = 0)
+	{
+		if((int)$id != -1 && $user != 0) {
+			$select = $this->_db->select()
+							->from(array('cnt' => 'contents_cnt'),
+									array())
+							->joinLeft(array('chu' => 'cnt_has_usr'),
+                                    'chu.id_cnt = cnt.id_cnt',
+									array())
+							->joinLeft(array('usr' => 'users_usr'),
+                                    'usr.id_usr = chu.id_usr',
+									array('usr.id_usr'))
+							->where('cnt.id_cnt = ?', (int)$id)
+							->where('usr.id_usr = ?', $user)
+			;
 
+			$result = $this->_db->fetchAll($select);
+			if($result) return true;
+		}
+
+		return false;
+	}
+
+	public function hasCntLinks($id_cnt) {
+		$select = $this->_db->select()->from('cnt_has_cnt', 'created_cnt')
+									  ->where('id_parent_cnt = ?', $id_cnt)
+									  ->orWhere('id_child_cnt = ?', $id_cnt)
+									  ;
+									  
+		//echo $select->__toString(); die;
+		$result = $this->_db->fetchAll($select);
+		return !empty($result);
+	}
+	
+	public function hasCmpLinks($id_cnt) {
+		$select = $this->_db->select()->from('cmp_has_cnt', 'id_cmp')
+									  ->where('id_cnt = ?', $id_cnt)
+									  ;
+									  
+		//echo $select->__toString(); die;
+		$result = $this->_db->fetchAll($select);
+		return !empty($result);
+	}
 } // end of class
 

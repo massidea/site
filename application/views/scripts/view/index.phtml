@@ -1,27 +1,33 @@
-<?php // Part of the ajax funtionalities ?>
-<?php $flagContentUrl = $this->url(array('controller' => 'content',
+<?php // Part of the ajax funtionalities 
+$flagContentUrl = $this->url(array('controller' => 'content',
 										'action' => 'flag',
 										'language' => $this->language),
 										'lang_default', true); 
-?>
-<?php $contentRatingUrl = $this->url(array('controller' => 'ajax',
+
+$contentRatingUrl = $this->url(array('controller' => 'ajax',
 										   'action' => 'contentrating',
 										   'id_cnt' => $this->contentData['id_cnt'],
 										   'language' => $this->language),
 										   'lang_default', true);
-?>
-<?php $moreFromUserUrl = $this->url(array('controller' => 'ajax',
+
+$moreFromUserUrl = $this->url(array('controller' => 'ajax',
 										  'action' => 'morefromuser',
 										  'id_usr' => $this->contentData['id_usr'],
 										  'id_cnt' => $this->contentData['id_cnt'],
 										  'language' => $this->language),
 										  'lang_default', true); 
-?>
-<?php $relatedContentUrl = $this->url(array('controller' => 'ajax',
+
+$relatedContentUrl = $this->url(array('controller' => 'ajax',
 											'action' => 'relatedcontent',
 											'id_cnt' => $this->contentData['id_cnt'],
 											'language' => $this->language),
 											'lang_default', true); 
+
+$contentFavouriteUrl = $this->url(array('controller' => 'ajax',
+										   'action' => 'contentfavourite',
+										   'id_cnt' => $this->contentData['id_cnt'],
+										   'language' => $this->language),
+										   'lang_default', true);
 ?>
 
 <?php $this->headScript()->captureStart() ?>
@@ -76,17 +82,36 @@ function ajaxLoad_moreRelated(type, more){
 	});
 };
 
+function initLinkedContent(type) {
+	var target = "#content_view_linked_content_"+type+"_extra";
+	var expandButton = "#content_view_linked_content_"+type+"_more";
+	if ($(target).is(':hidden')){
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
+	} else {
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
+	}
+	$("#content_view_linked_content_"+type+"_extra").slideToggle();
+}
+
 $(document).ready(function(){
 		ajaxLoad_moreRelated("user", false);
 		ajaxLoad_moreRelated("content", false);
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
-		//$("#content_view_favourite").load("?page=add_favourite&format=html");
+		$("#content_view_favourite").load("<?php echo $contentFavouriteUrl; ?>");
+		
+		$("#content_view_linked_content_challenges_more").click(function(){initLinkedContent("challenges");});
+		$("#content_view_linked_content_visions_more").click(function(){initLinkedContent("visions");});
+		
+		$(".user_content_edit").hover(
+			function(){ $(".user_content_edit > ul").clearQueue().slideDown(); },
+			function(){ $(".user_content_edit > ul").delay(1000).slideUp(); }
+		);
 });
 
 
 
 
-/*
+
 function ajaxLoad_favourite(method){
 	$.ajax({
 		type: "POST",
@@ -94,14 +119,14 @@ function ajaxLoad_favourite(method){
 			if (method == "add") $("#favouriteadd").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 			if (method == "remove") $("#favouriteremove").attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 		},
-		url: "?favourite="+method,
+		url: "<?php echo $contentFavouriteUrl; ?>/method/"+method,
 		success: function(result){
 			$("#content_view_favourite").html(result);
-			$("#current_favourites").animate({backgroundColor: "red"}, 1).animate({backgroundColor: "#ffffff"}, 1400);
+			$("#content_view_favourite").animate({backgroundColor: "red"}, 1).animate({backgroundColor: "#ffffff"}, 1400);
 		}
 	});
 };
-*/
+
 
 function ajaxLoad_vote(score){
 	$.ajax({
@@ -145,7 +170,7 @@ function flagContent()
 <?php 
     // change background color
     if (isset($this->contentType)) {
-	    $this->headScript()->captureStart(); 
+	    $this->headScript()->captureStart();
 	    ?> changeBack('<?php echo $this->contentType; ?>'); <?php
 	    $this->headScript()->captureEnd(); 
     }
@@ -160,13 +185,14 @@ function flagContent()
 <div class="right_side" style="float: right; padding: 0px; margin: 0px; margin-top: 0px;">
     <p class="right_side_title_small" style="padding: 11px 0px 3px 10px; font-weight: bold;"><?php echo $this->translate('content-view-author'); ?></p>
     <div class="top_right_box" style="margin-bottom:10px;">
-            <img src="<?php echo $this->url(array('controller' => 'account',
+            <div><img src="<?php echo $this->url(array('controller' => 'account',
                                                   'action' => 'profilethumb',
                                                   'id' => $this->userData['id_usr'],
                                                   'language' => $this->language,
                                                   'thumb' => 'true'),
                                             'lang_default', true); ?>" 
                 alt="User image" class="profile_image_smallsize" />
+            </div>
 		<div style="float: right;">
             <a href="<?php echo $this->url(array('controller' => 'account',
                                                  'action' => 'view', 
@@ -176,6 +202,7 @@ function flagContent()
             <?php echo $this->userData['login_name_usr']; ?></a><br />
             <?php echo $this->translate('content-view-joined'); ?> <?php echo date('d M Y', strtotime($this->userData['created_usr'])); ?>
 		</div>
+		<?php if ($this->contentData['id_usr'] != $this->usrId) { ?>
             <br /><br />
             <a href="<?php echo $this->url(array('controller' => 'privmsg',
                                      'action' => 'send',
@@ -183,7 +210,7 @@ function flagContent()
                                'lang_default', true); ?>/<?php echo $this->userData['login_name_usr']; ?>">
             <img src="<?php echo $this->baseUrl('/images/button_send_message_' . $this->language); ?>.png" alt="<?php echo $this->translate('account-profile-send-private-message'); ?>" title="<?php echo $this->translate('account-profile-send-private-message'); ?>" />
             </a>
-
+		<?php } ?>
     </div>
     
     <div id="content_view_user_related_header">

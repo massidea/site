@@ -10,13 +10,6 @@ var inputDefinitions = {
 };
 <?php $this->headScript()->captureEnd(); ?>
 
-<?php $this->headScript()->captureStart(); ?>
-$(function() {
-    $("#campaign_start").datepicker();
-    $("#campaign_end").datepicker();
-});
-<?php $this->headScript()->captureEnd(); ?>
-
 <div id="add-content-page" style="float:left; width:500px;">
     <!--<p>Group id: <?php echo $this->grpid; ?></p>-->
     <h2>Create a new campaign</h2>

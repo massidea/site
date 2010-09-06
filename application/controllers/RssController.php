@@ -115,4 +115,34 @@ class RssController extends Oibs_Controller_CustomController
         $this->view->contentData = $data;
 		
     } // end of indexAction()
+    
+    public function editfeedsAction() {
+    	$params = $this->getRequest()->getParams();
+    	
+    	if (!isset($params['type']) || !isset($params['id'])) return false;
+    	$reader = new Oibs_Controller_Plugin_RssReader($params['id'], $params['type']);
+    	$auth = Zend_Auth::getInstance();
+    	if (!$auth->hasIdentity()) return false;
+    	
+    	
+    	
+    	$userId = $auth->getIdentity()->user_id;
+    	$admin = false;
+    	if (!$admin = $reader->isAdmin($userId)) return false;
+    	$rssModel = new Default_Model_RssFeeds();
+    	$request = $this->getRequest();
+    	if ($request->isPost()) {
+    		$urls = array();
+    		if (isset($params['feeds'])) $urls = $params['feeds']; 
+    		$reader->addUrls($urls, $params['id'], $params['type']);
+    		$this->_redirect($reader->getLinkBack());
+    	}
+    	$urls = $rssModel->getUrls($params['id'], $params['type']);
+    	$this->view->title = "Massidea.org";
+    	$this->view->pageTitle = $reader->getTitle();
+    	$this->view->linkback = $reader->getLinkBack();
+    	$this->view->admin = $admin;
+    	$this->view->count = (count($urls) != 0) ? count($urls) : 1;
+    	$this->view->urls = $urls;
+    }
 } // end of class

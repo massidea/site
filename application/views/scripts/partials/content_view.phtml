@@ -40,6 +40,24 @@ if (isset($this->parent_siblings[0])) {
     }
 }
 ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#content-view-viewers-list > a").click(function(event) {
+		event.preventDefault();
+	});
+	$("#content-view-viewers-list").mouseover(function () {
+		$(this).css('cursor', 'pointer');
+	});
+	$("#content-view-viewers-list").qtip(
+		{
+			content: $("#content-view-viewers-list-content").html().replace(/%7E/g, '~'),
+			show: 'click',
+			hide: 'click',
+			style: { width: { min: 250, max: 500 }} 
+		}
+	);
+});
+</script>
 <div class="user_content_row" style="float: left;">
     <div style="padding: 10px;">
         <div class="view_content_left_header">
@@ -70,7 +88,8 @@ if (isset($this->parent_siblings[0])) {
             <div class="box_468_light">
                 <div style="width:100%; float: left; overflow:hidden;">
                     <div style="float: left; padding-bottom: 3px;">
-                        <span style="font-weight: bold; color: #d21034;"><?php echo $this->translate('content-linked-challenges'); ?></span>
+                        <span style="font-weight: bold; color: #d21034; vertical-align: middle;"><?php echo $this->translate('content-linked-challenges'); if(isset($linked_problems)) echo "(".sizeof($linked_problems).")"; ?></span>
+                        <?php if(isset($linked_problems) && sizeof($linked_problems) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_challenges_more" /><?php endif; ?>
                     </div>
                     <?php if ($authenticated): ?>
                     <div style="float: right;">
@@ -97,9 +116,15 @@ if (isset($this->parent_siblings[0])) {
                 </div><br clear="all" />
                 <div style="width:300px;">
                     <?php if (isset($linked_problems)): ?>
-                        <?php foreach ($linked_problems as $problem): ?>
+                        <?php $i = 0; foreach ($linked_problems as $problem): $i++; ?>
+                        	<?php if($i == 4): ?> <div id="content_view_linked_content_challenges_extra" class="content_view_linked_content_extra"> <?php endif; ?>
+                        	<div>
                             <span style="font-weight: bold;">
-                                <a href=""><?php echo $problem['login_name_usr'] . ': '; ?></a>
+                                <a href="<?php echo $this->url(array('controller' => 'account',
+                                                         'action' => 'view',
+                                						 'user' => $problem['login_name_usr'],
+                                                         'language' => $this->language),
+                                                         'lang_default', true); ?>"><?php echo $problem['login_name_usr'] . ': '; ?></a>
                             </span>
                             <a href="<?php echo $this->url(array('content_id' => $problem['id_cnt'], 
                                                                  'language' => $this->language), 
@@ -107,16 +132,20 @@ if (isset($this->parent_siblings[0])) {
                                 <?php echo $problem['title_cnt']; ?>
                             </a>
                             <br />
+                            </div>
                         <?php endforeach; ?>
+                        <?php if($i > 3): ?> </div> <?php endif; ?> 
                     <?php else: ?>
                         <span><?php echo $this->translate('content-box-no-linked-challenges'); ?></span>
                     <?php endif; ?>
                 </div>
+                	
             </div>
             <div class="box_468_medium">
                 <div style="width:100%; float: left; overflow:hidden;">
                     <div style="float: left; padding-bottom: 3px;">
-                        <span style="font-weight: bold; color: #ffc726"><?php echo $this->translate('content-linked-visions'); ?></span>
+                        <span style="font-weight: bold; color: #ffc726"><?php echo $this->translate('content-linked-visions'); if(isset($linked_futures)) echo "(".sizeof($linked_futures).")";?></span>
+                    	<?php if(isset($linked_futures) && sizeof($linked_futures) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_visions_more" /><?php endif; ?>
                     </div>
                     <?php if ($authenticated): ?>
                     <div style="float: right;">
@@ -143,9 +172,15 @@ if (isset($this->parent_siblings[0])) {
                 </div><br clear="all" />
                 <div style="width:300px;">
                     <?php if (isset($linked_futures)): ?>
-                        <?php foreach ($linked_futures as $future): ?>
+                        <?php $i= 0; foreach ($linked_futures as $future): $i++; ?>
+                        <?php if($i == 4): ?> <div id="content_view_linked_content_visions_extra" class="content_view_linked_content_extra"> <?php endif; ?>
+                        <div>
                             <span style="font-weight: bold;">
-                                <a href=""><?php echo $future['login_name_usr'] . ': '; ?></a>
+                                <a href="<?php echo $this->url(array('controller' => 'account',
+                                                         'action' => 'view',
+                                						 'user' => $future['login_name_usr'],
+                                                         'language' => $this->language),
+                                                         'lang_default', true); ?>"><?php echo $future['login_name_usr'] . ': '; ?></a>
                             </span>
                             <a href="<?php echo $this->url(array('content_id' => $future['id_cnt'], 
                                                                  'language' => $this->language), 
@@ -153,7 +188,9 @@ if (isset($this->parent_siblings[0])) {
                                 <?php echo $future['title_cnt']; ?>
                             </a>
                             <br />
+                         </div>
                         <?php endforeach; ?>
+                        <?php if($i > 3): ?>  </div> <?php endif; ?> 
                     <?php else: ?>
                         <span><?php echo $this->translate('content-box-no-linked-visions'); ?></span>
                     <?php endif; ?>
@@ -162,11 +199,11 @@ if (isset($this->parent_siblings[0])) {
             <div class="view_content_left_header_btm">
                 <div style="float:left;">
                 	<div id="content_view_content_info_container"></div>
-                </div>  
-                <!--  <div style="float:left; padding:5px;">
-                	<div id="content_view_favourite"></div>
-                </div>  -->                
-                <div style="float:right; padding:5px;"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
+                </div>              
+                <div id="content-view-viewers-list" style="float:right; padding:5px;"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div>
+                <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
+	           <div id="content_view_favourite" style="clear: both;"></div>
+	     <?php endif; ?>
                 <div style="clear: both;">
 	                <?php if($this->contentData['language_cnt'] != $this->gtranslateLangPair['to']): ?>
 	                	<?php if($this->isTranslated): ?>
@@ -183,8 +220,27 @@ if (isset($this->parent_siblings[0])) {
 	                <?php endif;?>
 	                		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
 
-        	<div class="user_content_edit" style="float:right">
-				<input type="button" value="Edit" onclick="location.href='<?php echo $this->baseUrl("/".$this->language."/content/edit/".$this->contentData['id_cnt']); ?>';" />
+        	<div class="user_content_edit">
+        		<a href="#" onClick="return false;">Manage content</a>
+        		<ul>
+        			<li>
+        			<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+        			<a href="<?php echo $this->url(array('controller' => 'content',
+                                                         'action' => 'edit',
+        												 'content_id' => $this->contentData['id_cnt'],
+                                                         'language' => $this->language),
+                                                         'content_edit', true); ?>">Edit Content</a>
+                    </li>
+                    <li>
+                    <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+                    <a href="<?php echo $this->url(array('controller' => 'content',
+                                                         'action' => 'unlink',
+        												 'relatestoid' => $this->contentData['id_cnt'],
+                                                         'language' => $this->language),
+                                                         'unlinkcontent', true); ?>">Manage linked content</a>
+                    </li>
+                                                         
+        		</ul>
 			</div>
 		<?php endif; ?>
                 </div>
@@ -227,19 +283,20 @@ if (isset($this->parent_siblings[0])) {
                 	</a>
                 </span>
                 <?php $i = count($this->tags) - 1; ?>
-                <?php foreach($this->tags as $tag): ?>
-                    <a href="<?php echo $this->url(array('controller' => 'tag', 
-                                                         'action' => 'view', 
-                                                         'id' => $tag['id_tag'], 
-                                                         'language' => $this->language), 
-                                                   		 'lang_default', true); ?>">
-                        <?php echo stripslashes($tag['name_tag']); ?>
-                    </a>
-                    <?php echo $i-- > 0 ? ', ' : ''; ?>
-                <?php endforeach; ?>	
+                <?php if(count($this->tags)): ?>
+	                <?php foreach($this->tags as $tag): ?>
+	                    <a href="<?php echo $this->url(array('controller' => 'tag', 
+	                                                         'action' => 'view', 
+	                                                         'id' => $tag['id_tag'], 
+	                                                         'language' => $this->language), 
+	                                                   		 'lang_default', true); ?>">
+	                        <?php echo stripslashes($tag['name_tag']); ?></a><?php echo $i-- > 0 ? ', ' : ''; ?>
+	                <?php endforeach; ?>
+				<?php endif; ?>
             </div>
+            <?php if (!empty($this->contentData['body_cnt'])): ?>
             <p><?php echo stripslashes(nl2br($this->contentData['body_cnt'])); ?></p>
-            
+            <?php endif;?>
             <?php if ($this->modified) : ?>
             	<div class="content_view_content_modified">
             		<p><?php echo $this->translate('content-modified')." ".$this->modified; ?></p>
@@ -265,15 +322,13 @@ if (isset($this->parent_siblings[0])) {
 	        		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
 	        	</div>
 	        	<div class="content_view_file_list">
-        		<span style="float: left;"><?php echo $this->translate('content-files').':'; ?>&nbsp;</span>
+        		<span><?php echo $this->translate('content-files').':'; ?></span>
 	        		<?php $filecount = count($this->files); ?>
 	        		<?php $file_i = 0; ?>
        				<?php foreach ($this->files as $id_fil => $filename): ?>
        					<?php $file_i++; ?>
 	        			<a href="<?php echo $this->baseUrl('/en/file/view/'.$id_fil); ?>">
-	        				<?php echo $filename; ?>
-	        			</a>
-	        			<?php if($file_i < $filecount) echo ', '; ?>
+	        				<?php echo $filename; ?></a><?php if($file_i < $filecount) echo ', '; ?>
         			<?php endforeach;?>
 	        	</div>
 	        <?php endif;?>
@@ -381,11 +436,9 @@ if (isset($this->parent_siblings[0])) {
 				<?php endforeach; ?>
 				</ul>
 			</div>
-			<div class="user_content_spacer">
-        		<img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png');?>" alt="Massidea.org" />
-        	</div>
 		<?php endif; ?>
+		<?php if(isset($this->comments)): ?>
 		        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
-
+		<?php endif; ?>
 	</div>
 </div>

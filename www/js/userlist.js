@@ -179,7 +179,6 @@ function json_search_contents(listStart,id,div) {
 	  url: userContents+"/search/"+id+"/start/"+listStart,
 	  dataType: 'json',
 	  success: function(data) {
-	  		
 	  		var output = "";
 			$.each(data, function() {
 				if(this.title_cnt.length > 70) { 
@@ -200,7 +199,7 @@ function json_search_contents(listStart,id,div) {
 		  	 });
 		  	if(output == "") {
 			    $("#user_list_"+id+"_show_more_loading").hide();
-			  	$(div).show();
+			  	$(div).html("Showing all").show();
 		  	}
 
 	  }	
@@ -302,7 +301,11 @@ function getUserStatisticsGraphs(user_id) {
 		  url: userStatistics+"/user/"+user_id+"/search/graphs",
 		  dataType: 'json',
 		  success: function(data) {
-			  createGraphs(user_id,data);
+			  if(data) { createGraphs(user_id,data); }
+			  else { 
+				  $("#user_list_"+user_id+"_show_graphs_loading").hide();
+				  $("#user_list_user_"+user_id+"_statistics_load_graphs").parent().html("Nothing to show").show();
+			  }
 		}	
 	});
 }

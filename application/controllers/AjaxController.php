@@ -60,20 +60,62 @@ class AjaxController extends Oibs_Controller_CustomController
     function getrecentcampaignsAction()
     {
         $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
+        $status = isset($this->params['status']) ? $this->params['status'] : 'active';
 
         $grpmodel = new Default_Model_Groups();
         $campaignModel = new Default_Model_Campaigns();
 
         // If you find (time to think of) a better way to do this, be my guest.
-    	$recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
-        $cmps_new = array();
-        foreach ($recentcampaigns as $cmp) {
-            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-            $cmp['group_name_grp'] = $grp['group_name_grp'];
-            $cmps_new[] = $cmp;
+        if ($status === 'forthcoming') {
+            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 10);
+            $cmps_new = array();
+            foreach ($recentcampaigns as $cmp) {
+                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+                $cmp['group_name_grp'] = $grp['group_name_grp'];
+                $cmps_new[] = $cmp;
+            }
+        } else if ($status === 'ended') {
+            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 10);
+            $cmps_new = array();
+            foreach ($recentcampaigns as $cmp) {
+                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+                $cmp['group_name_grp'] = $grp['group_name_grp'];
+                $cmps_new[] = $cmp;
+            }
+        } else {
+            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
+            $cmps_new = array();
+            foreach ($recentcampaigns as $cmp) {
+                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+                $cmp['group_name_grp'] = $grp['group_name_grp'];
+                $cmps_new[] = $cmp;
+            }
         }
 
     	$this->view->recentcampaigns = $cmps_new;
+    }
+
+    function getrecentgroupsAction()
+    {
+        $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
+
+        $grpmodel = new Default_Model_Groups();
+        $grpadm = new Default_Model_GroupAdmins();
+        $usrHasGrp = new Default_Model_UserHasGroup();
+        $cmpmodel = new Default_Model_Campaigns();
+
+        $grps = $grpmodel->getRecentFromOffset($offset, 10);
+        $grps_new = array();
+        foreach ($grps as $grp) {
+            $adm = $grpadm->getGroupAdmins($grp['id_grp']);
+            $grp['id_admin'] = $adm[0]['id_usr'];
+            $grp['login_name_admin'] = $adm[0]['login_name_usr'];
+            $grp['campaign_count'] = count($cmpmodel->getCampaignsByGroup($grp['id_grp']));
+            $grp['member_count'] = count($usrHasGrp->getAllUsersInGroup($grp['id_grp']));
+            $grps_new[] = $grp;
+        }
+
+    	$this->view->recentgroups = $grps_new;
     }
 
 	function getrecentcontentAction()
@@ -151,7 +193,7 @@ class AjaxController extends Oibs_Controller_CustomController
 				$newContents = array();
 				$userModel = new Default_Model_User();
 				for($i = $start; $i < $start +3; $i++) {
-					if($resultList[$i])
+					if(isset($resultList[$i]))
 						$newContents[] = $resultList[$i];
 				}
 				if(!sizeof($newContents) == 0)
@@ -201,51 +243,75 @@ class AjaxController extends Oibs_Controller_CustomController
 		if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
 		$params = $this->getRequest()->getParams();
+				
 		$userModel = new Default_Model_User();
 		$userIds = $userModel->sortAndFilterUsers($params,null,null);
 		if(!$userIds) die; 
 		
-		$top = new Oibs_Controller_Plugin_Toplist_Users();
-		$top->setUserIdList($userIds)
-			->autoSet();
-			;
+		$serializedParams = serialize($params);
+		$cacheFile = md5($serializedParams);
+		$cache = Zend_Registry::get('cache');
 		
-		if($userid) $top->addUser($userid);
-		$topList = $top->getTopList();
-		
-		$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
-        $topListCountries->setUserIdList($userIds)
-        	->fetchUserCountries()
-        	->setTopAmount()
-        	->autoSet()
-			;
-		if($userid) $topListCountries->addUser($userid);
-		$topCountry = $topListCountries->getTopList();
-
-		$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
-		$topListGroups->setUserIdList($userIds)
-						->fetchUsersInGroups()
-						->setTopAmount()
-						->autoSet()
-						;		
-		$topGroup = $topListGroups->getTopList();
-		
-		$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
-		$topListCities->setUserIdList($userIds)
+		if(!$cacheResult = $cache->load('UserTopList_'.$cacheFile)) {
+			$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
+			$topListUsers->setUserIdList($userIds)
+				->autoSet();
+				;
+			
+			$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
+	        $topListCountries->setUserIdList($userIds)
+	        	->fetchUserCountries()
+	        	->setTopAmount()
+	        	->autoSet()
+				;
+				
+			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
+			$topListGroups->setUserIdList($userIds)
+							->fetchUsersInGroups()
+							->setTopAmount()
+							->autoSet()
+							;
+			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
+			$topListCities->setUserIdList($userIds)
 						->fetchUsersWithCity()
 						->setTopAmount()
 						->autoSet()
 						;
+			$topListClasses = array(
+		        	'Users' => $topListUsers,
+		       		'Groups' => $topListGroups,
+		       		'Cities' => $topListCities,
+		        	'Countries' => $topListCountries,
+		        );
+		    $cache->save($topListClasses, 'UserTopList_'.$cacheFile);
+		}
+		else {
+			$topListClasses = $cacheResult;
+		}
+		
+		$topListUsers = $topListClasses['Users'];
+        $topListCountries = $topListClasses['Countries'];
+        $topListCities = $topListClasses['Cities'];
+        $topListGroups = $topListClasses['Groups'];
+        	
+		if($userid) $topListUsers->addUser($userid);
+		$topList = $topListUsers->getTopList();
+				
+		if($userid) $topListCountries->addUser($userid);
+		$topCountry = $topListCountries->getTopList();
+				
+		$topGroup = $topListGroups->getTopList();
+		
 		if($userid) $topListCities->addUser($userid);
 		$topCity = $topListCities->getTopList();
-		
+
 		$topListBoxes = array(
         	'Users' => $topList,
 			'Groups' => $topGroup,
 			'Cities' => $topCity,
 			'Countries' => $topCountry,
         ); 
-	
+        //print_r($topListBoxes);die;
 		$this->view->topListBoxes = $topListBoxes;
 	}
 	
@@ -260,7 +326,7 @@ class AjaxController extends Oibs_Controller_CustomController
         }
         
         $contents = array();
-		$rawcontents = $userModel->getUserContent($this->params['id_usr'], $this->params['id_cnt'], $limit);
+		$rawcontents = $userModel->getUserContent($this->params['id_usr'], array('exclude' => $this->params['id_cnt'], 'limit' => $limit));
 		foreach($rawcontents as $rawcnt)
 		{
 			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
@@ -316,35 +382,36 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function contentfavouriteAction() {
         // Get authentication
         $auth = Zend_Auth::getInstance();
+		$favouriteUserId = 0;
+		if($auth->hasIdentity()) $favouriteUserId = $auth->getIdentity()->user_id;
 		
+        $params = $this->getRequest()->getParams();
+		// get favourite method, "add" or "remove"
+        $favouriteMethod = isset($params['method']) ? $params['method'] : "NONE";
+        $id = isset($params['id_cnt']) ? $params['id_cnt'] : "0";
         // Get contents total favourites
         $userFavouritesModel = new Default_Model_UserHasFavourites();
+        $contentModel = new Default_Model_Content();
         $totalFavourites = $userFavouritesModel->getUsersCountByFavouriteContent($id);
         $totalFavourites = $totalFavourites[0]['users_count_fvr'];
-        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$auth->getIdentity()->user_id);
-
-        /*
-         * favouritemethod comes from parameters sent by
-         * ajax function (ajaxLoad_favourite(method)) in index.phtml in /view/.
-         * this function gets parameter "method" (add/remove) from onClick event that is in index.ajax.phtml.
-         * if this onClick event is activated by clicking "heart" (icon_fav_on/off) icon in content view page,
-         * it runs the ajaxLoad_favourite(method) function which sends parameter "favourite" (add/remove) to
-         * this viewController which then handles the adding or removing the content from favourites.
-         */
-        if($favouriteMethod != "NONE" && $auth->hasIdentity()) {
-        	$favouriteUserId = $auth->getIdentity()->user_id;
+        $isFavourite = $userFavouritesModel->checkIfContentIsUsersFavourite($id,$favouriteUserId);
+		$isOwner = $contentModel->checkIfUserIsOwner($id,$favouriteUserId);
+		
+        if($favouriteMethod != "NONE" && $auth->hasIdentity() && !$isOwner) {
         	//If favourite method was "add", then add content to user favourites
         	if($favouriteMethod == "add" && !$isFavourite) 
         		{
         		if($userFavouritesModel->addContentToFavourites($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
+        			$isFavourite = true;
+        			$totalFavourites++;
         		} else $this->flash('favourite-adding-failed',$baseUrl.'/en/msg');
         	} 
         	//If favourite method was "remove" then remove content from user favourites.
         	elseif ($favouriteMethod == "remove" && $isFavourite)
         		{
         		if($userFavouritesModel->removeUserFavouriteContent($id,$favouriteUserId)) {
-        			$this->view->favouriteMethod = $favouriteMethod;
+        			$isFavourite = false;
+        			$totalFavourites--;
         		} else $this->flash('favourite-removing-failed',$baseUrl.'/en/msg');
         	} else unset($favouriteMethod);
         }
@@ -353,7 +420,7 @@ class AjaxController extends Oibs_Controller_CustomController
         	'total_favourites' 	=> $totalFavourites,
         	'is_favourite'		=> $isFavourite,
         );
-        
+        $thie->view->userid = $favouriteUserId;
         $this->view->favourite = $favourite;
 	}
 	
@@ -410,9 +477,28 @@ class AjaxController extends Oibs_Controller_CustomController
 		$this->_helper->viewRenderer->setNoRender(true);
 		if (!isset($this->params['type']) || !isset($this->params['id'])) return; 
 		$reader = new Oibs_Controller_Plugin_RssReader();
+		//$admin = groupadmins->userIsAdmin
 		$data = $reader->read($this->params['id'], $this->params['type']);
+		$auth = Zend_Auth::getInstance();
+
+		$isAdmin = false;
+		if ($auth->hasIdentity()) $isAdmin = $reader->isAdmin($auth->getIdentity()->user_id);
+		
 		//echo strlen(json_encode($data));
 		//echo strlen($this->view->partial('partials/rssreader.phtml', array("data" => $data)));
-		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data));
+		
+		echo $this->view->partial('partials/rssreader.phtml', array("data" => $data, "admin" => $isAdmin, 'link' => $reader->getEditLink()));
+	}
+	
+	public function validaterssAction() {
+		$this->_helper->viewRenderer->setNoRender(true);
+		$params = $this->getRequest()->getParams();
+	   	try {
+	    	Zend_Feed_Reader::import($params['url']);
+	    	echo "1";
+    	} catch (Exception $e) {
+    		echo "0";
+    	}
+		
 	}
 }

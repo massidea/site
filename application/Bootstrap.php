@@ -169,6 +169,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                                          );
                                          
             Zend_Registry::set('cache', $cache);
+            
+            // cache with short lifetime
+            $frontendShort = array('lifetime' => 600,
+                              'automatic_serialization' => true
+                              );
+            
+            $backendShort = array('cache_dir' => '../tmp/',);
+            
+            $sCache = Zend_Cache::factory('core',
+                                         'File',
+                                         $frontendShort,
+                                         $backendShort
+                                         );
+                                         
+            Zend_Registry::set('short_cache', $sCache);
         }
     }
     

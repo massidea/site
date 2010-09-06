@@ -238,11 +238,17 @@ class AccountController extends Oibs_Controller_CustomController
 
         $this->view->user = $data;
 		$id = $data['id_usr'];
+		
+		$topListClasses = $user->getUserTopList();
+	    $topListUsers = $topListClasses['Users'];
+        
+        if($id != 0) $topListUsers->addUser($id);
+		$topList = $topListUsers->getTopList();
 
         // Get public user data from UserProfiles Model
 		$userProfile = new Default_Model_UserProfiles();
         $dataa = $userProfile->getPublicData($id);
-        $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
+        if (isset($dataa['biography'])) $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
 
         // User weblinks
         $userWeblinksModel = new Default_Model_UserWeblinks();
@@ -284,7 +290,7 @@ class AccountController extends Oibs_Controller_CustomController
         */
         // Get content user has released
         $type = isset($params['type']) ? $params['type'] : 0 ;
-        $contentList = $user->getUserContent($data['id_usr']);
+
         $temp = array();
 
         // Initialize content counts
@@ -297,17 +303,19 @@ class AccountController extends Oibs_Controller_CustomController
 
         // Count amount of content user has published
         // and check unpublished so only owner can see it.
-        foreach ($contentList as $k => $c) {
+        $cntModel = new Default_Model_Content();
+        $contentList = array();
+        foreach ($user->getUserContent($data['id_usr'], array('order' => 'DESC')) as $k => $c) {
             // If user not logged in and content not published,
             // remove content from list
             if (!$auth->hasIdentity() && $c['published_cnt'] == 0) {
-                unset($contentList[$k]);
+                //unset($contentList[$k]);
             // Else if user logged in and not owner of unpublished content,
             // remove content from list
             } else if (isset($c['id_usr']) && $auth->hasIdentity() &&
                        $c['id_usr'] != $auth->getIdentity()->user_id &&
                        $c['published_cnt'] == 0) {
-                unset($contentList[$k]);
+                //unset($contentList[$k]);
             // Else increase content counts and sort content by content type
             } else {
                 if (isset($c['key_cty'])) {
@@ -326,11 +334,14 @@ class AccountController extends Oibs_Controller_CustomController
                     // Increase content type count
                     $dataa['contentCounts'][$c['key_cty']]++;
                 }
+                if($c['published_cnt'] == 0) {
+             	   $dataa['contentCounts']['user_edit']++;
+            	}
+            	$c['hasCntLinks'] = $cntModel->hasCntLinks($c['id_cnt']);
+          		$c['hasCmpLinks'] = $cntModel->hasCmpLinks($c['id_cnt']);
+            	$contentList[] = $c;
             }
 
-            if($c['published_cnt'] == 0) {
-                $dataa['contentCounts']['user_edit']++;
-            }
         } // end foreach
 
         // If user is logged in, and viewing self; allow edit
@@ -342,45 +353,10 @@ class AccountController extends Oibs_Controller_CustomController
             }
         }
 
-        if ($auth->hasIdentity() && $data['id_usr'] == $auth->getIdentity()->user_id) {
-        	$favouriteModel = new Default_Model_UserHasFavourites();
-        	$favouriteType = isset($params['favourite']) ? $params['favourite'] : 0;
-        	$favouriteList = $user->getUserFavouriteContent($data['id_usr']);
-
-        	// Initialize Favourite counts
-        	$dataa['favouriteCounts']['totalCount'] = 0;
-
-        	$dataa['favouriteCounts']['problem'] = 0;
-        	$dataa['favouriteCounts']['finfo'] = 0;
-        	$dataa['favouriteCounts']['idea'] = 0;
-
-        	foreach($favouriteList as $k => $favourite) {
-        		/*
-        		 * If content Id doesn't exist anymore:
-        		 * unset from Favouritelist and remove all lines from user_has_favourites table that
-        		 * refers to this content id
-        		 */
-        		if (isset($favourite['id_cnt_fvr']) && $favourite['id_cnt'] == '') {
-                	unset($favouriteList[$k]);
-                	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
-            	}
-
-        	    if (isset($favourite['key_cty'])) {
-
-                    // Increase total count
-                    $dataa['favouriteCounts']['totalCount']++;
-
-                    // Set content type count to 0 if count is not set
-                    if (!isset($dataa['favouriteCounts'][$favourite['key_cty']] )) {
-                        $dataa['favouriteCounts'][$favourite['key_cty']] = 0;
-                    }
-
-                    // Increase content type count
-                    $dataa['favouriteCounts'][$favourite['key_cty']]++;
-                }
-        	}
+       // if ($auth->hasIdentity() && $data['id_usr'] == $auth->getIdentity()->user_id) {
+        	$myFavourites = $this->getFavouriteRows($data['id_usr']);
         	//print_r($dataa);print_r($favouriteList);die;
-        }
+        //}
         //Zend_Debug::dump("" === null);
 		//Zend_Debug::dump($dataa['contentCounts']['idea']);
 		//Zend_Debug::dump($dataa['contentCounts']['idea'] == "");
@@ -395,7 +371,7 @@ class AccountController extends Oibs_Controller_CustomController
 			->addTab("Challenges", "problem", "challenges", $dataa['contentCounts']['problem'])
 			->addTab("Ideas", "idea", "ideas", $dataa['contentCounts']['idea'])
 			->addTab("Visions", "finfo", "visions", $dataa['contentCounts']['finfo']);
-			
+		//Zend_Debug::dump($dataa); die;
 		if ($dataa['contentCounts']['user_edit'] && $userEdit) {
 			$box->addTab("Saved", "user_edit", "saved", $dataa['contentCounts']['user_edit']);
 		}
@@ -410,16 +386,22 @@ class AccountController extends Oibs_Controller_CustomController
 		
 		$views = new Default_Model_ContentViews();
 		$myViews = $this->getViewRows($data['id_usr']);
+		$myViews = array_merge($myViews,$myFavourites['contents']);
+		//print_r($myViews);die;
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box	->setHeader("My Views")
+		$box	->setHeader("My Views & Favourites")
 				->setName("my-views")
 				->setClass("right")
-				->addTab("Views", "views", "all selected");			
+				->addTab("Views", "views", "views selected")
+				->addTab("Updated","updated","fvr_updated",$myFavourites['counts']['updated'])
+				->addTab("Challenges","problem","fvr_problem",$myFavourites['counts']['problem'])
+				->addTab("Ideas","idea","fvr_idea",$myFavourites['counts']['idea'])
+				->addTab("Visions","finfo","fvr_finfo",$myFavourites['counts']['finfo']);
 		$boxes[] = $box;
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box->setHeader("My Reads")
+		$box->setHeader("My Readers")
 			->setClass("left")
 			->setName("my-reads")
 			->addTab("Readers", "readers", "all selected");
@@ -429,36 +411,27 @@ class AccountController extends Oibs_Controller_CustomController
 		/*Box for user profile custom layout settings*/
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box->setHeader("Custom Layout")
-			->setClass("center")
+			->setClass("wide")
 			->setName("my-custom-layout")
-			->addTab("Fonts", "fonts", "all selected") //Header, type, class, extra
-			->addTab("Colors", "colors", "colors")
-			->addTab("Background", "background", "background");
+			->addTab("Customize", "fonts", "all selected") //Header, type, class, extra
+			/*->addTab("Colors", "colors", "colors")
+			->addTab("Background", "background", "background")*/;
 		$boxes[] = $box;
 		
-		$customLayoutForm = new Default_Form_AccountCustomLayoutSettings();
-			
+		$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm();
         // Set to view
+        
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
         $this->view->authorContents = $contentList;/*$temp*/
         $this->view->boxes = $boxes;
         $this->view->myViews = $myViews;
         $this->view->myReaders = $myReaders;
-        //$this->view->authorFavourites = $favouriteList;
         $this->view->user_edit = $userEdit;
+        $this->view->topList = $topList;
         $this->view->type = $type;
         $this->view->customLayoutSettingsForm = $customLayoutForm;
-
-        /* Waiting for layout that is maybe coming 
-        // MyViews
-        $viewsModel = new Default_Model_ContentViews();
-        Zend_Debug::dump($viewsModel->getUserViewedContents($data['id_usr']));
-        
-        // MyReaders
-        Zend_Debug::dump($user->getUsersViewers($data['id_usr']));
-        die;*/
-        
+       
         $group_model = new Default_Model_UserHasGroup();
         $usergroups = $group_model->getGroupsByUserId($id);
 
@@ -912,7 +885,35 @@ class AccountController extends Oibs_Controller_CustomController
          $code .= substr($possible, mt_rand(0, strlen($possible)-1), 1);
       } // end for
       return $code;
-   } // end of generateCode()
+	} // end of generateCode()
+
+	/**
+	 * Generate Api key -action
+	 * 
+	 */
+	public function apikeyAction()
+	{
+		$auth = Zend_Auth::getInstance();
+		$hasApiKey = false;
+		$apiKey = null;
+		if($auth->hasIdentity())
+		{
+			$id = $auth->getIdentity()->user_id;
+			$model = new Default_Model_UserApiKey();
+			$hasApiKey = $model->hasApiKey($id);
+			if(!$hasApiKey && $this->_hasParam('generate'))
+			{
+				$apiKey = $model->addApiKey($id, true);
+				$hasApiKey = true;
+			}
+			else
+			{
+				$apiKey = $model->getApiKeyById($id);
+			}
+		}
+		$this->view->hasApiKey = $hasApiKey;
+		$this->view->apikey = $apiKey;
+	}
 
     /**
     *    fetch forgotten password page:
@@ -1278,14 +1279,19 @@ class AccountController extends Oibs_Controller_CustomController
         	"comments" => $this->view->translate('userlist-orderlist-comments',$listName),
 		);
 		
+		$userCountries = null;
+		$userCities= null;
+		
         $userLocations = $this->getAllCitiesAndCountries();
-        $userCities = json_encode($userLocations['cities']);
-        $userCountries = json_encode($userLocations['countries']);
+        if(isset($userLocations['countries'])) $userCountries = json_encode($userLocations['countries']);
+        if(isset($userLocations['cities'])) $userCities = json_encode($userLocations['cities']);
 
         $formData['countries'][] = $this->view->translate('userlist-filter-country-all');
-        foreach($userLocations['countries'] as $country) {
-        	$formData['countries'][$country['countryIso']] = $country['name'];
-        }        
+        if(isset($userLocations['countries'])) {
+	        foreach($userLocations['countries'] as $country) {
+	        	$formData['countries'][$country['countryIso']] = $country['name'];
+	        }
+        }       
         
         $pat_sql = array("%","_");
         $pat_def = array("*","?");
@@ -1297,7 +1303,7 @@ class AccountController extends Oibs_Controller_CustomController
         
         $userModel = new Default_Model_User();
         
-        //variable initializings (to avoid notice errors :p)
+        //variable initializations (to avoid notice errors :p)
         $pageCount = null;
         $userContents = null;
         $listSize = null;
@@ -1344,61 +1350,23 @@ class AccountController extends Oibs_Controller_CustomController
         	$userid = null;
 			if($auth->hasIdentity()) $userid = $auth->getIdentity()->user_id;
 			
-        	$cache = Zend_Registry::get('cache');
+        	$topListClasses = $userModel->getUserTopList();
         	
-        	$top = new Oibs_Controller_Plugin_Toplist_Users();
-
-			if(!$resultList = $cache->load('UserTopList')) {
-				
-				$top->setLimit(10)
-					->autoSet()
-					;
-
-				$cache->save($top, 'UserTopList');
-	
-			} else {
-				$top = $resultList;
-			}
+        	$topListUsers = $topListClasses['Users'];
+        	$topListCountries = $topListClasses['Countries'];
+        	$topListCities = $topListClasses['Cities'];
+        	$topListGroups = $topListClasses['Groups'];
+        	
+        	if($userid) $topListUsers->addUser($userid);
+			$topList = $topListUsers->getTopList();
 			
-			if($userid) $top->addUser($userid);
-			$topList = $top->getTopList();
-
-			//print_r($top->test());die;
-			//print_r($topList);die;
-
-        	$topNames = array();
-        	foreach($topList as $top) {
-        		$topNames[] = $top['name'];
-        	}
-        	$topNames[] = "Amount";
-        	
-        	$topListCountries = new Oibs_Controller_Plugin_Toplist_Countries();
-	        $topListCountries->fetchUserCountries()
-	        ->setTopAmount()
-	        	->autoSet()
-				;
 			if($userid) $topListCountries->addUser($userid);
 			$topCountry = $topListCountries->getTopList();
-
 			
-			$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
-			$topListGroups->fetchUsersInGroups()
-			->setTopAmount()
-							->autoSet()
-							;
-							
-							
-			$topGroup = $topListGroups->getTopList();
-			
-			
-			$topListCities = new Oibs_Controller_Plugin_Toplist_Cities();
-			$topListCities->fetchUsersWithCity()
-			->setTopAmount()
-							->autoSet()
-							;
 			if($userid) $topListCities->addUser($userid);
 			$topCity = $topListCities->getTopList();
 			
+			$topGroup = $topListGroups->getTopList();
         }
         
         if(!$topNames) {
@@ -1805,6 +1773,7 @@ class AccountController extends Oibs_Controller_CustomController
 	    	$this->gtranslate->setLangFrom($post['language_cnt']);
 	    	$translang = $this->gtranslate->getLangPair();
 
+	    	$recentposts[$i]['class'] = 'views';
 	    	$recentposts[$i]['original'] = $post;
 	    	$recentposts[$i]['translated'] = $this->gtranslate->translateContent($post);
 	    	$recentposts[$i]['original']['tags'] = $tags;
@@ -1815,6 +1784,85 @@ class AccountController extends Oibs_Controller_CustomController
 	    	$i++;
     	}
     	return $recentposts;
+    }
+    
+    private function getFavouriteRows($id_usr) {
+   			$favouriteModel = new Default_Model_UserHasFavourites();
+   			$contentHasTagModel = new Default_Model_ContentHasTag();
+   			$user = new Default_Model_User();
+        	$favouriteList = $user->getUserFavouriteContent($id_usr);
+
+        	// Initialize Favourite counts
+        	$dataa['favouriteCounts'] = null;
+        	$dataa['favouriteCounts']['totalCount'] = 0;
+        	$dataa['favouriteCounts']['updated'] = 0;
+        	$dataa['favouriteCounts']['problem'] = 0;
+        	$dataa['favouriteCounts']['finfo'] = 0;
+        	$dataa['favouriteCounts']['idea'] = 0;
+
+        	foreach($favouriteList as $k => $favourite) {
+        		/*
+        		 * If content Id doesn't exist anymore:
+        		 * unset from Favouritelist and remove all lines from user_has_favourites table that
+        		 * refers to this content id
+        		 */
+        		if (isset($favourite['id_cnt_fvr']) && $favourite['id_cnt'] == '') {
+                	unset($favouriteList[$k]);
+                	$favouriteModel->removeAllContentFromFavouritesByContentId($favourite['id_cnt_fvr']);
+                	continue;
+            	}
+
+        	    if (isset($favourite['key_cty'])) {  
+                    $dataa['favouriteCounts']['totalCount']++; // Increase total count
+                    $dataa['favouriteCounts'][$favourite['key_cty']]++; // Increase content type count
+                }
+                
+                if(isset($favourite['last_checked']) && isset($favourite['modified_cnt'])) {
+                	if(strtotime($favourite['last_checked']) < strtotime($favourite['modified_cnt'])) {
+                		$dataa['favouriteCounts']['updated']++;
+                		$favouriteList[$k] = array_merge($favourite,array('updated' => '1'));
+                	}
+                	else $favouriteList[$k] = array_merge($favourite,array('updated' => '0'));
+                }  
+        	}
+
+        	$newList = array(
+        		'counts' => array(
+        			'total' => $dataa['favouriteCounts']['totalCount'],
+        			'updated' => $dataa['favouriteCounts']['updated'],
+        			'problem' => $dataa['favouriteCounts']['problem'],
+        			'finfo'	=> $dataa['favouriteCounts']['finfo'],
+        			'idea'	=> $dataa['favouriteCounts']['idea']
+        		),
+        		'contents' => array()
+        	);
+        	
+        	$k = 0;
+        	foreach($favouriteList as $key => $favourite) {
+        	
+        	    $tags = $contentHasTagModel->getContentTags($favourite['id_cnt']);
+
+		    	// Action helper for define is tag running number divisible by two
+				$tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
+	
+		    	$this->gtranslate->setLangFrom($favourite['language_cnt']);
+		    	$translang = $this->gtranslate->getLangPair();
+	
+		    	
+		    	$newList['contents'][$k]['class'] = "fvr_".$favourite['key_cty'];
+		    	if($favourite['updated'] === "1") 
+		    		$newList['contents'][$k]['class'] = "fvr_updated ".$newList['contents'][$k]['class'];
+		    	$newList['contents'][$k]['original'] = $favourite;
+		    	$newList['contents'][$k]['translated'] = $this->gtranslate->translateContent($favourite);
+		    	$newList['contents'][$k]['original']['tags'] = $tags;
+		    	$newList['contents'][$k]['translated']['tags'] = $tags;
+		    	$newList['contents'][$k]['original']['translang'] = $translang;
+		    	$newList['contents'][$k]['translated']['translang'] = $translang;
+		    	$k++;
+        	}
+        	
+        	return $newList;
+        	
     }
     
     public function onlineAction() {

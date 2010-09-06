@@ -8,22 +8,19 @@
 
 	<li class="all">
 	<div class="reader_user">
-			<div class="photo"><a href="<?php echo $url_user; ?>">
+			<div class="photo" style="float:left"><a href="<?php echo $url_user; ?>">
 				<img src="<?php echo $this->url(array('controller' => 'account',
 	                            'action' => 'profilethumb',
-	                            'id' => $reader['id_usr_vws'],
+	                            'id' => $reader['id_usr'],
 	                            'language' => $this->language,
 	                            'thumb' => 'true'),
-	                            'lang_default', true); ?>" /> </a>
+	                            'lang_default', true); ?>" /></a>
         	</div>
-	        <div class="context">
-				<a href="<?php echo $url_user; ?>">
-					<?php echo $reader['login_name_usr']; ?></a>
-	            </p>  
+	        <div class="context" style="float: left">
+				<p><a href="<?php echo $url_user; ?>"><?php echo $reader['login_name_usr']; ?></a></p>
 			</div>
-		</div>
+			<div class="clear"></div>
+	</div>
 	</li> 
-	 
 	<?php endforeach; ?>
-
 </ul>

@@ -11,6 +11,7 @@
                           }
                     ?>
                     <?php
+                    
                     $contentclass = '';
 
                     if ($content['key_cty'] === "idea") {
@@ -56,7 +57,7 @@
                                                                     'content_publish', true); ?>')">
                                         Publish
                                     </a>
-                                </b> |
+                                </b>
                                 <?php endif; ?>
                                 | <b>
                                     <a href="#" onclick="deleteconfirmation('<?php
@@ -66,21 +67,21 @@
                                         Delete
                                     </a>
                                 </b>
-                                <?php if (isset($content['cntHasCntCountParent']) && ($content['cntHasCntCountParent'] > 0 || $content['cntHasCntCountChild'] > 0)): ?>
+                                <?php if ($content['hasCntLinks']): ?>
                                 | <b>
                                     <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
                                                                          'language' => $this->language),
                                                                    'unlinkcontent', true); ?>">
-                                        Edit content links (<?php echo ($content['cntHasCntCountParent'] + $content['cntHasCntCountChild']); ?>)
+                                        Edit content links
                                     </a>
                                 </b>
                                 <?php endif; ?>
-                                <?php if (isset($content['cmpHasCntCount']) && $content['cmpHasCntCount'] > 0): ?>
+                                <?php if ($content['hasCmpLinks']): ?>
                                 | <b>
                                     <a href="<?php echo $this->url(array('relatestoid' => $content['id_cnt'],
                                                                  'language' => $this->language),
                                                                  'unlinkcampaign', true); ?>">
-                                        Edit campaign links (<?php echo $content['cmpHasCntCount']; ?>)
+                                        Edit campaign links
                                     </a>
                                 </b>
                                 <?php endif; ?>
