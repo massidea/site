@@ -48,6 +48,4 @@ No changes on the DB side, you can use the old SQL schemas. Repository folder fo
 5. 	Last but not least. I did this migration in less than 3 days, so there might some mistakes in the migrated code, I'm just a human being. :)  Just let 	me know, and I'll take a look at it. Also, test the code actively and when we have killed all bugs, we can start developing on this new version of 	Zend Framework. 
 
 
-Alright, these are the main points that came into my mind while doing the migration. If you have any specific questions, just ask in the forums or come chat with me on #dev.oibs in freenode.net.
-
-See ya!
+Alright, these are the main points that came into my mind while doing the migration. If you have any specific questions, just ask in the flowdock.
