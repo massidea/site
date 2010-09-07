@@ -1068,16 +1068,14 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 .popup_close {
     padding: 0px;
-    width: 590px;
-    position: fixed;
-    margin-left: auto;
-    margin-right: auto;
+    width: 50px;
+    position: relative;
+	float: right;
 }
 
 div.privacy {
     font-family: Arial, Times New Roman;
     color: #232323;
-    clear: both;
     padding-top: 10px;
 }
 div.privacy h1 { margin: 0px 0px 9px 0px; font-size: 23px; }
