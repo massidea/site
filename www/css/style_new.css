@@ -52,14 +52,15 @@ input.submit-button {
 	margin:-10px 0px 0px 8px; padding:2px; }
 
 /* General --> Scrollbox */
-#content .scroll-box { height:300px;; border:1px solid #ccc; overflow:auto; margin:5px 0px 15px 0px; }
+#content .scroll-box { height:300px; border:1px solid #ccc; overflow:auto; margin:0px 0px 15px 0px; }
 #content .scroll-box p { margin-left:15px; }
 
 #content .scroll-box ul li {
 	margin:8px 10px 0px 15px;
-	padding:0px 0px 10px 0px;
+	padding-bottom:10px;
 	list-style:none;
-	background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom; }
+	border-bottom: 1px dotted #CCC;
+	}
 
 #content .scroll-box ul li p { display:block; padding:2px 2px 2px 10px; margin:0px; }
 #content .scroll-box ul li span.left { width:200px !important; margin:3px 0px 0px 10px; }
@@ -592,50 +593,43 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 #content #user-page #activity #content_type ul li,
 #content #group-page #activity #content_type ul li{ list-style:none; float:left; margin:0px 0px -1px 10px; }
 
-#content #user-page #activity #content_type ul li a,
-#content #user-page #activity #content_type ul li a:visited,
+#content #user-page #activity #content_type ul li,
 #content #group-page #activity #content_type ul li a,
 #content #campaign-page #activity #content_type ul li a:visited {
-	display:bock; padding:5px; border:1px solid #ccc; }
+	display:block; padding:5px; border:1px solid #ccc; }
 
-#content #user-page #activity #content_type ul li.selected a,
-#content #user-page #activity #content_type ul li.selected a:visited,
+#content #user-page #activity #content_type ul li.selected,
 #content #group-page #activity #content_type ul li.selected a,
 #content #campaign-page #activity #content_type ul li.selected a:visited{
 	border-bottom:1px solid #fff; }
 
-#content #user-page #activity #content_type ul li.all a,
-#content #user-page #activity #content_type ul li.all a:visited,
+#content #user-page #activity #content_type ul li.all,
 #content #group-page #activity #content_type ul li.all a,
 #content #campaign-page #activity #content_type ul li.all a:visited{
 	background:#fff; color:#000; }
 
-#content #user-page #activity #content_type ul li.challenges a,
-#content #user-page #activity #content_type ul li.challenges a:visited,
+#content #user-page #activity #content_type ul li.challenges ,
 #content #group-page #activity #content_type ul li.challenges a,
 #content #campaign-page #activity #content_type ul li.challenges a:visited{
 	background:#D21034; color:#fff; }
 
-#content #user-page #activity #content_type ul li.ideas a,
-#content #user-page #activity #content_type ul li.ideas a:visited,
+#content #user-page #activity #content_type ul li.ideas ,
 #content #group-page #activity #content_type ul li.ideas a,
 #content #campaign-page #activity #content_type ul li.ideas a:visited {
 	background:#4B9B07; color:#fff; }
 
-#content #user-page #activity #content_type ul li.visions a,
-#content #user-page #activity #content_type ul li.visions a:visited,
+#content #user-page #activity #content_type ul li.visions,
 #content #group-page #activity #content_type ul li.visions a,
 #content #campaign-page #activity #content_type ul li.visions a:visited{
 	background:#FFC726; color:#fff; }
 
-#content #user-page #activity #content_type ul li.ended a,
-#content #user-page #activity #content_type ul li.ended a:visited,
+#content #user-page #activity #content_type ul li.ended,
 #content #group-page #activity #content_type ul li.ended a,
 #content #campaign-page #activity #content_type ul li.ended a:visited{
 	background:#ccc; color:#000; }
 
 /** User GUI */
-#content #user-page #activity .right { margin-top:-1px; }
+#content #user-page #activity .right { ; }
 #content #user-page #activity .right h2 {
 	font-size:1.10em;
 	background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;

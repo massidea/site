@@ -5,15 +5,14 @@
                 <ul>
                 	<?php foreach ($this->box->getTabs() as $tab): ?>
 						<li class="<?php echo $tab['class'];?>">
-							<a>
-								<strong><?php echo $tab['header']; ?></strong>
-								<?php if($tab['extraText'] !== ""):?>
-									(<?php echo $tab['extraText']; ?>)
-								<?php endif;?>
-							</a>
+							<strong><?php echo $tab['header']; ?></strong>
+							<?php if($tab['extraText'] !== ""):?>
+								(<?php echo $tab['extraText']; ?>)
+							<?php endif; ?>
 						</li>
                     <?php endforeach; ?>
                 </ul>
+
             </div>
 			<div class="clear"></div>
             <!-- Box Contents -->

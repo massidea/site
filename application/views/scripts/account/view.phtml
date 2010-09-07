@@ -43,14 +43,13 @@ $(document).ready(function() {
 		$(this).css('cursor', 'pointer');
 	});
 	
-	$("#activity > .left > #content_type > ul > li > a, #activity > .right > #content_type > ul > li > a").click(function (event) {		
-		event.preventDefault();
-		if ($(this).parent().hasClass('selected')) return;
-		$(this).parent().siblings().removeClass('selected');
-		$(this).parent().removeClass('selected');
-		classi = $(this).parent().attr('class'); 
-		$(this).parent().addClass('selected');
-		box = $(this).parent().parent().parent().parent().attr('id');
+	$("#activity > .left > #content_type > ul > li, #activity > .right > #content_type > ul > li").click(function (event) {		
+		if ($(this).hasClass('selected')) return;
+		$(this).siblings().removeClass('selected');
+		$(this).removeClass('selected');
+		var classi = $(this).attr('class'); 
+		$(this).addClass('selected');
+		var box = $(this).parent().parent().parent().attr('id');
 
 		$("#" + box + " > .scroll-box > ul > li").each(function() {
 			curClass =$(this).attr('class');

@@ -427,3 +427,7 @@ p#replying_to {
 .campaign_list_paragraph strong {
     font-size: 14px;
 }
+
+#user-page #activity DIV#content_type {
+	margin-bottom: -3px;
+}
