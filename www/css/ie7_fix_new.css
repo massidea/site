@@ -72,6 +72,13 @@
 
 #content #content-page-additional-functions #linking-contents ul li strong { float:right; margin-top:-17px;}
 	
-#my_groups .scroll-box ul li { width:155px;}
+#my_groups .scroll-box ul li { width:155px; }
+#my-reads .scroll-box ul li { width: 180px !important; }
+.scroll-box ul li .user_content_row {
+	width: 460px !important;	
+}
+.scroll-box ul li .user_summary_list_without_stats {
+	width: 390px !important;
+}
 
 #backdrop { filter:alpha(opacity=65) !important;zoom:1 !important; }

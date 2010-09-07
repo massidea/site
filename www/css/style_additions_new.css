@@ -110,7 +110,7 @@ background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom;}
 
 #my-reads .scroll-box ul li {
 	margin: 5px 5px 5px 5px;
-	padding: 0;
+	padding-bottom: 5px;
 }
 
 .reader_user .photo {

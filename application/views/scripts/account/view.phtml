@@ -44,13 +44,14 @@ $(document).ready(function() {
 	});
 	
 	$("#activity > .left > #content_type > ul > li > a, #activity > .right > #content_type > ul > li > a").click(function (event) {		
-		//event.preventDefault();
-
+		event.preventDefault();
+		if ($(this).parent().hasClass('selected')) return;
 		$(this).parent().siblings().removeClass('selected');
 		$(this).parent().removeClass('selected');
 		classi = $(this).parent().attr('class'); 
 		$(this).parent().addClass('selected');
 		box = $(this).parent().parent().parent().parent().attr('id');
+
 		$("#" + box + " > .scroll-box > ul > li").each(function() {
 			curClass =$(this).attr('class');
 			if( !$(this).hasClass(classi) && !$(this).hasClass('popup')) {
@@ -132,13 +133,13 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
             
             <li>
             	<ul class="user_profile_toplist">
-	            <li><strong>User ranking in:</strong><a href="#" onClick="return false;" style="float:right;" id="user_profile_toplist_title">Rank</a></li>
+	            <li class="clear"><strong style="float: left">User ranking in:</strong><a href="#" onClick="return false;" style="float:right;" id="user_profile_toplist_title">Rank</a></li>
 	            	<?php 
 	            	foreach($this->topList as $key => $value) :
 	            	 $rank = $value['addedUsers'][0]['rank']+1; 
 	            	 if($rank != 0) $points = $value['addedUsers'][0]['value'];
 	            	 if($rank == 0) { $rank = "Not ranked"; $points = "Not ranked"; } ?>
-	            		<li><strong><?php echo $value['title']; ?>: </strong><span class="user_profile_toplist_rank"><?php echo $rank; ?></span><span class="user_profile_toplist_points"><?php echo $points; ?></span></li>
+	            		<li class="clear"><strong style="float:left"><?php echo $value['title']; ?>: </strong><span class="user_profile_toplist_rank"><?php echo $rank; ?></span><span class="user_profile_toplist_points"><?php echo $points; ?></span></li>
 	            	<?php endforeach; ?>
 	            </ul>
             </li>
