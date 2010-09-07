@@ -17,6 +17,7 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 ** AFTER YOU PUSH OUR CHANGES TO GITHUB. SEND PULL REQUEST TO ACCOUNT: massidea **
 ![GitHub - Pull request](http://www.massidea.org/wiki/images/e/ec/Pull_request.png "")
 
+** And please, add issue to pull request.
 
 ## Migration notes (Old Migration notes.txt)
 | Zend FW 1.7.4 to 1.9.0 Migration notes by Tuomas Valtanen |  
