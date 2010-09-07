@@ -48,12 +48,12 @@
 	width: 390px !important;
 }
 
-.left .scroll-box {
+#user-page .left .scroll-box {
 	width: 200px;
 	float: left;
 }
 
-.right .scroll-box {
+#user-page .right .scroll-box {
 	width: 500px;
 	float: left;	
 }
