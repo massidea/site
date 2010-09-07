@@ -204,7 +204,8 @@ $(document).ready(function() {
                 <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
 	           <div id="content_view_favourite" style="clear: both;"></div>
 	     <?php endif; ?>
-                <div style="clear: both;">
+	     <div class="clear"></div>
+                <div style="float: left">
 	                <?php if($this->contentData['language_cnt'] != $this->gtranslateLangPair['to']): ?>
 	                	<?php if($this->isTranslated): ?>
 		                	<?php echo $this->translate('content-view-translated-from') . "<strong>" .$this->languageName . "</strong>. "; ?>
@@ -219,7 +220,7 @@ $(document).ready(function() {
 		                <?php endif; ?>
 	                <?php endif;?>
 	                		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
-
+	         </div>
         	<div class="user_content_edit">
         		<a href="#" onClick="return false;">Manage content</a>
         		<ul>
@@ -241,7 +242,7 @@ $(document).ready(function() {
                     </li>
                                                          
         		</ul>
-			</div>
+		
 		<?php endif; ?>
                 </div>
             </div>
