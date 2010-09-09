@@ -35,8 +35,11 @@ more = false;
 
 function expandCollapse(type) {
 	var target = "#content_view_"+type+"_related";
+	var expandButton = ".expand_"+type+"_related";
+	$(expandButton).unbind('click');
 	$(target).slideToggle('normal', function() {
-		$.cookie(type, $(target).is(':hidden') ? 'none' : 'block'); 
+		$.cookie(type, $(target).is(':hidden') ? 'none' : 'block');
+		$(expandButton).bind('click', function () { expandCollapse(type); }); 
 		setImage(type);
 	});
 }
@@ -64,8 +67,8 @@ function ajaxLoad_moreRelated(type, more){
 	var data = new Array();
 	if (more) { 
 		data = { 'more': '1' };
-	} else { 
-		$(expandButton).bind('click', function () { expandCollapse(type); }); 
+	} else { // Only done once when loading page
+		$(expandButton).bind('click', function () { expandCollapse(type); });
 	}
 	
 	$.ajax({

@@ -398,7 +398,7 @@
 	} 
 	
 	private function getBoxStates() {
-		$defaultState = 'none';
+		$defaultState = 'block';
 		$states = array (
 			'user' => isset($_COOKIE['user']) ? $_COOKIE['user'] : $defaultState,
 			'content' => isset($_COOKIE['content']) ? $_COOKIE['content'] : $defaultState 
