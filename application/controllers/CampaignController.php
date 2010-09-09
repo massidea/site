@@ -34,7 +34,9 @@ class CampaignController extends Oibs_Controller_CustomController
         $logged_in = $auth->hasIdentity();
 
         $this->view->logged_in = $logged_in;
-        $this->view->groups = $grps_new;
+
+//	FIXME: Notice: Undefined variable: grps_new in /home/iiuusit/massidea/application/controllers/CampaignController.php on line 37
+//      $this->view->groups = $grps_new;
     }
     
     /**

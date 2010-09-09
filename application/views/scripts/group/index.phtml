@@ -25,11 +25,11 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
             'controller' => 'group',
             'action'     => 'create',
             'language'   => $this->language
-        ), 'lang_default', true);
+        ),  'lang_default', true);
     ?>
 
     <?php if ($this->logged_in): ?>
-    <h3 style="float:right; margin-right:20px;"><a href="<?php echo $addgrpurl; ?>">&gt; Create new group</a></h3>
+	<h3 style="float:right; margin-right:20px;"><a href="<?php echo $addgrpurl; ?>">&gt; Create new group</a></h3>
     <?php endif; ?>
     
     <div class="clear"></div>
@@ -45,7 +45,10 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     <div class="box">
         <h2>What are groups?</h2>
         <div class="box-content">
-            <strong><a href="<?php echo $addgrpurl; ?>">Create a group</a></strong><br />
+		<?php if ($this->logged_in): ?>
+			<strong><a href="<?php echo $addgrpurl; ?>">Create a group</a></strong><br />
+		<?php endif; ?>
+
             Groups help like-minded people to join their forces.
             You can create as many groups as you want.
 
