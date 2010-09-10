@@ -193,34 +193,34 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $phone = new Zend_Form_Element_Text('phone');
         $phone->setLabel('Phone')
               ->setAttrib('id', 'phone');
-        $phonepublic = new Zend_Form_Element_CheckBox('phone_publicity');
+        $phonepublic = new Zend_Form_Element_Checkbox('phone_publicity');
         $phonepublic->setLabel($publictext);
 
         $firstname = new Zend_Form_Element_Text('firstname');
         $firstname->setLabel('First name')
                   ->setAttrib('id', 'first-name');
-        $firstnamepublic = new Zend_Form_Element_CheckBox('firstname_publicity');
+        $firstnamepublic = new Zend_Form_Element_Checkbox('firstname_publicity');
         $firstnamepublic->setLabel($publictext);
 
         // DB: surname
         $lastname = new Zend_Form_Element_Text('surname');
         $lastname->setLabel('Last name')
                  ->setAttrib('id', 'last-name');
-        $lastnamepublic = new Zend_Form_Element_CheckBox('surname_publicity');
+        $lastnamepublic = new Zend_Form_Element_Checkbox('surname_publicity');
         $lastnamepublic->setLabel($publictext);
 
         $gender = new Zend_Form_Element_Select('gender');
         $gender->setLabel('Gender')
                ->setAttrib('id', 'gender')
                ->addMultiOptions(array('Select', 'Male', 'Female'));
-        $genderpublic = new Zend_Form_Element_CheckBox('gender_publicity');
+        $genderpublic = new Zend_Form_Element_Checkbox('gender_publicity');
         $genderpublic->setLabel($publictext);
 
         $birthday = new Zend_Form_Element_Text('birthday');
         $birthday->setLabel('Date of Birth')
                  ->setAttrib('id', 'birthday')
                  ->setValidators(array(new Zend_Validate_Date('birthday')));
-        $birthdaypublic = new Zend_Form_Element_CheckBox('birthday_publicity');
+        $birthdaypublic = new Zend_Form_Element_Checkbox('birthday_publicity');
         $birthdaypublic->setLabel($publictext);
 
         $biography = new Zend_Form_Element_Textarea('biography');
@@ -235,7 +235,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                       ),
                   ));
                    //->setDescription('<div id="progressbar_biography" class="progress_ok"></div>');
-        $biographypublic = new Zend_Form_Element_CheckBox('biography_publicity');
+        $biographypublic = new Zend_Form_Element_Checkbox('biography_publicity');
         $biographypublic->setLabel($publictext);
 
         $intereststext = new Oibs_Form_Element_Note('intereststext');
@@ -383,14 +383,14 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                  ->addValidators(array(
                             array('NotEmpty', true, array('messages' => array('isEmpty' => 'Hometown empty')))
                  ));
-        $hometownpublic = new Zend_Form_Element_CheckBox('city_publicity');
+        $hometownpublic = new Zend_Form_Element_Checkbox('city_publicity');
         $hometownpublic->setLabel($publictext);
         $hometownpublic->helper = 'FormHidden';
 
         $address = new Zend_Form_Element_Text('address');
         $address->setLabel('Address')
                 ->setAttrib('id', 'address');
-        $addresspublic = new Zend_Form_Element_CheckBox('address_publicity');
+        $addresspublic = new Zend_Form_Element_Checkbox('address_publicity');
         $addresspublic->setLabel($publictext)
                       ->setAttrib('checked', 'checked')
                       ->setValue(1);
@@ -405,7 +405,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         foreach ($allCountries as $country) {
             $usercountry->addMultiOption($country['iso_ctr'], $country['printable_name_ctr']);
         }
-        $usercountrypublic = new Zend_Form_Element_CheckBox('country_publicity');
+        $usercountrypublic = new Zend_Form_Element_Checkbox('country_publicity');
         $usercountrypublic->setLabel($publictext);
 
         $timezone_model = new Default_Model_Timezones();
@@ -417,7 +417,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         foreach ($allTimezones as $timezone) {
             $usertimezone->addMultiOption($timezone['id_tmz'], $timezone['gmt_tmz'].' '.$timezone['timezone_location_tmz']);
         }
-        $usertimezonepublic = new Zend_Form_Element_CheckBox('usertimezone_publicity');
+        $usertimezonepublic = new Zend_Form_Element_Checkbox('usertimezone_publicity');
         $usertimezonepublic->setLabel($publictext);
 
         $userProfilesModel = new Default_Model_UserProfiles();
@@ -429,14 +429,14 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                    ->setRequired(true)
                    ->addMultiOptions($employments)
                    ->setErrorMessages(array('Select status'));
-        $employmentpublic = new Zend_Form_Element_CheckBox('employment_publicity');
+        $employmentpublic = new Zend_Form_Element_Checkbox('employment_publicity');
         $employmentpublic->setLabel($publictext);
 
         // DB: company
         $employer_organization = new Zend_Form_Element_Text('company');
         $employer_organization->setLabel('Employer / Organization')
                               ->setAttrib('id', 'employer-organization');
-        $employer_organizationpublic = new Zend_Form_Element_CheckBox('company_publicity');
+        $employer_organizationpublic = new Zend_Form_Element_Checkbox('company_publicity');
         $employer_organizationpublic->setLabel($publictext);
 
         $save = new Zend_Form_Element_Submit('save');
