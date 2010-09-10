@@ -286,7 +286,7 @@ $(document).ready(function() {
                 <?php $i = count($this->tags) - 1; ?>
                 <?php if(count($this->tags)): ?>
 	                <?php foreach($this->tags as $tag): ?>
-	                    <a href="<?php echo $this->url(array('controller' => 'tag', 
+	                    <a href="<?php if (isset($tag['id_tag'])) echo $this->url(array('controller' => 'tag', 
 	                                                         'action' => 'view', 
 	                                                         'id' => $tag['id_tag'], 
 	                                                         'language' => $this->language), 
