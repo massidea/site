@@ -47,7 +47,6 @@ class Default_Form_AddContentForm extends Zend_Form
 		$this->setName('add_content_form');
 		//$this->setName('contentAdd');
         $this->setAction($baseUrl.'/'.$lang.'/content/add/'.$contentType);
-		
         $this->addElementPrefixPath('Oibs_Decorators', 
 						'Oibs/Decorators/',
 						'decorator');
@@ -82,6 +81,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                             true, 
                                             array(1, 
                                                   140,
+                                                  'encoding' => 'UTF-8',
                                                   'messages' => 
                                                       array('stringLengthTooLong' => 
                                                         'content-add-field-too-long')))
@@ -106,6 +106,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(1, 
                                                     120,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'content-add-field-too-long')
@@ -150,6 +151,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(1, 
                                                     320,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'content-add-field-too-long')
@@ -169,6 +171,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(0, 
                                                     4000,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooShort' => 
                                                                 'content-add-field-too-short', 
@@ -187,6 +190,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(0, 
                                                     120,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'content-add-field-too-long')
@@ -212,6 +216,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                             true, 
                                             array(1, 
                                                   140,
+                                                  'encoding' => 'UTF-8',
                                                   'messages' => 
                                                     array('stringLengthTooLong' => 
                                                         'field-too-long')))
@@ -235,6 +240,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(1, 
                                                     140,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -260,6 +266,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(1,
                                                     140,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -285,6 +292,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(1,
                                                     140,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
@@ -314,6 +322,7 @@ class Default_Form_AddContentForm extends Zend_Form
                                               true, 
                                               array(0,
                                                     2000,
+                                                    'encoding' => 'UTF-8',
                                                     'messages' => 
                                                         array('stringLengthTooLong' => 
                                                             'field-too-long')
