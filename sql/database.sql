@@ -31,7 +31,7 @@ CREATE TABLE `campaigns_cmp` (
   PRIMARY KEY (`id_cmp`,`id_grp_cmp`),
   KEY `fk_grp` (`id_grp_cmp`),
   KEY `fk_cty` (`id_cty_cmp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +56,7 @@ CREATE TABLE `cmp_has_cmp` (
   PRIMARY KEY (`id_parent_cmp`,`id_child_cmp`),
   KEY `fk_cmp_has_cmp_parent_cmp` (`id_parent_cmp`),
   KEY `fk_cmp_has_cmp_child_cmp` (`id_child_cmp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `cmp_has_cnt` (
   `id_cmp` int(11) NOT NULL,
   `id_cnt` int(11) NOT NULL,
   PRIMARY KEY (`id_cmp`,`id_cnt`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `cmp_has_tag` (
   PRIMARY KEY (`id_cmp`,`id_tag`),
   KEY `fk_cpg` (`id_cmp`),
   KEY `fk_tag` (`id_tag`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +133,7 @@ CREATE TABLE `cmp_weblinks_cwl` (
   `modified_cwl` datetime DEFAULT NULL,
   PRIMARY KEY (`id_cwl`),
   KEY `fk_cmp_cwl` (`id_cmp_cwl`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE `cmt_ratings_cmr` (
   PRIMARY KEY (`id_cmr`),
   KEY `fk_usr_cmr` (`id_usr_cmr`),
   KEY `fk_cmt_cmr` (`id_cmt_cmr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `cnt_has_cnt` (
   PRIMARY KEY (`id_parent_cnt`,`id_child_cnt`),
   KEY `fk_cnt_has_cnt_parent_cnt` (`id_parent_cnt`),
   KEY `fk_cnt_has_cnt_child_cnt` (`id_child_cnt`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +212,7 @@ CREATE TABLE `cnt_has_fic` (
   PRIMARY KEY (`id_cnt`,`id_fic`),
   KEY `fk_cnt` (`id_cnt`),
   KEY `fk_fic` (`id_fic`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +238,7 @@ CREATE TABLE `cnt_has_grp` (
   PRIMARY KEY (`id_cnt`,`id_grp`),
   KEY `fk_cnt_has_grp_cnt` (`id_cnt`),
   KEY `fk_cnt_has_grp_grp` (`id_grp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +263,7 @@ CREATE TABLE `cnt_has_ind` (
   PRIMARY KEY (`id_cnt`,`id_ind`),
   KEY `fk_cnt_has_ind_cnt` (`id_cnt`),
   KEY `fk_cnt_has_ind_ind` (`id_ind`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +288,7 @@ CREATE TABLE `cnt_has_ivt` (
   PRIMARY KEY (`id_cnt`,`id_ivt`),
   KEY `fk_cnt_has_ivt_cnt` (`id_cnt`),
   KEY `fk_cnt_has_ivt_ivt` (`id_ivt`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +313,7 @@ CREATE TABLE `cnt_has_rec` (
   PRIMARY KEY (`id_cnt`,`id_rec`),
   KEY `fk_cnt` (`id_cnt`),
   KEY `fk_rec` (`id_rec`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +338,7 @@ CREATE TABLE `cnt_has_tag` (
   PRIMARY KEY (`id_cnt`,`id_tag`),
   KEY `fk_cnt_has_tag_cnt` (`id_cnt`),
   KEY `fk_cnt_has_tag_tag` (`id_tag`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +364,7 @@ CREATE TABLE `cnt_has_usr` (
   PRIMARY KEY (`id_cnt`,`id_usr`),
   KEY `fk_cnt_has_usr_cnt` (`id_cnt`),
   KEY `fk_cnt_has_usr_usr` (`id_usr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -396,7 +396,7 @@ CREATE TABLE `cnt_publish_times_pbt` (
   PRIMARY KEY (`id_pbt`),
   KEY `fk_cnt_pbt` (`id_cnt_pbt`),
   KEY `fk_usr_pbt` (`id_usr_pbt`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -423,7 +423,7 @@ CREATE TABLE `cnt_views_vws` (
   PRIMARY KEY (`id_cnt_vws`,`id_usr_vws`),
   KEY `fk_cnt_vws` (`id_cnt_vws`),
   KEY `fk_usr_vws` (`id_usr_vws`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -452,7 +452,7 @@ CREATE TABLE `comment_flags_cmf` (
   PRIMARY KEY (`id_cmf`),
   KEY `fk_cmt_cmf` (`id_comment_cmf`),
   KEY `fk_usr_cmf` (`id_user_cmf`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -485,7 +485,7 @@ CREATE TABLE `comments_cmt` (
   KEY `fk_cmt_cmt` (`id_parent_cmt`),
   KEY `fk_cmt_cnt` (`id_target_cmt`),
   KEY `fk_comments_cmt_users_usr` (`id_usr_cmt`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -514,7 +514,7 @@ CREATE TABLE `content_flags_cfl` (
   PRIMARY KEY (`id_cfl`),
   KEY `fk_cnt_cfl` (`id_content_cfl`),
   KEY `fk_usr_cfl` (`id_user_cfl`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -542,7 +542,7 @@ CREATE TABLE `content_ratings_crt` (
   `modified_crt` datetime DEFAULT NULL,
   PRIMARY KEY (`id_crt`),
   KEY `fk_cnt_crt` (`id_cnt_crt`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +569,7 @@ CREATE TABLE `content_types_cty` (
   `created_cty` datetime DEFAULT NULL,
   `modified_cty` datetime DEFAULT NULL,
   PRIMARY KEY (`id_cty`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -607,7 +607,7 @@ CREATE TABLE `contents_cnt` (
   `modified_cnt` datetime DEFAULT NULL,
   PRIMARY KEY (`id_cnt`),
   KEY `fk_cty_cnt` (`id_cty_cnt`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -633,7 +633,7 @@ CREATE TABLE `countries_ctr` (
   `iso3_ctr` char(3) DEFAULT NULL,
   `numcode_ctr` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`iso_ctr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -665,7 +665,7 @@ CREATE TABLE `files_fil` (
   PRIMARY KEY (`id_fil`),
   KEY `fk_cnt_fil` (`id_cnt_fil`),
   KEY `fk_usr_fil` (`id_usr_fil`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -697,7 +697,7 @@ CREATE TABLE `files_fil_old` (
   PRIMARY KEY (`id_fil`),
   KEY `fk_cnt_fil` (`id_cnt_fil`),
   KEY `fk_usr_fil` (`id_usr_fil`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -723,7 +723,7 @@ CREATE TABLE `futureinfo_classes_fic` (
   `created_fic` datetime DEFAULT NULL,
   `modified_fic` datetime DEFAULT NULL,
   PRIMARY KEY (`id_fic`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -749,7 +749,7 @@ CREATE TABLE `group_types_gtp` (
   `name_gtp` varchar(255) NOT NULL,
   PRIMARY KEY (`id_gtp`),
   UNIQUE KEY `id_gtp` (`id_gtp`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -775,7 +775,7 @@ CREATE TABLE `grp_has_admin_usr` (
   PRIMARY KEY (`id_usr`,`id_grp`),
   KEY `fk_grp_has_admin_usr_grp` (`id_grp`),
   KEY `fk_grp_has_admin_usr_usr` (`id_usr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -800,7 +800,7 @@ CREATE TABLE `grp_has_grp` (
   PRIMARY KEY (`id_parent_grp`,`id_child_grp`),
   KEY `fk_grp_has_grp_parent_grp` (`id_parent_grp`),
   KEY `fk_grp_has_grp_child_grp` (`id_child_grp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -825,7 +825,7 @@ CREATE TABLE `grp_has_prm` (
   PRIMARY KEY (`id_grp`,`id_prm`),
   KEY `fk_grp_has_prm_grp` (`id_grp`),
   KEY `fk_grp_has_prm_prm` (`id_prm`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -850,7 +850,7 @@ CREATE TABLE `grp_has_tag` (
   PRIMARY KEY (`id_grp`,`id_tag`),
   KEY `fk_grp` (`id_grp`),
   KEY `fk_tag` (`id_tag`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -879,7 +879,7 @@ CREATE TABLE `grp_weblinks_gwl` (
   `modified_gwl` datetime DEFAULT NULL,
   PRIMARY KEY (`id_gwl`),
   KEY `fk_grp_gwl` (`id_grp_gwl`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -909,7 +909,7 @@ CREATE TABLE `industries_ind` (
   PRIMARY KEY (`id_ind`),
   KEY `fk_lng_ind` (`id_lng_ind`),
   KEY `fk_parent_ind_ind` (`id_parent_ind`)
-) ENGINE=MyISAM AUTO_INCREMENT=1993 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1993 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -936,7 +936,7 @@ CREATE TABLE `innovation_types_ivt` (
   `created_ivt` datetime DEFAULT NULL,
   `modified_ivt` datetime DEFAULT NULL,
   PRIMARY KEY (`id_ivt`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -963,7 +963,7 @@ CREATE TABLE `languages_lng` (
   `created_lng` datetime DEFAULT NULL,
   `modified_lng` datetime DEFAULT NULL,
   PRIMARY KEY (`id_lng`)
-) ENGINE=MyISAM AUTO_INCREMENT=186 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=186 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -993,7 +993,7 @@ CREATE TABLE `links_lnk` (
   PRIMARY KEY (`id_lnk`),
   KEY `fk_cnt_lnk` (`id_cnt_lnk`),
   KEY `fk_usr_lnk` (`id_usr_lnk`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1018,7 +1018,7 @@ CREATE TABLE `notifications_ntf` (
   `description_ntf` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_ntf`),
   UNIQUE KEY `id_ntf` (`id_ntf`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1049,7 +1049,7 @@ CREATE TABLE `page_types_ptp` (
   UNIQUE KEY `type_ptp` (`type_ptp`),
   UNIQUE KEY `type_name_ptp` (`type_name_ptp`),
   KEY `fk_type_ctp` (`type_ptp`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1076,7 +1076,7 @@ CREATE TABLE `permissions_prm` (
   `created_prm` datetime DEFAULT NULL,
   `modified_prm` datetime DEFAULT NULL,
   PRIMARY KEY (`id_prm`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1108,7 +1108,7 @@ CREATE TABLE `private_messages_pmg` (
   PRIMARY KEY (`id_pmg`),
   KEY `fk_sender_usr_pmg` (`id_sender_pmg`),
   KEY `fk_receiver_usr_pmg` (`id_receiver_pmg`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1134,7 +1134,7 @@ CREATE TABLE `related_companies_rec` (
   `created_rec` datetime DEFAULT NULL,
   `modified_rec` datetime DEFAULT NULL,
   PRIMARY KEY (`id_rec`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1161,7 +1161,7 @@ CREATE TABLE `rss_feeds_rss` (
   `modified_rss` datetime DEFAULT NULL,
   `type_rss` int(11) NOT NULL,
   PRIMARY KEY (`id_rss`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1188,7 +1188,7 @@ CREATE TABLE `stylesheets_sth` (
   `modified_sth` datetime DEFAULT NULL,
   PRIMARY KEY (`id_sth`),
   KEY `fk_stylesheets_sth_users_usr1` (`id_usr_sth`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1215,7 +1215,7 @@ CREATE TABLE `tags_tag` (
   `created_tag` datetime DEFAULT NULL,
   `modified_tag` datetime DEFAULT NULL,
   PRIMARY KEY (`id_tag`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1240,7 +1240,7 @@ CREATE TABLE `timezones_tmz` (
   `gmt_tmz` varchar(11) NOT NULL DEFAULT '',
   `offset_tmz` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_tmz`)
-) ENGINE=MyISAM AUTO_INCREMENT=143 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1267,7 +1267,7 @@ CREATE TABLE `urr_has_upr` (
   PRIMARY KEY (`id_urr`,`id_upr`),
   KEY `fk_urr` (`id_urr`),
   KEY `fk_upr` (`id_upr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1302,7 +1302,7 @@ CREATE TABLE `users_usr` (
   `modified_usr` datetime DEFAULT NULL,
   PRIMARY KEY (`id_usr`),
   KEY `fk_lng_usr` (`id_lng_usr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1328,7 +1328,7 @@ CREATE TABLE `usr_apikeys_uak` (
   `created_uak` datetime DEFAULT NULL,
   `modified_uak` datetime DEFAULT NULL,
   PRIMARY KEY (`id_uak`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1361,7 +1361,7 @@ CREATE TABLE `usr_groups_grp` (
   PRIMARY KEY (`id_grp`),
   KEY `fk_usr_groups_grp_stylesheets_sth1` (`id_sth_grp`),
   KEY `fk_id_type_grp` (`id_type_grp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1387,7 +1387,7 @@ CREATE TABLE `usr_has_fvr` (
   PRIMARY KEY (`id_cnt`,`id_usr`),
   KEY `fk_usr_favourites_fvr_cnt` (`id_cnt`),
   KEY `fk_usr_favourites_fvr_usr` (`id_usr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1412,7 +1412,7 @@ CREATE TABLE `usr_has_grp` (
   PRIMARY KEY (`id_grp`,`id_usr`),
   KEY `fk_usr_has_grp_grp` (`id_grp`),
   KEY `fk_usr_has_grp_usr` (`id_usr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1437,7 +1437,7 @@ CREATE TABLE `usr_has_grp_waiting` (
   PRIMARY KEY (`id_grp`,`id_usr`),
   KEY `fk_usr_has_grp_waiting_grp` (`id_grp`),
   KEY `fk_usr_has_grp_waiting_usr` (`id_usr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1462,7 +1462,7 @@ CREATE TABLE `usr_has_npwd` (
   `key_npwd` varchar(32) NOT NULL,
   `expire_date_npwd` datetime NOT NULL,
   PRIMARY KEY (`id_npwd`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1487,7 +1487,7 @@ CREATE TABLE `usr_has_ntf` (
   PRIMARY KEY (`id_ntf`,`id_usr`),
   KEY `fk_usr` (`id_usr`),
   KEY `fk_ntf` (`id_ntf`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1512,7 +1512,7 @@ CREATE TABLE `usr_has_urr` (
   PRIMARY KEY (`id_usr`,`id_urr`),
   KEY `fk_usr` (`id_usr`),
   KEY `fk_urr` (`id_urr`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1540,7 +1540,7 @@ CREATE TABLE `usr_images_usi` (
   `modified_usi` datetime DEFAULT NULL,
   PRIMARY KEY (`id_usi`),
   KEY `fk_usr_usi` (`id_usr_usi`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1565,7 +1565,7 @@ CREATE TABLE `usr_privileges_upr` (
   `name_upr` varchar(255) NOT NULL,
   PRIMARY KEY (`id_upr`,`id_urc`),
   KEY `fk_urc` (`id_urc`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1594,7 +1594,7 @@ CREATE TABLE `usr_profiles_usp` (
   `modified_usp` datetime DEFAULT NULL,
   PRIMARY KEY (`id_usp`),
   KEY `fk_usr_usp` (`id_usr_usp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1617,7 +1617,7 @@ CREATE TABLE `usr_resources_urc` (
   `id_urc` int(11) NOT NULL AUTO_INCREMENT,
   `name_urc` varchar(255) NOT NULL,
   PRIMARY KEY (`id_urc`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1642,7 +1642,7 @@ CREATE TABLE `usr_roles_urr` (
   `created_urr` datetime DEFAULT NULL,
   `modified_urr` datetime DEFAULT NULL,
   PRIMARY KEY (`id_urr`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1672,7 +1672,7 @@ CREATE TABLE `usr_weblinks_uwl` (
   `modified_uwl` datetime DEFAULT NULL,
   PRIMARY KEY (`id_uwl`),
   KEY `fk_usr_uwl` (`id_usr_uwl`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
