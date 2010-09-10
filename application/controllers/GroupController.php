@@ -141,7 +141,7 @@
         $this->view->openCampaigns = $campaignModel->getOpenCampaignsByGroup($grpId);
         $this->view->notstartedCampaigns = $campaignModel->getNotstartedCampaignsByGroup($grpId);
         $this->view->endedCampaigns = $campaignModel->getEndedCampaignsByGroup($grpId);
-        $this->view->userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id);
+        $this->view->userIsGroupAdmin = isset($user->user_id) ? $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id) : false;
         $this->view->linkedgroups = $linkedgroups;
         $this->view->isClosed = $isClosed;
         $this->view->usrWaitingCount = $usrWaitingCount;

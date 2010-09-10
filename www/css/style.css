@@ -269,7 +269,8 @@ div.top_row_center_right_search img{
 div.top_row_center_right_language{
 	text-align: left; 
 	padding-top: 3px; 
-	width: 335px;
+	width: 150px;
+	float: left;
 }
 
 div.top_row_center_right_layout{
@@ -277,7 +278,7 @@ div.top_row_center_right_layout{
 	text-align: right; 
 	padding-top: 3px;
 	padding-right: 100px;
-	width: 115px;
+	width: 118px;
 }
 
 div.top_row_center_right_selection_text{

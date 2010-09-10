@@ -6,6 +6,14 @@ $url_getRecentCampaigns = $this->url(array('controller' => 'ajax',
 							 'action' => 'getrecentcampaigns',
 							 'language' => $this->language),
 							 'lang_default', true);
+
+
+/* FIXME: Can't create campaing without creating group
+
+$createCampaignUrl = $this->url(array(	'controller' => 'campaign',
+					'action'     => 'create',
+					'language'   => $this->language),  'lang_default', true);
+*/
 ?>
 <?php $this->headScript()->captureStart()?>
 
@@ -38,7 +46,12 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     <div class="box">
         <h2>What are campaigns?</h2>
         <div class="box-content">
-            <strong><a href="<?php echo $addgrpurl; ?>">Create a group</a></strong><br />
+	<?php
+
+	// FIXME: Why we use create campaing here? If we don't have functionality to create campaing without groups...
+        /*<strong><a href="<?php echo $createCampaignUrl; ?>">Create a campaing</a></strong><br />*/
+
+	?>
             Groups help like-minded people to join their forces.
             You can create as many groups as you want.
 
@@ -59,11 +72,11 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     </div>
 
     <div style="text-align: center; margin-top: 20px;">
-        <?php $moregrpsurl = $this->url(array('controller' => 'group',
+        <?php $moreCampaignUrl = $this->url(array('controller' => 'campaign',
                                               'action'     => 'list',
                                               'language'   => $this->language),
                                           'lang_default', true); ?>
-        <strong><a href="<?php echo $moregrpsurl; ?>">Show more</a></strong>
+        <strong><a href="<?php echo $moreCampaignUrl; ?>">Show more</a></strong>
     </div>
     */ ?>
 </div>

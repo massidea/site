@@ -34,32 +34,44 @@ $(document).ready(function() {
 			$(value).children().html(biographyshort + expandLink);
 		};
 	});
+		
 	$('#checkallrows').click(function(){
 		$("INPUT[type='checkbox']").attr('checked', $('#checkallrows').is(':checked'));
 	});
     // Endof Bio
 
-	$("#activity > .left > #content_type > ul > li, #activity > .right > #content_type > ul > li").mouseover(function () {
+	$("#activity > .left > #content_type > ul > li, \
+	   #activity > .right > #content_type > ul > li, \
+	   #activity > .wide > #content_type > ul > li").each(function () {
 		$(this).css('cursor', 'pointer');
 	});
 	
-	$("#activity > .left > #content_type > ul > li > a, #activity > .right > #content_type > ul > li > a").click(function (event) {		
-		//event.preventDefault();
-
-		$(this).parent().siblings().removeClass('selected');
-		$(this).parent().removeClass('selected');
-		classi = $(this).parent().attr('class'); 
-		$(this).parent().addClass('selected');
-		box = $(this).parent().parent().parent().parent().attr('id');
-		$("#" + box + " > .scroll-box > ul > li").each(function() {
-			curClass =$(this).attr('class');
-			if( !$(this).hasClass(classi) && !$(this).hasClass('popup')) {
-				$(this).hide();
-			} else if ($(this).hasClass(classi) && !$(this).hasClass('popup')) {
-				$(this).show();
-				$(this).scrollTop();
+	$("#activity > .left > #content_type, \
+	   #activity > .right > #content_type, \
+	   #activity > .wide > #content_type").each(function () {
+		var selected = "";
+		$(this).children("ul").children("li").each(function () {
+			if ($(this).hasClass('selected')) {
+				$(this).removeClass('selected');
+				selected = $(this).attr('class');
+				$(this).addClass('selected');
+				return;
 			}
-		}); // endof li.each
+		});
+		var box = $(this).parent().attr('id');
+		filterList(selected, box);
+	});
+	
+	$("#activity > .left > #content_type > ul > li, \
+	   #activity > .right > #content_type > ul > li, \
+	   #activity > .wide > #content_type > ul > li").click(function (event) {		
+		if ($(this).hasClass('selected')) return;
+
+		$(this).siblings().removeClass('selected');
+		var selected = $(this).attr('class'); 
+		$(this).addClass('selected');
+		var box = $(this).parent().parent().parent().attr('id');
+		filterList(selected, box);
 	}); // Endof a.click
 	
 	$("#user_profile_toplist_title").click(function(){
@@ -73,6 +85,18 @@ $(document).ready(function() {
 		}
 	});
 }); // Endof document ready
+
+function filterList(selected, box) {
+	$("#" + box + " > .scroll-box > ul > li").each(function() {
+		curClass =$(this).attr('class');
+		if( !$(this).hasClass(selected) && !$(this).hasClass('popup')) {
+			$(this).hide();
+		} else if ($(this).hasClass(selected) && !$(this).hasClass('popup')) {
+			$(this).show();
+			$(this).scrollTop();
+		}
+	}); // endof li.each
+}
 
 function expandText(key)
 {
@@ -132,13 +156,13 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
             
             <li>
             	<ul class="user_profile_toplist">
-	            <li><strong>User ranking in:</strong><a href="#" onClick="return false;" style="float:right;" id="user_profile_toplist_title">Rank</a></li>
+	            <li class="clear"><strong style="float: left">User ranking in:</strong><a href="#" onClick="return false;" style="float:right;" id="user_profile_toplist_title">Rank</a></li>
 	            	<?php 
 	            	foreach($this->topList as $key => $value) :
 	            	 $rank = $value['addedUsers'][0]['rank']+1; 
 	            	 if($rank != 0) $points = $value['addedUsers'][0]['value'];
 	            	 if($rank == 0) { $rank = "Not ranked"; $points = "Not ranked"; } ?>
-	            		<li><strong><?php echo $value['title']; ?>: </strong><span class="user_profile_toplist_rank"><?php echo $rank; ?></span><span class="user_profile_toplist_points"><?php echo $points; ?></span></li>
+	            		<li class="clear"><strong style="float:left"><?php echo $value['title']; ?>: </strong><span class="user_profile_toplist_rank"><?php echo $rank; ?></span><span class="user_profile_toplist_points"><?php echo $points; ?></span></li>
 	            	<?php endforeach; ?>
 	            </ul>
             </li>

@@ -17,48 +17,12 @@
 #add_content_button, #send-message { padding-right:0px !important; padding-left:0px !important; }
 .checkbox { border:1px solid #fff !important;}
 
-#content #user-page #profile-info #connect { margin:45px 20px 0px 0px; }
-
-#content #activity #content_type { margin:0px 0px -5px 0px; }
-#content #activity #content_type ul li { list-style:none; float:left; }
-#content #activity #content_type ul li.selected a,
-#content #activity #content_type ul li.selected a:visited{
-	border-bottom:1px solid #fff;
-	display:block;}
-	
-#content #activity #content_type ul li.all a,
-#content #activity #content_type ul li.all a:visited {
-	background:#fff; color:#000;
-	display:block;}
-	
-#content #activity #content_type ul li.challenges a,
-#content #activity #content_type ul li.challenges a:visited {
-	background:#D21034; color:#fff;
-	display:block;}
-
-#content #activity #content_type ul li.ideas a,
-#content #activity #content_type ul li.ideas a:visited {
-	background:#4B9B07; color:#fff;
-	display:block;}
-
-#content #activity #content_type ul li.visions a,
-#content #activity #content_type ul li.visions a:visited {
-	background:#FFC726; color:#fff;
-	display:block;}
-#content #activity #content_type ul li.ended a,
-#content #activity #content_type ul li.ended a:visited {
-	display:block;}
-
 #content #edit-user-page .input-column1, 
 #content #edit-user-page .input-column2,
 #content #edit-user-page .input-column3,
 #content #edit-user-page .input-column-website1,
 #content #edit-user-page .input-column-website2,
 #content #edit-user-page .input-column-website3 { margin-bottom:0px; }
-
-#content .scroll-box { height:300px; border:1px solid #ccc; overflow:auto; margin:5px 0px 15px 0px;  }
-#content .scroll-box p { margin-left:15px;} 
-#content .scroll-box ul li { width:455px;}
 
 #contribute .submit-button { width:130px;}
 
@@ -71,7 +35,33 @@
 #content #sign-up-page .error { margin-top:-1px; }
 
 #content #content-page-additional-functions #linking-contents ul li strong { float:right; margin-top:-17px;}
-	
-#my_groups .scroll-box ul li { width:155px;}
+
+
+#my_groups .scroll-box ul li { width:155px; }
+#my-reads .scroll-box ul li { width: 180px !important; }
+
+.scroll-box ul li .user_content_row {
+	width: 460px !important;	
+}
+
+.scroll-box ul li .user_summary_list_without_stats {
+	width: 390px !important;
+}
+
+#user-page .left .scroll-box {
+	width: 200px;
+	float: left;
+}
+
+#user-page .right .scroll-box {
+	width: 500px;
+	float: left;	
+}
+
+#content #user-page #activity #content_type ul li {
+	margin: 0 0 -8px 10px;
+	position: relative;
+	z-index: 1;
+}
 
 #backdrop { filter:alpha(opacity=65) !important;zoom:1 !important; }

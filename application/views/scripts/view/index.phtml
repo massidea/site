@@ -36,12 +36,23 @@ more = false;
 function expandCollapse(type) {
 	var target = "#content_view_"+type+"_related";
 	var expandButton = ".expand_"+type+"_related";
+	$(expandButton).unbind('click');
+	$(target).slideToggle('normal', function() {
+		$.cookie(type, $(target).is(':hidden') ? 'none' : 'block');
+		$(expandButton).bind('click', function () { expandCollapse(type); }); 
+		setImage(type);
+	});
+}
+
+function setImage(type) {
+	var target = "#content_view_"+type+"_related";
+	var expandButton = ".expand_"+type+"_related";
 	if ($(target).is(':hidden')){
 		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 	} else {
 		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
 	}
-	$(target).slideToggle('normal');
+
 }
 	
 function ajaxLoad_moreRelated(type, more){
@@ -56,8 +67,8 @@ function ajaxLoad_moreRelated(type, more){
 	var data = new Array();
 	if (more) { 
 		data = { 'more': '1' };
-	} else { 
-		$(expandButton).bind('click', function () { expandCollapse(type); }); 
+	} else { // Only done once when loading page
+		$(expandButton).bind('click', function () { expandCollapse(type); });
 	}
 	
 	$.ajax({
@@ -65,13 +76,11 @@ function ajaxLoad_moreRelated(type, more){
 		beforeSend: function(){
 			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 		},
-		complete: function(){
-			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
-		},
 		url: url,
 		data: data,
 		success: function(result){
 			$(targetDiv).html(result);
+			setImage(type);
 			$("a[id*='show_more_']").click(function(obj) {
 				var more=true;
 				obj.preventDefault();
@@ -96,6 +105,7 @@ function initLinkedContent(type) {
 $(document).ready(function(){
 		ajaxLoad_moreRelated("user", false);
 		ajaxLoad_moreRelated("content", false);
+
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
 		$("#content_view_favourite").load("<?php echo $contentFavouriteUrl; ?>");
 		
@@ -165,6 +175,7 @@ function flagContent()
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery.cookie.js')); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
 
 <?php 
@@ -215,21 +226,19 @@ function flagContent()
     
     <div id="content_view_user_related_header">
         <div class="pointerCursor" style="float: left;">
-            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>" alt="" />
-            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>" alt="" style="display: none" />
+            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" alt="" />
         </div>
         <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-user-related'); ?></span>
     </div>
-    <div id="content_view_user_related">
+    <div id="content_view_user_related" style="display: <?php echo $this->boxStates['user'];?>">
     </div>
     <div id="content_view_related_content_header">
         <div class="pointerCursor" style="float: left;">
-            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>" alt="" />
-            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>" alt="" style="display: none" />
+            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" alt="" />
         </div>
         <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-related'); ?></span>
     </div>
-    <div id="content_view_content_related" style="padding-top: 10px;">
+    <div id="content_view_content_related" style="padding-top: 10px; display: <?php echo $this->boxStates['content'];?>">
     </div>
 </div>
 <div style="clear:both;"></div>

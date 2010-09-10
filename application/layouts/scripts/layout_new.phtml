@@ -237,44 +237,11 @@ echo $this->doctype();
                     <div class="clear"></div>
                 <div id="select">
                     <div class="left">
-                        <input type="hidden" id="translate-language-code-value" value=<?php
-
-	                    $languages = New Default_Model_Languages();
-	
-	                    //get select language code from request url
-	                    $subject = str_replace($this->baseUrl(),'',$this->url());
-	                     
-	                    $pattern = '/^(\/([^\/]+)[\/]?)/';
-	                    preg_match($pattern,$subject,$matches);
-	                    //Search language code from database and if there is one, allow the code, else force en.
-	                    $languageCode = $languages->getLanguageByLangCode($matches[2]);
-	                    if($languageCode) $lang = $matches[2];
-	                    else $lang = "en";
-	                    echo $lang;
-
-                            ?> />
-                        Language:
-                        <!-- this has to be changed :) -->
-            		<select id="languages" onchange="changeLang('<?php echo $lang; ?>', '<?php echo $this->baseUrl('/');?>')">
-                        
-			            <?php 
-			            $allLanguages = $languages->getAllNamesAndCodes();
-			
-			 			for($i=0;$i<=sizeof($allLanguages);$i++) {
-			 				foreach($this->languages as $language) {
-			 					if ($language == $allLanguages[$i]['iso6391_lng']) unset($allLanguages[$i]);
-			 				}
-			 			}
-			            
-			            foreach($this->languages as $language): ?>
-			                   <option value="<?php echo $language; ?>"<?php if($language == $lang): ?> selected="selected"<?php endif; ?>><?php echo $this->translate('lang-'.$language); ?></option>
-			            <?php endforeach; ?>
-						<?php foreach($allLanguages as $language) : ?>
-							<option value="<?php echo $language['iso6391_lng']; ?>"<?php if($language['name_lng'] == $languageCode): ?> selected="selected"<?php endif; ?>><?php echo $language['name_lng']; ?></option>
-						<?php endforeach; ?>
-
-                    </select>
-                    
+		            <?php
+		            $languages = new Default_Model_Languages();
+		            $allLanguages = $languages->getAllNamesAndCodes();
+		            echo $translationForm = new Default_Form_ChangeTranslationLanguageForm($allLanguages);
+		            ?>
                     </div>
                     <div class="right"></div>
                     <div class="clear"></div>
@@ -469,35 +436,6 @@ echo $this->doctype();
                         </li>
                     </ul>
                 </div>
-                
- 				<div id="backdrop" onclick="popup_close(); popup_terms_close()"></div>  
- 				
- 				<div id="popup_privacy_" class="popup_terms" style="display:none;">
-			        <div class="popup_close">
-			            <div style="float:right;">
-			                <a href="#" onclick="popup_terms_close(''); return false;">
-			                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" />
-			                </a>
-			            </div>
-			        </div>
-			        
-			        <div class="privacy">
-			            <?php echo $this->translate('register-description'); ?>
-			        </div>
-		    	</div>
-		    	<div id="popup_terms_" class="popup_terms" style="display:none;">
-			        <div class="popup_close" style="">  
-			            <div style="float:right;">
-			                <a href="#" onclick="popup_terms_close(''); return false;">
-			                    <img src="<?php echo $this->baseUrl('/images/icon_close.png') ?>" alt="Close" />
-			                </a>
-			            </div>       
-			        </div>
-			        
-			        <div class="privacy">
-			            <?php echo $this->translate('network-service-agreement'); ?>
-			        </div>      
-			    </div>
                 <div class="dot-line-720 clear"></div>
                 <div class="left">
                     <p><?php echo $this->translate('index-funded'); ?></p>
@@ -574,7 +512,33 @@ echo $this->doctype();
             </div>
         </div>
     </div>
-        <div id="jsmetabox" style="display:none;">
+    <div id="backdrop" onclick="popup_close(); popup_terms_close()"></div>  
+ 	<div id="popup_privacy_" class="popup_terms" style="display:none;">
+        <div class="popup_close">
+            <div style="float:right;">
+                <a href="#" onclick="popup_terms_close(''); return false;">
+                    <img src="<?php echo $this->baseUrl('/images/icon_close.png'); ?>" alt="Close" />
+                </a>
+            </div>
+        </div>
+        
+        <div class="privacy">
+            <?php echo $this->translate('register-description'); ?>
+        </div>
+    </div>
+    <div id="popup_terms_" class="popup_terms" style="display:none;">
+        <div class="popup_close">  
+            <div style="float:right;">
+                <a href="#" onclick="popup_terms_close(''); return false;">
+                    <img src="<?php echo $this->baseUrl('/images/icon_close.png') ?>" alt="Close" />
+                </a>
+            </div>       
+        </div>
+        <div class="privacy">
+            <?php echo $this->translate('network-service-agreement'); ?>
+        </div>      
+    </div>
+    <div id="jsmetabox" style="display:none;">
     	<?php echo $this->jsmetabox->output(); ?>
     </div>
 </body>
