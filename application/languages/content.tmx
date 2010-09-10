@@ -1637,4 +1637,8 @@
 		<tuv xml:lang="en"><seg>Edit</seg></tuv>
 		<tuv xml:lang="fi"><seg>Muokkaa</seg></tuv>
 	</tu>
+	<tu tuid='content-link-not-content-this-type'>
+		<tuv xml:lang="en"><seg>No contents</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ei sisältöjä</seg></tuv>
+	</tu>
 </body>
