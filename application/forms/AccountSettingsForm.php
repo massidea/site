@@ -1,11 +1,10 @@
 <?php
 /**
  *  AccountSettingsForm -> Form for account settings
- *
- *     Copyright (c) <2009>, Markus RiihelÃ¤
- *     Copyright (c) <2009>, Mikko Sallinen
- *  Copyright (c) <2009>, Joel Peltonen
- *  Copyright (c) <2010>, Mikko Korpinen
+ * 	Copyright (c) <2009>, Markus Riihelä
+ *	Copyright (c) <2009>, Mikko Sallinen
+ *	Copyright (c) <2009>, Joel Peltonen
+ * 	Copyright (c) <2010>, Mikko Korpinen
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -24,8 +23,8 @@
  *  AccountSettingsForm - class
  *
  *  @package     Forms
- *  @author     Markus RiihelÃ¤, Mikko Sallinen, Joel Peltonen, Mikko Korpinen
- *  @copyright     2009 Markus RiihelÃ¤ & Mikko Sallinen, 2010 Mikko Korpinen
+ *  @author     Markus Riihelä, Mikko Sallinen, Joel Peltonen, Mikko Korpinen
+ *  @copyright     2009 Markus Riihelä & Mikko Sallinen, 2010 Mikko Korpinen
  *  @license     GPL v2
  *  @version     1.0
  */
