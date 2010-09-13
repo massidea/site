@@ -1010,12 +1010,12 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #sidebar #related-contents h4 { background:transparent url("../images/triangle.png") no-repeat 0px 4px; padding-left:10px; }
 
 /* Sidebar --> Scrollbox */
-#sidebar .scroll-box { height:300px; border:1px solid #ccc; overflow:auto; margin-top:5px; }
+#sidebar .scroll-box { max-height:300px; border:1px solid #ccc; overflow:auto; margin-top:5px; }
 #sidebar .scroll-box p { margin-left:10px; }
 #sidebar .scroll-box ul li { margin:15px 0px 15px 5px; padding-left:5px; }
-#sidebar .scroll-box ul li.challenges  { border-left:3px solid #D21034; }
-#sidebar .scroll-box ul li.ideas { border-left:3px solid #4B9B07; }
-#sidebar .scroll-box ul li.visions { border-left:3px solid #FFC726; }
+#sidebar .scroll-box ul li.problem  { border-left:3px solid #D21034; }
+#sidebar .scroll-box ul li.idea { border-left:3px solid #4B9B07; }
+#sidebar .scroll-box ul li.finfo { border-left:3px solid #FFC726; }
 
 /* Sidebar --> Campaings */
 #sidebar #campaigns p { margin:15px 0px 20px 15px; }

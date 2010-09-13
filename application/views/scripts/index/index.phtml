@@ -59,9 +59,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
 <div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
 	<div id="recent_posts_ajax" style="width: 500px;"></div>
-    <div class="user_content_spacer">
-
-    </div>
+    	<div class="user_content_spacer"></div>
     
     <div id="recent_posts_ajax_link" style="margin-top: 10px; margin-left: 220px;">
         <h3>
@@ -84,16 +82,17 @@ Commented to fix temporary problem, will be researched further later
 
 <div id="sidebar">
     <!-- For some mystical reason, paragraphs seem to need an empty style-attribute in order to extend a CSS -class -->
-    <h4 class="box">
-        <?php echo $this->translate('index-what-is'); ?>
-    </h4>
+    <div class="box">
+	    <h2>
+	        <?php echo $this->translate('index-what-is'); ?>
+	    </h2>
         <div class="box-content">
             <?php echo $this->translate('index-what-is-long'); ?>
             <?php // <span class="top_right_box_links"><a href="#"> echo $this->translate('index-learn-more'); </a></span> ?>
         </div>
-        
+    </div>
     <?php if(!$this->isLoggedIn): ?>
-    <p id="sign_up_now" style="padding-bottom: 10px;" class="top_right_box_links">
+    <p id="sign_up_now" style="padding-bottom: 10px; text-align: center" class="top_right_box_links">
         <b>
             <a href="<?php echo $url_sign_up; ?>">
                 <?php echo $this->translate('index-sigup')?>
