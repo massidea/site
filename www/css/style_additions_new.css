@@ -431,3 +431,6 @@ p#replying_to {
 #user-page #activity DIV#content_type {
 	margin-bottom: -3px;
 }
+
+.first_tag { color: #003581; }
+.second_tag { }

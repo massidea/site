@@ -293,9 +293,9 @@ line-height:1.3em; font-weight:bold; position:relative; }
 
 #content .user .photo { width:48px; float:left; margin:0px 10px 0px 0px; }
 #content .user .photo img { width:48px; height:48px; }
-#content .user .photo.challenge { border-left:5px solid #D21034; width:48px; height:48px; }
-#content .user .photo.ideas { border-left:5px solid #4B9B07; width:48px; height:48px; }
-#content .user .photo.visions { border-left:5px solid #FFC726; width:48px; height:48px; }
+#content .user .photo.problem { border-left:5px solid #D21034; width:48px; height:48px; }
+#content .user .photo.idea { border-left:5px solid #4B9B07; width:48px; height:48px; }
+#content .user .photo.finfo { border-left:5px solid #FFC726; width:48px; height:48px; }
 
 #content .user .context { width:420px; margin:0px 0px 0px 65px; }
 #content .user p { margin:0px; padding:0px; }

@@ -37,6 +37,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
 <?php $this->headScript()->captureEnd()?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
     <h3 class="recent_posts"><?php echo $this->translate('index-recent-posts'); ?>
         <a href="<?php echo $this->url(array('controller' => 'rss',
                                              'action' => 'generate',
@@ -59,7 +60,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
 	<div id="recent_posts_ajax" style="width: 500px;"></div>
     <div class="user_content_spacer">
-        <img src="<?php echo $this->baseUrl('/images/gray_dot_line_500.png'); ?>" alt="Massidea.org" />
+
     </div>
     
     <div id="recent_posts_ajax_link" style="margin-top: 10px; margin-left: 220px;">
@@ -68,7 +69,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         </h3>
     </div>
 </div>
-
+</div>
 <?php 
 /*
 Assign the partial view to the layout :) 
@@ -80,12 +81,13 @@ Commented to fix temporary problem, will be researched further later
 */
 //$this->layout()->right_side = $this->partial('partials/index.phtml'); 
 ?>
-<div class="right_side" style="padding: 0px; margin: 0px; margin-top: -52px;">
+
+<div id="sidebar">
     <!-- For some mystical reason, paragraphs seem to need an empty style-attribute in order to extend a CSS -class -->
-    <h4 style="margin-top: 8px; margin-bottom: 6px;">
+    <h4 class="box">
         <?php echo $this->translate('index-what-is'); ?>
     </h4>
-        <div class="top_right_box">
+        <div class="box-content">
             <?php echo $this->translate('index-what-is-long'); ?>
             <?php // <span class="top_right_box_links"><a href="#"> echo $this->translate('index-learn-more'); </a></span> ?>
         </div>
@@ -100,7 +102,7 @@ Commented to fix temporary problem, will be researched further later
     </p>
     <?php endif; ?>
     
-    <h3 style="margin-top: 5px; margin-bottom: 0; padding: 0;">
+    <h2>
         <?php echo $this->translate('index-most-popular')?>
         <a href="<?php echo $this->url(array('controller' => 'tag',
                                              'action' => 'index',
@@ -110,26 +112,26 @@ Commented to fix temporary problem, will be researched further later
                                              'lang_default', true); ?>">
             <?php echo $this->translate('index-tags')?>
         </a>
-    </h3>
-    
-    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
-    
+    </h2> 
     <div class="tag_cloud">
-       
-        <?php echo $this->partialLoop('partials/tag.phtml', $this->poptags); ?>
-        
-        <p id="show_all_tags" style="padding: 0px; margin-top: 10px;" class="top_right_box_links">
-            <a href="<?php echo $this->url(array('controller' => 'tag',
+        <ul class="tags">
+        	<?php foreach($this->poptags as $tag): ?>
+        	<li class="tags">
+        		<?php echo $this->partial('partials/tag.phtml', $tag); ?>
+        	</li>
+        	<?php endforeach; ?>
+        </ul>
+     </div>
+     <div class="clear"></div>
+    <div style="text-align: center;">
+                <strong><a href="<?php echo $this->url(array('controller' => 'tag',
                                              'language' => $this->language),
                                              'lang_default', true); ?>">
                 <?php echo $this->translate('index-show-all')?>
-            </a>
-        </p>
+            </a></strong>
     </div>
-        
-    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
-    
-    <p id="most_active_users" style="padding: 0px;" class="top_right_box_links">
+
+    <h2 id="most_active_users">
         <?php echo $this->translate('index-most-active')?>
         <a href="<?php echo $this->url(array('controller' => 'account',
                                              'action' => 'userlist',
@@ -139,12 +141,10 @@ Commented to fix temporary problem, will be researched further later
                                              'lang_default', true); ?>">
             <?php echo $this->translate('index-users')?>
         </a>
-    </p>
-    
-    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
+    </h2>
     
     <div class="top_right_box_links_users">
-    <ul>
+    <ul class="users">
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
 	</ul>
     </div>
@@ -165,11 +165,9 @@ Commented to fix temporary problem, will be researched further later
         <?php echo $this->translate('index-opensource')?>
     </div>
 
-    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
-
     <div id="campaigns">
-        <h3>Recent campaigns</h3>
-        <ul>
+        <h2>Recent campaigns</h2>
+        <ul class="campaigns">
             <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
         </ul>
     </div>
@@ -182,8 +180,8 @@ Commented to fix temporary problem, will be researched further later
     </div>
 
     <div id="campaigns">
-        <h3>Recent groups</h3>
-        <ul>
+        <h2>Recent groups</h2>
+        <ul class="campaigns">
             <?php echo $this->partialLoop('partials/group_row_extra_small.phtml', $this->groups); ?>
         </ul>
     </div>
@@ -194,4 +192,3 @@ Commented to fix temporary problem, will be researched further later
                                    'lang_default', true); ?>
         <strong><a href="<?php echo $grpurl; ?>">Show more</a></strong>
     </div>
-</div>
