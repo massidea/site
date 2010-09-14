@@ -1124,7 +1124,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 */
         public function removeContentAndDepending($id_cnt = 0)
         {
-            $contentRemoveChecker = array(
+            /*$contentRemoveChecker = array(
                 'removeContentFromCampaign' =>          true,
                 'removeContentFromContent' =>           true,
                 'removeContentFromFutureinfoClasses' => true,
@@ -1143,11 +1143,11 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 'removeUserFromFavorites' =>            true,
                 'removeContent' =>                      true,
                 'removeContentComments' =>              true
-            );
+            );*/
 
             // cnt_has_cmp
-            $cntHasCmp = new Default_Model_ContentHasCampaign();
-            if (!$cntHasCmp->removeContentCampaigns($id_cnt))
+            $cmpHasCnt = new Default_Model_CampaignHasContent();
+            if (!$cmpHasCnt->removeContentCampaignLinks($id_cnt))
                 $contentRemoveChecker['removeContentFromCampaign'] = false;
 
             // cnt_has_cnt

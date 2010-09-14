@@ -154,11 +154,14 @@ class Default_Model_CommentFlags extends Zend_Db_Table_Abstract
     */
     public function getFlagsByContentId($id_cnt)
     {
+    	$pageTypeModel = new Default_Model_PageTypes();
+    	
     	$select = $this->_db->select()
                        ->from(array('cmf' => 'comment_flags_cmf'), array('id_cmf'))
                        ->joinLeft(array('cmt' => 'comments_cmt'),
                                'cmf.id_comment_cmf = cmt.id_cmt')
-                       ->where('cmt.id_cnt_cmt = ?', (int)$id_cnt);
+                       ->where('cmt.type_cmt = ?', $pageTypeModel->getId("content"))
+                       ->where('cmt.id_target_cmt = ?', (int)$id_cnt);
 
 		$results = $this->getAdapter()->fetchAll($select);
         $finalresult = '';

@@ -22,13 +22,12 @@ $url_img = $this->url(array('controller' => 'account',
                             'thumb' => 'true'),
                             'lang_default', true);
 ?>
-<li class="<?php echo $this->key_cty ?>">
-    <div>
+    <div class="user">
         <div class="photo <?php echo $this->key_cty; ?>">
-            <a href="#"><img src="<?php echo $url_img; ?>" alt="" /></a>
+            <a href="<?php echo $url_user; ?>"><img src="<?php echo $url_img; ?>" alt="" /></a>
         </div>
-        <div>
-            <p>
+        <div class="context">
+            <h3>
                 <a href="<?php echo $url_user; ?>" class="username">
                     <?php echo $this->login_name_usr; ?>
                     <?php echo "(".$this->count.")"; ?>
@@ -38,7 +37,8 @@ $url_img = $this->url(array('controller' => 'account',
                         <?php echo $this->title_cnt;?>
                     </a>
                 </strong>
-            </p>
+            </h3>
+            <div class="context"></div>
             <p>
                 <?php echo $this->lead_cnt; ?>
             </p>
@@ -48,7 +48,19 @@ $url_img = $this->url(array('controller' => 'account',
                 </a>:
                 <?php echo $this->partialLoop('partials/tag.phtml', $this->tags);?>
             </p>
+
+    	<?php if($this->translang['from'] != $this->translang['to']): ?>
+		<?php $translangModel = new Default_Model_Languages();?>
+		<?php $translangName = $translangModel->getLanguageByLangCode($this->language_cnt);?>
+		<p class="translate">
+			<span class="summary_translatelink_meta" style="display: none;">
+				<?php echo json_encode(array('id' => $this->id_cnt,
+											 'language_name' => $translangName)); ?>
+			</span>
+			<span class="summary_translatelink_text"></span>
+		</p>
+		<?php endif;?>
+            </div>
         </div>
-    </div>
-    <div class="clear"></div>
-</li>
+	    <div class="clear"></div>
+	

@@ -416,7 +416,7 @@ class AccountController extends Oibs_Controller_CustomController
 			->addTab("Customize", "fonts", "all selected") //Header, type, class, extra
 			/*->addTab("Colors", "colors", "colors")
 			->addTab("Background", "background", "background")*/;
-		$boxes[] = $box;
+		//$boxes[] = $box;
 		
 		$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm();
         // Set to view

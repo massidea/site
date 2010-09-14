@@ -43,7 +43,7 @@ function ajaxLoad_getRecentPosts(obj, offset, prepend){
 
 function generateTranslationLinks()
 {
-	$('.summary_translatelink').each(function(){
+	$('.translate').each(function(){
 		var metadata = $.parseJSON($(this).children('.summary_translatelink_meta').html());
 		var textObject = $(this).children('.summary_translatelink_text');
 		var isOriginal = $(this).parents('.user_content_row').hasClass('user_content_row_hidden');
