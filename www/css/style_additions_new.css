@@ -434,3 +434,109 @@ p#replying_to {
 
 .first_tag { color: #003581; }
 .second_tag { }
+
+.user_content_edit ul { border: 1px solid #999; list-style:none outside none; position: absolute; display: none; width: 160px; background: none repeat scroll 0 0 #EEEEEE; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px; }
+.user_content_edit ul li { border: 2px outset #CCC; padding: 2px; } 
+.user_content_edit ul li img { vertical-align: middle; }
+.user_content_edit ul li:hover { background: #0089CF; }
+.user_content_edit ul li a:hover { color: #333 !important }
+.user_content_edit ul li a { color: #333333 !important; padding-left: 2px; text-decoration: none;}
+
+/* more from boxi */
+#content_view_user_related_container, 
+#content_view_related_content_container {
+	margin: 0 0 1em 0;
+}
+#content_view_user_related, 
+#content_view_content_related {
+	background:#ffffff none repeat scroll 0 0;
+    border:1px solid #CCCCCC;
+	padding: 0.5em 0.5em;
+	font-size: 10pt;
+}
+
+#content_view_user_related, #content_view_content_related {
+	max-height: 200px;
+	overflow: auto;
+}
+
+.content_view_user_related_entry_idea, 
+.content_view_user_related_entry_problem,
+.content_view_user_related_entry_futureinfo, 
+.content_view_user_related_entry_finfo, 
+.content_view_content_related_entry_idea, 
+.content_view_content_related_entry_problem,
+.content_view_content_related_entry_futureinfo, 
+.content_view_content_related_entry_finfo {
+	padding: 0 0 0 5px;
+	margin-top: 3px;
+    margin-bottom: 2px;
+	min-height: 10px;
+    clear: both;
+    font-size: 80%;
+}
+
+.content_view_user_related_entry_idea, .content_view_content_related_entry_idea {
+	border-left: 0.5em solid #4b9b07;
+}
+
+.content_view_user_related_entry_problem, .content_view_content_related_entry_problem {
+	border-left: 0.5em solid #d21034;
+}
+
+.content_view_user_related_entry_finfo, .content_view_content_related_entry_finfo {
+	border-left: 0.5em solid #ffc726;
+}
+
+#content_view_user_related_header,  #content_view_related_content_header {
+	height: 20px;
+	padding: 0.3em 1em 0 1em;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.content_rating_positive {
+	padding-right: 2px;
+	color: green;
+	font-weight:bold;
+	display:inline;
+}
+
+.content_rating_negative {
+	padding-right: 2px;
+	color: red;
+	font-weight:bold;
+	display:inline;
+}
+
+#content_view_content_rating_total {
+	padding-right: 2px;
+	display:inline;
+}
+
+#content_view_content_rating {
+	padding: 1px;
+}
+
+.content_view_content_vote {
+	padding-right: 2px;
+	display:inline-block;
+	vertical-align: middle;
+}
+
+a#cancel_reply_link {
+	padding: 10px;
+	float: right;
+	margin: 0;	
+}
+p#replying_to {
+	padding: 10px 20px 0 0;
+	margin: 0;
+	float: right;
+}
+
+div.scroll-box ul li.views div.user {
+	padding: 0 !important; 
+	margin: 0 !important;
+	background: none !important;	
+}

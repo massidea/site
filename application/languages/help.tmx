@@ -535,7 +535,7 @@
     <tu tuid='help-guidelines-paragraph5'>
 		<tuv xml:lang="en">
             <seg>
-                <h3>Content structure</h3>
+                <h2>Content structure</h2>
                 <p>
                     All contents in Massidea.org are following below format. 
                 </p>
@@ -583,7 +583,7 @@
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <h3>Sisällön rakenne</h3>
+                <h2>Sisällön rakenne</h2>
                 <p>
                     Kaikki sisällöt noudattavat seuraavaa formaattia.
                 </p>
@@ -634,7 +634,7 @@
     <tu tuid='help-guidelines-paragraph6'>
 		<tuv xml:lang="en">
             <seg>
-                <h3>Do you need more information?</h3>
+                <h2>Do you need more information?</h2>
                 <p>
                     For more detailed guidelines read Massidea.org - Content production tutorial.
                 </p> 
@@ -642,7 +642,7 @@
         </tuv>
 		<tuv xml:lang="fi">
             <seg>
-                <h3>Kaipaatko lisätietoa?</h3>
+                <h2>Kaipaatko lisätietoa?</h2>
                 <p>
                     Yksityskohtaisemmat ohjeistukset löytyvät Massidea.org -sisällöntuottamisen tutoriaalista.
                 </p> 

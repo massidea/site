@@ -5,7 +5,7 @@
 * { margin:0px; padding:0px; }
 
 /** Basic */
-html, body { background:#0089CF; height:100% }
+html, body { background:#0089CF;  }
 body {
 	font:80%/135% Arial, Helvetica, sans-serif;
 	color:#333; }
@@ -973,7 +973,7 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #search_results ul li.visions span { border-left:5px solid #FFC726; }
 
 /** GUI Text With Navigation **/
-#content #info-page { float:right !important; width:450px; margin:10px 10px 0px 30px; color:#929292; }
+#content #info-page { float:right !important; width:430px; margin:10px 10px 0px 30px; color:#929292; }
 #content #info-page h2 { color:#929292; }
 #sidebar.left { float:left !important; margin-top:10px; }
 

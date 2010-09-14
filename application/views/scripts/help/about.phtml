@@ -1,12 +1,11 @@
-<div id="help_container">
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="content">
 
     <?php echo $this->partial('help/sidebar.phtml'); ?>
     
-    <div id="help_content">
-        <div id="help_about_content">
-            <h1><?php echo $this->translate('help-about-us-header'); ?></h1>
-            <?php echo $this->translate('help-about-us-text'); ?>
-        </div>
+    <div id="info-page" class="narrow left">
+	    <h2><?php echo $this->translate('help-about-us-header'); ?></h2>
+        <?php echo $this->translate('help-about-us-text'); ?>
     </div>
 
 </div>
