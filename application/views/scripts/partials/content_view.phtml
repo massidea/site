@@ -89,7 +89,7 @@ $(document).ready(function() {
                 <div style="width:100%; float: left; overflow:hidden;">
                     <div style="float: left; padding-bottom: 3px;">
                         <span style="font-weight: bold; color: #d21034; vertical-align: middle;"><?php echo $this->translate('content-linked-challenges'); if(isset($linked_problems)) echo "(".sizeof($linked_problems).")"; ?></span>
-                        <?php if(isset($linked_problems) && sizeof($linked_problems) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_challenges_more" /><?php endif; ?>
+                        <?php if(isset($linked_problems) && sizeof($linked_problems) > 3): ?><img alt="" src="<?php echo $this->baseUrl("/images/icon_plus_tiny.png"); ?>" id="content_view_linked_content_challenges_more" /><?php endif; ?>
                     </div>
                     <?php if ($authenticated): ?>
                     <div style="float: right;">
@@ -145,7 +145,7 @@ $(document).ready(function() {
                 <div style="width:100%; float: left; overflow:hidden;">
                     <div style="float: left; padding-bottom: 3px;">
                         <span style="font-weight: bold; color: #ffc726"><?php echo $this->translate('content-linked-visions'); if(isset($linked_futures)) echo "(".sizeof($linked_futures).")";?></span>
-                    	<?php if(isset($linked_futures) && sizeof($linked_futures) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_visions_more" /><?php endif; ?>
+                    	<?php if(isset($linked_futures) && sizeof($linked_futures) > 3): ?><img alt="" src="<?php echo $this->baseUrl("/images/icon_plus_tiny.png"); ?>" id="content_view_linked_content_visions_more" /><?php endif; ?>
                     </div>
                     <?php if ($authenticated): ?>
                     <div style="float: right;">

@@ -554,7 +554,7 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 #content #user-page #profile-meta ul .user_profile_toplist { margin-left: -5px; }
 #content #user-page #profile-meta ul .user_profile_toplist li .user_profile_toplist_points { display: none; }
 #content #user-page #profile-meta ul .user_profile_toplist li .user_profile_toplist_rank { display: block; }
-
+#content #user-page #profile-meta ul .user_profile_toplist li #user_profile_toplist_title { float: right; }
 #content #user-page #profile-info { width:490px; float:left; margin-left:29px; }
 
 #content #user-page #profile-info #user-info ul { margin:-5px 0px 0px 0px; padding:0px; }

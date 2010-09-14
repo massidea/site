@@ -250,7 +250,7 @@ class AjaxController extends Oibs_Controller_CustomController
 		
 		$serializedParams = serialize($params);
 		$cacheFile = md5($serializedParams);
-		$cache = Zend_Registry::get('cache');
+		$cache = Zend_Registry::get('short_cache');
 		
 		if(!$cacheResult = $cache->load('UserTopList_'.$cacheFile)) {
 			$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
@@ -500,5 +500,28 @@ class AjaxController extends Oibs_Controller_CustomController
     		echo "0";
     	}
 		
+	}
+	
+	public function getnotificationsAction() {
+		$favouritesModel = new Default_Model_UserHasFavourites();
+
+		$auth = Zend_Auth::getInstance();
+		$id_usr = 0;
+		if ($auth->hasIdentity()) $id_usr = $auth->getIdentity()->user_id;
+
+		$notifications = $favouritesModel->getAllUpdatedContents($id_usr);
+		
+		if($notifications) {
+			foreach($notifications as $k => $notification) {
+				foreach($notification as $l => $content) {
+					$this->gtranslate->setLangFrom($content['original']['language_cnt']);
+					$translang = $this->gtranslate->getLangPair();
+					$notifications[$k][$l]['translated'] = $this->gtranslate->translateContent($content['original']);
+					$notifications[$k][$l]['original']['translang'] = $translang;
+			    	$notifications[$k][$l]['translated']['translang'] = $translang;
+				}
+			}
+		}
+		$this->view->notifications = $notifications;
 	}
 }

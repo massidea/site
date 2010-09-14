@@ -65,7 +65,7 @@
         if ($id == 0) {
             $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');   
         }
-        
+
         // Get specific content data -- this could fail? Needs check?
         $contentModel = new Default_Model_Content();
         $contentData = $contentModel->getDataAsSimpleArray($id);

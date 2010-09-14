@@ -1,0 +1,75 @@
+<?php $language = Zend_Layout::getMvcInstance()->getView()->language; //print_r($this->notifications);die; ?>
+
+<?php if($this->notifications): ?>
+<div id="notifications">
+<?php foreach($this->notifications as $k => $contentArray): ?>
+	<ul id="notifications_<?php echo $k; ?>">
+	
+	<?php foreach($contentArray as $id => $dataArray): ?>
+		<li class="<?php
+			 foreach($dataArray['updates']['bins'] as $bin => $binArray)
+			 	echo "notification_".$bin." "
+		 ?>" id="notification_id_<?php echo $id; ?>">
+		 <img src="<?php echo $this->url(array('controller' => 'account',
+                            'action' => 'profilethumb',
+                            'id' => $dataArray['updates']['latest']['id_usr'],
+                            'language' => $language,
+                            'thumb' => 'true'),
+                            'lang_default', true)?>"/>
+         <a href="<?php echo $this->url(array('controller' => 'account',
+                             'action' => 'view',
+                             'user' => $dataArray['updates']['latest']['login_name_usr'],
+                             'language' => $language),
+                             'lang_default', true); ?>"><?php echo $dataArray['updates']['latest']['login_name_usr']; ?></a>
+         <span>has made new <?php echo $dataArray['updates']['latest']['bin']; ?> to your <?php echo $k ?> content: </span>
+         <a href="<?php echo  $this->url(array('content_id' => $id,
+                             'language' => $language),
+                             'content_shortview', true); ?>"><?php echo $dataArray['original']['title_cnt']; ?> </a>
+         <span><?php echo $dataArray['updates']['latest']['time']; ?></span>
+		 <?php if($dataArray['updates']['total'] > 1): ?><a href="#" onClick="return false;">View older</a>
+		 <span>(<?php echo $dataArray['updates']['total']-1; ?>)</span>
+		 
+		 <ul class="notifications_older">
+		 	<?php foreach($dataArray['updates']['bins'] as $bin => $binArray):
+				if($bin == $dataArray['updates']['latest']['bin']) {
+					$amount = $binArray['amount']-1;
+		 			if($amount == 0) continue;
+		 		}
+		 		else $amount = $binArray['amount'];
+		 	?>
+		 	<li>
+		 		<span>
+		 		<?php echo $amount; ?> new <?php echo $bin ?>s: </span>
+		 		
+		 		<ul>
+		 		<?php foreach($binArray['values'] as $key => $user):
+						if($bin == $dataArray['updates']['latest']['bin'] && $key == 0) continue;
+		 		?>
+		 			<li>
+				 		<img src="<?php echo $this->url(array('controller' => 'account',
+		                            'action' => 'profilethumb',
+		                            'id' => $user['id_usr'],
+		                            'language' => $language,
+		                            'thumb' => 'true'),
+		                            'lang_default', true)?>"/>
+				         <a href="<?php echo $this->url(array('controller' => 'account',
+				                             'action' => 'view',
+				                             'user' => $user['login_name_usr'],
+				                             'language' => $language),
+				                             'lang_default', true); ?>"><?php echo $user['login_name_usr']; ?></a>
+				         
+				         <span>: <?php echo $dataArray['updates']['latest']['time']; ?></span>
+			 		 </li>
+			 	<?php endforeach; ?>
+			 	</ul>
+		 	</li>
+		 	<?php endforeach; ?>
+		 </ul>                       
+        <?php endif; ?>
+		</li>
+		
+	<?php endforeach; ?>
+	</ul>
+<?php endforeach; ?>
+</div>
+<?php endif; ?>

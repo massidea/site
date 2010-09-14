@@ -90,6 +90,7 @@ class Default_Model_ContentHasUser extends Zend_Db_Table_Abstract
 			$row->id_cnt = $id_cnt;
 			$row->id_usr = $id_usr;
 			$row->owner_cnt_usr = $owner;
+			$row->last_checked = new Zend_Db_Expr('NOW()');
 			
 			// Add row to database
 			$row->save();

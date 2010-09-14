@@ -65,3 +65,7 @@
 }
 
 #backdrop { filter:alpha(opacity=65) !important;zoom:1 !important; }
+
+#content #user-page #profile-meta ul .user_profile_toplist li span { float:right; display:inline; }
+#content #user-page #profile-meta ul .user_profile_toplist li { clear: both; }
+#content #user-page #profile-meta ul .user_profile_toplist li strong { display:inline; float:left; }
