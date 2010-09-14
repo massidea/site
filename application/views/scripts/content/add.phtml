@@ -1,7 +1,8 @@
 <?php $this->headScript()->appendFile($this->baseUrl('/js/ContentForm.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-min.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-unicode-base.js')); ?>
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css')); ?>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 
 <?php $previewUrl = $this->url(array('controller' => 'content',
 									 'action' => 'preview',
@@ -23,7 +24,7 @@ var previewUrl = '<?php echo $previewUrl; ?>';
 	    $this->headScript()->captureEnd(); 
     }
 ?>
-<div id="form_content_add_container" style="float: left;">
+<div id="add-content-page" class="narrow left">
 	
 	<div id="form_content_realcontent" style="display: block">
         <h2>
@@ -95,21 +96,18 @@ var previewUrl = '<?php echo $previewUrl; ?>';
     </div>
     
     <div id="form_content_previewcontent" style="display: none"></div>
-    
-    <div class="IAmABufferHearMeRoar" style="clear:both; height:100px;"></div>
-    
 </div>
-
-<div class="right_side" style="padding: 0px; margin-right: 5px; margin-top: 0px;">
+</div>
+<div id="sidebar">
 
     <?php $contentType = $this->short_contenttype; ?>
     
-    <p class="right_side_title_small" style="padding-top: 0px; padding-bottom:3px; color:#c0c0c0;">
-        <?php echo $this->translate('content-add-'.$contentType.'-right-box-header'); ?>
-    </p>
     
-    <div class="top_right_box" style="margin-bottom:10px; background: #EEEEEE; width:100%; margin-left:3px; padding:3px;">
-        <div>
+    <div class="box">
+	    <h2 class="right_side_title_small">
+	        <?php echo $this->translate('content-add-'.$contentType.'-right-box-header'); ?>
+	    </h2>
+        <div class="box-content">
             <?php // What is this? 
             if($contentType == "problem") {
                 ?>
@@ -189,4 +187,3 @@ var previewUrl = '<?php echo $previewUrl; ?>';
             ?>
         </div>
     </div>
-</div>

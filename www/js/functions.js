@@ -594,7 +594,7 @@ function multiFile(obj) {
 		if ($(obj).is(':visible')) {
 			$(obj).hide();
 			$(obj).before("<input id='content_file_upload' type='file' onchange='multiFile(this);' name='content_file_upload[]' />");
-			$(obj).parent().after("<div class='file_row'><div class='clear' /><img id='removeFile' src='" + baseUrl + "/images/icon_red_cross.png' style='cursor: pointer'/><div class='content_file_list_file'>"+ file + "</div></div>");
+			$(obj).parent().after("<div class='file_row field'><div class='clear' /><img id='removeFile' class='right' src='" + baseUrl + "/images/icon_red_cross.png' style='cursor: pointer'/><div class='content_file_list_file'>"+ file + "</div></div>");
 			$("#removeFile").click(function() {
 				$(this).parent().remove();
 				$(obj).remove();

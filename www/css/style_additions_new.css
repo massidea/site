@@ -73,32 +73,18 @@ background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom;}
     list-style:none;}
 #right_side #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
 .progress {
-	width: 240px;
-    #width: 238px; /* IE HACK :( */
-    height: 18px;
-    padding-left: 19px;
-	font-size: 12px;
-	overflow: hidden;
     background: #FFCFCF;
     background-image: url('../images/icon_thumb_down.png');
     background-position: left;
     background-repeat: no-repeat;
-    border: 1px solid #7F9DB9;
-    float:left;
+    text-indent: 20px;
 }
 .progress_ok {
-    width: 240px;
-    #width: 238px; /* IE HACK :( */
-    height: 18px;
-    padding-left: 19px;
-	font-size: 12px;
-	overflow: hidden;
     background: white;
     background-image: url('../images/icon_thumb_up.png');
     background-position: left;
     background-repeat: no-repeat;
-    border: 1px solid #7F9DB9;
-    float:left;
+    text-indent: 20px;
 }
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
@@ -540,3 +526,13 @@ div.scroll-box ul li.views div.user {
 	margin: 0 !important;
 	background: none !important;	
 }
+
+div#progressbar_content_language {
+	margin: 0 !important;	
+}
+
+#content #add-content-page #add_content_form label input {
+	margin-right: 5px;
+	margin-left: 5px;
+	width:auto !important;
+	float:none !important; }

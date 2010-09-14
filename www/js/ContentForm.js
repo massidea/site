@@ -84,20 +84,20 @@ $(document).ready(function() {
 
 		if(curLength < thisMax) {
 			progressText = curLeft + " until limit";
-			$(thisProgress).attr('class','progress_ok');
+			$(thisProgress).attr('class','progress_ok limit');
 		}
 		if(curLength > thisMax) {
 			progressText = Math.abs(curLeft) + " too many";
-			$(thisProgress).attr('class','progress');
+			$(thisProgress).attr('class','progress limit');
 		}
 		if(curLength == thisMax) {
 			progressText = "at the limit";
-			$(thisProgress).attr('class','progress_ok');
+			$(thisProgress).attr('class','progress_ok limit');
 		}
 		
 		if(curLength == 0 && thisReq) {
 			progressText = "required";
-			$(thisProgress).attr('class','progress');
+			$(thisProgress).attr('class','progress limit');
 		}
 
 		$(thisProgress).html(progressText);
@@ -109,10 +109,10 @@ $(document).ready(function() {
 			var thisProgress = $('#progressbar_' + obj.name);
 			if ( $(obj).attr('value') != 0 || thisReq == 0) {
 				progressText = "ok";
-				$(thisProgress).attr('class', 'progress_ok');
+				$(thisProgress).attr('class', 'progress_ok limit');
 			} else {
 				progressText = "required";
-				$(thisProgress).attr('class', 'progress');
+				$(thisProgress).attr('class', 'progress limit');
 			}
 			$(thisProgress).html(progressText);
 		}

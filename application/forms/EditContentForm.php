@@ -43,7 +43,7 @@ class Default_Form_EditContentForm extends Zend_Form
              ->removeDecorator('DtDdWrapper');
 
 		
-		$this->setName('edit_content_form');
+		$this->setName('add_content_form');
         $this->setAction($baseUrl.'/'.$lang.'/content/edit/'.$contentId);
 		$this->addElementPrefixPath('Oibs_Decorators', 
 						'Oibs/Decorators/',
@@ -307,6 +307,7 @@ class Default_Form_EditContentForm extends Zend_Form
         				   ->setDecorators(array('FormElementDecorator'))
         				   ->setLabel($translate->_('content-add-file-delete-files-label'));
         				   //->setDecorators(array('SettingsCheckboxDecorator'));
+        //Zend_Debug::dump($uploadedFilesBoxes->getDecorators()); die;
         
         // References
 		$references = new Zend_Form_Element_Textarea('content_references');
