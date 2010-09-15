@@ -65,78 +65,6 @@ function reloadCaptcha(baseUrl){
 }
 
 /**
-*	Hide or show an element and change some innerhtml related or more from user -block
-*
-*	@param e: Affected element
-*	@param a: The link element which needs the image changed
-*	@param t: The link text after the image is changed
-*/
-function hideshow2(e, a, t) {
-    if (e.length < 1) { return; }
-    
-    var element = document.getElementById(e);
-    var link = document.getElementById(a);
-
-    // search the innerHTML of the link element, if right to down, change image.. and the opposite
-    if (link.innerHTML.search(/down/i) >= "0") {
-        link.innerHTML = "<img src=\"/oibs190/www/images/icon_arrow_right.png\" alt=\"\" /> " + t;
-    } else {
-        link.innerHTML = "<img src=\"/oibs190/www/images/icon_arrow_down.png\" alt=\"\" /> " + t;
-    }
-
-    if (element.style.display == "none") {
-        element.style.display = "block"; 
-    } else { 
-        element.style.display = "none"; 
-    }
-}
-
-/**
-*   Hide or show the more from user-box and edit an image
-*
-*   @param e: Element to hide or show
-*   @param a: The link element which needs it's image changed
-*/
-function cycleMoreBox(e, a) {
-    if (e.length < 1) { return; }
-    
-    var element = document.getElementById(e);
-    var link = document.getElementById(a);
-
-    // search the link element for plus or minus state and replace with opposite
-    // (plus to minus OR minus to plus)
-    if (link.innerHTML.search(/minus/i) >= "0") {
-        link.innerHTML = "<img src=\"/images/icon_plus_tiny.png\" alt=\"\" /> ";
-    } else {
-        link.innerHTML = "<img src=\"/images/icon_minus_tiny.png\" alt=\"\" /> ";
-    }
-
-    // hide or show the element
-    if (element.style.display == "none") {
-        element.style.display = "block"; 
-    } else { 
-        element.style.display = "none"; 
-    }
-}
-
-/**
-*   Hide or show an element and change innerhtml (link text)
-*
-*   @deprecated     Not in use
-*   @param e1:      Element to hide / show
-*/
-function hideshow(e1) {
-    if (e1.length < 1) { return; }
-    var element1 = document.getElementById(e1);
-
-    if (element1.style.display == "none") {
-        element1.style.display = "block"; 
-    } else { 
-        element1.style.display = "none"; 
-    }
-}
-
-/**
 *   Activate the given element, deactivate all others.
 *   The tabs (clickable elements) must be named t0,t1,t2...tn
 *
@@ -154,59 +82,6 @@ function replaceActive(element, max, common) {
             document.getElementById(common+i).className = "";
         }
     }
-}
-
-/**
-*   Needs commenting!
-*
-*   @param value
-*   @param section
-*   @param cnttype
-*/
-function changeUrlValue(value, section, cnttype)
-{
-    var url = "http://oibs2.projects.tamk.fi/content/editcontent/" +cnttype;
-    if (section == "industry")
-    {
-        if(value == 0)
-        {
-            window.location = url;
-        }
-        else
-        {
-            url = url + "?industryinitial=" + value;
-            window.location = url;
-        }
-    }
-    else if(section == "division")
-    {
-        if(value == 0)
-        {
-            window.location = url;
-        }
-        else
-        {
-            if (url.indexOf('?') != -1)
-            {
-                
-                if (url.indexOf('industryinitial=') != -1)
-                {
-                    url = url + "&divisionid=";
-                    var position = url.indexOf('industryinitial=')+29;
-                    var url = setCharAt(url, position, value);
-                }
-            }
-        }
-    }
-}
-
-/**
-*   Needs commenting!
-*/
-function replyToComment(id)
-{
-    var d = document.getElementById("replyto");
-    d.value = id;
 }
 
 /**
@@ -283,31 +158,6 @@ function enableSubmit(form)
 function redirectDelay(url, time)
 {
     setTimeout('window.location = "' + url + '"', time);
-}
-
-/**
-*   Deprecated function for changing images based on clicks (no reload!)
-*   
-*   @deprecated
-*   @param to: image to be changed to src
-*   @param from: image to be changed from as this object
-*   @param langcat: language(from php)
-*/
-function imageChanger(to, langcat, host) {
-    var from = document.getElementById("frontpage_imagemap");
-    var newImage = host + '/images/' + langcat + '/Oibs_frontpage_' + to + '.png';
-    from.src = newImage;
-}
-
-/**
-*   @deprecated
-*   @param from: Change this element's innerHTML
-*   @param to: Change "from"'s innerHTML to this element's innerHTML
-*/
-function frontpageChanger(from, to) {
-    var placeholder = document.getElementById(from);
-    var z = document.getElementById(to);
-    placeholder.innerHTML = z.innerHTML;
 }
 
 /**
