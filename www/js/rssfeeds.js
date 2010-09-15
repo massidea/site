@@ -3,14 +3,12 @@ $("document").ready(function() {
 });
 
 function getFeed() {
-	var jsmeta = jQuery.parseJSON($("#jsmetabox").text());
-	
 	data = new Array();
-	data = {'type': jsmeta.currentPage[0].type, 'id': jsmeta.currentPage[0].id };
+	data = {'type': jsMeta.currentPage[0].type, 'id': jsMeta.currentPage[0].id };
 	$.ajax({
 		type: "GET",
 		//async: false,
-		url: jsmeta.baseUrl + "/en/ajax/readrss", //urls.commentUrls[0].postCommentUrl,
+		url: jsMeta.baseUrl + "/en/ajax/readrss",
 		data: data,
 		success: function(msg) {
 			$('#rss').html(msg);
