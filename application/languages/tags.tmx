@@ -7,7 +7,7 @@
 <body>
 	<tu tuid='tag-show-all'>
 		<tuv xml:lang="en"><seg>Show all</seg></tuv>
-		<tuv xml:lang="fi"><seg>Näytä kaikki</seg></tuv>
+		<tuv xml:lang="fi"><seg>N√§yt√§ kaikki</seg></tuv>
 	</tu>
 	<tu tuid='tag-cloud'>
 		<tuv xml:lang="en"><seg>Tag cloud</seg></tuv>
@@ -23,7 +23,7 @@
 	</tu>
     <tu tuid='tag-futureinfo'>
 		<tuv xml:lang="en"><seg>Visions</seg></tuv>
-		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymät</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuuden n√§kymyt</seg></tuv>
 	</tu>
     <tu tuid='tag-all'>
 		<tuv xml:lang="en"><seg>All</seg></tuv>
@@ -35,11 +35,11 @@
 	</tu>
     <tu tuid='tag-show'>
 		<tuv xml:lang="en"><seg>Show</seg></tuv>
-		<tuv xml:lang="fi"><seg>Näytä</seg></tuv>
+		<tuv xml:lang="fi"><seg>N√§yt√§</seg></tuv>
 	</tu>
    <tu tuid='tag-sort'>
 		<tuv xml:lang="en"><seg>Order by</seg></tuv>
-		<tuv xml:lang="fi"><seg>Järjestys</seg></tuv>
+		<tuv xml:lang="fi"><seg>J√§rjestys</seg></tuv>
 	</tu>
 	<tu tuid='tag-name'>
 		<tuv xml:lang="en"><seg>Name</seg></tuv>
@@ -47,11 +47,11 @@
 	</tu>
     <tu tuid='tag-popularity'>
 		<tuv xml:lang="en"><seg>Popularity</seg></tuv>
-		<tuv xml:lang="fi"><seg>Käyttöaste</seg></tuv>
+		<tuv xml:lang="fi"><seg>K√§ytt√∂aste</seg></tuv>
 	</tu>
 	<tu tuid='tag-publication'>
 		<tuv xml:lang="en"><seg>Age</seg></tuv>
-		<tuv xml:lang="fi"><seg>Ikä</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ik√§</seg></tuv>
 	</tu>
     <tu tuid='tag-view-title'>
 		<tuv xml:lang="en"><seg>Massidea.org Tags</seg></tuv>
@@ -59,15 +59,15 @@
 	</tu>
 	<tu tuid='tag-view-header'>
 		<tuv xml:lang="en"><seg>Contents that have the tag: </seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisällöt, joilla on avainsanat: </seg></tuv>
+		<tuv xml:lang="fi"><seg>Sis√§ll√∂t, joilla on avainsanat: </seg></tuv>
 	</tu>
     <tu tuid='tag-cloud-header'>
 		<tuv xml:lang="en"><seg>All the tags used on the site, size equals popularity.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Kaikki sivustolla käytetyt avainsanat, suurempi on suositumpi. </seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaikki sivustolla k√§ytetyt avainsanat, suurempi on suositumpi. </seg></tuv>
 	</tu>
 	<tu tuid='tag-cloud-number'>
 		<tuv xml:lang="en"><seg>Number of tags</seg></tuv>
-		<tuv xml:lang="fi"><seg>Lukumäärä</seg></tuv>
+		<tuv xml:lang="fi"><seg>Lukum√§√§r√§</seg></tuv>
 	</tu>
 	<tu tuid='tag-cloud-show-all'>
 		<tuv xml:lang="en"><seg>All</seg></tuv>
@@ -95,11 +95,11 @@
 	</tu>
 	<tu tuid='tag-cloud-sortby'>
 		<tuv xml:lang="en"><seg>Sort by</seg></tuv>
-		<tuv xml:lang="fi"><seg>Järjestys</seg></tuv>
+		<tuv xml:lang="fi"><seg>J√§rjestys</seg></tuv>
 	</tu>
 	<tu tuid='tag-cloud-show'>
 		<tuv xml:lang="en"><seg>Show</seg></tuv>
-		<tuv xml:lang="fi"><seg>Näytä</seg></tuv>
+		<tuv xml:lang="fi"><seg>N√§yt√§</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-cloudmsg'>
 		<tuv xml:lang="en"><seg>Tag cloud</seg></tuv>
@@ -115,28 +115,26 @@
 	</tu>
 	<tu tuid='tag-view-contents'>
 		<tuv xml:lang="en"><seg>Contents</seg></tuv>
-		<tuv xml:lang="fi"><seg>Sisältö</seg></tuv>
+		<tuv xml:lang="fi"><seg>Sis√§lt√∂</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-campaigns-groups'>
 		<tuv xml:lang="en"><seg>Campaigns and groups</seg></tuv>
-		<tuv xml:lang="fi"><seg>Kampanjat ja ryhmät</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kampanjat ja ryhm√§t</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-users'>
 		<tuv xml:lang="en"><seg>Users</seg></tuv>
-		<tuv xml:lang="fi"><seg>Käyttäjät</seg></tuv>
+		<tuv xml:lang="fi"><seg>K√§ytt√§j√§t</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-contents-intro'>
 		<tuv xml:lang="en"><seg>added to this topic, including challenges, vision and ideas</seg></tuv>
-		<tuv xml:lang="fi"><seg>lisätty tähän aiheeseen, sisältäen haasteet, visiot ja ideat</seg></tuv>
+		<tuv xml:lang="fi"><seg>lis√§tty t√§h√§n aiheeseen, sis√§lt√§en haasteet, visiot ja ideat</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-campaigns-groups-intro'>
 		<tuv xml:lang="en"><seg>producing content to this topic</seg></tuv>
-		<tuv xml:lang="fi"><seg>tähän aiheeseen sisältöä tuottavat</seg></tuv>
+		<tuv xml:lang="fi"><seg>t√§h√§n aiheeseen sis√§lt√∂√§ tuottavat</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-users-intro'>
 		<tuv xml:lang="en"><seg>indicating intrest to this topic</seg></tuv>
 		<tuv xml:lang="fi"><seg>osoittavat kiinnostusta aiheeseen</seg></tuv>
 	</tu>
 </body>
-
-
