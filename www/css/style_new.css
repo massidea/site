@@ -419,22 +419,25 @@ width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; }
 #content #content-page-additional-functions #linked-with .link-target { width:112px; float:left; }
 
 /* Content Page --> Additional functions --> Challenge, Idea & Vision */
-#content #content-page-additional-functions #linked .linked-challenge,
-#content #content-page-additional-functions #linked-with .linked-challenge,
+#content #content-page-additional-functions #linked .linked-problem,
+#content #content-page-additional-functions #linked-with .linked-problem,
 #content #content-page-additional-functions #linked .linked-idea,
 #content #content-page-additional-functions #linked-with .linked-idea,
-#content #content-page-additional-functions #linked .linked-vision,
-#content #content-page-additional-functions #linked-with .linked-vision {
+#content #content-page-additional-functions #linked .linked-finfo,
+#content #content-page-additional-functions #linked-with .linked-finfo {
 	width:350px; float:right; padding-left:4px; color:#000; }
 
-#content #content-page-additional-functions #linked .linked-challenge,
-#content #content-page-additional-functions #linked-with .linked-challenge {
+#content #content-page-additional-functions #linked .linked-problem,
+#content #content-page-additional-functions #linked-with .linked-problem,
+#content #content-page-additional-functions #linking-contents ul li span.linked-problem {
 	border-left:5px solid #D21034; }
 #content #content-page-additional-functions #linked .linked-idea,
-#content #content-page-additional-functions #linked-with .linked-idea {
+#content #content-page-additional-functions #linked-with .linked-idea,
+#content #content-page-additional-functions #linking-contents ul li span.linked-idea {
 	border-left:5px solid #4B9B07; }
-#content #content-page-additional-functions #linked .linked-vision,
-#content #content-page-additional-functions #linked-with .linked-vision {
+#content #content-page-additional-functions #linked .linked-finfo,
+#content #content-page-additional-functions #linked-with .linked-finfo,
+#content #content-page-additional-functions #linking-contents ul li span.linked-finfo {
 	border-left:5px solid #FFC726; }
 
 #content #content-page-additional-functions #link-info {

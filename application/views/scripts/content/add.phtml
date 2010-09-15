@@ -49,13 +49,11 @@ var previewUrl = '<?php echo $previewUrl; ?>';
         </p>
         <?php endif; ?>
             
-        <?php
-        if($this->relatesToId != 0) {
-        ?>
-            <div id="linkedto" class="linkedto">
-                <p class="linkedtotext">
+        <?php if($this->relatesToId != 0): ?>
+            <div id="linked">
+                <div class="link-target"><strong>
                     <?php echo $this->translate('content-is-linked-to'); ?>
-                </p>
+                </strong></div>
                 <?php 
                 if($this->relatesToType == "problem") { 
                     $color = "red";
@@ -68,13 +66,12 @@ var previewUrl = '<?php echo $previewUrl; ?>';
                 }
                 ?>
                 
-                <div class="<?php echo $this->relatesToType; ?>Line"></div>
+                <div class="linked-<?php echo $this->relatesToType; ?>">
                  
                 <!-- 
                 <img class="linkedtoimage" src="/images/<?php echo $color; ?>_vertical_line_small.png" alt="<?php echo $color; ?>" />
                 -->
                  
-                <p style="padding-top: 9px;">
                     <a href="<?php echo $this->url(array('content_id' => $this->relatesToId, 
                                                      'language' => $this->language), 
                                                      'content_shortview', true); ?>">
@@ -85,11 +82,10 @@ var previewUrl = '<?php echo $previewUrl; ?>';
                             echo $this->relatesToHeader;
                         ?>
                     </a>
-                </p>
+                </div>
+                <div class="clear"></div>
             </div>
-        <?php
-        }
-        ?>
+        <?php endif; ?>
         
         <?php echo $this->form; ?>
         
