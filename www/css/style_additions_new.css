@@ -810,3 +810,62 @@ div#progressbar_content_language {
 div.form_userlist_element_label_right label {
 	font-size: 0.9em;	
 }
+
+#search_result_content_pagination_top,
+#search_result_content_pagination_bottom {
+    clear: both;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 12pt;
+}
+
+#search_result {
+    width: 500px;
+    overflow: hidden;
+    float: left;
+    font-size: 14px;
+}
+
+.content_entry_container {
+	margin-top: 5px;
+	padding: 0;
+    clear: both;
+    
+    border: 0px solid blue;
+    overflow: hidden;
+}
+
+.content_container_left {
+    width: 70px;
+	padding: 0;
+	margin: 0;
+    float: left;
+}
+
+.content_container_right {
+	float: left;
+	padding: 0;
+    width: 420px;
+    border: 0px solid red;
+}
+
+.content_container_right .translate {
+	margin-top: 2px;
+}
+
+.content_entry_lead {
+	padding: 0;	
+}
+
+.content_entry_user_image_problem {
+    border-left: 6px solid #D21034;
+}
+
+.content_entry_user_image_idea {
+    border-left: 6px solid #4B9B07;
+}
+
+.content_entry_user_image_finfo {
+    border-left: 6px solid #FFC726;
+}
