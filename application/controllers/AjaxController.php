@@ -510,7 +510,8 @@ class AjaxController extends Oibs_Controller_CustomController
 		if ($auth->hasIdentity()) $id_usr = $auth->getIdentity()->user_id;
 
 		$notifications = $favouritesModel->getAllUpdatedContents($id_usr);
-		
+		//print_r($notifications);die;
+		$ids = array();
 		if($notifications) {
 			foreach($notifications as $k => $notification) {
 				foreach($notification as $l => $content) {
@@ -519,9 +520,15 @@ class AjaxController extends Oibs_Controller_CustomController
 					$notifications[$k][$l]['translated'] = $this->gtranslate->translateContent($content['original']);
 					$notifications[$k][$l]['original']['translang'] = $translang;
 			    	$notifications[$k][$l]['translated']['translang'] = $translang;
+			    	$ids[] = $l;
 				}
 			}
 		}
+		else $this->_helper->viewRenderer->setNoRender(true);
+
+		$jsonIds = json_encode($ids);
+		
 		$this->view->notifications = $notifications;
+		$this->view->ids = $jsonIds;
 	}
 }

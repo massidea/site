@@ -333,8 +333,6 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 			$updatedContents['fvr'] = $this->_fetchUpdatedContents($id_usr,$followsToFetch['fvr_follows'],"fvr");
 		}
 		if($this->_noNewContents($updatedContents)) return false;
-
-		//TODO: Poista kellonajat keystä tietojen katoamisen vuoksi
 		
 		//print_r($updatedContents);die;
 		
@@ -411,11 +409,11 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 				$merge[$k][$id_cnt]['translated'] = null;
 				
 				$total = 0;
-				foreach($updatedCounts as $k => $binArray) {
+				foreach($updatedCounts as $l => $binArray) {
 					foreach($binArray as $bin => $contentArray) {
 						if(isset($contentArray[$id_cnt])) {
 							$total += $contentArray[$id_cnt];
-							$merge[$k][$id_cnt]['updates']['bins'][$followable[$bin]]['amount'] = $contentArray[$id_cnt];
+							$merge[$l][$id_cnt]['updates']['bins'][$followable[$bin]]['amount'] = $contentArray[$id_cnt];
 						}
 					}
 				}
@@ -433,7 +431,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		
 		//print_r($followable);die;
 		$contents = array();
-		//print_r($merge);
+		//print_r($merge);die;
 		//print_r($sortedUpdated);die;
 		//print_r($actorList);die;
 		
