@@ -43,7 +43,7 @@
 				<?php foreach($this->user_content as $user_cnt): ?>
 					<div id="content_view_user_related_entry_<?php echo $user_cnt['id_cnt']; ?>" class="content_view_user_related_entry_<?php echo $user_cnt['key_cty'];?>">
 						<p class="bold"><a href="<?php echo $this->url(array('controller' => 'content', 'action' => 'view', 'id' => $user_cnt['id_cnt'], 'language' => $this->language), 'lang_default', true); ?>"><?php echo $user_cnt['title_cnt']; ?></a></p>
-						<p><?php echo $this->translate('content-view-user-related-views'); echo $user_cnt['views_cnt']; ?><p>
+						<p><?php echo $this->translate('content-view-user-related-views'); echo $user_cnt['views_cnt']; ?></p>
 					</div>
 				<?php endforeach; ?>
 			</div>

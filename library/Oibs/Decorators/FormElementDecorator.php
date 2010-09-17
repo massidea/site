@@ -5,7 +5,6 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
 	{
 		$element = $this->getElement();
 		$label = $element->getLabel();
-        
 		/*
 		if ($translator = $element->getTranslator())
 		{
@@ -46,7 +45,7 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
         
 		if( $element->isrequired()  && $errors == "" || $element instanceof Zend_Form_Element_Select )
 		{
-            $text = '<div id="progressbar_' .  $name . '" class="progress"></div>';
+            $text = '</div><div id="progressbar_' .  $name . '" class="progress limit">';
 		}
         
         // Get the attributes here, and remove annoying helper attribute
@@ -71,11 +70,8 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
 		{
             return '';
         }
-        //return '<div class="error_messages">' .
-        //       $element->getView()->formErrors($messages) . '</div>';
-        return '<div id="progressbar_'.$belongs.'" class="progress">' .
+        return '<div id="progressbar_'.$belongs.'" class="limit">' .
                $element->getView()->formErrors($messages) . 
-               //Zend_Debug::dump($belongs) . 
         	   '</div>';
     }
 
@@ -90,7 +86,7 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
             return '';
         }
         //return '<div class="form_element_' . $this->getElement()->getName() . '_description">' . $desc . '</div>';
-        return '<div class="form_element_helptext">' . $desc . '</div>';
+        return '<small class="right">' . $desc . '</small>';
     }
 
     public function render($content)
@@ -114,20 +110,18 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
         $desc      = $this->buildDescription();
         $name      = $this->getElement()->getName();
         
-        $output = '<div id="form_element_' . $name .'_container" class="form_element" >
-                    <div id="' . $name . '_div">
-                        <div class="form_element_header">'
+        $output = '<div id="form_element_' . $name .'_container" class="row" >
+                        <div class="field-label">'
                             . $desc
                             . $label
                         . '</div>
-                        <div style="clear: both;"></div>
-                        <div class="form_element_input">'
+                        <div class="field">'
                             . $input
+                        . '</div>'
                             . $errors
-                        . '<div style="clear: both;"></div>
-                        </div>
+                        . '
                     </div>
-                 <div style="clear: both;"></div></div>';
+                    <div class="clear"></div>';
         
         /*if($name == "content_research" || $name == "content_threat" || $name == "content_solution") {
             $output .= '<div id="form_helptext_optional" class="form_helptext" >'

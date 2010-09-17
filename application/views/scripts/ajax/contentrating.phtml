@@ -10,31 +10,28 @@
 ?>
 
 <div id="content_view_content_rating">
-	<span id="current_rating">
-		<div class="content_rating_positive">
+		<div class="content_rating_positive left">
 			<?php echo $this->rating['positive_percentage'] . '%'; ?>
 		</div>
 		
-		<div class="content_view_content_vote">
+		<div class="content_view_content_vote left">
 	        <?php if($this->hasIdentity): ?>
-				<img id="voteup" onclick="ajaxLoad_vote('1');" src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="Vote up" />
-				<img id="votedown" onclick="ajaxLoad_vote('-1');" src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="Vote down" />
+				<img id="voteup" class="left" onclick="ajaxLoad_vote('1');" src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="Vote up" />
+				<img id="votedown" class="left" onclick="ajaxLoad_vote('-1');" src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="Vote down" />
 			<?php else: ?>
-				<img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="Vote up" />
-				<img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="Vote down" />
+				<img class="left" src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" alt="Vote up" />
+				<img class="left" src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" alt="Vote down" />
 			<?php endif; ?>
 		</div>
 		
-		<div class="content_rating_negative">
+		<div class="content_rating_negative left">
 			<?php echo $this->rating['negative_percentage'] . '%'; ?>
 		</div>
-		<div id="content_view_content_rating_total">
-			<?php echo '(' . $this->rating['total'] . ' ' . $this->translate('content-rating') . ')'; ?>
-		</div>
+		<div id="content_view_content_rating_total" class="left">
+			<?php echo '(' . $this->rating['total'] . ' ' . $this->translate('content-rating') . ')'; ?></div>
 		
 		<?php if(!$this->hasIdentity): ?>
-		<div class="content_view_content_vote">
-			<span>
+		<div class="content_view_content_vote left">
 				<a href="<?php echo $loginLink;?>">
 					<?php echo $this->translate("content-login"); ?>
 				</a>
@@ -43,8 +40,6 @@
 					<?php echo $this->translate("content-signup"); ?>
 				</a>
 				<?php echo $this->translate("content-torate"); ?>
-			</span>
 		</div>
 		<?php endif; ?>
-        </span>
 </div>

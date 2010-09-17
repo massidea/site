@@ -73,32 +73,18 @@ background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom;}
     list-style:none;}
 #right_side #campaigns ul li span { padding:0px 0px 0px 8px; display:block; border-left:5px solid #0089CF;}
 .progress {
-	width: 240px;
-    #width: 238px; /* IE HACK :( */
-    height: 18px;
-    padding-left: 19px;
-	font-size: 12px;
-	overflow: hidden;
     background: #FFCFCF;
     background-image: url('../images/icon_thumb_down.png');
     background-position: left;
     background-repeat: no-repeat;
-    border: 1px solid #7F9DB9;
-    float:left;
+    text-indent: 20px;
 }
 .progress_ok {
-    width: 240px;
-    #width: 238px; /* IE HACK :( */
-    height: 18px;
-    padding-left: 19px;
-	font-size: 12px;
-	overflow: hidden;
     background: white;
     background-image: url('../images/icon_thumb_up.png');
     background-position: left;
     background-repeat: no-repeat;
-    border: 1px solid #7F9DB9;
-    float:left;
+    text-indent: 20px;
 }
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
@@ -434,3 +420,452 @@ p#replying_to {
 
 .first_tag { color: #003581; }
 .second_tag { }
+
+.user_content_edit ul { border: 1px solid #999; list-style:none outside none; position: absolute; display: none; width: 160px; background: none repeat scroll 0 0 #EEEEEE; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px; }
+.user_content_edit ul li { border: 2px outset #CCC; padding: 2px; } 
+.user_content_edit ul li img { vertical-align: middle; }
+.user_content_edit ul li:hover { background: #0089CF; }
+.user_content_edit ul li a:hover { color: #333 !important }
+.user_content_edit ul li a { color: #333333 !important; padding-left: 2px; text-decoration: none;}
+
+/* more from boxi */
+#content_view_user_related_container, 
+#content_view_related_content_container {
+	margin: 0 0 1em 0;
+}
+#content_view_user_related, 
+#content_view_content_related {
+	background:#ffffff none repeat scroll 0 0;
+    border:1px solid #CCCCCC;
+	padding: 0.5em 0.5em;
+	font-size: 10pt;
+}
+
+#content_view_user_related, #content_view_content_related {
+	max-height: 200px;
+	overflow: auto;
+}
+
+.content_view_user_related_entry_idea, 
+.content_view_user_related_entry_problem,
+.content_view_user_related_entry_futureinfo, 
+.content_view_user_related_entry_finfo, 
+.content_view_content_related_entry_idea, 
+.content_view_content_related_entry_problem,
+.content_view_content_related_entry_futureinfo, 
+.content_view_content_related_entry_finfo {
+	padding: 0 0 0 5px;
+	margin-top: 3px;
+    margin-bottom: 2px;
+	min-height: 10px;
+    clear: both;
+    font-size: 80%;
+}
+
+.content_view_user_related_entry_idea, .content_view_content_related_entry_idea {
+	border-left: 0.5em solid #4b9b07;
+}
+
+.content_view_user_related_entry_problem, .content_view_content_related_entry_problem {
+	border-left: 0.5em solid #d21034;
+}
+
+.content_view_user_related_entry_finfo, .content_view_content_related_entry_finfo {
+	border-left: 0.5em solid #ffc726;
+}
+
+#content_view_user_related_header,  #content_view_related_content_header {
+	height: 20px;
+	padding: 0.3em 1em 0 1em;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.content_rating_positive {
+	padding-right: 2px;
+	color: green;
+	font-weight:bold;
+	display:inline;
+}
+
+.content_rating_negative {
+	padding-right: 2px;
+	color: red;
+	font-weight:bold;
+	display:inline;
+}
+
+#content_view_content_rating_total {
+	padding-right: 2px;
+	display:inline;
+}
+
+#content_view_content_rating {
+	padding: 1px;
+}
+
+.content_view_content_vote {
+	padding-right: 2px;
+	display:inline-block;
+	vertical-align: middle;
+}
+
+a#cancel_reply_link {
+	padding: 10px;
+	float: right;
+	margin: 0;	
+}
+p#replying_to {
+	padding: 10px 20px 0 0;
+	margin: 0;
+	float: right;
+}
+
+div.scroll-box ul li.views div.user {
+	padding: 0 !important; 
+	margin: 0 !important;
+	background: none !important;	
+}
+
+div#progressbar_content_language {
+	margin: 0 !important;	
+}
+
+#content #add-content-page #add_content_form label input {
+	margin-right: 5px;
+	margin-left: 5px;
+	width:auto !important;
+	float:none !important; 
+}
+	
+.form_userlist_element .form_userlist_element_label {
+    float: left;
+    margin: 0 1em 0 0;
+    width: 8em;
+}
+.form_userlist_content_count_element .form_userlist_select_element .form_userlist_select_label {
+    width: 8.5em;
+}
+
+.form_userlist_content_count_element .form_userlist_select_element .form_userlist_select_label,
+.form_userlist_content_count_element .form_userlist_select_element .form_element_select_input,
+.form_userlist_content_count_element .form_userlist_content_element .form_element_content_input {
+    float: left;
+    margin: 0 0.5em 0 0 ;
+}
+
+.form_element_content_input input {
+	width: 55px;
+}
+
+.form_userlist_content_count_element {
+    margin: 0 0 1.5em 0; 
+}
+
+.form_userlist_element {
+    margin: 0 0 1em 0;    
+    clear: left;
+}
+
+#user_list_top {
+	display:inline-block;
+	width:100%;
+	padding-top:2px;
+}
+
+#user_list_search_form {
+	float:left;
+	width:60%;
+	padding: 10px;
+	padding-right: 5px;
+	padding-bottom: 30px;
+	margin-right: 15px;
+	background:none repeat scroll 0 0 #EEEEEE;
+    border:1px solid #CCCCCC;
+    height: 100%;
+}
+
+.user_list_title {
+	color:#AAAAAA;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 10px;
+	display:block;
+}
+
+#user_list_search_form span {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	display: block;
+}
+
+#account_user_list_container {
+    margin: 2em 0 0 0;
+}
+
+
+#user_list_search_instructions {
+	float:left;
+	width:35%;
+}
+
+.user_list_input_box_meta {
+	font-weight: bold;
+	float:right;
+}
+
+.user_list_input_box_meta img,
+.user_list_profile_rating img {
+	vertical-align: middle;
+}
+
+.user_list_positive_icon {
+	color: green;
+}
+
+.user_list_negative_icon {
+	color: red;
+}
+
+.user_list_input_box_lead {
+	margin-left:0.5em;
+	padding-left:2px;
+}
+.user_list_input_box_title {
+	padding-left:2px;
+}
+
+#user_list_user_pagination_top {
+	margin-top:6px;	
+}
+
+.user_list_users_latest_content {
+	padding-bottom:2px;	
+}
+
+.user_list_users_latest_content span span {
+	padding-left:2px;	
+}
+
+.user_list_users_latest_content_created {
+	padding-right:10px;
+	float:right;
+}
+
+.user_list_user_container {
+    display: table;
+    margin: 0 0 2em 0;
+    border-bottom: 1px dotted #DDDDDD;
+    width: 100%;
+}
+
+.user_list_user_container div {
+	display:inline-block;
+}
+
+.user_list_user_container div .user_list_user_line { display: block; }
+
+.user_list_right_side {
+	vertical-align: top;
+}
+
+.user_list_moreless {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 2px;
+	padding-right: 15px;
+}
+.user_list_user_line a {
+	text-decoration: none;
+}
+
+.user_list_user_info {
+	width: 600px;
+    vertical-align: top;
+}
+
+.user_list_sort {
+	font-size: 14px;
+}
+
+.user_list_user_info div img {
+	vertical-align: middle;
+}
+
+.user_list_right_side
+.user_list_username,
+.user_list_city,
+.user_list_country { font-size: 14px; font-weight: bold; }
+
+.user_list_content_type_finfo,
+.user_list_content_type_idea,
+.user_list_content_type_problem { font-size: 14px; font-weight: bold; }
+
+.user_list_rating,
+.user_list_rating_amount,
+.user_list_statistics_line,
+.user_list_last_login,
+.user_list_statistics,
+.user_list_recet_contents_title,
+.user_list_no_content { color: #B0B0B0; }
+
+.user_list_statistics_title,
+.user_list_recet_contents_title { font-weight: bold; }
+
+.user_list_last_login { float:right; padding-top:1px; }
+
+.user_list_user_info a { text-decoration: none; }
+
+.user_list_content_title { font-size: 14px; }
+
+.user_list_user_info_second {
+	width:440px;
+    vertical-align: top;
+}
+ 
+.user_list_user_image {
+    width: 100px;
+}
+
+.user_list_content_type_finfo { color: #FFC726; }
+.user_list_content_type_idea { color: #4B9B07; }
+.user_list_content_type_problem { color: #D21034;  }
+
+.user_list_top_box_runnerups_line { display: block; padding-bottom: 3px; }
+.user_list_top_box_runnerups_line div { display: inline; }
+.user_list_top_box_right { padding: 5px; }
+.user_list_top_box_left { padding-right: 5px; }
+.user_list_top_box_left p { margin: 0px; }
+.user_list_top_box { margin-bottom: 5px; width: 220px; vertical-align: top; background-color: #EEEEEE; }
+.user_list_top_box_title { font-size: 18px; font-weight: bold; padding-bottom: 5px; padding: 5px; }
+.user_list_top_box_runnerups { font-weight: bold; margin-bottom: 5px; }
+.user_list_top_box_runnerups_title_name { padding-left: 13px; }
+.user_list_top_box_runnerups_title_points, .user_list_top_box_runnerups_value { float: right; }
+.user_list_top_box_runnerups_rank { font-weight: bold; float:left; width: 20px; }
+.user_list_top_box_description { text-align:center; font-weight: bold; font-size: 14px; }
+.user_list_top_box_user { font-size: 18px; text-align:center; font-weight: bold; padding-top: 4px; }
+.user_list_top_box_image { text-align:center; min-width: 200px; min-height: 200px; }
+.user_list_top_box_image img { min-width: 200px; min-height: 200px;  }
+.user_list_top_box_show_more { width:16px; margin-left:auto; margin-right:auto; margin-top: 5px; }
+.user_list_top_list_title span { font-size: 24px; font-weight: bold; color:#AAAAAA; }
+.user_list_top_list_title a { vertical-align: middle; height: 24px; }
+.user_list_top_list_title { margin: 10px 25px 5px 0px; }
+#user_list_top_list_show { text-align:left; font-size: 14px; font-weight: bold; padding-top: 5px;}
+#user_list_top_list_show img { vertical-align: bottom; }
+.user_list_top_box_bottom { text-align: center; }
+.user_list_top_column { display: inline-block; padding-bottom: 5px; vertical-align: top; }
+#user_list_hall_of_fame { font-size: 28px; font-weight: bold; color: #AAAAAA; text-align: center; }
+	
+.ac_results {
+	padding: 0px;
+	border: 1px solid black;
+	background-color: white;
+	overflow: hidden;
+	z-index: 99999;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	/* 
+	if width will be 100% horizontal scrollbar will apear 
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font: menu;
+	font-size: 12px;
+	/* 
+	it is very important, if line-height not setted or setted 
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background: white right center no-repeat;
+}
+
+.ac_odd {
+	background-color: #eee;
+}
+
+.ac_over {
+	background-color: #0A246A;
+	color: white;
+}
+
+div.form_userlist_element_label_right label {
+	font-size: 0.9em;	
+}
+
+#search_result_content_pagination_top,
+#search_result_content_pagination_bottom {
+    clear: both;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 12pt;
+}
+
+#search_result {
+    width: 500px;
+    overflow: hidden;
+    float: left;
+    font-size: 14px;
+}
+
+.content_entry_container {
+	margin-top: 5px;
+	padding: 0;
+    clear: both;
+    
+    border: 0px solid blue;
+    overflow: hidden;
+}
+
+.content_container_left {
+    width: 70px;
+	padding: 0;
+	margin: 0;
+    float: left;
+}
+
+.content_container_right {
+	float: left;
+	padding: 0;
+    width: 420px;
+    border: 0px solid red;
+}
+
+.content_container_right .translate {
+	margin-top: 2px;
+}
+
+.content_entry_lead {
+	padding: 0;	
+}
+
+.content_entry_user_image_problem {
+    border-left: 6px solid #D21034;
+}
+
+.content_entry_user_image_idea {
+    border-left: 6px solid #4B9B07;
+}
+
+.content_entry_user_image_finfo {
+    border-left: 6px solid #FFC726;
+}

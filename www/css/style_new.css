@@ -5,7 +5,7 @@
 * { margin:0px; padding:0px; }
 
 /** Basic */
-html, body { background:#0089CF; height:100% }
+html, body { background:#0089CF;  }
 body {
 	font:80%/135% Arial, Helvetica, sans-serif;
 	color:#333; }
@@ -361,41 +361,41 @@ line-height:1.3em; font-weight:bold; position:relative; }
 #content #add-content-page #linked-with .linked-vision { border-left:5px solid #FFC726; }
 
 /* Add Content Page --> Add content form */
-#content #add-content-page #add-content-form {
+#content #add-content-page #add_content_form {
 	background:transparent url("../images/gray_dot_line_500.png") no-repeat left bottom;
 	padding-bottom:5px; color:#a7a7a7; }
 
-#content #add-content-page #add-content-form label strong { margin-left:2px; float:left; }
-#content #add-content-page #add-content-form small { font-size:12px; }
-#content #add-content-page #add-content-form input,
-#content #add-content-page #add-content-form textarea {
+#content #add-content-page #add_content_form label strong { margin-left:2px; float:left; }
+#content #add-content-page #add_content_form small { font-size:12px; }
+#content #add-content-page #add_content_form input,
+#content #add-content-page #add_content_form textarea {
 	border:1px solid #7f9db9; background:#fafafa;
 	margin:3px 0px 3px 0px; padding:2px;
 	width:384px; min-height:18px;
 	float:left; }
 
-#content #add-content-page #add-content-form .field-label,
-#content #add-content-page #add-content-form .field { width:384px; float:left; }
+#content #add-content-page #add_content_form .field-label,
+#content #add-content-page #add_content_form .field { width:384px; float:left; }
 
-#content #add-content-page #add-content-form .limit { float:right; border:1px solid #7f9db9;
+#content #add-content-page #add_content_form .limit { float:right; border:1px solid #7f9db9;
 width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; }
-#content #add-content-page #add-content-form .limit span { margin-left:23px; }
-#content #add-content-page #add-content-form .limit.ok { background:#f0fee9 url("../images/icon_thumb_up.png") no-repeat 4px; }
-#content #add-content-page #add-content-form .limit.bad { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 4px; }
+#content #add-content-page #add_content_form .limit span { margin-left:23px; }
+#content #add-content-page #add_content_form .limit.ok { background:#f0fee9 url("../images/icon_thumb_up.png") no-repeat 4px; }
+#content #add-content-page #add_content_form .limit.bad { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 4px; }
 
-#content #add-content-page #add-content-form textarea#textlead { height:49px; }
-#content #add-content-page #add-content-form textarea#text { height:232px; }
+#content #add-content-page #add_content_form textarea#textlead { height:49px; }
+#content #add-content-page #add_content_form textarea#text { height:232px; }
 
-#content #add-content-page #add-content-form .row.upload { margin:10px 0px 75px 0px; }
-#content #add-content-page #add-content-form .row.upload .field,
-#content #add-content-page #add-content-form .row.upload .field-label,
-#content #add-content-page #add-content-form .row.upload .field input#upload { width:307px !important; }
+#content #add-content-page #add_content_form .row.upload { margin:10px 0px 75px 0px; }
+#content #add-content-page #add_content_form .row.upload .field,
+#content #add-content-page #add_content_form .row.upload .field-label,
+#content #add-content-page #add_content_form .row.upload .field input#upload { width:307px !important; }
 
-#content #add-content-page #add-content-form .row.upload #browse,
-#content #add-content-page #add-content-form .row.upload #upload-file { height:22px; }
-#content #add-content-page #add-content-form .row.upload #browse {
+#content #add-content-page #add_content_form .row.upload #browse,
+#content #add-content-page #add_content_form .row.upload #upload-file { height:22px; }
+#content #add-content-page #add_content_form .row.upload #browse {
 	font-weight:normal; width:80px; margin:4px 5px 0px 10px; }
-#content #add-content-page #add-content-form .row.upload #upload-file {
+#content #add-content-page #add_content_form .row.upload #upload-file {
 	width:95px; margin-top:4px; }
 
 #content #add-content-page #language,
@@ -404,7 +404,7 @@ width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; }
 #content #add-content-page #visions-of-the-future-classification {
 	background:transparent url("../images/gray_dot_line_500.png") no-repeat left bottom; padding-bottom:5px; }
 
-#content #add-content-page select { margin:0px 0px 10px 0px; width:500px; }
+#content #add-content-page select { margin:0px 0px 10px 0px; width:390px; }
 #content #add-content-page #submit { margin-top:10px; }
 #content #add-content-page #submit input#publish { width:100px; }
 #content #add-content-page #submit input#preview { width:65px; }
@@ -419,22 +419,25 @@ width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; }
 #content #content-page-additional-functions #linked-with .link-target { width:112px; float:left; }
 
 /* Content Page --> Additional functions --> Challenge, Idea & Vision */
-#content #content-page-additional-functions #linked .linked-challenge,
-#content #content-page-additional-functions #linked-with .linked-challenge,
+#content #content-page-additional-functions #linked .linked-problem,
+#content #content-page-additional-functions #linked-with .linked-problem,
 #content #content-page-additional-functions #linked .linked-idea,
 #content #content-page-additional-functions #linked-with .linked-idea,
-#content #content-page-additional-functions #linked .linked-vision,
-#content #content-page-additional-functions #linked-with .linked-vision {
+#content #content-page-additional-functions #linked .linked-finfo,
+#content #content-page-additional-functions #linked-with .linked-finfo {
 	width:350px; float:right; padding-left:4px; color:#000; }
 
-#content #content-page-additional-functions #linked .linked-challenge,
-#content #content-page-additional-functions #linked-with .linked-challenge {
+#content #content-page-additional-functions #linked .linked-problem,
+#content #content-page-additional-functions #linked-with .linked-problem,
+#content #content-page-additional-functions #linking-contents ul li span.linked-problem {
 	border-left:5px solid #D21034; }
 #content #content-page-additional-functions #linked .linked-idea,
-#content #content-page-additional-functions #linked-with .linked-idea {
+#content #content-page-additional-functions #linked-with .linked-idea,
+#content #content-page-additional-functions #linking-contents ul li span.linked-idea {
 	border-left:5px solid #4B9B07; }
-#content #content-page-additional-functions #linked .linked-vision,
-#content #content-page-additional-functions #linked-with .linked-vision {
+#content #content-page-additional-functions #linked .linked-finfo,
+#content #content-page-additional-functions #linked-with .linked-finfo,
+#content #content-page-additional-functions #linking-contents ul li span.linked-finfo {
 	border-left:5px solid #FFC726; }
 
 #content #content-page-additional-functions #link-info {
@@ -968,12 +971,12 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 #search_results ul li span { padding:0px 0px 0px 8px; display:block; }
 #search_results ul#search-users span { padding:0px 0px 0px 0px; display:block; }
-#search_results ul li.challenges span { border-left:5px solid #D21034; }
-#search_results ul li.ideas span { border-left:5px solid #4B9B07; }
-#search_results ul li.visions span { border-left:5px solid #FFC726; }
+#search_results ul li.problem span { border-left:5px solid #D21034; }
+#search_results ul li.idea span { border-left:5px solid #4B9B07; }
+#search_results ul li.finfo span { border-left:5px solid #FFC726; }
 
 /** GUI Text With Navigation **/
-#content #info-page { float:right !important; width:450px; margin:10px 10px 0px 30px; color:#929292; }
+#content #info-page { float:right !important; width:430px; margin:10px 10px 0px 30px; color:#929292; }
 #content #info-page h2 { color:#929292; }
 #sidebar.left { float:left !important; margin-top:10px; }
 

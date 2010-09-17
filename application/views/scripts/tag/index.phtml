@@ -9,18 +9,17 @@
     $divider = " | ";
     $list_type = $this->list_type;
 ?>
-
-<div id="tag_cloud_container">
-    <div id="tag_list_type_row">
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="tags_container">
+    <div id="tag_list_type">
         <?php
 			$cloud = '<a href="' . $this->url(array('list_type' => 'cloud')) . '">' . $this->translate('tag-cloud').'</a>';
 			$index = '<a href="' . $this->url(array('list_type' => 'index')) . '">' . $this->translate('tag-index').'</a>';
             if ($list_type == 'cloud') $cloud = $this->translate('tag-cloud');
             if ($list_type == 'index') $index = $this->translate('tag-index');
             
-            echo '<h3 style="padding: 0px; margin: 0px;">' . $cloud . $divider . $index . '</h3>';
+            echo '<h3>' . $cloud . $divider . $index . '</h3>';
             ?>
-    </div>
     
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
     
@@ -53,7 +52,7 @@
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
 
     <div class="tag_filters_row">
-        <div class="tag_filters_left">
+        <div class="left">
             <?php
             $pre = "<b>".$this->translate('tag-show')."</b>"." ";
 			$all = '<a href="' . $this->url(array('ctype' => 'all')) . '">' . $this->translate('tag-all').'</a>';
@@ -83,7 +82,7 @@
              }
             echo $pre . $all . $divider . $problem . $divider . $futureinfo . $divider . $idea;
             ?>
-        </div> <div class="tag_filters_right" style="float: right;">
+        </div> <div class="right">
             <?php
             $pre = "<b>".$this->translate('tag-sort')."</b>".": ";
             $name = '<a href="' . $this->url(array('order' => 'name', 'direction' => 'desc')) . '">' . $this->translate('tag-name').'</a> 
@@ -125,10 +124,11 @@
             ?>
         </div>
     </div>
+        </div>
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_720.png');?>" alt="Massidea.org" />
-    <div style="clear:both;"> </div>
-	<div id="tag_cloud_container_tags" style="width:720px;">
+    <div class="clear"></div>
     <h3><?php if ($where == 'All') { echo $this->translate('tag-all'); } else { echo $where; }?></h3>
+	<div id="tag_cloud">
     <?php if ($list_type == 'index') echo'<div class="tag_index_col_0" style="text-align: left; width:150px; float: left;">' ?>
     <?php
         $i = 0;                     // keeps track of tag render round

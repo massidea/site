@@ -23,7 +23,7 @@
 	</tu>
     <tu tuid='tag-futureinfo'>
 		<tuv xml:lang="en"><seg>Visions</seg></tuv>
-		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymät</seg></tuv>
+		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymyt</seg></tuv>
 	</tu>
     <tu tuid='tag-all'>
 		<tuv xml:lang="en"><seg>All</seg></tuv>
@@ -127,7 +127,7 @@
 	</tu>
 	<tu tuid='tag-view-contents-intro'>
 		<tuv xml:lang="en"><seg>added to this topic, including challenges, vision and ideas</seg></tuv>
-		<tuv xml:lang="fi"><seg>lisätty tähän aiheeseen, sisäläten haasteet, visiot ja ideat</seg></tuv>
+		<tuv xml:lang="fi"><seg>lisätty tähän aiheeseen, sisältäen haasteet, visiot ja ideat</seg></tuv>
 	</tu>
 	<tu tuid='tag-view-campaigns-groups-intro'>
 		<tuv xml:lang="en"><seg>producing content to this topic</seg></tuv>
@@ -138,5 +138,3 @@
 		<tuv xml:lang="fi"><seg>osoittavat kiinnostusta aiheeseen</seg></tuv>
 	</tu>
 </body>
-
-

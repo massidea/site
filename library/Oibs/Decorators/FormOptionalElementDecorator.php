@@ -45,7 +45,7 @@ class Oibs_Decorators_FormOptionalElementDecorator extends Zend_Form_Decorator_A
         */
         
         if($errors == "") {
-            $text = '<div id="progressbar_' .  $name . '" class="progress"></div>';
+            $text = '</div><div id="progressbar_' .  $name . '" class="progress limit">';
         }
         
         // Get the attributes here, and remove annoying helper attribute
@@ -85,8 +85,8 @@ class Oibs_Decorators_FormOptionalElementDecorator extends Zend_Form_Decorator_A
 		{
             return '';
         }
-        //return '<div class="form_element_' . $this->getElement()->getName() . '_description">' . $desc . '</div>';
-        return '<div class="form_element_helptext">' . $desc . '</div>';
+
+        return '<small class="right">' . $desc . '</small>';
     }
 
     public function render($content)
@@ -110,20 +110,16 @@ class Oibs_Decorators_FormOptionalElementDecorator extends Zend_Form_Decorator_A
         $desc      = $this->buildDescription();
         $name      = $this->getElement()->getName();
         
-        $output = '<div id="form_element_' . $name .'_container" class="form_element" >
-                    <div id="' . $name . '_div">
-                        <div class="form_element_header">'
+        $output = '<div id="form_element_' . $name .'_container" class="row" >
+                        <div class="field-label">'
                             . $desc
                             . $label
                         . '</div>
-                        <div style="clear: both;"></div>
-                        <div class="form_element_input">'
+                        <div class="field">'
                             . $input
                             . $errors
-                        . '<div style="clear: both;"></div>
-                        </div>
-                    </div>
-                 <div style="clear: both;"></div></div>';
+                        .'</div>
+					</div>';
 
         switch ($placement) 
 		{
