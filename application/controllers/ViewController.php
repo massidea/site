@@ -212,7 +212,7 @@
 
         // get (VIEWED) content views (returns a string directly)
         $contentViewsModel = new Default_Model_ContentViews();
-        if (! $this->alreadyViewed($id)) {
+        if (! $this->alreadyViewed($id, ($auth->hasIdentity()) ? $auth->getIdentity()->username : "0")) {
 			$contentViewsModel->increaseViewCount($id);
         }
         $views = $contentViewsModel->getViewsByContentId($id);

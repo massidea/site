@@ -439,11 +439,8 @@ p#replying_to {
     border:1px solid #CCCCCC;
 	padding: 0.5em 0.5em;
 	font-size: 10pt;
-}
-
-#content_view_user_related, #content_view_content_related {
 	max-height: 200px;
-	overflow: auto;
+	overflow-x: hidden;
 }
 
 .content_view_user_related_entry_idea, 
@@ -521,7 +518,7 @@ p#replying_to {
 	float: right;
 }
 
-div.scroll-box ul li.views div.user {
+div#my-views div.scroll-box ul li div.user {
 	padding: 0 !important; 
 	margin: 0 !important;
 	background: none !important;	
@@ -869,3 +866,7 @@ div.form_userlist_element_label_right label {
 .content_entry_user_image_finfo {
     border-left: 6px solid #FFC726;
 }
+
+#content #my-views .scroll-box p {
+	padding: 0 !important;
+} 

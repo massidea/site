@@ -49,9 +49,9 @@ function setImage(type) {
 	var target = "#content_view_"+type+"_related";
 	var expandButton = ".expand_"+type+"_related";
 	if ($(target).is(':hidden')){
-		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
-	} else {
 		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
+	} else {
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 	}
 
 }
