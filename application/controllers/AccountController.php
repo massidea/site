@@ -397,7 +397,7 @@ class AccountController extends Oibs_Controller_CustomController
 				->addTab("Challenges","problem","fvr_problem",$myFavourites['counts']['problem'])
 				->addTab("Ideas","idea","fvr_idea",$myFavourites['counts']['idea'])
 				->addTab("Visions","finfo","fvr_finfo",$myFavourites['counts']['finfo']);
-		$boxes[] = $box;
+		//$boxes[] = $box;
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
@@ -406,7 +406,7 @@ class AccountController extends Oibs_Controller_CustomController
 			->setName("my-reads")
 			->addTab("Readers", "readers", "all selected");
 			
-		$boxes[] = $box;
+		//$boxes[] = $box;
 		
 		/*Box for user profile custom layout settings*/
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
