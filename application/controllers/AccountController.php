@@ -408,88 +408,90 @@ class AccountController extends Oibs_Controller_CustomController
 			
 		$boxes[] = $box;
 		
-		/*Box for user profile custom layout settings*/
-		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box->setHeader("Custom Layout")
-			->setClass("wide")
-			->setName("my-custom-layout")
-			->addTab("Basic options", "fonts", "all selected") //Header, type, class, extra
-			/*->addTab("Advanced", "advanced", "advanced")
-			->addTab("Background", "background", "background")*/;
-		//$boxes[] = $box;
-		
-		// $_POST tarkista onko fontti, värit yms lähetetty. Aseta värit yms formin komponentteihin ja tallenna uusi css-tiedosto
-		$profileCustomCss = new Default_Model_CssFiles();
-		//$customCssOptions = array();
-		$newCssParams = array();
-
-		$defaultCustomCssContent = $profileCustomCss->readCssFileContent('default');
-		$this->view->defaultCustomCss = $defaultCustomCssContent;
-		$customCssOptions['default_css'] = $defaultCustomCssContent;
-		
-		if(isset($_POST['csscontent'])) {
-			$customCssOptions['cssContent'] = $_POST['csscontent'];
-			$customCssOptions['cssNewContentWrite'] = $profileCustomCss->writeCssFileContent($customCssOptions['cssContent'], $username);
-		} else {
-			$customCssOptions['cssContent'] = $profileCustomCss->readCssFileContent($username);
-			$this->view->UserCustomCss = $customCssOptions['cssContent'];
+		if($userEdit) {
+			/*Box for user profile custom layout settings*/
+			$box = new Oibs_Controller_Plugin_AccountViewBox();
+			$box->setHeader("Custom Layout")
+				->setClass("wide")
+				->setName("my-custom-layout")
+				->addTab("Basic options", "fonts", "all selected"); //Header, type, class, extra
+			$boxes[] = $box;
+			
+			// $_POST tarkista onko fontti, värit yms lähetetty. Aseta värit yms formin komponentteihin ja tallenna uusi css-tiedosto
+			$profileCustomCss = new Default_Model_CssFiles();
+			//$customCssOptions = array();
+			$newCssParams = array();
+	
+			$defaultCustomCssContent = $profileCustomCss->readCssFileContent('default');
+			$this->view->defaultCustomCss = $defaultCustomCssContent;
+			$customCssOptions['default_css'] = $defaultCustomCssContent;
+			
+			if(isset($_POST['csscontent'])) {
+				$customCssOptions['cssContent'] = $_POST['csscontent'];
+				$customCssOptions['cssNewContentWrite'] = $profileCustomCss->writeCssFileContent($customCssOptions['cssContent'], $username);
+			} else {
+				$customCssOptions['cssContent'] = $profileCustomCss->readCssFileContent($username);
+				$this->view->UserCustomCss = $customCssOptions['cssContent'];
+			}
+	    	
+			if(isset($_POST['customfont'])) {
+				$customCssOptions['cssFontType'] = $_POST['customfont'];
+				//$customCssOptions['cssFontType'] = $profileCustomCss->setFontType($customCssOptions['cssContent'], '\"Times New Roman\"');
+				$newCssParams['font-family'] = $_POST['customfont'];
+	
+				$newCssParams['color'] = $_POST['customfontcolor'];
+			} /*else {
+				$customCssOptions['cssFontType'] = $profileCustomCss->getFontType($customCssOptions['cssContent']);
+			}*/
+	    	
+			if(isset($_POST['customfontsize'])) {
+				$customCssOptions['cssFontSize'] = $_POST['customfontsize'];
+				//$profileCustomCss->setFontSize($customCssOptions['cssContent'], $_POST['customfontsize']);
+				$newCssParams['font-size'] = $_POST['customfontsize'];
+			} /*else {
+				$customCssOptions['cssFontSize'] = $profileCustomCss->getFontSize();
+			}*/
+	    	
+			if(isset($_POST['customfontcolor'])) {
+				$customCssOptions['cssFontColor'] = $_POST['customfontcolor'];
+				//$profileCustomCss->setFontColor($customCssOptions['cssContent'], $customCssOptions['cssFontColor']);
+				$newCssParams['color'] = $_POST['customfontcolor'];
+			} /*else {
+				$customCssOptions['cssFontColor'] = $profileCustomCss->getFontColor();
+			}*/
+	    	
+			if(isset($_POST['backgroundimage'])) {
+				$customCssOptions['cssBackgroundImage'] = $_POST['backgroundimage'];
+			} /*else {
+				$customCssOptions['cssBackgroundImage'] = $profileCustomCss->getBackgroundImage();
+			}*/
+	    	
+			if(isset($_POST['custombgcolor'])) {
+				$customCssOptions['cssBackgroundColor'] = $_POST['custombgcolor'];
+				//$profileCustomCss->setBackgroundColor($customCssOptions['cssContent'], $_POST['custombgcolor']);
+				$newCssParams['background'] = $_POST['custombgcolor'];
+			} /*else {
+				$customCssOptions['cssBackgroundColor'] = $profileCustomCss->getBackgroundColor();
+			}*/
+			
+			if(count($newCssParams)>0) {
+				$customCssOptions['cssContent'] = $profileCustomCss->setStylingParams($customCssOptions['cssContent'], '#user-page', $newCssParams, $username);
+			} else {
+				$newCssParams = $profileCustomCss->GetStylingParams($customCssOptions['cssContent'], '#user-page');
+				$customCssOptions['cssBackgroundColor'] = $newCssParams['background'];
+				$customCssOptions['cssFontType'] = $newCssParams['font-family'];
+				$customCssOptions['cssFontSize'] = $newCssParams['font-size'];
+				$customCssOptions['cssFontColor'] = $newCssParams['color'];
+			}
+					
+			$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm($customCssOptions);
+			$customLayoutAdvancedForm = new Default_Form_AccountCustomLayoutAdvancedForm($customCssOptions);
+			
+			$this->view->customLayoutSettingsForm = $customLayoutForm;
+        	$this->view->customLayoutAdvancedForm = $customLayoutAdvancedForm;
 		}
-    	
-		if(isset($_POST['customfont'])) {
-			$customCssOptions['cssFontType'] = $_POST['customfont'];
-			//$customCssOptions['cssFontType'] = $profileCustomCss->setFontType($customCssOptions['cssContent'], '\"Times New Roman\"');
-			$newCssParams['font-family'] = $_POST['customfont'];
-
-			$newCssParams['color'] = $_POST['customfontcolor'];
-		} /*else {
-			$customCssOptions['cssFontType'] = $profileCustomCss->getFontType($customCssOptions['cssContent']);
-		}*/
-    	
-		if(isset($_POST['customfontsize'])) {
-			$customCssOptions['cssFontSize'] = $_POST['customfontsize'];
-			//$profileCustomCss->setFontSize($customCssOptions['cssContent'], $_POST['customfontsize']);
-			$newCssParams['font-size'] = $_POST['customfontsize'];
-		} /*else {
-			$customCssOptions['cssFontSize'] = $profileCustomCss->getFontSize();
-		}*/
-    	
-		if(isset($_POST['customfontcolor'])) {
-			$customCssOptions['cssFontColor'] = $_POST['customfontcolor'];
-			//$profileCustomCss->setFontColor($customCssOptions['cssContent'], $customCssOptions['cssFontColor']);
-			$newCssParams['color'] = $_POST['customfontcolor'];
-		} /*else {
-			$customCssOptions['cssFontColor'] = $profileCustomCss->getFontColor();
-		}*/
-    	
-		if(isset($_POST['backgroundimage'])) {
-			$customCssOptions['cssBackgroundImage'] = $_POST['backgroundimage'];
-		} /*else {
-			$customCssOptions['cssBackgroundImage'] = $profileCustomCss->getBackgroundImage();
-		}*/
-    	
-		if(isset($_POST['custombgcolor'])) {
-			$customCssOptions['cssBackgroundColor'] = $_POST['custombgcolor'];
-			//$profileCustomCss->setBackgroundColor($customCssOptions['cssContent'], $_POST['custombgcolor']);
-			$newCssParams['background'] = $_POST['custombgcolor'];
-		} /*else {
-			$customCssOptions['cssBackgroundColor'] = $profileCustomCss->getBackgroundColor();
-		}*/
 		
-		if(count($newCssParams)>0) {
-			$customCssOptions['cssContent'] = $profileCustomCss->setStylingParams($customCssOptions['cssContent'], '#user-page', $newCssParams, $username);
-		} else {
-			$newCssParams = $profileCustomCss->GetStylingParams($customCssOptions['cssContent'], '#user-page');
-			$customCssOptions['cssBackgroundColor'] = $newCssParams['background'];
-			$customCssOptions['cssFontType'] = $newCssParams['font-family'];
-			$customCssOptions['cssFontSize'] = $newCssParams['font-size'];
-			$customCssOptions['cssFontColor'] = $newCssParams['color'];
-		}
-				
-		$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm($customCssOptions);
-		$customLayoutAdvancedForm = new Default_Form_AccountCustomLayoutAdvancedForm($customCssOptions);
-				
-        // Set to view
-        
+        // Set to view        
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
         $this->view->authorContents = $contentList;/*$temp*/
@@ -499,8 +501,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->user_edit = $userEdit;
         $this->view->topList = $topList;
         $this->view->type = $type;
-        $this->view->customLayoutSettingsForm = $customLayoutForm;
-        $this->view->customLayoutAdvancedForm = $customLayoutAdvancedForm;
+        
 
         $group_model = new Default_Model_UserHasGroup();
         $usergroups = $group_model->getGroupsByUserId($id);
