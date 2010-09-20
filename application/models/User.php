@@ -524,16 +524,19 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     } // end of getUserContent*/
 
-    public function getUserContent($id_usr, $id_cnt=0, $limit=0) {
+    public function getUserContent($id_usr, $options = array()) {
     	$select = $this->_db->select()->from('cnt_has_usr', 'id_cnt')
     									->join('contents_cnt', 'cnt_has_usr.id_cnt = contents_cnt.id_cnt')
     									->join('content_types_cty', 'content_types_cty.id_cty = contents_cnt.id_cty_cnt', array('key_cty'))
-    									->join('cnt_views_vws', 'contents_cnt.id_cnt = cnt_views_vws.id_cnt_vws', array('views' => 'sum(views_vws)'))
+    									->joinLeft('cnt_views_vws', 'contents_cnt.id_cnt = cnt_views_vws.id_cnt_vws', array('views' => 'sum(views_vws)'))
     									->group('contents_cnt.id_cnt')
     									->where('cnt_has_usr.id_usr = ?', $id_usr)
     									;
-    	if ($id_cnt != 0) $select->where('contents_cnt.id_cnt != ?', $id_cnt);
-    	if ($limit != 0) $select->limit($limit);
+    	
+    	if (isset($options['exclude'])) $select->where('contents_cnt.id_cnt != ?', $options['exclude']);
+    	if (isset($options['limit'])) $select->limit($options['limit']);
+    	if (isset($options['order'])) $select->order('cnt_has_usr.id_cnt '.$options['order']);
+
     	return $this->_db->fetchAll($select);
     }
     

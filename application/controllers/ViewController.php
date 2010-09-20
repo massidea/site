@@ -384,6 +384,7 @@
         //$this->view->count              = $count;
         $this->view->campaigns          = $campaigns;
         $this->view->viewers			= $this->getViewers($id);
+        $this->view->boxStates			= $this->getBoxStates();
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
@@ -395,4 +396,13 @@
 		//getContentViewers
 		return $cntVwModel->getContentViewers($id_cnt, 10);
 	} 
+	
+	private function getBoxStates() {
+		$defaultState = 'block';
+		$states = array (
+			'user' => isset($_COOKIE['user']) ? $_COOKIE['user'] : $defaultState,
+			'content' => isset($_COOKIE['content']) ? $_COOKIE['content'] : $defaultState 
+		);
+		return $states;	
+	}
 }

@@ -269,7 +269,8 @@ div.top_row_center_right_search img{
 div.top_row_center_right_language{
 	text-align: left; 
 	padding-top: 3px; 
-	width: 335px;
+	width: 150px;
+	float: left;
 }
 
 div.top_row_center_right_layout{
@@ -277,7 +278,7 @@ div.top_row_center_right_layout{
 	text-align: right; 
 	padding-top: 3px;
 	padding-right: 100px;
-	width: 115px;
+	width: 118px;
 }
 
 div.top_row_center_right_selection_text{
@@ -673,7 +674,7 @@ div.top_right_box{
 div.top_right_box div { display:inline; }
 
 div.top_right_box p{
-	padding: 0px 0px 10px 0px;
+	padding: 5px 5px 10px;
 }
 
 
@@ -1140,17 +1141,6 @@ form#edit_content_form label {
 	width: 100px;
     color: #808080;
 }
-
-.content_file_list_file {
-	color: #808080;
-	width: 250px;
-	float: left;
-}
-#removeFile {
-	float: left;
-	
-}
-
 
 form#add_content_form fieldset    { 
 	padding: 1.4em; 

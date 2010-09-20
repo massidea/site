@@ -17,6 +17,7 @@ The mixed outcome - lucky insight - is boosting individual.s creativity and enab
 ** AFTER YOU PUSH OUR CHANGES TO GITHUB. SEND PULL REQUEST TO ACCOUNT: massidea **
 ![GitHub - Pull request](http://www.massidea.org/wiki/images/e/ec/Pull_request.png "")
 
+** And please, add issue to pull request.
 
 ## Migration notes (Old Migration notes.txt)
 | Zend FW 1.7.4 to 1.9.0 Migration notes by Tuomas Valtanen |  
@@ -48,6 +49,4 @@ No changes on the DB side, you can use the old SQL schemas. Repository folder fo
 5. 	Last but not least. I did this migration in less than 3 days, so there might some mistakes in the migrated code, I'm just a human being. :)  Just let 	me know, and I'll take a look at it. Also, test the code actively and when we have killed all bugs, we can start developing on this new version of 	Zend Framework. 
 
 
-Alright, these are the main points that came into my mind while doing the migration. If you have any specific questions, just ask in the forums or come chat with me on #dev.oibs in freenode.net.
-
-See ya!
+Alright, these are the main points that came into my mind while doing the migration. If you have any specific questions, just ask in the flowdock.

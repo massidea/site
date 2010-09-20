@@ -46,24 +46,17 @@ echo $this->doctype();
         'PREPEND'
     );
 
-    /*$this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
-    $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
+    $this->headScript()->prependFile('http://maps.google.com/jsapi');
     $this->headScript()->prependFile($this->baseUrl('/js/functions.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
-    $this->headScript()->prependFile('http://maps.google.com/jsapi');*/
-    $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.js'));
-	$this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
-	$this->headScript()->prependFile('http://maps.google.com/jsapi');
-	$this->headScript()->prependFile($this->baseUrl('/js/functions.js'));
-	$this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
-	$this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
-	$this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
-	$this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
-	
-    echo $this->headLink();
+    $this->headScript()->prependFile('http://maps.google.com/jsapi');
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
+
+    echo $this->headLink()."\n";
     echo $this->headMeta();
     echo $this->headScript();
     ?>
@@ -95,8 +88,7 @@ echo $this->doctype();
 																				 'action' => 'index',
 																				 'language' => $this->language),
 																				 'lang_default', true); ?>">
-												<?php echo $this->translate('index-admin-tools');?>
-											</a> | 
+												<?php echo $this->translate('index-admin-tools');?></a> | 
 							            <?php endif; ?>
 
                                     <?php echo $this->translate('index-logged_in'); ?>
@@ -105,8 +97,7 @@ echo $this->doctype();
                                                                      'user' => $this->username,
                                                                      'language' => $this->language),
                                                                'lang_default', true); ?>">
-                                        <?php echo $this->username; ?>
-                                    </a>
+                                        <?php echo $this->username; ?></a>
                                 	<ul id="user_options">
                                 		<li><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
                                                                      'action' => 'view',
@@ -394,7 +385,7 @@ echo $this->doctype();
 
             <div class="sub_menu_left_space">&nbsp;</div>
             
-            <div id="groups_campaigns" 
+            <div id="nav_groups" 
                 onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')" 
                 onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');" 
                 class="sub_menu_item_blue"
@@ -409,7 +400,7 @@ echo $this->doctype();
             
             <div class="sub_menu_left_space">&nbsp;</div>
 
-            <div id="groups_campaigns"
+            <div id="campaigns"
                 onmouseout="blurMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>')"
                 onmouseover="focusMenu(this.id, 'blue', '<?php echo $this->baseUrl();?>');"
                 class="sub_menu_item_blue"

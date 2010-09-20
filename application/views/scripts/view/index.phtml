@@ -1,3 +1,4 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <?php // Part of the ajax funtionalities 
 $flagContentUrl = $this->url(array('controller' => 'content',
 										'action' => 'flag',
@@ -36,12 +37,23 @@ more = false;
 function expandCollapse(type) {
 	var target = "#content_view_"+type+"_related";
 	var expandButton = ".expand_"+type+"_related";
+	$(expandButton).unbind('click');
+	$(target).slideToggle('normal', function() {
+		$.cookie(type, $(target).is(':hidden') ? 'none' : 'block');
+		$(expandButton).bind('click', function () { expandCollapse(type); }); 
+		setImage(type);
+	});
+}
+
+function setImage(type) {
+	var target = "#content_view_"+type+"_related";
+	var expandButton = ".expand_"+type+"_related";
 	if ($(target).is(':hidden')){
 		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 	} else {
 		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
 	}
-	$(target).slideToggle('normal');
+
 }
 	
 function ajaxLoad_moreRelated(type, more){
@@ -56,8 +68,8 @@ function ajaxLoad_moreRelated(type, more){
 	var data = new Array();
 	if (more) { 
 		data = { 'more': '1' };
-	} else { 
-		$(expandButton).bind('click', function () { expandCollapse(type); }); 
+	} else { // Only done once when loading page
+		$(expandButton).bind('click', function () { expandCollapse(type); });
 	}
 	
 	$.ajax({
@@ -65,13 +77,11 @@ function ajaxLoad_moreRelated(type, more){
 		beforeSend: function(){
 			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>");
 		},
-		complete: function(){
-			$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
-		},
 		url: url,
 		data: data,
 		success: function(result){
 			$(targetDiv).html(result);
+			setImage(type);
 			$("a[id*='show_more_']").click(function(obj) {
 				var more=true;
 				obj.preventDefault();
@@ -96,6 +106,7 @@ function initLinkedContent(type) {
 $(document).ready(function(){
 		ajaxLoad_moreRelated("user", false);
 		ajaxLoad_moreRelated("content", false);
+
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
 		$("#content_view_favourite").load("<?php echo $contentFavouriteUrl; ?>");
 		
@@ -165,7 +176,8 @@ function flagContent()
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery.cookie.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css')); ?>
 
 <?php 
     // change background color
@@ -176,24 +188,23 @@ function flagContent()
     }
 ?>
 
-<div style="clear:both;"></div>
         <?php if ($this->contentData['published_cnt'] == 0): ?>
             <h1><?php echo $this->translate('content-view-unpublished'); ?></h1>
         <?php endif; ?>
 		<?php echo $this->partial('partials/content_view.phtml', $this);?>
 
-<div class="right_side" style="float: right; padding: 0px; margin: 0px; margin-top: 0px;">
-    <p class="right_side_title_small" style="padding: 11px 0px 3px 10px; font-weight: bold;"><?php echo $this->translate('content-view-author'); ?></p>
-    <div class="top_right_box" style="margin-bottom:10px;">
-            <div><img src="<?php echo $this->url(array('controller' => 'account',
+<div id="sidebar" class="left">
+	<div class="box">
+    <h4 ><?php echo $this->translate('content-view-author'); ?></h4>
+    <div class="box-user-content">
+            <img src="<?php echo $this->url(array('controller' => 'account',
                                                   'action' => 'profilethumb',
                                                   'id' => $this->userData['id_usr'],
                                                   'language' => $this->language,
                                                   'thumb' => 'true'),
                                             'lang_default', true); ?>" 
-                alt="User image" class="profile_image_smallsize" />
-            </div>
-		<div style="float: right;">
+                alt="User image" class="profile_image_smallsize left" />
+		<div class="right">
             <a href="<?php echo $this->url(array('controller' => 'account',
                                                  'action' => 'view', 
                                                  'user' => $this->userData['login_name_usr'],
@@ -202,7 +213,8 @@ function flagContent()
             <?php echo $this->userData['login_name_usr']; ?></a><br />
             <?php echo $this->translate('content-view-joined'); ?> <?php echo date('d M Y', strtotime($this->userData['created_usr'])); ?>
 		</div>
-		<?php if ($this->contentData[id_usr] != $this->usrId) { ?>
+		<div class="clear"></div>
+		<?php if ($this->contentData['id_usr'] != $this->usrId) { ?>
             <br /><br />
             <a href="<?php echo $this->url(array('controller' => 'privmsg',
                                      'action' => 'send',
@@ -212,24 +224,26 @@ function flagContent()
             </a>
 		<?php } ?>
     </div>
-    
-    <div id="content_view_user_related_header">
-        <div class="pointerCursor" style="float: left;">
-            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>" alt="" />
-            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>" alt="" style="display: none" />
-        </div>
-        <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-user-related'); ?></span>
     </div>
-    <div id="content_view_user_related">
+    <div id="more-from-author">
+	    <div id="content_view_user_related_header">
+	        <div class="pointerCursor" style="float: left;">
+	            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" alt="" />
+	        </div>
+	        <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-user-related'); ?></span>
+	    </div>
+	    <div id="content_view_user_related" style="display: <?php echo $this->boxStates['user'];?>">
+	    </div>
     </div>
-    <div id="content_view_related_content_header">
-        <div class="pointerCursor" style="float: left;">
-            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>" alt="" />
-            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>" alt="" style="display: none" />
-        </div>
-        <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-related'); ?></span>
-    </div>
-    <div id="content_view_content_related" style="padding-top: 10px;">
-    </div>
+    <div id="related-contents">
+	    <div id="content_view_related_content_header">
+	        <div class="pointerCursor" style="float: left;">
+	            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" alt="" />
+	        </div>
+	        <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-related'); ?></span>
+	    </div>
+	    <div id="content_view_content_related" style="padding-top: 10px; display: <?php echo $this->boxStates['content'];?>">
+	    </div>
+	</div>
 </div>
 <div style="clear:both;"></div>

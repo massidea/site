@@ -1,5 +1,6 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/ContentForm.js'); ?>
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-min.js'); ?>
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-unicode-base.js'); ?>
 
@@ -27,7 +28,7 @@ var previewUrl = '<?php echo $previewUrl; ?>';
     }
 ?>
 
-<div id="form_content_add_container" style="float: left;">	
+<div id="add-content-page" class="narrow left">
 	<div id="form_content_realcontent">
         <h2>Editing <?php echo $this->short_contenttype . " " . $this->contentHeader; ?></h2>
         <?php echo $this->form; ?>

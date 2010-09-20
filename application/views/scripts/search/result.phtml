@@ -1,5 +1,4 @@
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); ?>
-
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <div class="search_result">
     <h3><?php echo $this->translate('search-result-title'); ?></h3>
     
@@ -159,22 +158,22 @@
                         
                     </p>
                     
-                    <div class="search_result_details">
-                        <div class="search_result_details_left">
+                    <div class="search_result_details clear">
+                        <div class="search_result_details_left left">
                         <?php
                         // generate rating row
                         if (isset($entry['ratingdata'])): ?>
-                        <div class="content_rating_positive"> 
+                        <div class="content_rating_positive left"> 
                             <?php echo $entry['ratingdata']['positive_percentage']; ?>%
                         </div>
-                        <div class="content_view_content_vote">
+                        <div class="content_view_content_vote left">
                             <img src="<?php echo $this->baseUrl('/images/icon_thumb_up.png'); ?>" 
                                 alt="" style="vertical-align: middle;" />
                                 
                             <img src="<?php echo $this->baseUrl('/images/icon_thumb_down.png'); ?>" 
                                 alt="" style="vertical-align: middle;" />
                         </div>
-                        <div class="content_rating_negative">     
+                        <div class="content_rating_negative left">     
                             <?php echo $entry['ratingdata']['negative_percentage']; ?>%
                         </div>
                             (
@@ -185,7 +184,7 @@
                         
                         </div>
                         
-                        <div class="search_result_details_right">
+                        <div class="search_result_details_right right">
                         <?php 
                         	$sent = strtotime($entry['created_cnt']);
                             $elapsed = time() - $sent;
@@ -238,5 +237,3 @@
             <?php echo $this->translate('search-nothing-found'); ?>
         </div>
     <?php endif; ?>
-    
-</div>

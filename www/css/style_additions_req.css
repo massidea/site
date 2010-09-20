@@ -994,6 +994,7 @@ p#replying_to {
 }
 
 .qtip-content ul {
+	margin: 2px;
 	padding: 0;	
 }
 
@@ -1003,4 +1004,17 @@ p#replying_to {
 	list-style-position: outside;
 	list-style-type: none;
 	border-bottom: 1px dotted #CCC;
+}
+
+.content_file_list_file {
+	color: #808080;
+}
+#removeFile {
+	float: right;
+	
+}
+
+.file_row {
+	width: 390px;
+	padding-top: 5px;	
 }

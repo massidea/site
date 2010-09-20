@@ -142,6 +142,18 @@ class Default_Model_CampaignHasContent extends Zend_Db_Table_Abstract
 
         return $result;
     }
+    
+    /**
+     * Remove contents campaign links
+     * 
+     * @author Sami Suuriniemi
+     * @param $id_cnt
+     */
+    public function removeContentCampaignLinks($id_cnt) {
+    	$where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
+    	$this->delete($where);
+    	return true;
+    }
 
 } // end of class
 ?>

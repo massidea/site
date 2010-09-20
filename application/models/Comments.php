@@ -321,13 +321,10 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     */
     public function removeAllContentComments($id_cnt)
     {
+    	$ptModel = new Default_Model_PageTypes();
         $where[] = $this->getAdapter()->quoteInto('id_target_cmt = ?', (int)$id_cnt);
-        $where[] = $this->getAdapter()->quoteInto('type_cmt = 1');
-        if ($this->delete($where)) {
-            return true;
-        } else {
-            return false;
-        }
+        $where[] = $this->getAdapter()->quoteInto('type_cmt = ?', $ptModel->getId('content'));
+        return $this->delete($where);
     }
     
     /**

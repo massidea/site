@@ -15,8 +15,8 @@ $url_user = $this->url(array('controller' => 'account',
 $type = Zend_Layout::getMvcInstance()->getView()->type;
 ?>
 
-<div class="mini_content_row">
-    <div class="mini_content_row_stats smallsize_<?php echo $type;?>_border">
+<li class="<?php echo $type;?>">
+		<div>
         <span class="summary_topic">
                 <a href="<?php echo $url_post;?>">
                     <?php echo $this->title_cnt;?>
@@ -24,8 +24,5 @@ $type = Zend_Layout::getMvcInstance()->getView()->type;
         </span>
         <br />
         <?php echo $this->translate('content-list-order-by-views').': '?> <?php echo $this->viewCount; ?>
-    </div>
-
-    <div style="clear: both;"></div>
-
-</div>
+        </div>
+</li>

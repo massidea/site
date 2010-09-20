@@ -34,7 +34,7 @@ class Oibs_Decorators_UploadDecorator extends Zend_Form_Decorator_File
 		$text = '';
 		if($element->isrequired())
 		{
-            $text = '<div id="progressbar_'.$name.'" class="progress"></div>';
+            $text = '<div id="progressbar_'.$name.'" class="progress limit"></div>';
 		}
         
 		return $element->getView()->$helper(
@@ -62,7 +62,7 @@ class Oibs_Decorators_UploadDecorator extends Zend_Form_Decorator_File
 		{
             return '';
         }
-        return '<div class="form_element_helptext">' . $desc . '</div>';
+        return '<small class="right">' . $desc . '</small>';
     }
 
     public function render($content)
@@ -95,20 +95,17 @@ class Oibs_Decorators_UploadDecorator extends Zend_Form_Decorator_File
 					. $errors
 					. '</div>';*/
 
-        $output = '<div id="form_element_' . $name .'_container" class="form_element" >
-                    <div id="' . $name . '_div">
-                        <div class="form_element_header">'
+        $output = '<div id="form_element_' . $name .'_container" class="row" >
+                        <div class="field-label">'
                             . $desc
                             . $label
                         . '</div>
-                        <div style="clear: both;"></div>
-                        <div class="form_element_input">'
+                        <div class="field">'
                             . $input
                             . $errors
-                        . '<div style="clear: both;"></div>
-                        </div>
-                    </div>
-                 <div style="clear: both;"></div></div>';
+                    . '</div>
+					</div>
+					<div class="clear"></div>';
 
         switch ($placement) 
 		{

@@ -20,19 +20,15 @@ elseif($this->relatesToContentContentType == "idea") {
     $title2 = $this->translate('content-link-idea');
 }
 ?>
-<div class="linking">
-<h3 class="linking_header"><?php echo $title." ".$title2; ?></h3>
-<?php
-if($this->relatesToId != 0 && $this->hasUserContents == true) {
-?>
-    <div id="linked_to">
-        <div id="linked_to_where">
-            <p class="linking_paragraph"><?php echo $this->translate('content-link-target',
-                                                                     $this->language);
-            ?></p>
+<div id="content-page-additional-functions" class="narrow">
+<h2 class="linking_header"><?php echo $title." ".$title2; ?></h2>
+<?php if($this->relatesToId != 0 && $this->hasUserContents == true): ?>
+    <div id="linked">
+        <div class="link-target">
+            <strong><?php echo $this->translate('content-link-target', $this->language); ?></strong>
         </div>
-        <div class="linked_to_where_<?php echo $this->relatesToContentContentType; ?>">
-            <p class="linking_paragraph"><a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
+        <div class="linked-<?php echo $this->relatesToContentContentType; ?>">
+            <strong><a href="<?php echo $this->url(array('content_id' => $this->relatesToId,
                                                                               'language' => $this->language),
                                                                         'content_shortview', true); ?>">
                     <?php
@@ -41,57 +37,47 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
                         }
                         echo $this->relatesToContentTitle;
                     ?>
-                </a>
-            </p>
+                </a></strong>
         </div>
+            <div class="clear"></div>
     </div>
-    <?php
-    if($this->contents) {
-        ?> <p class="linking_help_text"><?php echo $this->translate('content-link-helptext'); ?></p> <?php
-        foreach($this->contents as $content) {
-            if($content['published_cnt'] != 0) {
-                ?>
-                <div class="linking_dot_line"></div>
-                <div class="linking_from">
-                    <div class="linking_from_name">
-                        <?php
-                        $linkurl = $this->url(array('content_id' => $content['id_cnt'],
-                                                    'language' => $this->language),
-                                              'content_shortview', true);
-                        ?>
-                        <div class="linking_from_<?php echo $content['key_cty']; ?>">
-                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
-                            <p class="linking_from_text"><?php echo $content['lead_cnt']; ?></p>
-                        </div>
-                    </div>
-                    <div class="linking_from_link">
-                        <?php
-                        $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
-                                                    'parentid'    => $this->relatesToId,
-                                                    'childid'     => $content['id_cnt'],
-                                                    'language' => $this->language),
-                                              'makecontentlinks', true);
-                        ?>
-                        <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-link'); ?></a>
-                    </div>
-                </div>
-                <div class="clear"></div>
-                <?php
-            }
-        }
-        ?> <div class="linking_dot_line"></div> <?php
-    } else {
-        ?> <p>No contents</p> <?php
-    }
-} else {
-    ?>
+    <?php if($this->contents): ?> 
+    	<p class="linking_help_text"><?php echo $this->translate('content-link-helptext'); ?></p>
+    	<div id="linking-contents">
+    		<ul>
+    		<?php foreach($this->contents as $content): ?>
+	            <?php if($content['published_cnt'] != 0): ?>
+	            <li>
+	            	<span class="linked-<?php echo $content['key_cty'];?>">
+						<?php
+	                        $linkurl = $this->url(array('content_id' => $content['id_cnt'],
+	                                                    'language' => $this->language),
+	                                              'content_shortview', true);
+	                    ?>
+	                    <a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a>
+	                    <?php
+	                        $linkurl = $this->url(array('contenttype' => $this->linkingContentType,
+	                                                    'parentid'    => $this->relatesToId,
+	                                                    'childid'     => $content['id_cnt'],
+	                                                    'language' => $this->language),
+	                                              'makecontentlinks', true);
+	                    ?>
+	                    <a href="<?php echo $linkurl; ?>"><strong><?php echo $this->translate('content-link'); ?></strong></a>
+                	</span>
+                </li>
+                <?php endif ?>
+        	<?php endforeach; ?>
+        	</ul>
+    	</div> 
+	<?php else: ?>
+        <p>No contents</p>
+    <?php endif; ?>
+<?php else: ?>
     <p><?php echo $this->translate('content-link-not-content-this-type'); ?></p>
-    <?php
-}
-?>
+<?php endif; ?>
 </div>
-
-<div id="sidebar" style="margin-left:20px; margin-right:0;">
+</div>
+<div id="sidebar" class="left">
     <div class="box">
         <h4>What is content unlinking?</h4>
         <div class="box-content">
@@ -104,4 +90,3 @@ if($this->relatesToId != 0 && $this->hasUserContents == true) {
             <div class="clear"></div>
         </div>
     </div>
-</div>

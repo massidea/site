@@ -43,7 +43,7 @@
 		//$this->setAction($this->_generateActionUrl());
         
 		$layout_select = new Zend_Form_Element_Select('layout_select');
-		$layout_select->setAttrib('onchange', '$("#submit").click();');
+		$layout_select->setAttrib('onchange', '$("#submitLayoutSelection").click();');
 		$layout_select->removeDecorator('Errors');
 		$layout_select->removeDecorator('Label');
 		$layout_select->removeDecorator('HtmlTag');
@@ -58,7 +58,7 @@
 		//$layout_select->setValue('default');
 		echo $this->_getCurrentLayoutSelect();
 		
-		$submit = new Zend_Form_Element_Submit('submit');
+		$submit = new Zend_Form_Element_Submit('submitLayoutSelection');
 		$submit->removeDecorator('DtDdWrapper');
 		$submit->setAttrib('style', 'display: none;');
 				

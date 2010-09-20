@@ -1,9 +1,7 @@
-urls = "";
-interval = 5000;
-maxLevel = 3;
+var interval = 5000;
+var maxLevel = 3;
 
 $("document").ready(function () {
-	urls = jQuery.parseJSON($("#jsmetabox").text());
 	setTimeout("refreshComments(true)", interval);
 	$("#commentPostButton").click(function() {
 		postComment();
@@ -25,7 +23,7 @@ function postComment() {
 	$.ajax({
 		type: "POST",
 		//async: false,
-		url: urls.commentUrls[0].postCommentUrl,
+		url: jsMeta.commentUrls[0].postCommentUrl,
 		data: data,
 		success: function(msg) {
 			refreshComments(false);
@@ -54,7 +52,7 @@ function isScrolledIntoView(elem)
  */
 function refreshComments(timer) {
 	if (isScrolledIntoView("#content_view_comments")) {
-		$.getJSON(urls.commentUrls[0].getCommentsUrl, function(data) {
+		$.getJSON(jsMeta.commentUrls[0].getCommentsUrl, function(data) {
 			if (data != "0") {
 				$.each(data, function(key, value) {
 					addCommentRow(value.id, value.parent, value.commentDiv);
@@ -162,7 +160,7 @@ function flagAsSpam(commentId)
 	var replaceCommentText;
 	$.ajax({
 		type: "POST",
-		url: urls.commentUrls[0].flagAsSpamUrl,
+		url: jsMeta.commentUrls[0].flagAsSpamUrl,
 		data: "flaggedid=" + commentId,
 		success: function(msg){
 			if(msg == '1') { replaceCommentText = 'Flagged'; }
