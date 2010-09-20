@@ -177,16 +177,6 @@ function flagContent()
 
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery.cookie.js')); ?>
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css')); ?>
-
-<?php 
-    // change background color
-    if (isset($this->contentType)) {
-	    $this->headScript()->captureStart();
-	    ?> changeBack('<?php echo $this->contentType; ?>'); <?php
-	    $this->headScript()->captureEnd(); 
-    }
-?>
 
         <?php if ($this->contentData['published_cnt'] == 0): ?>
             <h1><?php echo $this->translate('content-view-unpublished'); ?></h1>

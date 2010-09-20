@@ -883,3 +883,9 @@ div.form_userlist_element_label_right label {
 	list-style-type: none;
 	border-bottom: 1px dotted #CCC;
 }
+
+
+#content #content-page div#content-page-head { padding-left: 5px; }
+#content #content-page div#content-page-head.problem { border-left:5px solid #D21034 !important; }
+#content #content-page div#content-page-head.idea { border-left:5px solid #4B9B07 !important; }
+#content #content-page div#content-page-head.finfo { border-left:5px solid #FFC726 !important; }
