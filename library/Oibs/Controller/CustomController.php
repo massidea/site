@@ -278,32 +278,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         }
         return false;
     }
-    /** alreadyViewed
-     * 
-     * checks if user has viewed specific content during this session 
-     * 
-     * @param 	$cntId	content id
-     * @param   $username username, 0 if not logged
-     * @return  bool	if user has viewed page or not 
-     */
-    function alreadyViewed($cntId, $username) {
-    	$session = new Zend_Session_Namespace();
-    	if (!isset($session->viewedPages) || !is_array($session->viewedPages) ) {
-    		$session->viewedPages = array();
-    		$session->user = "0";
-    	}
-    	
-    	if (!isset($session->viewedPages[$username]) || !is_array($session->viewedPages[$username])) {
-    		$session->viewedPages[$username] = array();
-    	}
-    	if (in_array($cntId, $session->viewedPages[$username])) {
-    		return true;
-    	} else {
-    		$session->viewedPages[$username][] = $cntId;
-    		return false;
-    	}
-    	
-    }
     
     function setActiveOnline() {
     	$auth = Zend_Auth::getInstance();

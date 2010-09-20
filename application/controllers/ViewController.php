@@ -393,10 +393,15 @@
 
 	private function getViewers($id_cnt) {
 		$cntVwModel = new Default_Model_ContentViews();
-		//getContentViewers
 		return $cntVwModel->getContentViewers($id_cnt, 10);
 	} 
 	
+	/** getBoxStates
+	 * 
+	 * checks if contentview sideboxes are to be shown or hidden initially
+	 * 
+	 * @return $states array of states.
+	 */
 	private function getBoxStates() {
 		$defaultState = 'block';
 		$states = array (
@@ -405,4 +410,31 @@
 		);
 		return $states;	
 	}
+	
+    /** alreadyViewed
+     * 
+     * checks if user has viewed specific content during this session 
+     * 
+     * @param 	$cntId	content id
+     * @param   $username username, 0 if not logged
+     * @return  bool	if user has viewed page or not 
+     */
+    private function alreadyViewed($cntId, $username) {
+    	$session = new Zend_Session_Namespace();
+    	if (!isset($session->viewedPages) || !is_array($session->viewedPages) ) {
+    		$session->viewedPages = array();
+    		$session->user = "0";
+    	}
+    	
+    	if (!isset($session->viewedPages[$username]) || !is_array($session->viewedPages[$username])) {
+    		$session->viewedPages[$username] = array();
+    	}
+    	if (in_array($cntId, $session->viewedPages[$username])) {
+    		return true;
+    	} else {
+    		$session->viewedPages[$username][] = $cntId;
+    		return false;
+    	}
+    	
+    }
 }

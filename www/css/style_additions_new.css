@@ -869,4 +869,17 @@ div.form_userlist_element_label_right label {
 
 #content #my-views .scroll-box p {
 	padding: 0 !important;
-} 
+}
+
+.qtip-content ul {
+	margin: 0;
+	padding: 0;	
+}
+
+.qtip-content ul li {
+	padding: 5px;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	border-bottom: 1px dotted #CCC;
+}
