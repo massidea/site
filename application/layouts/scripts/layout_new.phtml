@@ -287,20 +287,20 @@ echo $this->doctype();
                                     <?php echo $this->translate('index-groups');?>
                             </a>
                         </li>
-                        <li class="blue">
-                            <a href="<?php echo $this->url(array('language' => $this->language,
-                                                     'controller' => 'campaign',
-                                                     'action'     => 'index',
-                                               ), 'lang_default', true); ?>">
-                                    <?php echo $this->translate('index-campaigns');?>
-                            </a>
-                        </li>
-                        <li id="users" class="blue">
+						<li id="users" class="blue">
                             <a href="<?php echo $this->url(array('controller' => 'account',
                                                  'action' => 'userlist',
                                                  'language' => $this->language),
                                             'lang_default', true); ?>">
                                       <?php echo $this->translate('index-users');?>
+                            </a>
+                        </li>
+                        <li class="deepblue">
+                            <a href="<?php echo $this->url(array('language' => $this->language,
+                                                     'controller' => 'campaign',
+                                                     'action'     => 'index',
+                                               ), 'lang_default', true); ?>">
+                                    <?php echo $this->translate('index-campaigns');?>
                             </a>
                         </li>
 			<li class="deepblue">
