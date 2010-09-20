@@ -182,8 +182,8 @@ function flagContent()
             <h1><?php echo $this->translate('content-view-unpublished'); ?></h1>
         <?php endif; ?>
 		<?php echo $this->partial('partials/content_view.phtml', $this);?>
-
-<div id="sidebar" class="left">
+</div>
+<div id="sidebar" class="right">
 	<div class="box">
     <h4 ><?php echo $this->translate('content-view-author'); ?></h4>
     <div class="box-user-content">
@@ -235,5 +235,4 @@ function flagContent()
 	    <div id="content_view_content_related" style="padding-top: 10px; display: <?php echo $this->boxStates['content'];?>">
 	    </div>
 	</div>
-</div>
 <div style="clear:both;"></div>

@@ -84,6 +84,7 @@ class Default_Form_FetchPasswordForm extends Zend_Form
         // Username input form element
         $username = new Zend_Form_Element_Text('email');
         $username->setLabel($translate->_("account-fetchpassword-email"))
+        		->removeDecorator('DtDdWrapper')
                 ->addFilter('StringtoLower')
                 ->setRequired(true)
 				->addValidators(array(
@@ -97,7 +98,8 @@ class Default_Form_FetchPasswordForm extends Zend_Form
         // Form submit buttom element
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel($translate->_("account-fetchpassword-submit"))
-               ->setAttrib('class', 'fetchpassword-submit');
+        		->removeDecorator('DtDdWrapper')
+               ->setAttrib('class', 'fetchpassword-submit left');
         
         // Add elements to form
         $this->addElements(array($username, $submit, $hidden));
