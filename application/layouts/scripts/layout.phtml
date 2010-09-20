@@ -17,8 +17,13 @@ echo $this->doctype();
     <title><?php echo $this->translate($this->title); ?></title>
     
     <?php
+    //$this->layout_mode = 'custom'; // testing...
+    
     $this->headLink()->appendStylesheet($this->baseUrl('/css/farbtastic.css'));		// Used for farbtastic custom color picker
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/style.css'));
+	/*if($this->layout_mode == 'custom') { 
+    	if($this->authenticated) {$this->headLink()->appendStylesheet($this->baseUrl('/css/user_custom_style/'.$this->username.'.css')); }
+    }*/
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css'));
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie8_fix.css'), 'screen', 'IE 8');
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix.css'), 'screen', 'IE 7');
@@ -41,15 +46,23 @@ echo $this->doctype();
         'PREPEND'
     );
 
-    $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
+    /*$this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/functions.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
-    $this->headScript()->prependFile('http://maps.google.com/jsapi');
-
+    $this->headScript()->prependFile('http://maps.google.com/jsapi');*/
+    $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.js'));
+	$this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
+	$this->headScript()->prependFile('http://maps.google.com/jsapi');
+	$this->headScript()->prependFile($this->baseUrl('/js/functions.js'));
+	$this->headScript()->prependFile($this->baseUrl('/js/OibsUtils.js'));
+	$this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
+	$this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
+	$this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
+	
     echo $this->headLink();
     echo $this->headMeta();
     echo $this->headScript();

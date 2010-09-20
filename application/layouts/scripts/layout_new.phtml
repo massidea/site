@@ -6,8 +6,13 @@ echo $this->doctype();
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <title><?php echo $this->translate($this->title); ?></title>
     <?php
+    $this->layout_mode = 'custom'; // testing...
+    
     $this->headLink()->appendStylesheet($this->baseUrl('/css/farbtastic.css'));	// Used for farbtastic custom color picker
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_new.css'));
+    if($this->layout_mode == 'custom') { 
+    	if($this->authenticated) {$this->headLink()->appendStylesheet($this->baseUrl('/css/user_custom_style/'.$this->username.'.css')); }
+    }
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css'));
 	$this->headLink()->appendStylesheet($this->baseUrl('/css/ie8_fix_new.css'), 'screen', 'IE 8');
     $this->headLink()->appendStylesheet($this->baseUrl('/css/ie7_fix_new.css'), 'screen', 'IE 7');

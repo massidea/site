@@ -54,8 +54,9 @@
 		$layout_select->addMultiOption('default', 'Default');
 		$layout_select->addMultiOption('custom', 'Custom');
 		
-		//$layout_select->setValue($this->_getCurrentLayoutSelect());
-		$layout_select->setValue('default');
+		$layout_select->setValue($this->_getCurrentLayoutSelect());
+		//$layout_select->setValue('default');
+		echo $this->_getCurrentLayoutSelect();
 		
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->removeDecorator('DtDdWrapper');
@@ -63,20 +64,11 @@
 				
 		$this->addElements(array($layout_select, $submit));
 	}
-	
-	private function _generateActionUrl()
-	{
-		$urlHelper = new Zend_View_Helper_Url();
-		return $urlHelper->url(array('controller' => 'misc',
-									 'action' => 'changelayout',
-									 'language' => $this->view->language),
-									 'lang_default', true);
-	}
-	
+		
 	private function _getCurrentLayoutSelect()
 	{
-		$layoutSession = new Zend_Session_Namespace('layout');
-		return $layoutSession->translateTo;
+		$layoutSession = $this->view->layout_mode;
+		return $layoutSession;
 	}
 
 }

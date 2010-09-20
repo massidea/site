@@ -32,6 +32,8 @@
 	{ 
         parent::__construct();
 		
+        $this->setMethod('post');
+        $this->setEnctype('multipart/form-data');
 		$this->setName('custom_layout_settings_form');
 		$this->addElementPrefixPath('Oibs_Form_Decorator',
                                 'Oibs/Form/Decorator/',
@@ -66,11 +68,17 @@
         $bgheader->setValue('<center><div style="font-weight:bold; font-size:1.35em; margin-top:-20px;"><label>Custom background</label></div></center>');
         
 		// Font
+		/*$customfontfamilylist = array('sans-serif'=> 'Arial', 'sans-serif' => '\"Arial Black\"', 'cursive' => '\"Comic Sans MS\"', 'monospace' => '\"Courier New\"', 'serif' => 'Georgia',
+								'sans-serif' => 'Impact', 'sans-serif' => 'Tahoma', 'serif' => '\"Times New Roman\"', 'sans-serif' => '\"Trebuchet MS\"', 'sans-serif' => 'Verdana');*/
+		$customfontlist = array('Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana');
+		$selectionValue = array_search($options['cssFontType'], $customfontlist);
 		$customfont = new Zend_Form_Element_Select('customfont');
 		$customfont->setLabel('Font')
 				   ->setAttrib('id', 'customfont')
 				   ->setAttrib('style', 'margin-top:-1px;')
-				   ->addMultiOptions(array('Arial', 'Castellar', 'Times New Roman', 'Microsoft Sans Serif', 'Harrington'));
+				   ->addMultiOptions($customfontlist)
+				   //->addMultiOptions($customfontfamilylist)
+				   ->setValue($options['cssFontType']);
 		
 		$customfontclear = new Oibs_Form_Element_Note('customfontclear');
         $customfontclear->setValue('<div style="clear:both;"></div>');
@@ -81,12 +89,16 @@
 											Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</div>');
 				   
 		// Font size
+		//$customfontsizes = array('8', '9', '10', '11', '12', '13', '14');
+		//$customfontsizes = array('0' => '8', '1' => '9', '2' => '10', '3' => '11', '4' => '12', '5' => '13', '6' => '14');
+		$customfontsizes = array('8px' => '8', '9px' => '9', '10px' => '10', '11px' => '11', '12px' => '12', '13px' => '13', '14px' => '14');
 		$customfontsize = new Zend_Form_Element_Select('customfontsize');
 		//$customfontsize->setLabel('Font Size')
 		$customfontsize->setLabel('')
 				   ->setAttrib('id', 'customfontsize')
 				   ->setAttrib('style', 'float:left; text-align:left; margin-bottom:5px; margin-left:10px; margin-top:-8px;')
-				   ->addMultiOptions(array('8', '10', '12', '14', '16'));
+				   ->addMultiOptions($customfontsizes)
+				   ->setValue($options['cssFontSize']);
 
 		$customsizeclear = new Oibs_Form_Element_Note('customsizeclear');
         $customsizeclear->setValue('<div class="clear"></div>');
@@ -96,7 +108,7 @@
         $customfontcolor->setLabel('Color')
                ->setAttrib('id', 'customfontcolor')
                ->setAttrib('style', 'margin-top:-1px;')
-               ->setValue('#000000');
+               ->setValue($options['cssFontColor']);
         				   
 
         $customfontcolorclear = new Oibs_Form_Element_Note('customfontcolorlear');
@@ -124,14 +136,14 @@
 		$custombgcolor->setLabel('Color')
                ->setAttrib('id', 'custombgcolor')
                ->setAttrib('style', 'margin-top:-1px;')
-               ->setValue('#ffffff');
+               ->setValue($options['cssBackgroundColor']);
 
 		// For background color picker script
         $custombgcolorpicker = new Oibs_Form_Element_Note('custombgcolorpicker');
         $custombgcolorpicker->setValue('<center><div id="custombgcolorpicker" style="margin-top:20px; margin-left:10px; /*border:1px solid silver;*/"></div></center>');
 
         // Submit button
-        $submit = new Zend_Form_Element_Button('custom_layout_button');
+        $submit = new Zend_Form_Element_Submit('custom_layout_button');
 		//$submit->setLabel($translate->_("account-register-submit"))
 		$submit->setLabel('Save')
 				->setAttrib('style', 'width:60px; float:right; margin-right:10px')
@@ -140,43 +152,28 @@
         $submitclear = new Oibs_Form_Element_Note('submitclear');
         $submitclear->setValue('<div style="clear:both;"></div>');
         
-        $savebgimagebutton = new Zend_Form_Element_Button('savebgimagebutton');
+        $savebgimagebutton = new Zend_Form_Element_Submit('savebgimagebutton');
 		//$savebgimagebutton->setLabel($translate->_("account-register-submit"))
 		$savebgimagebutton->setLabel('Upload')
 				->setAttrib('style', 'float:right; margin-right:50px; margin-top:6px; width:60px')
         		->removeDecorator('DefaultDecorator')
         		->removeDecorator('DtDdWrapper');
         
-        $bgimageinuse = new Zend_Form_Element_CheckBox('bgimage_in_use');
-        $bgimageinuse->setLabel(' Use < no imagefile uploaded>');
-        
-        $bgcolorinuse = new Zend_Form_Element_CheckBox('bgcolor_in_use');
-        $bgcolorinuse->setLabel(' Use');
+        $bgimageinuse = new Zend_Form_Element_Checkbox('bgimage_in_use');
+        $bgimageinuse->setLabel(' Use < '.$options['cssBackgroundImage'].' >');
 		
         // Block separator
 		$blockseparator = new Oibs_Form_Element_Note('blockseparator');
-        $blockseparator->setValue('<center><div style="width:696px; height:1px; border-bottom:1px solid silver; margin-bottom:10px;"></div></center>');         
+        $blockseparator->setValue('<center><div style="width:696px; height:1px; border-bottom:1px solid silver; margin-bottom:10px;"></div></center>');
+
+        $advancedbutton = new Zend_Form_Element_Button('advencedsettingsbutton');
+		//$savebgimagebutton->setLabel($translate->_("account-register-submit"))
+		$advancedbutton->setLabel('Advanced')
+				->setAttrib('style', 'float:left; margin-left:10px; width:80px')
+        		->removeDecorator('DefaultDecorator')
+        		->removeDecorator('DtDdWrapper');
          
         // Add elements to form
-         /*
-         $this->addElements(array(//$customfontpreviewtext,
-								 //$customfontclear,
-								 $testdivstart,
-								 $backgroundimage,
-								 $custombgcolor,
-								 $testdivend,
-								 //$clear,
-								 $testdiv2start,
-								 $customfont,
-								 //$clear,
-								 $customfontsize,
-								 $customsizeclear,
-								 $customfontcolor,
-								 $testdiv2end,
-								 $customfontcolorclear,
-								 $customfontcolorpicker,
-								 $clear));
-*/
 		$this->addElements(array(//$clearall,
 								 $testdivstart,
 								 	$savebgimagebutton,
@@ -197,7 +194,8 @@
 								 
 								 $submitclear,
 								 $blockseparator,
-								 $submit
+								 $submit,
+								 $advancedbutton
 								 ));
 								 
 		// Add decorators
@@ -209,7 +207,6 @@
 		//$backgroundimage->setDecorators(array('UploadDecorator'));
 		$custombgcolor->setDecorators(array('InputDecorator3'));
 		$bgimageinuse->setDecorators(array('CheckBoxDecorator'));
-		$bgcolorinuse->setDecorators(array('CheckBoxDecorator'));
 		
 		$this->setDecorators(array(
             'FormElements',

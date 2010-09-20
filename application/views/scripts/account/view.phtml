@@ -78,17 +78,41 @@ $(document).ready(function() {
 	
 	$('#custombgcolorpicker').farbtastic('#custombgcolor');
 	
-	$('#custom_layout_button').click(function() {
-		alert("save button hit!");
-		//$(#customfontcolor).css('font-weight' : 'bold;');
+	$("#advancedsettings-modal").dialog({
+		autoOpen: false,
+		title: 'Advanced Layout Customization',
+		height: 800,
+		width: 600,
+		resizable: false,
+		modal: true
 	});
+	
+	$('#advencedsettingsbutton').click(function() {
+		$("#advancedsettings-modal").dialog('open');
+		$("#advancedsettings-modal").parent().css({'background-color' : 'black',
+										  		   'opacity' : '0.7'});
+	});
+	
+	$('#cancel_css_button').click(function() {
+		$("#advancedsettings-modal").dialog('close');
+	});
+	
+	$('#restore_css_button').click(function() {
+		var original_css = $("#original_css").val();
+		$("#css_textarea").val(original_css);
+	});
+	
+	$('#default_css_button').click(function() {
+		var default_css = $("#default_css").val();
+		$("#css_textarea").val(default_css);
+	});	
+
 }); // Endof document ready
 
 function expandText(key)
 {
 	$(".biographyrow:eq("+key+")").html("<span>"+ biographyBody +"</span>");
 }
-
 
 
 <?php $this->headScript()->captureEnd(); ?>
@@ -320,7 +344,7 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
     	<?php foreach($this->boxes as $this->box): ?>
 			<?php echo $this->partial("partials/account_view_user_box.phtml", $this); ?>
 		<?php endforeach; ?>
-		
+
             <!--
             <div id="comments">
                 <h4>Comments</h4>
@@ -399,4 +423,8 @@ Zend_Layout::getMvcInstance()->setLayout('layout_new');
             -->
         <div class="clear"></div>
     </div>
+
+    <div id="advancedsettings-modal">
+		<?php echo $this->customLayoutAdvancedForm; ?>
+	</div>
 </div>
