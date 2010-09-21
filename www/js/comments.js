@@ -6,6 +6,11 @@ $("document").ready(function () {
 	$("#commentPostButton").click(function() {
 		postComment();
 	});
+	
+	$('textarea#commentTextarea').autoResize({
+	    extraSpace : 30
+	});
+	$('textarea#commentTextarea').resize();
 });
 
 /**

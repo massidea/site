@@ -181,6 +181,7 @@ function flagContent()
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/autoresize.jquery.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery.cookie.js')); ?>
 
         <?php if ($this->contentData['published_cnt'] == 0): ?>
