@@ -412,12 +412,11 @@ class AccountController extends Oibs_Controller_CustomController
 			/*Box for user profile custom layout settings*/
 			$box = new Oibs_Controller_Plugin_AccountViewBox();
 			$box->setHeader("Custom Layout")
-				->setClass("wide")
+				->setClass("widebox")
 				->setName("my-custom-layout")
 				->addTab("Basic options", "fonts", "all selected"); //Header, type, class, extra
 			$boxes[] = $box;
 			
-			// $_POST tarkista onko fontti, värit yms lähetetty. Aseta värit yms formin komponentteihin ja tallenna uusi css-tiedosto
 			$profileCustomCss = new Default_Model_CssFiles();
 			//$customCssOptions = array();
 			$newCssParams = array();

@@ -49,16 +49,16 @@
         $bgimageclear->setValue('<div style="clear:both;"></div>');
         
         $testdivstart = new Oibs_Form_Element_Note('testdivstart');
-        $testdivstart->setValue('<div class="backgrounddiv" style="float:right; min-width:410px; min-height:150px; height:auto !important; height:300px; margin-top:-5px; padding-left:20px; border-left:1px solid silver;">');
+        $testdivstart->setValue('<div class="backgrounddiv" style="float:right; min-width:410px; width:auto !important; min-height:150px; height:auto !important; height:300px; margin-top:-5px; padding-left:20px; border-left:1px solid silver;">');
 
         $testdivend = new Oibs_Form_Element_Note('testdivend');
-        $testdivend->setValue('</div>');
+        $testdivend->setValue('</div> <!-- end fontdiv -->');
 
         $testdiv2start = new Oibs_Form_Element_Note('testdiv2start');
-        $testdiv2start->setValue('<div class="fontdiv" style="float:left; min-width:280px; min-height:150px; height:auto !important; height:300px; margin-top:-25px;">');
+        $testdiv2start->setValue('<div class="fontdiv" style="float:left; min-width:280px; width:auto !important; min-height:150px; height:auto !important; height:300px; margin-top:-25px;">');
         
         $testdiv2end = new Oibs_Form_Element_Note('testdiv2end');
-        $testdiv2end->setValue('</div>');
+        $testdiv2end->setValue('</div> <!-- end fontdiv -->');
         
         // Headers
         $fontheader = new Oibs_Form_Element_Note('fontheader');
@@ -213,21 +213,4 @@
             'Form'
         ));
 	}
-	
-/*
-	private function _generateActionUrl()
-	{
-		$urlHelper = new Zend_View_Helper_Url();
-		return $urlHelper->url(array('controller' => 'misc',
-									 'action' => 'changelayout',
-									 'language' => $this->view->language),
-									 'lang_default', true);
-	}
-	
-	private function _getCurrentLayoutSelect()
-	{
-		$layoutSession = new Zend_Session_Namespace('layout');
-		return $layoutSession->translateTo;
-	}
-	*/
 }
