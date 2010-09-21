@@ -420,9 +420,17 @@ class AccountController extends Oibs_Controller_CustomController
 		
 		$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm();
         // Set to view
-        
+			
+		// Comment module
+        $comments = new Oibs_Controller_Plugin_Comments("account", $id);
+		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+        // enable comment form        
+		if ($auth->hasIdentity()) $comments->allowComments(true);
+		$comments->loadComments();
+		
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
+        $this->view->comments = $comments;
         $this->view->authorContents = $contentList;/*$temp*/
         $this->view->boxes = $boxes;
         $this->view->myViews = $myViews;

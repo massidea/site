@@ -121,6 +121,9 @@ $(document).ready(function() {
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new');?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/autoresize.jquery.js')); ?>
+
 <?php
     $admin = false;
     if(in_array("admin", $this->logged_user_roles)):
@@ -345,83 +348,9 @@ $(document).ready(function() {
     	<?php foreach($this->boxes as $this->box): ?>
 			<?php echo $this->partial("partials/account_view_user_box.phtml", $this); ?>
 		<?php endforeach; ?>
-		
-            <!--
-            <div id="comments">
-                <h4>Comments</h4>
-                <p><strong><a href="#">Login</a> or <a href="#">Sign Up</a> to post a comment</strong></p>
-
-                <div class="comment">
-                    <div class="comment-head">
-                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
-                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="comment-context">
-                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
-                    </div>
-                </div>
-
-                <div class="comment">
-                    <div class="comment-head">
-                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
-                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="comment-context">
-                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
-                    </div>
-                </div>
-
-                <div class="comment">
-                    <div class="comment-head">
-                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
-                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="comment-context">
-                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
-                    </div>
-                </div>
-
-                <div class="comment reply">
-                    <div class="comment-head">
-                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
-                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="comment-context">
-                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
-                    </div>
-                </div>
-
-                <div class="comment reply">
-                    <div class="comment-head">
-                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
-                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="comment-context">
-                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
-                    </div>
-                </div>
-
-                <div class="comment">
-                    <div class="comment-head">
-                        <div class="left"><a href="#"><strong>Username</strong></a> | <a href="#"><strong>City</strong></a> (12 Jun 2009)</div>
-                        <div class="right"><a href="#">Flag</a> | <a href="#"><strong>Reply</strong></a></div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="comment-context">
-                        <p>In the future many services workes cloud be displaced by artificial intelligence.</p>
-                    </div>
-                </div>
-
-                <div id="add-comment">
-                    <h4>Would you like to comment? <a href="#">Login</a> or <a href="#">Sign Up</a></h4>
-                </div>
-            </div>
-            -->
+		<div class="right" style="width: 500px">
+		<?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
+		</div>
         <div class="clear"></div>
     </div>
 </div>
