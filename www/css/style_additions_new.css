@@ -889,3 +889,31 @@ div.form_userlist_element_label_right label {
 #content #content-page div#content-page-head.problem { border-left:5px solid #D21034 !important; }
 #content #content-page div#content-page-head.idea { border-left:5px solid #4B9B07 !important; }
 #content #content-page div#content-page-head.finfo { border-left:5px solid #FFC726 !important; }
+
+#hiddenmenu{
+	display: none; 
+	padding: 4px;
+	background-color: #FFFFFF; 
+	border: 1px solid #000000; 
+	font-family: Tahoma;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+#account_profile_image{
+	border: 1px solid #e5e5e5;
+	margin-left: 10px;
+	padding: 4px;
+	width: 280px;
+}
+
+#account_profile_image_submit{
+	margin-left: 9px;
+	margin-top: 6px;
+}
+
+div.row div.field div.errors ul.errors li {
+	list-style-type: none;
+	color: red;	
+	text-align: center;
+}
