@@ -1,5 +1,5 @@
         <div class="view_content_comments">
-		        <div style="clear:both;"></div>
+		        <div class="clear"></div>
 				<div id="content_view_comment_form_container">
 			<?php if($this->comments->userCanComment()): ?>
 					<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
@@ -16,7 +16,7 @@
 			<?php else: ?>
             <p style="margin: 0px; padding: 0px;">Would you like to comment?</p>
             <p style="margin: 0px; padding: 0px;">
-            	<a href="<?php echo $this->comments->loginUrl; ?>">Log in</a> or <a href="<?php echo $this->comments->signupUrl; ?>">Sign up</a>
+            	<a id="login_link" href="#">Log in</a> or <a href="<?php echo $this->comments->signupUrl; ?>">Sign up</a>
             </p>
             <?php endif;?>
             				</div>

@@ -46,9 +46,12 @@ $(document).ready(function(){
 		autoOpen: false
 	});
 	
-	$("#login_link").click(function () {
-		$("#login_box").dialog("open");
-		$("#login_box > form > div:nth-child(2) > input").focus();
+	$("a#login_link").each(function() {
+		$(this).click(function (event) {
+			event.preventDefault();
+			$("#login_box").dialog("open");
+			$("#login_box > form > div:nth-child(2) > input").focus();
+		});
 	});
 
 	$("#login_link_openid").click(function () {

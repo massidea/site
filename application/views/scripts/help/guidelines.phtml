@@ -11,13 +11,13 @@ $signupLink = $this->url(array('controller' => 'account',
 ?>
 <div id="content-guidlines-page" class="narrow left">    
         <?php if (!$this->authenticated) { ?>
-            <h3><a href="<?php echo $loginLink;?>"><?php echo $this->translate("help-login"); ?></a> <?php echo $this->translate("help-or"); ?> <a href="<?php echo $signupLink;?>"><?php echo $this->translate("help-sign-up"); ?></a> <?php echo $this->translate("help-to-add-new-content"); ?>
+            <h3><a id="login_link" href="#"><?php echo $this->translate("help-login"); ?></a> <?php echo $this->translate("help-or"); ?> <a href="<?php echo $signupLink;?>"><?php echo $this->translate("help-sign-up"); ?></a> <?php echo $this->translate("help-to-add-new-content"); ?>
             </h3>
 
             <p>
             <?php echo $this->translate("help-guidelines-top1"); ?>
 
-            <a href="<?php echo $loginLink;?>"><?php echo $this->translate("help-login"); ?></a> <?php echo $this->translate("help-or"); ?> <a href="<?php echo $signupLink;?>"><?php echo $this->translate("help-sign-up"); ?></a> <?php echo $this->translate("help-to-add-new-content"); ?>
+            <a id="login_link" href="#"><?php echo $this->translate("help-login"); ?></a> <?php echo $this->translate("help-or"); ?> <a href="<?php echo $signupLink;?>"><?php echo $this->translate("help-sign-up"); ?></a> <?php echo $this->translate("help-to-add-new-content"); ?>
             </p>
 
             <p><?php echo $this->translate("help-guidelines-top2"); ?></p>
