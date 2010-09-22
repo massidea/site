@@ -262,7 +262,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		return;
 	}
 	
-	private function _getFollows() {
+	public function getFollows() {
 		$select = $this->_db->select()->from('follows_flw',array('bit','name'));
 		$result = $this->_db->fetchAssoc($select);
 		$returnArray = array();
@@ -295,8 +295,8 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		return $newArray;
 	}
 	
-	private function _getWhatUserIsFollowing($id_usr = 0, $type = 'all') {
-		$follows = $this->_getFollows();
+	public function getWhatUserIsFollowing($id_usr = 0, $type = 'all') {
+		$follows = $this->getFollows();
 
 		if($type = "all")
 			$settings = $this->_getProfileSettingsForFollows($id_usr);
@@ -323,7 +323,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	}
 	
 	public function getAllUpdatedContents($id_usr) {
-		$followsToFetch = $this->_getWhatUserIsFollowing($id_usr);
+		$followsToFetch = $this->getWhatUserIsFollowing($id_usr);
 		//print_r($followsToFetch);die;
 		$updatedContents = array();
 		if(isset($followsToFetch['own_follows'])) {
@@ -400,7 +400,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		$updatedCounts = $this->_getCounts($countsContents);
 		//print_r($updatedCounts);die;
 		$updated = $this->_getContentInfo($updatedCounts);
-		$followable = $this->_getFollows();
+		$followable = $this->getFollows();
 		//print_r($updated);die;
 		$merge = array();
 		foreach($updated as $k => $contentArray) {

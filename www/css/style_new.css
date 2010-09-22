@@ -139,9 +139,9 @@ input.submit-button {
 #header #search #search-top #notification_box .notification_class .notification_list_child { list-style: none outside none; margin-left: 65px; padding-top: 5px;}
 
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child { font-size: 0.9em; }
-#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_context_child { float:left; margin-left: 3px; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_context_child { float:left; margin-left: 3px; font-size: 0.9em; padding: 0px; margin-top: -3px; }
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_photo_child { float:left; }
-#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_photo_child img { width: 25px; height: 25px; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_photo_child img { width: 30px; height: 30px; }
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul { list-style: none outside none; margin-left: 25px; margin-bottom: 5px;  }
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul li { margin-bottom: 5px; }
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul li a { color: #0089CF; text-decoration: none; } 
@@ -698,6 +698,7 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 #content #edit-user-page .input-column2 { width:254px; float:left;  margin-right:20px;  margin-bottom:8px; }
 #content #edit-user-page .input-column3 { width:60px; float:left;  margin-bottom:8px; }
 #content #edit-user-page .input-column3.two_rows { margin-top:-10px; }
+#content #edit-user-page .input-column2 label input[type="checkbox"] { float:left; width: 10px; margin-right: 5px; }
 
 #content #edit-user-page textarea,
 #content #edit-user-page input {  width:255px; }

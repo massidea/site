@@ -17,6 +17,14 @@
 				<li class="notification_list_row" id="notification_list_id_<?php echo $id; ?>">
 					<div class="notification_list_row_first">
 						<div class="notification_photo_first">
+						<?php if($dataArray['updates']['latest']['bin'] == "rating"): ?>
+							<img src="<?php echo $this->url(array('controller' => 'account',
+		                            'action' => 'profilethumb',
+		                            'id' => 0,
+		                            'language' => $language,
+		                            'thumb' => 'true'),
+		                            'lang_default', true)?>" />
+						<?php else: ?>
 							<a href="<?php echo $this->url(array('controller' => 'account',
 		                             'action' => 'view',
 		                             'user' => $dataArray['updates']['latest']['login_name_usr'],
@@ -29,14 +37,21 @@
 		                            'thumb' => 'true'),
 		                            'lang_default', true)?>" />
 	                        </a>
+	                    <?php endif; ?>
 						</div>
 						<div class="notification_context">
 							<div>
+								<?php if($dataArray['updates']['latest']['bin'] == "rating"): ?>
+								<span>Someone</span>
+								<?php else: ?>
 								<a href="<?php echo $this->url(array('controller' => 'account',
 		                             'action' => 'view',
 		                             'user' => $dataArray['updates']['latest']['login_name_usr'],
 		                             'language' => $language),
-		                             'lang_default', true); ?>"><?php echo $dataArray['updates']['latest']['login_name_usr']; ?></a>
+		                             'lang_default', true); ?>">
+								<?php echo $dataArray['updates']['latest']['login_name_usr']; ?>
+								</a>
+								<?php endif; ?>
 		         				<span>made <?php echo $dataArray['updates']['latest']['bin']; ?> to your <?php echo $k ?> content: </span>
 							</div>
 							<div>
@@ -77,21 +92,40 @@
 							 		?>
 							 			<li>
 							 				<div class="notification_photo_child">
-										 		<img src="<?php echo $this->url(array('controller' => 'account',
-								                            'action' => 'profilethumb',
-								                            'id' => $user['id_usr'],
-								                            'language' => $language,
-								                            'thumb' => 'true'),
-								                            'lang_default', true)?>"/>
+							 				<?php if($bin == "rating"): ?>
+												<img src="<?php echo $this->url(array('controller' => 'account',
+							                            'action' => 'profilethumb',
+							                            'id' => 0,
+							                            'language' => $language,
+							                            'thumb' => 'true'),
+							                            'lang_default', true)?>" />
+											<?php else: ?>
+							 					<a href="<?php echo $this->url(array('controller' => 'account',
+						                             'action' => 'view',
+						                             'user' => $user['login_name_usr'],
+						                             'language' => $language),
+						                             'lang_default', true); ?>">
+											 		<img src="<?php echo $this->url(array('controller' => 'account',
+									                            'action' => 'profilethumb',
+									                            'id' => $user['id_usr'],
+									                            'language' => $language,
+									                            'thumb' => 'true'),
+									                            'lang_default', true)?>"/>
+								                </a>
+								             <?php endif; ?>
 								             </div>
 								             <div class="notification_context_child">
-										         <a href="<?php echo $this->url(array('controller' => 'account',
+								             <?php if($bin == "rating"): ?>
+								             	<span>Someone</span> 
+										     <?php else: ?>
+										        <a href="<?php echo $this->url(array('controller' => 'account',
 										                             'action' => 'view',
 										                             'user' => $user['login_name_usr'],
 										                             'language' => $language),
-										                             'lang_default', true); ?>"><?php echo $user['login_name_usr']; ?></a>
-										         
-										         <span>: <?php echo $dataArray['updates']['latest']['time']; ?></span>
+										                             'lang_default', true); ?>"><?php echo $user['login_name_usr']; ?>
+										         </a>   
+										     <?php endif;?>    
+										         <br /><span><?php echo $user['time']; ?></span>
 								 		 	</div>
 								 		 	<div style="clear:both;"></div>
 								 		 </li>
@@ -110,87 +144,3 @@
 	<?php endforeach; //$this->notifications as $k => $contentArray ?>
 	<div id="notification_ids" style="visibility: hidden; display: none;"><?php echo $this->ids; ?></div>
 <?php endif; //$this->notifications ?>
-
-
- 
- <?php /*  
-	<ul id="notifications_<?php echo $k; ?>">
-	
-	<?php foreach($contentArray as $id => $dataArray): ?>
-		<li class="<?php
-			 foreach($dataArray['updates']['bins'] as $bin => $binArray)
-			 	echo "notification_".$bin." "
-		 ?>notification_list" id="notification_id_<?php echo $id; ?>">
-		 <div class="notification_first">
-		 
-			 <img src="<?php echo $this->url(array('controller' => 'account',
-	                            'action' => 'profilethumb',
-	                            'id' => $dataArray['updates']['latest']['id_usr'],
-	                            'language' => $language,
-	                            'thumb' => 'true'),
-	                            'lang_default', true)?>" />
-	         <div>
-		         <a href="<?php echo $this->url(array('controller' => 'account',
-		                             'action' => 'view',
-		                             'user' => $dataArray['updates']['latest']['login_name_usr'],
-		                             'language' => $language),
-		                             'lang_default', true); ?>"><?php echo $dataArray['updates']['latest']['login_name_usr']; ?></a>
-		         <span>has made new <?php echo $dataArray['updates']['latest']['bin']; ?> to your <?php echo $k ?> content: </span>
-		         <br />
-		         <a href="<?php echo  $this->url(array('content_id' => $id,
-		                             'language' => $language),
-		                             'content_shortview', true); ?>"><?php echo $dataArray['original']['title_cnt']; ?> </a>
-	         </div>
-	         <span><?php echo $dataArray['updates']['latest']['time']; ?></span>
-         </div>
-         
-		 <?php if($dataArray['updates']['total'] > 1): ?>
-		 <div class="notification_more">
-		 <a href="#" onClick="return false;">View older</a>
-		 <span>(<?php echo $dataArray['updates']['total']-1; ?>)</span>
-		 </div>
-		 <ul class="notifications_older">
-		 	<?php foreach($dataArray['updates']['bins'] as $bin => $binArray):
-				if($bin == $dataArray['updates']['latest']['bin']) {
-					$amount = $binArray['amount']-1;
-		 			if($amount == 0) continue;
-		 		}
-		 		else $amount = $binArray['amount'];
-		 	?>
-		 	<li>
-		 		<span>
-		 		<?php echo $amount; ?> new <?php echo $bin ?>s: </span>
-		 		
-		 		<ul>
-		 		<?php foreach($binArray['values'] as $key => $user):
-						if($bin == $dataArray['updates']['latest']['bin'] && $key == 0) continue;
-		 		?>
-		 			<li>
-				 		<img src="<?php echo $this->url(array('controller' => 'account',
-		                            'action' => 'profilethumb',
-		                            'id' => $user['id_usr'],
-		                            'language' => $language,
-		                            'thumb' => 'true'),
-		                            'lang_default', true)?>"/>
-				         <a href="<?php echo $this->url(array('controller' => 'account',
-				                             'action' => 'view',
-				                             'user' => $user['login_name_usr'],
-				                             'language' => $language),
-				                             'lang_default', true); ?>"><?php echo $user['login_name_usr']; ?></a>
-				         
-				         <span>: <?php echo $dataArray['updates']['latest']['time']; ?></span>
-			 		 </li>
-			 	<?php endforeach; ?>
-			 	</ul>
-		 	</li>
-		 	<?php endforeach; ?>
-		 </ul>
-		 <?php else: ?>
-		 <div style="clear:both;"></div>              
-        <?php endif; ?>
-		</li>
-		
-	<?php endforeach; ?>
-	</ul>
-<?php endforeach; ?>
-<?php endif; */ ?>

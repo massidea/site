@@ -157,5 +157,15 @@ class Default_Model_ContentHasUser extends Zend_Db_Table_Abstract
         
         return $owner;
     }
+    
+    public function updateLastChecked($id_usr = 0, $id_cnt = 0) {
+    	if($id_cnt != 0 && $id_usr != 0)
+		{
+			$this->update(array(
+						'last_checked' => new Zend_Db_Expr('NOW()')),
+						 "id_usr = $id_usr AND id_cnt = $id_cnt");
+		} 
+		return false;
+    }
 } // end of class
 ?>

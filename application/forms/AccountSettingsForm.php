@@ -101,24 +101,26 @@ class Default_Form_AccountSettingsForm extends Zend_Form
 			'hostname-undecipherable-tld',
 			Zend_Validate_Hostname::UNDECIPHERABLE_TLD);
 
+		// Clear div
+        $clear = '<div class="clear"></div>';
+			
         // Headers
         $accountInformation = new Oibs_Form_Element_Note('accountinformation');
-        $accountInformation->setValue('<div class="clear"></div><h3>Account information</h3><div class="clear"></div>');
+        $accountInformation->setValue($clear.'<h3>Account information</h3>'.$clear);
 
         $personalInformation = new Oibs_Form_Element_Note('personalinformation');
-        $personalInformation->setValue('<h3>Personal Information</h3><div class="clear"></div>');
+        $personalInformation->setValue('<h3>Personal Information</h3>'.$clear);
 
         $locationInformation = new Oibs_Form_Element_Note('locationinformation');
-        $locationInformation->setValue('<h3>Location Information</h3><div class="clear"></div>');
+        $locationInformation->setValue('<h3>Location Information</h3>'.$clear);
 
         $employmentInformation = new Oibs_Form_Element_Note('employmentinformation');
-        $employmentInformation->setValue('<h3>Employment Information</h3><div class="clear"></div>');
+        $employmentInformation->setValue('<h3>Employment Information</h3>'.$clear);
 
+        $subscribeInformation = new Oibs_Form_Element_Note('subscribeinformation');
+        $subscribeInformation->setValue('<h3>Subscribe settings</h3>'.$clear);
         // Public text
         $publictext = 'Public';
-
-        // Clear div
-        $clear = '<div class="clear"></div>';
 
         // Username for description
         $auth = Zend_Auth::getInstance();
@@ -438,6 +440,28 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $employer_organizationpublic = new Zend_Form_Element_Checkbox('company_publicity');
         $employer_organizationpublic->setLabel($publictext);
 
+        //Subscribe things
+        $favouritesModel = new Default_Model_UserHasFavourites();
+        $subscribeOptions = $favouritesModel->getFollows();
+        unset($subscribeOptions['8']); //Unsetting the translation box till its in use.
+        //print_r($subscribeOptions);die;
+        
+        $test = new Zend_Form_Element_MultiCheckbox('lol');
+        //$test->setV
+
+        
+        $subscribeClasses = array("own_follows" => "Own contents",
+        						  "fvr_follows" => "Favourite contents");
+        foreach($subscribeClasses as $key => $value) {        
+	        $subscribe[$key] = new Zend_Form_Element_MultiCheckbox($key);
+	        $subscribe[$key]->setLabel('Activities you want to follow in your '.$value);
+	        $subscribe[$key]->addMultiOptions($subscribeOptions);
+        }
+
+        $subscribeclear = new Oibs_Form_Element_Note('subscribeclear');
+	    $subscribeclear->setValue($clear);
+
+        
         $save = new Zend_Form_Element_Submit('save');
         $save->setLabel('Save profile')
              ->setAttrib('id', 'save-profile')
@@ -509,6 +533,10 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             $employmentpublic,
                             $employer_organization,
                             $employer_organizationpublic,
+                            $subscribeInformation,
+                            $subscribe['own_follows'],
+                            $subscribe['fvr_follows'],
+                            $subscribeclear,
                             $save,
                             $cancel,
                            ));
@@ -517,6 +545,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $personalInformation->setDecorators(array('ViewHelper'));
         $locationInformation->setDecorators(array('ViewHelper'));
         $employmentInformation->setDecorators(array('ViewHelper'));
+        $subscribeInformation->setDecorators(array('ViewHelper'));
 
         $username->setDecorators(array('InputDecorator'));
         $usernamepublic->setDecorators(array('PublicDecorator'));
@@ -572,6 +601,10 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $employmentpublic->setDecorators(array('PublicDecorator'));
         $employer_organization->setDecorators(array('InputDecorator'));
         $employer_organizationpublic->setDecorators(array('PublicDecorator'));
+        $subscribe['own_follows']->setDecorators(array('InputDecorator'));
+        $subscribe['fvr_follows']->setDecorators(array('InputDecorator'));
+        $subscribeclear->setDecorators(array('ViewHelper'));
+
         $save->setDecorators(array(
             'ViewHelper',
             array('HtmlTag', array('tag' => 'div', 'openOnly' => true, 'id' => 'save_changes')),
