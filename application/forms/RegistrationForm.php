@@ -49,7 +49,8 @@ class Default_Form_RegistrationForm extends Zend_Form
 				->addValidators(array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
 				))
-				->setDecorators(array('RegistrationDecorator'));
+				->setDecorators(array('RegistrationDecorator'))
+				;
     
 		$mailvalid = new Zend_Validate_EmailAddress();
 		$mailvalid->setMessage(
@@ -203,7 +204,7 @@ class Default_Form_RegistrationForm extends Zend_Form
                                 $city, $email, $employment, 
                                 $captcha, $captcha_text, $terms, $submit));
        
-       $this->addDisplayGroup(array('username', 'password', 'confirm_password'), 'account_information');
+       /*$this->addDisplayGroup(array('username', 'password', 'confirm_password'), 'account_information');
        $this->account_information->setLegend('register-account-information');
        $this->account_information->removeDecorator('DtDdWrapper');
        $this->addDisplayGroup(array('city', 'email', 'employment'), 'personal_information');
@@ -212,6 +213,6 @@ class Default_Form_RegistrationForm extends Zend_Form
        
        $this->addDisplayGroup(array('captcha', 'captcha_text', 'terms', 'submit'), 'confirmations');
        $this->confirmations->removeDecorator('DtDdWrapper');
-       $this->confirmations->setLegend('register-confirmations');
+       $this->confirmations->setLegend('register-confirmations');*/
 	}
 }

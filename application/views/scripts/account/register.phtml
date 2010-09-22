@@ -1,16 +1,8 @@
-<?php 
-//$this->headScript()->appendFile($this->baseUrl . '/js/checkRF.js'); Does not work yet / anymore
-
-$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); 
-?>
-
-<div class="form_registration_container">
-    <div class="form_registration_header">
-        <div class="form_registration_header_left">
-            <h3><?php echo $this->translate('account-register-page_header'); ?></h3>
-        </div>
-    </div>
-    <div style="clear:both;"></div>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="sign-up-page" class="narrow left">
+            <h2 class="left"><?php echo $this->translate('account-register-page_header'); ?></h2>
+    <div class="clear"></div>
+    <div id="edit-profile-form">
 	<?php
         if (isset($this->form)) {
             echo $this->form;
@@ -18,19 +10,17 @@ $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css
             // PANIC!!
         }
     ?>
+	</div>
 </div>
-
-<div class="right_side" style="padding: 0px; margin: 0px; margin-top: 0px;">
-    <p class="right_side_title_small" style="padding-top: 0px; padding-bottom:3px; color:#c0c0c0;">
-        <?php echo $this->translate('registration-box-header'); ?>
-    </p>
-    <div class="top_right_box" style="">
-        <div class="">
+<div id="sidebar" class="right">
+    <div class="box">
+        <h2><?php echo $this->translate('registration-box-header'); ?></h2>
+    	<div class="box-content">
             <p><?php echo $this->translate('account-register-p1'); ?></p>
             <p><?php echo $this->translate('account-register-p2'); ?></p>
             <p><?php echo $this->translate('account-register-p3'); ?></p>
             <p><?php echo $this->translate('account-register-p4'); ?></p>
             <p><?php echo $this->translate('account-register-p5'); ?></p>
-        </div>
+		</div>
     </div>
 </div>
