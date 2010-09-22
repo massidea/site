@@ -108,10 +108,7 @@
                 
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
-        
-        $comments = new Oibs_Controller_Plugin_Comments("content", $id);
-		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
-        
+              
         // turn commenting off by default
         $user_can_comment = false;
         
@@ -131,9 +128,7 @@
         
         // If user has identity
         if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) {
-            // enable comment form
-            $comments->allowComments(true);
-            
+        
             // enable rating if the content was not published by the user
             // (also used for flagging)
             if ($ownerId != $auth->getIdentity()->user_id) {
@@ -215,7 +210,7 @@
 
         // get (VIEWED) content views (returns a string directly)
         $contentViewsModel = new Default_Model_ContentViews();
-        if (! $this->alreadyViewed($id)) {
+        if (! $this->alreadyViewed($id, ($auth->hasIdentity()) ? $auth->getIdentity()->username : "0")) {
 			$contentViewsModel->increaseViewCount($id);
         }
         $views = $contentViewsModel->getViewsByContentId($id);
@@ -355,7 +350,13 @@
         	$modified = $contentData['modified_cnt'];
         }
 
-        $comments->loadComments();
+        
+        // Comment module
+        $comments = new Oibs_Controller_Plugin_Comments("content", $id);
+		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+        // enable comment form        
+		if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) $comments->allowComments(true);
+		$comments->loadComments();
         
         // Inject data to view
         $this->view->files 				= $files;
@@ -396,10 +397,15 @@
 
 	private function getViewers($id_cnt) {
 		$cntVwModel = new Default_Model_ContentViews();
-		//getContentViewers
 		return $cntVwModel->getContentViewers($id_cnt, 10);
 	} 
 	
+	/** getBoxStates
+	 * 
+	 * checks if contentview sideboxes are to be shown or hidden initially
+	 * 
+	 * @return $states array of states.
+	 */
 	private function getBoxStates() {
 		$defaultState = 'block';
 		$states = array (
@@ -408,4 +414,31 @@
 		);
 		return $states;	
 	}
+	
+    /** alreadyViewed
+     * 
+     * checks if user has viewed specific content during this session 
+     * 
+     * @param 	$cntId	content id
+     * @param   $username username, 0 if not logged
+     * @return  bool	if user has viewed page or not 
+     */
+    private function alreadyViewed($cntId, $username) {
+    	$session = new Zend_Session_Namespace();
+    	if (!isset($session->viewedPages) || !is_array($session->viewedPages) ) {
+    		$session->viewedPages = array();
+    		$session->user = "0";
+    	}
+    	
+    	if (!isset($session->viewedPages[$username]) || !is_array($session->viewedPages[$username])) {
+    		$session->viewedPages[$username] = array();
+    	}
+    	if (in_array($cntId, $session->viewedPages[$username])) {
+    		return true;
+    	} else {
+    		$session->viewedPages[$username][] = $cntId;
+    		return false;
+    	}
+    	
+    }
 }

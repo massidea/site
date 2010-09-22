@@ -1,4 +1,5 @@
-<h1><?php echo $this->translate('account-apikey-title'); ?></h1>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<h2><?php echo $this->translate('account-apikey-title'); ?></h2>
 <p>
 <?php if($this->hasApiKey): ?>
 	<?php echo $this->translate('account-apikey-your-key') . ": " . $this->apikey; ?>

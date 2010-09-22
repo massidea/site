@@ -593,7 +593,7 @@ CREATE TABLE `contents_cnt` (
   `id_cnt` int(11) NOT NULL AUTO_INCREMENT,
   `id_cty_cnt` int(11) NOT NULL,
   `title_cnt` varchar(255) NOT NULL,
-  `lead_cnt` varchar(255) NOT NULL,
+  `lead_cnt` text NOT NULL,
   `language_cnt` varchar(5) NOT NULL,
   `body_cnt` text NOT NULL,
   `research_question_cnt` varchar(120) DEFAULT NULL,

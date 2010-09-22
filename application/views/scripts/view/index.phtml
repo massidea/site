@@ -49,9 +49,9 @@ function setImage(type) {
 	var target = "#content_view_"+type+"_related";
 	var expandButton = ".expand_"+type+"_related";
 	if ($(target).is(':hidden')){
-		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
-	} else {
 		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_plus_tiny.png');?>");
+	} else {
+		$(expandButton).attr("src", "<?php echo $this->baseUrl('/images/icon_minus_tiny.png');?>");
 	}
 
 }
@@ -107,7 +107,16 @@ $(document).ready(function(){
 		ajaxLoad_moreRelated("user", false);
 		ajaxLoad_moreRelated("content", false);
 
-		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>");
+		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>", function () 
+			{
+				$("a#login_link").each(function() {
+				$(this).click(function (event) {
+					event.preventDefault();
+					$("#login_box").dialog("open");
+					$("#login_box > form > div:nth-child(2) > input").focus();
+				});
+			});
+		});
 		$("#content_view_favourite").load("<?php echo $contentFavouriteUrl; ?>");
 		
 		$("#content_view_linked_content_challenges_more").click(function(){initLinkedContent("challenges");});
@@ -118,10 +127,6 @@ $(document).ready(function(){
 			function(){ $(".user_content_edit > ul").delay(1000).slideUp(); }
 		);
 });
-
-
-
-
 
 function ajaxLoad_favourite(method){
 	$.ajax({
@@ -176,24 +181,15 @@ function flagContent()
 <?php $this->headScript()->captureEnd(); ?>
 
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/autoresize.jquery.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery.cookie.js')); ?>
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css')); ?>
-
-<?php 
-    // change background color
-    if (isset($this->contentType)) {
-	    $this->headScript()->captureStart();
-	    ?> changeBack('<?php echo $this->contentType; ?>'); <?php
-	    $this->headScript()->captureEnd(); 
-    }
-?>
 
         <?php if ($this->contentData['published_cnt'] == 0): ?>
             <h1><?php echo $this->translate('content-view-unpublished'); ?></h1>
         <?php endif; ?>
 		<?php echo $this->partial('partials/content_view.phtml', $this);?>
-
-<div id="sidebar" class="left">
+</div>
+<div id="sidebar" class="right">
 	<div class="box">
     <h4 ><?php echo $this->translate('content-view-author'); ?></h4>
     <div class="box-user-content">
@@ -245,5 +241,4 @@ function flagContent()
 	    <div id="content_view_content_related" style="padding-top: 10px; display: <?php echo $this->boxStates['content'];?>">
 	    </div>
 	</div>
-</div>
 <div style="clear:both;"></div>

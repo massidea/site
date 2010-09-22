@@ -8,7 +8,7 @@ $url_getRecentCampaigns = $this->url(array('controller' => 'ajax',
 							 'lang_default', true);
 
 
-/* FIXME: Can't create campaing without creating group
+/* FIXME: Can't create campaing without creating  group
 
 $createCampaignUrl = $this->url(array(	'controller' => 'campaign',
 					'action'     => 'create',
@@ -46,20 +46,18 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     <div class="box">
         <h2>What are campaigns?</h2>
         <div class="box-content">
-	<?php
 
-	// FIXME: Why we use create campaing here? If we don't have functionality to create campaing without groups...
-        /*<strong><a href="<?php echo $createCampaignUrl; ?>">Create a campaing</a></strong><br />*/
+            <p>To collect multiple insights, group can launch
+            a campaign and summarize individual user’s insights
+            into one united theme. Basically campaign is group’s
+            organized and coordinated effort to promote content
+            production to a specified theme.</p>
 
-	?>
-            Groups help like-minded people to join their forces.
-            You can create as many groups as you want.
+            <p>Adding content to campaign requires group membership.
+            Moreover, users can only link their own already published
+            existing contents to a campaign. One content can be linked
+            to multiple campaigns.</p>
 
-            <p>Once you have created a group you can launch group campaigns.</p>
-
-            <strong>Launch a campaign</strong><br />
-            To collect others' opinions, launch a campaign that combines
-            individual contents as an easy-to-navigate unit.
         </div>
     </div>
 

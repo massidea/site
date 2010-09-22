@@ -439,11 +439,8 @@ p#replying_to {
     border:1px solid #CCCCCC;
 	padding: 0.5em 0.5em;
 	font-size: 10pt;
-}
-
-#content_view_user_related, #content_view_content_related {
 	max-height: 200px;
-	overflow: auto;
+	overflow-x: hidden;
 }
 
 .content_view_user_related_entry_idea, 
@@ -521,7 +518,7 @@ p#replying_to {
 	float: right;
 }
 
-div.scroll-box ul li.views div.user {
+div#my-views div.scroll-box ul li div.user {
 	padding: 0 !important; 
 	margin: 0 !important;
 	background: none !important;	
@@ -868,4 +865,55 @@ div.form_userlist_element_label_right label {
 
 .content_entry_user_image_finfo {
     border-left: 6px solid #FFC726;
+}
+
+#content #my-views .scroll-box p {
+	padding: 0 !important;
+}
+
+.qtip-content ul {
+	margin: 0;
+	padding: 0;	
+}
+
+.qtip-content ul li {
+	padding: 5px;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	border-bottom: 1px dotted #CCC;
+}
+
+
+#content #content-page div#content-page-head { padding-left: 5px; }
+#content #content-page div#content-page-head.problem { border-left:5px solid #D21034 !important; }
+#content #content-page div#content-page-head.idea { border-left:5px solid #4B9B07 !important; }
+#content #content-page div#content-page-head.finfo { border-left:5px solid #FFC726 !important; }
+
+#hiddenmenu{
+	display: none; 
+	padding: 4px;
+	background-color: #FFFFFF; 
+	border: 1px solid #000000; 
+	font-family: Tahoma;
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+#account_profile_image{
+	border: 1px solid #e5e5e5;
+	margin-left: 10px;
+	padding: 4px;
+	width: 280px;
+}
+
+#account_profile_image_submit{
+	margin-left: 9px;
+	margin-top: 6px;
+}
+
+form div.errors ul.errors li {
+	list-style-type: none;
+	color: red;	
+	text-align: center;
 }

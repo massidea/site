@@ -6,7 +6,7 @@
 <div class='rss-reader clear'><div class='rss-channel'></div><ul>
 <?php foreach($this->data['items'] as $item): ?>
 	<li style="display:block;"><div class='rss-item'><a href="<?php echo $item['link']; ?>"><?php echo $item['title']; ?></a><br />
-	<div class="rss-item-desc" style="display:none"><?php echo $item['desc']; ?></div>
+	<div class="rss-item-desc" style="display:none"><h2 style="border-bottom:1px dotted #CCC;"><?php echo $item['cTitle']; ?></h2><?php echo $item['desc']; ?></div>
 	</div></li>
 <?php endforeach; ?>
 </ul></div>
