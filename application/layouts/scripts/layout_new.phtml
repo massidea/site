@@ -117,7 +117,7 @@ echo $this->doctype();
                                                                'lang_default', true); ?>">
                                     <?php echo $this->translate('index-logout'); ?>
                                 </a>
-                        <?php else:
+                        <?php else: // if not authenticated
                                 $url_sign_up = $this->url(array('controller' => 'account',
                                                         'action' => 'register',
                                                         'language' => $this->language),

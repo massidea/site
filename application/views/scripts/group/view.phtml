@@ -10,6 +10,7 @@ function deleteconfirmation(url) {
 }
 <?php $this->headScript()->captureEnd(); ?>
 <?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/autoresize.jquery.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/rssfeeds.js')); ?>
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
@@ -267,7 +268,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
             </div>
             <div class="clear"></div>
         </div>
-         		<?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
+        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
         
     </div>
 </div>

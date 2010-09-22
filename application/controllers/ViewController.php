@@ -108,10 +108,7 @@
                 
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
-        
-        $comments = new Oibs_Controller_Plugin_Comments("content", $id);
-		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
-        
+              
         // turn commenting off by default
         $user_can_comment = false;
         
@@ -133,9 +130,7 @@
         
         // If user has identity
         if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) {
-            // enable comment form
-            $comments->allowComments(true);
-            
+        
             // enable rating if the content was not published by the user
             // (also used for flagging)
             if ($ownerId != $auth->getIdentity()->user_id) {
@@ -352,7 +347,13 @@
         	$modified = $contentData['modified_cnt'];
         }
 
-        $comments->loadComments();
+        
+        // Comment module
+        $comments = new Oibs_Controller_Plugin_Comments("content", $id);
+		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+        // enable comment form        
+		if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) $comments->allowComments(true);
+		$comments->loadComments();
         
         // Inject data to view
         $this->view->files 				= $files;

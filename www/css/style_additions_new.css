@@ -912,7 +912,7 @@ div.form_userlist_element_label_right label {
 	margin-top: 6px;
 }
 
-div.row div.field div.errors ul.errors li {
+form div.errors ul.errors li {
 	list-style-type: none;
 	color: red;	
 	text-align: center;
