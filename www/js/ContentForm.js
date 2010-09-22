@@ -18,8 +18,8 @@
  *	Licence:	GPL v2.0
  */	
 
-var canExit = 0;
 var inPreview = 0;
+var canExit = 0;
 var tmpFormData;
 var previewId = 'form_content_previewcontent';
 var contentId = 'form_content_realcontent';
@@ -101,6 +101,8 @@ $(document).ready(function() {
 		}
 
 		$(thisProgress).html(progressText);
+		
+		window.onbeforeunload = unloadWarning;
 	}
 	
 	function selectCheck(obj) {
@@ -139,27 +141,28 @@ $(document).ready(function() {
 	$('.content_manage_button').click(function() {	
 		if($(this).attr('id') == "content_publish_button") {
 			canExit = 1;
+			window.onbeforeunload = null;
 			$("#content_publish").val('1');
 			$('.content_manage_button').attr('disabled', 'disabled');
 			$('#form_content_realcontent').has(this).children('form').submit();
 		} else if($(this).attr('id') == "content_save_button") {
 			canExit = 1;
+			window.onbeforeunload = null;
 			$("#content_save").val('1');
 			$('.content_manage_button').attr('disabled', 'disabled');
 			$('#form_content_realcontent').has(this).children('form').submit();
 		} else if($(this).attr('id') == "content_preview_button") {
 			canExit = 0;
+			window.onbeforeunload = unloadWarning;
 			generatePreview();
 		}
 	});
 });
 
 //Warn user on exit
-window.onbeforeunload = unloadWarning;
 function unloadWarning()
 {
 	if(contentHasChanged() && !canExit){
-		canExit = 0;
 		switch(inPreview){
 		case 0:
 			return "You have made changes to your content that have not yet been saved. Exiting now will abandon them.";
