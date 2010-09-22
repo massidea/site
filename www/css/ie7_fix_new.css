@@ -41,7 +41,7 @@
 #my-reads .scroll-box ul li { width: 180px !important; }
 
 .scroll-box ul li .user_content_row {
-	width: 460px !important;	
+		
 }
 
 .scroll-box ul li .user_summary_list_without_stats {
@@ -75,3 +75,4 @@
 .user_list_top_column { display: inline; }
 .user_list_top_box { margin-right: 4px; }
 .ui-tabs .ui-tabs-nav { width: 705px; }
+

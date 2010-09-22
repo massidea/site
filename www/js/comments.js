@@ -6,6 +6,11 @@ $("document").ready(function () {
 	$("#commentPostButton").click(function() {
 		postComment();
 	});
+	
+	$('textarea#commentTextarea').autoResize({
+	    extraSpace : 30
+	});
+	$('textarea#commentTextarea').resize();
 });
 
 /**
@@ -17,9 +22,10 @@ function postComment() {
 	var message = $("#commentTextarea").val();
 	var parent = $("#comment_parent").val();
 	clearForm();
+	$('textarea#commentTextarea').resize();
 	data = new Array();
 
-	data = {'msg': message, 'parent': parent };
+	data = {'msg': message.substring(0,1000), 'parent': parent };
 	$.ajax({
 		type: "POST",
 		//async: false,

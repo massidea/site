@@ -5,7 +5,7 @@
 * { margin:0px; padding:0px; }
 
 /** Basic */
-html, body { background:#0089CF;  }
+html, body { /*background:#0089CF;*/  }
 body {
 	font:80%/135% Arial, Helvetica, sans-serif;
 	color:#333; }
@@ -95,7 +95,7 @@ input.submit-button {
 
 /** Header */
 #header {
-	background:#003580;
+	/* background:#003580 */;
 	height: 94px; }
 
 /* Header --> H1 (logo) */
@@ -103,7 +103,7 @@ input.submit-button {
 
 #header h1 a, #header h1 a:visited {
 	position:absolute;
-	background:transparent url("../images/massidea_logo.png") no-repeat;
+	background:transparent url("../images/massidea_logo_grey.png") no-repeat center center;
 	width:256px; height:94px; }
 
 #header h1 span {
@@ -114,9 +114,9 @@ input.submit-button {
 	overflow:hidden; }
 
 /** Header --> Search */
-#header #search a, #header #search a:visited { color:#fff; }
+/* #header #search a, #header #search a:visited { color:#fff; } */
 #header #search a:hover { text-decoration:underline; }
-#header #search { float:left; color:#fff; margin:5px 20px 0px 290px; }
+#header #search { float:left; /* color:#fff; */ margin:5px 20px 0px 290px; }
 #header #search input.top_search_field { width:350px; margin:0px 10px 10px 0px; padding:2px; float:left; }
 #header #search #search-top { text-align:right; width:358px; margin:4px 0px 4px 0px; }
 

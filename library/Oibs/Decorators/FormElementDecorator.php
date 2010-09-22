@@ -36,17 +36,10 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
 		
 		$text = '';
         $errors = $this->buildErrors();
-		/*
-        if($element->isrequired())
-		{
-			$text = '<span class="form_element_' . $this->getElement()->getName() . '_required">*</span>';
-		}
-        */
         
-		if( $element->isrequired()  && $errors == "" || $element instanceof Zend_Form_Element_Select )
-		{
-            $text = '</div><div id="progressbar_' .  $name . '" class="progress limit">';
-		}
+		//if( $element->isrequired() || $element instanceof Zend_Form_Element_Select )
+		//{
+      	//}
         
         // Get the attributes here, and remove annoying helper attribute
         $attribs = $element->getAttribs();
@@ -70,9 +63,9 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
 		{
             return '';
         }
-        return '<div id="progressbar_'.$belongs.'" class="limit">' .
+        return '<div class="errors">' . '<ul class="errors">' . '<li>' .
                $element->getView()->formErrors($messages) . 
-        	   '</div>';
+        	   '</li></ul></div>';
     }
 
     public function buildDescription()
@@ -117,18 +110,11 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
                         . '</div>
                         <div class="field">'
                             . $input
-                        . '</div>'
                             . $errors
-                        . '
-                    </div>
-                    <div class="clear"></div>';
-        
-        /*if($name == "content_research" || $name == "content_threat" || $name == "content_solution") {
-            $output .= '<div id="form_helptext_optional" class="form_helptext" >'
-                        .$translate->_('content-add-helptext-optional')
-                        .'</div>
-                        <div class="form_helptext_line"></div>';
-        }*/
+                        . '</div>' .
+                        '</div><div id="progressbar_' .  $name . '" class="progress limit">' .
+                    '</div>' .
+                    '<div class="clear"></div>';
 
         switch ($placement) 
 		{

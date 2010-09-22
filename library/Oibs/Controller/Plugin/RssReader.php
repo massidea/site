@@ -141,9 +141,11 @@ class Oibs_Controller_Plugin_RssReader {
     	foreach ($channels as $channel) {
 	
 	    	$feedData['titles'][] = $channel->getTitle();
+	    	$cTitle = $channel->getTitle();
 	    	$i = 0;
 	    	foreach ($channel as $item) {
 	    		$tempItem = array();
+	    		$tempItem['cTitle'] = $cTitle;
 	    		$tempItem['title'] = $item->getTitle();
 	    		$tempItem['link'] =  $item->getLink();
 				$tempItem['desc'] = $item->getContent();

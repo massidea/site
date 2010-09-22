@@ -1,3 +1,4 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <?php 
 	// Append the scripts needed by jCrop 
 	$this->headLink()->appendStylesheet($this->baseUrl . '/css/jcrop/jquery.jcrop.css');
@@ -27,7 +28,7 @@ function updateCoords(c)
 };
 <?php $this->headScript()->captureEnd() ?>
 
-<h1><?php echo $this->translate('account-processimage-title'); ?></h1>
+<h2><?php echo $this->translate('account-processimage-title'); ?></h2>
 <table>
 	<tr>
 		<td><img src="<?php echo $this->prethumb;?>" alt="cropbox" id="cropbox" /></td>

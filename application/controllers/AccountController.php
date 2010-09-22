@@ -397,7 +397,7 @@ class AccountController extends Oibs_Controller_CustomController
 				->addTab("Challenges","problem","fvr_problem",$myFavourites['counts']['problem'])
 				->addTab("Ideas","idea","fvr_idea",$myFavourites['counts']['idea'])
 				->addTab("Visions","finfo","fvr_finfo",$myFavourites['counts']['finfo']);
-		$boxes[] = $box;
+		//$boxes[] = $box;
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
@@ -406,7 +406,7 @@ class AccountController extends Oibs_Controller_CustomController
 			->setName("my-reads")
 			->addTab("Readers", "readers", "all selected");
 			
-		$boxes[] = $box;
+		//$boxes[] = $box;
 		
 		if($userEdit) {
 			/*Box for user profile custom layout settings*/
@@ -489,10 +489,19 @@ class AccountController extends Oibs_Controller_CustomController
 			$this->view->customLayoutSettingsForm = $customLayoutForm;
         	$this->view->customLayoutAdvancedForm = $customLayoutAdvancedForm;
 		}
+
+        // Set to view
+			
+		// Comment module
+        $comments = new Oibs_Controller_Plugin_Comments("account", $id);
+		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+        // enable comment form        
+		if ($auth->hasIdentity()) $comments->allowComments(true);
+		$comments->loadComments();
 		
-        // Set to view        
         $this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
         $this->view->userprofile = $dataa;
+        $this->view->comments = $comments;
         $this->view->authorContents = $contentList;/*$temp*/
         $this->view->boxes = $boxes;
         $this->view->myViews = $myViews;
