@@ -88,7 +88,7 @@ background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom;}
 }
 #content #user-page #activity .left { width:200px; float:left !important; }
 #content #user-page #activity .right { width:500px; float:right; }
-#content #user-page #activity .wide { width:720px; float:left;}
+#content #user-page #activity .widebox { width:720px; float:left;}
 
 #my-custom-layout .scroll-box {
 	height: 385px;

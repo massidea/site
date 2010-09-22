@@ -75,18 +75,13 @@
 		$customfont = new Zend_Form_Element_Select('customfont');
 		$customfont->setLabel('Font')
 				   ->setAttrib('id', 'customfont')
-				   ->setAttrib('style', 'margin-top:-1px;')
+				   //->setAttrib('style', '/*margin-top:-1px;*/')
 				   ->addMultiOptions($customfontlist)
 				   //->addMultiOptions($customfontfamilylist)
 				   ->setValue($options['cssFontType']);
 		
 		$customfontclear = new Oibs_Form_Element_Note('customfontclear');
         $customfontclear->setValue('<div style="clear:both;"></div>');
-		
-		// Custom font preview text
-		$customfontpreviewtext = new Oibs_Form_Element_Note('custompreviewtext');
-		$customfontpreviewtext->setValue('<div style="float:right; width:250px; display:block; padding-right:50px;">
-											Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</div>');
 				   
 		// Font size
 		//$customfontsizes = array('8', '9', '10', '11', '12', '13', '14');
@@ -96,7 +91,7 @@
 		//$customfontsize->setLabel('Font Size')
 		$customfontsize->setLabel('')
 				   ->setAttrib('id', 'customfontsize')
-				   ->setAttrib('style', 'float:left; text-align:left; margin-bottom:5px; margin-left:10px; margin-top:-8px;')
+				   ->setAttrib('style', 'float:left; text-align:left; margin-left:10px; margin-right: 10px; margin-top:-7px;')
 				   ->addMultiOptions($customfontsizes)
 				   ->setValue($options['cssFontSize']);
 
@@ -107,7 +102,7 @@
 		$customfontcolor = new Zend_Form_Element_Text('customfontcolor');
         $customfontcolor->setLabel('Color')
                ->setAttrib('id', 'customfontcolor')
-               ->setAttrib('style', 'margin-top:-1px;')
+               //->setAttrib('style', '')
                ->setValue($options['cssFontColor']);
         				   
 
@@ -127,15 +122,15 @@
 				->addValidator('Extension', false, 'jpg,png,gif')
                 ->removeDecorator('DtDdWrapper')
                 ->removeDecorator('DefaultDecorator')
-                ->addDecorator('HtmlTag',array('tag' => 'div', /*'class' => 'form_addcontent_row',*/ 'style' => '/*float:right;*/ margin-top:6px'))
-                ->addDecorator('Label',array('tag' => 'div', /*'class' => 'form_addcontent_row',*/ 'style' => 'font-weight:bold; float:left; padding-right:10px; margin-top:6px; width:60px'))
+                ->addDecorator('HtmlTag',array('tag' => 'div', 'style' => '/*float:right;*/ margin-top:-7px'))
+                ->addDecorator('Label',array('tag' => 'div', 'style' => 'font-weight:bold; float:left; padding-right:10px; margin-top:-7px; margin-left: 10px; width:60px; padding-left:20px; border-left:1px solid silver;'))
                 ;
                
         // Background color input
 		$custombgcolor = new Zend_Form_Element_Text('custombgcolor');
 		$custombgcolor->setLabel('Color')
                ->setAttrib('id', 'custombgcolor')
-               ->setAttrib('style', 'margin-top:-1px;')
+               //->setAttrib('style', '')
                ->setValue($options['cssBackgroundColor']);
 
 		// For background color picker script
@@ -155,7 +150,7 @@
         $savebgimagebutton = new Zend_Form_Element_Submit('savebgimagebutton');
 		//$savebgimagebutton->setLabel($translate->_("account-register-submit"))
 		$savebgimagebutton->setLabel('Upload')
-				->setAttrib('style', 'float:right; margin-right:50px; margin-top:6px; width:60px')
+				->setAttrib('style', 'float:right; margin-right:10px; margin-top:-22px; width:60px')
         		->removeDecorator('DefaultDecorator')
         		->removeDecorator('DtDdWrapper');
         
@@ -175,6 +170,34 @@
          
         // Add elements to form
 		$this->addElements(array(//$clearall,
+								 //$testdivstart,
+								 	$customfont,
+								 	$customfontsize,
+								 	$backgroundimage,
+									$savebgimagebutton,
+									$clearall,
+								 	$customfontcolor,
+								 	//$bgimageinuse,
+								 	$clearall,
+								 	$custombgcolor,
+								 	$custombgcolorpicker,
+								 //$testdivend,
+								 
+								 //$testdiv2start,
+								 	
+								 	
+								 	//$customsizeclear,
+								 	
+								 	//$customfontcolorclear,
+								 	$customfontcolorpicker,
+								 //$testdiv2end,
+								 
+								 $submitclear,
+								 $blockseparator,
+								 $submit,
+								 $advancedbutton
+								 ));
+		/*$this->addElements(array(//$clearall,
 								 $testdivstart,
 								 	$savebgimagebutton,
 								 	$backgroundimage,
@@ -196,7 +219,7 @@
 								 $blockseparator,
 								 $submit,
 								 $advancedbutton
-								 ));
+								 ));*/
 								 
 		// Add decorators
 		$customfont->setDecorators(array('InputDecorator2'));
@@ -205,7 +228,7 @@
 		//$customfontcolor->setDecorators(array('ColorPickerDecorator'));
 		$customfontcolor->setDecorators(array('InputDecorator2'));
 		//$backgroundimage->setDecorators(array('UploadDecorator'));
-		$custombgcolor->setDecorators(array('InputDecorator3'));
+		$custombgcolor->setDecorators(array('InputDecorator2'));
 		$bgimageinuse->setDecorators(array('CheckBoxDecorator'));
 		
 		$this->setDecorators(array(
@@ -214,3 +237,4 @@
         ));
 	}
 }
+

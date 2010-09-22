@@ -19,7 +19,7 @@ class Oibs_Form_Decorator_InputDecorator2 extends Zend_Form_Decorator_Abstract
         if ($element->isRequired()) {
             $temp = '<strong><span class="required">*) </span>'.$label.': </strong>';
         } else {
-            $temp = '<strong>'.$label.': </strong>';
+            $temp = '<strong>'.$label.' : </strong>';
         }
         $label = $temp;
 

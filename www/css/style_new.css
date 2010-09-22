@@ -721,12 +721,12 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 #content #edit-user-page #save_changes input#cancel { width:100px; }
 
 #content #activity label { font-size:.9em; }
-#content #activity .input-column1 { width:60px; float:left; text-align:left; /*margin-right:10px;*/ margin-left:10px; margin-top:10px;}
-#content #activity .input-column2 { width:150px; float:left; text-align:left; margin-bottom:5px; /*margin-left:10px;*/ margin-top:10px; }
-#content #activity .input-column3 { width:250px; float:left; text-align:left; margin-bottom:10px; margin-left:70px; margin-top:5px; }
+#content #activity .input-column1 { width:60px; float:left; text-align:left; margin-left:10px; margin-top:10px; }
+#content #activity .input-column2 { width:150px; float:left; text-align:left; margin-top:10px; }
+#content #activity .input-column3 { width:250px; float:left; text-align:left; /*margin-bottom:10px;*/ margin-left:70px; margin-top:5px; }
 /*#content #activity .input-column4 { width:120px; float:left; text-align:left; margin-bottom:5px; margin-left:10px; margin-top:0px; }*/
-#content #activity .input-column5 { width:60px; float:left; text-align:left; margin-right:10px; /*margin-left:10px;*/ /*margin-top:10px;*/ }
-#content #activity .input-column6 { width:150px; float:left; text-align:left; margin-bottom:5px; /*margin-left:25px;*/ /*margin-top:10px;*/ }
+#content #activity .input-column5 { width:60px; float:left; text-align:left; margin-right:10px; }
+#content #activity .input-column6 { width:150px; float:left; text-align:left; margin-bottom:5px;}
 	
 /** Campaign GUI **/
 #content #campaign-page h2 span.challenges { color:#D21034 !important; }
