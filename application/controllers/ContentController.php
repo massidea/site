@@ -474,7 +474,8 @@ class ContentController extends Oibs_Controller_CustomController
 				        // Load most popular tags from cache
 						$output = md5(time());
 						$cache->save($output, 'LatestPostHash');
-				        
+						// Force refresh to tags on front page
+				        $cache->remove('IndexTags'); 
 						
 						if($data['publish'] == 1) {
 							$url = $this->_urlHelper->url(array('content_id' => $add,
