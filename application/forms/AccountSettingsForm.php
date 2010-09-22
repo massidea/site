@@ -533,10 +533,10 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                             $employmentpublic,
                             $employer_organization,
                             $employer_organizationpublic,
-                            $subscribeInformation,
+                            /*$subscribeInformation, RC fix :)
                             $subscribe['own_follows'],
                             $subscribe['fvr_follows'],
-                            $subscribeclear,
+                            $subscribeclear, */
                             $save,
                             $cancel,
                            ));

@@ -503,6 +503,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	}
 	
 	public function getnotificationsAction() {
+		return; //RC fix :)
 		$favouritesModel = new Default_Model_UserHasFavourites();
 
 		$auth = Zend_Auth::getInstance();
