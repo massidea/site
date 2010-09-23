@@ -4,7 +4,11 @@
  *
  * @author Mikko Korpinen
  */
-class Oibs_Form_Element_Note extends Zend_Form_Element_Xhtml {
+class Oibs_Form_Element_Note extends Zend_Form_Element {
     public $helper = 'formNote';
+    
+    public function isValid($value) {
+    	return true;
+    }
 }
 ?>
