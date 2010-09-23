@@ -919,3 +919,21 @@ form div.error ul.errors li {
 	color: red;	
 	text-align: center;
 }
+
+#login-page{
+	margin: 2em 17em 2em 17em;
+	padding: 1em;
+	border: 1px solid #AAAAAA;
+	background: #F8F8F8;	
+	width: 240px;
+}
+
+#login-page-links {
+	margin-top: 5px;
+	padding-top: 5px;
+	border-top: 1px dotted #CCC;	
+}
+
+form div.login-row { padding-bottom: 5px; }
+form div.login-column1 { width: 80px; }
+form div.login-column2 { width: 160px; }
