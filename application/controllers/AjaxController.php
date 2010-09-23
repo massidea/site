@@ -67,7 +67,7 @@ class AjaxController extends Oibs_Controller_CustomController
 
         // If you find (time to think of) a better way to do this, be my guest.
         if ($status === 'forthcoming') {
-            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 10);
+            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 1);
             $cmps_new = array();
             foreach ($recentcampaigns as $cmp) {
                 $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
@@ -75,7 +75,7 @@ class AjaxController extends Oibs_Controller_CustomController
                 $cmps_new[] = $cmp;
             }
         } else if ($status === 'ended') {
-            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 10);
+            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 1);
             $cmps_new = array();
             foreach ($recentcampaigns as $cmp) {
                 $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
@@ -83,7 +83,7 @@ class AjaxController extends Oibs_Controller_CustomController
                 $cmps_new[] = $cmp;
             }
         } else {
-            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
+            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 1);
             $cmps_new = array();
             foreach ($recentcampaigns as $cmp) {
                 $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
@@ -250,7 +250,7 @@ class AjaxController extends Oibs_Controller_CustomController
 		
 		$serializedParams = serialize($params);
 		$cacheFile = md5($serializedParams);
-		$cache = Zend_Registry::get('cache');
+		$cache = Zend_Registry::get('short_cache');
 		
 		if(!$cacheResult = $cache->load('UserTopList_'.$cacheFile)) {
 			$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
@@ -500,5 +500,36 @@ class AjaxController extends Oibs_Controller_CustomController
     		echo "0";
     	}
 		
+	}
+	
+	public function getnotificationsAction() {
+		return; //RC fix :)
+		$favouritesModel = new Default_Model_UserHasFavourites();
+
+		$auth = Zend_Auth::getInstance();
+		$id_usr = 0;
+		if ($auth->hasIdentity()) $id_usr = $auth->getIdentity()->user_id;
+
+		$notifications = $favouritesModel->getAllUpdatedContents($id_usr);
+		//print_r($notifications);die;
+		$ids = array();
+		if($notifications) {
+			foreach($notifications as $k => $notification) {
+				foreach($notification as $l => $content) {
+					$this->gtranslate->setLangFrom($content['original']['language_cnt']);
+					$translang = $this->gtranslate->getLangPair();
+					$notifications[$k][$l]['translated'] = $this->gtranslate->translateContent($content['original']);
+					$notifications[$k][$l]['original']['translang'] = $translang;
+			    	$notifications[$k][$l]['translated']['translang'] = $translang;
+			    	$ids[] = $l;
+				}
+			}
+		}
+		else $this->_helper->viewRenderer->setNoRender(true);
+
+		$jsonIds = json_encode($ids);
+		
+		$this->view->notifications = $notifications;
+		$this->view->ids = $jsonIds;
 	}
 }

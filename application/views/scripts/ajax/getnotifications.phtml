@@ -1,0 +1,146 @@
+<?php $language = Zend_Layout::getMvcInstance()->getView()->language; //print_r($this->notifications);die; ?>
+
+<?php if($this->notifications): ?>
+	<ul id="notification_tabs">
+	<?php foreach($this->notifications as $k => $contentArray):	if($k == "own") $k = "Own";	elseif($k == "fvr") $k = "Favourite"; ?>
+	<li><a href="<?php echo "#".$k; ?>"><?php echo $k; ?></a></li>
+	<?php endforeach; ?>
+	<li id="notification_close" style="float: right;">
+		<a role="button">X</a>
+	</li>
+	</ul>
+	<?php foreach($this->notifications as $k => $contentArray):	if($k == "own") $k = "Own";	elseif($k == "fvr") $k = "Favourite"; ?>
+	
+	<div id="<?php echo $k ?>" class="notification_class">
+		<ul class="notification_list">
+			<?php foreach($contentArray as $id => $dataArray): ?>
+				<li class="notification_list_row" id="notification_list_id_<?php echo $id; ?>">
+					<div class="notification_list_row_first">
+						<div class="notification_photo_first">
+						<?php if($dataArray['updates']['latest']['bin'] == "rating"): ?>
+							<img src="<?php echo $this->url(array('controller' => 'account',
+		                            'action' => 'profilethumb',
+		                            'id' => 0,
+		                            'language' => $language,
+		                            'thumb' => 'true'),
+		                            'lang_default', true)?>" />
+						<?php else: ?>
+							<a href="<?php echo $this->url(array('controller' => 'account',
+		                             'action' => 'view',
+		                             'user' => $dataArray['updates']['latest']['login_name_usr'],
+		                             'language' => $language),
+		                             'lang_default', true); ?>">
+								<img src="<?php echo $this->url(array('controller' => 'account',
+		                            'action' => 'profilethumb',
+		                            'id' => $dataArray['updates']['latest']['id_usr'],
+		                            'language' => $language,
+		                            'thumb' => 'true'),
+		                            'lang_default', true)?>" />
+	                        </a>
+	                    <?php endif; ?>
+						</div>
+						<div class="notification_context">
+							<div>
+								<?php if($dataArray['updates']['latest']['bin'] == "rating"): ?>
+								<span>Someone</span>
+								<?php else: ?>
+								<a href="<?php echo $this->url(array('controller' => 'account',
+		                             'action' => 'view',
+		                             'user' => $dataArray['updates']['latest']['login_name_usr'],
+		                             'language' => $language),
+		                             'lang_default', true); ?>">
+								<?php echo $dataArray['updates']['latest']['login_name_usr']; ?>
+								</a>
+								<?php endif; ?>
+		         				<span>made <?php echo $dataArray['updates']['latest']['bin']; ?> to your <?php echo $k ?> content: </span>
+							</div>
+							<div>
+							<?php if(mb_strlen($dataArray['original']['title_cnt'],'utf-8') > 80) $style = "font-size: 0.75em";
+									else $style = "font-size: 1.0em"; ?>
+								<a href="<?php echo  $this->url(array('content_id' => $id,
+		                             'language' => $language),
+		                             'content_shortview', true); ?>" style="<?php echo $style; ?>"><?php echo $dataArray['original']['title_cnt']; ?></a>
+							</div>
+							
+						</div>
+						<div class="notification_time">
+								<img src="<?php echo $this->baseUrl("/images/favicon.png");?>" style="vertical-align: top;"<?php //echo $dataArray['updates']['latest']['time']; ?>/>
+								<?php if($dataArray['updates']['total'] > 1): ?>
+								<span><?php echo $dataArray['updates']['total']-1; ?></span>
+								<a href="#">More</a>
+								<?php endif;?>
+						</div>
+					</div>
+					<div style="clear:both;"></div>
+					
+					<?php if($dataArray['updates']['total'] > 1): ?>	
+						<div class="notification_list_row_other">
+							<ul class="notification_list_child">
+								<?php foreach($dataArray['updates']['bins'] as $bin => $binArray):
+									if($bin == $dataArray['updates']['latest']['bin']) {
+										$amount = $binArray['amount']-1;
+							 			if($amount == 0) continue;
+							 		}
+						 			else $amount = $binArray['amount'];
+						 		?>
+							
+								<li class="notification_list_row_child">
+									<span><?php echo $amount; ?> new <?php echo $bin ?>s: </span>
+									<ul>
+									<?php foreach($binArray['values'] as $key => $user):
+											if($bin == $dataArray['updates']['latest']['bin'] && $key == 0) continue;
+							 		?>
+							 			<li>
+							 				<div class="notification_photo_child">
+							 				<?php if($bin == "rating"): ?>
+												<img src="<?php echo $this->url(array('controller' => 'account',
+							                            'action' => 'profilethumb',
+							                            'id' => 0,
+							                            'language' => $language,
+							                            'thumb' => 'true'),
+							                            'lang_default', true)?>" />
+											<?php else: ?>
+							 					<a href="<?php echo $this->url(array('controller' => 'account',
+						                             'action' => 'view',
+						                             'user' => $user['login_name_usr'],
+						                             'language' => $language),
+						                             'lang_default', true); ?>">
+											 		<img src="<?php echo $this->url(array('controller' => 'account',
+									                            'action' => 'profilethumb',
+									                            'id' => $user['id_usr'],
+									                            'language' => $language,
+									                            'thumb' => 'true'),
+									                            'lang_default', true)?>"/>
+								                </a>
+								             <?php endif; ?>
+								             </div>
+								             <div class="notification_context_child">
+								             <?php if($bin == "rating"): ?>
+								             	<span>Someone</span> 
+										     <?php else: ?>
+										        <a href="<?php echo $this->url(array('controller' => 'account',
+										                             'action' => 'view',
+										                             'user' => $user['login_name_usr'],
+										                             'language' => $language),
+										                             'lang_default', true); ?>"><?php echo $user['login_name_usr']; ?>
+										         </a>   
+										     <?php endif;?>    
+										         <br /><span><?php echo $user['time']; ?></span>
+								 		 	</div>
+								 		 	<div style="clear:both;"></div>
+								 		 </li>
+								 	<?php endforeach; ?>
+								 	</ul>
+								</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					<?php endif; ?>
+				</li>
+			<?php endforeach; //$contentArray as $id => $dataArray ?>
+		</ul> 
+	</div>
+	
+	<?php endforeach; //$this->notifications as $k => $contentArray ?>
+	<div id="notification_ids" style="visibility: hidden; display: none;"><?php echo $this->ids; ?></div>
+<?php endif; //$this->notifications ?>

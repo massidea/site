@@ -79,7 +79,7 @@ class Oibs_Form_Decorator_InputDecorator extends Zend_Form_Decorator_Abstract
         $input     = $this->buildInput();
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
-
+        
         $output = '<div class="input-column1">'
                 . $label
                 . '</div>'
