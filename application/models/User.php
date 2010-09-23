@@ -1015,12 +1015,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							;
 					
         $result = $this->_db->fetchAll($select);
-
         foreach($result as $key => $data) {
         	if($data['value'] == "") unset($result[$key]);
         }
+   
         $result = array_values($result);
-
 		return $result;
     }
     
@@ -1154,9 +1153,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      *  
      *  @param array $userIdList
      *  @return array $list
-     *  @author Jari Korpela     *
+     *  @author Jari Korpela
      */
-    private function getUsersContents($userIdList) {
+    public function getUsersContents($userIdList) {
     	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
                                              array('id_usr',
                                              	   'id_cnt'))
@@ -1174,6 +1173,23 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         
         return $contentArray;
         
+    }
+    
+    public function getUsersContentsLastCheck($userIds) {
+    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
+                                             array('id_usr',
+                                             	   'id_cnt',
+                                             		'last_checked'))
+                                             ->group('id_cnt')
+                                             ->where('id_usr IN (?)',$userIds)
+                                             ->order(array('id_usr','id_cnt DESC'))
+                                             ;
+        $result = $this->_db->fetchAll($select);
+        $contentArray = array();
+        foreach($result as $res) {
+        	$contentArray[$res['id_usr']][$res['id_cnt']] = $res['last_checked'];
+        }
+        return $contentArray;
     }
     
     private function getUserStatisticsContentTypes($contentIdList) {
@@ -1673,7 +1689,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
                 $contentSelect = $this->_db->select()
 	                ->from(array('uhf' => 'usr_has_fvr'),
-	                			array('id_usr','id_cnt','last_checked'))
+	                			array('id_cnt','last_checked'))
 	                ->joinLeft(array('cnt' => 'contents_cnt'),
 	                			'uhf.id_cnt = cnt.id_cnt',
 	                			array('id_cnt', 'id_cty_cnt', 'title_cnt', 
@@ -1689,7 +1705,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	                				array('COUNT(chs2.id_cnt) as count'))
 	                ->joinLeft(array('usr' => 'users_usr'),    
 	                                  'chs.id_usr = usr.id_usr',  
-	                                  array('login_name_usr'))
+	                                  array('login_name_usr','id_usr'))
 	                /*->joinLeft(array('vws' => 'cnt_views_vws'),
 	                                 'vws.id_cnt_vws = cnt.id_cnt',
 	                                  array('views' => 'COUNT(DISTINCT vws.views_vws)'))*/
@@ -1846,7 +1862,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return array of toplist classes
      */
     public function getUserTopList() {
-    		$cache = Zend_Registry::get('cache');
+    		$cache = Zend_Registry::get('short_cache');
 			
         	if(!$cacheResult = $cache->load('UserTopList')) {
 				$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();

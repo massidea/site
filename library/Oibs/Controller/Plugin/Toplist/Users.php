@@ -45,7 +45,7 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 				$sortedUsers = $this->_getChoicesSortedUserList($top,$this->_topLists[$top]);
 				
 				$value = $this->_getChoiceValue($top,$id);
-				
+
 				$rank = array(array('rank' => array_search($id[0],$sortedUsers)));
 				$info = $this->_userModel->getUserInfo($id);
 	
@@ -70,13 +70,15 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 				}
 
 				$value = $this->_getChoiceValue($key,$id);
+				if(empty($value)) $rank = "-1";
 
 				$value[0]['rank'] = $rank;
 				$info = $this->_userModel->getUserInfo($id);
 				$final = $this->_intersectMergeArray($value,$info);
 				$this->_addedUser[$key] = $final;
 
-			}			
+			}
+
 		}
 		return;
 	}
