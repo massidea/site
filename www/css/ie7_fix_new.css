@@ -81,3 +81,7 @@
 .user_list_top_box { margin-right: 4px; }
 .ui-tabs .ui-tabs-nav { width: 705px; }
 
+#add_new_content { overflow: hidden; }
+#add_new_content .add_new_info h3 { font-size: 16px; }
+#login_box { margin-top: -3px; }
+

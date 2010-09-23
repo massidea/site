@@ -28,6 +28,8 @@ function blurMenu(target, color, baseurl)
 }
 
 $(document).ready(function(){
+	var meta = jQuery.parseJSON($("#jsmetabox").text());
+	
 	$("#login_box").dialog({
 		closeOnEscape: true,
 		draggable: false,
@@ -46,13 +48,44 @@ $(document).ready(function(){
 		autoOpen: false
 	});
 	
-	$("a#login_link").each(function() {
-		$(this).click(function (event) {
-			event.preventDefault();
+	$("#add_new_content").dialog({
+		closeOnEscape: true,
+		draggable: false,
+		modal: true,
+		resizable: false,
+		title: 'Choose the content category in which to create new content',
+		autoOpen: false,
+		width: 610,
+		height: 370
+	});
+	
+	$("#add_new_content").parent().removeClass("ui-widget-content");
+	$("#addnewcontent").click(function(){
+		if($("#add_new_content").html() != null) {
+			$("#add_new_content").dialog("open");
+		}
+		else {
+			$("#login_box").dialog( "option", "title", 'Please login to add content' );
 			$("#login_box").dialog("open");
 			$("#login_box > form > div:nth-child(2) > input").focus();
-		});
+		}
+		
 	});
+
+	 $("#loginlink").click(function() {
+			 $("#login_box").dialog( "option", "title", 'Login to Massidea' );
+			 $("#login_box").dialog("open");
+			 $("#login_box > form > div:nth-child(2) > input").focus();
+	 });
+	 
+	 $("a#login_link").each(function() {
+		 $(this).click(function (event) {
+			 event.preventDefault();
+			 $("#login_box").dialog( "option", "title", 'Login to Massidea' );
+			 $("#login_box").dialog("open");
+			 $("#login_box > form > div:nth-child(2) > input").focus();
+		 });
+	 });
 
 	$("#login_link_openid").click(function () {
 		$("#login_box").dialog("close");
@@ -66,12 +99,12 @@ $(document).ready(function(){
 		$("#login_box > form > div:nth-child(2) > input").focus();
 	});
 	
-	$("#login_link").hover(
-			function(){
-				var optPos = $("#login_link").position().left;
-				$("#user_options").clearQueue().css("left",optPos).slideDown();
-			},
-			function(){$("#user_options").delay(1000).slideUp();}
+	$("#loginlink").hover(
+			 function(){
+				 var optPos = $("#loginlink").position().left;
+				 $("#user_options").clearQueue().css("left",optPos).show();
+				 },
+			 function(){$("#user_options").delay(1000).slideUp();}
 	);
 	
 	$("#user_options").hover(
@@ -100,6 +133,7 @@ $(document).ready(function(){
 			 function () {$("#add_content_menu").delay(1000).fadeOut();}
 			 );
 
+	 /*
 	 $("#notification_close").live("mouseover mouseout click", function(event){ 
 		 if(event.type == "mouseover")
 			 $("a",this).addClass("notification_close_button");
@@ -108,7 +142,7 @@ $(document).ready(function(){
 	 });
 
 	 
-	 var meta = jQuery.parseJSON($("#jsmetabox").text());
+	 
 	 $.ajax({
 		url: meta.baseUrl+"/en/ajax/getnotifications/",
 		success: function(data) {
@@ -133,6 +167,7 @@ $(document).ready(function(){
 			}
 		}	
 	 });
+	 */
 
 });
 

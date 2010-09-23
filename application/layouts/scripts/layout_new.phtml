@@ -54,7 +54,7 @@ echo $this->doctype();
                     <div id="search-top">
                         <?php if($this->authenticated) : ?>
                             <?php echo $this->translate('index-logged_in'); ?>
-                                <a id="login_link" href="<?php echo $this->url(array('controller' => 'account',
+                                <a id="loginlink" href="<?php echo $this->url(array('controller' => 'account',
                                                                      'action' => 'view',
                                                                      'user' => $this->username,
                                                                      'language' => $this->language),
@@ -127,7 +127,7 @@ echo $this->doctype();
                                                         'language' => $this->language),
                                                   'lang_default', true);
                         ?>
-                            <a id="login_link" href="#">
+                            <a id="loginlink" href="#">
                                     <?php echo $this->translate('index-login'); ?>
                             </a>
                                 |
@@ -171,22 +171,24 @@ echo $this->doctype();
                                 </form>
 
                                 <div style="margin-top: 0px;">
-                                    <div class="top_right_box_links" style="float:left; font-size: 12px; margin-left: 4px;">
-                                        <p>
+                                    <div class="top_right_box_links" style="float:left; font-size: 12px; margin-left: 4px; margin-top: 2px;">
+                                    		<span>
                                             <?php echo $this->translate('account-login-via-openid-loginbox'); ?>
                                             <a id="login_link_openid" href="#">
                                                 <?php echo $this->translate('account-login-via-openid-loginbox-link'); ?>
                                             </a>
-                                        </p>
-                                    </div>
-
-                                    <div style="margin-top: -6px; float:left; margin-left: 12px;">
-                                        <p>
-                                            <img src="<?php echo $this->baseUrl("/images/openid.png");?>" alt="OpenID" />
-                                        </p>
+                                            </span> 
+                                           <img style="vertical-align: middle;" src="<?php echo $this->baseUrl("/images/openid.png");?>" alt="OpenID" />
                                     </div>
 
                                     <div style="clear: both;"></div>
+                                    <div>
+                                   	 <a href="<?php echo $this->url(array(
+                                            'controller' => 'account',
+                                            'action' => 'register',
+                                            'language' => $this->language),
+                                        'lang_default', true);?>">No account? Registering is free and fast!</a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -253,6 +255,58 @@ echo $this->doctype();
                 </div>
             </div>
             </div>
+            
+            <?php 
+            /*
+            	Here lies the code for adding new content screen
+            */
+
+           if ($this->authenticated):
+               $url_add_i = $this->url(array('contenttype' => 'idea',
+                                             'language' => $this->language),
+                                             'addcnttype', true);
+
+               $url_add_c = $this->url(array('contenttype' => 'problem',
+                                             'language' => $this->language),
+                                             'addcnttype', true);
+
+               $url_add_v = $this->url(array('contenttype' => 'finfo',
+                                             'language' => $this->language),
+                                             'addcnttype', true);
+                
+            ?>
+            <div id="add_new_content">
+            	<div id="add_new_challenge" class="add_new">
+            		<div class="add_new_title" onClick="window.location='<?php echo $url_add_c; ?>';">
+            			<div><a href="<?php echo $url_add_c; ?>">Challenge</a></div>
+            		</div>
+            		<div class="add_new_info">
+            			<h3><?php echo $this->translate('help-guidelines-header-problem'); ?></h3>
+	        			<?php echo $this->translate('help-guidelines-paragraph2'); ?>
+            		</div>            		
+            	</div>
+            	<div id="add_new_idea" class="add_new">
+            		<div class="add_new_title" onClick="window.location='<?php echo $url_add_i; ?>';">
+            			<div><a href="<?php echo $url_add_i; ?>">Idea</a></div>
+            		</div>
+            		<div class="add_new_info">
+            			<h3><?php echo $this->translate('help-guidelines-header-idea'); ?></h3>
+	               		<?php echo $this->translate('help-guidelines-paragraph3'); ?>
+            		</div>    
+            	</div>
+            	<div id="add_new_vision" class="add_new">
+            		<div class="add_new_title" onClick="window.location='<?php echo $url_add_v; ?>';">
+            			<div><a href="<?php echo $url_add_v; ?>">Vision</a></div>
+            		</div>
+            		<div class="add_new_info">
+            			<h3><?php echo $this->translate('help-guidelines-header-finfo'); ?></h3>
+	                	<?php echo $this->translate('help-guidelines-paragraph4'); ?>
+            		</div>    
+            	</div>
+            	<div class="clear"></div>
+            </div>
+            <?php endif; ?>
+            
             <div id="menu">
                 <div class="left">
                     <ul>
@@ -319,30 +373,9 @@ echo $this->doctype();
                                 src="<?php echo $this->baseUrl('/images/add_new_content_en.png'); ?>"
                                 alt="Add content" />
                         </a>
-                        <?php
-                        $url_add_i = $url_add_c = $url_add_v =
-                                $this->url(array('controller' => 'content',
-                                                 'action' => 'index',
-                                                 'language' => $this->language),
-                                           'lang_default', true);
-
-                        if ($this->authenticated) {
-                            /*   Quite confusing for not having a link to adding ideas... */
-                                // Idea can now be, without a link to the problem or finfo
-                            $url_add_i = $this->url(array('contenttype' => 'idea',
-                                                          'language' => $this->language),
-                                                          'addcnttype', true);
-
-                            $url_add_c = $this->url(array('contenttype' => 'problem',
-                                                          'language' => $this->language),
-                                                          'addcnttype', true);
-
-                            $url_add_v = $this->url(array('contenttype' => 'finfo',
-                                                          'language' => $this->language),
-                                                          'addcnttype', true);
-                        }
-                        ?>
+                        <?php /* 
                         <div id="add_content_menu">
+                        
                             <div onmouseover="highlightContentMenuItem(this.id)"
                                     onmouseout="dimContentMenuItem(this.id)"
                                     id="add_content_menu_challenge">
@@ -388,6 +421,7 @@ echo $this->doctype();
                                 <div class="clear"></div>
                             </div>
                         </div>
+                        */ ?>
                     </div>
                 </div>
                 <div class="clear"></div>
