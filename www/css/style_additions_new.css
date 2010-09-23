@@ -937,3 +937,7 @@ form div.error ul.errors li {
 form div.login-row { padding-bottom: 5px; }
 form div.login-column1 { width: 80px; }
 form div.login-column2 { width: 160px; }
+
+#rss-list-feeds div.feed-row { cursor: pointer; }
+#rss-list-feeds div.feed-row-selected { background: #F3F3F3; }
+#rss-list-feeds div#feed-rows { border: 1px solid #CCC; }
