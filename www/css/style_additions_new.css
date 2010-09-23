@@ -950,3 +950,21 @@ form div.login-column2 { width: 160px; }
 	padding: 8px 0 !important;
 	margin: 0 !important;
 }
+/** Private messages page*/
+#privmsg-page #privmsg-options-all input { float: left; margin-right: 10px; }
+#privmsg-page .privmsg { border-bottom: 1px dotted #ccc; }
+#privmsg-page .privmsg-header { border-bottom: 1px dotted #ccc; }
+#privmsg-page .privmsg .privmsg_userinfo { width: 110px; padding: 10px; }
+#privmsg-page .privmsg .privmsg_content { width: 580px; }
+#privmsg-page .privmsg .privmsg-header .reply { margin: 10px; }
+#privmsg-page .privmsg .privmsg-header-new { color: red; margin: 10px; }
+#privmsg-page #privmsg-options-all { height: 30px; }
+#privmsg-page .privmsg img { width: 80px; height: 80px; }
+
+/** Sending private messages page */
+form#send_privmsg_form { margin-left: auto; margin-right: auto; }
+form#send_privmsg_form label { font-weight: bold; display: block; float: left; width: 170px; }
+form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ background-color: lightyellow; }
+.form_privmsg_row { margin-left: 10px; margin-top: 10px; }
+.form_privmsg_row label { font-weight: bold; display: block; float: left; width: 170px; }
+ 

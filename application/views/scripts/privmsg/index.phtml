@@ -1,5 +1,3 @@
-<h1><?php echo $this->translate('privmsg-messages'); ?></h1>
-<br />
 <?php $this->headScript()->captureStart() ?>
 $(document).ready(function() {
 	$("input[type=button][value=Reply]").click(function() {
@@ -8,21 +6,22 @@ $(document).ready(function() {
 	});
 });
 <?php $this->headScript()->captureEnd() ?>
-<?php
-if($this->privmsgs):
-?>
 
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="privmsg-page">
+<h2><?php echo $this->translate('privmsg-messages'); ?></h2>
+
+<?php if($this->privmsgs): ?>
 <!-- A form for deleting the selected messages -->
 <form name="delete_privmsgs" id="delete_privmsgs" action="#" method="post">
 	<input type="hidden" name="delete_first" value="<?php echo $this->privmsgs[0]['id_pmg']; ?>" />
 	<input type="hidden" name="delete_last" value="<?php echo $this->privmsgs[count($this->privmsgs)-1]['id_pmg']; ?>" />
-	<div style="padding: 0px 0px 5px 0px;">
+	<div id="privmsg-options-all">
 		<input type="checkbox" name="select_all" id="select_all" onclick="selectAllPrivmsgs(); return true;" />
 		<input type="submit" name="delete_selected" value="<?php echo $this->translate('privmsg-delete-selected'); ?>" onclick="document.delete_privmsgs.submit(); return false;" />
 	</div>
-	
-<?php
-	foreach($this->privmsgs as $privmsg):
+	<div class="clear">
+	<?php foreach($this->privmsgs as $privmsg):
 		$sent = strtotime($privmsg['created_pmg']);
 		$elapsed = time() - $sent;
 		
@@ -51,87 +50,74 @@ if($this->privmsgs):
         ?>
 		
 		<div class="privmsg">
-			<div class="privmsg_userinfo">
+			<div class="privmsg_userinfo left">
 				
 				<!-- Checkbox and Delete-button for every message -->
-				<div style="padding: 0px 0px 3px 0px;">
+				<div class="privmsg_buttons">
 					<input type="checkbox" name="select_<?php echo $privmsg['id_pmg']; ?>" id="select_<?php echo $privmsg['id_pmg']; ?>" />
 					<a href="javascript: void(0)" onclick="selectOnlyThisMsg(<?php echo $privmsg['id_pmg']; ?>); document.delete_privmsgs.submit(); return false">
 						<?php echo $this->translate('privmsg-delete'); ?>
 					</a>
 				</div>
 					
-                    <center>
-                    <?php 
-                    if($privmsg['username_pmg'] != 'privmsg-message-sender-system') 
-                    {
-                    ?>
+                <div class="">
+                    <?php if($privmsg['username_pmg'] != 'privmsg-message-sender-system'): ?>
 	                    <a href="<?php echo $this->url(array('controller' => 'account',
 	                                                         'action' => 'view',
 	                                                         'user' => $privmsg['username_pmg'],
 	                                                         'language' => $this->language),
 	                                                   		 'lang_default', true); ?>">
-	                    <?php 
-                    }
-                    ?>
-                        <?php if($privmsg['user_has_image']): ?>
-                        
-                            <img src="<?php echo $this->url(array('controller' => 'account', 
-                                                                  'action' => 'profilethumb', 
-                                                                  'id' => $privmsg['id_sender_pmg'], 
-                                                                  'language' => $this->language, 
-                                                                  'thumb' => 'true'), 
-                                                            'lang_default', true); ?>" 
-                                alt="User image" width="80" height="80" />
-                    </a>
-                    </center>
-                    
-                    <br />
-                    
+							<img src="<?php echo $this->url(array('controller' => 'account', 
+	                                                                  'action' => 'profilethumb', 
+	                                                                  'id' => $privmsg['id_sender_pmg'], 
+	                                                                  'language' => $this->language, 
+	                                                                  'thumb' => 'true'), 
+	                                                            'lang_default', true); ?>" 
+	                                alt="User image" width="80" height="80" />
+                    	</a>
+               </div>
                     <?php $this->translate('privmsg-message-from'); ?>
-                    <a href="<?php echo $this->url(array('controller' => 'account',
-                                                         'action' => 'view',
-                                                         'user' => $privmsg['username_pmg'],
-                                                         'language' => $this->language),
-                                                   'lang_default', true); ?>">
-                        <?php echo $privmsg['username_pmg']; ?>
-                    </a>
-                <?php else: ?>
+                    <strong>
+	                    <a href="<?php echo $this->url(array('controller' => 'account',
+	                                                         'action' => 'view',
+	                                                         'user' => $privmsg['username_pmg'],
+	                                                         'language' => $this->language),
+	                                                   'lang_default', true); ?>">
+	                        <?php echo $privmsg['username_pmg']; ?></a>
+                    </strong>
+                <?php else: //if message from system ?> 
                     <img src="<?php echo $this->baseUrl('/images/system.png'); ?>" 
                         alt="System" />
-                    </a>
-                    </center>
-                    
-                    <br />
-                    
+                    </div>
+
                     <?php echo $this->translate('privmsg-message-from'); ?>
-                    <b>
+                    <strong>
                         <?php echo $this->translate($privmsg['username_pmg']); ?>
-                    </b>
+                    </strong>
                 <?php endif; ?>
-                
-				<br />
-				<?php echo $sent; ?>
+				<div class="privmsg-time-sent"><?php echo $sent; ?></div>
 			</div><!-- end of privmsg_userinfo -->
-			<div class="privmsg_content">
-                <?php if($privmsg['read_pmg'] == 0): ?>
-                    <span style="color: red;">
-                        <b>NEW!</b>
-                    </span>
-                <?php endif; ?>
-                
+			<div class="privmsg_content left">
+                <div class="privmsg-header">
+	                <h4 class="left"><?php echo stripslashes($privmsg['header_pmg']); ?></h4>
+	                <div class="privmsg-header-new left">
+	                <?php if($privmsg['read_pmg'] == 0): ?>
+                        <strong><small>* NEW!</small></strong>
+                	<?php endif; ?>
+                	</div>
+	                
+	                <?php if($privmsg['username_pmg'] != "privmsg-message-sender-system" && $privmsg['username_pmg'] != $this->user): ?> <!-- Reply button if sender is not system -->
+						<div class="reply right"><input type="button" id="replyto-<?php echo $privmsg['username_pmg']; ?>" value="Reply"/></div>						
+					<?php endif; ?>
+					<div class="clear"></div>
+				</div>
                 <p>
-                    <?php echo stripslashes($privmsg['header_pmg']); ?>
-                </p>
-                <p class="privmsg_p">
                     <?php echo stripslashes($privmsg['message_body_pmg']); ?>
                 </p>
-                <?php if($privmsg['username_pmg'] != "privmsg-message-sender-system" && $privmsg['username_pmg'] != $this->user) { ?> <!-- Reply button if sender is not system -->
-					<div class="reply"><input type="button" id="replyto-<?php echo $privmsg['username_pmg']; ?>" value="Reply"/></div>
-				<?php } ?>
 			</div><!-- end of privmsg_content -->
 		</div><!-- end of privmsg -->
+		<div class="clear"></div>
     <?php endforeach; ?>
 <?php endif; ?>
 </form> <!-- end of 'Delete selected'-form -->
-
+</div>
