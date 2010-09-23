@@ -1,33 +1,30 @@
 $(document).ready(function(){
 	recentcampaignsdiv  = '#campaign-list';
 	recentcampaignslink = '#recent_campaigns_ajax_link';
-    active = '#active';
-    forthcoming = '#forthcoming';
-    ended = '#ended';
-    status = 'active';
+    active = '#active_span';
+    forthcoming = '#forthcoming_span';
+    ended = '#ended_span';
+    var status = 'active';
     campaignStatus = '#campaign-status';
 	recentcampaignslink_orig = $(recentcampaignslink).html();
-	pagecount = 1;
-	previousresult = "";
-	refreshTime = 30000;
+	var pagecount = 1;
 
 	$(recentcampaignslink+' a').live('click', function(){
 		pagecount = pagecount + 1;
 		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, false);
 	});
 
-    // Not working in IE?
-    $(active).live('click', function(){
+    $(active+' a').live('click', function(){
         pagecount = 1;
         status = 'active';
 		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, true);
 	});
-    $(forthcoming).live('click', function(){
+    $(forthcoming+' a').live('click', function(){
         pagecount = 1;
         status = 'forthcoming';
 		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, true);
 	});
-    $(ended).live('click', function(){
+    $(ended+' a').live('click', function(){
         pagecount = 1;
         status = 'ended';
 		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, true);
@@ -46,23 +43,23 @@ function ajaxLoad_getRecentCampaigns(obj, offset, stat, empty, prepend){
             if (empty) {
                 $(recentcampaignsdiv).html('');
             }
-            if (stat === 'forthcoming') {
+            if (stat == 'forthcoming') {
                 $(campaignStatus).html(
-                    '<a href="#" id="active" onclick="return false;">Active</a> |' +
+                    '<span id="active_span"><a href="#" onclick="return false;">Active</a></span> |' +
                     ' <strong style="font-size: 14px">Forthcoming</strong> |' +
-                    ' <a href="#" id="ended" onclick="return false;">Ended</a>'
+                    ' <span id="ended_span"><a href="#" onclick="return false;">Ended</a></span>'
                 );
-            } else if (stat === 'ended') {
+            } else if (stat == 'ended') {
                 $(campaignStatus).html(
-                    '<a href="#" id="active" onclick="return false;"><strong>Active</a> |' +
-                    ' <a href="#" id="forthcoming" onclick="return false;">Forthcoming</a> |' +
+                    '<span id="active_span"><a href="#" onclick="return false;"><strong>Active</a></span> |' +
+                    ' <span id="forthcoming_span"><a href="#" onclick="return false;">Forthcoming</a></span> |' +
                     ' <strong style="font-size: 14px">Ended</strong>'
                 );
             } else {
                 $(campaignStatus).html(
                     '<strong style="font-size: 14px">Active</strong> |' +
-                    ' <a href="#" id="forthcoming" onclick="return false;">Forthcoming</a> |' +
-                    ' <a href="#" id="ended" onclick="return false;">Ended</a>'
+                    ' <span id="forthcoming_span"><a href="#" onclick="return false;">Forthcoming</a></span> |' +
+                    ' <span id="ended_span"><a href="#" onclick="return false;">Ended</a></span>'
                 );
             }
 		},
