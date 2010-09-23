@@ -15,7 +15,8 @@
             animate : true,
             animateDuration : 150,
             animateCallback : function(){},
-            extraSpace : 20
+            extraSpace : 20,
+            limit : 1000
         }, options);
         
         // Only textarea's auto-resize:
