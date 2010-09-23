@@ -848,7 +848,7 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 #content #sign-up-page .select.error { width:218px; }
 #content #sign-up-page .field.error { width:224px; }
-#content #sign-up-page .error { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 3px; width:100%; padding:2px 10px 2px 24px; margin-top:0px; border:1px solid #7f9db9; border-top:none; }
+/*#content #sign-up-page .error { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 3px; width:100%; padding:2px 10px 2px 24px; margin-top:0px; border:1px solid #7f9db9; border-top:none; }*/
 
 #content #sign-up-page #home-country { width:180px; float:left; margin:10px 0px 10px 0px; }
 #content #sign-up-page #default-language { width:180px; float:right; margin:10px 0px 10px 0px; }

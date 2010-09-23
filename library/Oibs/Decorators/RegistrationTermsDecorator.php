@@ -21,7 +21,7 @@ class Oibs_Decorators_RegistrationTermsDecorator extends Zend_Form_Decorator_Abs
 			return ''; // if there are no messages = errors; return empty
         }
         return '
-        <div class="termserror">
+        <div class="errors">
         ' . $element->getView()->formErrors($messages) . '
         </div>
         ';
@@ -48,11 +48,10 @@ class Oibs_Decorators_RegistrationTermsDecorator extends Zend_Form_Decorator_Abs
 		$desc      = $this->buildDescription();
 		
 		$output = '
-            <div class="registration_terms_input">
+            <p>
 				'. $input .'
-			</div><div class="registration_terms_desc">
 				'. $desc .'
-            </div>
+            </p>
             '. $errors .'
             ';
 				   
