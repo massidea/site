@@ -941,3 +941,12 @@ form div.login-column2 { width: 160px; }
 #rss-list-feeds div.feed-row { cursor: pointer; }
 #rss-list-feeds div.feed-row-selected { background: #F3F3F3; }
 #rss-list-feeds div#feed-rows { border: 1px solid #CCC; }
+
+#content #campaign-page #current-posts .scroll-box {
+	padding:0 20px !important;	
+}
+
+#content #campaign-page #current-posts .scroll-box ul div.user {
+	padding: 8px 0 !important;
+	margin: 0 !important;
+}
