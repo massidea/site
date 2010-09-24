@@ -100,32 +100,27 @@ Commented to fix temporary problem, will be researched further later
     <?php endif; ?>
     <!-- Campaigns -->
     <div id="campaigns">
-        <h2>Recent campaigns</h2>
-        <ul class="campaigns">
-            <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
-        </ul>
-    </div>
-    <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-        <?php $cmpurl = $this->url(array('controller' => 'campaign',
+            <?php $cmpurl = $this->url(array('controller' => 'campaign',
                                          'action' => 'index',
                                          'language' => $this->language),
                                    'lang_default', true); ?>
         <strong><a href="<?php echo $cmpurl; ?>">Show more</a></strong>
+        <h2>Recent <a href="<?php echo $cmpurl;?>">campaigns</a></h2>
+        <ul class="campaigns">
+            <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
+        </ul>
     </div>
     <!-- End of campaigns -->
     <!-- Groups -->
     <div id="campaigns">
-        <h2>Recent groups</h2>
-        <ul class="campaigns">
-            <?php echo $this->partialLoop('partials/group_row_extra_small.phtml', $this->groups); ?>
-        </ul>
-    </div>
-    <div style="text-align: center; margin-top: 20px;">
         <?php $grpurl = $this->url(array('controller' => 'group',
                                          'action' => 'index',
                                          'language' => $this->language),
                                    'lang_default', true); ?>
-        <strong><a href="<?php echo $grpurl; ?>">Show more</a></strong>
+        <h2>Recent <a href="<?php echo $grpurl;?>">groups</a></h2>
+        <ul class="campaigns">
+            <?php echo $this->partialLoop('partials/group_row_extra_small.phtml', $this->groups); ?>
+        </ul>
     </div>
     <!-- End of groups -->
     <!-- Users -->
@@ -137,22 +132,12 @@ Commented to fix temporary problem, will be researched further later
         									 'list' => 'desc',
                                              'language' => $this->language),
                                              'lang_default', true); ?>">
-            <?php echo $this->translate('index-users')?>
-        </a>
+            <?php echo "users"; ?></a>
     </h2>
     <div class="top_right_box_links_users">
     <ul class="users">
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
 	</ul>
-    </div>
-    <div class="top_right_box_links_show_all_users">
-        <a href="<?php echo $this->url(array('controller' => 'account',
-                                             'action' => 'userlist',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-            <?php echo $this->translate('index-show-all')?>
-            <?php echo $this->translate('index-users')?>
-        </a>
     </div>
     <!-- End of users -->
     <!-- Tags -->
@@ -177,13 +162,6 @@ Commented to fix temporary problem, will be researched further later
         </ul>
      </div>
      <div class="clear"></div>
-    <div style="text-align: center;">
-                <strong><a href="<?php echo $this->url(array('controller' => 'tag',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-                <?php echo $this->translate('index-show-all')?>
-            </a></strong>
-    </div>   
     <!-- End of tags --> 
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
     <div class="massidea_dev_info">

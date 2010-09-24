@@ -1017,6 +1017,7 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #sidebar h2 {
 	font-size:1.15em;
 	background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
+	color: #C0C0C0;
 	padding:0px 0px 5px 0px;
 	margin-top:20px; }
 
@@ -1053,14 +1054,15 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #sidebar #campaigns p { margin:15px 0px 20px 15px; }
 #sidebar #campaigns ul { margin:-8px 0px; padding:0px; }
 #sidebar #campaigns ul li {
-	background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
+	/*background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;*/
 	padding:5px 0px 5px 2px;
 	list-style:none; }
 
-#sidebar #campaigns ul li span { padding:0px 0px 0px 8px; display:block; }
+#sidebar #campaigns ul li span { padding:0px 0px 0px 5px; display:block; }
 #sidebar #campaigns ul li.challenges span { border-left:5px solid #D21034; }
 #sidebar #campaigns ul li.ideas span { border-left:5px solid #4B9B07; }
 #sidebar #campaigns ul li.visions span { border-left:5px solid #FFC726; }
+#sidebar #campaigns ul li.cmpgrp span { border-left:5px solid #0089CF; }
 
 /* Footer */
 #footer { margin-top:10px; padding:0px 16px 5px 16px; color:#999; }
