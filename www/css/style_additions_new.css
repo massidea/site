@@ -20,7 +20,7 @@
 #content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
 #content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
 #gaccampaignlist { float:left; width:520px; }
-#gaccampaignlist h3 { color: #C0C0C0; font-size: 16; font-weight: bold; }
+#gaccampaignlist h3, #gaccampaignlist h2 { color: #C0C0C0; font-size: 16; font-weight: bold; }
 #content .campaign-list p,
 #content .group-list p { fdsmargin-left:15px; }
 #content .campaign-list ul li,
@@ -967,4 +967,10 @@ form#send_privmsg_form label { font-weight: bold; display: block; float: left; w
 form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ background-color: lightyellow; }
 .form_privmsg_row { margin-left: 10px; margin-top: 10px; }
 .form_privmsg_row label { font-weight: bold; display: block; float: left; width: 170px; }
+
+/** Font size bigger on certain pages */
+#content .user_content_list .user div.context p,
+#content .user_content_list .user div.context h3 { font-size: 1.05em !important; }
  
+/** Color for easy coloring of some text */
+.light-gray { color: #C0C0C0; }

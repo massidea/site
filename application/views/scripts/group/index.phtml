@@ -17,7 +17,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentgroups.js')); ?>
 
 <div id="gaccampaignlist">
-    <h3 style="float:left;">Recent groups</h3>
+    <h2 class="left">Recent groups</h2>
 
     <?php
     $addgrpurl = $this->url(
@@ -29,7 +29,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     ?>
 
     <?php if ($this->logged_in): ?>
-	<h3 style="float:right; margin-right:20px;"><a href="<?php echo $addgrpurl; ?>">&gt; Create new group</a></h3>
+	<h3 class="right" style="margin-right:20px;"><a href="<?php echo $addgrpurl; ?>">&gt; Create new group</a></h3>
     <?php endif; ?>
     
     <div class="clear"></div>
