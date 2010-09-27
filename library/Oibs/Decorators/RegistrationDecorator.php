@@ -6,30 +6,66 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 		$element = $this->getElement();
 		$label = $element->getLabel();
 
-		return "<label><strong>".$label."</strong></label>";//$element->getView()
-						//->formLabel($element->getName(),$label);
+		/*
+		if ($translator = $element->getTranslator())
+		{
+			$label = $translator->translate($label);
+		}
+		
+		if ($label != null)
+		{
+			if ($element->isrequired())
+			{
+				$label .= '*';
+			}
+			$label .= ':';
+		}
+		*/
+		
+		  if($label != "") {
+            return $element->getView()
+						->formLabel($element->getName(), $label);
+        }
+
 	}
 
 	public function buildInput()
     {
         $element = $this->getElement();
         $helper  = $element->helper;
-		
-        return $element->getView()->$helper(
+	$name = $this->getElement()->getName();
+        	$text = '';
+        $errors = $this->buildErrors();
+        if( $element->isrequired()  && $errors == "" || $element instanceof Zend_Form_Element_Select )
+		{
+            $text = '<div id="progressbar_' .  $name . '" class="progress"></div>';
+		}
+                 $attribs = $element->getAttribs();
+        unset($attribs['helper']);
+        
+         return $element->getView()->$helper(
             $element->getName(),
             $element->getValue(),
-            $element->getAttribs(),
-            $element->options);
+            $attribs,
+            $element->options) . $text;
+
     }
 
     public function buildErrors()
     {
         $element  = $this->getElement();
+        $belongs = $element->getName();
         $messages = $element->getMessages();
         if (empty($messages)) 
 		{
             return '';
         }
+
+//        return '<div id="progressbar_'.$belongs.'" class="progress">' .
+//               $element->getView()->formErrors($messages) .
+//               //Zend_Debug::dump($belongs) .
+//        	   '</div>';
+
         $errors = $element->getView()->formErrors($messages);
         
         return '
@@ -43,6 +79,7 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
     {
         $element = $this->getElement();
         $desc    = $element->getDescription();
+        $name    = $this->getElement()->getName();
         if (empty($desc)) 
 		{
             return '';
@@ -60,7 +97,9 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 		$text = '';
 		if($element->isRequired())
 		{
-			$text = '*';
+
+			$text = '<div class="registration_required">*</div>';
+
 		}
 
 		if (!$element instanceof Zend_Form_Element) 

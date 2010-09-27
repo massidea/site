@@ -222,7 +222,7 @@
     display:block;
     background-color: pink;
     height: 20px;
-    width: 225px;
+    width: 165px;
     padding-left: 25px;
     background-image: url('/images/icon_thumb_down.png');
     background-position: 4px 1px;
@@ -238,10 +238,14 @@
 .form_registration_input input[type="password"],
 .form_registration_input select {
     border: 1px solid #7f9db9;
-    width: 250px;
+    width: 190px;
     height: 20px;
-    margin-top: 5px;
+    margin-right: 0px;
     float: left;
+}
+.form_registration_input select {
+    height: 24px;
+    width: 192px;
 }
 
 .form_registration_row label {
