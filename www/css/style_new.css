@@ -1062,7 +1062,8 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #sidebar #campaigns ul li.challenges span { border-left:5px solid #D21034; }
 #sidebar #campaigns ul li.ideas span { border-left:5px solid #4B9B07; }
 #sidebar #campaigns ul li.visions span { border-left:5px solid #FFC726; }
-#sidebar #campaigns ul li.cmp span { border-left:5px solid #003581; }
+#sidebar #campaigns ul li.cmp span,
+#sidebar ul.campaigns li.cmp span { border-left:5px solid #003581; }
 #sidebar #campaigns ul li.grp span { border-left:5px solid #0089CF; }
 
 /* Footer */

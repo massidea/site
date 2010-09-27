@@ -67,7 +67,7 @@ class AjaxController extends Oibs_Controller_CustomController
 
         // If you find (time to think of) a better way to do this, be my guest.
         if ($status === 'forthcoming') {
-            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 1);
+            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 10);
             $cmps_new = array();
             foreach ($recentcampaigns as $cmp) {
                 $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
@@ -75,7 +75,7 @@ class AjaxController extends Oibs_Controller_CustomController
                 $cmps_new[] = $cmp;
             }
         } else if ($status === 'ended') {
-            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 1);
+            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 10);
             $cmps_new = array();
             foreach ($recentcampaigns as $cmp) {
                 $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
@@ -83,7 +83,7 @@ class AjaxController extends Oibs_Controller_CustomController
                 $cmps_new[] = $cmp;
             }
         } else {
-            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 1);
+            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
             $cmps_new = array();
             foreach ($recentcampaigns as $cmp) {
                 $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
@@ -355,6 +355,22 @@ class AjaxController extends Oibs_Controller_CustomController
         $this->view->id=$this->params['id_cnt'];
         $this->view->more = $more;
         $this->view->relatedContents = $contents;
+	}
+
+	public function relatedcampaignsAction() {		
+		if (!isset($this->params['id_cnt'])) {
+			echo "0";
+			return false;	
+		}
+		
+		if (isset($this->params['more'])) { 
+			$limit = 100; 
+			$more = true; 
+		}
+		
+        $campaignHasContentModel = new Default_Model_CampaignHasContent();
+        $campaigns = $campaignHasContentModel->getContentCampaigns($this->params['id_cnt']);
+		$this->view->campaigns = $campaigns;
 	}
 	
 	public function contentratingAction() {

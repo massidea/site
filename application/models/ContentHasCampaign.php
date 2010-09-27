@@ -74,7 +74,7 @@ class Default_Model_ContentHasCampaign extends Zend_Db_Table_Abstract
         $select =  $this->_db->select()
                         ->from(array('cnt_has_cmp' => 'cnt_has_cmp'), array('id_cmp'))
                         ->where('id_cnt = ?', $id_cnt)
-                        ->join(array('campaigns_cmp' => 'campaigns_cmp'), 'campaigns_cmp.id_cmp = cnt_has_cmp.id_cmp', array('name_cmp'))
+                        ->join(array('campaigns_cmp' => 'campaigns_cmp'), 'campaigns_cmp.id_cmp = cnt_has_cmp.id_cmp', array('*'))
         ;
         $result = $this->_db->fetchAll($select);
 
