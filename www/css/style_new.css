@@ -406,7 +406,7 @@ line-height:1.3em; font-weight:bold; position:relative; }
 #content #add-content-page #add_content_form .field { width:384px; float:left; }
 
 #content #add-content-page #add_content_form .limit { float:right; border:1px solid #7f9db9;
-width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; }
+width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; text-indent: 25px; }
 #content #add-content-page #add_content_form .limit span { margin-left:23px; }
 #content #add-content-page #add_content_form .limit.ok { background:#f0fee9 url("../images/icon_thumb_up.png") no-repeat 4px; }
 #content #add-content-page #add_content_form .limit.bad { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 4px; }
@@ -1021,9 +1021,9 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 	padding:0px 0px 5px 0px;
 	margin-top:20px; }
 
-#sidebar .box h2 { font-size:1.2em; margin:3px 3px 4px 0px; padding:0px; background:none; }
-#sidebar .box h4 { font-size:.9em; margin:3px 3px 3px 7px; padding:0px; }
-#sidebar .box h5 { font-size:1em; margin:0px 3px 0px 0px; padding:0px; }
+#sidebar .box h2 { font-size:1.2em; margin:3px 3px 4px 0px; padding:0px; background:none; color: #C0C0C0; }
+#sidebar .box h4 { font-size:.9em; margin:3px 3px 3px 7px; padding:0px; color: #C0C0C0; }
+#sidebar .box h5 { font-size:1em; margin:0px 3px 0px 0px; padding:0px; color: #C0C0C0; }
 #sidebar .box-content { background:#f2f2f2;font-size:.9em; border:1px solid #ccc; padding:0px 10px 0px 10px; }
 #sidebar .box-user-content { background:#f2f2f2;font-size:.9em; border:1px solid #ccc; padding:8px; }
 #sidebar .box-user-content ul li { list-style:none; }
@@ -1062,7 +1062,8 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #sidebar #campaigns ul li.challenges span { border-left:5px solid #D21034; }
 #sidebar #campaigns ul li.ideas span { border-left:5px solid #4B9B07; }
 #sidebar #campaigns ul li.visions span { border-left:5px solid #FFC726; }
-#sidebar #campaigns ul li.cmpgrp span { border-left:5px solid #0089CF; }
+#sidebar #campaigns ul li.cmp span { border-left:5px solid #003581; }
+#sidebar #campaigns ul li.grp span { border-left:5px solid #0089CF; }
 
 /* Footer */
 #footer { margin-top:10px; padding:0px 16px 5px 16px; color:#999; }

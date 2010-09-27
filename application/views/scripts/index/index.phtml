@@ -104,7 +104,6 @@ Commented to fix temporary problem, will be researched further later
                                          'action' => 'index',
                                          'language' => $this->language),
                                    'lang_default', true); ?>
-        <strong><a href="<?php echo $cmpurl; ?>">Show more</a></strong>
         <h2>Recent <a href="<?php echo $cmpurl;?>">campaigns</a></h2>
         <ul class="campaigns">
             <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
