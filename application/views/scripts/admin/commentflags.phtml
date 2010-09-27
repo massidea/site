@@ -1,3 +1,4 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <?php $this->headScript()->captureStart() ?>
 var commentBody = new Array();
 
@@ -25,16 +26,11 @@ function expandText(key)
 
 <?php $this->headScript()->captureEnd() ?>
 
-<h1><?php echo $this->translate('admin-comment-flags-title'); ?></h1>
-<?php
-$comments = $this->comments;
-if(count($comments)==0)
-{
-	echo $this->translate('admin-comment-flags-no-flags');
-}
-else // any ways to make this as a zend form?
-{
-?>
+<h2><?php echo $this->translate('admin-comment-flags-title'); ?></h2>
+<?php $comments = $this->comments; ?>
+<?php if(count($comments)==0): ?> 
+	<?php echo $this->translate('admin-comment-flags-no-flags'); ?>
+<?php else: // any ways to make this as a zend form? ?>
 <form method="post">
 <table id="admin_comment_flags_table">
 <tr id="desc_tr">
@@ -46,18 +42,16 @@ else // any ways to make this as a zend form?
 <?php
 $comments = $this->comments;
 $count = 0;
-
-foreach($comments as $comment)
-{
-	echo '<tr class="item_tr">'."\n";
-	echo "\t<td>" . '<input type="checkbox" name="' . $comment['cmt_id'] . '" class="chkbx_row" />' . "</td>\n";
-	echo "\t" . '<td><a href="' . $comment['cnt_url'] . '">' . $comment['cnt_title'] . "</a></td>\n";
-	echo "\t" . '<td class="commentrow"><span>' . $comment['cmt_body'] . "</span></td>\n";
-	echo "\t<td>" . $comment['cmt_count'] . "</td>\n";
-	echo "</tr>\n";
-	$count++;
-}
 ?>
+<?php foreach($comments as $comment): ?>
+	<tr class="item_tr">
+	<td><input type="checkbox" name="<?php echo $comment['cmt_id']; ?>" class="chkbx_row" /></td>
+	<td><a href="<?php echo $comment['cnt_url']; ?>"><?php echo $comment['cnt_title']; ?></a></td>
+	<td class="commentrow"><span><?php echo $comment['cmt_body']; ?></span></td>
+	<td><?php echo $comment['cmt_count'];?></td>
+	</tr>
+	<?php $count++; ?>
+<?php endforeach; ?>
 </table>
 <br />
 <p><?php echo $this->translate('admin-comment-flags-items-count') . " " . $count; ?></p>
@@ -78,8 +72,6 @@ foreach($comments as $comment)
 <input type="submit" value="<?php echo $this->translate('admin-comment-flags-submit'); ?>" />
 </form>
 <br />
-<?php
-}
-?>
+<?php endif; ?>
 <br />
 <br />
