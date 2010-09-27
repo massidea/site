@@ -152,7 +152,7 @@ input.submit-button {
 #header #search #search-top #user_options ul { list-style:none outside none; }
 #header #search #search-top #user_options ul li { border: 2px outset #CCCCCC; padding-bottom: 1px; padding-top: 1px; }
 #header #search #search-top #user_options ul li img { vertical-align: middle; }
-#header #search #search-top #user_options ul li:hover { background: #0089CF; }
+#header #search #search-top #user_options ul li:hover { background: #F2F2F2; cursor: pointer;}
 #header #search #search-top #user_options ul li span { color: #003580;padding-left: 2px; }
 #header #search #search-top #user_options ul li a { color: #333333; padding-left: 2px; text-decoration: none;}
 /*

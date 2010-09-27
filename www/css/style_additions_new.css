@@ -976,5 +976,6 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 .light-gray { color: #C0C0C0; }
 
 #sidebar .box-user-content .box-bottom { padding-top: 10px; }
+#sidebar h2 a:hover { background: #F2F2F2; }
 
 #content_view_related_content_header span, #content_view_user_related_header span { color: #C0C0C0; padding-left: 10px; }
