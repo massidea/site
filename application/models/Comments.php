@@ -102,7 +102,7 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     */
     public function getAllByContentId($id = 0, $page = 0, $count = 0)
     {
-        $data = array();
+        //$data = array();
         
         if ($id != -1) {
             $select = $this->_db->select()
@@ -154,33 +154,17 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     *   @param $id Content id value.
     *   @return array
     */
-    public function getCommentsByContent($id = 0)
+    public function getCommentsByContent($id_cnt = 0)
     {
-        // Array for comment data
-        $data = array();
-        
-        // Select comments and users
         $select = $this->_db->select()
-            ->from('comments_cmt', array('*'))
-            ->joinInner('users_usr',
-                'id_usr_cmt = id_usr', 
-                array('*')
-            )
-            ->where('id_target_cmt = ?', (int)$id)
-            ->where('type_cmt = 1')
-            //->where('id_parent_cmt = 0')
-            ->order('created_cmt DESC');
+                        ->from('comments_cmt', array('*'))
+                        ->where('id_target_cmt = ?', (int)$id_cnt)
+                        ->where('type_cmt = ?', $this->getCommentType("content"));
+                        
+        $result = $this->_db->fetchAll($select);
         
-        $stmt = $this->_db->query($select);
-        
-        $result = $stmt->fetchAll();
-        
-        if(count($result) != 0) {
-            $data = $result;
-        }
-
-        return $data;
-    }
+        return $result;
+       }
     
     public function getComments($type, $id, $id_usr, $time) {
     	$select = $this->select()

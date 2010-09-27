@@ -981,3 +981,32 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 #content_view_related_content_header span, #content_view_user_related_header span { color: #C0C0C0; padding-left: 10px; }
 
 .profile_image_mediumsize { height: 85px; width: 85px; }
+
+/** Admin tools page */
+/*
+ * Admin tools decorations
+ */
+ 
+#admin_comment_flags_table {
+	border: 1px solid #000;
+	border-spacing: 0px;
+	padding: 2px;
+	width: 100%;
+}
+#admin_comment_flags_table td {
+	padding: 2px;
+}
+
+#admin_comment_flags_table #desc_tr {
+	background-color: #ccc;
+	color: #000;
+}
+
+#admin_comment_flags_table .desc_td_checkbox {
+	width: 15px;
+}
+
+#admin_comment_flags_table .item_tr:nth-child(odd) {
+	background-color: #eee;
+	color: #000;
+}
