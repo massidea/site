@@ -7,13 +7,29 @@ $grpurl = $this->url(array('groupid' => $this->id_grp_cmp,
                            'language' => $language),
                        'group_shortview', true);
 
-if ($this->end_time_cmp == '0000-00-00') {
-    $date = 'Never';
+$thisDate = date("Y-m-d", time());
+$thisDate = new Zend_Date($thisDate, Zend_Date::ISO_8601);
+$startDate = new Zend_Date($this->start_time_cmp, Zend_Date::ISO_8601);
+$cmpStartEndText = "";
+$date = "";
+if ($thisDate->compare($startDate) == -1) {
+    // Campaign has not started yet
+    $date = $startDate->toString('dd MMM, yyyy');
+    $cmpStartEndText = "Starting";
 } else {
-    $date = new Zend_Date($this->end_time_cmp, Zend_Date::ISO_8601);
-    $date = $date->toString('dd MMM, yyyy');
+    if ($this->end_time_cmp == '0000-00-00') {
+        $date = 'Never';
+        $cmpStartEndText = "Ending";
+    } else {
+        $endDate = new Zend_Date($this->end_time_cmp, Zend_Date::ISO_8601);
+        $date = $endDate->toString('dd MMM, yyyy');
+        if ($thisDate->compare($endDate) == 1) {
+            $cmpStartEndText = "Ended";
+        } else {
+            $cmpStartEndText = "Ending";
+        }
+    }
 }
-// TODO: muokkailua :D
 ?>
 <li>
     <div>
@@ -27,8 +43,8 @@ if ($this->end_time_cmp == '0000-00-00') {
             <?php echo $this->ingress_cmp; ?>
         </p>
         <span class="left">
-            <strong>Ending:</strong>
-            <?php echo $date;?>
+            <strong><?php echo $cmpStartEndText; ?>:</strong>
+            <?php echo $date; ?>
         </span>
         <span class="right">
             <!--
