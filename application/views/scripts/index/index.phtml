@@ -111,13 +111,13 @@ Commented to fix temporary problem, will be researched further later
     </div>
     <!-- End of campaigns -->
     <!-- Groups -->
-    <div id="campaigns">
+    <div id="groups">
         <?php $grpurl = $this->url(array('controller' => 'group',
                                          'action' => 'index',
                                          'language' => $this->language),
                                    'lang_default', true); ?>
         <h2>Recent <a href="<?php echo $grpurl;?>">groups</a></h2>
-        <ul class="campaigns">
+        <ul class="groups">
             <?php echo $this->partialLoop('partials/group_row_extra_small.phtml', $this->groups); ?>
         </ul>
     </div>

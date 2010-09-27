@@ -982,7 +982,7 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 /** Random sidebar things */
 #sidebar .box-user-content .box-bottom { padding-top: 10px; }
 #sidebar #campaigns ul.campaigns li:hover,
-#sidebar #campaigns ul.groups li:hover { background: #F2F2F2; cursor: pointer; }
+#sidebar #groups ul.groups li:hover { background: #F2F2F2; cursor: pointer; }
 
 #sidebar ul.tags li.tags a:hover { background: #F2F2F2; }
 
