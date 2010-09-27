@@ -1,8 +1,29 @@
-<?php 
+<?php
+// some variable initiation
+$url_checkuserExist = $this->url(array('controller' => 'ajax',
+            'action' => 'isuseravailable',
+            'language' => $this->language),
+                'lang_default', true);
+?>
+
+<script type="text/javascript">
+    var url_userexists = "<?= $url_checkuserExist ?>";
+</script>
+
+<?php
 //$this->headScript()->appendFile($this->baseUrl . '/js/checkRF.js'); Does not work yet / anymore
 
-$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css')); 
+$this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css'));
+$this->headScript()->appendFile($this->baseUrl('/js/xregexp-min.js'));
+$this->headScript()->appendFile($this->baseUrl('/js/xregexp-unicode-base.js'));
+$this->headScript()->appendFile($this->baseUrl . '/js/RegisterForm.js');
 ?>
+
+
+
+
+
+
 
 <div class="form_registration_container">
     <div class="form_registration_header">
@@ -11,18 +32,18 @@ $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_req.css
         </div>
     </div>
     <div style="clear:both;"></div>
-	<?php
-        if (isset($this->form)) {
-            echo $this->form;
-        } else {
-            // PANIC!!
-        }
-    ?>
+<?php
+if (isset($this->form)) {
+    echo $this->form;
+} else {
+    // PANIC!!
+}
+?>
 </div>
 
 <div class="right_side" style="padding: 0px; margin: 0px; margin-top: 0px;">
     <p class="right_side_title_small" style="padding-top: 0px; padding-bottom:3px; color:#c0c0c0;">
-        <?php echo $this->translate('registration-box-header'); ?>
+<?php echo $this->translate('registration-box-header'); ?>
     </p>
     <div class="top_right_box" style="">
         <div class="">
