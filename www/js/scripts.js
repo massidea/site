@@ -28,7 +28,7 @@ function blurMenu(target, color, baseurl)
 }
 
 $(document).ready(function(){
-	var meta = jQuery.parseJSON($("#jsmetabox").text());
+	var meta = jsMeta;
 	
 	$("#login_box").dialog({
 		closeOnEscape: true,
@@ -53,19 +53,24 @@ $(document).ready(function(){
 		draggable: false,
 		modal: true,
 		resizable: false,
-		title: 'Choose the content category in which to create new content',
+		title: 'Select content type',
 		autoOpen: false,
 		width: 610,
-		height: 370
+		height: 290
+	});
+	$("#add_new_content > .add_new > .add_new_info > .add_new_title > a").each(function(){
+		$(this).click(function(){		
+			$("#add_new_content").dialog("close");
+		});
 	});
 	
-	$("#add_new_content").parent().removeClass("ui-widget-content");
+	//$("#add_new_content").parent().removeClass("ui-widget-content");
 	$("#addnewcontent").click(function(){
 		if($("#add_new_content").html() != null) {
 			$("#add_new_content").dialog("open");
 		}
 		else {
-			$("#login_box").dialog( "option", "title", 'Please login to add content' );
+			$("#login_box").dialog( "option", "title", 'You must login to add content' );
 			$("#login_box").dialog("open");
 			$("#login_box > form > div:nth-child(2) > input").focus();
 		}
@@ -124,6 +129,7 @@ $(document).ready(function(){
 		
 	);
 	*/
+	/*
 	 $("#add_content_button").hover(
 			 function () {$("#add_content_menu").fadeIn();}
 			 );
@@ -133,6 +139,7 @@ $(document).ready(function(){
 			 function () {$("#add_content_menu").delay(1000).fadeOut();}
 			 );
 
+	*/
 	 /*
 	 $("#notification_close").live("mouseover mouseout click", function(event){ 
 		 if(event.type == "mouseover")

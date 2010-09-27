@@ -360,22 +360,29 @@ class AjaxController extends Oibs_Controller_CustomController
 	public function contentratingAction() {
         // Get authentication
         $auth = Zend_Auth::getInstance();
-        
+        $ident = $auth->getIdentity();
+        if(isset($ident)) $userId = $ident->user_id;
+        else $userId = 0;
         // Get content rating
         $contentRatingsModel = new Default_Model_ContentRatings();
+        $contentModel = new Default_Model_Content();
         
+        $userIsOwner = $contentModel->checkIfUserIsOwner($this->params['id_cnt'],$userId);
+
         if (isset($this->params['rate'])) {
 			$rate = $this->params['rate'];
-			if ($auth->hasIdentity())
+			if ($auth->hasIdentity() && !$userIsOwner)
 			{
 				if($rate == 1 || $rate == -1)
 				{
-		            $contentRatingsModel->addRating($this->params['id_cnt'], $auth->getIdentity()->user_id, $rate);
+		            $contentRatingsModel->addRating($this->params['id_cnt'], $userId, $rate);
 				}
 			}
         }
         $rating = $contentRatingsModel->getPercentagesById($this->params['id_cnt']);
 		$this->view->hasIdentity = $auth->hasIdentity();
+		$this->view->userId = $userId;
+		$this->view->userIsOwner = $userIsOwner;
 		$this->view->rating = $rating;
 	}
 	

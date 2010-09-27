@@ -22,7 +22,7 @@ echo $this->doctype();
                                         'PREPEND'
                                );
 	//$this->headScript()->prependFile($this->baseUrl('http://code.jquery.com/jquery-latest.min.js'));
-    $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
+    //RC Comment :) $this->headScript()->prependFile($this->baseUrl('/js/farbtastic.js'));
 	$this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.7.2.custom.min.js'));
     //$this->headScript()->prependFile($this->baseUrl('/js/auto_translate.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.qtip-1.0.0-rc3.js'));
@@ -276,35 +276,26 @@ echo $this->doctype();
                 
             ?>
             <div id="add_new_content">
-            	<div id="add_new_challenge" class="add_new">
-            		<div class="add_new_title" onClick="window.location='<?php echo $url_add_c; ?>';">
-            			<div><a href="<?php echo $url_add_c; ?>">Challenge</a></div>
-            		</div>
-            		<div class="add_new_info">
-            			<h3><?php echo $this->translate('help-guidelines-header-problem'); ?></h3>
-	        			<?php echo $this->translate('help-guidelines-paragraph2'); ?>
-            		</div>            		
-            	</div>
-            	<div id="add_new_idea" class="add_new">
-            		<div class="add_new_title" onClick="window.location='<?php echo $url_add_i; ?>';">
-            			<div><a href="<?php echo $url_add_i; ?>">Idea</a></div>
-            		</div>
-            		<div class="add_new_info">
-            			<h3><?php echo $this->translate('help-guidelines-header-idea'); ?></h3>
-	               		<?php echo $this->translate('help-guidelines-paragraph3'); ?>
-            		</div>    
-            	</div>
-            	<div id="add_new_vision" class="add_new">
-            		<div class="add_new_title" onClick="window.location='<?php echo $url_add_v; ?>';">
-            			<div><a href="<?php echo $url_add_v; ?>">Vision</a></div>
-            		</div>
-            		<div class="add_new_info">
-            			<h3><?php echo $this->translate('help-guidelines-header-finfo'); ?></h3>
-	                	<?php echo $this->translate('help-guidelines-paragraph4'); ?>
-            		</div>    
-            	</div>
-            	<div class="clear"></div>
-            </div>
+				<div id="add_new_challenge" class="add_new">
+					<div class="add_new_info">
+						<div class="add_new_title"><a href="<?php echo $url_add_c;?>">> Add your challenge</a></div>
+						<?php echo $this->translate('help-guidelines-paragraph2'); ?>
+					</div>            		
+				</div>
+				<div id="add_new_idea" class="add_new">
+					<div class="add_new_info">
+						<div class="add_new_title"><a href="<?php echo $url_add_i;?>">> Add your idea</a></div>
+						<?php echo $this->translate('help-guidelines-paragraph3'); ?>
+					</div>    
+				</div>
+				<div id="add_new_vision" class="add_new">
+					<div class="add_new_info">
+						<div class="add_new_title"><a href="<?php echo $url_add_v;?>">> Add your vision</a></div>
+						<?php echo $this->translate('help-guidelines-paragraph4'); ?>
+					</div>    
+				</div>
+				<div class="clear"></div>
+			</div>
             <?php endif; ?>
             
             <div id="menu">

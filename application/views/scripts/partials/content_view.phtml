@@ -81,6 +81,32 @@ $(document).ready(function() {
 				</a>
 			</div>
 		<?php endif; ?>
+		
+		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>   
+        	<div class="user_content_edit right">
+        		<a href="#" onClick="return false;">Manage content</a>
+        		<ul style="display: none">
+        			<li>
+	        			<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+	        			<a href="<?php echo $this->url(array('controller' => 'content',
+	                                                         'action' => 'edit',
+	        												 'content_id' => $this->contentData['id_cnt'],
+	                                                         'language' => $this->language),
+	                                                         'content_edit', true); ?>">Edit Content</a>
+                    </li>
+                    <li>
+                    <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+	                    <a href="<?php echo $this->url(array('controller' => 'content',
+	                                                         'action' => 'unlink',
+	        												 'relatestoid' => $this->contentData['id_cnt'],
+	                                                         'language' => $this->language),
+	                                                         'unlinkcontent', true); ?>">Manage linked content</a>
+                    </li>
+                                                         
+        		</ul>
+        	</div>
+		<?php endif; ?>
+			
 		<div class="clear"></div>
             <div id="linked">
 	            <div id="linked-challenges">
@@ -180,7 +206,8 @@ $(document).ready(function() {
             </div>
             <div id="misc">
                	<div id="content_view_content_info_container" class="left"></div>
-                <div id="content-view-viewers-list" class="right"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div>
+                <!-- <div id="content-view-viewers-list" class="right"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div> -->
+                <div id="content-view-viewers-list" class="right"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
                 <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
                 <div class="clear"></div>
 	            <!-- <div id="content_view_favourite"></div>  -->
@@ -201,30 +228,7 @@ $(document).ready(function() {
 		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-translated-show-translated'); ?></a>]
 		                <?php endif; ?>
 	                <?php endif;?>
-	                		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
-	         </div>
-        	<div class="user_content_edit right">
-        		<a href="#" onClick="return false;">Manage content</a>
-        		<ul style="display: none">
-        			<li>
-	        			<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
-	        			<a href="<?php echo $this->url(array('controller' => 'content',
-	                                                         'action' => 'edit',
-	        												 'content_id' => $this->contentData['id_cnt'],
-	                                                         'language' => $this->language),
-	                                                         'content_edit', true); ?>">Edit Content</a>
-                    </li>
-                    <li>
-                    <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
-	                    <a href="<?php echo $this->url(array('controller' => 'content',
-	                                                         'action' => 'unlink',
-	        												 'relatestoid' => $this->contentData['id_cnt'],
-	                                                         'language' => $this->language),
-	                                                         'unlinkcontent', true); ?>">Manage linked content</a>
-                    </li>
-                                                         
-        		</ul>
-		<?php endif; ?>
+	        
                 </div>
             </div>        
             </div>

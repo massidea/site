@@ -272,7 +272,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
           }
           //else check if the given key has $value as value
           else{
-            if($array[$key]==$value)
+            if(isset($array[$key]) && $array[$key]==$value)
               return true;
           }
         }
