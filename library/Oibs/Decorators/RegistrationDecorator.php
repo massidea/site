@@ -5,24 +5,9 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 	{
 		$element = $this->getElement();
 		$label = $element->getLabel();
-		/*
-		if ($translator = $element->getTranslator())
-		{
-			$label = $translator->translate($label);
-		}
-		
-		if ($label != null)
-		{
-			if ($element->isrequired())
-			{
-				$label .= '*';
-			}
-			$label .= ':';
-		}
-		*/
-		
-		return $element->getView()
-						->formLabel($element->getName(), $label);
+
+		return "<label><strong>".$label."</strong></label>";//$element->getView()
+						//->formLabel($element->getName(),$label);
 	}
 
 	public function buildInput()
@@ -46,10 +31,9 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
             return '';
         }
         $errors = $element->getView()->formErrors($messages);
-        if (1==1){}
         
         return '
-        <div class="error">
+        <div class="errors">
         ' . $errors . '
         </div>
         ';
@@ -74,12 +58,12 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
     {
         $element = $this->getElement();
 		$text = '';
-		if($element->isrequired())
+		if($element->isRequired())
 		{
-			$text = '<div class="registration_required">*</div>';
+			$text = '*';
 		}
-        
-        if (!$element instanceof Zend_Form_Element) 
+
+		if (!$element instanceof Zend_Form_Element) 
 		{
             return $content;
         }
@@ -94,28 +78,31 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
         $input     = $this->buildInput();
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
-
-        if (empty($desc)) {
-            $output =   '
-                        <div class="form_registration_row">
-                            ' . $label . '
-                            <div class="form_registration_input">
-                                '. $input .'
-                                '. $text .'
-                            </div>
-                        </div>
-                        '. $errors;
+		$name	   = $element->getName();
+        $translator = $element->getTranslator();
+		
+        $output = "";
+        
+        
+		if ($name == 'city') {
+			$output = "<h3>" . $translator->translate('register-personal-information') . "</h3>";
+		} else if ($name == 'username') {
+			$output = "<div class='clear'></div><h3>" . $translator->translate('register-account-information') . "</h3>";
+		}
+        if ($element->isRequired()) {
+            $output .=   '<div class="input-column1">' . $label . '</div>' .
+                            '<div class="input-column2">'. $input .'</div>'
+                            . '<div class="input-column3">'. $text . '</div>'
+                        . $errors
+            			. '<div class="clear"></div>';
         } else {
-             $output = '
-                        <div class="form_registration_row">
-                            '. $label .'
-                            <div class="form_registration_input_description">
-                                '. $input .'
-                                '. $desc .'
-                                '. $text .'
-                            </div>
-                        </div>
-                        '. $errors;
+             $output .= '
+                        <div class="input-column1">
+                            '. $label .'</div>
+                            <div class="input-column2">
+                                '. $input
+                            . '</div>' 
+                            . '<div class="clear"></div>';
         }
 
         switch ($placement) 

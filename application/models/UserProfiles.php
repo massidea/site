@@ -738,7 +738,8 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     			$where[] = $this->getAdapter()->quoteInto('id_usr_usp = ?', $id);
     			$where[] = $this->getAdapter()->quoteInto('profile_key_usp = ?', $row['profile_key_usp']);
     			$this->update($row, $where);
-    		} else {	
+    		} else {
+    			$row['created_usp']        = new Zend_Db_Expr('NOW()');
     			$this->insert($row);	
     		}
         }
@@ -1397,7 +1398,7 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
                                       	 		'countryIso' => 'usc.iso_ctr'))
                                       ->where('usp.public_usp = 1')
                                       ->where('usp.profile_key_usp = "city" OR usp.profile_key_usp = "country"')
-                                      ->order('usp.id_usr_usp')
+                                      ->order('countryName')
                                       ->group('usp.profile_value_usp')
                                       ->distinct()
                                       ;
@@ -1448,6 +1449,18 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
                                       ->order('value desc')
                                       ->order('usp.id_usr_usp')
                                       ->group('usp.profile_value_usp')
+                                      ;
+       if($userIdList) $select->where('usp.id_usr_usp IN (?)', $userIdList);                          
+       $result = $this->_db->fetchAssoc($select);
+
+       return $result;
+    }
+    
+    public function getUsersWhoFollowContents($userIdList = null) {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      	array('id_usr_usp'))
+                                      ->where('usp.profile_key_usp = "own_follows" OR usp.profile_key_usp = "fvr_follows"')
+                                      ->where('usp.profile_value_usp != "" AND usp.profile_value_usp != "0"')
                                       ;
        if($userIdList) $select->where('usp.id_usr_usp IN (?)', $userIdList);                          
        $result = $this->_db->fetchAssoc($select);

@@ -2128,3 +2128,5 @@ p.fetchpassword-error {
 
 #content_view_favourite { padding-bottom: 2px; }
 #content_view_favourite div { display:inline; }
+
+#search-top img { vertical-align: bottom; margin-bottom: -3px;}

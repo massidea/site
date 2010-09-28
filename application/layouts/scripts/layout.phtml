@@ -145,6 +145,11 @@ echo $this->doctype();
                                             <?php
                                         }
                                     } ?>
+                                    
+                                    <?php if(1): ?>
+                                    &nbsp;
+                                    	<img src="<?php echo $this->baseUrl("/images/notifications_b.png");?>" />
+                                    <?php endif; ?>
                                     |
                                     <a href="<?php echo $this->url(array('controller' => 'account', 
                                                                          'action' => 'logout',

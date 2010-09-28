@@ -65,6 +65,11 @@
 }
 
 #backdrop { filter:alpha(opacity=65) !important;zoom:1 !important; }
+
+#content #user-page #profile-meta ul .user_profile_toplist li span { float:right; display:inline; }
+#content #user-page #profile-meta ul .user_profile_toplist li { clear: both; }
+#content #user-page #profile-meta ul .user_profile_toplist li strong { display:inline; float:left; }
+
 .user_list_left_side,.user_list_right_side,.user_list_last_login,.user_list_username,.user_list_city,.user_list_country,.user_list_rating,.user_list_rating_amount { float:left; }
 .user_list_moreless { margin-left: 25px; }
 .user_list_last_login { float: right; }

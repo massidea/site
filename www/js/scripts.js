@@ -100,7 +100,40 @@ $(document).ready(function(){
 			 function () {$("#add_content_menu").delay(1000).fadeOut();}
 			 );
 
+	 $("#notification_close").live("mouseover mouseout click", function(event){ 
+		 if(event.type == "mouseover")
+			 $("a",this).addClass("notification_close_button");
+		 if(event.type == "mouseout") $("a",this).removeClass("notification_close_button");
+		 if(event.type == "click") $("#notification_box").slideToggle();
+	 });
+
 	 
+	 var meta = jQuery.parseJSON($("#jsmetabox").text());
+	 $.ajax({
+		url: meta.baseUrl+"/en/ajax/getnotifications/",
+		success: function(data) {
+			if(data) {
+				$("#notification_box").html(data);
+				$("#notification_link").click( function() {$("#notification_box").slideToggle();} );
+				$("#notification_link").css("cursor","pointer");
+				var notificationIds = jQuery.parseJSON($("#notification_box > #notification_ids").text());
+				 $.each(notificationIds,function(index,value) {
+					 var div = "#notification_list_id_"+value;
+					 $(div+"> .notification_list_row_first > .notification_time > a").live("click",function(){
+						 if($(".notification_list_row_other",div).is(":hidden")) {
+							 $(div+"> .notification_list_row_first > .notification_time > a").text("Less");
+						 }
+						 else { $(div+"> .notification_list_row_first > .notification_time > a").text("More"); }
+						 $(".notification_list_row_other",div).slideToggle();
+
+					 });
+				 });
+				$("#notification_box").tabs();
+				$("#notification_link").attr("src",meta.baseUrl+"/images/notifications_a.png");
+			}
+		}	
+	 });
+
 });
 
 function highlightContentMenuItem(target)

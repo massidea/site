@@ -238,7 +238,7 @@ class AccountController extends Oibs_Controller_CustomController
 
         $this->view->user = $data;
 		$id = $data['id_usr'];
-		
+				
 		$topListClasses = $user->getUserTopList();
 	    $topListUsers = $topListClasses['Users'];
         
@@ -1218,9 +1218,17 @@ class AccountController extends Oibs_Controller_CustomController
             		array_push($settingsData['notifications'], $id_ntf); 
             }
             
+            $favouriteModel = new Default_Model_UserHasFavourites();
+            $followed = $favouriteModel->getWhatUserIsFollowing($id);
+            foreach($followed as $key => $dataArray) {
+            	$settingsData[$key] = array();
+            	$settingsData[$key] = array_keys($followed[$key]);
+            }
+            
+            //print_r($settingsData);die;
             // populate form
 			if(isset($settingsData)) {
-                //echo '<pre>'; var_dump($settingsData);
+                //echo '<pre>'; var_dump($settingsData);die;
 				$form->populate($settingsData);
 			}
 			
@@ -1232,6 +1240,10 @@ class AccountController extends Oibs_Controller_CustomController
 				$formdata = $this->_request->getPost();
                 
 				if($form->isValid($formdata)) {
+					function plus($a, $b) { return $a += $b; }
+					$formdata['own_follows'] = array_reduce($formdata['own_follows'], "plus");
+					$formdata['fvr_follows'] = array_reduce($formdata['fvr_follows'], "plus");
+
                     // if form is valid
                     // Updates checked notifications
 
@@ -1406,7 +1418,7 @@ class AccountController extends Oibs_Controller_CustomController
 	        $userListing = $userModel->getUserListing($formData, $page, $count, $order, $list, $listSize);
 	
 	        $userContents = array();
-	        $cache = Zend_Registry::get('cache');
+	        $cache = Zend_Registry::get('short_cache');
 	        foreach($userListing as $user) {
 	        	// Get cache from registry
 	        	if(is_array($user['contents']) && sizeof($user['contents']) > 0) {
@@ -1521,7 +1533,7 @@ class AccountController extends Oibs_Controller_CustomController
      */
 	private function getAllCitiesAndCountries() {
 
-		$cache = Zend_Registry::get('cache');
+		$cache = Zend_Registry::get('short_cache');
 
 		// Load user locations from cache
 		if(!$resultList = $cache->load('UserLocationsList')) {
@@ -1922,6 +1934,7 @@ class AccountController extends Oibs_Controller_CustomController
         	
         	$k = 0;
         	foreach($favouriteList as $key => $favourite) {
+        		//print_r($favourite);die;
         	
         	    $tags = $contentHasTagModel->getContentTags($favourite['id_cnt']);
 
