@@ -2,12 +2,20 @@
 	<div class="clear"></div>
 	<div id="content_view_comment_form_container">
 	<?php if($this->comments->userCanComment()): ?>
-		<h3 style="float: left;"><?php echo $this->translate('content-view-comment-add'); ?></h3>
-		<a href="#" id="cancel_reply_link" style="display: none;" onclick="javascript:cancelReply();return false;">
-			<?php echo $this->translate('content-view-comment-cancel'); ?>
-		</a>
-		<p id="replying_to" style="display: none;">Replying to [username]</p>
+		<h3 class="left"><?php echo $this->translate('content-view-comment-add'); ?></h3>		
+
 		<div class="clear"></div>
+		<div class="dot-line-500"></div>
+
+		
+		<div>
+			<p id="replying_to" style="display: none;">Replying to [username]</p>
+			<p id="reply_body"></p>
+			<a href="#" id="cancel_reply_link" style="display: none;" onclick="javascript:cancelReply();return false;">
+				<?php echo $this->translate('content-view-comment-cancel'); ?>
+			</a>
+		</div>
+		
 		<p><textarea id="commentTextarea" name="Comments"></textarea></p>
 		<input type="button" value="Post comment" id="commentPostButton"></input>
 		<input type="hidden" id="comment_parent" value="0"></input>
@@ -26,7 +34,9 @@
                 </div>
         <?php if ($this->comments->getCommentCount() > 0): ?>
             <?php foreach($this->comments->getComments() as $comment): ?>
-            	<?php $comment['userUrl'] = $this->comments->getUserUrl($comment['login_name_usr']); ?>		
+            	<?php	$comment['userUrl'] = $this->comments->getUserUrl($comment['login_name_usr']); 
+            			$comment['userRating'] = $this->comments->getUserRating($comment['login_name_usr'], 'ContentCount'); 
+            	?>
 				<?php echo $this->partial('partials/comment_row.phtml', $comment); ?>
 			<?php endforeach; ?>
 		<?php if (false && $this->comments > $this->count): ?>

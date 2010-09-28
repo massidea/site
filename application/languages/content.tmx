@@ -226,7 +226,7 @@
 		<tuv xml:lang="fi"><seg>Vastaamassa käyttäjälle</seg></tuv>
 	</tu>
 	<tu tuid='content-view-comment-cancel'>
-		<tuv xml:lang="en"><seg>Cancel reply</seg></tuv>
+		<tuv xml:lang="en"><seg>Remove reply</seg></tuv>
 		<tuv xml:lang="fi"><seg>Peru vastaus</seg></tuv>
 	</tu>
     <tu tuid='content-view-campaigns'>

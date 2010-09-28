@@ -97,7 +97,8 @@ function addCommentRow(id, parent, div) {
 	
 	$("div#content_view_comment_"+id+"_container").removeClass("content_view_comment_container_");
 	$("div#content_view_comment_"+id+"_container").addClass("content_view_comment_container_" + level);
-	$("div#content_view_comment_"+id+"_container").effect("highlight", {}, 2000);	
+	$("div#content_view_comment_"+id+"_container").effect("highlight", {}, 2000);
+	$(window).scrollTop($("div#content_view_comment_"+id+"_container").offset().top);
 }
 
 /**
@@ -115,16 +116,21 @@ function clearForm() {
 *   
 *   Basic function for comment replying
 */
-function replyTo (replyId, username) {
+function replyTo (replyId, username, rating) {
     // Apply values
+    var body = $("div#content_view_comment_"+replyId+"_textbody").html();
+    var usr = username + '(' + rating + ')';
+    var linkToUser = usr.link(jsMeta.baseUrl+"/en/account/view/user/"+username);
+
     $('#comment_parent').val(replyId);
-    $('#replying_to').html("Replying to "+username);
+    $('#replying_to').html("Replying to "+ linkToUser + ":");
+    $('#reply_body').html(body);
 
     // Show "Replying to..." text and "Cancel reply" -link
     $('p#replying_to').show();
     $('a#cancel_reply_link').show();
     
-    $('#commentTextarea').focus();
+    $(window).scrollTop($('#content_view_comment_form_container').offset().top);
     
     return false;
 }
@@ -148,10 +154,13 @@ function cancelReply () {
     // Apply values
     $('#comment_parent').val(0);
     $('#parent_username').val('');
+    $('#reply_body').html('');
     
     // Hide "Replying to..." text and "Cancel reply" -link
     $('p#replying_to').hide();
     $('a#cancel_reply_link').hide();
+    
+    $(window).scrollTop($('#content_view_comment_form_container').offset().top);
     
     return false;
 }

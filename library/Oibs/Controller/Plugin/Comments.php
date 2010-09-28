@@ -110,6 +110,50 @@ class Oibs_Controller_Plugin_Comments {
 	}
 	
 	/**
+	 * getUserRating
+	 * 
+	 * gets the user rating via external callback function
+	 * 
+	 * @param string $username
+	 * @param string $callback_function
+	 * @return mixed
+	 */
+	public static function getUserRating($username, $callback_function) {
+		$retVal = call_user_func("Oibs_Controller_Plugin_Comments::_getUser".$callback_function, $username);
+		return $retVal;
+	}
+	
+	/**
+	 * _GetUserContentCount
+	 * 
+	 * gets user rating by content count
+	 * 
+	 * @param string $username
+	 * return int
+	 */
+	private static function _getUserContentCount($username) {
+		$userModel = new Default_Model_User();
+		$user = $userModel->getUserByName($username);
+		$user_id = $user['id_usr'];
+		
+		$content_count = $userModel->getUsersContentCount(array($user_id));
+		
+		return (int)$content_count[0]['value'];
+	}
+	
+	/**
+	 * _getUserPoints
+	 * 
+	 * gets user rating by point system
+	 * 
+	 * @param string $username
+	 * NotImplemented
+	 */
+	private static function _getUserPoints($username) {
+		return 0;
+	}
+	
+	/**
 	 * getPartial
 	 * 
 	 * @return string partial to be used

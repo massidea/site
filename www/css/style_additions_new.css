@@ -365,13 +365,19 @@ li.linked_campaigns, li.linked_groups {
 
 a#cancel_reply_link {
 	padding: 0;
-	float: right;
-	margin: 0;	
+	margin: 0;
+	float: left;
 }
 p#replying_to {
-	padding: 0 20px 0 0;
+	padding-right: 5px;
 	margin: 0;
-	float: right;
+	float: left;
+}
+
+#reply_body {
+	padding-right: 5px;
+	margin: 0;
+	
 }
 
 .content_view_comment_container_1 .content_view_comment_header, .content_view_comment_container_2 .content_view_comment_header, .content_view_comment_container_3 .content_view_comment_header {
@@ -505,17 +511,6 @@ p#replying_to {
 	padding-right: 2px;
 	display:inline-block;
 	vertical-align: middle;
-}
-
-a#cancel_reply_link {
-	padding: 10px;
-	float: right;
-	margin: 0;	
-}
-p#replying_to {
-	padding: 10px 20px 0 0;
-	margin: 0;
-	float: right;
 }
 
 div#my-views div.scroll-box ul li div.user {
