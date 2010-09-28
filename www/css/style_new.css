@@ -119,6 +119,33 @@ input.submit-button {
 #header #search { float:left; /* color:#fff; */ margin:5px 20px 0px 290px; }
 #header #search input.top_search_field { width:350px; margin:0px 10px 10px 0px; padding:2px; float:left; }
 #header #search #search-top { text-align:right; width:358px; margin:4px 0px 4px 0px; }
+#header #search #search-top img { vertical-align: bottom; margin-bottom: -3px;}
+
+#header #search #search-top #notification_box { display: none; position: absolute; z-index: 10000; background: none repeat scroll 0 0 #FFFFFF; width: 500px; border: 2px solid #999999; text-align: left; height: 420px; left:50%; }
+#header #search #search-top #notification_box #notification_tabs { position: relative; }
+#header #search #search-top #notification_box #notification_tabs li a { color: black; cursor: pointer; text-decoration: none; }
+#header #search #search-top #notification_box #notification_tabs .notification_close_button { background-color: #EEE; border: 1px solid #555; margin: -1px; }
+#header #search #search-top #notification_box .notification_class { overflow: auto; max-height: 350px; }
+#header #search #search-top #notification_box .notification_class .notification_list { list-style: none outside none; }
+#header #search #search-top #notification_box .notification_class .notification_photo_first { float: left; width: 60px; height: 60px; }
+#header #search #search-top #notification_box .notification_class .notification_photo_first img { width: 60px; height: 60px; }
+#header #search #search-top #notification_box .notification_class .notification_list_row { border-bottom: 1px dotted #CCCCCC; padding-bottom: 7px; margin-bottom: 5px; }
+#header #search #search-top #notification_box .notification_class .notification_context { float: left; font-size: 0.9em; padding-left: 5px; width: 324px; }
+#header #search #search-top #notification_box .notification_class .notification_context a { color: #0089CF; text-decoration: none; }
+#header #search #search-top #notification_box .notification_class .notification_time { float:right; }
+#header #search #search-top #notification_box .notification_class .notification_time a { display:block; font-size: 0.9em; color: #0089CF; text-align: center; text-decoration: none; }
+#header #search #search-top #notification_box .notification_class .notification_time span { text-align: center; display: block; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other { display: none; }
+#header #search #search-top #notification_box .notification_class .notification_list_child { list-style: none outside none; margin-left: 65px; padding-top: 5px;}
+
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child { font-size: 0.9em; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_context_child { float:left; margin-left: 3px; font-size: 0.9em; padding: 0px; margin-top: -3px; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_photo_child { float:left; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_photo_child img { width: 30px; height: 30px; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul { list-style: none outside none; margin-left: 25px; margin-bottom: 5px;  }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul li { margin-bottom: 5px; }
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul li a { color: #0089CF; text-decoration: none; } 
+
 
 #header #search #search-top #user_options { position: absolute; display: none; width: 130px; background: none repeat scroll 0 0 #FFFFFF; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; }
 #header #search #search-top #user_options ul { list-style:none outside none; }
@@ -557,7 +584,7 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 #content #user-page #profile-meta ul .user_profile_toplist { margin-left: -5px; }
 #content #user-page #profile-meta ul .user_profile_toplist li .user_profile_toplist_points { display: none; }
 #content #user-page #profile-meta ul .user_profile_toplist li .user_profile_toplist_rank { display: block; }
-
+#content #user-page #profile-meta ul .user_profile_toplist li #user_profile_toplist_title { float: right; }
 #content #user-page #profile-info { width:490px; float:left; margin-left:29px; }
 
 #content #user-page #profile-info #user-info ul { margin:-5px 0px 0px 0px; padding:0px; }
@@ -671,6 +698,7 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 #content #edit-user-page .input-column2 { width:254px; float:left;  margin-right:20px;  margin-bottom:8px; }
 #content #edit-user-page .input-column3 { width:60px; float:left;  margin-bottom:8px; }
 #content #edit-user-page .input-column3.two_rows { margin-top:-10px; }
+#content #edit-user-page .input-column2 label input[type="checkbox"] { float:left; width: 10px; margin-right: 5px; }
 
 #content #edit-user-page textarea,
 #content #edit-user-page input {  width:255px; }
@@ -795,7 +823,7 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 #content #sign-up-page .select.error { width:218px; }
 #content #sign-up-page .field.error { width:224px; }
-#content #sign-up-page .error { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 3px; width:100%; padding:2px 10px 2px 24px; margin-top:0px; border:1px solid #7f9db9; border-top:none; }
+/*#content #sign-up-page .error { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 3px; width:100%; padding:2px 10px 2px 24px; margin-top:0px; border:1px solid #7f9db9; border-top:none; }*/
 
 #content #sign-up-page #home-country { width:180px; float:left; margin:10px 0px 10px 0px; }
 #content #sign-up-page #default-language { width:180px; float:right; margin:10px 0px 10px 0px; }

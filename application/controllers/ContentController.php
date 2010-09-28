@@ -467,6 +467,16 @@ class ContentController extends Oibs_Controller_CustomController
                                                   		'lang_default', true);
 
 					if($add_successful) {
+						
+						// Get cache from registry
+				        $cache = Zend_Registry::get('cache');
+				        
+				        // Load most popular tags from cache
+						$output = md5(time());
+						$cache->save($output, 'LatestPostHash');
+						// Force refresh to tags on front page
+				        $cache->remove('IndexTags'); 
+						
 						if($data['publish'] == 1) {
 							$url = $this->_urlHelper->url(array('content_id' => $add,
                                          						'language' => $this->view->language), 

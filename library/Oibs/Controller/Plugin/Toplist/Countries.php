@@ -29,7 +29,7 @@ class Oibs_Controller_Plugin_Toplist_Countries extends Oibs_Controller_Plugin_To
 	
 	private function _addUserRank($id) {
 		$found = false;
-		
+		if(empty($this->_usersWithCountry) || !is_array($this->_usersWithCountry)) return;
 		foreach($this->_usersWithCountry as $_id => $data) {
 			if($id == $_id ) {
 				$found = true;

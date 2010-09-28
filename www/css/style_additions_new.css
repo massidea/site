@@ -907,7 +907,9 @@ div.form_userlist_element_label_right label {
 	margin-top: 6px;
 }
 
-form div.errors ul.errors li {
+form div.errors ul.errors li,
+form div.error ul.errors li {
+	clear: both;
 	list-style-type: none;
 	color: red;	
 	text-align: center;

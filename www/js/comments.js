@@ -8,7 +8,8 @@ $("document").ready(function () {
 	});
 	
 	$('textarea#commentTextarea').autoResize({
-	    extraSpace : 30
+	    extraSpace : 30,
+	    limit : 10000000000
 	});
 	$('textarea#commentTextarea').resize();
 });
@@ -184,7 +185,6 @@ function flagAsSpam(commentId)
 		}
 	});
 }
-
 /**
 *   deleteComment
 *

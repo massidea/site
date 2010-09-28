@@ -78,15 +78,16 @@ class Oibs_Controller_Plugin_Toplist_Groups extends Oibs_Controller_Plugin_TopLi
 		if(!empty($this->_topListIds[$choice]['users'])) {
 			$final = array();
 			foreach($this->_groupsWithIds as $data) {
-				if(!isset($final[$this->_name][$data['id_grp']])) {
-					if(isset($this->_topListIds[$choice]['users'][$data['id_usr']]['value']))
-					$final[$this->_name][$data['id_grp']] = array('name' => $data['group_name_grp'],
-															'id' => $data['id_grp'],
-															'value' => $this->_topListIds[$choice]['users'][$data['id_usr']]['value']
-															);
-				}
-				else {
-					$final[$this->_name][$data['id_grp']]['value'] += $this->_topListIds[$choice]['users'][$data['id_usr']]['value'];
+				if(isset($this->_topListIds[$choice]['users'][$data['id_usr']]['value'])) {
+					if(!isset($final[$this->_name][$data['id_grp']])) {
+						$final[$this->_name][$data['id_grp']] = array('name' => $data['group_name_grp'],
+																'id' => $data['id_grp'],
+																'value' => $this->_topListIds[$choice]['users'][$data['id_usr']]['value']
+																);
+					}
+					else {
+						$final[$this->_name][$data['id_grp']]['value'] += $this->_topListIds[$choice]['users'][$data['id_usr']]['value'];
+					}
 				}
 			}
 			if(empty($final)) $final[$this->_name] = null;
