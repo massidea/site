@@ -554,7 +554,7 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 #content #campaign-page h4 { font-size:1em; }
 
 #content #group-page #group-campaigns,
-#content #group-page #join-group { color:#c0c0c0; margin:-32px 0px 15px 0px; }
+#content #group-page #join-group { padding-top: 10px; color:#c0c0c0; margin:0px 0px 15px 0px; }
 
 #content #group-page #group-campaigns p,
 #content #group-page #join-group p { margin:0px; padding:0px; }
@@ -768,7 +768,7 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 	background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; }
 
 #content #contribute { margin-bottom:45px; }
-#content #contribute h2 { color:#000; float:left; }
+#content #contribute h2 { color:#C0C0C0; float:left; }
 #content #contribute .right, #content #current-posts .right { width:300px !important; text-align:right; }
 #content #current-posts h2 { float:left; }
 #content #current-posts { border:1px solid #ccc; padding:10px 0px 0px 0px; }

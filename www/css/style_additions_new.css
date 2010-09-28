@@ -1,11 +1,11 @@
 #content #group-page #group-info {
-	margin:0 0px 42px 0px;
+	margin:0 0px 0px 0px;
 	padding:0px 0px 8px 0px;
 	background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; }
 #content #group-page .scroll-box li {
     
 }
-#content #campaign-page p.link {font-size: 1.4em}
+#content #campaign-page p.link, #content #campaign-page #contribute .right a {font-size: 1.4em}
 
 #content #group-page #edit-group-etc {
     color:#c0c0c0;
@@ -383,28 +383,12 @@ p#replying_to {
 	height:2em;
 }
 
-.rss-reader {
-	border: 1px solid #CCCCCC;
-}
-
-.rss-reader ul {
-	margin: 5px !important;
-}
-
-.rss-item {
-	border-bottom: 1px dotted #CCCCCC;	
-}
-
-#rss-list-feeds #feeds {
-	width: 450px;	
-}
-#rss-input-feed-url {
-	width: 405px;	
-}
-
-#rss {
-	border-top: 1px dotted #CCCCCC;	
-}
+.rss-reader { border: 1px solid #CCCCCC;}
+.rss-reader ul { margin: 5px !important; }
+.rss-item { border-bottom: 1px dotted #CCCCCC; padding: 3px;}
+#rss-list-feeds #feeds { width: 450px; }
+#rss-input-feed-url { width: 405px; }
+#rss { border-top: 1px dotted #CCCCCC; }
 
 .campaign_list_paragraph {
     font-size: 12px;
@@ -1004,3 +988,5 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 
 #sidebar ul.campaigns li a { padding-left: 5px; }
 #sidebar ul.campaigns li { padding-bottom: 2px; }
+
+.scroll-box .user .context { width: 375px !important; }
