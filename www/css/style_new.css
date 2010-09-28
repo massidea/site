@@ -721,13 +721,27 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 #content #edit-user-page #save_changes input#cancel { width:100px; }
 
 #content #activity label { font-size:.9em; }
-#content #activity .input-column1 { width:60px; float:left; text-align:left; margin-left:10px; margin-top:10px; }
-#content #activity .input-column2 { width:150px; float:left; text-align:left; margin-top:10px; }
+#content #activity .input-column1 { width:70px; float:left; text-align:left; margin-left:20px; margin-top:10px; }
+#content #activity .input-column2 { width:140px; float:left; text-align:left; margin-top:10px; }
 #content #activity .input-column3 { width:250px; float:left; text-align:left; /*margin-bottom:10px;*/ margin-left:70px; margin-top:5px; }
 /*#content #activity .input-column4 { width:120px; float:left; text-align:left; margin-bottom:5px; margin-left:10px; margin-top:0px; }*/
-#content #activity .input-column5 { width:60px; float:left; text-align:left; margin-right:10px; }
-#content #activity .input-column6 { width:150px; float:left; text-align:left; margin-bottom:5px;}
-	
+/*#content #activity .input-column5 { width:150px; float:right; text-align:left; margin-right:10px; margin-top:10px; }
+#content #activity .input-column6 { width:60px; float:right; text-align:left; margin-top:10px; margin-right:10px; }*/
+#content #activity .input-column5 { width:140px; float:right; text-align:left; margin-right:179px; margin-top:10px; }
+#content #activity .input-column6 { width:70px; float:left; text-align:left; margin-top:10px; margin-left:70px; padding-left:20px; border-left:1px solid silver; }
+
+#content #activity .scroll-box #setbgimage-label { font-family: "Times New Roman"; font-size:8pt; width:225px; float:right; margin-top:-12px; margin-right:25px; }
+#content #activity .scroll-box #removesetbgimage-element { float:right; margin-top:-12px; margin-right:65px; }
+#content #activity .scroll-box #help_link_basic-element { float:right; margin-top:-15px; margin-right:20px;}
+
+#help_link_advanced-element { float:right; margin-top:-15px; margin-right:20px; }
+
+#basicsettingshelp-modal p { margin-left:10px; margin-right:5px; text-align:justify; }
+
+#advancedsettingshelp-modal p { margin-left:10px; margin-right:5px; text-align:justify; }
+#advancedsettingshelp-modal #css_example { background:#e6e6e6; font-family:"Times New Roman", sans-serif; font-size:15px; margin-left:12pt; }
+
+
 /** Campaign GUI **/
 #content #campaign-page h2 span.challenges { color:#D21034 !important; }
 #content #campaign-page h2 span.users { color:#0089CF !important; }

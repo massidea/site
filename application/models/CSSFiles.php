@@ -67,21 +67,24 @@ class Default_Model_CssFiles {
 		}
 	}
 		
-	public function getBackgroundImage() {
+	public function getBackgroundImage($cssFileContent, $div) {
 		
-		$backgroundImage = 'tyhja.png';
+		$backgroundImageUrl = '';
 		
-		return $backgroundImage;
+		$newStylingParam = $this->readStylingParam($cssFileContent, $div, 'background');
+		
+		$urlLocStart = strpos($newStylingParam, 'url');
+		if($urlLocStart) {
+			$urlLocStart = strpos($newStylingParam, '"', $urlLocStart+1);
+			$urlLocEnd = strpos($newStylingParam, '"', $urlLocStart+1);
+			$backgroundImageUrl = substr($newStylingParam, $urlLocStart+1, $urlLocEnd-$urlLocStart-1);
+		}
+		//echo 'backgroundImageUrl = '.$backgroundImageUrl;	// debug
+		
+		return $backgroundImageUrl;
 	}
 	
 	public function setStylingParams($cssFileContent, $div, $stylingParams, $_username) {
-		
-		// Remodel font-size parameter to suite css file
-		$font_sizes = array('0' => '8', '1' => '9', '2' => '10', '3' => '11', '4' => '12', '5' => '13', '6' => '14');
-		//$font_size_key = array_search('font-size', $stylingParams); 
-		/*if(array_key_exists('font-size', $stylingParams)) {
-			$stylingParams['font-size'] = $font_sizes[$stylingParams['font-size']].'px';
-		}*/
 		
 		// Remodel font-family parameter to suite css file
 		$font_familylist = array('Arial, sans-serif', '"Arial Black", sans-serif', '"Comic Sans MS", cursive', '"Courier New", monospace', 'Georgia, serif',
@@ -268,6 +271,35 @@ class Default_Model_CssFiles {
 	
 	private function readStylingParam($cssFileContent, $div, $stylingParam) {
 		
+		// Find div from css file content
+		$divContent = '';
+		$divLoc = strpos($cssFileContent, $div);
+		$divStartLoc = 0;
+		$divEndLoc = 0;
+		if($divLoc) {
+			$divStartLoc = strpos($cssFileContent, '{', $divLoc);
+			$divEndLoc = strpos($cssFileContent, '}', $divStartLoc+1);
+			$divContent = substr($cssFileContent, $divStartLoc+1, $divEndLoc-$divStartLoc-1);
+		} else {
+			return $divLoc;
+		}
+		
+		// Find styling parameter of div written between {}
+		$stylingParamContent = '';
+		$stylingParamStartLoc = 0;
+		$stylingParamEndLoc = 0;
+		$newStylingParam = '';
+		
+		$stylingParamStartLoc = strpos($divContent, $stylingParam);
+		if($stylingParamStartLoc) {
+			$stylingParamEndLoc = strpos($divContent, ';', $stylingParamStartLoc);
+			$stylingParamContent = substr($divContent, $stylingParamStartLoc, $stylingParamEndLoc-$stylingParamStartLoc+1);
+			$paramSplitLoc = strpos($stylingParamContent, ':');
+			$newStylingParam = substr($stylingParamContent, $paramSplitLoc+1, strlen($stylingParamContent)-$paramSplitLoc-2);
+			$newStylingParam = str_replace(', ', ',', $newStylingParam);
+		}
+	
+		return $newStylingParam;
 	}
 	
 	private function readStylingParams($cssFileContent, $div) {
@@ -298,16 +330,35 @@ class Default_Model_CssFiles {
 		
 		for($i=0; $i<$divParamCount; $i++) {
 			if(strlen($divContent)) {
-				$stylingParamStartLoc = strpos($divContent, $stylingParams[$i]);
-				if($stylingParamStartLoc) {
-					$stylingParamEndLoc = strpos($divContent, ';', $stylingParamStartLoc);
-					$stylingParamContent = substr($divContent, $stylingParamStartLoc, $stylingParamEndLoc-$stylingParamStartLoc+1);
-					$paramSplitLoc = strpos($stylingParamContent, ':');
-					$divParams[$stylingParams[$i]] = substr($stylingParamContent, $paramSplitLoc+1, strlen($stylingParamContent)-$paramSplitLoc-2);
-					$divParams[$stylingParams[$i]] = str_replace(', ', ',', $divParams[$stylingParams[$i]]);
-					//echo $stylingParams[$i].' = '.$divParams[$stylingParams[$i]];	// debug
-				} else {
-					//return false;
+				if($div == 'body') {
+					$stylingParamStartLoc = strpos($divContent, 'background');
+					if($stylingParamStartLoc) {
+						$stylingParamEndLoc = strpos($divContent, ';', $stylingParamStartLoc);
+						$stylingParamContent = substr($divContent, $stylingParamStartLoc, $stylingParamEndLoc-$stylingParamStartLoc+1);
+						$paramSplitLoc = strpos($stylingParamContent, ':');
+						$divParams[$stylingParams[$i]] = substr($stylingParamContent, $paramSplitLoc+1, strlen($stylingParamContent)-$paramSplitLoc-2);
+						$divParams[$stylingParams[$i]] = str_replace(', ', ',', $divParams[$stylingParams[$i]]);
+						
+						$urlLocStart = strpos($divParams[$stylingParams[$i]], 'url');
+						if($urlLocStart) {
+							$urlLocStart = strpos($divParams[$stylingParams[$i]], '"', $urlLocStart+1);
+							$urlLocEnd = strpos($divParams[$stylingParams[$i]], '"', $urlLocStart+1);
+							$urlContent = substr($divParams[$stylingParams[$i]], $urlLocStart+1, $urlLocEnd-$urlLocStart-1);
+						}
+						//echo 'urlContent = '.$urlContent;	// debug
+					}
+				} else { 
+					$stylingParamStartLoc = strpos($divContent, $stylingParams[$i]);
+					if($stylingParamStartLoc) {
+						$stylingParamEndLoc = strpos($divContent, ';', $stylingParamStartLoc);
+						$stylingParamContent = substr($divContent, $stylingParamStartLoc, $stylingParamEndLoc-$stylingParamStartLoc+1);
+						$paramSplitLoc = strpos($stylingParamContent, ':');
+						$divParams[$stylingParams[$i]] = substr($stylingParamContent, $paramSplitLoc+1, strlen($stylingParamContent)-$paramSplitLoc-2);
+						$divParams[$stylingParams[$i]] = str_replace(', ', ',', $divParams[$stylingParams[$i]]);
+						//echo $stylingParams[$i].' = '.$divParams[$stylingParams[$i]];	// debug
+					} else {
+						//return false;
+					}
 				}
 			} else {
 				$divParams[$stylingParams[$i]] = $this->defaultCssParams[$stylingParams[$i]];

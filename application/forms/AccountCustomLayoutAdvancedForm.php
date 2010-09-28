@@ -39,10 +39,13 @@
                                 'Oibs/Form/Decorator/',
                                 'decorator');
         
+		$clearall = new Oibs_Form_Element_Note('clearall');
+        $clearall->setValue('<div style="clear:both;"></div>');
+		
         $csstextarea = new Zend_Form_Element_Textarea('csscontent');
         $csstextarea->setLabel('Editable custom layout css for advanced users')
                   ->setAttrib('id', 'css_textarea')
-                  ->setAttrib('style', 'width: 575px; height: 600px; margin-left: -5px; margin-right: 10px; margin-bottom: 10px;')
+                  ->setAttrib('style', 'width: 575px; height: 660px; margin-left: -5px; margin-right: 10px; margin-bottom: 10px;')
                   ->setValue($options['cssContent'])
                   ->addDecorator('Label',array('tag' => 'div', 'style' => '/*font-weight:bold;*/ float:left; margin-top:6px'))
                   ->addValidators(array(
@@ -65,13 +68,13 @@
         
         $defaultcssbutton = new Zend_Form_Element_Button('default_css_button');
 		$defaultcssbutton->setLabel('Default')
-				->setAttrib('style', 'width:80px; float:left; margin-left: 10px;')
+				->setAttrib('style', 'width:80px; float:left; margin-left: 10px; margin-top:-17px;')
         		->removeDecorator('DefaultDecorator')
         		->removeDecorator('DtDdWrapper');
         		
 		$restorecssbutton = new Zend_Form_Element_Button('restore_css_button');
 		$restorecssbutton->setLabel('Restore')
-				->setAttrib('style', 'width:80px; float:left; margin-left: -5px;')
+				->setAttrib('style', 'width:80px; float:left; margin-left: -5px; margin-top:-17px;')
         		->removeDecorator('DefaultDecorator')
         		->removeDecorator('DtDdWrapper');
         
@@ -82,10 +85,15 @@
         $originalcsshidden = new Zend_Form_Element_Hidden('original_css');
         $originalcsshidden->setAttrib('id', 'original_css')
         			 ->setValue($options['cssContent']);
+
+		$advancedhelp = new Oibs_Form_Element_Note('help_link_advanced');
+		$advancedhelp->setValue('<a href="#" onClick="return false;">Help</a>');
         
         $this->addElements(array($csstextarea,
 								 $savecssbutton,
 								 $cancelcssbutton,
+								 $advancedhelp,
+								 //$clearall,
 								 $restorecssbutton,
 								 $defaultcssbutton,
 								 $defaultcsshidden,

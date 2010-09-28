@@ -39,24 +39,19 @@
 		$this->removeDecorator('Errors');
 		$this->removeDecorator('HtmlTag');
 		$this->removeDecorator('Label');
-
-		//$this->setAction($this->_generateActionUrl());
         
 		$layout_select = new Zend_Form_Element_Select('layout_select');
 		$layout_select->setAttrib('onchange', '$("#submitLayoutSelection").click();');
 		$layout_select->removeDecorator('Errors');
 		$layout_select->removeDecorator('Label');
 		$layout_select->removeDecorator('HtmlTag');
-		
-		/*foreach($options as $language)
-			$translation_select->addMultiOption($language['iso6391_lng'], $language['name_lng']);
-		*/
+
 		$layout_select->addMultiOption('default', 'Default');
 		$layout_select->addMultiOption('custom', 'Custom');
 		
-		$layout_select->setValue($this->_getCurrentLayoutSelect());
-		//$layout_select->setValue('default');
-		echo $this->_getCurrentLayoutSelect();
+		$layout_select->setAttrib('style', 'min-width:85px');
+		
+		$layout_select->setValue($options->layout_mode);
 		
 		$submit = new Zend_Form_Element_Submit('submitLayoutSelection');
 		$submit->removeDecorator('DtDdWrapper');
@@ -64,11 +59,4 @@
 				
 		$this->addElements(array($layout_select, $submit));
 	}
-		
-	private function _getCurrentLayoutSelect()
-	{
-		$layoutSession = $this->view->layout_mode;
-		return $layoutSession;
-	}
-
 }

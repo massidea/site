@@ -481,11 +481,14 @@ class AccountController extends Oibs_Controller_CustomController
 				$customCssOptions['cssFontType'] = $newCssParams['font-family'];
 				$customCssOptions['cssFontSize'] = $newCssParams['font-size'];
 				$customCssOptions['cssFontColor'] = $newCssParams['color'];
+				$customCssOptions['cssBackgroundImage'] = $profileCustomCss->getBackgroundImage($customCssOptions['cssContent'], 'body');
 			}
-					
+			
+			// Create forms
 			$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm($customCssOptions);
 			$customLayoutAdvancedForm = new Default_Form_AccountCustomLayoutAdvancedForm($customCssOptions);
 			
+			// Set to view
 			$this->view->customLayoutSettingsForm = $customLayoutForm;
         	$this->view->customLayoutAdvancedForm = $customLayoutAdvancedForm;
 		}
@@ -509,6 +512,7 @@ class AccountController extends Oibs_Controller_CustomController
         $this->view->user_edit = $userEdit;
         $this->view->topList = $topList;
         $this->view->type = $type;
+        $this->view->viewName = 'user_profile';
         
 
         $group_model = new Default_Model_UserHasGroup();

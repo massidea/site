@@ -118,6 +118,38 @@ $(document).ready(function() {
 		var default_css = $("#default_css").val();
 		$("#css_textarea").val(default_css);
 	});
+	
+	$("#basicsettingshelp-modal").dialog({
+		autoOpen: false,
+		title: 'How to customize your profile - Basic options',
+		height: 650,
+		width: 475,
+		resizable: false,
+		position: ['left', 'top'],
+		modal: true
+	});
+	
+	$("#help_link_basic-element").click(function() {
+		$("#basicsettingshelp-modal").dialog('open');
+	});
+	
+	$("#advancedsettingshelp-modal").dialog({
+		autoOpen: false,
+		title: 'How to customize your profile - Advanced options',
+		height: 650,
+		width: 475,
+		resizable: false,
+		position: ['left', 'top'],
+		modal: true
+	});
+	
+	$("#help_link_advanced-element").click(function() {
+		$("#advancedsettingshelp-modal").dialog('open');
+	});
+	
+	$("#removesetbgimage-element").click(function() {
+		alert('poista-filu-namiska!');
+	});
 
 }); // Endof document ready
 
@@ -379,5 +411,112 @@ function expandText(key)
 
     <div id="advancedsettings-modal">
 		<?php echo $this->customLayoutAdvancedForm; ?>
+	</div>
+	
+	<div id="basicsettingshelp-modal">
+		<strong>Font - Type and size</strong><br>
+		<p>
+			You can select different types of fonts from the options of the dropdown list. Selection effects the texts on your profile page, including headers, labels and bodytext.
+			Text inside the scrollboxes are not effected. You can also change the size of the text from the dropdown list next to the font types. By default font type is
+			Arial and font size 12.<br><br>
+		</p>
+		
+		<strong>Font - Color</strong><br>
+		<p>	
+			Changing font color can be done by typing the color code (i.e. #000000, black) into the text field or by selecting suitable color and hue from the wheel
+			selector. Note! When typing the color code, the first character must be "#". By default font color is #000000, black.<br><br>
+		</p>
+		
+		<strong>Background - Color</strong><br>
+		<p>	
+			Changing background color can be done by typing the color code (i.e. #ffffff, white) into the text field or by selecting suitable color and hue from the wheel
+			selector. Note! When typing the color code, the first character must be "#". By default font color is #ffffff, white.<br><br>
+		</p>
+		
+		<strong>Background - Image</strong><br>
+		<p>	
+			Using a backgound image is an optional setting. To upload an image, click browse and select the imagefile from your computer, then click "Upload".
+			To use an image from the internet, go to "Advanced". By default no background image is uploaded.
+		</p>
+	</div>
+	
+	<div id="advancedsettingshelp-modal">
+		<strong>What is this?</strong>
+		<p>
+			With this editor you can directly edit the styling settings of your profile page. Note! Chances of these settings are saved to your CSS-file and are
+			permanent once you click "Save" button. It is recommended that only experienced users modify settings.
+		</p>
+		
+		<br><br>
+		
+		<strong>Saving changes</strong>
+		<p>
+			To save changes you have made, click "Save" button.<br>
+		</p>
+		
+		<br><br>
+		
+		<strong>Restore previous settings</strong>
+		<p>
+			While editing your css-settings, if you need to restore the last saved version of your css-file, click "Restore" button. Note! To apply the
+			restored settings you need to save them. 
+		</p>
+		
+		<br>
+		
+		<strong>Restore default settings</strong>
+		<p>
+			If you need to restore the default css-settings, click "Default" button. Note! To apply the default settings you need to save them.
+		</p>
+		
+		<br><br>
+		
+		<strong>body</strong>
+		<p>
+			Editing "body" will effect entire profilepage. For example, if you wish to change the background color or set an image to backgound, it should be done
+			here. See default settings of "body" below, where background color is set to #ffffff (white) and no background image is defined.<br><br>
+			
+			<div id="css_example">
+				body {<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;background:#ffffff url("");<br>
+				}
+			</div>
+		</p>
+		
+		<br><br>
+		
+		<strong>#content #user-page</strong>
+		<p>
+			Editing "#content #user-page" effects the content area, center of the page. See default settings of "#content #user-page" below, where background color
+			is set to #ffffff (white), font type to Arial (sans-serif is the font family-name that Arial belongs to), font size to 12 pixels and font color to #000000 
+			(black).<br><br>
+			
+			<div id="css_example">
+				#content #user-page {<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;background:#ffffff;<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;font-family:Arial, sans-serif;<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;font-size:12px;<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;color:#000000;<br>
+				}
+			</div> 
+		</p>
+		
+		<br><br>
+		
+		<strong>.scroll-box</strong>
+		<p>
+			Editing ".scroll-box" effects the content inside boxes on the page, for example My Posts. See default settings below, where background color is set to 
+			#ffffff (white), font type to Arial (sans-serif is the font family-name that Arial belongs to), font size to 12 pixels and font color to #000000 
+			(black).<br><br>
+			
+			<div id="css_example">
+				.scroll-box {<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;background:#ffffff;<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;font-family:Arial, sans-serif;<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;font-size:12px;<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;color:#000000;<br>
+				}
+			</div>
+		</p>
 	</div>
 </div>

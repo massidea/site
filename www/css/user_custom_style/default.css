@@ -1,8 +1,20 @@
 /* Custom CSS file */
+/* Here you can customize further the appearance of you profile page */
+
+body {
+	background:#ffffff;
+}
 
 #content #user-page {
-	background: #ffffff;
-	font-family: "Times New Roman", Serif;
-	font: 10px;
-	color: #000000;
+	background:#ffffff;
+	font-family:Arial, sans-serif;
+	font-size:12px;
+	color:#000000;
+}
+
+.scroll-box {
+	background:#ffffff;
+	font-family:Arial, sans-serif;
+	font-size:12px;
+	color:#000000;
 }

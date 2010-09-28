@@ -6,11 +6,16 @@ echo $this->doctype();
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <title><?php echo $this->translate($this->title); ?></title>
     <?php
-    $this->layout_mode = 'custom'; // testing...
+    
+    if(isset($_POST['layout_select'])) {
+    	$this->layout_mode = $_POST['layout_select']; // testing...
+    } else {
+    	$this->layout_mode = 'custom';
+    }
     
     $this->headLink()->appendStylesheet($this->baseUrl('/css/farbtastic.css'));	// Used for farbtastic custom color picker
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_new.css'));
-    if($this->layout_mode == 'custom') { 
+    if(($this->layout_mode == 'custom') && ($this->viewName == 'user_profile')) { 
     	if($this->authenticated) {$this->headLink()->appendStylesheet($this->baseUrl('/css/user_custom_style/'.$this->username.'.css')); }
     }
     $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css'));
@@ -249,7 +254,11 @@ echo $this->doctype();
 		            echo $translationForm = new Default_Form_ChangeTranslationLanguageForm($allLanguages);
 		            ?>
                     </div>
-                    <div class="right"></div>
+                    <div class="right">
+                    	<?php 
+                    		if($this->authenticated) { echo $layoutForm = new Default_Form_AccountCustomLayoutForm($this); }
+                    	?>
+                    </div>
                     <div class="clear"></div>
                 </div>
             </div>
