@@ -393,7 +393,9 @@ class ContentController extends Oibs_Controller_CustomController
 				$data = $this->getRequest()->getPost();
 
 				// If form data is valid, handle database insertions
-				if ($form->isValid($data)) {
+				$validForm = $form->isValid($data) ? true : (isset($data['content_save']) && $data['content_save'] != '');
+				if ($validForm) {
+					
 
 					// If form data is going to be published
 					if(isset($data['content_publish']) && $data['content_publish'] != '') {
@@ -1292,15 +1294,16 @@ class ContentController extends Oibs_Controller_CustomController
 						$data['content_id'] = $contentId;
 
 						// If form data is valid, handle database insertions
-						if($form->isValid($data)) {
+						$validForm = $form->isValid($data) ? true : (isset($data['content_save']) && $data['content_save'] != '');
+						if($validForm) {
 							// If form data is going to be published
 
-							if(isset($data['content_publish'])) {
+							if(isset($data['content_publish']) && $data['content_publish'] == 1) {
 								$data['publish'] = 1;
 								$message_error = 'content-publish-not-successful';
 							}
 							// If form data is going to be saved
-							elseif(isset($data['content_save'])) {
+							elseif(isset($data['content_save']) && $data['content_save'] == 1) {
 								$data['publish'] = 0;
 								$message_error = 'content-save-not-successful';
 							}

@@ -406,7 +406,7 @@ line-height:1.3em; font-weight:bold; position:relative; }
 #content #add-content-page #add_content_form .field { width:384px; float:left; }
 
 #content #add-content-page #add_content_form .limit { float:right; border:1px solid #7f9db9;
-width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; text-indent: 25px; }
+width:109px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; text-indent: 20px; }
 #content #add-content-page #add_content_form .limit span { margin-left:23px; }
 #content #add-content-page #add_content_form .limit.ok { background:#f0fee9 url("../images/icon_thumb_up.png") no-repeat 4px; }
 #content #add-content-page #add_content_form .limit.bad { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 4px; }
