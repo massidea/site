@@ -233,8 +233,8 @@
         $links = array();
 
         // Get all content campaigns
-        $campaignHasContentModel = new Default_Model_CampaignHasContent();
-        $campaigns = $campaignHasContentModel->getContentCampaigns($id);
+        // $campaignHasContentModel = new Default_Model_CampaignHasContent();
+        // $campaigns = $campaignHasContentModel->getContentCampaigns($id);
 
         // This functionality needs looking over (code and general idea)
         // get content family (array of children, parents and siblings)
@@ -386,7 +386,7 @@
         //$this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
         //$this->view->count              = $count;
-        $this->view->campaigns          = $campaigns;
+        //$this->view->campaigns          = $campaigns;
         $this->view->viewers			= $this->getViewers($id);
         $this->view->boxStates			= $this->getBoxStates();
         
@@ -410,6 +410,7 @@
 		$defaultState = 'block';
 		$states = array (
 			'user' => isset($_COOKIE['user']) ? $_COOKIE['user'] : $defaultState,
+			'campaign' => isset($_COOKIE['campaign']) ? $_COOKIE['campaign'] : $defaultState,
 			'content' => isset($_COOKIE['content']) ? $_COOKIE['content'] : $defaultState 
 		);
 		return $states;	

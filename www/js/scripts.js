@@ -79,6 +79,16 @@ $(document).ready(function(){
 			function(){$("#user_options").delay(1000).slideUp();}
 			);
 	
+	/** change 'ul > li' to links to proper page */
+	$("#user_options > ul > li").click(function() {
+		var url = $(this).children("a").attr('href');
+		$(location).attr('href', url);
+	});
+	
+	$("#campaigns > .campaigns > .cmp > span, #groups > .groups > .grp > span").click(function() {
+		var url = $(this).children("a").attr('href');
+		$(location).attr('href', url);
+	});
 	/*
 	$("#user_options > ul > #user_options_groups").hover(
 			function() {

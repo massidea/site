@@ -319,8 +319,8 @@
 		<tuv xml:lang="fi"><seg>Käyttäjänimi:</seg></tuv>
 	</tu>
 	<tu tuid='account-register-password'>
-		<tuv xml:lang="en"><seg>Password:</seg></tuv>
-		<tuv xml:lang="fi"><seg>Salasana:</seg></tuv>
+		<tuv xml:lang="en"><seg>Password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasana</seg></tuv>
 	</tu>
 	<tu tuid='account-register-password_confirm'>
 		<tuv xml:lang="en"><seg>Confirm password:</seg></tuv>

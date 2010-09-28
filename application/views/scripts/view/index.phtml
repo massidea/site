@@ -24,12 +24,31 @@ $relatedContentUrl = $this->url(array('controller' => 'ajax',
 											'language' => $this->language),
 											'lang_default', true); 
 
+$relatedCampaignUrl = $this->url(array('controller' => 'ajax',
+											'action' => 'relatedcampaigns',
+											'id_cnt' => $this->contentData['id_cnt'],
+											'language' => $this->language),
+											'lang_default', true); 
+
 $contentFavouriteUrl = $this->url(array('controller' => 'ajax',
 										   'action' => 'contentfavourite',
 										   'id_cnt' => $this->contentData['id_cnt'],
 										   'language' => $this->language),
 										   'lang_default', true);
 ?>
+
+<?php 
+$authorUrl =  $this->url(array(	'controller' => 'account',
+								'action' => 'view', 
+								'user' => $this->userData['login_name_usr'],
+								'language' => $this->language),
+								'lang_default', true);
+$cmpsUrl = $this->url(array( 'controller' => 'campaign',
+							 'language' => $this->language),
+					 'lang_default', true);
+
+?>
+
 
 <?php $this->headScript()->captureStart() ?>
 more = false;
@@ -60,10 +79,10 @@ function ajaxLoad_moreRelated(type, more){
 	var expandButton = ".expand_"+type+"_related";
 	var targetDiv =  "#content_view_"+type+"_related";
 	var url = "";
-	if (type == 'user') {
-		url = "<?php echo $moreFromUserUrl; ?>";
-	} else {
-		url = "<?php echo $relatedContentUrl; ?>";
+	switch(type) {
+		case "user": url = "<?php echo $moreFromUserUrl; ?>"; break;
+		case "content": url = "<?php echo $relatedContentUrl; ?>"; break;
+		case "campaign": url = "<?php echo $relatedCampaignUrl; ?>"; break;
 	}
 	var data = new Array();
 	if (more) { 
@@ -106,6 +125,7 @@ function initLinkedContent(type) {
 $(document).ready(function(){
 		ajaxLoad_moreRelated("user", false);
 		ajaxLoad_moreRelated("content", false);
+		ajaxLoad_moreRelated("campaign", false);
 
 		$("#content_view_content_info_container").load("<?php echo $contentRatingUrl; ?>", function () 
 			{
@@ -191,7 +211,7 @@ function flagContent()
 </div>
 <div id="sidebar" class="right">
 	<div class="box">
-    <h4 ><?php echo $this->translate('content-view-author'); ?></h4>
+    <h4><?php echo $this->translate('content-view-author'); ?></h4>
     <div class="box-user-content">
             <img src="<?php echo $this->url(array('controller' => 'account',
                                                   'action' => 'profilethumb',
@@ -201,44 +221,52 @@ function flagContent()
                                             'lang_default', true); ?>" 
                 alt="User image" class="profile_image_smallsize left" />
 		<div class="right">
-            <a href="<?php echo $this->url(array('controller' => 'account',
-                                                 'action' => 'view', 
-                                                 'user' => $this->userData['login_name_usr'],
-                                                 'language' => $this->language),
-                                                 'lang_default', true);?>">
+            <a href="<?php echo $authorUrl; ?>">
             <?php echo $this->userData['login_name_usr']; ?></a><br />
             <?php echo $this->translate('content-view-joined'); ?> <?php echo date('d M Y', strtotime($this->userData['created_usr'])); ?>
 		</div>
 		<div class="clear"></div>
-		<?php if ($this->contentData['id_usr'] != $this->usrId) { ?>
-            <br /><br />
+
+		<?php if ($this->contentData['id_usr'] != $this->usrId): ?>
+		<div class="box-bottom">
             <a href="<?php echo $this->url(array('controller' => 'privmsg',
                                      'action' => 'send',
                                      'language' => $this->language),
                                'lang_default', true); ?>/<?php echo $this->userData['login_name_usr']; ?>">
             <img src="<?php echo $this->baseUrl('/images/button_send_message_' . $this->language); ?>.png" alt="<?php echo $this->translate('account-profile-send-private-message'); ?>" title="<?php echo $this->translate('account-profile-send-private-message'); ?>" />
             </a>
-		<?php } ?>
+        </div>
+		<?php endif; ?>
     </div>
     </div>
     <div id="more-from-author">
 	    <div id="content_view_user_related_header">
-	        <div class="pointerCursor" style="float: left;">
+	        <div class="pointerCursor left">
 	            <img class="expand_user_related" src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" alt="" />
 	        </div>
-	        <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-user-related'); ?></span>
+	        <span class="left"><?php echo $this->translate('content-view-user-related'); ?></span>
 	    </div>
 	    <div id="content_view_user_related" style="display: <?php echo $this->boxStates['user'];?>">
 	    </div>
     </div>
     <div id="related-contents">
 	    <div id="content_view_related_content_header">
-	        <div class="pointerCursor" style="float: left;">
+	        <div class="pointerCursor left">
 	            <img class="expand_content_related" src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" alt="" />
 	        </div>
-	        <span style="padding-left: 10px;color: #0089CF; float: left;"><?php echo $this->translate('content-view-related'); ?></span>
+	        <span class="left"><?php echo $this->translate('content-view-related'); ?></span>
 	    </div>
-	    <div id="content_view_content_related" style="padding-top: 10px; display: <?php echo $this->boxStates['content'];?>">
+	    <div id="content_view_content_related" style="display: <?php echo $this->boxStates['content'];?>">
 	    </div>
 	</div>
-<div style="clear:both;"></div>
+	<div id="related-campaigns">
+	    <div id="content_view_related_campaign_header">
+	        <div class="pointerCursor left">
+	            <img class="expand_campaign_related" src="<?php echo $this->baseUrl('/images/ajax-loader-black.gif');?>" alt="" />
+	        </div>
+	        <span class="left"><?php echo "Linked to <a href='" . $cmpsUrl . "'>campaigns</a>"; ?></span>
+	    </div>
+	    <div id="content_view_campaign_related" style="display: <?php echo $this->boxStates['campaign'];?>">
+	    </div>
+	</div>
+<div class="clear"></div>

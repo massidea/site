@@ -1,29 +1,53 @@
 <script type="text/javascript">
 
+$("document").ready(function () {
+	bindEvents();
+	setSelectSize();
+});
+
 function submitFeeds() {
-	$("#feeds > option").attr("selected", "selected");
-	$('form').submit();
-	$("#feeds > option").removeAttr("selected");
+	$('#feed-form-list > #feed-rows > .feed-row').each(function () {
+		url = $(this).html();
+		$("#feeds").append($("<option></option>").val(url).html(url));
+	});
+	$("#feeds > option").attr("selected", "selected"); 
+	$('#feed-form').submit();
 }
 
 function addFeed(url) {
 	var exists = false;
-	$('#feeds > option').each(function () {
+	$('#feed-form-list > #feed-rows > .feed-row').each(function () {
 		if ($(this).html() == url) 
 				exists = true;
 	});
-	if (exists) return true;
-	$('#feeds').append($('<option ondblclick="$(this).remove()"></option>').val(url).html(url));
-
+	if (exists) {
+		alert("Feed already exists!");
+		$('#rss-input-feed-url').val("");
+		return true;
+	}
+	if ($('#feed-form-list').is(':hidden')) $("#feed-form-list").toggle();
+	$('#feed-rows').append($('<div class="feed-row"></div>').val(url).html(url));
+	bindEvents();
 	setSelectSize();
 	$('#rss-input-feed-url').val('');
 }
 
+function bindEvents() {
+	$('#feed-form-list > #feed-rows > .feed-row').each(function() {
+		$(this).dblclick(function() {
+			removeFeed($(this));					
+		});
+		$(this).hover(function() { $(this).addClass("feed-row-selected");}, 
+					  function() { $(this).removeClass("feed-row-selected"); }
+		  );
+	});
+}
+
 function setSelectSize() {
-	var options = $("#feeds > option").length; 
-	if ( options == 0) options = 1; 
-	
-	$('#feeds').attr('size', options);
+	var options = $("#feed-form-list > #feed-rows > .feed-row").length;
+	if ( options == 0) { 
+		$("#feed-form-list").toggle();
+	}
 }
 
 function removeFeed(obj) {
@@ -55,20 +79,25 @@ function validateFeed() {
 <?php if(!$this->admin): ?>
 	<h2>You are not an admin of selected page</h2>
 <?php else:?>
-<h2>Feeds for '<?php echo $this->pageTitle; ?>'</h2><br />
-<div id="rss-editfeeds" class="left">
+<h2>Feeds for '<?php echo $this->pageTitle; ?>'</h2>
+<div id="rss-editfeeds">
 	<div id="rss-input-feed">Enter feed URL<br />
 	<input id="rss-input-feed-url" type="text" name="feed"/><input id="rss-input-feed-add" onclick="validateFeed()" type="button" value="Add"/></div><br />
 	<div id="rss-list-feeds">
-	<form method="post">
-		<select id="feeds" name="feeds[]" size="<?php echo $this->count; ?>" multiple="true">
+	<form id="feed-form" method="post">
+		<div id="feed-form-list">
+		<select id="feeds" name="feeds[]" multiple="true" style="display: none">
+		</select>
+		<div id="feed-rows">
 			<?php foreach ($this->urls as $url): ?>
-				<option ondblclick="removeFeed(this);"><?php echo $url['url_rss'];?></option>
+				<div class="feed-row" ondblclick="removeFeed(this);"><?php echo $url['url_rss'];?></div>
 			<?php endforeach; ?>
-		</select> <br />
-		*Double click to remove feed
-	</div><br /><br />
-	<input id="submit-feeds" type="button" value="Save" onclick="submitFeeds();"/><a href="<?php echo $this->linkback;?>" style="float:right">Cancel</a>
+		</div>
+		<p>*Double click to remove feed</p>
+		</div>
+		<input id="submit-feeds" type="button" value="Save" onclick="submitFeeds();"/><a href="<?php echo $this->linkback;?>" style="float:right">Cancel</a>
 	</form>
+	</div>
+
 </div>
 <?php endif;?>

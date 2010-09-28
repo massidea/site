@@ -44,15 +44,13 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                                              'language' => $this->language),
                                              'lang_default', true); ?>">
                                            
-        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 5px; vertical-align: middle;" />
-        </a>
+        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 5px; vertical-align: middle;" /></a>
         <a href="<?php echo $this->url(array('controller' => 'voice',
                                              'action' => 'generate',
                                              'language' => $this->language),
                                              'lang_default', true); ?>">
                                            
-        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 4px; vertical-align: middle;" />
-        </a>
+        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 4px; vertical-align: middle;" /></a>
 	</h3>
 <!-- Small hack to force a small space between the h2 and content... might help the Symbian -browsers a bit -->
 <div style="height: 2px;"></div>
@@ -100,7 +98,48 @@ Commented to fix temporary problem, will be researched further later
         </b>
     </p>
     <?php endif; ?>
-    
+    <!-- Campaigns -->
+    <div id="campaigns">
+            <?php $cmpurl = $this->url(array('controller' => 'campaign',
+                                         'action' => 'index',
+                                         'language' => $this->language),
+                                   'lang_default', true); ?>
+        <h2>Recent <a href="<?php echo $cmpurl;?>">campaigns</a></h2>
+        <ul class="campaigns">
+            <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
+        </ul>
+    </div>
+    <!-- End of campaigns -->
+    <!-- Groups -->
+    <div id="groups">
+        <?php $grpurl = $this->url(array('controller' => 'group',
+                                         'action' => 'index',
+                                         'language' => $this->language),
+                                   'lang_default', true); ?>
+        <h2>Recent <a href="<?php echo $grpurl;?>">groups</a></h2>
+        <ul class="groups">
+            <?php echo $this->partialLoop('partials/group_row_extra_small.phtml', $this->groups); ?>
+        </ul>
+    </div>
+    <!-- End of groups -->
+    <!-- Users -->
+    <h2 id="most_active_users">
+        <?php echo $this->translate('index-most-active')?>
+        <a href="<?php echo $this->url(array('controller' => 'account',
+                                             'action' => 'userlist',
+        									 'order' => 'content',
+        									 'list' => 'desc',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
+            <?php echo "users"; ?></a>
+    </h2>
+    <div class="top_right_box_links_users">
+    <ul class="users">
+        <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
+	</ul>
+    </div>
+    <!-- End of users -->
+    <!-- Tags -->
     <h2>
         <?php echo $this->translate('index-most-popular')?>
         <a href="<?php echo $this->url(array('controller' => 'tag',
@@ -122,69 +161,7 @@ Commented to fix temporary problem, will be researched further later
         </ul>
      </div>
      <div class="clear"></div>
-    <div style="text-align: center;">
-                <strong><a href="<?php echo $this->url(array('controller' => 'tag',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-                <?php echo $this->translate('index-show-all')?>
-            </a></strong>
-    </div>
-
-    <h2 id="most_active_users">
-        <?php echo $this->translate('index-most-active')?>
-        <a href="<?php echo $this->url(array('controller' => 'account',
-                                             'action' => 'userlist',
-        									 'order' => 'content',
-        									 'list' => 'desc',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-            <?php echo $this->translate('index-users')?>
-        </a>
-    </h2>
-    
-    <div class="top_right_box_links_users">
-    <ul class="users">
-        <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
-	</ul>
-    </div>
-    
-    <div class="top_right_box_links_show_all_users">
-        <a href="<?php echo $this->url(array('controller' => 'account',
-                                             'action' => 'userlist',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-            <?php echo $this->translate('index-show-all')?>
-            <?php echo $this->translate('index-users')?>
-        </a>
-    </div>
-    <div id="campaigns">
-        <h2>Recent campaigns</h2>
-        <ul class="campaigns">
-            <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
-        </ul>
-    </div>
-    <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-        <?php $cmpurl = $this->url(array('controller' => 'campaign',
-                                         'action' => 'index',
-                                         'language' => $this->language),
-                                   'lang_default', true); ?>
-        <strong><a href="<?php echo $cmpurl; ?>">Show more</a></strong>
-    </div>
-
-    <div id="campaigns">
-        <h2>Recent groups</h2>
-        <ul class="campaigns">
-            <?php echo $this->partialLoop('partials/group_row_extra_small.phtml', $this->groups); ?>
-        </ul>
-    </div>
-    <div style="text-align: center; margin-top: 20px;">
-        <?php $grpurl = $this->url(array('controller' => 'group',
-                                         'action' => 'index',
-                                         'language' => $this->language),
-                                   'lang_default', true); ?>
-        <strong><a href="<?php echo $grpurl; ?>">Show more</a></strong>
-    </div>
-    
+    <!-- End of tags --> 
     <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
     <div class="massidea_dev_info">
         <?php echo $this->translate('index-opensource')?>

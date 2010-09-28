@@ -52,7 +52,8 @@ input.submit-button {
 	margin:-10px 0px 0px 8px; padding:2px; }
 
 /* General --> Scrollbox */
-#content .scroll-box { height:300px; border:1px solid #ccc; overflow:auto; margin:0px 0px 15px 0px; }
+.scroll-box { overflow-x: hidden !important }
+#content .scroll-box { height:300px; border:1px solid #ccc; overflow:auto; overflow-x:hidden; margin:0px 0px 15px 0px; }
 #content .scroll-box p { margin-left:15px; }
 
 #content .scroll-box ul li {
@@ -60,7 +61,7 @@ input.submit-button {
 	padding-bottom:10px;
 	list-style:none;
 	border-bottom: 1px dotted #CCC;
-	}
+}
 
 #content .scroll-box ul li p { display:block; padding:2px 2px 2px 10px; margin:0px; }
 #content .scroll-box ul li span.left { width:200px !important; margin:3px 0px 0px 10px; }
@@ -151,7 +152,7 @@ input.submit-button {
 #header #search #search-top #user_options ul { list-style:none outside none; }
 #header #search #search-top #user_options ul li { border: 2px outset #CCCCCC; padding-bottom: 1px; padding-top: 1px; }
 #header #search #search-top #user_options ul li img { vertical-align: middle; }
-#header #search #search-top #user_options ul li:hover { background: #0089CF; }
+#header #search #search-top #user_options ul li:hover { background: #F2F2F2; cursor: pointer;}
 #header #search #search-top #user_options ul li span { color: #003580;padding-left: 2px; }
 #header #search #search-top #user_options ul li a { color: #333333; padding-left: 2px; text-decoration: none;}
 /*
@@ -340,7 +341,7 @@ line-height:1.3em; font-weight:bold; position:relative; }
 #content #content-page #viewtop span.date,
 #content #content-page #viewtop span.rate { font-size:.9em;  margin-left:10px; }
 
-#content #content-page #viewtop #linked { border:1px solid #ccc; margin:1px 0px 5px 0px; font-size:12px; }
+#content #content-page #viewtop #linked { border:1px solid #ccc; margin:1px 0px 5px 0px; font-size:12px; padding:0 !important; }
 #content #content-page #viewtop #linked #linked-challenges { border-bottom:1px solid #ccc; color:#D21034; padding:8px; }
 #content #content-page #viewtop #linked #linked-visions { color:#FFC726; padding:8px; background:#f3f3f3; }
 #content #content-page #viewtop #linked .left { float:left }
@@ -405,7 +406,7 @@ line-height:1.3em; font-weight:bold; position:relative; }
 #content #add-content-page #add_content_form .field { width:384px; float:left; }
 
 #content #add-content-page #add_content_form .limit { float:right; border:1px solid #7f9db9;
-width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; }
+width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; text-indent: 25px; }
 #content #add-content-page #add_content_form .limit span { margin-left:23px; }
 #content #add-content-page #add_content_form .limit.ok { background:#f0fee9 url("../images/icon_thumb_up.png") no-repeat 4px; }
 #content #add-content-page #add_content_form .limit.bad { background:#ffcfcf url("../images/icon_thumb_down.png") no-repeat 4px; }
@@ -553,7 +554,7 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 #content #campaign-page h4 { font-size:1em; }
 
 #content #group-page #group-campaigns,
-#content #group-page #join-group { color:#c0c0c0; margin:-32px 0px 15px 0px; }
+#content #group-page #join-group { padding-top: 10px; color:#c0c0c0; margin:0px 0px 15px 0px; }
 
 #content #group-page #group-campaigns p,
 #content #group-page #join-group p { margin:0px; padding:0px; }
@@ -767,7 +768,7 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 	background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; }
 
 #content #contribute { margin-bottom:45px; }
-#content #contribute h2 { color:#000; float:left; }
+#content #contribute h2 { color:#C0C0C0; float:left; }
 #content #contribute .right, #content #current-posts .right { width:300px !important; text-align:right; }
 #content #current-posts h2 { float:left; }
 #content #current-posts { border:1px solid #ccc; padding:10px 0px 0px 0px; }
@@ -1016,12 +1017,13 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #sidebar h2 {
 	font-size:1.15em;
 	background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
+	color: #C0C0C0;
 	padding:0px 0px 5px 0px;
 	margin-top:20px; }
 
-#sidebar .box h2 { font-size:1.2em; margin:3px 3px 4px 0px; padding:0px; background:none; }
-#sidebar .box h4 { font-size:.9em; margin:3px 3px 3px 7px; padding:0px; }
-#sidebar .box h5 { font-size:1em; margin:0px 3px 0px 0px; padding:0px; }
+#sidebar .box h2 { font-size:1.2em; margin:3px 3px 4px 0px; padding:0px; background:none; color: #C0C0C0; }
+#sidebar .box h4 { font-size:.9em; margin:3px 3px 3px 7px; padding:0px; color: #C0C0C0; }
+#sidebar .box h5 { font-size:1em; margin:0px 3px 0px 0px; padding:0px; color: #C0C0C0; }
 #sidebar .box-content { background:#f2f2f2;font-size:.9em; border:1px solid #ccc; padding:0px 10px 0px 10px; }
 #sidebar .box-user-content { background:#f2f2f2;font-size:.9em; border:1px solid #ccc; padding:8px; }
 #sidebar .box-user-content ul li { list-style:none; }
@@ -1041,25 +1043,25 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 #sidebar #related-contents h4 { background:transparent url("../images/triangle.png") no-repeat 0px 4px; padding-left:10px; }
 
 /* Sidebar --> Scrollbox */
-#sidebar .scroll-box { max-height:300px; border:1px solid #ccc; overflow:auto; margin-top:5px; }
+#sidebar .scroll-box { max-height:300px; border:1px solid #ccc; overflow:auto; overflow-x: hidden; margin-top:5px; }
 #sidebar .scroll-box p { margin-left:10px; }
 #sidebar .scroll-box ul li { margin:15px 0px 15px 5px; padding-left:5px; }
 #sidebar .scroll-box ul li.problem  { border-left:3px solid #D21034; }
 #sidebar .scroll-box ul li.idea { border-left:3px solid #4B9B07; }
 #sidebar .scroll-box ul li.finfo { border-left:3px solid #FFC726; }
 
-/* Sidebar --> Campaings */
-#sidebar #campaigns p { margin:15px 0px 20px 15px; }
-#sidebar #campaigns ul { margin:-8px 0px; padding:0px; }
-#sidebar #campaigns ul li {
-	background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
+/* Sidebar --> Campaings & Groups*/
+#sidebar #campaigns p, #sidebar #groups p { margin:15px 0px 20px 15px; }
+#sidebar #campaigns ul, #sidebar #groups ul, { margin:-8px 0px; padding:0px; }
+#sidebar #campaigns ul li, #sidebar #groups ul li {
+	/*background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;*/
 	padding:5px 0px 5px 2px;
 	list-style:none; }
 
-#sidebar #campaigns ul li span { padding:0px 0px 0px 8px; display:block; }
-#sidebar #campaigns ul li.challenges span { border-left:5px solid #D21034; }
-#sidebar #campaigns ul li.ideas span { border-left:5px solid #4B9B07; }
-#sidebar #campaigns ul li.visions span { border-left:5px solid #FFC726; }
+#sidebar #campaigns ul li span, #sidebar #groups ul li span { padding:0px 0px 0px 5px; display:block; }
+#sidebar #campaigns ul li.cmp span,
+#sidebar ul.campaigns li.cmp span { border-left:5px solid #003581; }
+#sidebar ul.groups li.grp span { border-left:5px solid #0089CF; }
 
 /* Footer */
 #footer { margin-top:10px; padding:0px 16px 5px 16px; color:#999; }

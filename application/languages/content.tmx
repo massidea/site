@@ -1634,8 +1634,8 @@
 		<tuv xml:lang="fi"><seg>Istunto on vanhentunut, kirjaudu uudestaan sisään.</seg></tuv>
 	</tu>
 	<tu tuid='content-add-edit'>
-		<tuv xml:lang="en"><seg>Edit</seg></tuv>
-		<tuv xml:lang="fi"><seg>Muokkaa</seg></tuv>
+		<tuv xml:lang="en"><seg>Back to edit</seg></tuv>
+		<tuv xml:lang="fi"><seg>Takaisin muokkaamaan</seg></tuv>
 	</tu>
 	<tu tuid='content-link-not-content-this-type'>
 		<tuv xml:lang="en"><seg>No contents</seg></tuv>

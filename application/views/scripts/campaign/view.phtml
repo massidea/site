@@ -209,13 +209,11 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                     <?php if ($this->status === 'open') : ?>
                     <h2>I want to contribute:</h2>
                     <div class="right">
-                        <p class="link">
                         <?php
                         if ($this->userHasGroup):
                         ?>
                             <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
                         <?php endif; ?>
-                        </p>
                         <!--<p>If you add content, you'll become a group member</p> -->
                     </div>
                     <?php elseif ($this->status === 'not_started') : ?>

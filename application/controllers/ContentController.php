@@ -484,7 +484,7 @@ class ContentController extends Oibs_Controller_CustomController
 							$this->_redirect($url);
 						}
 						else {
-							$userpage = $this->_urlHelper->url(array('controller' => 'account',
+							/*$userpage = $this->_urlHelper->url(array('controller' => 'account',
                                                          			 'action' => 'view', 
                                                          			 'user' => $auth->getIdentity()->username, 
 			                                                         'language' =>  $this->view->language), 
@@ -502,7 +502,13 @@ class ContentController extends Oibs_Controller_CustomController
 							$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
 							$message_ok .= ' ' . $this->view->translate('content-save-successful4');
 							$message_ok .= ' <a href="'.$savedTab.'">'.$this->view->translate('content-save-successful5').'</a>.';
-							$this->flash($message_ok, $url);
+							$this->flash($message_ok, $url);*/
+							$url = $this->_urlHelper->url(array('controller' => 'account',
+																'action' => 'view',
+																'language' => $this->view->language,
+																'user' => $auth->getIdentity()->username),
+																'lang_default', true);
+							$this->_redirect($url);
 						}
 					}
 					else {
@@ -1360,13 +1366,13 @@ class ContentController extends Oibs_Controller_CustomController
 							if($edit) {
 								//$favourite = new Default_Model_UserHasFavourites();
 								//$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
-								if($oldData['published_cnt'] == 1) {
+								if($oldData['published_cnt'] == 1 || (isset($data['content_publish']) && $data['content_publish'] == 1)) {
 									$url = $this->_urlHelper->url(array('content_id' => $edit,
                                                                         'language' => $this->view->language), 
                                                                   'content_shortview', true);
 									$this->_redirect($url);
 								} else {
-									$message_ok = $this->view->translate('content-save-successful');
+									/*$message_ok = $this->view->translate('content-save-successful');
 									$message_ok .= ' ('.$content->getContentHeaderByContentId($edit).')';
 									
 									$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
@@ -1377,7 +1383,13 @@ class ContentController extends Oibs_Controller_CustomController
                                                                        'lang_default', true);
 									$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
 									$message_ok .= ' ' . $this->view->translate('content-save-successful4');
-									$this->flash($message_ok, $url);
+									$this->flash($message_ok, $url);*/
+									$url = $this->_urlHelper->url(array('controller' => 'account',
+																		'action' => 'view',
+																		'language' => $this->view->language,
+																		'user' => $auth->getIdentity()->username),
+																		'lang_default', true);
+									$this->_redirect($url);
 								}
 							} else {
 								$this->flash($message_error, $url);

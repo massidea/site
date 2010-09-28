@@ -53,6 +53,13 @@ echo $this->doctype();
                 <div id="search">
                     <div id="search-top">
                         <?php if($this->authenticated) : ?>
+							<?php if (in_array("admin", $this->logged_user_roles)): ?>
+									<a href="<?php echo $this->url(array('controller' => 'admin',
+																		 'action' => 'index',
+																		 'language' => $this->language),
+																		 'lang_default', true); ?>">
+								<?php echo $this->translate('index-admin-tools');?></a> | 
+							<?php endif; ?>
                             <?php echo $this->translate('index-logged_in'); ?>
                                 <a id="login_link" href="<?php echo $this->url(array('controller' => 'account',
                                                                      'action' => 'view',

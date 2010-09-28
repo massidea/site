@@ -1159,10 +1159,10 @@ class AccountController extends Oibs_Controller_CustomController
 			
 			// If request is post
 			//$request = $this->getRequest();
-			if($this->_request->isPost()) {
+			if($this->getRequest()->isPost()) {
        
                 // get form data
-				$formdata = $this->_request->getPost();
+				$formdata = $this->getRequest()->getPost();
                 
 				if($form->isValid($formdata)) {
 					function plus($a, $b) { return $a += $b; }
