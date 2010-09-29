@@ -107,7 +107,7 @@ $(document).ready(function(){
 		 if(event.type == "click") $("#notification_box").slideToggle();
 	 });
 
-	 
+	 /*
 	 var meta = jQuery.parseJSON($("#jsmetabox").text());
 	 $.ajax({
 		url: meta.baseUrl+"/en/ajax/getnotifications/",
@@ -132,8 +132,7 @@ $(document).ready(function(){
 				$("#notification_link").attr("src",meta.baseUrl+"/images/notifications_a.png");
 			}
 		}	
-	 });
-
+	 }); */
 });
 
 function highlightContentMenuItem(target)

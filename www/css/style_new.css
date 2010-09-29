@@ -52,7 +52,7 @@ input.submit-button {
 	margin:-10px 0px 0px 8px; padding:2px; }
 
 /* General --> Scrollbox */
-.scroll-box { overflow-x: hidden !important }
+.scroll-box { overflow-x: hidden !important; overflow-y: auto !important; }
 #content .scroll-box { height:300px; border:1px solid #ccc; overflow:auto; overflow-x:hidden; margin:0px 0px 15px 0px; }
 #content .scroll-box p { margin-left:15px; }
 

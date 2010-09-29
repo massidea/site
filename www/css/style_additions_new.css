@@ -420,12 +420,10 @@ p#replying_to {
 #content_view_user_related, 
 #content_view_content_related,
 #content_view_campaign_related {
-	background:#ffffff none repeat scroll 0 0;
     border:1px solid #CCCCCC;
 	padding: 0.5em 0.5em;
 	font-size: 10pt;
-	max-height: 200px;
-	overflow-x: hidden;
+	max-height: 230px !important;
 }
 
 .content_view_user_related_entry_idea, 
@@ -982,7 +980,7 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 #admin_comment_flags_table .item_tr:nth-child(odd) { background-color: #eee; color: #000; }
 
 #sidebar ul.campaigns li a { padding-left: 5px; }
-#sidebar ul.campaigns li { padding-bottom: 2px; }
+#sidebar ul.campaigns li { padding: 0 0 2px; margin: 0; }
 
 .scroll-box .user .context { width: 375px !important; }
 
@@ -992,3 +990,8 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 #group-links ul li.linked_groups div.linked_groups { border-left: solid 5px #0089CF; padding-left: 5px; }
 #campaign-page #contribute h3 { margin: 10px 0 !important; }
 #campaign-page div#campaign-added-by, #group-page div#group-founded { margin-top: -7px; padding-bottom: 5px; }
+
+
+/** Content view page adds */
+div.solutions_child_row_content { padding: 5px 0 0 10px; }
+div.solutions_for_this_content { padding: 10px 0 0 7px; }
