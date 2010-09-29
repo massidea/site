@@ -515,6 +515,10 @@ width:108px; color:#000; padding:3px 0px 2px 0px; margin:3px 0px 3px 0px; }
 	padding-left:10px;
 	display:block; }
 
+.content_view_linked_content_extra { display: none; }
+#content_view_linked_content_challenges_more,
+#content_view_linked_content_visions_more { cursor: pointer; vertical-align: middle; }
+
 #content #content-page-additional-functions #linking-contents ul li strong { float:right; }
 
 #content #content-page-additional-functions #submit { margin-top:10px; }

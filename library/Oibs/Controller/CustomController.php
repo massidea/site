@@ -104,6 +104,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         {
 			$this->view->username = $auth->getIdentity()->username;
             $this->view->userid = $auth->getIdentity()->user_id;
+            $this->view->jsmetabox->append('userId', $auth->getIdentity()->user_id);
             
             $Default_Model_privmsg = New Default_Model_PrivateMessages();
             $unread_privmsgs = $Default_Model_privmsg->getCountOfUnreadPrivMsgs($auth->getIdentity()->user_id);
@@ -149,6 +150,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
 		$this->view->jsmetabox->append('idleRefreshUrl', $this->_urlHelper->url(array('controller' => 'ajax', 'action' => 'idlerefresh'), 'lang_default', true));
 		$this->view->jsmetabox->append('baseUrl', $this->view->baseUrl);
+		
 		
 		$id_target = "";
 		switch($params['controller']) {
