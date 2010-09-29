@@ -38,6 +38,10 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
         $errors = $this->buildErrors();
         if( $element->isrequired()  && $errors == "" || $element instanceof Zend_Form_Element_Select )
 		{
+           // $text = '<div id="progressbar_' .  $name . '" class="progress"></div>';
+		}
+                else
+                    {
             $text = '<div id="progressbar_' .  $name . '" class="progress"></div>';
 		}
                  $attribs = $element->getAttribs();
@@ -93,7 +97,9 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 
     public function render($content)
     {
+        
         $element = $this->getElement();
+        $belongs = $element->getName();
 		$text = '';
 		if($element->isRequired())
 		{
@@ -130,7 +136,7 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 		}
         if ($element->isRequired()) {
             $output .=   '<div class="input-column1">' . $label . '</div>' .
-                            '<div class="input-column2">'. $input .'</div>'
+                            '<div class="input-column2">'. $input .'<div id="progressbar_' .$belongs.'" class="progress" ></div></div>'
                             . '<div class="input-column3">'. $text . '</div>'
                         . $errors
             			. '<div class="clear"></div>';

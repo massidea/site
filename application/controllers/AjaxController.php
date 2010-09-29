@@ -502,30 +502,28 @@ class AjaxController extends Oibs_Controller_CustomController {
     }
     
 public function isuseravailableAction() {
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->_helper->layout->disableLayout();
+//        $this->_helper->viewRenderer->setNoRender(true);
+//        $this->_helper->layout->disableLayout();
 
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->isGet()) {
 
             //retrive parameter data from ajax call
 
-            $username=$_POST['username'];
-
+//            $username=$_POST['username'];
+            $username = isset($this->params['user']) ? $this->params['user'] : "";
             $userModel = new Default_Model_User();
             $result=$userModel->usernameExists($username);
 
-            header('Content-type: application/json');
+//            header('Content-type: application/json');
+//
+//
+//            if ($result) {      //User already exists
+//                echo "true";
+//            } else {
+//                echo "false";
+//            }
 
-
-            if($result)      //User already exists
-            {
-                echo "true";
-            }
-            else
-            {
-                echo "false";
-            }
-
+            $this->view->result=$result;
         }
     }
 

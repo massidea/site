@@ -917,5 +917,8 @@ form div.error ul.errors li {
 	clear: both;
 	list-style-type: none;
 	color: red;	
-	text-align: center;
+	text-align: left;
+        position: relative;
+        top:-8px;
+        left:165px;
 }
