@@ -576,8 +576,8 @@ width:100%; border:1px solid #7f9db9; background:#fafafa; margin:2px 0px 5px 0px
 #content #members ul li  { line-height:1.3em; }
 #content #group-page #members ul li  { line-height:1em; }
 
-#content #user-page #profile-meta ul,
-#content #group-page #profile-meta ul { list-style:none; margin:10px 0px 0px 20px; }
+#content #user-page #profile-meta ul
+/**, #content #group-page #profile-meta ul */ { list-style:none; margin:10px 0px 0px 20px; }
 #content #user-page #profile-meta ul li,
 #content #group-page #profile-meta ul li { list-style:none; padding:2px 0px 2px 0px; }
 
@@ -763,8 +763,8 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 #content #comments h3 { color:#000; float:left; margin:8px 0px 8px 0px; }
 
 #content #campaign-page #campaign-info {
-	margin:-10px 0px 10px 0px;
-	padding:0px 0px 8px 0px;
+	margin:0px 0px 10px 0px;
+	padding:2px 0px 8px 0px;
 	background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; }
 
 #content #contribute { margin-bottom:45px; }

@@ -7,7 +7,9 @@ $url_getRecentCampaigns = $this->url(array('controller' => 'ajax',
 							 'language' => $this->language),
 							 'lang_default', true);
 
-
+$grpUrl = $this->url(array('controller' => 'group',
+							'language' => $this->language),
+							'lang_default', true);
 /* FIXME: Can't create campaing without creating  group
 
 $createCampaignUrl = $this->url(array(	'controller' => 'campaign',
@@ -41,23 +43,30 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         </h3>
     </div>
 </div>
-
-<div id="sidebar" class="left">
+</div>
+<div id="sidebar">
     <div class="box">
         <h2>What are campaigns?</h2>
         <div class="box-content">
 
-            <p>To collect multiple insights, group can launch
-            a campaign and summarize individual user’s insights
-            into one united theme. Basically campaign is group’s
-            organized and coordinated effort to promote content
-            production to a specified theme.</p>
+            <p>To collect multiple insights, <a href="<?php echo $grpUrl; ?>">group</a> can launch 
+            a campaign and summarize individual user’s 
+            insights into one united theme.</p> 
 
-            <p>Adding content to campaign requires group membership.
-            Moreover, users can only link their own already published
-            existing contents to a campaign. One content can be linked
-            to multiple campaigns.</p>
+			<p>Basically campaign is <a href="<?php echo $grpUrl; ?>">group’s</a> organized and
+			 coordinated effort	to promote content production 
+			 to a specified theme.</p>
 
+			<p>Adding content to campaign requires group 
+			membership. To join, go to <a href="<?php echo $grpUrl; ?>">group’s</a> homepage.</p>
+
+			<p>Moreover, users can only link their own already 
+			published contents to a campaign. One content can 
+			be linked to multiple campaigns.</p>
+
+			<p><a href="<?php echo $grpUrl; ?>">Group</a> admin can also link own campaigns to other 
+			campaigns, which help similar campaigns to join 
+			forces.</p>
         </div>
     </div>
 

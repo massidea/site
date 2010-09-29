@@ -29,13 +29,18 @@ $linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
 $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                            'language'   => $this->language),
                      'group_shortview', true);
+$signupUrl = $this->url(array('controller' => 'account',
+                                                        'action' => 'register',
+                                                        'language' => $this->language),
+                                                  'lang_default', true);
 ?>
 <div id="campaign-page">
     <h2>
         <?php echo $this->campaign['name_cmp']; ?>
-        campaign by
-        <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
-    </h2>
+   	</h2>
+   	<div id="campaign-added-by" class="light-gray">
+    	Added by <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a> group
+    </div>
     <div id="profile-meta">
         <!--<img src="<?php echo $this->baseUrl("/images/no_profile_img_placeholder.png"); ?>" alt="avatar" class="avatar" />-->
         <p><?php echo $this->campaign['ingress_cmp']; ?></p>
@@ -51,19 +56,19 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
         </p>
         -->
         <p>
-            <?php if ($this->status === 'open' || $this->status === 'ended') : ?>
-            <strong>Has started: </strong>
-            <?php else : ?>
+            <?php //if ($this->status === 'open' || $this->status === 'ended') : ?>
+            <strong>Start time: </strong>
+            <?php /*else : ?>
             <strong>Will start: </strong>
-            <?php endif; ?>
+            <?php endif; */?>
             <?php echo $cmpstart->toString('dd MMM, yyyy'); ?>
         </p>
         <p>
-            <?php if ($this->status === 'ended') : ?>
-            <strong>Has ended: </strong>
-            <?php else : ?>
+            <?php //if ($this->status === 'ended') : ?>
+            <strong>End time: </strong>
+            <?php /*else : ?>
             <strong>Is ending: </strong>
-            <?php endif; ?>
+            <?php endif;*/ ?>
             <?php echo $cmpend; ?>
         </p>
         <?php if (is_array($this->cmpAdmins)): ?>
@@ -72,12 +77,14 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <?php echo $this->partialLoop('partials/user_row.phtml', $this->cmpAdmins); ?>
             </ul>
         <?php endif; ?>
+        <?php /* ?>
         <p>
             <strong>Group: </strong>
             <br />
             <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a>
             <br />
         </p>
+        <?php */ ?>
         <?php if (is_array($this->grpUsers)): ?>
         <div id="members">
             
@@ -91,32 +98,27 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <div class="clear dot-line-200"></div>
         </div>
         <?php endif; ?>
-        <div>
-            <p>
-                <strong>Linked campaigns: </strong>
-                <br />
+        <div id="campaign-links">
+                <h4>Linked campaigns: </h4>
                 <ul>
                     <?php //var_dump($this->linkedcampaigns); ?>
-                    <?php
-                    foreach($this->linkedcampaigns as $campaign) {
+                    <?php foreach($this->linkedcampaigns as $campaign):  ?>
+                    <?php 
                         $cmpurl = $this->url(array('cmpid'      => $campaign['id_cmp'],
                                                    'language'   => $this->language),
                                              'campaign_view', true);
-                        $grpurl = $this->url(array('groupid'    => $campaign['id_grp_cmp'],
+                        $lgrpurl = $this->url(array('groupid'    => $campaign['id_grp_cmp'],
                                                    'language'   => $this->language),
                                              'group_shortview', true);
                         ?>
                         <li class="linked_campaigns">
                             <div class="linked_campaigns">
                                 <strong><a href="<?php echo $cmpurl; ?>"><?php echo $campaign['name_cmp']; ?></a></strong>
-                                by <a href="<?php echo $grpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a>
+                                by <a href="<?php echo $lgrpurl; ?>"><?php echo $campaign['group_name_grp']; ?></a>
                             </div>
                         </li>
-                        <?php
-                    }
-                    ?>
+                        <?php endforeach; ?>
                 </ul>
-            </p>
             <?php
             $addcampaigns = $this->url(
                                 array(
@@ -135,14 +137,16 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                                  ), 'lang_default', true
                             );
              ?>
-            <p><a href="<?php echo $addcampaigns; ?>">Add campaigns</a></p>
+            <div class="right"><a href="<?php echo $addcampaigns; ?>">> Link campaigns</a></div>
+			<div class="clear"></div>
             <?php if ($this->userIsGroupAdmin): ?>
-                <p><a href="<?php echo $editcampaignlinks; ?>">Edit campaign links</a></p>
+                <div class="right"><a href="<?php echo $editcampaignlinks; ?>">> Edit campaign links</a></div>
             <?php endif; ?>
+            <div class="clear"></div>
         </div>
         <div id='rss'>
     		<?php if ($this->hasFeeds): ?>  	
-        		<p><strong>Feed: </strong>
+        		<h4>Feed </h4>
         		<img src="<?php echo $this->baseUrl;?>/images/ajax-loader-black.gif" style="float: right; vertical-align:text-top;"/></p>
         	<?php endif;?>
     	</div>
@@ -207,21 +211,25 @@ $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
             <div id="contribute">
                 <?php if ($this->identity == true) : ?>
                     <?php if ($this->status === 'open') : ?>
-                    <h2>I want to contribute:</h2>
-                    <div class="right">
-                        <?php
-                        if ($this->userHasGroup):
-                        ?>
-                            <a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+                        <?php if ($this->userHasGroup): ?>
+    		                <h2>I want to contribute:</h2>
+							<div class="right">
+								<a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+							</div>
+                        <?php else: ?>
+                        	<h3 class="light-gray">Join <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a> group to link your content(s) to this campaign</h3>
                         <?php endif; ?>
                         <!--<p>If you add content, you'll become a group member</p> -->
-                    </div>
                     <?php elseif ($this->status === 'not_started') : ?>
-                    <h2>Campaign has not started</h2>
+                    <h3>Campaign has not started</h3>
                     <?php elseif ($this->status === 'ended') : ?>
-                    <h2>Campaign has been closed</h2>
+                    <h3>Campaign has been closed</h3>
                     <?php endif; ?>
-                <?php endif; ?>
+                <?php else: ?>
+					<h3 class="light-gray">
+						<a id="login_link" href="#">Log in</a> or <a href="<?php echo $signupUrl; ?>">Sign up</a> to link your content(s) to this campaign.
+					</h3>
+                <?php endif;?>
                 <div class="clear"></div>
                 <div id="current-posts">
                     <div id="head">

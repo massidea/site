@@ -15,10 +15,15 @@ function deleteconfirmation(url) {
 <?php
 Zend_Layout::getMvcInstance()->setLayout('layout_new');
 $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601);
+
+$signupUrl = $this->url(array('controller' => 'account',
+								'action' => 'register',
+								'language' => $this->language),
+						'lang_default', true);
 ?>
 <div id="group-page">
     <h2><?php echo $this->grpData["group_name_grp"]; ?></h2>
-
+        <div id="group-founded" class="light-gray"><?php echo $this->translate('group-founded') . ': '; ?><?php echo $date_founded->toString('dd MMM, yyyy'); ?></div>
     <div id="profile-meta">
         <?php //TODO: tähän tulostetaan ryhmän kuva, ei tätä kiinteää kuvaa ?>
         <!-- <img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" /> -->
@@ -34,32 +39,27 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                   </a>
             </strong><?php // tägit tähän väliin ?></p>
         -->
-        <p><strong><?php echo $this->translate('group-founded') . ': '; ?></strong><?php echo $date_founded->toString('dd MMM, yyyy'); ?></p>
-        <strong><?php echo $this->translate('group-admins') . ':'; ?></strong>
+        <h4><?php echo $this->translate('group-admins') . ':'; ?></h4>
 		<ul>
         <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
         </ul>
-        <h4><?php echo $this->translate('group-members'); ?></h4>
-        <span class="more"><strong><a href="<?php echo $this->url(array('controller' => 'account',
+        <h4><a href="<?php echo $this->url(array('controller' => 'account',
                                                         'action' => 'userlist',
         												'group' => $this->grpData["group_name_grp"],
         												'exactg' => "1",
                                                         'language' => $this->language),
-                                                        'lang_default', true); ?>">Show all</a></strong></span>
+                                                        'lang_default', true); ?>"><?php echo $this->translate('group-members'); ?></a></h4>
         <div class="clear"></div>
         <ul>
            <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
         </ul>
         <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
-        <div class="clear dot-line-200"></div>
-        <div>
-            <p>
-                <strong>Linked groups: </strong>
-                <br />
+        <div id="group-links">
+			<h4>Linked groups: </h4>
                 <ul>
                     <?php //var_dump($this->linkedgroups); ?>
-                    <?php
-                    foreach($this->linkedgroups as $group) {
+                    <?php foreach($this->linkedgroups as $group): ?>
+                    	<?php 
                         $grpurl = $this->url(array('groupid'    => $group['id_grp'],
                                                    'language'   => $this->language),
                                              'group_shortview', true);
@@ -69,11 +69,8 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                                 <strong><a href="<?php echo $grpurl; ?>"><?php echo $group['group_name_grp']; ?></a></strong>
                             </div>
                         </li>
-                        <?php
-                    }
-                    ?>
+                	<?php endforeach; ?>
                 </ul>
-            </p>
             <?php
             $addgroups = $this->url(
                                 array(
@@ -92,16 +89,18 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                                  ), 'lang_default', true
                             );
             ?>
-            <p><a href="<?php echo $addgroups; ?>">Add groups</a></p>
+            <div class="right"><a href="<?php echo $addgroups; ?>">> Link groups</a></div>
+            <div class="clear"></div>
             <?php if ($this->userIsGroupAdmin): ?>
-                <p><a href="<?php echo $editgrouplinks; ?>">Edit group links</a></p>
+                <div class="right"><a href="<?php echo $editgrouplinks; ?>">> Edit group links</a></div>
             <?php endif; ?>
+            <div class="clear"></div>
+        </div>
         <div id='rss'>
         	<?php if ($this->hasFeeds): ?>  	
-        		<p><strong>Feed: </strong>
+        		<h4>Feed</h4>
         		<img src="<?php echo $this->baseUrl;?>/images/ajax-loader-black.gif" style="float: right; vertical-align:text-top;"/></p>
         	<?php endif;?>
-        </div>
         </div>
     </div>
     <div id="activity" class="right">
@@ -147,7 +146,7 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
 
                 <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
                 <div id="group-links">
-                    <p class="group-links">Group links:
+                    <p class="group-links">Group web links:
                         <?php
                         $count = count($this->grpData['groupWeblinks']);
                         $i = 1;
@@ -170,8 +169,8 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                 <h3>Campaigns</h3>
                 <p>Group's call of contents</p>
             </div>
+			<div id="join-group">
             <?php if ($this->identity == true) : ?>
-            <div id="join-group">
                 <?php
                 if ($this->userIsGroupAdmin):
                      $cmplink = $this->url(
@@ -246,8 +245,13 @@ $date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601
                     <?php endif; ?>
                 <?php endif; ?>
                 <p>Only by joining you can add contents to campaigns</p>
-            </div>
-            <?php endif; ?>
+            <?php else: ?>
+				<h3 class="light-gray">
+					<a id="login_link" href="#">Log in</a> or <a href="<?php echo $signupUrl; ?>">Sign up</a> to join this group.
+				</h3>
+				<p>Only by joining you can add contents to campaigns</p>
+            <?php endif;?>
+			</div>
             <div class="clear"></div>
             <div class="scroll-box">
                 <ul>

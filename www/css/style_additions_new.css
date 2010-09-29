@@ -388,7 +388,6 @@ p#replying_to {
 .rss-item { border-bottom: 1px dotted #CCCCCC; padding: 3px;}
 #rss-list-feeds #feeds { width: 450px; }
 #rss-input-feed-url { width: 405px; }
-#rss { border-top: 1px dotted #CCCCCC; }
 
 .campaign_list_paragraph {
     font-size: 12px;
@@ -976,10 +975,7 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 
 .profile_image_mediumsize { height: 85px; width: 85px; }
 
-/** Admin tools page 
- *
- * Admin tools decorations
- */
+/** Admin tools page */
 #admin_comment_flags_table { border: 1px solid #000; border-spacing: 0px; padding: 2px; width: 100%; }
 #admin_comment_flags_table td { padding: 2px; }
 #admin_comment_flags_table #desc_tr { background-color: #ccc; color: #000; }
@@ -990,3 +986,10 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 #sidebar ul.campaigns li { padding-bottom: 2px; }
 
 .scroll-box .user .context { width: 375px !important; }
+
+#campaign-page #profile-meta h4, #group-page #profile-meta h4 { font-size:1.1em !important; background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
+	color: #C0C0C0; padding:0px 0px 5px 0px; margin-top:20px; }
+#campaign-links ul li.linked_campaigns div.linked_campaigns { border-left: solid 5px #003581; padding-left: 5px; }
+#group-links ul li.linked_groups div.linked_groups { border-left: solid 5px #0089CF; padding-left: 5px; }
+#campaign-page #contribute h3 { margin: 10px 0 !important; }
+#campaign-page div#campaign-added-by, #group-page div#group-founded { margin-top: -7px; padding-bottom: 5px; }
