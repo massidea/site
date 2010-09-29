@@ -85,7 +85,7 @@ $(document).ready(function() {
             <div id="linked">
 	            <div id="linked-challenges">
                     <div class="left">
-                        <strong><?php echo $this->translate('content-linked-challenges'); if(isset($linked_problems)) echo "(".sizeof($linked_problems).")"; ?></strong>
+                        <strong><?php echo $this->translate('content-linked-challenges'); if(isset($linked_problems)) echo " (".sizeof($linked_problems).")"; ?></strong>
                         <?php if(isset($linked_problems) && sizeof($linked_problems) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_challenges_more" /><?php endif; ?>
                         <br />
                     	<?php if (isset($linked_problems)): ?>
@@ -132,7 +132,7 @@ $(document).ready(function() {
             </div>
             <div id="linked-visions">
                 <div class="left">
-					<strong><?php echo $this->translate('content-linked-visions'); if(isset($linked_futures)) echo "(".sizeof($linked_futures).")";?></strong>
+					<strong><?php echo $this->translate('content-linked-visions'); if(isset($linked_futures)) echo " (".sizeof($linked_futures).")";?></strong>
 					<br />
                     	<?php if(isset($linked_futures) && sizeof($linked_futures) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_visions_more" /><?php endif; ?>
                     	
