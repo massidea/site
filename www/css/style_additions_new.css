@@ -17,6 +17,8 @@
 
 #content .campaign-status { color: #C0C0C0; font-size: 12px; }
 
+#content #campaign-status { margin-left: -4px; width: 492px; }
+
 #content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
 #content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
 #gaccampaignlist { float:left; width:520px; }

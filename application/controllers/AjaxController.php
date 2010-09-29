@@ -68,28 +68,17 @@ class AjaxController extends Oibs_Controller_CustomController
         // If you find (time to think of) a better way to do this, be my guest.
         if ($status === 'forthcoming') {
             $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 10);
-            $cmps_new = array();
-            foreach ($recentcampaigns as $cmp) {
-                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-                $cmp['group_name_grp'] = $grp['group_name_grp'];
-                $cmps_new[] = $cmp;
-            }
         } else if ($status === 'ended') {
             $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 10);
-            $cmps_new = array();
-            foreach ($recentcampaigns as $cmp) {
-                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-                $cmp['group_name_grp'] = $grp['group_name_grp'];
-                $cmps_new[] = $cmp;
-            }
         } else {
             $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
-            $cmps_new = array();
-            foreach ($recentcampaigns as $cmp) {
-                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-                $cmp['group_name_grp'] = $grp['group_name_grp'];
-                $cmps_new[] = $cmp;
-            }
+        }
+
+        $cmps_new = array();
+        foreach ($recentcampaigns as $cmp) {
+            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+            $cmp['group_name_grp'] = $grp['group_name_grp'];
+            $cmps_new[] = $cmp;
         }
 
     	$this->view->recentcampaigns = $cmps_new;

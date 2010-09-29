@@ -45,21 +45,27 @@ function ajaxLoad_getRecentCampaigns(obj, offset, stat, empty, prepend){
             }
             if (stat == 'forthcoming') {
                 $(campaignStatus).html(
-                    '<span id="active_span"><a href="#" onclick="return false;">Active</a></span> |' +
-                    ' <strong style="font-size: 14px">Forthcoming</strong> |' +
-                    ' <span id="ended_span"><a href="#" onclick="return false;">Ended</a></span>'
+                    '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
+                    '<li id="active_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
+                    '<li id="forthcoming_span" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Forthcoming</a></li>' +
+                    '<li id="ended_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
+                    '</ul>'
                 );
             } else if (stat == 'ended') {
                 $(campaignStatus).html(
-                    '<span id="active_span"><a href="#" onclick="return false;"><strong>Active</a></span> |' +
-                    ' <span id="forthcoming_span"><a href="#" onclick="return false;">Forthcoming</a></span> |' +
-                    ' <strong style="font-size: 14px">Ended</strong>'
+                    '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
+                    '<li id="active_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
+                    '<li id="forthcoming_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
+                    '<li id="ended_span" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Ended</a></li>' +
+                    '</ul>'
                 );
             } else {
                 $(campaignStatus).html(
-                    '<strong style="font-size: 14px">Active</strong> |' +
-                    ' <span id="forthcoming_span"><a href="#" onclick="return false;">Forthcoming</a></span> |' +
-                    ' <span id="ended_span"><a href="#" onclick="return false;">Ended</a></span>'
+                    '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
+                    '<li id="active_span" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Active</a></li>' +
+                    '<li id="forthcoming_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
+                    '<li id="ended_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
+                    '</ul>'
                 );
             }
 		},
