@@ -280,7 +280,7 @@
                     $groupModel = new Default_Model_Groups();
                     $newGroupId = $groupModel->editGroup(
                         $grpId,
-                        $post['groupname'],
+                        $this->replaceWhitespace($post['groupname']),
                         $post['grouptype'],
                         $post['groupdesc'],
                         $post['groupbody']);
@@ -341,7 +341,7 @@
                     // Add new group to db.
                     $groupModel = new Default_Model_Groups();
                     $newGroupId = $groupModel->createGroup(
-                        $post['groupname'],
+                        $this->replaceWhitespace($post['groupname']),
                         $post['grouptype'],
                         $post['groupdesc'],
                         $post['groupbody']);
@@ -620,8 +620,10 @@
             if (!empty($usrgrp)) {
                 $i = 0;
                 foreach ($usrgrp as $group) {
-                    if ($grpHasGrpModel->checkIfGroupHasGroup($grpId, $group['id_grp']) || $grpId == $group['id_grp']) {
-                       unset($usrgrp[$i]);
+                    if ($grpHasGrpModel->checkIfGroupHasGroup($grpId, $group['id_grp']) ||
+                        $grpHasGrpModel->checkIfGroupHasGroup($group['id_grp'], $grpId) ||
+                        $grpId == $group['id_grp']) {
+                            unset($usrgrp[$i]);
                     }
                     $i++;
                 }
@@ -714,31 +716,43 @@
      */
     public function makegrouplinkAction()
     {
-        $parentGrpId = $this->_request->getParam('parentgrpid');
-        $this->view->parentgrpid = $parentGrpId;
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            $parentGrpId = $this->_request->getParam('parentgrpid');
+            $this->view->parentgrpid = $parentGrpId;
 
-        $childGrpId = $this->_request->getParam('childgrpid');
-        $this->view->childgrpid = $childGrpId;
+            $childGrpId = $this->_request->getParam('childgrpid');
+            $this->view->childgrpid = $childGrpId;
 
-        if (!((isset($parentGrpId)) && (isset($childGrpId)))) {
-            $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
-                                                        'action' => 'index',
-                                                        'language' => $this->view->language),
-                                                  'lang_default', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            if (!((isset($parentGrpId)) && (isset($childGrpId)))) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'group',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            $grphasgrpmodel = new Default_Model_GroupHasGroup();
+            if (!$grphasgrpmodel->checkIfGroupHasGroup($parentGrpId, $childGrpId) &&
+                !$grphasgrpmodel->checkIfGroupHasGroup($childGrpId, $parentGrpId)) {
+                    $grphasgrpmodel->addGroupToGroup($parentGrpId, $childGrpId);
+            }
+
+            // TODO:
+            // Tell the user that the link was created.
+
+            // Redirect back to the current campaign's page.
+            $target = $this->_urlHelper->url(array('groupid' => $parentGrpId,
+                                                   'language' => $this->view->language),
+                                             'group_shortview', true);
+            $this->_redirector->gotoUrl($target);
+        } else {
+            $target = $this->_urlHelper->url(array('controller' => 'group',
+                                                   'action'     => 'index',
+                                                   'language'   => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
         }
-
-        $grphasgrpmodel = new Default_Model_GroupHasGroup();
-        $grphasgrpmodel->addGroupToGroup($parentGrpId, $childGrpId);
-
-        // TODO:
-        // Tell the user that the link was created.
-
-        // Redirect back to the current campaign's page.
-        $target = $this->_urlHelper->url(array('groupid' => $parentGrpId,
-                                               'language' => $this->view->language),
-                                         'group_shortview', true);
-        $this->_redirector->gotoUrl($target);
     }
 
     /**
