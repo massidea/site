@@ -1,9 +1,9 @@
 $(document).ready(function(){
 	recentcampaignsdiv  = '#campaign-list';
 	recentcampaignslink = '#recent_campaigns_ajax_link';
-    active = '#active_span';
-    forthcoming = '#forthcoming_span';
-    ended = '#ended_span';
+    active = '#active_tab';
+    forthcoming = '#forthcoming_tab';
+    ended = '#ended_tab';
     var status = 'active';
     campaignStatus = '#campaign-status';
 	recentcampaignslink_orig = $(recentcampaignslink).html();
@@ -46,25 +46,25 @@ function ajaxLoad_getRecentCampaigns(obj, offset, stat, empty, prepend){
             if (stat == 'forthcoming') {
                 $(campaignStatus).html(
                     '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
-                    '<li id="active_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
-                    '<li id="forthcoming_span" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Forthcoming</a></li>' +
-                    '<li id="ended_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
+                    '<li id="active_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
+                    '<li id="forthcoming_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Forthcoming</a></li>' +
+                    '<li id="ended_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
                     '</ul>'
                 );
             } else if (stat == 'ended') {
                 $(campaignStatus).html(
                     '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
-                    '<li id="active_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
-                    '<li id="forthcoming_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
-                    '<li id="ended_span" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Ended</a></li>' +
+                    '<li id="active_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
+                    '<li id="forthcoming_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
+                    '<li id="ended_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Ended</a></li>' +
                     '</ul>'
                 );
             } else {
                 $(campaignStatus).html(
                     '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
-                    '<li id="active_span" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Active</a></li>' +
-                    '<li id="forthcoming_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
-                    '<li id="ended_span" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
+                    '<li id="active_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Active</a></li>' +
+                    '<li id="forthcoming_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
+                    '<li id="ended_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
                     '</ul>'
                 );
             }
