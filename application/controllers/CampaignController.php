@@ -525,8 +525,10 @@ class CampaignController extends Oibs_Controller_CustomController
             if (!empty($usrcmp)) {
                 $i = 0;
                 foreach ($usrcmp as $campaign) {
-                    if ($cmpHasCmpModel->checkIfCampaignHasCampaign($cmpId, $campaign['id_cmp']) || $cmpId == $campaign['id_cmp']) {
-                       unset($usrcmp[$i]);
+                    if ($cmpHasCmpModel->checkIfCampaignHasCampaign($cmpId, $campaign['id_cmp']) ||
+                        $cmpHasCmpModel->checkIfCampaignHasCampaign($campaign['id_cmp'], $cmpId) ||
+                        $cmpId == $campaign['id_cmp']) {
+                            unset($usrcmp[$i]);
                     }
                     $i++;
                 }
@@ -796,31 +798,43 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function makecampaignlinkAction()
     {
-        $parentCmpId = $this->_request->getParam('parentcmpid');
-        $this->view->parentcmpid = $parentCmpId;
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            $parentCmpId = $this->_request->getParam('parentcmpid');
+            $this->view->parentcmpid = $parentCmpId;
 
-        $childCmpId = $this->_request->getParam('childcmpid');
-        $this->view->childcmpid = $childCmpId;
+            $childCmpId = $this->_request->getParam('childcmpid');
+            $this->view->childcmpid = $childCmpId;
 
-        if (!((isset($parentCmpId)) && (isset($childCmpId)))) {
-            $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
-                                                        'action' => 'index',
-                                                        'language' => $this->view->language),
-                                                  'lang_default', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            if (!((isset($parentCmpId)) && (isset($childCmpId)))) {
+                $redirectUrl = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
+                                                      'lang_default', true);
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            $cmphascmpmodel = new Default_Model_CampaignHasCampaign();
+            if (!$cmphascmpmodel->checkIfCampaignHasCampaign($parentCmpId, $childCmpId) &&
+                !$cmphascmpmodel->checkIfCampaignHasCampaign($childCmpId, $parentCmpId)) {
+                    $cmphascmpmodel->addCampaignToCampaign($parentCmpId, $childCmpId);
+            }
+
+            // TODO:
+            // Tell the user that the link was created.
+
+            // Redirect back to the current campaign's page.
+            $target = $this->_urlHelper->url(array('cmpid' => $parentCmpId,
+                                                   'language' => $this->view->language),
+                                             'campaign_view', true);
+            $this->_redirector->gotoUrl($target);
+        } else {
+            $target = $this->_urlHelper->url(array('controller' => 'campaign',
+                                                   'action'     => 'index',
+                                                   'language'   => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
         }
-
-        $cmphascmpmodel = new Default_Model_CampaignHasCampaign();
-        $cmphascmpmodel->addCampaignToCampaign($parentCmpId, $childCmpId);
-
-        // TODO:
-        // Tell the user that the link was created.
-
-        // Redirect back to the current campaign's page.
-        $target = $this->_urlHelper->url(array('cmpid' => $parentCmpId,
-                                               'language' => $this->view->language),
-                                         'campaign_view', true);
-        $this->_redirector->gotoUrl($target);
     }
 
     /**

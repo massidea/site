@@ -321,4 +321,16 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         $string = mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
         return $string;
     }
+
+    /**
+     * Replace any whitespace with only a single space
+     *
+     * @param string $str
+     * @return string
+     */
+    function replaceWhitespace($str) {
+        $str = preg_replace('/\s+/', ' ', trim((string) $str));
+        return $str;
+    }
+
 } // end of class
