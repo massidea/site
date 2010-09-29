@@ -14,7 +14,7 @@ if ($this->end_time_cmp == '0000-00-00') {
     $date = $date->toString('dd MMM, yyyy');
 }
 ?>
-<li class="cmp" onclick="makeLink(this);">
+<li class="cmp hover-link" onclick="makeLink(this);">
     <span>
         <a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a><!--
         <?php if ((isset($this->group_name_grp)) && (isset($this->id_grp_cmp))): ?>
