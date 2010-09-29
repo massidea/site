@@ -92,7 +92,15 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 			</div>
 		 </div>
 		<?php */ ?>
-		<h2>Most viewed</h2>
+		<?php 
+			$mostViewedUrl = $this->url(array('controller' => 'search',
+                                             'action' => 'result',
+        									 'order' => 'views',
+        									 'page' => '1',
+                                             'language' => $this->language),
+                                             'lang_default', true);
+		?>
+		<h2 class="no-bg">Most <a href="<?php echo $mostViewedUrl; ?>">viewed</a></h2>
 		 <div class="scroll-box">
 		 	<ul>
 			<?php echo $this->partialLoop('partials/mini_content_row.phtml', $this->mostViewedData); ?>

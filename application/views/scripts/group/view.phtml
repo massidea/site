@@ -55,7 +55,7 @@ $signupUrl = $this->url(array('controller' => 'account',
         </ul>
         <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
         <div id="group-links">
-			<h4>Linked groups: </h4>
+			<h4>Linked groups </h4>
                 <ul>
                     <?php //var_dump($this->linkedgroups); ?>
                     <?php foreach($this->linkedgroups as $group): ?>
@@ -66,7 +66,7 @@ $signupUrl = $this->url(array('controller' => 'account',
                         ?>
                         <li class="linked_groups">
                             <div class="linked_groups">
-                                <strong><a href="<?php echo $grpurl; ?>"><?php echo $group['group_name_grp']; ?></a></strong>
+								<a href="<?php echo $grpurl; ?>"><?php echo $group['group_name_grp']; ?></a>
                             </div>
                         </li>
                 	<?php endforeach; ?>
@@ -246,9 +246,9 @@ $signupUrl = $this->url(array('controller' => 'account',
                 <?php endif; ?>
                 <p>Only by joining you can add contents to campaigns</p>
             <?php else: ?>
-				<h3 class="light-gray">
+				<div id="group-not-logged" class="light-gray">
 					<a id="login_link" href="#">Log in</a> or <a href="<?php echo $signupUrl; ?>">Sign up</a> to join this group.
-				</h3>
+				</div>
 				<p>Only by joining you can add contents to campaigns</p>
             <?php endif;?>
 			</div>

@@ -15,7 +15,7 @@ $url_user = $this->url(array('controller' => 'account',
 $type = Zend_Layout::getMvcInstance()->getView()->type;
 ?>
 
-<li class="<?php echo $type;?>">
+<li class="<?php echo $type;?> hover-link" onclick="makeLink(this);">
 		<div>
         <span class="summary_topic">
                 <a href="<?php echo $url_post;?>">
