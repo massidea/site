@@ -367,8 +367,8 @@ $(document).ready(function() {
             <div class="box_468_light">
                 <div class="child_row" class="clear">
                     <?php foreach ($this->children as $child): ?>
-                        <div class="clear"></div>
-                        <div class="left">
+                    <div class="solution-row">
+                        <div class=" photo left">
 				            <img src="<?php echo $this->url(array('controller' => 'account',
 				                                                  'action' => 'profilethumb',
 				                                                  'id' => $child['id_usr'],
@@ -388,6 +388,9 @@ $(document).ready(function() {
                             </div>
                             <div><?php echo $child['lead_cnt']; ?></div>
                         </div>
+                        <div class="clear"></div>
+                   		</div>
+						<div class="clear"></div>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -399,7 +402,8 @@ $(document).ready(function() {
 			<strong><?php echo $this->translate('content-view-solution-to'); ?></strong>
 			<div class="child-row">
 				<?php foreach ($this->parents as $parent): ?>
-                        <div class="left">
+					<div class="solution-row">
+                        <div class="photo left">
 				            <img src="<?php echo $this->url(array('controller' => 'account',
 				                                                  'action' => 'profilethumb',
 				                                                  'id' => $parent['id_usr'],
@@ -418,8 +422,11 @@ $(document).ready(function() {
                             </div>
                             <div><?php echo $parent['lead_cnt']; ?></div>
                         </div>
-                    <?php endforeach; ?>
-                    </div>
+                        <div class="clear"></div>
+                	</div>
+                	<div class="clear"></div>
+                <?php endforeach; ?>
+            	</div>
 			</div>
 			<div class="clear"></div>
 		<?php endif; ?>

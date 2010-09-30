@@ -958,8 +958,7 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 
 /** Random sidebar things */
 #sidebar .box-user-content .box-bottom { padding-top: 10px; }
-#sidebar #campaigns ul.campaigns li:hover,
-#sidebar #groups ul.groups li:hover { background: #F2F2F2; cursor: pointer; }
+.hover-link:hover { background: #F2F2F2; cursor: pointer; }
 
 #sidebar ul.tags li.tags a:hover { background: #F2F2F2; }
 
@@ -980,7 +979,7 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 #admin_comment_flags_table .item_tr:nth-child(odd) { background-color: #eee; color: #000; }
 
 #sidebar ul.campaigns li a { padding-left: 5px; }
-#sidebar ul.campaigns li { padding-bottom: 2px; }
+#sidebar ul.campaigns li { padding: 2px; list-style: none; }
 
 .scroll-box .user .context { width: 375px !important; }
 
@@ -994,8 +993,11 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 
 
 /** Content view page adds */
-div.solutions_child_row_content { padding: 5px 0 0 10px; }
+div.solutions_child_row_content { padding: 0 0 0 15px; width: 400px; }
 div.solutions_for_this_content { padding: 10px 0 0 7px; }
+div.solution-row { padding: 5px; border-bottom: dotted 1px #CCC; }
+div.solution-row .photo { padding-top: 5px; }
+#content_view_campaign_related ul li { padding: 1px 0 1px 0 !important; margin: 0 !important; }
 
 #sidebar .no-bg { background: none !important; margin-bottom: 1px !important; padding-bottom: 1px !important; }
 
@@ -1003,4 +1005,5 @@ div.solutions_for_this_content { padding: 10px 0 0 7px; }
 textarea#content_textlead { height: 10em; }
 textarea#content_references { height: 15em; }
 
-.vote { cursor: pointer; } 
+.vote { cursor: pointer; }
+
