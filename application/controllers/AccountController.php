@@ -435,43 +435,44 @@ class AccountController extends Oibs_Controller_CustomController
 	    	
 			if(isset($_POST['customfont'])) {
 				$customCssOptions['cssFontType'] = $_POST['customfont'];
-				//$customCssOptions['cssFontType'] = $profileCustomCss->setFontType($customCssOptions['cssContent'], '\"Times New Roman\"');
 				$newCssParams['font-family'] = $_POST['customfont'];
 	
 				$newCssParams['color'] = $_POST['customfontcolor'];
-			} /*else {
-				$customCssOptions['cssFontType'] = $profileCustomCss->getFontType($customCssOptions['cssContent']);
-			}*/
+			}
 	    	
 			if(isset($_POST['customfontsize'])) {
 				$customCssOptions['cssFontSize'] = $_POST['customfontsize'];
-				//$profileCustomCss->setFontSize($customCssOptions['cssContent'], $_POST['customfontsize']);
 				$newCssParams['font-size'] = $_POST['customfontsize'];
-			} /*else {
-				$customCssOptions['cssFontSize'] = $profileCustomCss->getFontSize();
-			}*/
+			}
 	    	
 			if(isset($_POST['customfontcolor'])) {
 				$customCssOptions['cssFontColor'] = $_POST['customfontcolor'];
-				//$profileCustomCss->setFontColor($customCssOptions['cssContent'], $customCssOptions['cssFontColor']);
 				$newCssParams['color'] = $_POST['customfontcolor'];
-			} /*else {
-				$customCssOptions['cssFontColor'] = $profileCustomCss->getFontColor();
-			}*/
-	    	
-			if(isset($_POST['backgroundimage'])) {
-				$customCssOptions['cssBackgroundImage'] = $_POST['backgroundimage'];
-			} /*else {
-				$customCssOptions['cssBackgroundImage'] = $profileCustomCss->getBackgroundImage();
-			}*/
+			}
 	    	
 			if(isset($_POST['custombgcolor'])) {
 				$customCssOptions['cssBackgroundColor'] = $_POST['custombgcolor'];
-				//$profileCustomCss->setBackgroundColor($customCssOptions['cssContent'], $_POST['custombgcolor']);
 				$newCssParams['background'] = $_POST['custombgcolor'];
-			} /*else {
-				$customCssOptions['cssBackgroundColor'] = $profileCustomCss->getBackgroundColor();
-			}*/
+			}
+			
+			if(isset($_FILES["backgroundimage"]["name"]) && $_FILES["backgroundimage"]["name"]!='' && $_FILES["backgroundimage"]["size"]>0) {
+				$backgroundImage = new Default_Model_ProfileBackgroundImage();
+				
+				$backgroundImage->deleteBackgroundImage('upload/', $profileCustomCss->getBackgroundImage($customCssOptions['cssContent'], 'body'));
+				
+				$backgroundImageFile = $backgroundImage->uploadBackgroundImage('upload/', $_FILES["backgroundimage"]["tmp_name"], 
+																				$_FILES["backgroundimage"]["name"], $username);
+				$customCssOptions['cssContent'] = $profileCustomCss->setBackgroundImage($customCssOptions['cssContent'], 'body', $backgroundImageFile, $username);
+				$customCssOptions['cssBackgroundImage'] = $backgroundImageFile;
+			}
+			else if($_POST['backgroundimagehidden'] == 'deleted') {
+				$tempImageName = $profileCustomCss->getBackgroundImage($customCssOptions['cssContent'], 'body');
+				$customCssOptions['cssContent'] = $profileCustomCss->setBackgroundImage($customCssOptions['cssContent'], 'body', '', $username);
+				
+				$backgroundImage = new Default_Model_ProfileBackgroundImage();
+				$backgroundImage->deleteBackgroundImage('upload/',$tempImageName);
+				$customCssOptions['cssBackgroundImage'] = $backgroundImageFile;
+			}
 			
 			if(count($newCssParams)>0) {
 				$customCssOptions['cssContent'] = $profileCustomCss->setStylingParams($customCssOptions['cssContent'], '#user-page', $newCssParams, $username);

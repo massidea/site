@@ -70,6 +70,7 @@ class Default_Model_CssFiles {
 	public function getBackgroundImage($cssFileContent, $div) {
 		
 		$backgroundImageUrl = '';
+		$backgroundImageName = '';
 		
 		$newStylingParam = $this->readStylingParam($cssFileContent, $div, 'background');
 		
@@ -78,8 +79,15 @@ class Default_Model_CssFiles {
 			$urlLocStart = strpos($newStylingParam, '"', $urlLocStart+1);
 			$urlLocEnd = strpos($newStylingParam, '"', $urlLocStart+1);
 			$backgroundImageUrl = substr($newStylingParam, $urlLocStart+1, $urlLocEnd-$urlLocStart-1);
+			
+			$filePathEnd = strrpos($backgroundImageUrl, '/');
+			if($filePathEnd) {
+				$backgroundImageName = substr($backgroundImageUrl, $filePathEnd+1);
+				return $backgroundImageName; 
+			} else {
+				return $backgroundImageUrl;
+			}
 		}
-		//echo 'backgroundImageUrl = '.$backgroundImageUrl;	// debug
 		
 		return $backgroundImageUrl;
 	}
@@ -101,30 +109,7 @@ class Default_Model_CssFiles {
 		
 		return $newCssFileContent;
 	}
-		
-	public function setFontType($cssFileContent, $newFontType) {
 
-		/*$newCssFileContent = $this->replaceStylingParams($cssFileContent, '#user-page', 'font-family', $newFontType);
-		
-		$success = $this->writeCssFileContent($newCssFileContent);
-		if($success) {
-			echo 'setFontType toimii<br>';
-		}*/
-	}
-	
-	public function setFontSize($cssFileContent, $newFontSize) {
-		
-		/*$fontSizeSelector = array('8', '9', '10', '11', '12', '13', '14');
-		$newCssFileContent = $this->replaceStylingParams($cssFileContent, '#user-page', 'font', $fontSizeSelector[$newFontSize].'px');
-		
-		$success = $this->writeCssFileContent($newCssFileContent);
-		if($success) {
-			echo 'setFontSize toimii<br>';
-		}
-		
-		return $success;*/
-	}
-	
 	public function setFontColor($cssFileContent, $newFontColor) {
 		
 		$newCssFileContent = $this->replaceStylingParam($cssFileContent, '#user-page', 'color', $newFontColor);
@@ -153,8 +138,41 @@ class Default_Model_CssFiles {
 		}
 	}
 	
-	public function setBackgroundImage() {
+	public function setBackgroundImage($cssFileContent, $div, $backgroundImageUrl, $_username) {
 		
+		$stylingParam = $this->readStylingParam($cssFileContent, $div, 'background');
+		$newStylingParam = '';
+		
+		$urlLocStart = strpos($stylingParam, 'url');
+		if($urlLocStart) {
+			$urlLocStart = strpos($stylingParam, '"', $urlLocStart+1);
+			$urlLocEnd = strpos($stylingParam, '"', $urlLocStart+1);
+
+			$urlSplit1 = substr($stylingParam, 0, $urlLocStart+1);
+			$urlSplit2 = substr($stylingParam, $urlLocEnd);
+			
+			if(strlen($backgroundImageUrl)) {
+				$newStylingParam = $urlSplit1.'../../'.$backgroundImageUrl.$urlSplit2;
+			} else {
+				$newStylingParam = $urlSplit1.$urlSplit2;
+			}
+		} else {
+			//echo 'no URL() found. stylingParam = '.$stylingParam;
+			if(strlen($backgroundImageUrl)) {
+				$newStylingParam = $stylingParam.' url("../../'.$backgroundImageUrl.'")';
+			} else {
+				$newStylingParam = $stylingParam.' url("")';
+			}
+		}
+
+		$newCssFileContent = $this->replaceStylingParam($cssFileContent, $div, 'background', $newStylingParam);
+		
+		$success = $this->writeCssFileContent($newCssFileContent, $_username);
+		
+		// debug
+		if($success) {
+			return $newCssFileContent;
+		} else return false;
 	}
 		
 	private function replaceStylingParams($cssFileContent, $div, $newParamValue) {
@@ -263,8 +281,8 @@ class Default_Model_CssFiles {
 		$newCssFileEnd = substr($cssFileContent, $divEndLoc);
 		$newCssFileContent = $newCssFileStart.$newDiv.$newCssFileEnd;
 		
-		echo '<br>'.$newDiv;				// debug
-		echo '<br>'.$newCssFileContent;		// debug
+		//echo '<br>'.$newDiv;				// debug
+		//echo '<br>'.$newCssFileContent;		// debug
 		
 		return $newCssFileContent;
 	}

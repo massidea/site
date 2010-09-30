@@ -758,8 +758,9 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 #content #activity .input-column5 { width:140px; float:right; text-align:left; margin-right:179px; margin-top:10px; }
 #content #activity .input-column6 { width:70px; float:left; text-align:left; margin-top:10px; margin-left:70px; padding-left:20px; border-left:1px solid silver; }
 
-#content #activity .scroll-box #setbgimage-label { font-family: "Times New Roman"; font-size:8pt; width:225px; float:right; margin-top:-12px; margin-right:25px; }
-#content #activity .scroll-box #removesetbgimage-element { float:right; margin-top:-12px; margin-right:65px; }
+#content #activity .scroll-box #setbgimage-label { font-family: "Times New Roman"; font-size:10pt; color:#acabaa; width:225px; float:right; margin-top:-20px; margin-right:25px; }
+#content #activity .scroll-box #removesetbgimage-element { float:right; margin-top:-12px; margin-right:65px;  cursor: pointer; }
+
 #content #activity .scroll-box #help_link_basic-element { float:right; margin-top:-15px; margin-right:20px;}
 
 #help_link_advanced-element { float:right; margin-top:-15px; margin-right:20px; }

@@ -161,10 +161,19 @@
         
         if(strlen($options['cssBackgroundImage'])) {
 	        $setbgimage = new Oibs_Form_Element_Note('setbgimage');
-	        $setbgimage->setLabel('<'.$options['cssBackgroundImage'].'>');
+	        $setbgimage->setLabel($options['cssBackgroundImage']);
 	        
 	        $removesetbgimage = new Oibs_Form_Element_Note('removesetbgimage');
 	        $removesetbgimage->setValue('<img src="/images/icon_red_cross.png"/>');
+	        				 //->setAttrib('type', 'submit');
+	        
+	        $backgroundimagehidden = new Zend_Form_Element_Hidden('backgroundimagehidden');
+        	$backgroundimagehidden->setAttrib('id', 'backgroundimagehidden')
+        			 			  ->setValue($options['cssBackgroundImage']);
+			
+			$backgroundimageoldhidden = new Zend_Form_Element_Hidden('backgroundimageoldhidden');
+        	$backgroundimageoldhidden->setAttrib('id', 'backgroundimageoldhidden')
+        			 			  ->setValue($options['cssBackgroundImage']);
         }
         
         // Block separator
@@ -206,7 +215,9 @@
 								 $submit,
 								 $advancedbutton,
 								 $clearall,
-								 $help
+								 $help,
+								 //$backgroundimageoldhidden,
+								 $backgroundimagehidden
 								 ));
 								 
 		// Add decorators

@@ -148,7 +148,13 @@ $(document).ready(function() {
 	});
 	
 	$("#removesetbgimage-element").click(function() {
-		alert('poista-filu-namiska!');
+		$(this).remove();
+		$("#setbgimage-label").remove();
+		$("#backgroundimagehidden").val("deleted");
+		
+		//var backgroundImageOld = $("#cssBackgroundImage").val();
+		//$("#backgroundimageoldhidden").val(backgroundImageOld);
+		
 	});
 
 }); // Endof document ready
