@@ -394,7 +394,6 @@ p#replying_to {
 .rss-item { border-bottom: 1px dotted #CCCCCC; padding: 3px;}
 #rss-list-feeds #feeds { width: 450px; }
 #rss-input-feed-url { width: 405px; }
-#rss { border-top: 1px dotted #CCCCCC; }
 
 .campaign_list_paragraph {
     font-size: 12px;
@@ -427,7 +426,6 @@ p#replying_to {
 #content_view_user_related, 
 #content_view_content_related,
 #content_view_campaign_related {
-	background:#ffffff none repeat scroll 0 0;
     border:1px solid #CCCCCC;
 	padding: 0.5em 0.5em;
 	font-size: 10pt;

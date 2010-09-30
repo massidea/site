@@ -72,44 +72,14 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
    	    </h2>
         
         <div class="box-content">
-            <p><?php echo $this->translate('content-list-right-p1-'.$this->type); ?></p>
-            <p><?php echo $this->translate('content-list-right-p2-'.$this->type); ?></p>
-            <p><?php echo $this->translate('content-list-right-p3'); ?></p>
+            <p><?php echo str_replace("\n", "</p><p>", $this->translate('content-list-right-'.$this->type)); ?></p>
         </div>
      </div>
-        <p id="tags_link" style="margin-top: 1px;" class="top_right_box_links">
-        <h2>
-            <?php echo $this->translate('index-most-popular')?>
-            <a href="<?php echo $this->url(array('controller' => 'tag',
-                                             'action' => 'index',
-        									 'order' => 'popularity',
-        									 'direction' => 'desc',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-                <?php echo $this->translate('index-tags')?>
-            </a>
-            </h2>
-        </p>
-        <div class="tag_cloud">
-        <ul class="tags">
-        	<?php foreach($this->tags as $tag): ?>
-        	<li class="tags">
-        		<?php echo $this->partial('partials/tag.phtml', $tag); ?>
-        	</li>
-        	<?php endforeach; ?>
-        </ul>
-     <div class="clear"></div>
-    <div style="text-align: center;">
-                <strong><a href="<?php echo $this->url(array('controller' => 'tag',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-                <?php echo $this->translate('index-show-all')?>
-            </a></strong>
-            </div>
-	    </div>
-	 <div class="see_also_title">
+		<?php /* commented until best rated is fixed! ?>
+		<div class="see_also_title">
 			<h2><?php echo $this->translate('index-see-also-'.$this->type); ?></h2>
 			<div class="see_also_links">
+
 				<a href="<?php echo $this->url(array('controller' => 'search', 
 							      'action' => 'result',  
 							      'language' => $this->language, 
@@ -121,17 +91,42 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 				<a href="#"><?php echo $this->translate('content-best-rated'); ?></a>
 			</div>
 		 </div>
-
+		<?php */ ?>
+		<?php 
+			$mostViewedUrl = $this->url(array('controller' => 'search',
+                                             'action' => 'result',
+        									 'order' => 'views',
+        									 'page' => '1',
+                                             'language' => $this->language),
+                                             'lang_default', true);
+		?>
+		<h2 class="no-bg">Most <a href="<?php echo $mostViewedUrl; ?>">viewed</a></h2>
 		 <div class="scroll-box">
 		 	<ul>
 			<?php echo $this->partialLoop('partials/mini_content_row.phtml', $this->mostViewedData); ?>
 			</ul>
         </div>
-
+        <h2><?php echo $this->translate('index-most-popular')?>
+            <a href="<?php echo $this->url(array('controller' => 'tag',
+                                             'action' => 'index',
+        									 'order' => 'popularity',
+        									 'direction' => 'desc',
+                                             'language' => $this->language),
+                                             'lang_default', true); ?>">
+                <?php echo $this->translate('index-tags'); ?></a></h2>
+        <div class="tag_cloud">
+        <ul class="tags">
+        	<?php foreach($this->tags as $tag): ?>
+        	<li class="tags">
+        		<?php echo $this->partial('partials/tag.phtml', $tag); ?>
+        	</li>
+        	<?php endforeach; ?>
+        </ul>
+	     <div class="clear"></div>
+	    </div>
         <h2>
             <?php echo $this->translate('content-list-missing-header'); ?>
-        </h2>
-        
-        <p style="padding:0; margin:0;">
+        </h2> 
+        <p>
             <?php echo $this->translate('index-opensource'); ?>
         </p>

@@ -12,6 +12,16 @@ $("document").ready(function () {
 	    limit : 10000000000
 	});
 	$('textarea#commentTextarea').resize();
+	
+	$("#content_view_comment_form_container > p > #commentTextarea").bind("keydown keyup change",function(){
+		var limit = 1000;
+		var length = $(this).val().length;
+		if(limit < length)
+			$("#comment_character_cut").show();
+		else $("#comment_character_cut").hide();
+		$("#comment_character_count").html(length+"/"+limit);
+	});
+	
 });
 
 /**
@@ -108,6 +118,8 @@ function addCommentRow(id, parent, div) {
  * function to clear for and reset reply after posting
  */
 function clearForm() {
+	$("#comment_character_count").html("0/1000");
+	$("#comment_character_cut").hide();
 	$("#commentTextarea").val("");
 	cancelReply();
 }

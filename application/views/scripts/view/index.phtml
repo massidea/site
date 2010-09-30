@@ -246,7 +246,7 @@ function flagContent()
 	        </div>
 	        <span class="left"><?php echo $this->translate('content-view-user-related'); ?></span>
 	    </div>
-	    <div id="content_view_user_related" style="display: <?php echo $this->boxStates['user'];?>">
+	    <div id="content_view_user_related" class="scroll-box" style="display: <?php echo $this->boxStates['user'];?>">
 	    </div>
     </div>
     <div id="related-contents">
@@ -256,7 +256,7 @@ function flagContent()
 	        </div>
 	        <span class="left"><?php echo $this->translate('content-view-related'); ?></span>
 	    </div>
-	    <div id="content_view_content_related" style="display: <?php echo $this->boxStates['content'];?>">
+	    <div id="content_view_content_related" class="scroll-box" style="display: <?php echo $this->boxStates['content'];?>">
 	    </div>
 	</div>
 	<div id="related-campaigns">
@@ -266,7 +266,7 @@ function flagContent()
 	        </div>
 	        <span class="left"><?php echo "Linked to <a href='" . $cmpsUrl . "'>campaigns</a>"; ?></span>
 	    </div>
-	    <div id="content_view_campaign_related" style="display: <?php echo $this->boxStates['campaign'];?>">
+	    <div id="content_view_campaign_related" class="scroll-box" style="display: <?php echo $this->boxStates['campaign'];?>">
 	    </div>
 	</div>
 <div class="clear"></div>
