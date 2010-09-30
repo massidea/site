@@ -983,3 +983,24 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 #sidebar ul.campaigns li { padding-bottom: 2px; }
 
 .scroll-box .user .context { width: 375px !important; }
+
+#campaign-page #profile-meta h4, #group-page #profile-meta h4 { font-size:1.1em !important; background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
+	color: #C0C0C0; padding:0px 0px 5px 0px; margin-top:20px; }
+#campaign-links ul li.linked_campaigns div.linked_campaigns { border-left: solid 5px #003581; padding-left: 5px; }
+#group-links ul li.linked_groups div.linked_groups { border-left: solid 5px #0089CF; padding-left: 5px; }
+#campaign-page #contribute h3 { margin: 10px 0 !important; }
+#campaign-page div#campaign-added-by, #group-page div#group-founded { margin-top: -7px; padding-bottom: 5px; }
+#group-page #group-not-logged { font-size: 1.1em; }
+
+
+/** Content view page adds */
+div.solutions_child_row_content { padding: 5px 0 0 10px; }
+div.solutions_for_this_content { padding: 10px 0 0 7px; }
+
+#sidebar .no-bg { background: none !important; margin-bottom: 1px !important; padding-bottom: 1px !important; }
+
+/** Content add textareas */
+textarea#content_textlead { height: 10em; }
+textarea#content_references { height: 15em; }
+
+.vote { cursor: pointer; } 
