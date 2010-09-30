@@ -11,6 +11,11 @@
 		<p><textarea id="commentTextarea" name="Comments"></textarea></p>
 		<input type="button" value="Post comment" id="commentPostButton"></input>
 		<input type="hidden" id="comment_parent" value="0"></input>
+		<div id="comment_character" style="width: 400px; float:right; text-align: right;">
+			<span>Character limit: </span>
+			<span id="comment_character_count">0/1000</span>
+			<span id="comment_character_cut" style="color: red; display: none;"> Characters over the limit will be cut.</span>
+		</div>
 		<?php //echo $this->comments->getForm(); ?>
 	<?php else: ?>
             <p style="margin: 0px; padding: 0px;">Would you like to comment?</p>

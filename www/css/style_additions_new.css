@@ -2,6 +2,9 @@
 	margin:0 0px 42px 0px;
 	padding:0px 0px 8px 0px;
 	background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; }
+	
+.profile_image_mediumsize { width: 80px; height: 80px; }
+
 #content #group-page .scroll-box li {
     
 }
@@ -424,10 +427,10 @@ p#replying_to {
 .first_tag { color: #003581; }
 .second_tag { }
 
-.user_content_edit ul { border: 1px solid #999; list-style:none outside none; position: absolute; display: none; width: 160px; background: none repeat scroll 0 0 #EEEEEE; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px; }
-.user_content_edit ul li { border: 2px outset #CCC; padding: 2px; } 
+.user_content_edit ul { border: 1px outset #999; list-style:none outside none; position: absolute; display: none; width: 160px; background: none repeat scroll 0 0 #FFF; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; margin: 0px; padding: 0px; }
+.user_content_edit ul li { border: 1px outset #CCC; padding: 2px; } 
 .user_content_edit ul li img { vertical-align: middle; }
-.user_content_edit ul li:hover { background: #0089CF; }
+.user_content_edit ul li:hover { background: #CCC; }
 .user_content_edit ul li a:hover { color: #333 !important }
 .user_content_edit ul li a { color: #333333 !important; padding-left: 2px; text-decoration: none;}
 
@@ -922,3 +925,5 @@ form div.error ul.errors li {
 	color: red;	
 	text-align: center;
 }
+
+.vote { cursor: pointer; } 
