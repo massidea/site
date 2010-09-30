@@ -56,7 +56,7 @@ $(document).ready(function() {
     $(allInputs).live('keydown keyup', function(){
         textCount(this);
     });
-    $("#confirm_password").live('keyup', function(){
+    $("#confirm_password").live('keyup keydown', function(){
         passMatch(this);
     });
 
@@ -68,7 +68,7 @@ $(document).ready(function() {
         if (this.name == "city" ) textValidation(this);
     });
 
-    $('select').live('change keyup', function() {
+    $('select').live('ready change keyup keydown', function() {
         selectCheck(this);
     });
     $(allInputs).blur(function() {
