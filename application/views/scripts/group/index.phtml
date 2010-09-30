@@ -40,23 +40,38 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         </h3>
     </div>
 </div>
-</div>
+
+<?php
+$cmpUrl = $this->url(
+    array(
+        'controller' => 'campaign',
+        'action'     => 'index',
+        'language'   => $this->language
+    ),  'lang_default', true);
+?>
+
 <div id="sidebar">
     <div class="box">
         <h2>What are groups?</h2>
         <div class="box-content">
-		<?php if ($this->logged_in): ?>
-			<strong><a href="<?php echo $addgrpurl; ?>">Create a group</a></strong><br />
-		<?php endif; ?>
-			<p>
-            Groups help like-minded people to join their forces.
-            You can create as many groups as you want.</p>
+            <p>Group collects together individual users who share mutual interest
+            such as studies, hobbies, association activities, job or place of residence.</p>
 
-            <p>Once you have created a group you can launch group campaigns.</p>
+            <p>Groups include <a href="<?php echo $cmpUrl; ?>">campaign</a> functionality
+            which help to join forces to achieve a common set of goals. Only group members
+            can link content to campaigns.</p>
 
-            <strong>Launch a campaign</strong><br />
-            <p>To collect others' opinions, launch a campaign that combines
-            individual contents as an easy-to-navigate unit.</p>
+            <p>All logged in users can create as many groups as they want.</p>
+
+            <p>There are two kind of groups:</p>
+
+            <p>1) Open groups where all users are accepted without admin approaval.</p>
+
+            <p>2) Closed groups where participation requires group admin’s approval.</p>
+
+            <p>All group contents are visible for everybody regardless of group type.</p>
+
+            <p>Group can also add external RSS feeds to their home and campaign pages.</p>
         </div>
     </div>
 

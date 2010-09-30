@@ -28,12 +28,17 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
 <div id="gaccampaignlist" class="left narrow">
     <h2 class="left">Recent campaigns</h2>
+
     
+    <?php // There is only tabs style from jquery tabs. Implementation is how it have been. ?>
+
     <div class="clear"></div>
-    <div id="campaign-status" class="campaign-status">
-        <span id="active_span"><a href="#" onclick="return false;">Active</a></span> |
-        <span id="forthcoming_span"><a href="#" onclick="return false;">Forthcoming</a></span> |
-        <span id="ended_span"><a href="#" onclick="return false;">Ended</a></span>
+    <div id="campaign-status" class="ui-tabs">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li id="active_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Active</a></li>
+            <li id="forthcoming_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>
+            <li id="ended_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>
+        </ul>
     </div>
     
     <div id="campaign-list" class="campaign-list"></div>
