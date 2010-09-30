@@ -13,8 +13,11 @@ var inputDefinitions = {
 <div id="add-content-page" style="float:left; width:500px;">
     <h2>Edit group <?php echo $this->grpName; ?></h2>
 
-    <p>Groups help like-minded people to join their forces. You can create as many groups as you want.
-    Once you have created a group you can create group campaigns.</p>
+    <p>Group collects together individual users who share mutual interest such as studies,
+        hobbies, association activities, job or place of residence.</p>
+
+    <p>All logged in users can create as many groups as they want and linked their own
+        groups to other groups.</p>
 
     <div id="add-content-form">
         <?php echo $this->form; ?>
@@ -26,15 +29,34 @@ var inputDefinitions = {
         <h2>How to create a group?</h2>
         <div class="box-content">
             <p><strong>Name</strong><br />
-            A good name grabs the reader's attention and summarizes the meaning
-            of the group.</p>
+                Name capture the essence of group’s interest and goals. It can
+                also be name of your organization, asso-ciation, studying course, etc.</p>
 
-            <p><strong>Lead paragraph</strong><br />
-            Lead paragraph sums up the whole meaning of your group.</p>
+            <p><strong>Type</strong><br />
+                Open group: All users are accepted as group members without admin approaval.</p>
 
-            <p><strong>Body</strong><br />
-            The further body content is elaborating the headline and lead paragraph,
-            and justifies in more detail, why you should join the group.</p>
+            <p>Closed group: Becoming a member requires group admin’s approval. Regardless
+                of type, all group related contents are visible for all users. However,
+                only group members can link content to group’s campaigns.</p>
+
+            <p><strong>Short description</strong><br />
+                Shortly explain the purpose of the group by answering to what, who and whom
+                questions. This information is shown on the group listing pages and therefore
+                is important tool to attract users.</p>
+
+            <p><strong>Full description</strong><br />
+                Is elaborating in more detail the group and it’s purpose by answer following questions:</p>
+
+            <p>1) What is the group.</p>
+
+            <p>2) Who is running the group and whom should be interested to join in.</p>
+
+            <p>3) Why the group is important and valuable.</p>
+
+            <p>4) Where group is operating (can be geographical location or circumstances)</p>
+
+            <p>5) When (temporal dimension) the group is operating. Is this a permanent group
+                for long-term collabora-tion or temporary and operating only limited time.</p>
         </div>
     </div>
 </div>
