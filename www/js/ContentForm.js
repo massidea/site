@@ -148,6 +148,7 @@ $(document).ready(function() {
 		} else if($(this).attr('id') == "content_save_button") {
 			canExit = 1;
 			window.onbeforeunload = null;
+			$("#content_publish").val('');
 			$("#content_save").val('1');
 			$('.content_manage_button').attr('disabled', 'disabled');
 			$('#form_content_realcontent').has(this).children('form').submit();
