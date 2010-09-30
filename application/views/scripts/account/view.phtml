@@ -3,6 +3,10 @@
 function publishconfirmation(url) {
     var answer = confirm("Publish content?");
     if (answer) {
+    
+    	alert(url);
+    
+    	return;
         alert("Content published");
         window.location = url;
     } else {

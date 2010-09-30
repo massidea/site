@@ -384,6 +384,8 @@ class ContentController extends Oibs_Controller_CustomController
 				$cache->save($form, $formCacheTag);
 			}
 			
+			
+			
 			$this->view->form = $form;
 
 			// Get requests
@@ -395,7 +397,6 @@ class ContentController extends Oibs_Controller_CustomController
 				// If form data is valid, handle database insertions
 				$validForm = $form->isValid($data) ? true : (isset($data['content_save']) && $data['content_save'] != '');
 				if ($validForm) {
-					
 
 					// If form data is going to be published
 					if(isset($data['content_publish']) && $data['content_publish'] != '') {
@@ -457,6 +458,7 @@ class ContentController extends Oibs_Controller_CustomController
 					$content = new Default_Model_Content();
 					$add = $content->addContent($data);
 
+
 					if(!$add) {
 						$add_successful = false;
 					} else {
@@ -514,9 +516,11 @@ class ContentController extends Oibs_Controller_CustomController
 						}
 					}
 					else {
+						
 						$this->flash($message_error, $url);
 					}
 				}
+				
 			} // end if
 
 		} else {
