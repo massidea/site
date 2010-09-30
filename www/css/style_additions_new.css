@@ -959,6 +959,8 @@ form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ backg
 /** Random sidebar things */
 #sidebar .box-user-content .box-bottom { padding-top: 10px; }
 .hover-link:hover { background: #F2F2F2; cursor: pointer; }
+div.top_right_box_links_users ul li a#user-link { padding-left: 5px; border-left: solid 5px #0089CF; }
+div.top_right_box_links_users ul li { padding: 5px 0 5px; }
 
 #sidebar ul.tags li.tags a:hover { background: #F2F2F2; }
 

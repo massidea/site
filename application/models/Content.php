@@ -147,7 +147,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
 																	"title_cnt",
 																	"lead_cnt",
-																	"language_cnt"))
+																	"language_cnt",
+																	"created_cnt"))
 								->joinLeft(	"cnt_has_usr", 
 											"contents_cnt.id_cnt = cnt_has_usr.id_cnt",
 											array())

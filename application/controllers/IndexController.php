@@ -114,7 +114,7 @@ class IndexController extends Oibs_Controller_CustomController
         // Laod most active users from cache
         if(!$result = $cache->load('IndexUsers')) {
             $contentHasUserModel = new Default_Model_ContentHasUser();        
-            $activeusers = $contentHasUserModel->getMostActive(10);
+            $activeusers = $contentHasUserModel->getMostActive(5);
             
             // Save most active users data to cache
             $cache->save($activeusers, 'IndexUsers');

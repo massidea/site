@@ -14,7 +14,7 @@ a { text-decoration:none; color:#0089CF; }
 a:visited, a:hover, a:active { text-decoration:none; color:#0089CF; }
 
 p { margin:10px 0px 10px 0px; }
-h2, h3, h4, h5, h6 { margin:10px 0px 10px 0px; }
+h2, h3, h4, h5, h6 { margin:10px 0px 10px 0px; color: #C0C0C0; }
 img { border:none; }
 hr { display:none; }
 

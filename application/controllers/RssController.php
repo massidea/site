@@ -111,7 +111,7 @@ class RssController extends Oibs_Controller_CustomController
         
         // Set to view
         $this->view->cache = $cache;
-        $this->view->cacheIdentifier = 'RSS_' . md5($params['type'].$params['count']);
+        $this->view->cacheIdentifier = 'RSS_' . md5($cty.$count);
         $this->view->contentData = $data;
 		
     } // end of indexAction()

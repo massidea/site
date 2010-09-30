@@ -14,7 +14,7 @@ $cityUrl = $this->url(array('controller' => 'account',
                         'lang_default',
                         true);
 ?>
-<li><a href="<?php echo $url ?>"><?php echo $this->login_name_usr; ?></a>
+<li <?php //class="hover-link" onclick="makeLink(this);"?>><a id="user-link" href="<?php echo $url ?>"><?php echo $this->login_name_usr; ?></a>
 <?php if(isset($this->count)): ?>
 	<?php echo "($this->count)";?>
 <?php endif; ?>

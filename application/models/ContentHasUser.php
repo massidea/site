@@ -60,8 +60,10 @@ class Default_Model_ContentHasUser extends Zend_Db_Table_Abstract
                                ->joinRight(array('usr' => 'users_usr'),
                                           'chu.id_usr = usr.id_usr',
                                           array('id_usr', 'login_name_usr'))
+                               ->joinRight('usr_profiles_usp', 'chu.id_usr = usr_profiles_usp.id_usr_usp', array('city' => 'usr_profiles_usp.profile_value_usp'))
                                ->group('chu.id_usr')
                                ->order('count DESC')
+                               ->where('usr_profiles_usp.profile_key_usp = ?', 'city')
                                ->limit($limit);
         
         $result = $this->_db->fetchAll($contentSelect);

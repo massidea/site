@@ -70,7 +70,7 @@
 		<tuv xml:lang="fi"><seg>Suosituimmat</seg></tuv>
 	</tu>
 	<tu tuid='index-recent-posts'>
-		<tuv xml:lang="en"><seg>Recent Challenges, Ideas and Visions</seg></tuv>
+		<tuv xml:lang="en"><seg>Recent posts</seg></tuv>
 		<tuv xml:lang="fi"><seg>Uusimmat sisällöt</seg></tuv>
 	</tu>
 	<tu tuid='index-learn-more'>
