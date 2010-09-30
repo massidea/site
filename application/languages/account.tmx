@@ -236,28 +236,30 @@
 		<tuv xml:lang="fi"><seg>Rekisteröityminen onnistui</seg></tuv>
 	</tu>
 	<tu tuid='registration-box-header'>
-		<tuv xml:lang="en"><seg>Massidea.org registration...</seg></tuv>
-		<tuv xml:lang="fi"><seg>Rekisteröityminen...</seg></tuv>
+		<tuv xml:lang="en"><seg>Massidea.org registration</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröityminen</seg></tuv>
 	</tu>
-	<tu tuid='account-register-p1'>
-		<tuv xml:lang="en"><seg>Registering with Massidea.org is free of charge.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Rekisteröiminen on ilmaista.</seg></tuv>
-	</tu>
-    <tu tuid='account-register-p2'>
-		<tuv xml:lang="en"><seg>Registered users can submit content, review and comment on content, add content-to-content links, rate content and create their own user profiles.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Rekisteröityneet käyttäjät voivat julkaista sisältöjä, kommentoida, linkittää sisältöjä, antaa arvosanoja ja luoda oman profiilin.</seg></tuv>
-	</tu>
-	<tu tuid='account-register-p3'>
-		<tuv xml:lang="en"><seg>Fields marked with an "<span style="color:red;">*</span>" are required.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Pakolliset kentät ovat merkitty merkillä "<span style="color:red;">*</span>".</seg></tuv>
-	</tu>
-	<tu tuid='account-register-p4'>
-		<tuv xml:lang="en"><seg>By default only your location, no other personal information is shown to other users.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Oletuksena muille käyttäjille näytetään paikkakuntasi, mitään henkilötietoja ei näytetä.</seg></tuv>
-	</tu>
-    <tu tuid='account-register-p5'>
-		<tuv xml:lang="en"><seg>You can add more information to your profile after registering!</seg></tuv>
-		<tuv xml:lang="fi"><seg>Voit lisätä lisätietoja profiiliisi rekisteröitymisen jälkeen!</seg></tuv>
+	<tu tuid='account-register'>
+		<tuv xml:lang="en"><seg>
+			<p><strong>1. CREATE ACCOUNT</strong><br />
+				It is a free of charge and takes only a minute.</p>
+			<p><strong>2. UPLOAD AND SHARE</strong><br />
+				After joining you can start sharing your insights with others.</p> 
+			<p><strong>3. YOUR PORTFOLIO IS EXTENDING</strong><br />
+				All your posts are extending your personal knowledge profile.</p>
+			<p><strong>4. CONNETING PEOPLE AND CONTENTS</strong><br />
+				Your posts acts as an interface to others users and their insight. More posts, the greater your possibilities to interact are.</p>
+			<p><strong>5. BOOSTING CREATIVITY</strong><br />
+				Unexpected connections between people and insights creates a stimulating environment which is boosting your creativity. Meet new people and discover novel ideas </p>
+			<p>Learn more in our <a href="http://www.massidea.org/blog">Blog</a>.</p>
+			<p>Registering with Massidea.org is free of charge. All fields are mandatory.</p>
+		</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröiminen on ilmaista.
+			<p>Rekisteröityneet käyttäjät voivat julkaista sisältöjä, kommentoida, linkittää sisältöjä, antaa arvosanoja ja luoda oman profiilin.</p>
+			<p>Pakolliset kentät ovat merkitty merkillä "<span style="color:red;">*</span>".</p>
+			<p>Oletuksena muille käyttäjille näytetään paikkakuntasi, mitään henkilötietoja ei näytetä.</p>
+			<p>Voit lisätä lisätietoja profiiliisi rekisteröitymisen jälkeen!</p>
+		</seg></tuv>
 	</tu>
 	<tu tuid='account-register-verification-question-help'>
 		<tuv xml:lang="en"><seg>
@@ -319,8 +321,8 @@
 		<tuv xml:lang="fi"><seg>Käyttäjänimi:</seg></tuv>
 	</tu>
 	<tu tuid='account-register-password'>
-		<tuv xml:lang="en"><seg>Password:</seg></tuv>
-		<tuv xml:lang="fi"><seg>Salasana:</seg></tuv>
+		<tuv xml:lang="en"><seg>Password</seg></tuv>
+		<tuv xml:lang="fi"><seg>Salasana</seg></tuv>
 	</tu>
 	<tu tuid='account-register-password_confirm'>
 		<tuv xml:lang="en"><seg>Confirm password:</seg></tuv>

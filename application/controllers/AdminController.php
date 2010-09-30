@@ -328,6 +328,7 @@ class AdminController extends Oibs_Controller_CustomController
     	$tmpCount = array();
     	foreach($flagItems as $flagItem)
     	{
+    		if(!isset($tmpCount[$flagItem['id_comment_cmf']])) $tmpCount[$flagItem['id_comment_cmf']] = 0;
     		$tmpCount[$flagItem['id_comment_cmf']]++;
     	}
     	arsort($tmpCount);
@@ -455,6 +456,7 @@ class AdminController extends Oibs_Controller_CustomController
     	$tmpCount = array();
     	foreach($flagItems as $flagItem)
     	{
+    		if (!isset($tmpCount[$flagItem['id_content_cfl']])) $tmpCount[$flagItem['id_content_cfl']] = 0;
     		$tmpCount[$flagItem['id_content_cfl']]++;
     	}
     	arsort($tmpCount);

@@ -2,7 +2,7 @@
 <p><a href="<?php echo $this->link; ?>" style="float: right">Edit feeds</a></p>
 <?php endif;?>
 <?php if($this->data !== false): ?>
-<p><strong>Feed:</strong><br /></p>
+<h4>Feed</h4>
 <div class='rss-reader clear'><div class='rss-channel'></div><ul>
 <?php foreach($this->data['items'] as $item): ?>
 	<li style="display:block;"><div class='rss-item'><a href="<?php echo $item['link']; ?>"><?php echo $item['title']; ?></a><br />

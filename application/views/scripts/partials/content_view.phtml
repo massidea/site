@@ -81,12 +81,38 @@ $(document).ready(function() {
 				</a>
 			</div>
 		<?php endif; ?>
+		
+		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>   
+        	<div class="user_content_edit right">
+        		<a href="#" onClick="return false;">Manage content</a>
+        		<ul style="display: none">
+        			<li>
+	        			<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+	        			<a href="<?php echo $this->url(array('controller' => 'content',
+	                                                         'action' => 'edit',
+	        												 'content_id' => $this->contentData['id_cnt'],
+	                                                         'language' => $this->language),
+	                                                         'content_edit', true); ?>">Edit Content</a>
+                    </li>
+                    <li>
+                    <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
+	                    <a href="<?php echo $this->url(array('controller' => 'content',
+	                                                         'action' => 'unlink',
+	        												 'relatestoid' => $this->contentData['id_cnt'],
+	                                                         'language' => $this->language),
+	                                                         'unlinkcontent', true); ?>">Manage linked content</a>
+                    </li>
+                                                         
+        		</ul>
+        	</div>
+		<?php endif; ?>
+			
 		<div class="clear"></div>
             <div id="linked">
 	            <div id="linked-challenges">
                     <div class="left">
-                        <strong><?php echo $this->translate('content-linked-challenges'); if(isset($linked_problems)) echo "(".sizeof($linked_problems).")"; ?></strong>
-                        <?php if(isset($linked_problems) && sizeof($linked_problems) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_challenges_more" /><?php endif; ?>
+                        <strong><?php echo $this->translate('content-linked-challenges'); if(isset($linked_problems)) echo " (".sizeof($linked_problems).")"; ?></strong>
+                        <?php if(isset($linked_problems) && sizeof($linked_problems) > 3): ?><img alt="" src="<?php echo $this->baseUrl("/images/icon_plus_tiny.png"); ?>" id="content_view_linked_content_challenges_more" /><?php endif; ?>
                         <br />
                     	<?php if (isset($linked_problems)): ?>
                         <?php $i = 0; foreach ($linked_problems as $problem): $i++; ?>
@@ -132,9 +158,9 @@ $(document).ready(function() {
             </div>
             <div id="linked-visions">
                 <div class="left">
-					<strong><?php echo $this->translate('content-linked-visions'); if(isset($linked_futures)) echo "(".sizeof($linked_futures).")";?></strong>
+					<strong><?php echo $this->translate('content-linked-visions'); if(isset($linked_futures)) echo " (".sizeof($linked_futures).")";?></strong>
 					<br />
-                    	<?php if(isset($linked_futures) && sizeof($linked_futures) > 3): ?><img alt="" src="/~jari/images/icon_plus_tiny.png" id="content_view_linked_content_visions_more" /><?php endif; ?>
+                    	<?php if(isset($linked_futures) && sizeof($linked_futures) > 3): ?><img alt="" src="<?php echo $this->baseUrl("/images/icon_plus_tiny.png"); ?>" id="content_view_linked_content_visions_more" /><?php endif; ?>
                     	
                    	<?php if (isset($linked_futures)): ?>
 	                <?php $i= 0; foreach ($linked_futures as $future): $i++; ?>
@@ -180,7 +206,8 @@ $(document).ready(function() {
             </div>
             <div id="misc">
                	<div id="content_view_content_info_container" class="left"></div>
-                <div id="content-view-viewers-list" class="right"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div>
+                <!-- <div id="content-view-viewers-list" class="right"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div> -->
+                <div id="content-view-viewers-list" class="right"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
                 <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
                 <div class="clear"></div>
 	            <!-- <div id="content_view_favourite"></div>  -->
@@ -201,30 +228,7 @@ $(document).ready(function() {
 		                	[<a href="<?php echo $notranslate; ?>"><?php echo $this->translate('content-view-translated-show-translated'); ?></a>]
 		                <?php endif; ?>
 	                <?php endif;?>
-	                		<?php if ($this->contentData['id_cnt'] != "preview" && $this->contentData['id_usr'] == $this->userid): ?>
-	         </div>
-        	<div class="user_content_edit right">
-        		<a href="#" onClick="return false;">Manage content</a>
-        		<ul style="display: none">
-        			<li>
-	        			<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
-	        			<a href="<?php echo $this->url(array('controller' => 'content',
-	                                                         'action' => 'edit',
-	        												 'content_id' => $this->contentData['id_cnt'],
-	                                                         'language' => $this->language),
-	                                                         'content_edit', true); ?>">Edit Content</a>
-                    </li>
-                    <li>
-                    <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
-	                    <a href="<?php echo $this->url(array('controller' => 'content',
-	                                                         'action' => 'unlink',
-	        												 'relatestoid' => $this->contentData['id_cnt'],
-	                                                         'language' => $this->language),
-	                                                         'unlinkcontent', true); ?>">Manage linked content</a>
-                    </li>
-                                                         
-        		</ul>
-		<?php endif; ?>
+	        
                 </div>
             </div>        
             </div>
@@ -233,6 +237,7 @@ $(document).ready(function() {
             <p><em><?php echo stripslashes($this->contentData['lead_cnt']); ?></em></p>
         </div>
         <div id="content-page-context">
+            <?php /* ?>
             <div id="content_view_campaigns" style="padding-top:7px;">
                 <span class="content_view_bold">
                 	<a href="<?php echo $this->url(array('controller' => 'campaign',
@@ -256,6 +261,7 @@ $(document).ready(function() {
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
+            */ ?>
             <div id="content_view_tags" style="padding-top:7px; padding-bottom:7px;">
                 <span class="content_view_bold">
                 	<a href="<?php echo $this->url(array('controller' => 'tag',
@@ -354,15 +360,15 @@ $(document).ready(function() {
         <?php if (isset($this->children[0])): ?>
         <div class="solutions_for_this_content">
 			<div class="box_468_medium">
-            	<span style="font-weight:bold;">
+            	<strong>
             		<?php echo $this->translate('content-view-solutions-for'); ?>
-            	</span>
+				</strong>
             </div>
             <div class="box_468_light">
-                <div class="child_row" style="clear:both; overflow: hidden;">
+                <div class="child_row" class="clear">
                     <?php foreach ($this->children as $child): ?>
-                        <div style="clear:both;"></div>
-                        <div style="float:left">
+                        <div class="clear"></div>
+                        <div class="left">
 				            <img src="<?php echo $this->url(array('controller' => 'account',
 				                                                  'action' => 'profilethumb',
 				                                                  'id' => $child['id_usr'],
@@ -371,39 +377,51 @@ $(document).ready(function() {
 				                                            	  'lang_default', true); ?>" 
 				                 alt="User image" class="profile_image_smallsize" />
                         </div>
-                        <div class="solutions_child_row_content" style="float:left; padding-left: 10px;">
-                            <a href="#"><?php echo $child['login_name_usr'];?></a>
-                            <span style="font-weight:bold;">
+                        <div class="solutions_child_row_content left">
+                            <div>
+                            <a href="#"><?php echo $child['login_name_usr'];?></a>:
+                            <strong>
                             	<a href="<?php echo $this->url(array('content_id' => $child['id_cnt'], 
                                                                  	 'language' => $this->language), 
                                                            			 'content_shortview', true); ?>">
-                                	<?php echo $child['title_cnt']; ?>
-                            	</a>
-                            </span>
-                            <br />
-                            <span><?php echo $child['lead_cnt']; ?></span>
+                                	<?php echo $child['title_cnt']; ?></a></strong>
+                            </div>
+                            <div><?php echo $child['lead_cnt']; ?></div>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
         </div>
         <?php endif; ?>
+        
         <?php if (isset($this->parents[0])) : ?>
-		<div class="success">
-			<h3><?php echo $this->translate('content-view-solution-to'); ?></h3>
-			<ul>
+		<div class="solutions_for_this_content">
+			<strong><?php echo $this->translate('content-view-solution-to'); ?></strong>
+			<div class="child-row">
 				<?php foreach ($this->parents as $parent): ?>
-					<li>
-						<a href="<?php echo $this->url(array('content_id' => $parent['id_cnt'], 
-                                                                 'language' => $this->language), 
-                                                                 'content_shortview', true); ?>">
-							<?php echo $parent['title_cnt']; ?>
-						</a>
-						<br />
-					</li>
-				<?php endforeach; ?>
-				</ul>
+                        <div class="left">
+				            <img src="<?php echo $this->url(array('controller' => 'account',
+				                                                  'action' => 'profilethumb',
+				                                                  'id' => $parent['id_usr'],
+				                                                  'language' => $this->language,
+				                                                  'thumb' => 'true'),
+				                                            	  'lang_default', true); ?>" 
+				                 alt="User image" class="profile_image_smallsize" />
+                        </div>
+                        <div class="solutions_child_row_content left">
+                            <div>
+                            <a href="#"><?php echo $parent['login_name_usr'];?></a>
+                            <strong><a href="<?php echo $this->url(array('content_id' => $parent['id_cnt'], 
+                                                                 	 'language' => $this->language), 
+                                                           			 'content_shortview', true); ?>">
+                            	<?php echo $parent['title_cnt']; ?></a></strong>
+                            </div>
+                            <div><?php echo $parent['lead_cnt']; ?></div>
+                        </div>
+                    <?php endforeach; ?>
+                    </div>
 			</div>
+			<div class="clear"></div>
 		<?php endif; ?>
 		<?php if(isset($this->comments)): ?>
 		        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>

@@ -10,32 +10,28 @@
 		<tuv xml:lang="fi"><seg>Puuttuuko jokin toiminto?</seg></tuv>
 	</tu>
 	<tu tuid='content-list-right-p3'>
-		<tuv xml:lang="en"><seg>Familarize your self with content production guideline and start sharing your visions.</seg></tuv>
+		<tuv xml:lang="en"><seg>Familiarize your self with content production guideline and start sharing your visions.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tutustu sisällöntuoton ohjenuoriin ja aloita omien ajatuksiesi jakaminen.</seg></tuv>
 	</tu>
-	<tu tuid='content-list-right-p1-idea'>
-		<tuv xml:lang="en"><seg>Ideas are related to challenges or visions found in the Massidea database. </seg></tuv>
-		<tuv xml:lang="fi"><seg>Massidean tietokannassa ideat aina liittyvät tulevaisuustietoon tai haasteeseen.</seg></tuv>
+	<tu tuid='content-list-right-idea'>
+		<tuv xml:lang="en"><seg>Ideas are solutions to today’s challenges and visions of the future related opportunities and threads.
+			Idea is always the starting point, plan or intention for potential innovation.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Massidean tietokannassa ideat aina liittyvät tulevaisuustietoon tai haasteeseen.
+			Toisin sanoin, ideat ovat vastauksia tai ratkaisuja tämän päivän haasteisiin tai tulevaisuuden visioihin.</seg></tuv>
 	</tu>
-	<tu tuid='content-list-right-p2-idea'>
-		<tuv xml:lang="en"><seg>In other words, ideas are answers or solutions to current challenges or visions of the future. </seg></tuv>
-		<tuv xml:lang="fi"><seg>Toisin sanoin, ideat ovat vastauksia tai ratkaisuja tämän päivän haasteisiin tai tulevaisuuden visioihin.</seg></tuv>
+	<tu tuid='content-list-right-finfo'>
+		<tuv xml:lang="en"><seg> Visions of the future or foresight, concern the long-term futures that are usually at least 10 years away.
+		Vision can be a future scenario, trend or anti-trend, which is most likely expected to be realized in the long run.
+		It can also describe alternative future based on seed of change or a weak signal, which might significantly change our life to unexpected path.
+		Visions identify opportunities and threads and help generating new ideas. Ideas founded on vision are more likely resulting radical innovations. </seg></tuv>
 	</tu>
-	<tu tuid='content-list-right-p1-finfo'>
-		<tuv xml:lang="en"><seg>Visions of the future concern the future, not the present day. </seg></tuv>
-		<tuv xml:lang="fi"><seg>Tulevaisuustiedot koskevat jotain tulevaa, eivät nykyistä tilannetta.</seg></tuv>
-	</tu>
-	<tu tuid='content-list-right-p2-finfo'>
-		<tuv xml:lang="en"><seg>Vision can be a future scenario, trend or anti-trend, which is expected to be realized. It can also be seed of change or a weak signal from the future which might become reality.</seg></tuv>
-		<tuv xml:lang="fi"><seg>Tulevaisuustieto voi olla skenaario, trendi tai antitrendi, jota odotetaan toteutuvaksi. Tämä voi tarkoittaa myös muutoksen siementä tai heikkoa signaalia tulevaisuudesta, joka voisi toteutua.</seg></tuv>
-	</tu>
-	<tu tuid='content-list-right-p1-problem'>
-		<tuv xml:lang="en"><seg>Problems and obstacles are stopping us from achieving our goals. </seg></tuv>
-		<tuv xml:lang="fi"><seg>Ongelmat ja haasteet estävät meitä tavoittamasta päämääriämme.</seg></tuv>
-	</tu>
-	<tu tuid='content-list-right-p2-problem'>
-		<tuv xml:lang="en"><seg>Whether it's a question of business or personal life related issues, we can turn problems into challenges and start solving them.</seg></tuv>
-		<tuv xml:lang="fi"><seg>On kyseessä työelämän tai henkilökohtaisen ongelma, voimme muuttaa onglman haasteeksi ja aloittaa niiden ratkaisemisen.</seg></tuv>
+	<tu tuid='content-list-right-problem'>
+		<tuv xml:lang="en"><seg>Challange is personal, business or social related problem, need, situation or observation.
+			It describes the current status of affairs and recognizes the need to resolve the matter.
+			Challanges are important source for generating new ideas, since they are describing the current market needs.
+			By sharing your challange, you invite others to suggest their own solutions to your challenge</seg></tuv>
+		<tuv xml:lang="fi"><seg>Ongelmat ja haasteet estävät meitä tavoittamasta päämääriämme.
+			On kyseessä työelämän tai henkilökohtaisen ongelma, voimme muuttaa onglman haasteeksi ja aloittaa niiden ratkaisemisen.</seg></tuv>
 	</tu>
 	<tu tuid='content-list-right-header-finfo'>
 		<tuv xml:lang="en"><seg>What is a vision?</seg></tuv>
@@ -226,7 +222,7 @@
 		<tuv xml:lang="fi"><seg>Vastaamassa käyttäjälle</seg></tuv>
 	</tu>
 	<tu tuid='content-view-comment-cancel'>
-		<tuv xml:lang="en"><seg>Cancel reply</seg></tuv>
+		<tuv xml:lang="en"><seg>Remove reply</seg></tuv>
 		<tuv xml:lang="fi"><seg>Peru vastaus</seg></tuv>
 	</tu>
     <tu tuid='content-view-campaigns'>
@@ -1634,8 +1630,8 @@
 		<tuv xml:lang="fi"><seg>Istunto on vanhentunut, kirjaudu uudestaan sisään.</seg></tuv>
 	</tu>
 	<tu tuid='content-add-edit'>
-		<tuv xml:lang="en"><seg>Edit</seg></tuv>
-		<tuv xml:lang="fi"><seg>Muokkaa</seg></tuv>
+		<tuv xml:lang="en"><seg>Back to edit</seg></tuv>
+		<tuv xml:lang="fi"><seg>Takaisin muokkaamaan</seg></tuv>
 	</tu>
 	<tu tuid='content-link-not-content-this-type'>
 		<tuv xml:lang="en"><seg>No contents</seg></tuv>

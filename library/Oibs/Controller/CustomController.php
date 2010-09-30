@@ -104,6 +104,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         {
 			$this->view->username = $auth->getIdentity()->username;
             $this->view->userid = $auth->getIdentity()->user_id;
+            $this->view->jsmetabox->append('userId', $auth->getIdentity()->user_id);
             
             $Default_Model_privmsg = New Default_Model_PrivateMessages();
             $unread_privmsgs = $Default_Model_privmsg->getCountOfUnreadPrivMsgs($auth->getIdentity()->user_id);
@@ -149,6 +150,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
 		$this->view->jsmetabox->append('idleRefreshUrl', $this->_urlHelper->url(array('controller' => 'ajax', 'action' => 'idlerefresh'), 'lang_default', true));
 		$this->view->jsmetabox->append('baseUrl', $this->view->baseUrl);
+		
 		
 		$id_target = "";
 		switch($params['controller']) {
@@ -272,7 +274,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
           }
           //else check if the given key has $value as value
           else{
-            if($array[$key]==$value)
+            if(isset($array[$key]) && $array[$key]==$value)
               return true;
           }
         }
@@ -321,4 +323,16 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         $string = mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
         return $string;
     }
+
+    /**
+     * Replace any whitespace with only a single space
+     *
+     * @param string $str
+     * @return string
+     */
+    function replaceWhitespace($str) {
+        $str = preg_replace('/\s+/', ' ', trim((string) $str));
+        return $str;
+    }
+
 } // end of class

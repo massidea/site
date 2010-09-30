@@ -19,10 +19,10 @@ $usrurl = $this->url(array('controller' => 'account',
             <?php echo $this->description_grp; ?>
         </p>
         <?php if (isset($this->campaign_count) && isset($this->member_count)) : ?>
-        <p>
+        <div class="light-gray">
             <strong>Campaigns:</strong> <?php echo $this->campaign_count; ?>,
             <strong>Members:</strong> <?php echo $this->member_count; ?>
-        </p>
+        </div>
         <?php endif; ?>
         <div class="clear"></div>
     </div>

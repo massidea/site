@@ -1,3 +1,4 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <style type="text/css">
 #cacheidlist
 {
@@ -14,7 +15,7 @@
 }
 </style>
 
-<h1><?php echo $this->translate('admin-cachemanager-title'); ?></h1>
+<h2><?php echo $this->translate('admin-cachemanager-title'); ?></h2>
 <h3><?php echo $this->translate('admin-cachemanager-status'); ?></h3>
 <div>
 	<p><?php echo $this->translate('admin-cachemanager-filling-percentage'); ?><i><?php echo $this->fillingPercentage; ?>%</i></p>

@@ -544,3 +544,16 @@ function unselectRadiobutton()
 	document.group_waiting_list_form.accept_all.checked = false;
     document.group_waiting_list_form.deny_all.checked = false;
 }
+
+/**
+ * makeLink
+ * 
+ * Makes a link out of whole element if it has 'a' as child, 
+ * taking its href 
+ * 
+ * @param obj
+ */
+function makeLink(obj) {
+	var url = $(obj).find("a").attr('href');
+	$(location).attr('href', url);
+}

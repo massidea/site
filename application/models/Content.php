@@ -237,7 +237,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 			// Find content comments
 			$select_comment = $this->select()->order('created_cmt ASC');
-			$comments = $rowset->findDependentRowset('Default_Model_Comments', 'CommentContent', $select_comment);
+			$cmtModel = new Default_Model_Comments();
+			$comments = $cmtModel->getCommentsByContent($id); //$rowset->findDependentRowset('Default_Model_Comments', 'CommentContent', $select_comment);
 
 			// Find content keywords
 			$tags = $rowset->findManyToManyRowset('Default_Model_Tags', 'Default_Model_ContentHasTag')->toArray();
@@ -798,6 +799,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$content['solution_cnt'] = htmlspecialchars($data['content_solution']);
 		$content['references_cnt'] = htmlspecialchars($data['content_references']);
 		$content['modified_cnt'] = new Zend_Db_Expr('NOW()');
+		
+		
 		if (isset($data['publish']) && $data['publish'] == 1) 
 			$content['published_cnt'] = 1;
 

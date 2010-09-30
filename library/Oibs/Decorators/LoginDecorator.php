@@ -5,21 +5,6 @@ class Oibs_Decorators_LoginDecorator extends Zend_Form_Decorator_Abstract
 	{
 		$element = $this->getElement();
 		$label = $element->getLabel();
-		/*
-		if ($translator = $element->getTranslator())
-		{
-			$label = $translator->translate($label);
-		}
-		
-		if ($label != null)
-		{
-			if ($element->isrequired())
-			{
-				$label .= '*';
-			}
-			$label .= ':';
-		}
-		*/
 		
 		return $element->getView()
 						->formLabel($element->getName(), $label);
@@ -47,7 +32,7 @@ class Oibs_Decorators_LoginDecorator extends Zend_Form_Decorator_Abstract
 		{
             return '';
         }
-        return '<div class="error_messages">' .
+        return '<div class="errors">' .
                $element->getView()->formErrors($messages) . '</div>';
     }
 
@@ -81,14 +66,14 @@ class Oibs_Decorators_LoginDecorator extends Zend_Form_Decorator_Abstract
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
 
-        $output = /*'<dl class="form_element">*/
-					'<div class="login_form_element">'
-					. $label
-					. $input
+        $output = '<div class="login-row">' .
+				  '<div class="login-column1 left">'. $label . '</div>' .
+				  '<div class="login-column2 left">' . $input . '</div>'
 					. $errors
 					. $desc
+					. '<div class="clear"></div>'
 					. '</div>';
-				 /*</dl>'*/;
+					
 
         switch ($placement) 
 		{
