@@ -78,8 +78,11 @@ $(document).ready(function() {
 		var thisMin = inputDefinitions[obj.name][0];
 		var thisMax = inputDefinitions[obj.name][1];
 		var thisReq = inputDefinitions[obj.name][2];
-		var curLength = $(obj).val().length;
+		// Quick and ugly hack to prevent newline to fail whole validator
+		var newLines = $(obj).val().split("\n").length - 1;
+		var curLength = $(obj).val().length + newLines;
 		var curLeft = (thisMax-curLength);
+		
 		var thisProgress = $('#progressbar_'+obj.name);
 
 		if(curLength < thisMax) {
