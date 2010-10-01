@@ -1421,6 +1421,7 @@ class AccountController extends Oibs_Controller_CustomController
         	if($key == "controller" || $key == "action" || $key == "module" || $key == "language") continue;
         	$parsedUrl .= "/$key/$param";
         }
+        $parsedUrl = str_replace("%","%25",$parsedUrl);
            
         $this->view->userSearch = $userSearch;
         // Custom pagination to fix memory error on large amount of data
