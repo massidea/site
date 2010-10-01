@@ -3,6 +3,10 @@
 $("document").ready(function () {
 	bindEvents();
 	setSelectSize();
+	$('#cancel-button').click(function() {
+		 window.location.href = "<?php echo $this->linkback;?>"; 
+	});
+	
 });
 
 function submitFeeds() {
@@ -82,7 +86,7 @@ function validateFeed() {
 <h2>Feeds for '<?php echo $this->pageTitle; ?>'</h2>
 <div id="rss-editfeeds">
 	<div id="rss-input-feed">Enter feed URL<br />
-	<input id="rss-input-feed-url" type="text" name="feed"/><input id="rss-input-feed-add" onclick="validateFeed()" type="button" value="Add"/></div><br />
+	<input id="rss-input-feed-url" type="text" name="feed"/><input id="rss-input-feed-add" class="submit-button" onclick="validateFeed()" type="button" value="Add"/></div><br />
 	<div id="rss-list-feeds">
 	<form id="feed-form" method="post">
 		<div id="feed-form-list">
@@ -95,7 +99,8 @@ function validateFeed() {
 		</div>
 		<p>*Double click to remove feed</p>
 		</div>
-		<input id="submit-feeds" type="button" value="Save" onclick="submitFeeds();"/><a href="<?php echo $this->linkback;?>" style="float:right">Cancel</a>
+		<input id="submit-feeds" class="submit-button" type="button" value="Save" onclick="submitFeeds();"/>
+		<input type="button" id="cancel-button" class="submit-button" value="Cancel"/>
 	</form>
 	</div>
 

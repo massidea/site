@@ -394,6 +394,7 @@ p#replying_to {
 .rss-item { border-bottom: 1px dotted #CCCCCC; padding: 3px;}
 #rss-list-feeds #feeds { width: 450px; }
 #rss-input-feed-url { width: 405px; }
+#rss-input-feed-add { margin-left: 5px; }
 
 .campaign_list_paragraph {
     font-size: 12px;
@@ -1010,3 +1011,6 @@ textarea#content_references { height: 15em; }
 
 div.tag_cloud { padding-bottom: 5px; }
 
+/** Content unlinking page row styles */
+.linking_from_header { padding-left: 5px; }
+.linking_from_content { padding-left: 5px; width: 350px; }

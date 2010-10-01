@@ -33,7 +33,7 @@ if($this->contentexists) {
                     ?>
                     <div class="linking_dot_line"></div>
                     <div class="linking_from">
-                        <div class="linking_from_name">
+                        <div class="linking_from_name left">
                             <?php
                             $linkusr = $this->url(array('controller' => 'account',
                                                         'action' => 'view',
@@ -45,9 +45,12 @@ if($this->contentexists) {
                                                   'content_shortview', true);
                             ?>
                             <div class="linking_from_<?php echo $content['key_cty']; ?>">
-                                <a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a> :
-                                <strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong>
-                                <p class="linking_from_text"><?php echo $content['lead_cnt']; ?></p>
+                                <div class="left linking_from_header"><a href="<?php echo $linkusr; ?>"><?php echo $content['login_name_usr']; ?></a>:</div>
+                                <div class="left linking_from_content">
+	                                <div><strong><a href="<?php echo $linkurl; ?>"><?php echo $content['title_cnt']; ?></a></strong></div>
+	                                <div><?php echo $content['lead_cnt']; ?></div>
+	                        	</div>
+	                        	<div class="clear"></div>
                             </div>
                         </div>
                         <div class="linking_from_link">
@@ -66,7 +69,7 @@ if($this->contentexists) {
                                                   'removecontentlinks', true);
                             }
                             ?>
-                            <a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-unlink'); ?></a>
+                            <strong><a href="<?php echo $linkurl; ?>"><?php echo $this->translate('content-unlink'); ?></a></strong>
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -90,12 +93,16 @@ if($this->contentexists) {
     <div class="box">
         <h4>What is content unlinking?</h4>
         <div class="box-content">
-            <p><strong></strong><br />
-            </p>
+            <p>Combining different contents together boost creativity 
+            and increase the likelihood of unexpected findings.</p>
 
-            <p><strong></strong><br />
-            </p>
+			<p>By linking you can create logical relationships between different contents.</p> 
 
+			<p>You can link your own published content to other users or to your own contents.</p> 
+
+			<p>One content can be linked to multiple contents.</p> 
+
+			<p>If you want, you can remove links later on from your profile page.</p>
             <div class="clear"></div>
         </div>
     </div>

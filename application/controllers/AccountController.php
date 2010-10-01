@@ -1166,8 +1166,8 @@ class AccountController extends Oibs_Controller_CustomController
                 
 				if($form->isValid($formdata)) {
 					function plus($a, $b) { return $a += $b; }
-					$formdata['own_follows'] = array_reduce($formdata['own_follows'], "plus");
-					$formdata['fvr_follows'] = array_reduce($formdata['fvr_follows'], "plus");
+					//$formdata['own_follows'] = array_reduce($formdata['own_follows'], "plus");
+					//$formdata['fvr_follows'] = array_reduce($formdata['fvr_follows'], "plus");
 
                     // if form is valid
                     // Updates checked notifications
