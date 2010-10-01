@@ -165,7 +165,6 @@ function getSearchTopList() {
 		},	
 		url: url,
 		success: function(data) {
-			alert(1);
 		  $(".user_list_top_list").html(data);
 		  $("#user_list_tabs").tabs().removeClass('ui-widget');
 		  $(".user_list_top_list").slideDown(1000);
