@@ -1010,3 +1010,7 @@ textarea#content_references { height: 15em; }
 
 div.tag_cloud { padding-bottom: 5px; }
 
+/** Content unlinking page row styles */
+.linking_from_header { padding-left: 5px; }
+.linking_from_content { padding-left: 5px; width: 350px; }
+.linking_from_content
