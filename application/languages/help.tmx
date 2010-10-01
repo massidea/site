@@ -456,12 +456,9 @@
     <tu tuid='help-guidelines-paragraph2'>
 		<tuv xml:lang="en">
             <seg>
-                <p>
-                    Problems and obstacles are stopping us from achieving our goals. 
-                </p>
-                <p>
-                    Whether it's a question of business or personal life related issues, we can turn problems into challenges and start solving them.
-                </p> 
+                <p>Challenge can be personal, business or social related problem, need, situation or observation description.</p>
+                <p>It defines the current status of affairs and recognizes the need to resolve the matter.</p>
+                <p>Challenges are important source for generating new ideas, since they are describing the current market needs.</p> 
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
@@ -484,12 +481,9 @@
     <tu tuid='help-guidelines-paragraph3'>
 		<tuv xml:lang="en">
             <seg>
-                <p>
-                    Ideas are always related to a challenge or a vision found in the Massidea.org database. 
-                </p>
-                <p>
-                    In other words, ideas are answers or solutions to current challenges or visions of the future.
-                </p> 
+                <p>Ideas are solutions to today’s challenges and visions of the future related opportunities and threads.</p>
+                <p>Idea is always the starting point, plan or intention for potential innovation.</p>
+                <p>Idea can suggest small incremental improvement or radical revolutionary change in thinking, products, processes or organization.</p> 
             </seg>
         </tuv>
 		<tuv xml:lang="fi">
@@ -512,12 +506,9 @@
     <tu tuid='help-guidelines-paragraph4'>
 		<tuv xml:lang="en">
             <seg>
-                <p>
-                    Vision concern the future, not the present day. It can be a future scenario, trend or anti-trend, which is expected to be realized. 
-                </p>
-                <p>
-                    It can also be seed of change or a weak signal from the future which might become reality. 
-                </p> 
+                <p>Vision concern the long-term future which is usually at least 10 years away.</p>
+                <p>It can be future scenario, trend or anti-trend, which is most likely to be realized.</p>
+                <p>It can also describe an alternative unlikely future based on seed of change or weak signal, which might significantly change all our life if realized.</p> 
             </seg>
         </tuv>
 		<tuv xml:lang="fi">

@@ -182,6 +182,7 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
     						->joinLeft(array('ugg' => 'usr_groups_grp'),
     							'ugg.id_grp = uhg.id_grp',
     							array('ugg.group_name_grp'))
+    						->where('ugg.group_name_grp != ""') //If databse is not synchronized, this fixes atleast one problem...
     						;
     						if(isset($userIdList)) $select->where('id_usr IN (?)',$userIdList);
     						
@@ -198,6 +199,7 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
     							'ugg.id_grp = uhg.id_grp',
     							array('name' => 'ugg.group_name_grp'))
     						->group('uhg.id_grp')
+    						->where('ugg.group_name_grp != ""') //If databse is not synchronized, this fixes atleast one problem...
     						->order('value desc')
     						->order('name')
     						;

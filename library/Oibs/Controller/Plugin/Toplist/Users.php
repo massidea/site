@@ -95,15 +95,24 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 		if(!empty($getIds)) {
 			
 			$temp = $this->_getChoiceValue($choice,$getIds);
-	
+			
+			$newIds = array();
+			foreach($getIds as $id) {
+				foreach($temp as $t) {
+					if($t['id_usr'] == $id) {
+						$newIds[] = $id;
+						continue 2;
+					}
+				}
+			}
+			$getIds = $newIds;
+			$intersect = $this->_intersectMergeArray($temp,$this->_userModel->getUserInfo($getIds));	
 			$this->_topList[$choice] = array(
 				'users' => 
-					$this->_finalizeToSortingOrderByUserId($getIds,
-						$this->_intersectMergeArray($temp,
-							$this->_userModel->getUserInfo($getIds))),
+					$this->_finalizeToSortingOrderByUserId($getIds,$intersect),
 				'name' => $choice
 			);
-
+			
 		}
 		return;
 	}
