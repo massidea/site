@@ -676,393 +676,13 @@
 		<tuv xml:lang="en"><seg>How to write a good challenge?</seg></tuv>
 		<tuv xml:lang="fi"><seg>How to write a good challenge?</seg></tuv>
 	</tu>
-	<tu tuid='content-add-problem-right-box-t1'>
-		<tuv xml:lang="en"><seg>Focus on the challenge</seg></tuv>
-		<tuv xml:lang="fi"><seg>Focus on the challenge</seg></tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p1'>
-		<tuv xml:lang="en">
-            <seg>
-                Focus on writing <i>only</i> about the challenge and not it's
-                solutions. Solutions are kept separate form the challenge thus
-                allowing multiple solutions to the same challenge.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Focus on writing <i>only</i> about the challenge and not it's
-                solutions. Solutions are kept separate form the challenge thus
-                allowing multiple solutions to the same challenge.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-t2'>
-		<tuv xml:lang="en"><seg>Motivate the reader</seg></tuv>
-		<tuv xml:lang="fi"><seg>Motivate the reader</seg></tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p2'>
-		<tuv xml:lang="en">
-            <seg>
-                Explain clearly 1) what the challenge is and 2) why it is
-                important to solve it.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Explain clearly 1) what the challenge is and 2) why it is
-                important to solve it.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p3'>
-		<tuv xml:lang="en">
-            <seg>
-                Write for a person who is not familiar with the topic.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Write for a person who is not familiar with the topic.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p4'>
-		<tuv xml:lang="en">
-            <seg>
-                Most importantly you are trying to motivate others to offer
-                their solutions.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Most importantly you are trying to motivate others to offer
-                their solutions.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p5'>
-		<tuv xml:lang="en">
-            <seg>
-                <b>Title, subheader and keywords</b> are important, as they will
-                determine how attractive your article is and whether others
-                will find it.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                <b>Title, subheader and keywords</b> are important, as they will
-                determine how attractive your article is and whether others
-                will find it.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p6'>
-		<tuv xml:lang="en">
-            <seg>
-                <b>Define the research question</b> to which you need an answer.
-                This will also help you to write more focused.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                <b>Define the research question</b> to which you need an answer.
-                This will also help you to write more focused.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-t3'>
-		<tuv xml:lang="en"><seg>Choose your language</seg></tuv>
-		<tuv xml:lang="fi"><seg>Choose your language</seg></tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p7'>
-		<tuv xml:lang="en">
-            <seg>
-                Altough English is preferred as the universal language.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Altough English is preferred as the universal language.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-problem-right-box-p8'>
-		<tuv xml:lang="en">
-            <seg>
-                <b>Include references</b> in your article (at least the website
-                in which the article can be found or the name and number of
-                the magazine).
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                <b>Include references</b> in your article (at least the website
-                in which the article can be found or the name and number of
-                the magazine).
-            </seg>
-        </tuv>
-	</tu>
 	<tu tuid='content-add-finfo-right-box-header'>
 		<tuv xml:lang="en"><seg>How to write a good vision?</seg></tuv>
 		<tuv xml:lang="fi"><seg>How to write a good vision?</seg></tuv>
 	</tu>
-	<tu tuid='content-add-finfo-right-box-t1'>
-		<tuv xml:lang="en"><seg>Focus on the future</seg></tuv>
-		<tuv xml:lang="fi"><seg>Focus on the future</seg></tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p1'>
-		<tuv xml:lang="en">
-            <seg>
-                Focus on writing about one <i>specific</i> future vision, not
-                about the general view of the forthcoming.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Focus on writing about one <i>specific</i> future vision, not
-                about the general view of the forthcoming.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-t2'>
-		<tuv xml:lang="en"><seg>Motivate the reader</seg></tuv>
-		<tuv xml:lang="fi"><seg>Motivate the reader</seg></tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p2'>
-		<tuv xml:lang="en">
-            <seg>
-                Explain clearly 1) what the future vision is and estimate 2)
-                when and 3) how likely the vision is expected to be realized.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Explain clearly 1) what the future vision is and estimate 2)
-                when and 3) how likely the vision is expected to be realized.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p3'>
-		<tuv xml:lang="en">
-            <seg>
-                Write for a person who is not familiar with the topic.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Write for a person who is not familiar with the topic.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p4'>
-		<tuv xml:lang="en">
-            <seg>
-                Most importantly you are trying to motivate others to offer
-                their ideas and challenges based on your vision.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Most importantly you are trying to motivate others to offer
-                their ideas and challenges based on your vision.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-t3'>
-		<tuv xml:lang="en"><seg>Define the threat and opportunity</seg></tuv>
-		<tuv xml:lang="fi"><seg>Define the threat and opportunity</seg></tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p5'>
-		<tuv xml:lang="en">
-            <seg>
-                Identify the most important threat and opportunity when your
-                vision is realized.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Identify the most important threat and opportunity when your
-                vision is realized.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p6'>
-		<tuv xml:lang="en">
-            <seg>
-                <b>Title, subheader and keywords</b> are important, as they will
-                determine how attractive your article is and whether others
-                will find it.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                <b>Title, subheader and keywords</b> are important, as they will
-                determine how attractive your article is and whether others
-                will find it.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-t4'>
-		<tuv xml:lang="en"><seg>Choose your language</seg></tuv>
-		<tuv xml:lang="fi"><seg>Choose your language</seg></tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p7'>
-		<tuv xml:lang="en">
-            <seg>
-                Altough English is preferred as the universal language.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Altough English is preferred as the universal language.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-finfo-right-box-p8'>
-		<tuv xml:lang="en">
-            <seg>
-                <b>Include references</b> in your article (at least the website
-                in which the article can be found or the name and number of
-                the magazine).
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                <b>Include references</b> in your article (at least the website
-                in which the article can be found or the name and number of
-                the magazine).
-            </seg>
-        </tuv>
-	</tu>
 	<tu tuid='content-add-idea-right-box-header'>
 		<tuv xml:lang="en"><seg>How to write a good idea?</seg></tuv>
 		<tuv xml:lang="fi"><seg>How to write a good idea?</seg></tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-t1'>
-		<tuv xml:lang="en"><seg>Focus on the idea</seg></tuv>
-		<tuv xml:lang="fi"><seg>Focus on the idea</seg></tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p1'>
-		<tuv xml:lang="en">
-            <seg>
-                Focus on writing <i>only</i> about the idea.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Focus on writing <i>only</i> about the idea.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-t2'>
-		<tuv xml:lang="en"><seg>Motivate the reader</seg></tuv>
-		<tuv xml:lang="fi"><seg>Motivate the reader</seg></tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p2'>
-		<tuv xml:lang="en">
-            <seg>
-                Explain clearly 1) what the idea is and 2) why it is going to
-                work.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Explain clearly 1) what the idea is and 2) why it is going to
-                work.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p3'>
-		<tuv xml:lang="en">
-            <seg>
-                Write for a person who is not familiar with the topic to make
-                your article easily understandable.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Write for a person who is not familiar with the topic to make
-                your article easily understandable.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p4'>
-		<tuv xml:lang="en">
-            <seg>
-                Most importantly you are trying to motivate others to further
-                develop your idea or take it into practice.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Most importantly you are trying to motivate others to further
-                develop your idea or take it into practice.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p5'>
-		<tuv xml:lang="en">
-            <seg>
-                <b>Title, subheader and keywords</b> are important, as they will
-                determine how attractive your article is and whether others
-                will find it.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                <b>Title, subheader and keywords</b> are important, as they will
-                determine how attractive your article is and whether others
-                will find it.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-t3'>
-		<tuv xml:lang="en"><seg>Define your idea in one sentence</seg></tuv>
-		<tuv xml:lang="fi"><seg>Define your idea in one sentence</seg></tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p6'>
-		<tuv xml:lang="en">
-            <seg>
-                Summarize your idea's key point.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Summarize your idea's key point.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-t4'>
-		<tuv xml:lang="en"><seg>Choose your language</seg></tuv>
-		<tuv xml:lang="fi"><seg>Choose your language</seg></tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p7'>
-		<tuv xml:lang="en">
-            <seg>
-                Altough English is preferred as the universal language.
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                Altough English is preferred as the universal language.
-            </seg>
-        </tuv>
-	</tu>
-	<tu tuid='content-add-idea-right-box-p8'>
-		<tuv xml:lang="en">
-            <seg>
-                <b>Include references</b> in your article (at least the website
-                in which the article can be found or the name and number of
-                the magazine).
-            </seg>
-        </tuv>
-		<tuv xml:lang="fi">
-            <seg>
-                <b>Include references</b> in your article (at least the website
-                in which the article can be found or the name and number of
-                the magazine).
-            </seg>
-        </tuv>
 	</tu>
 	<tu tuid='content-edit'>
 		<tuv xml:lang="en"><seg>Edit</seg></tuv>
@@ -1565,65 +1185,41 @@
 		<tuv xml:lang="en"><seg>Is linked to</seg></tuv>
 		<tuv xml:lang="fi"><seg>Mihin linkitetään</seg></tuv>
 	</tu>
-	<tu tuid='content-add-problem-p1'>
-		<tuv xml:lang="en"><seg>
-            Problems and obstacles are stopping us from achieving our goals.
-            Whether it's a question of business or personal life related
-            issues, we can turn problems into challenges and start solving
-            them.
-        </seg></tuv>
-		<tuv xml:lang="fi"><seg>
-            Problems and obstacles are stopping us from achieving our goals.
-            Whether it's a question of business or personal life related
-            issues, we can turn problems into challenges and start solving
-            them.
-        </seg></tuv>
+	<tu tuid='content-add-problem'>
+		<tuv xml:lang="en">
+			<seg>Challenge is personal, business or social related problem, need, situation or observation. It describes the current status of affairs and recognizes the need to resolve the matter. 
+			Write to a person who is not familiar with the topic. 
+			Keep your focus on challenge and not related solutions or visions. You can publish those one a separate document and link them later on to this challenge.</seg></tuv>
 	</tu>
-	<tu tuid='content-add-problem-p2'>
+	<tu tuid='content-add-right-box-specific-problem'>
 		<tuv xml:lang="en"><seg>
-            Follow the instructions on the right and upload your challenge into
-            Massidea.org, and let the community offer you new solutions.
-        </seg></tuv>
-        <tuv xml:lang="fi"><seg>
-            Follow the instructions on the right and upload your challenge into
-            Massidea.org, and let the community offer you new solutions.
-        </seg></tuv>
+			<p><strong>Research questions</strong><br />
+			The single question in which you need an answer.</p>
+		</seg></tuv>
 	</tu>
-	<tu tuid='content-add-finfo-p1'>
-		<tuv xml:lang="en"><seg>
-            Your topic must concern the future, not the present day. Vision can
-            be a future scenario, trend or anti-trend, which is expected to be
-            realized. It can also be seed of change or a weak signal from the
-            future which might become reality.
-        </seg></tuv>
-		<tuv xml:lang="fi"><seg>
-            Your topic must concern the future, not the present day. Vision can
-            be a future scenario, trend or anti-trend, which is expected to be
-            realized. It can also be seed of change or a weak signal from the
-            future which might become reality.
-        </seg></tuv>
+	<tu tuid='content-add-idea'>
+		<tuv xml:lang="en">
+		<seg>Ideas are solutions to today’s challenges and visions of the future related opportunities and threads. Idea can suggest small incremental improvement or radical revolutionary change in thinking, products, processes or organization. 
+		Write to a person who is not familiar with the topic. 
+		Keep your focus on idea and not related challenges or visions. You can publish those on a separate document and link them later on to this idea.</seg></tuv>
 	</tu>
-	<tu tuid='content-add-finfo-p2'>
+	<tu tuid='content-add-right-box-specific-idea'>
 		<tuv xml:lang="en"><seg>
-            Your topic can cover e.g. future technology or science, new needs,
-            political or legislative decision.
-        </seg></tuv>
-        <tuv xml:lang="fi"><seg>
-            Your topic can cover e.g. future technology or science, new needs,
-            political or legislative decision.
-        </seg></tuv>
+			<p><strong>Idea in one sentence</strong><br />
+			Summarize your idea's key point to a one sentence.</p>
+		</seg></tuv>
 	</tu>
-	<tu tuid='content-add-idea-p1'>
+	<tu tuid='content-add-finfo'>
+		<tuv xml:lang="en">
+		<seg>Vision concern the long-term future which is usually at least 10 years away. It can be future scenario, trend or anti-trend, which is most likely to be realized. It can also describe an alternative unlikely future based on seed of change or weak signal, which might significantly change all our life if realized.
+		Write to a person who is not familiar with the topic.
+		Keep your focus on vision and not related challenges or ideas. You can publish those on a separate document and link them later on to this vision.</seg></tuv>
+	</tu>
+	<tu tuid='content-add-right-box-specific-finfo'>
 		<tuv xml:lang="en"><seg>
-            Ideas are always related to a challenge or a vision found in the
-            Massidea database. In other words, ideas are answers or solutions
-            to current challenges or visions of the future.
-        </seg></tuv>
-		<tuv xml:lang="fi"><seg>
-            Ideas are always related to a challenge or a vision found in the
-            Massidea database. In other words, ideas are answers or solutions
-            to current challenges or visions of the future.
-        </seg></tuv>
+			<p><strong>The threat and opportunity</strong><br />
+			Identify the most important threat and opportunity if vision is realized.</p>
+		</seg></tuv>
 	</tu>
 	<tu tuid='content-preview-not-logged-in'>
 		<tuv xml:lang="en"><seg>Your session has timed out, please log in again.</seg></tuv>

@@ -18,28 +18,17 @@ var previewUrl = '<?php echo $previewUrl; ?>';
 <div id="add-content-page" class="narrow left">
 	
 	<div id="form_content_realcontent" style="display: block">
-        <h2>
+        <h2 class="light-gray">
             <?php echo $this->translate('content-add-'
                                 . $this->short_contenttype
                                 . '-page-header'
                 ); ?>
         </h2>
         <p>
-            <?php echo $this->translate('content-add-' 
-                                . $this->short_contenttype 
-                                . '-p1'
-                ); ?>
+            <?php echo str_replace("\n", "</p><p>", $this->translate('content-add-' 
+                                . $this->short_contenttype
+                )); ?>
         </p>
-        
-        <?php if($this->short_contenttype != "idea"): ?>
-        <p>
-        <?php echo $this->translate('content-add-' 
-                            . $this->short_contenttype 
-                            . '-p2'
-            ); ?>
-        </p>
-        <?php endif; ?>
-            
         <?php if($this->relatesToId != 0): ?>
             <div id="linked">
                 <div class="link-target"><strong>
@@ -86,16 +75,50 @@ var previewUrl = '<?php echo $previewUrl; ?>';
 </div>
 </div>
 <div id="sidebar">
-
     <?php $contentType = $this->short_contenttype; ?>
-    
-    
     <div class="box">
 	    <h2 class="right_side_title_small">
 	        <?php echo $this->translate('content-add-'.$contentType.'-right-box-header'); ?>
 	    </h2>
         <div class="box-content">
-            <?php // What is this? 
+        <p><strong>Language</strong><br /> 
+		English is preferred but you can write in any language. Automated translation to over 50 languages is offered via Google translator.</p> 
+
+		<p><strong>Headline</strong><br />
+		Grab’s attention, summarize the whole thought and attracts to read the rest of the story.</p>
+
+		<p><strong>Lead chapter</strong><br /> 
+		Together with headline answers to what, why and whom questions and sum up the whole thought.</p> 
+
+		<?php echo $this->translate('content-add-right-box-specific-'.$contentType); ?>
+		
+		<p><strong>Keywords</strong><br />
+		Words that capture the essence of the topic of your content. Are important, since we use them for related content automatization.</p> 
+
+		<p><strong>Related companies and organizations</strong><br /> 
+		Similar as keywords but present existing companies and organizations, which are related to your insight.</p> 
+
+		<p><strong>Body text</strong><br />
+		Is elaborating the headline and lead paragraph. Answer following questions:</p> 
+		
+		<p>1) What is the insight,</p> 
+
+		<p>2) Why the insight is important and valuable,</p> 
+
+		<p>3) Who is the target group and whom should be interested,</p> 
+
+		<p>4) When (temporal dimension) the insight is topical and</p> 
+
+		<p>5) Where (geographical, physical location or circumstances) the insight is topical?</p> 
+
+		<p><strong>References</strong><br /> 
+		Include references in your content when possible (e.g. website, book or article).</p> 
+
+		<p><strong>Upload file(s)</strong><br />
+		If have more to say or show, you can attach multiple files to your content.</p>
+
+			<?php /*
+			 // What is this? 
             if($contentType == "problem") {
                 ?>
                 
@@ -171,6 +194,6 @@ var previewUrl = '<?php echo $previewUrl; ?>';
                 
                 <?php
             }
-            ?>
+            */ ?>
         </div>
     </div>
