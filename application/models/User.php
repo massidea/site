@@ -1008,18 +1008,20 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     									array('id_usr'))
     									->joinLeft(array('crt' => 'content_ratings_crt'),
     												'crt.id_cnt_crt = cnt.id_cnt',
-    												array('value' => 'SUM(rating_crt)'))
+    												array('value' => 'SUM(crt.rating_crt)'))
     							->where('id_usr IN (?)',$userIDList)
     							->group('id_usr')
     							->order('id_usr')
     							;
 					
         $result = $this->_db->fetchAll($select);
+        //print_r($result);die;
         foreach($result as $key => $data) {
         	if($data['value'] == "") unset($result[$key]);
         }
    
         $result = array_values($result);
+        //print_r($result);
 		return $result;
     }
     
@@ -1352,9 +1354,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */ 
     public function sortUsersByRating($search, $sort, $list, $limit) {
-
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
     									->joinLeft(array('crt' => 'content_ratings_crt'),
@@ -1366,6 +1367,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							;
     	if($limit) $select->limit($limit,0);						
         $result = $this->_db->fetchAll($select);
+        //print_r($result);die;
         $result = $this->simplifyArray($result,'id_usr');
         if($list) $result = $this->addMissingIdsToResult($result,
 							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),

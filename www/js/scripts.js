@@ -55,8 +55,8 @@ $(document).ready(function(){
 		resizable: false,
 		title: 'Select content type',
 		autoOpen: false,
-		width: 610,
-		height: 290
+		width: 625,
+		height: 345
 	});
 	$("#add_new_content > .add_new > .add_new_info > .add_new_title > a").each(function(){
 		$(this).click(function(){		
