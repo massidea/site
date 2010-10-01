@@ -97,11 +97,11 @@
 		<tuv xml:lang="fi"><seg>Tulevaisuuden näkymät</seg></tuv>
 	</tu>
 	<tu tuid='index-problems'>
-		<tuv xml:lang="en"><seg>Today's challenges</seg></tuv>
+		<tuv xml:lang="en"><seg>Recent challenges</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tämän päivän haasteet</seg></tuv>
 	</tu>
 		<tu tuid='index-ideas'>
-		<tuv xml:lang="en"><seg>View ideas</seg></tuv>
+		<tuv xml:lang="en"><seg>Recent ideas</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
 	</tu>
 	<tu tuid='index-addcontent-challenge'>
