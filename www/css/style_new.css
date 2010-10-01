@@ -1080,7 +1080,7 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 /* Sidebar --> Campaings & Groups*/
 #sidebar #campaigns p, #sidebar #groups p { margin:15px 0px 20px 15px; }
-#sidebar #campaigns ul, #sidebar #groups ul, { margin:-8px 0px; padding:0px; }
+/** #sidebar #campaigns ul, #sidebar #groups ul { margin:-8px 0px; padding:0px; } */
 #sidebar #campaigns ul li, #sidebar #groups ul li {
 	/*background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;*/
 	padding:5px 0px 5px 2px;

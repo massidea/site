@@ -980,7 +980,6 @@ div.top_right_box_links_users ul li { padding: 5px 0 5px; }
 #admin_comment_flags_table .desc_td_checkbox { width: 15px; }
 #admin_comment_flags_table .item_tr:nth-child(odd) { background-color: #eee; color: #000; }
 
-#sidebar ul.campaigns li a { padding-left: 5px; }
 #sidebar ul.campaigns li { padding: 2px; list-style: none; }
 
 .scroll-box .user .context { width: 375px !important; }
@@ -1008,4 +1007,6 @@ textarea#content_textlead { height: 10em; }
 textarea#content_references { height: 15em; }
 
 .vote { cursor: pointer; }
+
+div.tag_cloud { padding-bottom: 5px; }
 

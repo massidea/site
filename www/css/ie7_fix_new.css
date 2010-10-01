@@ -79,7 +79,7 @@
 .user_list_top_box_runnerups_title_points { margin-top: -15px; }
 .user_list_top_column { display: inline; }
 .user_list_top_box { margin-right: 4px; }
-.ui-tabs .ui-tabs-nav { width: 705px; }
+.user_list_giant_tab_box .ui-tabs .ui-tabs-nav { width: 705px; }
 
 #add_new_content { overflow: hidden; }
 #add_new_content .add_new_info h3 { font-size: 16px; }
