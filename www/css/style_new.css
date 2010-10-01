@@ -95,10 +95,10 @@ input.submit-button {
 	margin:0 auto; padding:0px 1px 20px 1px; }
 
 #add_new_content { padding: 0px 0px 0px 0px; display: none; background-color: #eee; }
-#add_new_content .add_new { float: left; width: 196px; }
+#add_new_content .add_new { float: left; width: 200px; }
 
-#add_new_content .add_new_info { position: relative; background-color: #fff; height: 230px; border: 1px solid #AAA; margin-top: 10px; }
-#add_new_content .add_new_info p { padding:0px 10px 0px 10px; font-size: 0.9em; color: #999 }
+#add_new_content .add_new_info { position: relative; background-color: #fff; height: 290px; border: 1px solid #AAA; margin-top: 10px; }
+#add_new_content .add_new_info p { padding:0px 10px 0px 10px; font-size: 0.8em; color: #999 }
 
 #add_new_content .add_new_title { cursor: pointer; border-bottom: 1px solid #AAA; }
 #add_new_content .add_new_title a { color: #FFF; font-weight: bold; font-size: 14px; height: 15px; width: inherit; display: block; position: relative; padding: 5px 0px 5px 5px; overflow: hidden;}
@@ -113,7 +113,7 @@ input.submit-button {
 #add_new_content #add_new_vision .add_new_title:hover { background-color: #FFF; }
 #add_new_content #add_new_vision .add_new_title:hover a { color: #FFC726; }
 
-#add_new_content #add_new_idea { margin-left: 7px; margin-right: 7px; }
+#add_new_content #add_new_idea { margin-left: 8px; margin-right: 8px; }
 #add_new_content #add_new_challenge { margin-left: 4px; }
 #add_new_content #add_new_vision { margin-right: 4px; }
 
