@@ -1499,7 +1499,7 @@ class ContentController extends Oibs_Controller_CustomController
 					} else {
 						$message = $this->view->translate('content-remove-not-successful') . '<br />';
 						// User don't have to see these explanations
-						
+						/*
 						 if(!$contentRemoveChecker['removeContentFromCampaign']) $message .= $this->view->translate('content-remove-removeContentFromCampaign') . '<br />';
 						 if(!$contentRemoveChecker['removeContentFromContent']) $message .= $this->view->translate('content-remove-removeContentFromContent-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContentFromFutureinfoClasses']) $message .= $this->view->translate('content-remove-removeContentFromFutureinfoClasses-not-successful') . '<br />';
@@ -1518,7 +1518,7 @@ class ContentController extends Oibs_Controller_CustomController
 						 if(!$contentRemoveChecker['removeUserHasFavorites']) $message .= $this->view->translate('content-remove-removeUserHasFavorites-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContent']) $message .= $this->view->translate('content-remove-removeContent-content-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';
-						 
+						 */
 
 						$this->flash($message, $url);
 					}
