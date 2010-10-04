@@ -123,15 +123,10 @@ class Default_Model_ContentHasRelatedCompany extends Zend_Db_Table_Abstract
 	*/
 	public function removeContentRelComps($id_cnt = 0)
     {
-        $return = false;
-        
         $where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
-        if($this->delete($where))
-        {
-            $return = true;
-        }
+        $this->delete($where);
         
-        return $return;
+        return $this->fetchAll($where)->count() ? false : true;
     } // end of removeContentRelComps
     
     /**

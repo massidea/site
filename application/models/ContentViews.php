@@ -182,11 +182,8 @@ class Default_Model_ContentViews extends Zend_Db_Table_Abstract
     public function removeContentViews($id_cnt_vws = 0)
     {
         $where = $this->getAdapter()->quoteInto('id_cnt_vws = ?', $id_cnt_vws);
-        if ($this->delete($where)) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->delete($where);
+        return $this->fetchAll($where)->count() ? false : true;
     } // end of removeContentViews
     
     public function getUserViewedContents($id_usr, $limit = 10) {

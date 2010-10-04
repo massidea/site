@@ -1128,7 +1128,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 */
         public function removeContentAndDepending($id_cnt = 0)
         {
-            /*$contentRemoveChecker = array(
+            $contentRemoveChecker = array(
                 'removeContentFromCampaign' =>          true,
                 'removeContentFromContent' =>           true,
                 'removeContentFromFutureinfoClasses' => true,
@@ -1147,7 +1147,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 'removeUserFromFavorites' =>            true,
                 'removeContent' =>                      true,
                 'removeContentComments' =>              true
-            );*/
+            );
 
             // cnt_has_cmp
             $cmpHasCnt = new Default_Model_CampaignHasContent();
@@ -1160,22 +1160,28 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 $contentRemoveChecker['removeContentFromContent'] = false;
 
             // cnt_has_fic
+            /* not used
             $cntHasFic = new Default_Model_ContentHasFutureinfoClasses();
             if (!$cntHasFic->removeFutureinfoClassesFromContent($id_cnt))
                 $contentRemoveChecker['removeContentFromFutureinfoClasses'] = false;
+			*/
 
             // cnt_has_grp
             // Not used?
 
             // cnt_has_ind
+            /* not used
             $cntHasInd = new Default_Model_ContentHasIndustries();
             if (!$cntHasInd->removeIndustriesFromContent($id_cnt))
                 $contentRemoveChecker['removeContentFromIndustries'] = false;
+            */
 
             // cnt_has_ivt
+            /* not used
             $cntHasIvt = new Default_Model_ContentHasInnovationTypes();
             if (!$cntHasIvt->removeInnovationTypesFromContent($id_cnt))
                 $contentRemoveChecker['removeContentFromInnovationTypes'] = false;
+            */
 
             // related_companies_rec and cnt_has_rec
             $cntHasRec = new Default_Model_ContentHasRelatedCompany();

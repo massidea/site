@@ -238,18 +238,11 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 	//If content is deleted this is used to remove references to deleted content
 	public function removeAllContentFromFavouritesByContentId($id_cnt = 0) 
 	{
-		$return = false;
-
 		if($id_cnt != 0) {
 			$where = $this->getAdapter()->quoteInto('id_cnt = ?', (int)$id_cnt);
-
-			if(!$this->delete($where)) {
-				$return = false;
-			} else {
-				$return = true;
-			}
+			$this->delete($where);
 		}
-		return $return;
+		return ($this->fetchAll($where)->count()) ? false : true;
 	}
 	
 	/*

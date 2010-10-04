@@ -1502,9 +1502,9 @@ class ContentController extends Oibs_Controller_CustomController
 						/*
 						 if(!$contentRemoveChecker['removeContentFromCampaign']) $message .= $this->view->translate('content-remove-removeContentFromCampaign') . '<br />';
 						 if(!$contentRemoveChecker['removeContentFromContent']) $message .= $this->view->translate('content-remove-removeContentFromContent-not-successful') . '<br />';
-						 if(!$contentRemoveChecker['removeContentFromFutureinfoClasses']) $message .= $this->view->translate('content-remove-removeContentFromFutureinfoClasses-not-successful') . '<br />';
-						 if(!$contentRemoveChecker['removeContentFromIndustries']) $message .= $this->view->translate('content-remove-removeContentFromIndustries-not-successful') . '<br />';
-						 if(!$contentRemoveChecker['removeContentFromInnovationTypes']) $message .= $this->view->translate('content-remove-removeContentFromInnovationTypes-not-successful') . '<br />';
+						 //if(!$contentRemoveChecker['removeContentFromFutureinfoClasses']) $message .= $this->view->translate('content-remove-removeContentFromFutureinfoClasses-not-successful') . '<br />';
+						 //if(!$contentRemoveChecker['removeContentFromIndustries']) $message .= $this->view->translate('content-remove-removeContentFromIndustries-not-successful') . '<br />';
+						 //if(!$contentRemoveChecker['removeContentFromInnovationTypes']) $message .= $this->view->translate('content-remove-removeContentFromInnovationTypes-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContentFromRelatedCompanies']) $message .= $this->view->translate('content-remove-removeContentFromRelatedCompanies-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContentRelatedCompanies']) $message .= $this->view->translate('content-remove-removeContentRelatedCompanies-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContentFromTags']) $message .= $this->view->translate('content-remove-removeContentFromTags-not-successful') . '<br />';
@@ -1517,8 +1517,7 @@ class ContentController extends Oibs_Controller_CustomController
 						 if(!$contentRemoveChecker['removeContentFiles']) $message .= $this->view->translate('content-remove-removeContentFiles-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeUserHasFavorites']) $message .= $this->view->translate('content-remove-removeUserHasFavorites-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContent']) $message .= $this->view->translate('content-remove-removeContent-content-not-successful') . '<br />';
-						 if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';
-						 */
+						 if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';*/						
 
 						$this->flash($message, $url);
 					}
