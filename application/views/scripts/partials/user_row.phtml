@@ -14,14 +14,12 @@ $cityUrl = $this->url(array('controller' => 'account',
                         'lang_default',
                         true);
 ?>
-<li><a href="<?php echo $url ?>"><?php echo $this->login_name_usr; ?></a>
-<?php
-if(isset($this->count)) {
-    echo "($this->count)";
-}
-if (isset($this->city) && !empty($this->city)) {
-   echo " | "; ?> <a href="<?php echo $cityUrl; ?>"><?php echo $this->city; ?></a><?php
-}
-?>
+<li <?php //class="hover-link" onclick="makeLink(this);"?>><a id="user-link" href="<?php echo $url ?>"><?php echo $this->login_name_usr; ?></a>
+<?php if(isset($this->count)): ?>
+	<?php echo "($this->count)";?>
+<?php endif; ?>
+<?php if (isset($this->city) && !empty($this->city)): ?>
+   | <a href="<?php echo $cityUrl; ?>"><?php echo $this->city; ?></a>
+<?php endif; ?>
 </li>
 <?php unset($language, $url); ?>

@@ -57,7 +57,7 @@ class Oibs_Validators_GroupExists extends Zend_Validate_Abstract
     */
 	public function isValid($value)
 	{
-	    $value = (string) $value;
+	    $value = Oibs_Controller_CustomController::replaceWhitespace($value);
 	    $this->_setValue($value);
 
         $groupModel = new Default_Model_Groups();

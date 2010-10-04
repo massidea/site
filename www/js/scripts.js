@@ -28,6 +28,8 @@ function blurMenu(target, color, baseurl)
 }
 
 $(document).ready(function(){
+	var meta = jsMeta;
+	
 	$("#login_box").dialog({
 		closeOnEscape: true,
 		draggable: false,
@@ -46,13 +48,49 @@ $(document).ready(function(){
 		autoOpen: false
 	});
 	
-	$("a#login_link").each(function() {
-		$(this).click(function (event) {
-			event.preventDefault();
-			$("#login_box").dialog("open");
-			$("#login_box > form > div:nth-child(2) > input").focus();
+	$("#add_new_content").dialog({
+		closeOnEscape: true,
+		draggable: false,
+		modal: true,
+		resizable: false,
+		title: 'Select content type',
+		autoOpen: false,
+		width: 610,
+		height: 290
+	});
+	$("#add_new_content > .add_new > .add_new_info > .add_new_title > a").each(function(){
+		$(this).click(function(){		
+			$("#add_new_content").dialog("close");
 		});
 	});
+	
+	//$("#add_new_content").parent().removeClass("ui-widget-content");
+	$("#addnewcontent").click(function(){
+		if($("#add_new_content").html() != null) {
+			$("#add_new_content").dialog("open");
+		}
+		else {
+			$("#login_box").dialog( "option", "title", 'You must login to add content' );
+			$("#login_box").dialog("open");
+			$("#login_box > form > div:nth-child(2) > input").focus();
+		}
+		
+	});
+
+	 $("#loginlink").click(function() {
+			 $("#login_box").dialog( "option", "title", 'Login to Massidea' );
+			 $("#login_box").dialog("open");
+			 $("#login_box > form > div:nth-child(2) > input").focus();
+	 });
+	 
+	 $("a#login_link").each(function() {
+		 $(this).click(function (event) {
+			 event.preventDefault();
+			 $("#login_box").dialog( "option", "title", 'Login to Massidea' );
+			 $("#login_box").dialog("open");
+			 $("#login_box > form > div:nth-child(2) > input").focus();
+		 });
+	 });
 
 	$("#login_link_openid").click(function () {
 		$("#login_box").dialog("close");
@@ -66,12 +104,12 @@ $(document).ready(function(){
 		$("#login_box > form > div:nth-child(2) > input").focus();
 	});
 	
-	$("#login_link").hover(
-			function(){
-				var optPos = $("#login_link").position().left;
-				$("#user_options").clearQueue().css("left",optPos).slideDown();
-			},
-			function(){$("#user_options").delay(1000).slideUp();}
+	$("#loginlink").hover(
+			 function(){
+				 var optPos = $("#loginlink").position().left;
+				 $("#user_options").clearQueue().css("left",optPos).show();
+				 },
+			 function(){$("#user_options").delay(1000).slideUp();}
 	);
 	
 	$("#user_options").hover(
@@ -91,6 +129,7 @@ $(document).ready(function(){
 		
 	);
 	*/
+	/*
 	 $("#add_content_button").hover(
 			 function () {$("#add_content_menu").fadeIn();}
 			 );
@@ -100,6 +139,8 @@ $(document).ready(function(){
 			 function () {$("#add_content_menu").delay(1000).fadeOut();}
 			 );
 
+	*/
+	 /*
 	 $("#notification_close").live("mouseover mouseout click", function(event){ 
 		 if(event.type == "mouseover")
 			 $("a",this).addClass("notification_close_button");
@@ -107,8 +148,6 @@ $(document).ready(function(){
 		 if(event.type == "click") $("#notification_box").slideToggle();
 	 });
 
-	 
-	 var meta = jQuery.parseJSON($("#jsmetabox").text());
 	 $.ajax({
 		url: meta.baseUrl+"/en/ajax/getnotifications/",
 		success: function(data) {
@@ -133,7 +172,7 @@ $(document).ready(function(){
 			}
 		}	
 	 });
-
+	 */
 });
 
 function highlightContentMenuItem(target)

@@ -78,26 +78,29 @@ $(document).ready(function() {
 		var thisMin = inputDefinitions[obj.name][0];
 		var thisMax = inputDefinitions[obj.name][1];
 		var thisReq = inputDefinitions[obj.name][2];
-		var curLength = $(obj).val().length;
+		// Quick and ugly hack to prevent newline to fail whole validator
+		var newLines = $(obj).val().split("\n").length - 1;
+		var curLength = $(obj).val().length + newLines;
 		var curLeft = (thisMax-curLength);
+		
 		var thisProgress = $('#progressbar_'+obj.name);
 
 		if(curLength < thisMax) {
 			progressText = curLeft + " until limit";
-			$(thisProgress).attr('class','progress_ok limit');
+			$(thisProgress).attr('class','limit ok');
 		}
 		if(curLength > thisMax) {
 			progressText = Math.abs(curLeft) + " too many";
-			$(thisProgress).attr('class','progress limit');
+			$(thisProgress).attr('class','limit bad');
 		}
 		if(curLength == thisMax) {
 			progressText = "at the limit";
-			$(thisProgress).attr('class','progress_ok limit');
+			$(thisProgress).attr('class','limit ok');
 		}
 		
 		if(curLength == 0 && thisReq) {
 			progressText = "required";
-			$(thisProgress).attr('class','progress limit');
+			$(thisProgress).attr('class','limit bad');
 		}
 
 		$(thisProgress).html(progressText);
@@ -111,10 +114,10 @@ $(document).ready(function() {
 			var thisProgress = $('#progressbar_' + obj.name);
 			if ( $(obj).attr('value') != 0 || thisReq == 0) {
 				progressText = "ok";
-				$(thisProgress).attr('class', 'progress_ok limit');
+				$(thisProgress).attr('class', 'limit ok');
 			} else {
 				progressText = "required";
-				$(thisProgress).attr('class', 'progress limit');
+				$(thisProgress).attr('class', 'limit bad');
 			}
 			$(thisProgress).html(progressText);
 		}
@@ -148,6 +151,7 @@ $(document).ready(function() {
 		} else if($(this).attr('id') == "content_save_button") {
 			canExit = 1;
 			window.onbeforeunload = null;
+			$("#content_publish").val('');
 			$("#content_save").val('1');
 			$('.content_manage_button').attr('disabled', 'disabled');
 			$('#form_content_realcontent').has(this).children('form').submit();

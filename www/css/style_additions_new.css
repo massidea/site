@@ -1,11 +1,11 @@
 #content #group-page #group-info {
-	margin:0 0px 42px 0px;
+	margin:0 0px 0px 0px;
 	padding:0px 0px 8px 0px;
 	background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; }
 #content #group-page .scroll-box li {
     
 }
-#content #campaign-page p.link {font-size: 1.4em}
+#content #campaign-page p.link, #content #campaign-page #contribute .right a {font-size: 1.4em}
 
 #content #group-page #edit-group-etc {
     color:#c0c0c0;
@@ -20,7 +20,7 @@
 #content #current-posts .scroll-box .photo.ideas { border-left:5px solid #4B9B07 !important; width:48px; height:48px; float:left; }
 #content #current-posts .scroll-box .photo.visions { border-left:5px solid #FFC726 !important; width:48px; height:48px; float:left; }
 #gaccampaignlist { float:left; width:520px; }
-#gaccampaignlist h3 { color: #C0C0C0; font-size: 16; font-weight: bold; }
+#gaccampaignlist h3, #gaccampaignlist h2 { color: #C0C0C0; font-size: 16; font-weight: bold; }
 #content .campaign-list p,
 #content .group-list p { fdsmargin-left:15px; }
 #content .campaign-list ul li,
@@ -366,13 +366,19 @@ li.linked_campaigns, li.linked_groups {
 
 a#cancel_reply_link {
 	padding: 0;
-	float: right;
-	margin: 0;	
+	margin: 0;
+	float: left;
 }
 p#replying_to {
-	padding: 0 20px 0 0;
+	padding-right: 5px;
 	margin: 0;
-	float: right;
+	float: left;
+}
+
+#reply_body {
+	padding-right: 5px;
+	margin: 0;
+	
 }
 
 .content_view_comment_container_1 .content_view_comment_header, .content_view_comment_container_2 .content_view_comment_header, .content_view_comment_container_3 .content_view_comment_header {
@@ -384,28 +390,11 @@ p#replying_to {
 	height:2em;
 }
 
-.rss-reader {
-	border: 1px solid #CCCCCC;
-}
-
-.rss-reader ul {
-	margin: 5px !important;
-}
-
-.rss-item {
-	border-bottom: 1px dotted #CCCCCC;	
-}
-
-#rss-list-feeds #feeds {
-	width: 450px;	
-}
-#rss-input-feed-url {
-	width: 405px;	
-}
-
-#rss {
-	border-top: 1px dotted #CCCCCC;	
-}
+.rss-reader { border: 1px solid #CCCCCC;}
+.rss-reader ul { margin: 5px !important; }
+.rss-item { border-bottom: 1px dotted #CCCCCC; padding: 3px;}
+#rss-list-feeds #feeds { width: 450px; }
+#rss-input-feed-url { width: 405px; }
 
 .campaign_list_paragraph {
     font-size: 12px;
@@ -431,12 +420,13 @@ p#replying_to {
 
 /* more from boxi */
 #content_view_user_related_container, 
-#content_view_related_content_container {
+#content_view_related_content_container,
+#content_view_related_campaign_container {
 	margin: 0 0 1em 0;
 }
 #content_view_user_related, 
-#content_view_content_related {
-	background:#ffffff none repeat scroll 0 0;
+#content_view_content_related,
+#content_view_campaign_related {
     border:1px solid #CCCCCC;
 	padding: 0.5em 0.5em;
 	font-size: 10pt;
@@ -472,9 +462,11 @@ p#replying_to {
 	border-left: 0.5em solid #ffc726;
 }
 
-#content_view_user_related_header,  #content_view_related_content_header {
+#content_view_user_related_header,  
+#content_view_related_content_header,
+#content_view_related_campaign_header {
 	height: 20px;
-	padding: 0.3em 1em 0 1em;
+	padding-top: 10px;
 	font-weight: bold;
 	font-size: 14px;
 }
@@ -506,17 +498,6 @@ p#replying_to {
 	padding-right: 2px;
 	display:inline-block;
 	vertical-align: middle;
-}
-
-a#cancel_reply_link {
-	padding: 10px;
-	float: right;
-	margin: 0;	
-}
-p#replying_to {
-	padding: 10px 20px 0 0;
-	margin: 0;
-	float: right;
 }
 
 div#my-views div.scroll-box ul li div.user {
@@ -923,3 +904,112 @@ form div.error ul.errors li {
         top:-8px;
         left:165px;
 }
+
+#login-page{
+	margin: 2em 17em 2em 17em;
+	padding: 1em;
+	border: 1px solid #AAAAAA;
+	background: #F8F8F8;	
+	width: 240px;
+}
+
+#login-page-links {
+	margin-top: 5px;
+	padding-top: 5px;
+	border-top: 1px dotted #CCC;	
+}
+
+form div.login-row { padding-bottom: 5px; }
+form div.login-column1 { width: 80px; }
+form div.login-column2 { width: 160px; }
+
+#rss-list-feeds div.feed-row { cursor: pointer; }
+#rss-list-feeds div.feed-row-selected { background: #F3F3F3; }
+#rss-list-feeds div#feed-rows { border: 1px solid #CCC; }
+
+#content #campaign-page #current-posts .scroll-box {
+	padding:0 20px !important;	
+}
+
+#content #campaign-page #current-posts .scroll-box ul div.user {
+	padding: 8px 0 !important;
+	margin: 0 !important;
+}
+/** Private messages page*/
+#privmsg-page #privmsg-options-all input { float: left; margin-right: 10px; }
+#privmsg-page .privmsg { border-bottom: 1px dotted #ccc; }
+#privmsg-page .privmsg-header { border-bottom: 1px dotted #ccc; }
+#privmsg-page .privmsg .privmsg_userinfo { width: 110px; padding: 10px; }
+#privmsg-page .privmsg .privmsg_content { width: 580px; }
+#privmsg-page .privmsg .privmsg-header .reply { margin: 10px; }
+#privmsg-page .privmsg .privmsg-header-new { color: red; margin: 10px; }
+#privmsg-page #privmsg-options-all { height: 30px; }
+#privmsg-page .privmsg img { width: 80px; height: 80px; }
+
+/** Sending private messages page */
+form#send_privmsg_form { margin-left: auto; margin-right: auto; }
+form#send_privmsg_form label { font-weight: bold; display: block; float: left; width: 170px; }
+form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ background-color: lightyellow; }
+.form_privmsg_row { margin-left: 10px; margin-top: 10px; }
+.form_privmsg_row label { font-weight: bold; display: block; float: left; width: 170px; }
+
+/** Font size bigger on certain pages */
+#content .user_content_list .user div.context p,
+#content .user_content_list .user div.context h3 { font-size: 1.05em !important; }
+ 
+/** Color for easy coloring of some text */
+.light-gray { color: #C0C0C0; }
+
+/** Random sidebar things */
+#sidebar .box-user-content .box-bottom { padding-top: 10px; }
+.hover-link:hover { background: #F2F2F2; cursor: pointer; }
+div.top_right_box_links_users ul li a#user-link { padding-left: 5px; border-left: solid 5px #0089CF; }
+div.top_right_box_links_users ul li { padding: 5px 0 5px; }
+
+#sidebar ul.tags li.tags a:hover { background: #F2F2F2; }
+
+#content_view_related_content_header span, 
+#content_view_user_related_header span,
+#content_view_related_campaign_header span { color: #C0C0C0; padding-left: 10px; }
+
+.profile_image_mediumsize { height: 85px; width: 85px; }
+
+/** Admin tools page 
+ *
+ * Admin tools decorations
+ */
+#admin_comment_flags_table { border: 1px solid #000; border-spacing: 0px; padding: 2px; width: 100%; }
+#admin_comment_flags_table td { padding: 2px; }
+#admin_comment_flags_table #desc_tr { background-color: #ccc; color: #000; }
+#admin_comment_flags_table .desc_td_checkbox { width: 15px; }
+#admin_comment_flags_table .item_tr:nth-child(odd) { background-color: #eee; color: #000; }
+
+#sidebar ul.campaigns li a { padding-left: 5px; }
+#sidebar ul.campaigns li { padding: 2px; list-style: none; }
+
+.scroll-box .user .context { width: 375px !important; }
+
+#campaign-page #profile-meta h4, #group-page #profile-meta h4 { font-size:1.1em !important; background:transparent url("../images/gray_dot_line_200.png") bottom no-repeat;
+	color: #C0C0C0; padding:0px 0px 5px 0px; margin-top:20px; }
+#campaign-links ul li.linked_campaigns div.linked_campaigns { border-left: solid 5px #003581; padding-left: 5px; }
+#group-links ul li.linked_groups div.linked_groups { border-left: solid 5px #0089CF; padding-left: 5px; }
+#campaign-page #contribute h3 { margin: 10px 0 !important; }
+#campaign-page div#campaign-added-by, #group-page div#group-founded { margin-top: -7px; padding-bottom: 5px; }
+#group-page #group-not-logged { font-size: 1.1em; }
+
+
+/** Content view page adds */
+div.solutions_child_row_content { padding: 0 0 0 15px; width: 400px; }
+div.solutions_for_this_content { padding: 10px 0 0 7px; }
+div.solution-row { padding: 5px; border-bottom: dotted 1px #CCC; }
+div.solution-row .photo { padding-top: 5px; }
+#content_view_campaign_related ul li { padding: 1px 0 1px 0 !important; margin: 0 !important; }
+
+#sidebar .no-bg { background: none !important; margin-bottom: 1px !important; padding-bottom: 1px !important; }
+
+/** Content add textareas */
+textarea#content_textlead { height: 10em; }
+textarea#content_references { height: 15em; }
+
+.vote { cursor: pointer; }
+

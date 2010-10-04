@@ -384,6 +384,14 @@ class Default_Form_EditContentForm extends Zend_Form
 				->setDecorators(array('FormElementDecorator'))
 				->setMultiOptions($data['InnovationTypes']);
         
+				
+		// Used for track button clicks
+        $hidden_content_publish = new Zend_Form_Element_Hidden('content_publish');
+		$hidden_content_publish->setDecorators(array('FormHiddenElementDecorator'));
+		
+		$hidden_content_save = new Zend_Form_Element_Hidden('content_save');
+		$hidden_content_save->setDecorators(array('FormHiddenElementDecorator'));
+
 		// Form buttons
         
         $publish = new Zend_Form_Element_Button('content_publish_button');
@@ -421,7 +429,7 @@ class Default_Form_EditContentForm extends Zend_Form
         	array_push($elements, $uploadedFilesBoxes);
         }
         
-        array_push($elements, $references, $language);
+        array_push($elements, $references, $language, $hidden_content_save, $hidden_content_publish);
         
         /*
         if($contentType == "finfo") {
@@ -440,6 +448,7 @@ class Default_Form_EditContentForm extends Zend_Form
         	array_push($elements, $publish, $save, $preview);
  		}
  		else {
+ 			$save->setLabel("Publish changes");
  	        array_push($elements, $save, $preview);		
  		}
  		

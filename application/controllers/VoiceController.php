@@ -75,7 +75,7 @@ class VoiceController extends Oibs_Controller_CustomController
 
         // Get recent content by type
         $content = new Default_Model_Content();
-        $data = $content->getRecentByLangAndType($lang, $cty, $count);
+        $data = $content->getRecentByLangAndType($this->view->language, $cty, $count);
         
         // Get tags for contents
         $tags_model = new Default_Model_ContentHasTag();

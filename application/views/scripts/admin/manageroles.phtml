@@ -1,17 +1,17 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <?php
-
 if($this->managerolesaction == "")
 {
     ?>
-    <h1><?php echo $this->translate('admin-manage-roles-title'); ?></h1>
+    <h2><?php echo $this->translate('admin-manage-roles-title'); ?></h2>
     <p>
-        <a href="/<?php echo $this->language; ?>/admin/manageroles/add">
+        <a href="<?php echo $this->baseUrl."/".$this->language; ?>/admin/manageroles/add">
             <?php echo $this->translate('admin-manage-roles-add'); ?>
         </a><br />
-        <a href="/<?php echo $this->language; ?>/admin/manageroles/edit">
+        <a href="<?php echo $this->baseUrl."/".$this->language; ?>/admin/manageroles/edit">
             <?php echo $this->translate('admin-manage-roles-edit'); ?>
         </a><br />
-        <a href="/<?php echo $this->language; ?>/admin/manageroles/remove">
+        <a href="<?php echo $this->baseUrl."/".$this->language; ?>/admin/manageroles/remove">
             <?php echo $this->translate('admin-manage-roles-remove'); ?>
         </a><br />
     </p>
@@ -19,15 +19,15 @@ if($this->managerolesaction == "")
 }
 elseif($this->managerolesaction == "add")
 {
-    echo "<h1>".$this->translate('admin-manage-roles-add-title')."</h1>";
+    echo "<h2>".$this->translate('admin-manage-roles-add-title')."</h2>";
 }
 elseif($this->managerolesaction == "edit")
 {
-    echo "<h1>".$this->translate('admin-manage-roles-edit-title')."</h1>";
+    echo "<h2>".$this->translate('admin-manage-roles-edit-title')."</h2>";
 }
 elseif($this->managerolesaction == "remove")
 {
-    echo "<h1>".$this->translate('admin-manage-roles-remove-title')."</h1>";
+    echo "<h2>".$this->translate('admin-manage-roles-remove-title')."</h2>";
 }
 
 ?>

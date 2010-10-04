@@ -3,6 +3,10 @@
 function publishconfirmation(url) {
     var answer = confirm("Publish content?");
     if (answer) {
+    
+    	alert(url);
+    
+    	return;
         alert("Content published");
         window.location = url;
     } else {
@@ -104,10 +108,10 @@ function expandText(key)
 }
 
 $(document).ready(function() {
-	$('#picker').farbtastic('#customfontcolor');
+	//$('#picker').farbtastic('#customfontcolor');
 	//$('#picker').farbtastic('#custompreviewtext');
 	
-	$('#custombgcolorpicker').farbtastic('#custombgcolor');
+	//$('#custombgcolorpicker').farbtastic('#custombgcolor');
 	
 	$('#custom_layout_button').click(function() {
 			alert("save button hit!");
@@ -154,7 +158,7 @@ $(document).ready(function() {
                                 date("d.m.Y H:i", strtotime($this->user['last_login_usr'])) :
                                 'Never logged in'; ?></li>
             <!-- <li><strong>Page views:</strong> 1,200</li> -->
-            
+            <?php /* RC Comment :)
             <li>
             	<ul class="user_profile_toplist">
 	            <li class="clear"><strong style="float: left">User ranking in:</strong><a href="#" onClick="return false;" style="float:right;" id="user_profile_toplist_title">Rank</a></li>
@@ -167,6 +171,7 @@ $(document).ready(function() {
 	            	<?php endforeach; ?>
 	            </ul>
             </li>
+            */ ?>
         </ul>
     </div>
     <div id="profile-info">

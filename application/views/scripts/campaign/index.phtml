@@ -7,7 +7,9 @@ $url_getRecentCampaigns = $this->url(array('controller' => 'ajax',
 							 'language' => $this->language),
 							 'lang_default', true);
 
-
+$grpUrl = $this->url(array('controller' => 'group',
+							'language' => $this->language),
+							'lang_default', true);
 /* FIXME: Can't create campaing without creating  group
 
 $createCampaignUrl = $this->url(array(	'controller' => 'campaign',
@@ -24,14 +26,19 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <?php $this->headScript()->captureEnd()?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcampaigns.js')); ?>
 
-<div id="gaccampaignlist">
-    <h3 style="float:left;">Recent campaigns</h3>
+<div id="gaccampaignlist" class="left narrow">
+    <h3 class="left">Recent campaigns</h3>
+
     
+    <?php // There is only tabs style from jquery tabs. Implementation is how it have been. ?>
+
     <div class="clear"></div>
-    <div id="campaign-status" class="campaign-status">
-        <span id="active_span"><a href="#" onclick="return false;">Active</a></span> |
-        <span id="forthcoming_span"><a href="#" onclick="return false;">Forthcoming</a></span> |
-        <span id="ended_span"><a href="#" onclick="return false;">Ended</a></span>
+    <div id="campaign-status" class="ui-tabs">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li id="active_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Active</a></li>
+            <li id="forthcoming_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>
+            <li id="ended_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>
+        </ul>
     </div>
     
     <div id="campaign-list" class="campaign-list"></div>
@@ -41,26 +48,32 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         </h3>
     </div>
 </div>
-
-<div id="gacsidebar">
+</div>
+<div id="sidebar">
     <div class="box">
         <h2>What are campaigns?</h2>
         <div class="box-content">
 
-            <p>To collect multiple insights, group can launch
-            a campaign and summarize individual user’s insights
-            into one united theme. Basically campaign is group’s
-            organized and coordinated effort to promote content
-            production to a specified theme.</p>
+            <p>To collect multiple insights, <a href="<?php echo $grpUrl; ?>">group</a> can launch 
+            a campaign and summarize individual user’s 
+            insights into one united theme.</p> 
 
-            <p>Adding content to campaign requires group membership.
-            Moreover, users can only link their own already published
-            existing contents to a campaign. One content can be linked
-            to multiple campaigns.</p>
+			<p>Basically campaign is <a href="<?php echo $grpUrl; ?>">group’s</a> organized and
+			 coordinated effort	to promote content production 
+			 to a specified theme.</p>
 
+			<p>Adding content to campaign requires group 
+			membership. To join, go to <a href="<?php echo $grpUrl; ?>">group’s</a> homepage.</p>
+
+			<p>Moreover, users can only link their own already 
+			published contents to a campaign. One content can 
+			be linked to multiple campaigns.</p>
+
+			<p><a href="<?php echo $grpUrl; ?>">Group</a> admin can also link own campaigns to other 
+			campaigns, which help similar campaigns to join 
+			forces.</p>
         </div>
     </div>
-
     <?php /*
     <div id="groups">
         <h3>Recent groups</h3>
@@ -77,4 +90,3 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         <strong><a href="<?php echo $moreCampaignUrl; ?>">Show more</a></strong>
     </div>
     */ ?>
-</div>

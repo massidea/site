@@ -10,8 +10,8 @@ $actionList = array(
 );
 
 ?>
-
-<h1><?php echo $this->translate('admin-title'); ?></h1>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<h2><?php echo $this->translate('admin-title'); ?></h2>
 <h3><?php echo $this->translate('admin-tasks'); ?></h3>
 <ul>
 <?php foreach($actionList as $action): ?>

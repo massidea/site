@@ -1,50 +1,30 @@
-<div id="login_form_container">
-	<h1><?php echo $this->translate('account-login-title'); ?></h1>
-	<p>
-		<?php //echo $this->translate('account-login-text'); ?>
-	</p>
-	<?php
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+
+<div id="login-page">
+	<h2><?php echo $this->translate('account-login-title'); ?></h2>
+
+	<?php if(isset($this->errormsg)): ?>
+        <h4> <?php echo $this->errormsg; ?></h4>
+    <?php endif; ?>
     
-    if(isset($this->errormsg))
-    {
-        echo "<h2>".$this->errormsg."</h2>";
-    }
-    
-	echo $this->form;
-	
-	/*
-	<form action="<?php $this->url(array('controller' => 'account', 'action' => 'login', 'language' => $this->language), 'lang_default', true); ?>" method="post">
-		<p>
-			<span class="login_text"><?php echo $this->translate('account-login-username'); ?>:</span>
-				<input name="username" type="text" class="login" /><br/>
-			<span class="login_text"><?php echo $this->translate('account-login-password'); ?>:</span>
-				<input name="password" type="password" class="login" /><br />
-			<span class="login_text">&nbsp;</span>
-				<input type="submit" value="<?php echo $this->translate('account-login-submit'); ?>" class="login_button" />
-		</p>
-	*/
-	?>
-		
-		<p>	
+	<?php echo $this->form; ?>
+	<div id="login-page-links">
+	<div class="left">
 			<a href="<?php echo $this->url(array('controller' => 'account', 
                                                  'action' => 'fetchpassword', 
                                                  'language' => $this->language), 
                                            'lang_default', true); ?>">
                  <?php echo $this->translate('account-login-forgot_password'); ?>
             </a>
-            <br/> 
-		</p>
-		<?php
-	// </form>
-	?>
-	<div style="background-color: #FFF; margin: 10px; padding: 2px; font-size: 10pt; border: 1px solid #AAA; width: 150px;">
+		</div>
+	<div class="right">
 		<img src="<?php echo $this->baseUrl('/images/icon_openid_16x16.gif'); ?>" alt="OpenID login" style="vertical-align: middle;" />
 		<a href="<?php echo $this->url(array('controller' => 'account',
                                              'action' => 'openid',
                                              'language' => $this->language),
                                        'lang_default', true); ?>">
-			<?php echo $this->translate('account-login-via-openid'); ?>
-		</a>
+			<?php echo $this->translate('account-login-via-openid'); ?></a>
 	</div>
-
+	</div>
+	<div class="clear"></div>
 </div>

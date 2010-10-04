@@ -63,29 +63,19 @@ class AjaxController extends Oibs_Controller_CustomController {
 
         // If you find (time to think of) a better way to do this, be my guest.
         if ($status === 'forthcoming') {
-            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 1);
-            $cmps_new = array();
-            foreach ($recentcampaigns as $cmp) {
-                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-                $cmp['group_name_grp'] = $grp['group_name_grp'];
-                $cmps_new[] = $cmp;
-            }
+            $recentcampaigns = $campaignModel->getRecentForthcomingFromOffset($offset, 10);
+
         } else if ($status === 'ended') {
-            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 1);
-            $cmps_new = array();
-            foreach ($recentcampaigns as $cmp) {
-                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-                $cmp['group_name_grp'] = $grp['group_name_grp'];
-                $cmps_new[] = $cmp;
-            }
+            $recentcampaigns = $campaignModel->getRecentEndedFromOffset($offset, 10);
         } else {
-            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 1);
-            $cmps_new = array();
-            foreach ($recentcampaigns as $cmp) {
-                $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
-                $cmp['group_name_grp'] = $grp['group_name_grp'];
-                $cmps_new[] = $cmp;
-            }
+            $recentcampaigns = $campaignModel->getRecentFromOffset($offset, 10);
+        }
+
+        $cmps_new = array();
+        foreach ($recentcampaigns as $cmp) {
+            $grp = $grpmodel->getGroupData($cmp['id_grp_cmp']);
+            $cmp['group_name_grp'] = $grp['group_name_grp'];
+            $cmps_new[] = $cmp;
         }
 
         $this->view->recentcampaigns = $cmps_new;
@@ -352,6 +342,7 @@ class AjaxController extends Oibs_Controller_CustomController {
         $this->view->id = $this->params['id_cnt'];
         $this->view->more = $more;
         $this->view->relatedContents = $contents;
+<<<<<<< HEAD
     }
 
     public function contentratingAction() {
@@ -375,6 +366,56 @@ class AjaxController extends Oibs_Controller_CustomController {
     }
 
     public function contentfavouriteAction() {
+=======
+	}
+
+	public function relatedcampaignsAction() {		
+		if (!isset($this->params['id_cnt'])) {
+			echo "0";
+			return false;	
+		}
+		
+		if (isset($this->params['more'])) { 
+			$limit = 100; 
+			$more = true; 
+		}
+		
+        $campaignHasContentModel = new Default_Model_CampaignHasContent();
+        $campaigns = $campaignHasContentModel->getContentCampaigns($this->params['id_cnt']);
+		$this->view->campaigns = $campaigns;
+	}
+	
+	public function contentratingAction() {
+        // Get authentication
+        $auth = Zend_Auth::getInstance();
+        $ident = $auth->getIdentity();
+        if(isset($ident)) $userId = $ident->user_id;
+        else $userId = 0;
+        // Get content rating
+        $contentRatingsModel = new Default_Model_ContentRatings();
+        $contentModel = new Default_Model_Content();
+        
+        $userIsOwner = $contentModel->checkIfUserIsOwner($this->params['id_cnt'],$userId);
+
+        if (isset($this->params['rate'])) {
+			$rate = $this->params['rate'];
+			if ($auth->hasIdentity() && !$userIsOwner)
+			{
+				if($rate == 1 || $rate == -1)
+				{
+		            $contentRatingsModel->addRating($this->params['id_cnt'], $userId, $rate);
+				}
+			}
+        }
+        $rating = $contentRatingsModel->getPercentagesById($this->params['id_cnt']);
+		$this->view->hasIdentity = $auth->hasIdentity();
+		$this->view->userId = $userId;
+		$this->view->userIsOwner = $userIsOwner;
+		$this->view->rating = $rating;
+	}
+	
+	public function contentfavouriteAction() {
+>>>>>>> 7366a00468d9a244ce9b0cd912573159570e4e4c
         // Get authentication
         $auth = Zend_Auth::getInstance();
         $favouriteUserId = 0;
