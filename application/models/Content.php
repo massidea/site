@@ -331,18 +331,19 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
     public function getRelatedContents($id, $limit = -1) {
 
     	$tags = $this->getTagIdsByContentId($id);
-		if (empty($tags)) return false;
     	$linkedContents = array();
-    					
-   		$cntHasTagModel = new Default_Model_ContentHasTag();
-    	$select = $cntHasTagModel->select()
-    							 ->from('cnt_has_tag', array('id_cnt'))
-    							 ->where('id_tag IN (?)', $tags)
-    							 ->where('id_cnt != ?', $id);
-    	if($limit != -1)  $select->limit($limit);
-   		
-   		$contents = $cntHasTagModel->fetchAll($select)->toArray();
-   		if (!count($contents)) return false;
+		$contents = array();		
+    	if (!empty($tags)) {
+
+	   		$cntHasTagModel = new Default_Model_ContentHasTag();
+	    	$select = $cntHasTagModel->select()
+	    							 ->from('cnt_has_tag', array('id_cnt'))
+	    							 ->where('id_tag IN (?)', $tags)
+	    							 ->where('id_cnt != ?', $id);
+    		if($limit != -1)  $select->limit($limit);
+
+    		$contents = $cntHasTagModel->fetchAll($select)->toArray();
+    	}
    		$cnthascntModel = new Default_Model_ContentHasContent();
    		$contents = array_merge($contents, $cnthascntModel->getContentLinkIds($id));
 
