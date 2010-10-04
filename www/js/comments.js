@@ -15,7 +15,8 @@ $("document").ready(function () {
 	
 	$("#content_view_comment_form_container > p > #commentTextarea").bind("keydown keyup change",function(){
 		var limit = 1000;
-		var length = $(this).val().length;
+		var newLines = $(this).val().split("\n").length - 1;
+		var length = $(this).val().length + newLines;
 		if(limit < length)
 			$("#comment_character_cut").show();
 		else $("#comment_character_cut").hide();
