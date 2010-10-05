@@ -208,11 +208,8 @@ class Default_Model_ContentRatings extends Zend_Db_Table_Abstract
     public function removeContentRatings($id_cnt_crt)
     {
         $where = $this->getAdapter()->quoteInto('id_cnt_crt = ?', $id_cnt_crt);
-        if ($this->delete($where)) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->delete($where);
+        return $this->fetchAll($where)->count() ? false : true;
     }
 
 } // end of class

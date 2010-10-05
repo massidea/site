@@ -158,12 +158,17 @@ Commented to fix temporary problem, will be researched further later
         		<?php echo $this->partial('partials/tag.phtml', $tag); ?>
         	</li>
         	<?php endforeach; ?>
+			<div class="clear"></div>
         </ul>
      </div>
      <div class="clear"></div>
     <!-- End of tags --> 
-    <img src="<?php echo $this->baseUrl('/images/gray_dot_line_200.png'); ?>" alt="Massidea.org" />
-    <div class="massidea_dev_info">
-        <?php echo $this->translate('index-opensource')?>
-    </div>
+    <!--  Missing a feature? -->
+	<h2>
+		<?php echo $this->translate('content-list-missing-header'); ?>
+	</h2> 
+	<p>
+		<?php echo $this->translate('index-opensource'); ?>
+	</p>
+	<!--  End of Missing a feature? -->
     

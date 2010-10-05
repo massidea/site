@@ -119,14 +119,10 @@ class Default_Model_ContentHasUser extends Zend_Db_Table_Abstract
     */
     public function removeUserFromContent($id_cnt)
     {
-        $return = false;
-    
         $where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
-        if($this->delete($where)) {
-            $return = true;
-        }
+        $this->delete($where);
         
-        return $return;
+        return $this->fetchAll($where)->count() ? false : true;
     }
     
     /**

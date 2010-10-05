@@ -1118,21 +1118,8 @@ class AccountController extends Oibs_Controller_CustomController {
             }
 
             // populate form
-<<<<<<< HEAD
-            if (isset($settingsData)) {
-                //echo '<pre>'; var_dump($settingsData);
-                $form->populate($settingsData);
-            }
 
-            // If request is post
-            //$request = $this->getRequest();
-            if ($this->_request->isPost()) {
 
-                // get form data
-                $formdata = $this->_request->getPost();
-
-                if ($form->isValid($formdata)) {
-=======
 			if(isset($settingsData)) {
                 //echo '<pre>'; var_dump($settingsData);die;
 				$form->populate($settingsData);
@@ -1147,9 +1134,10 @@ class AccountController extends Oibs_Controller_CustomController {
                 
 				if($form->isValid($formdata)) {
 					function plus($a, $b) { return $a += $b; }
+
 					$formdata['own_follows'] = array_reduce($formdata['own_follows'], "plus");
 					$formdata['fvr_follows'] = array_reduce($formdata['fvr_follows'], "plus");
->>>>>>> 7366a00468d9a244ce9b0cd912573159570e4e4c
+
 
                     // if form is valid
                     // Updates checked notifications
@@ -1415,6 +1403,9 @@ class AccountController extends Oibs_Controller_CustomController {
                 continue;
             $parsedUrl .= "/$key/$param";
         }
+
+        $parsedUrl = str_replace("%","%25",$parsedUrl);
+           
 
         $this->view->userSearch = $userSearch;
         // Custom pagination to fix memory error on large amount of data

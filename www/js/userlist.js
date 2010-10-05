@@ -153,7 +153,7 @@ function effectGeneratorArrows(name,listname) {
 }
 
 function getSearchTopList() {
-	
+	var url = topUrl+requestedUrl;
 	var before = $("#user_list_top_list_show span").html();
 	$.ajax({
 		beforeSend: function(){
@@ -163,7 +163,7 @@ function getSearchTopList() {
 			$("#user_list_top_list_show span").html(before);
 			$("#user_list_top_list_link img").attr("src",iconminus);
 		},	
-		url: topUrl+requestedUrl,
+		url: url,
 		success: function(data) {
 		  $(".user_list_top_list").html(data);
 		  $("#user_list_tabs").tabs().removeClass('ui-widget');

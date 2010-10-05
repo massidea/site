@@ -60,6 +60,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                     array(
                         1,
                         140,
+                        'encoding' => 'UTF-8',
                         'messages' =>
                             array('stringLengthTooLong' => 'Name too long.'))),
                 array(new Oibs_Validators_GroupExists($options), false),
@@ -104,6 +105,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                     array(
                         1,
                         320,
+                        'encoding' => 'UTF-8',
                         'messages' =>
                             array('stringLengthTooLong' => 'Description too long.')))
             ))
@@ -129,6 +131,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                     array(
                         1,
                         4000,
+                        'encoding' => 'UTF-8',
                         'messages' =>
                             array('stringLengthTooLong' => 'Body text too long.')))
             ))
@@ -155,7 +158,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                             ->addValidators(array(
                                 array('StringLength',
                                     false,
-                                    array(0, 45, 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
+                                    array(0, 45, 'encoding' => 'UTF-8', 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
                                 ),
                             ));
         $weblinks_url_site1 = new Zend_Form_Element_Text('weblinks_url_site1');
@@ -164,7 +167,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                                new Oibs_Validators_UrlValidator(),
                                array('StringLength',
                                    false,
-                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                                   array(0, 150, 'encoding' => 'UTF-8', 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
                                )
                            ));
 
@@ -174,7 +177,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                             ->addValidators(array(
                                 array('StringLength',
                                     false,
-                                    array(0, 45, 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
+                                    array(0, 45, 'encoding' => 'UTF-8', 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
                                 ),
                             ));
         $weblinks_url_site2 = new Zend_Form_Element_Text('weblinks_url_site2');
@@ -194,7 +197,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                             ->addValidators(array(
                                 array('StringLength',
                                     false,
-                                    array(0, 45, 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
+                                    array(0, 45, 'encoding' => 'UTF-8', 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
                                 ),
                             ));
         $weblinks_url_site3 = new Zend_Form_Element_Text('weblinks_url_site3');
@@ -203,7 +206,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                                new Oibs_Validators_UrlValidator(),
                                array('StringLength',
                                    false,
-                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                                   array(0, 150, 'encoding' => 'UTF-8', 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
                                )
                            ));
 
@@ -214,7 +217,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                             ->addValidators(array(
                                 array('StringLength',
                                     false,
-                                    array(0, 45, 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
+                                    array(0, 45, 'encoding' => 'UTF-8', 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
                                 ),
                             ));
         $weblinks_url_site4 = new Zend_Form_Element_Text('weblinks_url_site4');
@@ -223,7 +226,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                                new Oibs_Validators_UrlValidator(),
                                array('StringLength',
                                    false,
-                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                                   array(0, 150, 'encoding' => 'UTF-8','messages' => array('stringLengthTooLong'  => $urlTooLongText))
                                )
                            ));
 
@@ -234,7 +237,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                             ->addValidators(array(
                                 array('StringLength',
                                     false,
-                                    array(0, 45, 'messages' => array('stringLengthTooLong'  => $nameTooLongText))
+                                    array(0, 45, 'encoding' => 'UTF-8','messages' => array('stringLengthTooLong'  => $nameTooLongText))
                                 ),
                             ));
         $weblinks_url_site5 = new Zend_Form_Element_Text('weblinks_url_site5');
@@ -243,7 +246,7 @@ class Default_Form_AddGroupForm extends Zend_Form
                                new Oibs_Validators_UrlValidator(),
                                array('StringLength',
                                    false,
-                                   array(0, 150, 'messages' => array('stringLengthTooLong'  => $urlTooLongText))
+                                   array(0, 150, 'encoding' => 'UTF-8','messages' => array('stringLengthTooLong'  => $urlTooLongText))
                                )
                            ));
 

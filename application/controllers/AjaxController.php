@@ -335,38 +335,20 @@ class AjaxController extends Oibs_Controller_CustomController {
         }
         $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], $limit);
         $contents = array();
-        foreach ($rawcontents as $rawcnt) {
-            $this->gtranslate->setLangFrom($rawcnt['language_cnt']);
-            $contents[] = $this->gtranslate->translateContent($rawcnt);
+
+        if ($rawcontents !== false) {
+	        foreach($rawcontents as $rawcnt)
+	        {
+				$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
+				$contents[] = $this->gtranslate->translateContent($rawcnt);
+	        }
+
         }
         $this->view->id = $this->params['id_cnt'];
         $this->view->more = $more;
         $this->view->relatedContents = $contents;
-<<<<<<< HEAD
-    }
 
-    public function contentratingAction() {
-        // Get authentication
-        $auth = Zend_Auth::getInstance();
-
-        // Get content rating
-        $contentRatingsModel = new Default_Model_ContentRatings();
-
-        if (isset($this->params['rate'])) {
-            $rate = $this->params['rate'];
-            if ($auth->hasIdentity()) {
-                if ($rate == 1 || $rate == -1) {
-                    $contentRatingsModel->addRating($this->params['id_cnt'], $auth->getIdentity()->user_id, $rate);
-                }
-            }
-        }
-        $rating = $contentRatingsModel->getPercentagesById($this->params['id_cnt']);
-        $this->view->hasIdentity = $auth->hasIdentity();
-        $this->view->rating = $rating;
-    }
-
-    public function contentfavouriteAction() {
-=======
+    
 	}
 
 	public function relatedcampaignsAction() {		
@@ -415,7 +397,6 @@ class AjaxController extends Oibs_Controller_CustomController {
 	}
 	
 	public function contentfavouriteAction() {
->>>>>>> 7366a00468d9a244ce9b0cd912573159570e4e4c
         // Get authentication
         $auth = Zend_Auth::getInstance();
         $favouriteUserId = 0;

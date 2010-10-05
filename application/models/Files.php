@@ -186,7 +186,6 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
         foreach ($result as $row) {
         	array_push($results, $this->deleteFromFilesystem($row->id_fil));
         }
-
         return !in_array(false, $results);
     }
     
@@ -229,8 +228,8 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
         $where = $this->getAdapter()->quoteInto('id_cnt_fil = ?', $id_cnt_fil);
         
         $filesystemDeleteResult = $this->deleteFromFilesystemByContentId($id_cnt_fil);
-        $databaseDeleteResult = $this->delete($where);
-        
+        $this->delete($where);
+        $databaseDeleteResult = !$this->fetchAll($where)->count();
         if ($databaseDeleteResult && $filesystemDeleteResult) {
             return true;
         } else {
