@@ -59,16 +59,15 @@ class Zend_Controller_Action_Helper_Tagsizes extends Zend_Controller_Action_Help
     
     public function popularTagCalc(array $tags = array(), $minSize = 100, $maxSize = 300, $step = 30) {
     	
-    	$category = array();
     	$size = sizeof($tags);
     	$stepper = $size / (($maxSize - $minSize) / $step); // ~3
     	
     	foreach ($tags as $k => $tag) {
-    		$rank = ceil($tag['rank'] / $stepper) * $step;
+    		$rank = ceil($tag['rank'] / $stepper) * $step + floor(log($tag['rank']+1))*$step;
             $size = round($maxSize - $rank);
+            if($size < $minSize) $size = $minSize;
             $tags[$k]['tag_size'] = $size;
         }
-        
         return $tags;
     }
     
