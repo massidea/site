@@ -57,6 +57,21 @@ class Zend_Controller_Action_Helper_Tagsizes extends Zend_Controller_Action_Help
         return $tags;
     }
     
+    public function popularTagCalc(array $tags = array(), $minSize = 100, $maxSize = 300, $step = 30) {
+    	
+    	$category = array();
+    	$size = sizeof($tags);
+    	$stepper = $size / (($maxSize - $minSize) / $step); // ~3
+    	
+    	foreach ($tags as $k => $tag) {
+    		$rank = ceil($tag['rank'] / $stepper) * $step;
+            $size = round($maxSize - $rank);
+            $tags[$k]['tag_size'] = $size;
+        }
+        
+        return $tags;
+    }
+    
     
     /**
      * Is tags running numer divisible by 2?
