@@ -99,7 +99,7 @@ class IndexController extends Oibs_Controller_CustomController
             */
             
             // Action helper for tags
-            $tags = $this->_helper->tagsizes->tagCalc($tags);
+            $tags = $this->_helper->tagsizes->popularTagCalc($tags);
             
             
             // Action helper for define is tag running number divisible by two

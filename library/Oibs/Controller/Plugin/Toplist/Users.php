@@ -106,6 +106,7 @@ class Oibs_Controller_Plugin_Toplist_Users extends Oibs_Controller_Plugin_TopLis
 				}
 			}
 			$getIds = $newIds;
+			if(empty($getIds)) return;
 			$intersect = $this->_intersectMergeArray($temp,$this->_userModel->getUserInfo($getIds));	
 			$this->_topList[$choice] = array(
 				'users' => 
