@@ -150,8 +150,7 @@ var iconminus = "<?php echo $url_iconMinus; ?>";
 			                                                                     'user' => $user['login_name_usr'],
 			                                                                     'language' =>  $this->language),
 			                                                               'lang_default', true); ?>">
-			                                    <?php echo $user['login_name_usr']; ?>(<?php echo $user['contentCount']; ?>)
-			                         ,</a>
+			                                    <?php echo $user['login_name_usr']; ?>(<?php echo $user['contentCount']; ?>),</a>
 			                        <?php if($user['city']): ?>
 			                        <a href="<?php echo $this->url(array('city' => $user['city'])); ?>" class="user_list_city"><?php echo $user['city']; ?>, </a>
 			                        <?php endif; if($user['country']): ?>
