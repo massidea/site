@@ -337,10 +337,12 @@ class AjaxController extends Oibs_Controller_CustomController
         }
         $rawcontents = $contentModel->getRelatedContents($this->params['id_cnt'], $limit);
         $contents = array();
-        foreach($rawcontents as $rawcnt)
-        {
-			$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
-			$contents[] = $this->gtranslate->translateContent($rawcnt);
+        if ($rawcontents !== false) {
+	        foreach($rawcontents as $rawcnt)
+	        {
+				$this->gtranslate->setLangFrom($rawcnt['language_cnt']);
+				$contents[] = $this->gtranslate->translateContent($rawcnt);
+	        }
         }
         $this->view->id=$this->params['id_cnt'];
         $this->view->more = $more;

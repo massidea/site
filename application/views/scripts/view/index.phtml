@@ -220,7 +220,7 @@ function flagContent()
                                                   'thumb' => 'true'),
                                             'lang_default', true); ?>" 
                 alt="User image" class="profile_image_smallsize left" />
-		<div class="right">
+		<div id="content-authorinfo" class="left">
             <a href="<?php echo $authorUrl; ?>">
             <?php echo $this->userData['login_name_usr']; ?></a><br />
             <?php echo $this->translate('content-view-joined'); ?> <?php echo date('d M Y', strtotime($this->userData['created_usr'])); ?>

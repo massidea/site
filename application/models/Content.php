@@ -331,18 +331,19 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
     public function getRelatedContents($id, $limit = -1) {
 
     	$tags = $this->getTagIdsByContentId($id);
-
     	$linkedContents = array();
-    					
-   		$cntHasTagModel = new Default_Model_ContentHasTag();
-    	$select = $cntHasTagModel->select()
-    							 ->from('cnt_has_tag', array('id_cnt'))
-    							 ->where('id_tag IN (?)', $tags)
-    							 ->where('id_cnt != ?', $id);
-    	if($limit != -1)  $select->limit($limit);
-   		
-   		$contents = $cntHasTagModel->fetchAll($select)->toArray();
-   		
+		$contents = array();		
+    	if (!empty($tags)) {
+
+	   		$cntHasTagModel = new Default_Model_ContentHasTag();
+	    	$select = $cntHasTagModel->select()
+	    							 ->from('cnt_has_tag', array('id_cnt'))
+	    							 ->where('id_tag IN (?)', $tags)
+	    							 ->where('id_cnt != ?', $id);
+    		if($limit != -1)  $select->limit($limit);
+
+    		$contents = $cntHasTagModel->fetchAll($select)->toArray();
+    	}
    		$cnthascntModel = new Default_Model_ContentHasContent();
    		$contents = array_merge($contents, $cnthascntModel->getContentLinkIds($id));
 
@@ -1128,7 +1129,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 */
         public function removeContentAndDepending($id_cnt = 0)
         {
-            /*$contentRemoveChecker = array(
+            $contentRemoveChecker = array(
                 'removeContentFromCampaign' =>          true,
                 'removeContentFromContent' =>           true,
                 'removeContentFromFutureinfoClasses' => true,
@@ -1147,7 +1148,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 'removeUserFromFavorites' =>            true,
                 'removeContent' =>                      true,
                 'removeContentComments' =>              true
-            );*/
+            );
 
             // cnt_has_cmp
             $cmpHasCnt = new Default_Model_CampaignHasContent();
@@ -1160,22 +1161,28 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 $contentRemoveChecker['removeContentFromContent'] = false;
 
             // cnt_has_fic
+            /* not used
             $cntHasFic = new Default_Model_ContentHasFutureinfoClasses();
             if (!$cntHasFic->removeFutureinfoClassesFromContent($id_cnt))
                 $contentRemoveChecker['removeContentFromFutureinfoClasses'] = false;
+			*/
 
             // cnt_has_grp
             // Not used?
 
             // cnt_has_ind
+            /* not used
             $cntHasInd = new Default_Model_ContentHasIndustries();
             if (!$cntHasInd->removeIndustriesFromContent($id_cnt))
                 $contentRemoveChecker['removeContentFromIndustries'] = false;
+            */
 
             // cnt_has_ivt
+            /* not used
             $cntHasIvt = new Default_Model_ContentHasInnovationTypes();
             if (!$cntHasIvt->removeInnovationTypesFromContent($id_cnt))
                 $contentRemoveChecker['removeContentFromInnovationTypes'] = false;
+            */
 
             // related_companies_rec and cnt_has_rec
             $cntHasRec = new Default_Model_ContentHasRelatedCompany();
@@ -1474,30 +1481,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 */
 
 	/**
-	 * getMostViewed
-	 *
-	 *
-	 */
-	public function getMostViewed ($limit = 20)
-	{
-		$select = $this->_db->select()->from(array('cnt' => 'contents_cnt'),
-		array('cnt.id_cnt', 'cnt.title_cnt'))
-		->join(array('vws' => 'cnt_views_vws'),
-		'cnt.id_cnt = vws.id_cnt_vws',
-		array('totalViews' => 'COUNT(vws.id_usr_vws)'))
-		->group('cnt.id_cnt')
-		->limit($limit)
-		->order('totalViews');
-		
-		$result = $this->_db->fetchAll($select);
-
-		// Zend_Debug::dump($result);
-
-		return $result;
-	}
-	
-
-	/**
 	 * getMostViewedType
 	 *
 	 *
@@ -1518,47 +1501,30 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 				$order = 'cnt.created_cnt DESC';
 		}
 
-		/*
-		 $industry = 1;
-		 if ($ind > 0) {
-		 $industry = $this->_db->quoteInto('chi.id_ind = ?', $ind);
-		 }
-		 */
-
 		// Needs more optimization
-		$select = $this->_db->select()->from(array('cty' => 'content_types_cty'),
-		array('cty.id_cty', 'cty.key_cty'))
-		->join(array('cnt' => 'contents_cnt'),
-                                            'cnt.id_cty_cnt = cty.id_cty',
-		array('cnt.id_cnt',
+		$select = $this->_db->select()->from(array('cnt' => 'contents_cnt'), array('cnt.id_cnt',
                                                   'cnt.title_cnt',
                                                   'cnt.lead_cnt',
                                                   'cnt.created_cnt',
                                                   'cnt.language_cnt'))
-		->joinLeft(array('chu' => 'cnt_has_usr'),
-                                            'chu.id_cnt = cnt.id_cnt',
-		array())
-		->joinLeft(array('usr' => 'users_usr'),
-                                            'usr.id_usr = chu.id_usr',
-		array('usr.id_usr',
-                                                  'usr.login_name_usr'))
-		
-		 ->joinLeft(array('chi' => 'cnt_has_ind'),
-		 'chi.id_cnt = cnt.id_cnt',
-		 array())
-
-		 ->joinLeft(array('vws' => 'cnt_views_vws'),
-		 'vws.id_cnt_vws = cnt.id_cnt',
-		 array('viewCount' => 'COUNT(vws.id_usr_vws)'))
-		/*
-		 ->joinLeft(array('ind' => 'industries_ind'),
-		 'ind.id_ind = chi.id_ind',
-		 array())*/
-		->group('cnt.id_cnt')
-		->where('cnt.published_cnt = 1')
-		//->where('cnt.language_cnt = ?', $lang)
-		->order($order);
-
+										->join(array('cty' => 'content_types_cty'),
+											 'cnt.id_cty_cnt = cty.id_cty',
+											 array('cty.id_cty', 'cty.key_cty'))
+										->joinLeft(array('chu' => 'cnt_has_usr'),
+                                        		    'chu.id_cnt = cnt.id_cnt',
+													array())
+										->joinLeft(array('usr' => 'users_usr'),
+                                        			    'usr.id_usr = chu.id_usr',
+														array('usr.id_usr',
+                                                  		'usr.login_name_usr'))
+		 								->join(array('vws' => 'cnt_views_vws'),
+		 												 'vws.id_cnt_vws = cnt.id_cnt',
+		 												array('viewCount' => 'SUM(vws.views_vws)'))
+										->group('cnt.id_cnt')
+										->where('cnt.published_cnt = 1')
+										//->where('cnt.language_cnt = ?', $lang)
+										->order($order);
+										;
 		if ($cty != 'all' && $cty != 'All') {
 			$select->where('cty.key_cty = ?', $cty);
 		}
@@ -1571,7 +1537,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
 		// Content data
 		$data = $this->_db->fetchAll($select);	
-
 		return $data;
 	}
 	

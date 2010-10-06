@@ -2,7 +2,7 @@
 /**
  *  ContentHasTag -> ContentHasInnovationTypes database model for content has tag link table.
  *
-* 	Copyright (c) <2009>, Markus Riihelä
+* 	Copyright (c) <2009>, Markus Riihelï¿½
 * 	Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -22,8 +22,8 @@
  *  ContentHasTag - class
  *
  *  @package 	models
- *  @author 		Markus Riihelä & Mikko Sallinen
- *  @copyright 	2009 Markus Riihelä & Mikko Sallinen
+ *  @author 		Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright 	2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
@@ -124,14 +124,10 @@ class Default_Model_ContentHasTag extends Zend_Db_Table_Abstract
 	*/
 	public function removeContentTags($id_cnt = 0)
     {
-        $return = false;
-        
         $where = $this->getAdapter()->quoteInto('id_cnt = ?', $id_cnt);
-        if($this->delete($where)) {
-            $return = true;
-        }
+        $this->delete($where);
         
-        return $return;
+        return $this->fetchAll($where)->count() ? false : true;
     } // end of removeContentTags
     
     /**

@@ -308,7 +308,9 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     	$ptModel = new Default_Model_PageTypes();
         $where[] = $this->getAdapter()->quoteInto('id_target_cmt = ?', (int)$id_cnt);
         $where[] = $this->getAdapter()->quoteInto('type_cmt = ?', $ptModel->getId('content'));
-        return $this->delete($where);
+        $this->delete($where);
+        // return false if content still has contents
+        return $this->fetchAll($where)->count() ? false : true;
     }
     
     /**

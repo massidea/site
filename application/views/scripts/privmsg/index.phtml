@@ -20,7 +20,7 @@ $(document).ready(function() {
 		<input type="checkbox" name="select_all" id="select_all" onclick="selectAllPrivmsgs(); return true;" />
 		<input type="submit" name="delete_selected" value="<?php echo $this->translate('privmsg-delete-selected'); ?>" onclick="document.delete_privmsgs.submit(); return false;" />
 	</div>
-	<div class="clear">
+	<div id="message-list" class="clear">
 	<?php foreach($this->privmsgs as $privmsg):
 		$sent = strtotime($privmsg['created_pmg']);
 		$elapsed = time() - $sent;
@@ -110,13 +110,14 @@ $(document).ready(function() {
 						<div class="reply right"><input type="button" id="replyto-<?php echo $privmsg['username_pmg']; ?>" value="Reply"/></div>						
 					<?php endif; ?>
 					<div class="clear"></div>
-				</div>
+				</div>				
                 <p>
                     <?php echo stripslashes($privmsg['message_body_pmg']); ?>
                 </p>
 			</div><!-- end of privmsg_content -->
+			<div class="clear"></div>
+			
 		</div><!-- end of privmsg -->
-		<div class="clear"></div>
     <?php endforeach; ?>
 <?php endif; ?>
 </form> <!-- end of 'Delete selected'-form -->
