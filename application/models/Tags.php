@@ -378,6 +378,7 @@ class Default_Model_Tags extends Zend_Db_Table_Abstract
 	    foreach ($tagList as $key => $row) {
 		    $name[$key]  = mb_strtolower($row['name_tag']);
 		    $count[$key] = $row['count'];
+		    $tagList[$key]['rank'] = $key;
 		}
 		array_multisort($name, SORT_ASC, $count, SORT_DESC, $tagList);
         // return results
