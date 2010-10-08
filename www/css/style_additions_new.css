@@ -314,7 +314,7 @@ li.linked_campaigns, li.linked_groups {
 	width: 498px;
 	margin-top: 10px;
 }
-
+.content_view_comment_textbody { word-wrap: break-word; }
 #content_view_comments_header {
 	margin:1em 0;
 }
