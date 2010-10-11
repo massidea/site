@@ -1,6 +1,7 @@
 <?php $this->headScript()->appendFile($this->baseUrl('/js/ContentForm.js')); ?>
-<?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-min.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-unicode-base.js')); ?>
+
 
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 
@@ -29,13 +30,14 @@ var previewUrl = '<?php echo $previewUrl; ?>';
                                 . $this->short_contenttype
                 )); ?>
         </p>
+        <?php /* ?>
         <p>Answer following questions:</p>
 		<p>1) What is the insight,</p>
 		<p>2) Why the insight is important and valuable,</p>
 		<p>3) Who is the target group and whom should be interested,</p>
 		<p>4) When (temporal dimension) the insight is topical and</p>
 		<p>5) Where (geographical, physical location or circumstances) the insight is topical?</p>
-        <?php if($this->relatesToId != 0): ?>
+        */ ?> <?php  if($this->relatesToId != 0): ?>
             <div id="linked">
                 <div class="link-target"><strong>
                     <?php echo $this->translate('content-is-linked-to'); ?>
