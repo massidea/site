@@ -78,7 +78,6 @@ background:transparent url("../images/gray_dot_line_500.png") no-repeat bottom;}
     background-position: left;
     background-repeat: no-repeat;
     text-indent: 20px;
-    width: 260px;
 }
 .progress_ok {
     background: white;
@@ -900,10 +899,7 @@ form div.error ul.errors li {
 	clear: both;
 	list-style-type: none;
 	color: red;	
-	text-align: left;
-        position: relative;
-        top:-8px;
-        left:165px;
+	text-align: center;
 }
 
 #login-page{
