@@ -825,13 +825,8 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 #content #sign-up-page .input-column1 {  width:154px; float:left; text-align:right; margin-right:10px; margin-bottom:8px; }
 #content #sign-up-page .input-column2 { width:254px; float:left;  margin-right:15px;  margin-bottom:8px; }
-#content #sign-up-page .input-column2 input
-  { width:254px; }
-
-#content #sign-up-page .input-column2 select
-{
-    width:260px;
-}
+#content #sign-up-page .input-column2 input,
+#content #sign-up-page .input-column2 select { width:254px; }
 
 #content #sign-up-page #update-msg  { color:#999; margin:20px 0px 13px 0px; }
 
