@@ -84,12 +84,12 @@ $(document).ready(function() {
 			$(this).focus(function (event) {
 				$(this).parent().parent().css("z-index",9999);
 				$(this).css("position","relative");
-				var areaWidth = 618;
+				var areaWidth = 729;
+				var progressWidth = 109;
 				$(this).css("width",areaWidth+"px");
-				var progressLeft = $(this).css("width");
 				$("#progressbar_"+this.name).css("position","relative");
-				$("#progressbar_"+this.name).css("left",areaWidth-384+"px");
-				
+				$("#progressbar_"+this.name).css("left",areaWidth-385-progressWidth+"px");
+				$("#progressbar_"+this.name).css("top","-23px");
 			});
 			$(this).blur(function (event) {
 				$(this).css("position","");
