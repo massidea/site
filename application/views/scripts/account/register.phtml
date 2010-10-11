@@ -1,4 +1,22 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<?php
+// some variable initiation
+$url_checkuserExist = $this->url(array('controller' => 'ajax',
+            'action' => 'isuseravailable',
+            'language' => $this->language),
+                'lang_default', true);
+?>
+
+
+<script type="text/javascript">
+    var url_userexists = "<?= $url_checkuserExist ?>";
+</script>
+<?php
+$this->headScript()->appendFile($this->baseUrl('/js/xregexp-min.js'));
+$this->headScript()->appendFile($this->baseUrl('/js/xregexp-unicode-base.js'));
+$this->headScript()->appendFile($this->baseUrl . '/js/CheckRegisterationForm.js');
+?>
+
 <div id="sign-up-page" class="narrow left">
             <h2 class="left"><?php echo $this->translate('account-register-page_header'); ?></h2>
     <div class="clear"></div>
