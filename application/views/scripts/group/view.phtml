@@ -103,7 +103,7 @@ $signupUrl = $this->url(array('controller' => 'account',
         	<?php endif;?>
         </div>
     </div>
-    <div id="activity" class="right">
+    <div id="activity" class="right narrow">
         <div class="left">
             <div id="group-info">
                 <?php if ($this->userIsGroupAdmin):
@@ -272,7 +272,10 @@ $signupUrl = $this->url(array('controller' => 'account',
             </div>
             <div class="clear"></div>
         </div>
+		<div class="clear"></div>
         <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
-        
+
     </div>
+	<div class="clear"></div>
 </div>
+<div class="clear"></div>

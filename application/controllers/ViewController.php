@@ -325,11 +325,11 @@
         $paginator->pagesInRange = 10;*/
         
         // get content industries -- will be updated later.
-        $cntHasIndModel = new Default_Model_ContentHasIndustries();
+        /*$cntHasIndModel = new Default_Model_ContentHasIndustries();
         $hasIndustry = $cntHasIndModel->getIndustryIdOfContent($id);
         
         $industriesModel = new Default_Model_Industries();
-        $industriesArray = $industriesModel->getAllContentIndustryIds($hasIndustry);
+        $industriesArray = $industriesModel->getAllContentIndustryIds($hasIndustry);*/
         
         // roll values to an array
         /*$industries = array();
@@ -357,14 +357,15 @@
         // enable comment form        
 		if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) $comments->allowComments(true);
 		$comments->loadComments();
-        
+
+		$contentData['references_cnt'];
+   		$contentData['references_cnt'] = nl2br($this->clickable($contentData['references_cnt']));
+		
+   		
         // Inject data to view
         $this->view->files 				= $files;
         $this->view->id					= $id;
         $this->view->userImage          = $userImage;
-        //$this->view->commentPaginator   = $paginator;
-        //$this->view->commentData        = $commentsSorted;
-		//$this->view->user_can_comment   = $user_can_comment;
 		$this->view->comments 			= $comments;
 		$this->view->user_can_rate      = $user_can_rate;
         $this->view->user_is_owner      = $user_is_owner;
@@ -383,16 +384,14 @@
         $this->view->children           = $children;
         $this->view->children_siblings  = $children_siblings;
         $this->view->rivals             = $rivals;
-        //$this->view->comments           = $commentCount;
         $this->view->contentType        = $contentType;
-        //$this->view->count              = $count;
         //$this->view->campaigns          = $campaigns;
         $this->view->viewers			= $this->getViewers($id);
         $this->view->boxStates			= $this->getBoxStates();
         
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
-	} // end of view2Action
+	} // end of viewAction
     
 
 	private function getViewers($id_cnt) {
@@ -441,5 +440,31 @@
     		return false;
     	}
     	
+    }
+    
+    /** clickable
+     * 
+     * Makes an url in text clickable link
+     * loaned from http://www.php.net/manual/en/function.preg-replace.php#85722
+     * 
+     * @author tal at ashkenazi dot co dot il
+     * @param string $url
+     * @return string
+     */
+    function clickable($url){
+        $url                                    =    str_replace("\\r","\r",$url);
+        $url                                    =    str_replace("\\n","\n<BR>",$url);
+        $url                                    =    str_replace("\\n\\r","\n\r",$url);
+
+        $in=array(
+      	  	'`((?:https?|ftp)://\S+[[:alnum:]]/?)`si',
+        	'`((?<!//)(www\.\S+[[:alnum:]]/?))`si'
+        );
+        $out=array(
+	        '<a href="$1"  rel=nofollow>$1</a> ',
+	        '<a href="http://$1" rel=\'nofollow\'>$1</a>'
+        );
+        
+        return preg_replace($in,$out,$url);
     }
 }
