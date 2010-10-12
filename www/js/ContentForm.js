@@ -86,9 +86,10 @@ $(document).ready(function() {
 				$(this).css("position","relative");
 				var areaWidth = 729;
 				var progressWidth = 109;
+				var boxWidth = 385;
 				$(this).css("width",areaWidth+"px");
 				$("#progressbar_"+this.name).css("position","relative");
-				$("#progressbar_"+this.name).css("left",areaWidth-385-progressWidth+"px");
+				$("#progressbar_"+this.name).css("left",areaWidth-boxWidth-progressWidth+"px");
 				$("#progressbar_"+this.name).css("top","-23px");
 			});
 			$(this).blur(function (event) {
