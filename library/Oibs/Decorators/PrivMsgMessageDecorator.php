@@ -82,7 +82,7 @@ class Oibs_Decorators_PrivMsgMessageDecorator extends Zend_Form_Decorator_Abstra
         $desc      = $this->buildDescription();
 
         $output = /*'<dl class="form_element">*/
-					'<div class="form_privmsg_row">'
+					'<div id="'.$element->getName().'" class="form_privmsg_row">'
 					. $label
 					. $input
 					. $errors
