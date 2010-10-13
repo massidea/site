@@ -208,7 +208,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $row->modified_cmp = new Zend_Db_Expr('NOW()');
         
         // Save data to database
-        $row->save();
+        $id = $row->save();
         
         return $row;
     } // end of createCampaign
@@ -355,6 +355,10 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $cmpWeblinksModel = new Default_Model_CampaignWeblinks();
         $cmpWeblinksModel->removeCampaignWeblinks($id_cmp);
 
+        // Delete groups files
+        $filesModel = new Default_Model_Files();
+        $filesModel->removeFiles($id_cmp, "campaign");
+        
         // Delete campaign.
         $where = $this->getAdapter()->quoteInto('id_cmp = ?', $id_cmp);
         $this->delete($where);

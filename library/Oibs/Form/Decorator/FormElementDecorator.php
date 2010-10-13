@@ -1,5 +1,5 @@
 <?php 
-class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
+class Oibs_Form_Decorator_FormElementDecorator extends Zend_Form_Decorator_Abstract
 {
 	public function buildLabel()
 	{
@@ -112,11 +112,8 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
                             . $input
                             . $errors
                         . '</div>' .
-                        '</div>';
-		if (!$element instanceof  Zend_Form_Element_MultiCheckbox)
-			$output .= '<div id="progressbar_' .  $name . '" class="progress limit"></div>';
-		
-		$output .= '<div class="clear"></div>';
+                        '</div>' .
+                    '<div class="clear"></div>';
 
         switch ($placement) 
 		{

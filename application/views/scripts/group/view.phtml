@@ -143,10 +143,23 @@ $signupUrl = $this->url(array('controller' => 'account',
                 <?php endif; ?>
 
                 <p><?php echo $this->grpData['body_grp']; ?></p>
-
+				<?php if(!empty($this->files)) : ?>
+		        	<div id="campaign-files">
+			        	<div class="light-gray">
+		        		<span>Added files: </span>
+			        		<?php $filecount = count($this->files); ?>
+			        		<?php $file_i = 0; ?>
+		       				<?php foreach ($this->files as $id_fil => $filename): ?>
+		       					<?php $file_i++; ?>
+			        			<a href="<?php echo $this->baseUrl('/en/file/view/'.$id_fil); ?>">
+			        				<?php echo $filename; ?></a><?php if($file_i < $filecount) echo ', '; ?>
+		        			<?php endforeach;?>
+			        	</div>
+			    	</div>
+				<?php endif; ?>
                 <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
                 <div id="group-links">
-                    <p class="group-links">Group web links:
+                    <p class="group-links light-gray">Group web links:
                         <?php
                         $count = count($this->grpData['groupWeblinks']);
                         $i = 1;

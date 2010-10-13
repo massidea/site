@@ -306,9 +306,7 @@ class Default_Form_EditContentForm extends Zend_Form
         				   ->setRequired(false)
         				   ->setDecorators(array('FormElementDecorator'))
         				   ->setLabel($translate->_('content-add-file-delete-files-label'));
-        				   //->setDecorators(array('SettingsCheckboxDecorator'));
-        //Zend_Debug::dump($uploadedFilesBoxes->getDecorators()); die;
-        
+
         // References
 		$references = new Zend_Form_Element_Textarea('content_references');
 		$references->setValue($data['content_references'])

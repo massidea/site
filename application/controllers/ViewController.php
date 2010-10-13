@@ -80,7 +80,7 @@
         }
         
         $filesModel = new Default_Model_Files();
-        $files = $filesModel->getFilenamesByCntId($id);
+        $files = $filesModel->getFilenames($id, "content");
         
         // Get content owner id (groups to be implemented later)
         $contentHasUserModel = new Default_Model_ContentHasUser();

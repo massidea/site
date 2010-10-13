@@ -1,6 +1,6 @@
 <?php 
-class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
-{
+class Oibs_Form_Decorator_UploadDecorator extends Zend_Form_Decorator_File
+{   
 	public function buildLabel()
 	{
 		$element = $this->getElement();
@@ -20,12 +20,9 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
 			$label .= ':';
 		}
 		*/
-        
-		// Label is generated only if it's not empty
-        if($label != "") {
-            return $element->getView()
+		
+		return $element->getView()
 						->formLabel($element->getName(), $label);
-        }
 	}
 
 	public function buildInput()
@@ -35,58 +32,43 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
         $name = $this->getElement()->getName();
 		
 		$text = '';
-        $errors = $this->buildErrors();
+		if($element->isrequired())
+		{
+            $text = '<div id="progressbar_'.$name.'" class="progress limit"></div>';
+		}
         
-		//if( $element->isrequired() || $element instanceof Zend_Form_Element_Select )
-		//{
-      	//}
-        
-        // Get the attributes here, and remove annoying helper attribute
-        $attribs = $element->getAttribs();
-        unset($attribs['helper']);
-		
-        return $element->getView()->$helper(
-            $element->getName(),
-            $element->getValue(),
-            $attribs,
-            $element->options) . $text;
+		return $element->getView()->$helper(
+            $element->getName()."[]", //small hack to add brackets [] to make it possible to upload multiple files
+            $element->getAttribs()) . $text;
     }
 
     public function buildErrors()
     {
         $element  = $this->getElement();
-        //$belongs  = $element->getView()->getBelongsTo();
-        $belongs = $element->getName();
         $messages = $element->getMessages();
-        
         if (empty($messages)) 
 		{
             return '';
         }
-        return '<div class="errors">' . '<ul class="errors">' . '<li>' .
-               $element->getView()->formErrors($messages) . 
-        	   '</li></ul></div>';
+        return '<div class="error_messages">' .
+               $element->getView()->formErrors($messages) . '</div>';
     }
 
     public function buildDescription()
     {
         $element = $this->getElement();
         $desc    = $element->getDescription();
-        $name    = $this->getElement()->getName();
-        
         if (empty($desc)) 
 		{
             return '';
         }
-        //return '<div class="form_element_' . $this->getElement()->getName() . '_description">' . $desc . '</div>';
         return '<small class="right">' . $desc . '</small>';
     }
 
     public function render($content)
     {
-        $translate = Zend_Registry::get('Zend_Translate'); 
         $element = $this->getElement();
-        if (!$element instanceof Zend_Form_Element) 
+        if (!$element instanceof Zend_Form_Element_File) 
 		{
             return $content;
         }
@@ -102,7 +84,17 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
         $name      = $this->getElement()->getName();
-        
+
+        /*$output = '<div class="form_addcontent_title_row"><b>'
+					. $label
+                    . '</b>'
+                    . $desc
+                    . '</div>'
+                    . '<div class="form_addcontent_row">'
+					. $input
+					. $errors
+					. '</div>';*/
+
         $output = '<div id="form_element_' . $name .'_container" class="row" >
                         <div class="field-label">'
                             . $desc
@@ -111,12 +103,9 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
                         <div class="field">'
                             . $input
                             . $errors
-                        . '</div>' .
-                        '</div>';
-		if (!$element instanceof  Zend_Form_Element_MultiCheckbox)
-			$output .= '<div id="progressbar_' .  $name . '" class="progress limit"></div>';
-		
-		$output .= '<div class="clear"></div>';
+                    . '</div>
+					</div>
+					<div class="clear"></div>';
 
         switch ($placement) 
 		{
@@ -129,3 +118,4 @@ class Oibs_Decorators_FormElementDecorator extends Zend_Form_Decorator_Abstract
     }
 
 }
+?>
