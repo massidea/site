@@ -446,6 +446,7 @@
      * 
      * Makes an url in text clickable link
      * loaned from http://www.php.net/manual/en/function.preg-replace.php#85722
+     * also makes youtube links viewable videos
      * 
      * @author tal at ashkenazi dot co dot il
      * @param string $url
@@ -455,16 +456,40 @@
         $url                                    =    str_replace("\\r","\r",$url);
         $url                                    =    str_replace("\\n","\n<BR>",$url);
         $url                                    =    str_replace("\\n\\r","\n\r",$url);
-
-        $in=array(
-      	  	'`((?:https?|ftp)://\S+[[:alnum:]]/?)`si',
-        	'`((?<!//)(www\.\S+[[:alnum:]]/?))`si'
-        );
-        $out=array(
-	        '<a href="$1"  rel=nofollow>$1</a> ',
-	        '<a href="http://$1" rel=\'nofollow\'>$1</a>'
-        );
+		$urls									=	 explode("\n", $url);
         
-        return preg_replace($in,$out,$url);
+		$return = "";
+		foreach ($urls as $url) { 
+	        $youtubePattern = "/youtube.com\/watch\?v\=([[:alnum:]]{11})/";
+	        if (preg_match_all($youtubePattern, $url, $out)) { // If its a youtube link
+		        foreach($out[1] as $match) {
+					$return .= 
+						'<object>'.
+					  '<param name="movie" value="http://www.youtube.com/v/'.$match.'&hl=en&fs=1"></param>'.
+  							'<param name="allowFullScreen" value="true"></param>'.
+  							'<param name="allowScriptAccess" value="always"></param>'.
+							'<embed src="http://www.youtube.com/v/'.$match.'&hl=en&fs=1"'.
+						  		' type="application/x-shockwave-flash"'.
+						  		' allowfullscreen="true"'.
+						  		' allowscriptaccess="always"'.
+						  		' width="425" height="344"></embed>'.
+						'</object>';
+		        }
+	        } else { // If not youtube link
+		        
+		        $in=array(
+		      	  	'`((?:https?|ftp)://\S+[[:alnum:]]/?)`si',
+		        	'`((?<!//)(www\.\S+[[:alnum:]]/?))`si',
+		        );
+		        $out=array(
+			        '<a href="$1"  rel=nofollow>$1</a> ',
+			        '<a href="http://$1" rel=\'nofollow\'>$1</a>',
+		        );
+
+		        $return .= preg_replace($in,$out,$url);
+	        }
+	        $return .= "\n";
+		}
+		return $return;
     }
 }
