@@ -1018,7 +1018,40 @@ div.tag_cloud { padding-bottom: 5px; }
 .linking_from_header { padding-left: 5px; }
 .linking_from_content { padding-left: 5px; width: 350px; }
 
+
 /** Style for easy colored left border */
 .border-finfo { border-left: solid 5px #FFC726; padding: 0 0 0 10px !important; }
 .border-idea { border-left: solid 5px #4B9B07; padding: 0 0 0 10px !important; }
 .border-problem { border-left: solid 5px #D21034; padding: 0 0 0 10px !important; }
+
+/** Group page header and menu */
+#group-page { width: 720px; }
+#group-page #group-header { width: auto; }
+#group-page #group-header #group-name { float: left; width: 400px; }
+#group-page #group-header #group-signup { margin-left: 400px; width: auto; text-align: right; font-size: 16px; }
+#profile-meta #group-menu a { margin: 0 5px 0 5px; }
+#profile-meta #group-menu li#active { background-color: #cbcbcb; font-weight: bold; }
+
+/** Group page home */
+#group-page #activity .group-home h3,
+#group-page #activity .group-home p,
+#group-page #activity .group-home ul { padding: 5px; }
+#group-page #activity .group-home h3 { font-size: 14px; border-bottom: 1px solid #cccccc; }
+#group-page #activity .group-home p { color: #c0c0c0 }
+#group-page #activity .group-home ul { list-style-type: none; }
+
+/** Group page campaigns */
+#group-page #group-page-campaigns { border: 0; }
+#group-page #group-page-campaigns div p { margin-left:15px; }
+#group-page #group-page-campaigns div ul li {
+	margin:8px 10px 0px 0px;
+	padding-bottom:10px;
+	list-style:none;
+	border-bottom: 1px dotted #CCC;
+}
+#group-page #group-page-campaigns div ul li p { display:block; padding:2px 2px 2px 10px; margin:0px; }
+#group-page #group-page-campaigns div ul li span.left { width:200px !important; margin:3px 0px 0px 10px; }
+#group-page #group-page-campaigns div ul li span.right { width:200px !important; text-align:right; margin:5px 0px 0px 0px;  }
+#group-page #group-page-campaigns div ul li.challenges div { border-left:5px solid #D21034; }
+#group-page #group-page-campaigns div ul li.ideas div { border-left:5px solid #4B9B07; }
+#group-page #group-page-campaigns div ul li.visions div { border-left:5px solid #FFC726; }

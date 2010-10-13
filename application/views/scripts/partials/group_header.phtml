@@ -1,0 +1,98 @@
+<?php $date_founded = new Zend_Date($this->created_grp, Zend_Date::ISO_8601); ?>
+
+<div id="group-header">
+    <div id="group-name">
+        <h2><?php echo $this->group_name_grp; ?></h2>
+        <div id="group-founded" class="light-gray"><?php echo $this->translate('group-founded') . ': '; ?><?php echo $date_founded->toString('dd MMM, yyyy'); ?></div>
+    </div>
+    <div id="group-signup">
+        <?php if ($this->user_identity == true) : ?>
+            <?php
+            if ($this->user_is_group_admin):
+                 $cmplink = $this->url(
+                     array(
+                        'controller' => 'campaign',
+                        'action'     => 'create',
+                        'language'   => $this->language,
+                        'grpid'      => $this->id_grp
+                     ), 'lang_default', true
+            );
+            ?>
+            <p class="group-join">
+                <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a>
+            </p>
+            <?php else : ?>
+                <?php if ($this->is_closed && !$this->user_has_group) : ?>
+                    <?php if (!$this->user_has_group_waiting):
+                        $joinwaitingurl = $this->url(
+                            array(
+                                'controller' => 'group',
+                                'action' => 'join',
+                                'groupid' => $this->id_grp,
+                                'language' => $this->language
+                            ), 'lang_default', true
+                        );
+                    ?>
+                    <p class="group-join">
+                        <a href="<?php echo $joinwaitingurl; ?>">&gt; <?php echo $this->translate('group-join-waiting_group'); ?></a>
+                    </p>
+                    <?php else:
+                        $leavewaitingurl = $this->url(
+                            array(
+                                'controller' => 'group',
+                                'action' => 'leavewaiting',
+                                'groupid' => $this->id_grp,
+                                'language' => $this->language
+                            ), 'lang_default', true);
+                    ?>
+                    <p class="group-join">
+                        <a href="<?php echo $leavewaitingurl; ?>">&gt; <?php echo $this->translate('group-leave-waiting_group'); ?></a>
+                    </p>
+                    <?php endif; ?>
+                <?php else : ?>
+                    <?php if (!$this->user_has_group):
+                        $joinurl = $this->url(
+                            array(
+                                'controller' => 'group',
+                                'action' => 'join',
+                                'groupid' => $this->id_grp,
+                                'language' => $this->language
+                            ), 'lang_default', true
+                        );
+                    ?>
+
+                    <p class="group-join">
+                        <a href="<?php echo $joinurl; ?>">&gt; <?php echo $this->translate('group-join_group'); ?></a>
+                    </p>
+                    <?php else:
+                        $leaveurl = $this->url(
+                            array(
+                                'controller' => 'group',
+                                'action' => 'leave',
+                                'confirm' => 0,
+                                'groupid' => $this->id_grp,
+                                'language' => $this->language
+                            ), 'lang_default', true);
+                    ?>
+                    <p class="group-join">
+                        <a href="<?php echo $leaveurl; ?>">&gt; <?php echo $this->translate('group-leave_group'); ?></a>
+                    </p>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+            <!--<p>Only by joining you can add contents to campaigns</p>-->
+        <?php else: ?>
+            <div id="group-not-logged" class="light-gray">
+                <?php
+                $signupUrl = $this->url(array('controller' => 'account',
+                                              'action' => 'register',
+                                              'language' => $this->language),
+                                        'lang_default', true);
+                ?>
+                <a id="login_link" href="#">Log in</a> or <a href="<?php echo $signupUrl; ?>">Sign up</a> to join this group.
+            </div>
+            <!--<p>Only by joining you can add contents to campaigns</p>-->
+        <?php endif;?>
+    </div>
+</div>
+<div class="clear"></div>

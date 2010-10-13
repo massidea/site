@@ -74,6 +74,38 @@
      */
     function viewAction()
     {
+        // User identity, group header and group menu:
+
+        // Group id
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+        // Group data
+        $grpData = $this->getGroupData($grpId);
+        // Menudata
+        $menuData['id_grp'] = $grpId;
+        $menuData['grp_action'] = 'home';
+        // Set $this->view->...
+        $this->view->menuData = $menuData;
+
+        // Group campaignAction special stuff:
+        $grpData['body_grp'] = substr($grpData['body_grp'], 0, 230)."...";
+        $campaignModel = new Default_Model_Campaigns();
+        $cmpData = $campaignModel->getRecentByGroup(3, $grpId);
+        
+        // Set $this->view->...
+        $this->view->grpData = $grpData;
+        $this->view->cmpData = $cmpData;
+
+
+        /*
         // Get authentication
         $auth = Zend_Auth::getInstance();
 
@@ -87,6 +119,14 @@
         // Get data for this specific group.
         $grpId = $this->_request->getParam('groupid');
         $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
         $usrHasGrpModel = new Default_Model_UserHasGroup();
         $usrHasGrpWaitingModel = new Default_Model_UserHasGroupWaiting();
         $grpAdminsModel = new Default_Model_GroupAdmins();
@@ -145,6 +185,7 @@
         $this->view->linkedgroups = $linkedgroups;
         $this->view->isClosed = $isClosed;
         $this->view->usrWaitingCount = $usrWaitingCount;
+        */
     }
 
     function removeAction()
@@ -881,6 +922,170 @@
                                           'lang_default', true);
 			$this->flash($message, $url);
         }
+    }
+
+    /**
+     * campaignsAction
+     *
+     * @author Mikko Korpinen
+     */
+    public function campaignsAction()
+    {
+        // User identity, group header and group menu:
+
+        // Group id
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+        // Group data
+        $grpData = $this->getGroupData($grpId);
+        // Menudata
+        $menuData['id_grp'] = $grpId;
+        $menuData['grp_action'] = 'campaigns';
+        // Set $this->view->...
+        $this->view->grpData = $grpData;
+        $this->view->menuData = $menuData;
+
+        // Group campaignAction special stuff:
+
+        // Get campaigns
+        $campaignModel = new Default_Model_Campaigns();
+        // Set $this->view->...
+        $this->view->openCampaigns = $campaignModel->getOpenCampaignsByGroup($grpId);
+        $this->view->notstartedCampaigns = $campaignModel->getNotstartedCampaignsByGroup($grpId);
+        $this->view->endedCampaigns = $campaignModel->getEndedCampaignsByGroup($grpId);
+    }
+
+    /**
+     * infoAction
+     *
+     * @author Mikko Korpinen
+     */
+    public function infoAction()
+    {
+        // User identity, group header and group menu:
+
+        // Group id
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+        // Group data
+        $grpData = $this->getGroupData($grpId);
+        // Menudata
+        $menuData['id_grp'] = $grpId;
+        $menuData['grp_action'] = 'info';
+        // Set $this->view->...
+        $this->view->menuData = $menuData;
+
+        // Group infoAction special stuff:
+        // Group weblinks
+        $groupWeblinksModel = new Default_Model_GroupWeblinks();
+        $grpData['groupWeblinks'] = $groupWeblinksModel->getGroupWeblinks($grpId);
+        $i = 0;
+        foreach($grpData['groupWeblinks'] as $weblink) {
+            if (strlen($weblink['name_gwl']) == 0 || strlen($weblink['url_gwl']) == 0) {
+                unset($grpData['groupWeblinks'][$i]);
+            }
+            $i++;
+        }
+        // Set $this->view->...
+        $this->view->grpData = $grpData;
+
+    }
+
+    /**
+     * membersAction
+     *
+     * @author Mikko Korpinen
+     */
+    public function membersAction()
+    {
+        // User identity, group header and group menu:
+
+        // Group id
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+        // Group data
+        $grpData = $this->getGroupData($grpId);
+        // Menudata
+        $menuData['id_grp'] = $grpId;
+        $menuData['grp_action'] = 'members';
+        // Set $this->view->...
+        $this->view->grpData = $grpData;
+        $this->view->menuData = $menuData;
+
+        // Group membersAction special stuff:
+
+        // Get users in group
+        $usrHasGrpModel = new Default_Model_UserHasGroup();
+        // Set $this->view->...
+        $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
+    }
+
+    /**
+     * getGroupData - Get group data and realted stuff
+     *
+     * @param int $grpId
+     * @return array
+     */
+    private function getGroupData($grpId)
+    {
+        // Get authentication
+        $auth = Zend_Auth::getInstance();
+        // Get group data
+        $grpModel = new Default_Model_Groups();
+        $grpData = $grpModel->getGroupData($grpId);
+        $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
+        $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
+        // User has identity
+        if ($auth->hasIdentity()) {
+            $grpData['user_identity'] = true;
+        } else {
+            $grpData['user_identity'] = false;
+        }
+        // Group admins
+        $grpAdminsModel = new Default_Model_GroupAdmins();
+        $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+        $user = $auth->getIdentity();
+        $grpData['user_is_group_admin'] = isset($user->user_id) ? $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id) : false;
+        // Group type
+        $grpTypeId = $grpModel->getGroupTypeId($grpId);
+        $grpTypeModel = new Default_Model_GroupTypes();
+        $grpData['is_closed'] = $grpTypeModel->isClosed($grpTypeId);
+        // usrHasGrp models
+        if (isset($user->user_id)) {
+            $usrHasGrpModel = new Default_Model_UserHasGroup();
+            $grpData['user_has_group'] = $usrHasGrpModel->userHasGroup($grpId, $user->user_id);
+            $usrHasGrpWaitingModel = new Default_Model_UserHasGroupWaiting();
+            $grpData['user_has_group_waiting'] = $usrHasGrpWaitingModel->userWaitingGroup($grpId, $user->user_id);
+        } else {
+            $grpData['user_has_group'] = false;
+            $grpData['user_has_group_waiting'] = false;
+        }
+
+        return $grpData;
     }
 
 }

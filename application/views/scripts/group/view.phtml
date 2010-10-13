@@ -1,3 +1,81 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="group-page">
+    <?php echo $this->partial('partials/group_header.phtml', $this->grpData); ?>
+    <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
+    <div id="activity" class="right">
+        <div class="left group-home">
+            <div class="group-home-info">
+                <?php $infoUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                  'language' => $this->language),
+                                            'group_info_shortview', true); ?>
+                <h3><a href="<?php echo $infoUrl; ?>">Info</a></h3>
+                <p>
+                    <?php echo $this->grpData['body_grp']; ?>
+                    <a href="<?php echo $infoUrl; ?>">Read more</a>
+                </p><?php //Zend_Debug::dump($this->grpData); ?>
+            </div>
+            <div class="group-home-campaigns">
+                <?php $campaignsUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                       'language' => $this->language),
+                                                 'group_campaigns_shortview', true); ?>
+                <h3>New <a href="<?php echo $campaignsUrl; ?>">campaigns</a></h3>
+                <ul>
+                <?php
+                foreach ($this->cmpData as $cmp) {
+                    $cmpUrl = $this->url(array('cmpid'    => $cmp['id_cmp'],
+                                               'language' => $this->language),
+                                         'campaign_view', true);
+                    ?>
+                    <li><a href="<?php echo $cmpUrl; ?>"><?php echo $cmp['name_cmp']; ?></a></li>
+                    <?php
+                }
+                ?>
+                </ul>
+            </div>
+            <div class="group-home-comments">
+                <?php $commentsUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                      'language' => $this->language),
+                                                'group_discussion_shortview', true); ?>
+                <h3>New <a href="<?php echo $commentsUrl; ?>">comments</a></h3>
+            </div>
+            <div class="group-home-feeds">
+                <?php $feedsUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                   'language' => $this->language),
+                                             'group_feeds_shortview', true); ?>
+                <h3>New <a href="<?php echo $feedsUrl; ?>">feeds</a></h3>
+            </div>
+            <div class="group-home-members">
+                <?php $membersUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                     'language' => $this->language),
+                                               'group_members_shortview', true); ?>
+                <h3>New <a href="<?php echo $membersUrl; ?>">members</a></h3>
+            </div>
+            <?php /*
+            <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
+            <div id="group-links">
+                <p class="group-links">Group web links:
+                    <?php
+                    $count = count($this->grpData['groupWeblinks']);
+                    $i = 1;
+                    foreach ($this->grpData['groupWeblinks'] as $weblink) {
+                    ?>
+                    <a href="<?php echo $weblink['url_gwl']; ?>"><?php
+                        echo $weblink['name_gwl'];
+                    ?></a><?php
+                    if ($i != $count)
+                        echo ',';
+                    $i++;
+                    }
+                    ?>
+                </p>
+            </div>
+            <?php endif ?>
+            */ ?>
+        </div>
+    </div>
+</div>
+
+<?php /*
 <?php $this->headScript()->captureStart(); ?>
 function deleteconfirmation(url) {
     var answer = confirm("Delete group? This will also delete all of the group's campaigns.");
@@ -278,4 +356,4 @@ $signupUrl = $this->url(array('controller' => 'account',
     </div>
 	<div class="clear"></div>
 </div>
-<div class="clear"></div>
+*/?>

@@ -1,0 +1,29 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="group-page">
+    <?php echo $this->partial('partials/group_header.phtml', $this->grpData); ?>
+    <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
+    <div id="activity" class="right">
+        <div class="left">
+            <p><?php echo $this->grpData['body_grp']; ?></p><?php //Zend_Debug::dump($this->grpData); ?>
+            <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
+            <div id="group-links">
+                <p class="group-links">Group web links:
+                    <?php
+                    $count = count($this->grpData['groupWeblinks']);
+                    $i = 1;
+                    foreach ($this->grpData['groupWeblinks'] as $weblink) {
+                    ?>
+                    <a href="<?php echo $weblink['url_gwl']; ?>"><?php
+                        echo $weblink['name_gwl'];
+                    ?></a><?php
+                    if ($i != $count)
+                        echo ',';
+                    $i++;
+                    }
+                    ?>
+                </p>
+            </div>
+            <?php endif ?>
+        </div>
+    </div>
+</div>

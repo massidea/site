@@ -205,8 +205,17 @@ class CampaignController extends Oibs_Controller_CustomController
         $user = $auth->getIdentity();
         $cmpid = $this->_request->getParam('cmpid');
 
-        // Get campaign & its contents.
         $cmpmodel = new Default_Model_Campaigns();
+        // Check if campaign exists
+        if (!isset($cmpid) || !$cmpmodel->campaignExists($cmpid)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'campaign',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+
+        // Get campaign & its contents.
         $cmp = $cmpmodel->getCampaignById($cmpid)->toArray();
         $cmp['ingress_cmp'] = str_replace("\n", '<br>', $cmp['ingress_cmp']);
         $cmp['description_cmp'] = str_replace("\n", '<br>', $cmp['description_cmp']);
