@@ -115,8 +115,11 @@ $(document).ready(function(){
 	$("#user_options").hover(
 			function(){$("#user_options").clearQueue()},
 			function(){$("#user_options").delay(1000).slideUp();}
-			);
+	);
 	
+		
+
+		
 	/*
 	$("#user_options > ul > #user_options_groups").hover(
 			function() {

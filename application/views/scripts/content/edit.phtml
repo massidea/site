@@ -1,7 +1,7 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/ContentForm.js'); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_additions_new.css')); ?>
-<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-min.js'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp.js'); ?>
 <?php $this->headScript()->appendFile($this->baseUrl . '/js/xregexp-unicode-base.js'); ?>
 
 <?php $previewUrl = $this->url(array('controller' => 'content',
