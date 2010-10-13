@@ -79,7 +79,9 @@ class FileController extends Oibs_Controller_CustomController
     	$fliModel = new Default_Model_FileLinks();
     	if (!$fliModel->convertDone()) {
 			$fliModel->convert();
+			echo "converting..";
+    	} else {
+    		echo "convert already done";
     	}
-    	echo "convert already done";
     }
 }
