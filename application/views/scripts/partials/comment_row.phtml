@@ -22,7 +22,7 @@
 				<div id="content_view_comment_<?php echo $this->id_cmt; ?>" class="content_view_comment">
 					<div id="content_view_comment_<?php echo $this->id_cmt; ?>_textbody" 
                          class="content_view_comment_textbody">
-                      		<?php echo nl2br($this->body_cmt); ?>
+                      		<?php echo Oibs_Controller_Plugin_Utils::clickable(nl2br($this->body_cmt)); ?>
                     </div>
                     <div id="unmodified_<?php echo $this->id_cmt; ?>" style="display:none;">
                         <?php echo $this->body_cmt; ?>
