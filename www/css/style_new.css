@@ -102,18 +102,19 @@ input.submit-button {
 #add_new_content .add_new_info { position: relative; background-color: #fff; height: 290px; border: 1px solid #AAA; margin-top: 10px; }
 #add_new_content .add_new_info p { padding:0px 10px 0px 10px; font-size: 0.8em; color: #999 }
 
-#add_new_content .add_new_title { cursor: pointer; border-bottom: 1px solid #AAA; }
-#add_new_content .add_new_title a { color: #FFF; font-weight: bold; font-size: 14px; height: 15px; width: inherit; display: block; position: relative; padding: 5px 0px 5px 5px; overflow: hidden;}
+#add_new_content .add_new_title {  border-bottom: 1px solid #AAA; font-weight: bold; vertical-align: middle; }
+#add_new_content .add_new_info a { color: #FFF; font-size: 14px; height: inherit; width: inherit; display: block; position: relative; overflow: hidden;}
+
+#add_new_content #add_new_idea span { padding: 10px 62px 5px 10px; }
+#add_new_content #add_new_challenge span { padding: 10px 21px 5px 10px; }
+#add_new_content #add_new_vision span { padding: 10px 49px 5px 10px; }
 
 #add_new_content #add_new_challenge .add_new_title { background-color: #D21034; }
-#add_new_content #add_new_challenge .add_new_title:hover { background-color: #FFF; }
-#add_new_content #add_new_challenge .add_new_title:hover a { color: #D21034; }
+#add_new_content #add_new_challenge .add_new_info:hover span { background-color: #FFF; color: #D21034; }
 #add_new_content #add_new_idea .add_new_title { background-color: #4B9B07; }
-#add_new_content #add_new_idea .add_new_title:hover { background-color: #fff; }
-#add_new_content #add_new_idea .add_new_title:hover a { color: #4B9B07; }
+#add_new_content #add_new_idea .add_new_info:hover span { background-color: #fff; color: #4B9B07; }
 #add_new_content #add_new_vision .add_new_title { background-color: #FFC726; }
-#add_new_content #add_new_vision .add_new_title:hover { background-color: #FFF; }
-#add_new_content #add_new_vision .add_new_title:hover a { color: #FFC726; }
+#add_new_content #add_new_vision .add_new_info:hover span { background-color: #FFF; color: #FFC726; }
 
 #add_new_content #add_new_idea { margin-left: 8px; margin-right: 8px; }
 #add_new_content #add_new_challenge { margin-left: 4px; }
