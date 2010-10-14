@@ -46,22 +46,11 @@ class Oibs_Controller_Plugin_Utils {
 		$urls									=	 explode("\n", $url);
         
 		$return = "";
-		foreach ($urls as $url) { 
+		foreach ($urls as $url) {
+			$return .= "<div class='reference-row'>"; 
 	        $youtubePattern = "/youtube.com\/watch\?v\=([[:alnum:]]{11})/";
 	        if (preg_match_all($youtubePattern, $url, $out) && $embed) { // If its a youtube link
-		        foreach($out[1] as $match) {
-					$return .= 
-						'<object>'.
-					  '<param name="movie" value="http://www.youtube.com/v/'.$match.'&hl=en&fs=1"></param>'.
-  							'<param name="allowFullScreen" value="true"></param>'.
-  							'<param name="allowScriptAccess" value="always"></param>'.
-							'<embed src="http://www.youtube.com/v/'.$match.'&hl=en&fs=1"'.
-						  		' type="application/x-shockwave-flash"'.
-						  		' allowfullscreen="true"'.
-						  		' allowscriptaccess="always"'.
-						  		' width="425" height="344"></embed>'.
-						'</object>';
-		        }
+	        	$return .= self::youtubeLink($out[1]);
 	        } else { // If not youtube link
 		        
 		        $in=array(
@@ -75,8 +64,56 @@ class Oibs_Controller_Plugin_Utils {
 
 		        $return .= preg_replace($in,$out,$url);
 	        }
-	        $return .= "\n";
+	        $return .= "</div>";
 		}
 		return $return;
     }
+    
+    private function youtubeLink($youtubeIds) {
+    	$return = "";
+    	$h = 344;
+    	$w = 425;
+    	$cache = Zend_Registry::get('cache');
+		foreach($youtubeIds as $match) {
+			
+			$url = "http://www.youtube.com/v/".$match."&hl=en&fs=1";
+			$watchUrl = "http://www.youtube.com/watch?v=".$match;
+			$gdUrl = "http://gdata.youtube.com/feeds/api/videos/".$match;
+			$imgUrl = "http://img.youtube.com/vi/".$match."/2.jpg";
+			$youtubeCacheTag = 'youtube_title_'.$match;
+			
+			if (!$title = $cache->load($youtubeCacheTag)) { 
+				$title = self::getYoutubeTitle($gdUrl);
+				if (null == $title) return "";
+				$cache->save($title, $youtubeCacheTag);
+			} 
+			
+			$return .= '<div class="youtube-reference hover-link">'.
+				'<div class="youtube-embed" style="display:none"><object>'.
+			  '<param name="movie" value="'.$url.'"></param>'.
+  					'<param name="allowFullScreen" value="true"></param>'.
+  					'<param name="allowScriptAccess" value="always"></param>'.
+					'<embed src="'.$url.'"'.
+				  		' type="application/x-shockwave-flash"'.
+				  		' allowfullscreen="true"'.
+				  		' allowscriptaccess="always"'.
+				  		' width="'.$w.'" height="'.$h.'"></embed>'.
+				'</object></div>'.
+			'<div class="youtube-preview">'.
+			'<div class="youtube-thumbnail left"><img src="'.$imgUrl.'" /></div>'.
+			'<div class="youtube-title left">'.$title.'</div>'.
+			'<div class="clear"></div></div></div>';
+			$return .= '<div class="clear"></div>';
+        }
+    return $return;
+    }
+    
+	private function getYoutubeTitle($url) {
+        $fh = @fopen($url, "r");
+        if (!$fh) return null;
+        $str = fread($fh, 7500);
+        fclose($fh);
+        if (!preg_match('/<title type=\'(.*)\'>(.*)<\/title>/i', $str, $out)) return null;
+        return $out[2];
+	}
 }

@@ -359,7 +359,7 @@
 		$comments->loadComments();
 		
 		//$contentData['references_cnt'];
-   		$contentData['references_cnt'] = nl2br(Oibs_Controller_Plugin_Utils::clickable($contentData['references_cnt'], true));
+   		$contentData['references_cnt'] = Oibs_Controller_Plugin_Utils::clickable($contentData['references_cnt'], true);
 		$contentData['body_cnt'] = Oibs_Controller_Plugin_Utils::clickable($contentData['body_cnt']);
    		
         // Inject data to view

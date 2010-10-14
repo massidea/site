@@ -1027,4 +1027,8 @@ div.tag_cloud { padding-bottom: 5px; }
 .border-problem { border-left: solid 5px #D21034; padding: 0 0 0 10px !important; }
 
 button.content_manage_button { margin: 10px 0; }
+
+/** Youtube things */
+.reference-row { padding: 5px; }
+.youtube-title { padding: 0 0 0 5px; }
 	 

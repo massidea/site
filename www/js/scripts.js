@@ -176,6 +176,13 @@ $(document).ready(function(){
 		}	
 	 });
 	 */
+	
+	$('.youtube-reference').click(function() {
+		$(this).removeClass('hover-link');
+		$(this).find('.youtube-preview').toggle();
+		$(this).find('.youtube-embed').toggle();
+		$(this).unbind('click');
+	});
 });
 
 function highlightContentMenuItem(target)
