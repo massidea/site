@@ -215,13 +215,30 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
 
     public function editCampaign($id, $name, $ingress, $desc, $start, $end)
     {
-		$data = array(
-            'name_cmp' => $name,
-            'ingress_cmp' => $ingress,
-            'description_cmp' => $desc,
-            'start_time_cmp' => $start,
-            'end_time_cmp' => $end,
-        );
+        if ($start == 'keepExisting') {
+            if (empty($end))
+                $end = "0000-00-00";
+            $data = array(
+                'name_cmp' => $name,
+                'ingress_cmp' => $ingress,
+                'description_cmp' => $desc,
+                'end_time_cmp' => $end,
+            );
+        } else {
+            if (empty($start)) {
+                $start = date("Y-m-d", time());
+            }
+            if (empty($end))
+                $end = "0000-00-00";
+            $data = array(
+                'name_cmp' => $name,
+                'ingress_cmp' => $ingress,
+                'description_cmp' => $desc,
+                'start_time_cmp' => $start,
+                'end_time_cmp' => $end,
+            );
+        }
+		
 
 		$where = $this->getAdapter()->quoteInto('id_cmp = ?', $id);
 		$this->update($data, $where);

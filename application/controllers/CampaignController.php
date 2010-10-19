@@ -334,14 +334,25 @@ class CampaignController extends Oibs_Controller_CustomController
                 $post = $request->getPost();
                 if ($form->isValid($post)) {
                     // Change existing group info.
-                    $cmpModel->editCampaign(
-                        $cmpId,
-                        $post['campaign_name'],
-                        $post['campaign_ingress'],
-                        $post['campaign_desc'],
-                        $post['campaign_start'],
-                        $post['campaign_end']
-                    );
+                    if (isset($post['campaign_start'])) {
+                        $cmpModel->editCampaign(
+                            $cmpId,
+                            $post['campaign_name'],
+                            $post['campaign_ingress'],
+                            $post['campaign_desc'],
+                            $post['campaign_start'],
+                            $post['campaign_end']
+                        );
+                    } else {
+                        $cmpModel->editCampaign(
+                            $cmpId,
+                            $post['campaign_name'],
+                            $post['campaign_ingress'],
+                            $post['campaign_desc'],
+                            'keepExisting',
+                            $post['campaign_end']
+                        );
+                    }
 
                     // Set weblinks
                     if (isset($post['weblinks_name_site1']) && isset($post['weblinks_url_site1'])) {

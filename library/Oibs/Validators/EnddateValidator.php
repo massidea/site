@@ -67,17 +67,14 @@ class Oibs_Validators_EnddateValidator extends Zend_Validate_Abstract
                 if ($end->compare($start) == 1) {
                     return true;
                 }
-	        }
-	    } elseif (is_string($startDay)) {
-            // If start day is empty, set this day
-            if (empty($startDay)) {
-                $start = date("Y-m-d", time());
-            } else {
-                $start = $startDay;
-            }
-            $start = new Zend_Date($start, Zend_Date::ISO_8601);
-            if ($end->compare($start) == 1) {
-                return true;
+	        } else {
+                // If admin is editing started campaign check that new end date is this day or after
+                $thisDay = date("Y-m-d", time());
+                $thisDay = new Zend_Date($thisDay, Zend_Date::ISO_8601);
+                $thisDay->subDay(1);
+                if ($end->compare($thisDay) == 1) {
+                    return true;
+                }
             }
 	    }
 

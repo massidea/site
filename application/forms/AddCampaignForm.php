@@ -131,7 +131,7 @@ class Default_Form_AddCampaignForm extends Zend_Form
         $campaignstart
             ->setAttrib('id', 'campaign_start')
             ->setAttrib('name', 'campaign_start')
-            ->setLabel('Start date (empty means current day)')
+            ->setLabel('Start date (empty means current date)')
             //->setRequired(true)
             ->setAttrib('invalidMessage', 'Invalid date specified')
             ->setAttrib('formalLength', 'long')
@@ -296,61 +296,63 @@ class Default_Form_AddCampaignForm extends Zend_Form
         else
             $save->setLabel('Create');
 
-        // Group admin can edit campaign start and end day only before campaign has started
+        // Group admin can edit campaign start day only before campaign has started
 
         $date = new Zend_Date(date("Y-m-d", time()), Zend_Date::ISO_8601);
         $startdate = new Zend_Date($options['startdate'], Zend_Date::ISO_8601);
 
         if ($date->compare($startdate) == -1) {
             $this->addElements(array(
-                $campaignname,
-                $campaignname_clear,
-                $campaigningress,
-                $campaigningress_clear,
-                $campaigndesc,
-                $campaigndesc_clear,
-                $campaignstart,
-                $campaignstart_clear,
-                $campaignend,
-                $campaignend_clear,
-                $weblinks_websites,
-                $weblinks_name,
-                $weblinks_url,
-                $weblinks_name_site1,
-                $weblinks_url_site1,
-                $weblinks_name_site2,
-                $weblinks_url_site2,
-                $weblinks_name_site3,
-                $weblinks_url_site3,
-                $weblinks_name_site4,
-                $weblinks_url_site4,
-                $weblinks_name_site5,
-                $weblinks_url_site5,
-                $save,
-            ));
+                    $campaignname,
+                    $campaignname_clear,
+                    $campaigningress,
+                    $campaigningress_clear,
+                    $campaigndesc,
+                    $campaigndesc_clear,
+                    $campaignstart,
+                    $campaignstart_clear,
+                    $campaignend,
+                    $campaignend_clear,
+                    $weblinks_websites,
+                    $weblinks_name,
+                    $weblinks_url,
+                    $weblinks_name_site1,
+                    $weblinks_url_site1,
+                    $weblinks_name_site2,
+                    $weblinks_url_site2,
+                    $weblinks_name_site3,
+                    $weblinks_url_site3,
+                    $weblinks_name_site4,
+                    $weblinks_url_site4,
+                    $weblinks_name_site5,
+                    $weblinks_url_site5,
+                    $save,
+                ));
         } else {
             $this->addElements(array(
-                $campaignname,
-                $campaignname_clear,
-                $campaigningress,
-                $campaigningress_clear,
-                $campaigndesc,
-                $campaigndesc_clear,
-                $weblinks_websites,
-                $weblinks_name,
-                $weblinks_url,
-                $weblinks_name_site1,
-                $weblinks_url_site1,
-                $weblinks_name_site2,
-                $weblinks_url_site2,
-                $weblinks_name_site3,
-                $weblinks_url_site3,
-                $weblinks_name_site4,
-                $weblinks_url_site4,
-                $weblinks_name_site5,
-                $weblinks_url_site5,
-                $save,
-            ));
+                    $campaignname,
+                    $campaignname_clear,
+                    $campaigningress,
+                    $campaigningress_clear,
+                    $campaigndesc,
+                    $campaigndesc_clear,
+                    $campaignend,
+                    $campaignend_clear,
+                    $weblinks_websites,
+                    $weblinks_name,
+                    $weblinks_url,
+                    $weblinks_name_site1,
+                    $weblinks_url_site1,
+                    $weblinks_name_site2,
+                    $weblinks_url_site2,
+                    $weblinks_name_site3,
+                    $weblinks_url_site3,
+                    $weblinks_name_site4,
+                    $weblinks_url_site4,
+                    $weblinks_name_site5,
+                    $weblinks_url_site5,
+                    $save,
+                ));
         }
 
         $save->setDecorators(array(
