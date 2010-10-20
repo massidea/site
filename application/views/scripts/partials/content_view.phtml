@@ -42,7 +42,7 @@ if (isset($this->parent_siblings[0])) {
 ?>
 <script type="text/javascript">
 $(document).ready(function() {
-	/*$("#content-view-viewers-list > a").click(function(event) {
+	$("#content-view-viewers-list > a").click(function(event) {
 		event.preventDefault();
 	});
 	$("#content-view-viewers-list").mouseover(function () {
@@ -56,7 +56,6 @@ $(document).ready(function() {
 			style: { width: { min: 250, max: 500 }} 
 		}
 	);
-	*/
 });
 </script>
 <div id="content-page" class="narrow left">
@@ -207,8 +206,7 @@ $(document).ready(function() {
             </div>
             <div id="misc">
                	<div id="content_view_content_info_container" class="left"></div>
-                <!-- <div id="content-view-viewers-list" class="right"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div> -->
-                <div id="content-view-viewers-list" class="right"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
+                <div id="content-view-viewers-list" class="right"><a href="#"><?php printf($this->translate('content-view-view_times'), $this->views); ?></a></div>
                 <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
                 <div class="clear"></div>
 	            <!-- <div id="content_view_favourite"></div>  -->

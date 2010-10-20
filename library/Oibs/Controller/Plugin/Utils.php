@@ -71,10 +71,13 @@ class Oibs_Controller_Plugin_Utils {
     
     private function youtubeLink($youtubeIds) {
     	$return = "";
-    	$h = 344;
+		
+    	$baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+		$h = 344;
     	$w = 425;
     	$cache = Zend_Registry::get('cache');
-		foreach($youtubeIds as $match) {
+		
+    	foreach($youtubeIds as $match) {
 			
 			$url = "http://www.youtube.com/v/".$match."&hl=en&fs=1";
 			$watchUrl = "http://www.youtube.com/watch?v=".$match;
@@ -100,8 +103,9 @@ class Oibs_Controller_Plugin_Utils {
 				  		' width="'.$w.'" height="'.$h.'"></embed>'.
 				'</object></div>'.
 			'<div class="youtube-preview">'.
-			'<div class="youtube-thumbnail left"><img src="'.$imgUrl.'" /></div>'.
-			'<div class="youtube-title left">'.$title.'</div>'.
+			'<div class="youtube-thumbnail left" style="background-image:url(\''.$imgUrl.'\');">'.
+				'<img class="thumbnail-image-play" src="'.$baseUrl.'/images/play-button.png" /></div>'.
+			'<div class="youtube-title left">Youtube.com<br />'.$title.'</div>'.
 			'<div class="clear"></div></div></div>';
 			$return .= '<div class="clear"></div>';
         }
