@@ -464,17 +464,16 @@ class AjaxController extends Oibs_Controller_CustomController
 				
 		$auth = Zend_Auth::getInstance();
 		
-		if ($auth->hasIdentity()) {
-			$type = $this->params['type'];
-			$id = $this->params['id'];
-			
-			$comments = new Oibs_Controller_Plugin_Comments($type, $id);
-			$newComments = array();
-			$newComments = $comments->getNewComments($auth->getIdentity()->user_id);
-			
-			if (count($newComments) != 0) {
-				$this->view->comments = $newComments;
-			}
+		$user_id = ($auth->hasIdentity()) ? $auth->getIdentity()->user_id : "0";
+		$type = $this->params['type'];
+		$id = $this->params['id'];
+		
+		$comments = new Oibs_Controller_Plugin_Comments($type, $id);
+		$newComments = array();
+		$newComments = $comments->getNewComments($user_id);
+		
+		if (count($newComments) != 0) {
+			$this->view->comments = $newComments;
 		}
 	}
 	
