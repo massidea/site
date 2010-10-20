@@ -397,7 +397,7 @@
                         'groupid' => $newGroupId,
                         'language' => $this->view->language),
                          'group_shortview', true);
-                    //$this->_redirector->gotoUrl($target);
+                    $this->_redirector->gotoUrl($target);
                 }
             }
         } else {
