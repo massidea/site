@@ -56,7 +56,8 @@ class Default_Form_RegistrationForm extends Zend_Form
         $city->setLabel($translate->_("account-register-city"))
                 ->setRequired(true)
 				->addValidators(array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
+                                    new Oibs_Validators_City('city')
 				))
 				->setDecorators(array('RegistrationDecorator'))
 				;
@@ -123,7 +124,7 @@ class Default_Form_RegistrationForm extends Zend_Form
 				->setDecorators(array('RegistrationDecorator'));
 
         $e_options = array(
-                        "" => "account-select",
+                        "0" => "account-select",
                         "private_sector" => "account-register_private_sector",
                         "public_sector" => "account-register_public_sector",
                         "education_sector" => "account-register_education_sector",

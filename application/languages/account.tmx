@@ -72,11 +72,11 @@
 	<tu tuid='account-login-title'>
 		<tuv xml:lang="en"><seg>Login</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kirjaudu</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='account-login-username'>
 		<tuv xml:lang="en"><seg>Username</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tunnus</seg></tuv>
-	</tu> 
+	</tu>
 	<tu tuid='account-login-password'>
 		<tuv xml:lang="en"><seg>Password</seg></tuv>
 		<tuv xml:lang="fi"><seg>Salasana</seg></tuv>
@@ -194,7 +194,12 @@
     <tu tuid='account-register-page_header-text'>
 		<tuv xml:lang="en"><seg>Sign up:</seg></tuv>
 		<tuv xml:lang="fi"><seg>Rekisteröidy: </seg></tuv>
+	</tu> 
+<tu tuid='account-register-page_header-heading'>
+		<tuv xml:lang="en"><seg>Registering with Massidea.org is free of charge.<br/> All fields are mandatory.</seg></tuv>
+		<tuv xml:lang="fi"><seg>Rekisteröityminen Massidea.org on maksuton.<br/>Pakolliset kentät ovat merkitty merkillä "<span style="color:red;">*</span>".</seg></tuv>
 	</tu>
+
     <tu tuid='field-empty'>
 		<tuv xml:lang="en"><seg>This is a required field</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tämä kenttä on pakollinen</seg></tuv>
@@ -218,11 +223,11 @@
     <tu tuid='checkbox-not-checked'>
 		<tuv xml:lang="en"><seg>Mandatory</seg></tuv>
 		<tuv xml:lang="fi"><seg>Pakollinen</seg></tuv>
-	</tu>    
+	</tu>
     <tu tuid='email-invalid-hostname'>
 		<tuv xml:lang="en"><seg>E-mail hostname invalid</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sähköpostin hostname ei ole validi</seg></tuv>
-	</tu>    
+	</tu>
     <tu tuid='field-too-short'>
 		<tuv xml:lang="en"><seg>Field too short</seg></tuv>
 		<tuv xml:lang="fi"><seg>Liian lyhyt</seg></tuv>
@@ -244,7 +249,7 @@
 			<p><strong>1. CREATE ACCOUNT</strong><br />
 				It is a free of charge and takes only a minute.</p>
 			<p><strong>2. UPLOAD AND SHARE</strong><br />
-				After joining you can start sharing your insights with others.</p> 
+				After joining you can start sharing your insights with others.</p>
 			<p><strong>3. YOUR PORTFOLIO IS EXTENDING</strong><br />
 				All your posts are extending your personal knowledge profile.</p>
 			<p><strong>4. CONNETING PEOPLE AND CONTENTS</strong><br />
@@ -252,11 +257,9 @@
 			<p><strong>5. BOOSTING CREATIVITY</strong><br />
 				Unexpected connections between people and insights creates a stimulating environment which is boosting your creativity. Meet new people and discover novel ideas </p>
 			<p>Learn more in our <a href="http://www.massidea.org/blog">Blog</a>.</p>
-			<p>Registering with Massidea.org is free of charge. All fields are mandatory.</p>
-		</seg></tuv>
+			</seg></tuv>
 		<tuv xml:lang="fi"><seg>Rekisteröiminen on ilmaista.
 			<p>Rekisteröityneet käyttäjät voivat julkaista sisältöjä, kommentoida, linkittää sisältöjä, antaa arvosanoja ja luoda oman profiilin.</p>
-			<p>Pakolliset kentät ovat merkitty merkillä "<span style="color:red;">*</span>".</p>
 			<p>Oletuksena muille käyttäjille näytetään paikkakuntasi, mitään henkilötietoja ei näytetä.</p>
 			<p>Voit lisätä lisätietoja profiiliisi rekisteröitymisen jälkeen!</p>
 		</seg></tuv>
@@ -287,6 +290,10 @@
     <tu tuid='account-register-city'>
 		<tuv xml:lang="en"><seg>Hometown: </seg></tuv>
 		<tuv xml:lang="fi"><seg>Kotikunta: </seg></tuv>
+	</tu>
+<tu tuid='city-not-valid'>
+		<tuv xml:lang="en"><seg>City is not valid</seg></tuv>
+		<tuv xml:lang="fi"><seg>Kaupunki ei kelpaa</seg></tuv>
 	</tu>
     <tu tuid='account-register-employment'>
 		<tuv xml:lang="en"><seg>I am currently</seg></tuv>
@@ -367,25 +374,25 @@
 	<tu tuid='account-register-terms_and_privacy'>
 		<tuv xml:lang="en"><seg>I agree to the <a href="#" onclick="popup('popup_terms_')">services agreement</a> and <a href="#" onclick="popup('popup_privacy_')">register description</a></seg></tuv>
 		<tuv xml:lang="fi"><seg>Hyväksyn <a href="#" onclick="popup('popup_terms_')">loppukäyttäjäehdot</a> ja <a href="#" onclick="popup('popup_privacy_')">rekisteriselosteen</a></seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='account-register-current_password'>
 		<tuv xml:lang="en"><seg>Current password</seg></tuv>
 		<tuv xml:lang="fi"><seg>Nykyinen salasana</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='account-register-submit'>
 		<tuv xml:lang="en"><seg>Submit</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lähetä</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='account-register-gender'>
 		<tuv xml:lang="en"><seg>Gender</seg></tuv>
 		<tuv xml:lang="fi"><seg>Sukupuoli</seg></tuv>
-	</tu>	
-	
+	</tu>
+
 	<tu tuid='account-register-image'>
 		<tuv xml:lang="en"><seg>Image</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kuva...</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-joined'>
 		<tuv xml:lang="en"><seg>Joined</seg></tuv>
 		<tuv xml:lang="fi"><seg>Rekisteröitynyt</seg></tuv>
@@ -441,58 +448,58 @@
 	<tu tuid='account-profile-category'>
 		<tuv xml:lang="en"><seg>User Category</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjäryhmien</seg></tuv>
-	</tu>	
-	
+	</tu>
+
 	<tu tuid='account-profile-profession'>
 		<tuv xml:lang="en"><seg>Profession</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ammatti</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-company'>
 		<tuv xml:lang="en"><seg>Company</seg></tuv>
 		<tuv xml:lang="fi"><seg>Yritys</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-city'>
 		<tuv xml:lang="en"><seg>City</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kaupunki</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-phone'>
 		<tuv xml:lang="en"><seg>Phone</seg></tuv>
 		<tuv xml:lang="fi"><seg>Puhelin</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-birth'>
 		<tuv xml:lang="en"><seg>Birthday</seg></tuv>
 		<tuv xml:lang="fi"><seg>Syntymäpäivä</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-biography'>
 		<tuv xml:lang="en"><seg>Biography</seg></tuv>
 		<tuv xml:lang="fi"><seg>Elämäkerta</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-country'>
 		<tuv xml:lang="en"><seg>Country</seg></tuv>
 		<tuv xml:lang="fi"><seg>Maa</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-total'>
 		<tuv xml:lang="en"><seg>Total Contents</seg></tuv>
 		<tuv xml:lang="fi"><seg>Omaa sisältöä</seg></tuv>
 	</tu>
-    
+
 	<tu tuid='account-profile-total-finfo'>
 		<tuv xml:lang="en"><seg>Future Infos</seg></tuv>
 		<tuv xml:lang="fi"><seg>Visiot</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-total-problem'>
 		<tuv xml:lang="en"><seg>Problems</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ongelmat</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-total-idea'>
 		<tuv xml:lang="en"><seg>Ideas</seg></tuv>
 		<tuv xml:lang="fi"><seg>Ideat</seg></tuv>
@@ -502,7 +509,7 @@
 		<tuv xml:lang="en"><seg>Posted</seg></tuv>
 		<tuv xml:lang="fi"><seg>Luotu</seg></tuv>
 	</tu>
-    
+
 	<tu tuid='account-profile-content-views'>
 		<tuv xml:lang="en"><seg>Views</seg></tuv>
 		<tuv xml:lang="fi"><seg>Katsottu</seg></tuv>
@@ -512,22 +519,22 @@
 		<tuv xml:lang="en"><seg>Ratings</seg></tuv>
 		<tuv xml:lang="fi"><seg>Arvostelu</seg></tuv>
 	</tu>
-    
+
 	<tu tuid='account-profile-content-comments'>
 		<tuv xml:lang="en"><seg>Comments</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kommentit</seg></tuv>
-	</tu>	
-    
+	</tu>
+
 	<tu tuid='account-edit-title'>
 		<tuv xml:lang="en"><seg>Edit account</seg></tuv>
 		<tuv xml:lang="fi"><seg>Muokkaa tiliä</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-profile-send-private-message'>
 		<tuv xml:lang="en"><seg>Send private message</seg></tuv>
 		<tuv xml:lang="fi"><seg>Lähetä yksityisviesti</seg></tuv>
-	</tu>	
-	
+	</tu>
+
 	<tu tuid='account-userlist-search-instructions'>
 		<tuv xml:lang="en"><seg><![CDATA[
 		<span><strong>Guidelines to extend your search</strong></span><br>
@@ -569,23 +576,23 @@
 	<tu tuid='userlist-orderlist-comments'>
 		<tuv xml:lang="en"><seg>Users are now sorted in %s order by the amount of comments they have made to contents.</seg></tuv>
 		<tuv xml:lang="fi"><seg>Käyttäjät on järjestetty %s järjestykseen käyttäjänimien mukaan.</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='userlist-top-title-count'>
 		<tuv xml:lang="en"><seg>Most contents</seg></tuv>
 		<tuv xml:lang="fi"><seg>Enitent sisältöjä.</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='userlist-top-title-view'>
 		<tuv xml:lang="en"><seg>Most views</seg></tuv>
 		<tuv xml:lang="fi"><seg>Enitent sisältöjä katsonut.</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='userlist-top-title-popularity'>
 		<tuv xml:lang="en"><seg>Most popular</seg></tuv>
 		<tuv xml:lang="fi"><seg>Suosituin.</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='userlist-top-title-rating'>
 		<tuv xml:lang="en"><seg>Highest rating</seg></tuv>
 		<tuv xml:lang="fi"><seg>Korkein arvostelu.</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='userlist-top-title-comment'>
 		<tuv xml:lang="en"><seg>Most comments</seg></tuv>
 		<tuv xml:lang="fi"><seg>Eniten kommentteja.</seg></tuv>
@@ -697,17 +704,17 @@
 	<tu tuid='account-profile-openid-exists'>
 		<tuv xml:lang="en"><seg>This OpenID is already attached</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tämä OpenID-tunnus on jo liitetty</seg></tuv>
-	</tu>	
+	</tu>
 	<tu tuid='account-openid-title'>
 		<tuv xml:lang="en"><seg>OpenID-login</seg></tuv>
 		<tuv xml:lang="fi"><seg>OpenID-kirjautuminen</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-openid-text'>
 		<tuv xml:lang="en"><seg>Login with attached OpenID</seg></tuv>
 		<tuv xml:lang="fi"><seg>Kirjaudu liitetyllä OpenID-tunnuksella</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-openid-loginurl'>
 		<tuv xml:lang="en"><seg>OpenID address</seg></tuv>
 		<tuv xml:lang="fi"><seg>OpenID osoite</seg></tuv>
@@ -722,7 +729,7 @@
 		<tuv xml:lang="en"><seg>Password confirmation does not match</seg></tuv>
 		<tuv xml:lang="fi"><seg>Salasanan vahvistus ei täsmää</seg></tuv>
 	</tu>
-	
+
 	<tu tuid='account-currentpassword-nomatch'>
 		<tuv xml:lang="en"><seg>Current password does not match</seg></tuv>
 		<tuv xml:lang="fi"><seg>Nykyinen salasana ei täsmää</seg></tuv>
@@ -731,12 +738,12 @@
 		<tuv xml:lang="en"><seg>Public</seg></tuv>
 		<tuv xml:lang="fi"><seg>Julkinen</seg></tuv>
 	</tu>
-	
+
     <tu tuid='account-processimage-title'>
 		<tuv xml:lang="en"><seg>Edit profile thumbnail</seg></tuv>
 		<tuv xml:lang="fi"><seg>Muokkaa profiilikuvaa</seg></tuv>
 	</tu>
-	
+
     <tu tuid='account-processimage-save'>
 		<tuv xml:lang="en"><seg>Save</seg></tuv>
 		<tuv xml:lang="fi"><seg>Tallenna</seg></tuv>

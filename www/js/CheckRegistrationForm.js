@@ -25,12 +25,13 @@ var inPreview = 0;
 var tmpFormData;
 var previewId = 'form_content_previewcontent';
 var contentId = 'form_content_realcontent';
+var ajaxCheck = false;
 
 $(document).ready(function() {
     tmpFormData = getPreviewData();
-
+     
     // Get all input elements
-    var allInputs = $(":input[type=text], :input[type=textarea], #password ");
+    // var allInputs = $(":input[type=text], :input[type=textarea], #password ");
 
     // Definitions for input boxes ([0] = minimum, [1] = maximum, [2] = required (1 true/0 false)
 
@@ -42,82 +43,153 @@ $(document).ready(function() {
         'email': [6, 100, 1],
         'employment': [1, 100, 1],
         'captcha_text': [1, 5, 1]
-
-
-
     };
-
 
     var inputValidations = {
         'username': XRegExp("^[\\p{L}0-9, ]*$"),
         'city' : XRegExp("^[\\p{L}0-9, ]*$")
-         };
-
-    $(allInputs).live('keydown keyup', function(){
-        textCount(this);
-    });
-    $("#confirm_password").live('keyup keydown', function(){
-        passMatch(this);
-    });
-
-
-    $(allInputs).live('keyup keydown', function(){
-        textCount(this);
-        if (this.name == "username") textValidation(this);
-        if (this.name == "email") textValidation(this);
-        if (this.name == "city" ) textValidation(this);
-    });
-
-    $('select').live('ready change keyup keydown', function() {
-        selectCheck(this);
-    });
-    $(allInputs).blur(function() {
-        checkMin(this);
-    });
-    $("#email").blur(function() {
-        checkEmail(this);
-    });
-
-    $("#username").blur(function()
+    };
+    
+   
+    //checkMin()
+    //textCount()
+    //textValidation()
+    call();
+    function call()
     {
-        //first validate all input
+        //--------------------------------------username validation-------------//
+        var username_input= $("#username");
         var thisProgress = $('#progressbar_username');
-        if($(thisProgress).hasClass('progress_ok'))
+        if($(username_input).val()=="")
         {
-            var Url = url_userexists;
-            var username = $(this).val();
+            $(thisProgress).attr('class','progress').html("required");
+        }
+        //first validate all input
+        $(username_input).live('change keydown keyup blur focus', function()
+        {
+            checkMin(this);
+              
+        });
 
-
-//            $.post(url,data,function(resp)
-//            {
-//                console.log(resp);
-//                if(resp=="false")
-//                {
-//                    $("#progressbar_username").html("Good !");
-//                }
-//                else
-//                {
-//                    $("#progressbar_username").attr('className','progress').html("Username already exists !");
-//                }
-//            },'json');
-
-            $.ajax({
-                url : Url+"/user/"+username,
-                success: function(result)
+        $("#username").blur(function()
+        {
+            if(ajaxCheck==true)
                 {
-                    if(result=="false")
+                   checkUserAvail();
+                }
+        });
+        
+
+
+        //--------------------------------------------password validation-----------------------------------------//
+
+        var password_input= $("#password");
+        var password_progress = $('#progressbar_password');
+        if($(password_input).val()=="")
+        {
+            $(password_progress).attr('class','progress').html("required");
+        }
+        //first validate all input
+        $(password_input).live('change keydown keyup blur focus', function()
+        {
+            checkMin(this);
+        });
+
+        var password_confirm_input=$("#confirm_password");
+        var password_confirm_progress =$("#progressbar_confirm_password");
+        if($(password_confirm_input).val()=="")
+        {
+            $(password_confirm_progress).attr('class','progress').html("required");
+        }
+        $(password_confirm_input).live('change keydown keyup blur focus', function()
+        {
+            passMatch(this);
+        });
+
+
+        //-----------------------------------hometown validation--------------------------------//
+
+        var city_input= $("#city");
+        var city_progress = $('#progressbar_city');
+        if($(city_input).val()=="")
+        {
+            $(city_progress).attr('class','progress').html("required");
+        }
+        
+        $(city_input).live('change keydown keyup blur focus', function()
+        {
+            checkMin(this);
+        });
+
+
+        //-----------------------------------email id validation-------------------------------//
+        
+        var email_input= $("#email");
+        var email_progress = $('#progressbar_email');
+        if($(city_input).val()=="")
+        {
+            $(email_progress).attr('class','progress').html("required");
+        }
+        
+        $(email_input).live('change keydown keyup blur focus', function()
+        {
+            checkEmail(this);
+        });
+
+        //------------------------------employment check--------------------------------------//
+        var employment_input= $("#employment");
+        var employment_progress = $('#progressbar_employment');
+        if($(employment_input).val()=="0")
+        {
+            $(employment_progress).attr('class','progress').html("required");
+        }
+
+        $(employment_input).live('change keydown keyup blur focus', function()
+        {
+            selectCheck(this);
+        });
+
+        //-----------------------------captcha------------------------//
+        var captcha_input= $("#captcha_text");
+        var captcha_progress = $('#progressbar_captcha_text');
+        if($(captcha_input).val()=="")
+        {
+            $(captcha_progress).attr('class','progress').html("required");
+        }
+
+        $(captcha_input).live('change keydown keyup blur focus', function()
+        {
+            if($(captcha_input).val()!="")
+                $(captcha_progress).fadeOut(1000);
+            else
+                $(captcha_progress).show(1);
+        });
+        
+
+    } // call function ends
+    
+    function checkUserAvail()
+    {
+        var Url = url_userexists;
+        var username = $("#username").val();
+        var thisProgress=$("#progressbar_username");
+        $.ajax({
+            url : Url+"/user/"+username,
+            success: function(result)
+            {
+                if(result=="false")
                 {
-                    $("#progressbar_username").html("Good !");
+                    $(thisProgress).html("Good !");
                 }
                 else
                 {
-                    $("#progressbar_username").attr('className','progress').html("Username already exists !");
+                    $(thisProgress).attr('class','progress').html("Username already exists !");
                 }
-                }
-            });
-        }
-         return false;
-    });
+            }
+        });
+        return false;
+    }
+    
 
     function passMatch(obj) {
         var thisProgress = $('#progressbar_'+obj.name);
@@ -125,6 +197,11 @@ $(document).ready(function() {
             progressText = "Mismatch!";
             $(thisProgress).attr('class','progress');
 
+        }
+        else if($(obj).val()=="")
+        {
+            progressText = "required";
+            $(thisProgress).attr('class','progress');
         }
         else {
             progressText = "Match!";
@@ -145,38 +222,44 @@ $(document).ready(function() {
             $(thisProgress).attr('class','progress');
         }
         else if(!emailReg.test(emailaddressVal)) {
-            progressText ="enter valid id";
+            progressText ="Enter valid id";
             $(thisProgress).attr('class','progress');
         }
-        else  $(thisProgress).attr('class','progress_ok');
+        else  
+        {
+            $(thisProgress).attr('class','progress_ok');
+            progressText="ok "
+            
+        }
         $(thisProgress).html(progressText);
     }
 
 
     function checkMin(obj) {
+
         var thisProgress = $('#progressbar_'+obj.name);
         var thisMin = inputDefinitions[obj.name][0];
+       
         var curLength = $(obj).val().length;
         var curLeft = (thisMin-curLength)
+
         if(curLength < thisMin) {
+          
             progressText =Math.abs(curLeft) + " too Less";
             $(thisProgress).attr('class','progress');
             $(thisProgress).html(progressText);
+            
+        }
+        else if(textCount(obj))
+        {
+            textValidation(obj);
         }
     }
 
-    function textValidation(obj) {
-        var thisProgress = $('#progressbar_'+obj.name);
-        var regex = inputValidations[obj.name];
-        if (regex.test($(obj).val())) { }
-        else {
-            progressText = "Tag not valid!";
-            $(thisProgress).attr('class','progress');
-            $(thisProgress).html(progressText);
-        }
-    }
+    
 
     function textCount(obj) {
+        //var checkText = false;
         var thisMin = inputDefinitions[obj.name][0];
         var thisMax = inputDefinitions[obj.name][1];
         var thisReq = inputDefinitions[obj.name][2];
@@ -184,55 +267,80 @@ $(document).ready(function() {
         var curLeft = (thisMax-curLength);
         var thisProgress = $('#progressbar_'+obj.name);
 
-        if(curLength < thisMax) {
+        if(curLength < thisMax && curLength >= thisMin ) {
             progressText = curLeft + " until limit";
             $(thisProgress).attr('class','progress_ok');
+            $(thisProgress).html(progressText);
+            return true;
         }
-        if(curLength > thisMax) {
-            progressText = Math.abs(curLeft) + " too many";
-            $(thisProgress).attr('class','progress');
-        }
+
         if(curLength == thisMax) {
             progressText = "at the limit";
             $(thisProgress).attr('class','progress_ok');
+            $(thisProgress).html(progressText);
+            return true;
         }
+        
+        if(curLength > thisMax) {
+            progressText = Math.abs(curLeft) + " too many";
+            $(thisProgress).attr('class','progress');
+            $(thisProgress).html(progressText);
+            return false;
+        }
+        
 
         if(curLength == 0 && thisReq) {
             progressText = "required";
             $(thisProgress).attr('class','progress');
+            $(thisProgress).html(progressText);
+            return false;
         }
 
-        $(thisProgress).html(progressText);
+                
     }
 
+    function textValidation(obj) {
+        var thisProgress = $('#progressbar_'+obj.name);
+        var regex = inputValidations[obj.name];
+        if (regex.test($(obj).val()))
+        {
+            $(thisProgress).attr('class','progress_ok');
+            if(obj.name=="username")
+            {
+                ajaxCheck = true;
+            }
+        }
+        else {
+            progressText = "Tag not valid!";
+            $(thisProgress).attr('class','progress');
+            $(thisProgress).html(progressText);
+            if(obj.name=="username")
+            {
+                ajaxCheck = false;
+            }
+        }
+    }
     function selectCheck(obj) {
+        
         if(inputDefinitions[obj.name]) {
+            
             var thisReq = inputDefinitions[obj.name][2];
             var thisProgress = $('#progressbar_' + obj.name);
             if ( $(obj).attr('value') != 0 || thisReq == 0) {
                 progressText = "ok";
                 $(thisProgress).attr('class', 'progress_ok');
+                
             } else {
                 progressText = "required";
                 $(thisProgress).attr('class', 'progress');
+                
             }
+            
             $(thisProgress).html(progressText);
         }
     }
 
-    // Precheck on page load
-    $(allInputs).each(function(){
-        if(this.name != "q") {
-            textCount(this);
-            if (this.name == "content_keywords") textValidation(this);
-        }
-    });
-
-    $('select').each(function() {
-        if ($(this).attr('id') != "languages") {
-            selectCheck(this);
-        }
-    });
+    
 
     /**
 	 * Set content publish button to disabled after click
