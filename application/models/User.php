@@ -716,6 +716,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     		if(!isset($userIdList[$i])) break;
     		$userIdListCut[] = $userIdList[$i];
     	}
+    	if(sizeof($userIdListCut) == 0) return array();
     	
     	$userIdList = $userIdListCut; //We replace the whole list with the user Ids we want (this is for final ordering purpose)
     	$userInfo = $this->getUserInfo($userIdList); //Get basic user information

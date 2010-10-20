@@ -35,15 +35,6 @@ class Default_Form_RegistrationForm extends Zend_Form
         parent::__construct($options);
 		$translate = Zend_Registry::get('Zend_Translate'); 
 		$this->removeDecorator('DtDdWrapper');
-                /**my content coming
-                 *
-                 */
-                $this->addDecorator('FormElements')
-                ->addDecorator('HtmlTag', array('tag' => 'div'))
-                 ->addDecorator('Form');
-                /**
-                 *
-                 */
 		$this->setName('register_form');
 		$this->setAttrib('id', 'register_form');
 		$this->addElementPrefixPath('Oibs_Decorators', 
@@ -143,9 +134,9 @@ class Default_Form_RegistrationForm extends Zend_Form
                     ->setDecorators(array('RegistrationDecorator'));
                     
 		$username = new Zend_Form_Element_Text('username');
-              	$username->setLabel($translate->_("account-register-username"))
+		$username->setLabel($translate->_("account-register-username"))
 				->setRequired(true)
-                                ->addValidators(array(
+				->addValidators(array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
 				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long'))),
                 new Oibs_Validators_UsernameExists('username'),

@@ -48,15 +48,71 @@ $(document).ready(function() {
 	
 	var inputValidations = { 
 		'content_keywords':				XRegExp("^[\\p{L}0-9, ]*$")		
-	}; 
+	};
+	
+	var inputHelps = {
+		'content_header': "<strong>Headline</strong><br /> Grab’s attention, summarize the whole thought and attracts to read the rest of the story.",
+		'content_keywords': "<strong>Keywords</strong><br /> Words that capture the essence of the topic of your content. <br /> Are important, since we use them for related content automatization. <br />Use commas '<strong>,</strong>' to seperate tags!",
+		'content_textlead': "<strong>Lead chapter</strong><br /> Together with headline answers to what, why and whom questions and sum up the whole thought.",
+		'content_text': "<strong>Body text</strong><br /> Is elaborating the headline and lead paragraph. Answer following questions:  <br /> 1) What is the insight, <br /> 2) Why the insight is important and valuable, <br /> 3) Who is the target group and whom should be interested, <br /> 4) When (temporal dimension) the insight is topical and <br /> 5) Where (geographical, physical location or circumstances) the insight is topical?",
+		'content_related_companies': "<strong>Related companies and organizations</strong><br /> Similar as keywords but present existing companies and organizations, which are related to your insight.",		
+		'content_research': "<strong>Research question</strong><br /> The single question in which you need an answer.",
+		'content_opportunity': "<strong>Opportunity</strong><br /> Identify the most important opportunity if vision is realized.",
+		'content_threat': "<strong>Threat</strong><br /> Identify the most important threat if vision is realized.",
+		'content_solution': "<strong>Solution</strong><br /> Summarize your idea's key point to a one sentence.",
+		'content_references': "<strong>References</strong><br /> Include references in your content when possible (e.g. website, book or article)."
+	};
 	                 
 	$(allInputs).live('keydown', function(){
-		textCount(this);
+		if(this.name != "q") {
+			textCount(this);
+		}
 	});
 	
 	$(allInputs).live('keyup', function(){
-		textCount(this);
-		if (this.name == "content_keywords") textValidation(this);
+		if(this.name != "q") { 
+			textCount(this);
+			if (this.name == "content_keywords") textValidation(this);
+		}
+	});
+	
+	$(allInputs).each(function(){
+		if(this.name != "q") { 
+			textCount(this);
+			if (this.name == "content_keywords") textValidation(this);
+			
+			$(this).focus(function (event) {
+				$(this).parent().parent().css("z-index",9999);
+				$(this).css("position","relative");
+				var areaWidth = 729;
+				var progressWidth = 109;
+				var boxWidth = 385;
+				$(this).css("width",areaWidth+"px");
+				$("#progressbar_"+this.name).css("position","relative");
+				$("#progressbar_"+this.name).css("left",areaWidth-boxWidth-progressWidth+"px");
+				$("#progressbar_"+this.name).css("top","-23px");
+			});
+			$(this).blur(function (event) {
+				$(this).css("position","");
+				$(this).css("width","");
+				$("#progressbar_"+this.name).css("position","");
+			});
+			$(this).qtip({
+				content: inputHelps[this.name],
+				style: { 
+					width: "300",
+					background: "#DDDDDD",
+					border: {
+				      width: 2,
+				      radius: 2,
+				      color: '#7F9DB9'
+				   }
+				},
+				show: { when: { event: "focus" } },
+				hide: { when: { event: "blur" } },
+				position: { corner: { target: 'topLeft', tooltip: 'bottomLeft' } }
+			});
+		}
 	});
 
 	$('select').live('change keyup', function() {
@@ -69,7 +125,7 @@ $(document).ready(function() {
 		if (regex.test($(obj).val())) { }
 		else {
 			progressText = "Tag not valid!";
-			$(thisProgress).attr('class','progress');
+			$(thisProgress).addClass('bad');
 			$(thisProgress).html(progressText);
 		}
 	}
@@ -123,13 +179,6 @@ $(document).ready(function() {
 		}
 	}
 	
-	// Precheck on page load
-	$(allInputs).each(function(){
-		if(this.name != "q") { 
-			textCount(this);
-			if (this.name == "content_keywords") textValidation(this);
-		}
-	});
 	
 	$('select').each(function() {
 		if ($(this).attr('id') != "languages") { 

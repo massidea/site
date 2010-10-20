@@ -883,10 +883,4 @@
         }
     }
 
-    public function discussionAction()
-    {
-        $something=" sample test ";
-        $this->view->some = $something;
-    }
-
 }

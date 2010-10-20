@@ -100,6 +100,33 @@ input.submit-button {
 	background:#fff;
 	margin:0 auto; padding:0px 1px 20px 1px; }
 
+
+#add_new_content { padding: 0px 0px 0px 0px; display: none; background-color: #eee; }
+#add_new_content .add_new { float: left; width: 200px; }
+
+#add_new_content .add_new_info { position: relative; background-color: #fff; height: 290px; border: 1px solid #AAA; margin-top: 10px; }
+#add_new_content .add_new_info p { padding:0px 10px 0px 10px; font-size: 0.8em; color: #999 }
+
+#add_new_content .add_new_title {  border-bottom: 1px solid #AAA; font-weight: bold; vertical-align: middle; }
+#add_new_content .add_new_info a { color: #FFF; font-size: 14px; height: inherit; width: inherit; display: block; position: relative; overflow: hidden;}
+
+#add_new_content #add_new_idea span { padding: 10px 62px 5px 10px; }
+#add_new_content #add_new_challenge span { padding: 10px 21px 5px 10px; }
+#add_new_content #add_new_vision span { padding: 10px 49px 5px 10px; }
+
+#add_new_content #add_new_challenge .add_new_title { background-color: #D21034; }
+#add_new_content #add_new_challenge .add_new_info:hover span { background-color: #FFF; color: #D21034; }
+#add_new_content #add_new_idea .add_new_title { background-color: #4B9B07; }
+#add_new_content #add_new_idea .add_new_info:hover span { background-color: #fff; color: #4B9B07; }
+#add_new_content #add_new_vision .add_new_title { background-color: #FFC726; }
+#add_new_content #add_new_vision .add_new_info:hover span { background-color: #FFF; color: #FFC726; }
+
+#add_new_content #add_new_idea { margin-left: 8px; margin-right: 8px; }
+#add_new_content #add_new_challenge { margin-left: 4px; }
+#add_new_content #add_new_vision { margin-right: 4px; }
+
+
+
 /** Header */
 #header {
 	/* background:#003580 */;
@@ -803,13 +830,8 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
 
 #content #sign-up-page .input-column1 {  width:154px; float:left; text-align:right; margin-right:10px; margin-bottom:8px; }
 #content #sign-up-page .input-column2 { width:254px; float:left;  margin-right:15px;  margin-bottom:8px; }
-#content #sign-up-page .input-column2 input
-  { width:254px; }
-
-#content #sign-up-page .input-column2 select
-{
-    width:260px;
-}
+#content #sign-up-page .input-column2 input,
+#content #sign-up-page .input-column2 select { width:254px; }
 
 #content #sign-up-page #update-msg  { color:#999; margin:20px 0px 13px 0px; }
 
