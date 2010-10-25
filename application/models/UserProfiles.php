@@ -1468,4 +1468,45 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
        return $result;
     }
     
+    /**
+     * To be deleted after first use.
+     */
+    public function setDefaultFollows() {
+    	$select = $this->_db->select()->from(array('usp' => 'usr_profiles_usp'),
+                                      	array('id_usr_usp'))
+                                      ->where('usp.profile_key_usp = "own_follows" OR usp.profile_key_usp = "fvr_follows"')
+                                      ->where('usp.profile_value_usp != "" OR usp.profile_value_usp != "0"')
+                                      ;
+    	
+    	$selectUsers = $this->_db->select()->from(array('usr' => 'users_usr'),
+											array('id_usr'))
+											->where('id_usr NOT IN (?)', $select)
+		;
+		$result = array_keys($this->_db->fetchAssoc($selectUsers));
+		
+		
+   		$ownfollows = array(
+			'profile_key_usp' => 'own_follows',
+			'profile_value_usp' => 7,
+			'public_usp' => 0,
+			'modified_usp' => new Zend_Db_Expr('NOW()'),
+   			'created_usp' => new Zend_Db_Expr('NOW()')
+		);
+		
+		$fvrfollows = array(
+			'profile_key_usp' => 'fvr_follows',
+			'profile_value_usp' => 23,
+			'public_usp' => 0,
+			'modified_usp' => new Zend_Db_Expr('NOW()'),
+			'created_usp' => new Zend_Db_Expr('NOW()')
+		);
+					
+		
+		foreach($result as $id) {
+			$ownfollows['id_usr_usp'] = $id;
+			$fvrfollows['id_usr_usp'] = $id;
+			$this->insert($ownfollows);
+			$this->insert($fvrfollows);
+		}
+    }    
 } // end of class

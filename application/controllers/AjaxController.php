@@ -518,7 +518,6 @@ class AjaxController extends Oibs_Controller_CustomController
 	}
 	
 	public function getnotificationsAction() {
-		return; //RC fix :)
 		$favouritesModel = new Default_Model_UserHasFavourites();
 
 		$auth = Zend_Auth::getInstance();
@@ -546,5 +545,14 @@ class AjaxController extends Oibs_Controller_CustomController
 		
 		$this->view->notifications = $notifications;
 		$this->view->ids = $jsonIds;
+	}
+	
+	/**
+	 * To be deleted after first use.
+	 */
+	public function setdefaultfollowsAction() {
+		$db = new Default_Model_UserProfiles();
+		$db->setDefaultFollows();
+		$this->_helper->viewRenderer->setNoRender(true);
 	}
 }
