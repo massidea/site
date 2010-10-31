@@ -1,0 +1,38 @@
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="group-page">
+    <?php echo $this->partial('partials/group_header.phtml', $this->grpData); ?>
+    <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
+    <div id="activity" class="right">
+        <div class="left">
+            <?php
+            $addgroups = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action'     => 'linkgroup',
+                                    'language'   => $this->language,
+                                    'grpid'      => $this->grpData["id_grp"]
+                                 ), 'lang_default', true
+                            );
+            $editgrouplinks = $this->url(
+                                array(
+                                    'controller' => 'group',
+                                    'action'     => 'unlinkgroup',
+                                    'language'   => $this->language,
+                                    'grpid'      => $this->grpData["id_grp"]
+                                 ), 'lang_default', true
+                            );
+            ?>
+            <?php if ($this->grpData['user_identity']): ?>
+                <div class="group-page-link-edit"><a href="<?php echo $addgroups; ?>">&gt; Link groups</a></div>
+            <?php endif; ?>
+            <?php if ($this->grpData['user_is_group_admin']): ?>
+                <div class="group-page-link-edit"><a href="<?php echo $editgrouplinks; ?>">&gt; Edit group links</a></div>
+            <?php endif; ?>
+            <div id="group-page-linkedgroups" class="scroll-box">
+                <ul>
+                    <?php echo $this->partialLoop('partials/group_row.phtml', $this->linkedgroups); ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

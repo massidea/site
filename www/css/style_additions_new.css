@@ -5,7 +5,9 @@
 #content #group-page .scroll-box li {
     
 }
-#content #campaign-page p.link, #content #campaign-page #contribute .right a {font-size: 1.4em}
+#content #campaign-page .link, #content #campaign-page #contribute .right a {font-size: 1.4em}
+
+#content #campaign-page .link { text-align: right; padding-top: 0; margin-top: -55px; }
 
 #content #group-page #edit-group-etc {
     color:#c0c0c0;
@@ -183,7 +185,7 @@ div.user_summary_list_without_stats{
 #content #add-content-page #add_group_form .input-column-website3 input { width:120px; }
 
 #content #add-content-page #Createacampaign #campaign_start,
-#content #add-content-page #Createacampaign #campaign_end { width: 328px; }
+#content #add-content-page #Createacampaign #campaign_end { width: 326px; }
 #content #add-content-page #Createacampaign .ui-datepicker-trigger { margin: 2px 0 2px 2px; }
 
 
@@ -1018,29 +1020,35 @@ div.tag_cloud { padding-bottom: 5px; }
 .linking_from_header { padding-left: 5px; }
 .linking_from_content { padding-left: 5px; width: 350px; }
 
-
 /** Style for easy colored left border */
 .border-finfo { border-left: solid 5px #FFC726; padding: 0 0 0 10px !important; }
 .border-idea { border-left: solid 5px #4B9B07; padding: 0 0 0 10px !important; }
 .border-problem { border-left: solid 5px #D21034; padding: 0 0 0 10px !important; }
 
-/** Group page header and menu */
+/** Group header and menu */
 #group-page { width: 720px; }
+#group-page #group-admins { margin-top: 20px; margin-left: 30px; }
 #group-page #group-header { width: auto; }
 #group-page #group-header #group-name { float: left; width: 400px; }
 #group-page #group-header #group-signup { margin-left: 400px; width: auto; text-align: right; font-size: 16px; }
 #profile-meta #group-menu a { margin: 0 5px 0 5px; }
 #profile-meta #group-menu li#active { background-color: #cbcbcb; font-weight: bold; }
-
-/** Group page home */
+/** Group home */
 #group-page #activity .group-home h3,
 #group-page #activity .group-home p,
 #group-page #activity .group-home ul { padding: 5px; }
-#group-page #activity .group-home h3 { font-size: 14px; border-bottom: 1px solid #cccccc; }
-#group-page #activity .group-home p { color: #c0c0c0 }
+#group-page #activity .group-home h3 { font-size: 14px; border-bottom: 1px solid #cccccc; padding-top: 0; }
+#group-page #activity .group-home div { margin-bottom: 15px; }
 #group-page #activity .group-home ul { list-style-type: none; }
-
-/** Group page campaigns */
+#group-page #activity .group-home #group-home-comments li { word-wrap: break-word; }
+#group-page #activity .group-home #group-home-campaigns li { border-left: solid 5px #003581; padding-left: 5px; margin-top: 2px; }
+#group-page #activity .group-home #group-home-linkedgroups li { border-left: solid 5px #0089CF; padding-left: 5px; margin-top: 2px; }
+#group-page #activity #group-home-info p { margin-bottom: 0; }
+/** Group info */
+#group-page #activity #group-text { margin-bottom: 25px; }
+#group-page #activity #group-text p { margin-bottom: 5px; }
+/** Group campaigns */
+#group-page #group-create-campaign { font-size: 16px; text-align: right; }
 #group-page #group-page-campaigns { border: 0; }
 #group-page #group-page-campaigns div p { margin-left:15px; }
 #group-page #group-page-campaigns div ul li {
@@ -1055,3 +1063,21 @@ div.tag_cloud { padding-bottom: 5px; }
 #group-page #group-page-campaigns div ul li.challenges div { border-left:5px solid #D21034; }
 #group-page #group-page-campaigns div ul li.ideas div { border-left:5px solid #4B9B07; }
 #group-page #group-page-campaigns div ul li.visions div { border-left:5px solid #FFC726; }
+/** Group comments */
+#group-page #content_view_comment_form_container { margin-top: 0 }
+/** Group linked groups */
+#group-page #group-page-linkedgroups ul li div div.light-gray { margin-left: 10px; }
+#group-page .group-page-link-edit { font-size: 16px; text-align: right; }
+/** Group feeds */
+#content #group-page .group-feeds h3 { padding: 0 0 5px 0; border-bottom: 1px solid #c0c0c0; }
+#group-page #activity .group-feeds ul { list-style-type: none; margin: 5px 0 5px 3px; }
+#group-page p#group-feeds-edit { font-size: 16px; text-align: right; }
+/** Group members */
+#group-page .group-members { border-bottom: 1px solid #c0c0c0; padding: 10px 0 10px 0; }
+#group-page .group-members-left { float: left; width: 100px; padding-top: 5px; }
+#group-page .group-members-right { margin-left: 100px; }
+
+/** Style for easy colored left border */
+.border-finfo { border-left: solid 5px #FFC726; padding: 0 0 0 10px !important; }
+.border-idea { border-left: solid 5px #4B9B07; padding: 0 0 0 10px !important; }
+.border-problem { border-left: solid 5px #D21034; padding: 0 0 0 10px !important; }

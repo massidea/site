@@ -245,6 +245,33 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     }
 
     /**
+     * endCampaign - Set campaign end date to yesterday
+     *
+     * @author Mikko Korpinen
+     * @param int $id
+     * @param date $start_time_cmp
+     */
+    public function endCampaign($id, $start_time_cmp)
+    {
+        $end = date("Y-m-d", time()-(1*24*60*60));
+
+        // Set also start date if it is after end date
+        if ($start_time_cmp <= $end) {
+            $data = array(
+                'end_time_cmp' => $end,
+            );
+        } else {
+            $data = array(
+                'start_time_cmp' => $end,
+                'end_time_cmp' => $end,
+            );
+        }
+
+		$where = $this->getAdapter()->quoteInto('id_cmp = ?', $id);
+		$this->update($data, $where);
+    }
+
+    /**
     *   getAll
     *
     *   Gets all campaigns
@@ -510,7 +537,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
      *
      * @author Mikko Korpinen
      * @param int $id_cmp
-     * @return string
+     * @return string (not_started, open, ended)
      */
     public function getStatus($id_cmp)
     {

@@ -4,8 +4,14 @@
     <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
     <div id="activity" class="right">
         <div class="left">
-            <p><?php echo $this->grpData['body_grp']; ?></p><?php //Zend_Debug::dump($this->grpData); ?>
+            <div id="group-text">
+                <?php echo $this->grpData['description_grp']; ?>
+            </div>
+            <div id="group-text">
+                <?php echo $this->grpData['body_grp']; ?><?php //Zend_Debug::dump($this->grpData); ?>
+            </div>
             <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
+            <?php // Tähän ryhmän liitetiedosto ?>
             <div id="group-links">
                 <p class="group-links">Group web links:
                     <?php

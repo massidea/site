@@ -13,17 +13,23 @@ $infoUrl = $this->url(array('groupid'      => $this->id_grp,
                             'language'   => $language),
                       'group_info_shortview', true);
 
-$membersUrl = $this->url(array('groupid'      => $this->id_grp,
+$membersUrl = $this->url(array('controller' => 'account',
+                               'action'     => 'userlist',
+                               'order'      => 'username',
+                               'list'       => 'asc',
+                               'country'    => 0,
+                               'group'      => $this->group_name_grp,
+                               'exactq'     => 1,
                                'language'   => $language),
-                         'group_members_shortview', true);
+                         'lang_default', true);
 
 $feedsUrl = $this->url(array('groupid'      => $this->id_grp,
                              'language'   => $language),
                        'group_feeds_shortview', true);
 
-$discussionUrl = $this->url(array('groupid'      => $this->id_grp,
+$commentsUrl = $this->url(array('groupid'      => $this->id_grp,
                                   'language'   => $language),
-                            'group_discussion_shortview', true);
+                            'group_comments_shortview', true);
 
 $linkedgroupsUrl = $this->url(array('groupid'      => $this->id_grp,
                                     'language'   => $language),
@@ -32,12 +38,9 @@ $linkedgroupsUrl = $this->url(array('groupid'      => $this->id_grp,
 
 <div id="profile-meta">
     <ul id="group-menu">
-        <!--<li>Picture</li>-->
+        <!--<li><img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" /></li>-->
         <li id="<?php if ($this->grp_action === 'home') echo 'active'; ?>">
             <a href="<?php echo $homeUrl; ?>">Home</a>
-        </li>
-        <li id="<?php if ($this->grp_action === 'campaigns') echo 'active'; ?>">
-            <a href="<?php echo $campaignsUrl; ?>">Campaigns</a>
         </li>
         <li id="<?php if ($this->grp_action === 'info') echo 'active'; ?>">
             <a href="<?php echo $infoUrl; ?>">Info</a>
@@ -45,14 +48,32 @@ $linkedgroupsUrl = $this->url(array('groupid'      => $this->id_grp,
         <li id="<?php if ($this->grp_action === 'members') echo 'active'; ?>">
             <a href="<?php echo $membersUrl; ?>">Members</a>
         </li>
-        <li id="<?php if ($this->grp_action === 'feeds') echo 'active'; ?>">
-            <a href="<?php echo $feedsUrl; ?>">Feeds</a>
+        <li id="<?php if ($this->grp_action === 'campaigns') echo 'active'; ?>">
+            <a href="<?php echo $campaignsUrl; ?>">Campaigns</a>
         </li>
-        <li id="<?php if ($this->grp_action === 'discussion') echo 'active'; ?>">
-            <a href="<?php echo $discussionUrl; ?>">Discussion</a>
+        <li id="<?php if ($this->grp_action === 'comments') echo 'active'; ?>">
+            <a href="<?php echo $commentsUrl; ?>">Comments</a>
         </li>
         <li id="<?php if ($this->grp_action === 'linkedgroups') echo 'active'; ?>">
             <a href="<?php echo $linkedgroupsUrl; ?>">Linked groups</a>
         </li>
+        <li id="<?php if ($this->grp_action === 'feeds') echo 'active'; ?>">
+            <a href="<?php echo $feedsUrl; ?>">Feeds</a>
+        </li>
     </ul>
+    <div id="group-admins">
+        <?php $grpAdminsCount = count($this->grp_admins); ?>
+        <ul class="light-gray">
+            <li>Group admin<?php if ($grpAdminsCount > 1) echo 's'; ?>:</li>
+        <?php foreach ($this->grp_admins as $admin): ?>
+            <?php $usrUrl = $this->url(array('controller' => 'account',
+                                             'action' => 'view',
+                                             'user' => $admin['login_name_usr'],
+                                             'language' =>  $this->language),
+                                       'lang_default', true); ?>
+            <li><a href="<?php echo $usrUrl; ?>"><?php echo $admin['login_name_usr']; ?>
+                (<?php echo $admin['count']; ?>)</a></li>
+        <?php endforeach; ?>
+        </ul>
+    </div>
 </div>

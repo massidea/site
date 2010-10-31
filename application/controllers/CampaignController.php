@@ -1049,4 +1049,80 @@ class CampaignController extends Oibs_Controller_CustomController
         }
     }
 
+    function endAction()
+    {
+        $auth = Zend_Auth::getInstance();
+
+        if ($auth->hasIdentity()) {
+            $cmpId = $this->_request->getParam('id');
+
+            if (!$cmpId) {
+                $target = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'index',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($target);
+            }
+
+            // Get group id from campaign info.
+            $cmpModel = new Default_Model_Campaigns();
+            $cmp = $cmpModel->getCampaignById($cmpId)->toArray();
+            $grpId = $cmp['id_grp_cmp'];
+
+            // Only group admins can end campaign.
+            $grpAdminsModel = new Default_Model_GroupAdmins();
+            $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+            $userIsGroupAdmin = $this->checkIfArrayHasKeyWithValue(
+                $grpAdmins, 'id_usr', $auth->getIdentity()->user_id);
+            if (!$userIsGroupAdmin) {
+                $redirectUrl = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'campaign',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            // Check if campaign status is ended
+            $status = $cmpModel->getStatus($cmpId);
+            if ($status==="ended") {
+                $redirectUrl = $this->_urlHelper->url(
+                    array(
+                        'controller' => 'campaign',
+                        'action' => 'index',
+                        'language' => $this->view->language),
+                    'lang_default', true
+                );
+                $this->_redirector->gotoUrl($redirectUrl);
+            }
+
+            // Chang end date to yesterday
+            $cmpModel->endCampaign($cmpId, $cmp['start_time_cmp']);
+
+            // Redirect back to the campaign page.
+            $target = $this->_urlHelper->url(
+                array(
+                    'cmpid' => $cmpId,
+                    'language' => $this->view->language),
+                'campaign_view', true
+            );
+            $this->_redirector->gotoUrl($target);
+        } else {
+            // Not logged in.
+            $redirectUrl = $this->_urlHelper->url(
+                array(
+                    'controller' => 'campaign',
+                    'action' => 'index',
+                    'language' => $this->view->language),
+                'lang_default', true
+            );
+            $this->_redirector->gotoUrl($redirectUrl);
+        }
+    }
+
 }

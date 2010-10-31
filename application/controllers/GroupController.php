@@ -92,17 +92,66 @@
         // Menudata
         $menuData['id_grp'] = $grpId;
         $menuData['grp_action'] = 'home';
+        $menuData['group_name_grp'] = $grpData['group_name_grp'];
+        $menuData['grp_admins'] = $grpData['grp_admins'];
         // Set $this->view->...
         $this->view->menuData = $menuData;
 
+
         // Group campaignAction special stuff:
-        $grpData['body_grp'] = substr($grpData['body_grp'], 0, 230)."...";
+
+        $maxCharacters = 140;   // Max characters before we cut string and add ...
+        $maxObjects = 3;        // Max campaigns, comments, linked groups and feeds in group home
+        // Campaigns
         $campaignModel = new Default_Model_Campaigns();
-        $cmpData = $campaignModel->getRecentByGroup(3, $grpId);
+        $cmpData = $campaignModel->getRecentByGroup($maxObjects, $grpId);
+        $i = 0;
+        foreach($cmpData as $cmp) {
+            if (strlen($cmp['ingress_cmp']) > $maxCharacters) {
+                $cmpData[$i]['ingress_cmp'] = substr($cmp['ingress_cmp'], 0, $maxCharacters)."...";
+                $i++;
+            }
+
+        }
+        // Comments
+        $comments = new Oibs_Controller_Plugin_Comments("group", $grpId);
+        $comments->loadComments();
+        $onlyComments = $comments->getComments();
+        uasort($onlyComments, 'compareComments');
+        $commentsCount = count($onlyComments);
+        $homeComments = array();
+        for ($i=0; $i<$commentsCount && $i<$maxObjects; $i++) {
+            $homeComments[$i] = $onlyComments[$i];
+            if (strlen($homeComments[$i]['body_cmt']) > $maxCharacters)
+                $homeComments[$i]['body_cmt'] = substr($homeComments[$i]['body_cmt'], 0, $maxCharacters)."...";
+        }
+        // Linked groups
+        $grpHasGrpModel = new Default_Model_GroupHasGroup();
+        $linkedgroups = $grpHasGrpModel->getGroupGroups($grpId);
+        $linkedgroups = array_merge($linkedgroups['parents'], $linkedgroups['childs']);
+        $linkedgroupsCount = count($linkedgroups);
+        $linkedgroups_new = array();
+        for ($i=0; $i<$linkedgroupsCount && $i<$maxObjects; $i++) {
+            $linkedgroups_new[$i] = $linkedgroups[$i];
+        }
+        // Feeds
+        $feedsModel = new Oibs_Controller_Plugin_RssReader();
+        $hasFeeds = $feedsModel->hasFeeds($grpId, "group");
+        $feeds = array();
+        if ($hasFeeds) {
+            $feedsData = $feedsModel->read($grpId, "group");
+            for ($i=0; $i<$maxObjects; $i++) {
+                $feeds[$i] = $feedsData['items'][$i];
+            }
+        }
         
         // Set $this->view->...
         $this->view->grpData = $grpData;
         $this->view->cmpData = $cmpData;
+        $this->view->comments = $homeComments;
+        $this->view->linkedgroups = $linkedgroups_new;
+        $this->view->hasFeeds = $hasFeeds;
+        $this->view->feeds = $feeds;
 
 
         /*
@@ -949,9 +998,12 @@
         // Menudata
         $menuData['id_grp'] = $grpId;
         $menuData['grp_action'] = 'campaigns';
+        $menuData['group_name_grp'] = $grpData['group_name_grp'];
+        $menuData['grp_admins'] = $grpData['grp_admins'];
         // Set $this->view->...
         $this->view->grpData = $grpData;
         $this->view->menuData = $menuData;
+
 
         // Group campaignAction special stuff:
 
@@ -988,10 +1040,14 @@
         // Menudata
         $menuData['id_grp'] = $grpId;
         $menuData['grp_action'] = 'info';
+        $menuData['group_name_grp'] = $grpData['group_name_grp'];
+        $menuData['grp_admins'] = $grpData['grp_admins'];
         // Set $this->view->...
         $this->view->menuData = $menuData;
 
+
         // Group infoAction special stuff:
+
         // Group weblinks
         $groupWeblinksModel = new Default_Model_GroupWeblinks();
         $grpData['groupWeblinks'] = $groupWeblinksModel->getGroupWeblinks($grpId);
@@ -1014,6 +1070,8 @@
      */
     public function membersAction()
     {
+        // This is not in use at the momet. Members link lead to users page search.
+
         // User identity, group header and group menu:
 
         // Group id
@@ -1032,17 +1090,161 @@
         // Menudata
         $menuData['id_grp'] = $grpId;
         $menuData['grp_action'] = 'members';
+        $menuData['group_name_grp'] = $grpData['group_name_grp'];
+        $menuData['grp_admins'] = $grpData['grp_admins'];
         // Set $this->view->...
         $this->view->grpData = $grpData;
         $this->view->menuData = $menuData;
 
+
         // Group membersAction special stuff:
 
-        // Get users in group
-        $usrHasGrpModel = new Default_Model_UserHasGroup();
         // Set $this->view->...
-        $this->view->grpUsers = $usrHasGrpModel->getAllUsersInGroup($grpId);
+
     }
+
+    /**
+     * commentsAction
+     *
+     * @author Mikko Korpinen
+     */
+    public function commentsAction()
+    {
+        // User identity, group header and group menu:
+
+        // Group id
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+        // Group data
+        $grpData = $this->getGroupData($grpId);
+        // Menudata
+        $menuData['id_grp'] = $grpId;
+        $menuData['grp_action'] = 'comments';
+        $menuData['group_name_grp'] = $grpData['group_name_grp'];
+        $menuData['grp_admins'] = $grpData['grp_admins'];
+        // Set $this->view->...
+        $this->view->grpData = $grpData;
+        $this->view->menuData = $menuData;
+
+
+        // Group membersAction special stuff:
+
+        // Get comments and set $this->view->...
+        $comments = new Oibs_Controller_Plugin_Comments("group", $grpId);
+        if ($grpData['user_identity']) $comments->allowComments(true);
+        $this->view->jsmetabox->append('commentUrls', $comments->getUrls());
+        $comments->loadComments();
+        $this->view->comments = $comments;
+    }
+
+    /**
+     * linkedgroupsAction
+     *
+     * @author Mikko Korpinen
+     */
+    public function linkedgroupsAction()
+    {
+        // User identity, group header and group menu:
+
+        // Group id
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+        // Group data
+        $grpData = $this->getGroupData($grpId);
+        // Menudata
+        $menuData['id_grp'] = $grpId;
+        $menuData['grp_action'] = 'linkedgroups';
+        $menuData['group_name_grp'] = $grpData['group_name_grp'];
+        $menuData['grp_admins'] = $grpData['grp_admins'];
+        // Set $this->view->...
+        $this->view->grpData = $grpData;
+        $this->view->menuData = $menuData;
+
+
+        // Group membersAction special stuff:
+
+        // Get linked groups
+        $grpHasGrpModel = new Default_Model_GroupHasGroup();
+        $linkedgroups = $grpHasGrpModel->getGroupGroups($grpId);
+        $linkedgroups = array_merge($linkedgroups['parents'], $linkedgroups['childs']);
+        $usrHasGrpModel = new Default_Model_UserHasGroup();
+        $cmpModel = new Default_Model_Campaigns();
+        $linkedgroups_new = array();
+        foreach ($linkedgroups as $grp) {
+            $grp['campaign_count'] = count($cmpModel->getCampaignsByGroup($grp['id_grp']));
+            $grp['member_count'] = count($usrHasGrpModel->getAllUsersInGroup($grp['id_grp']));
+            $linkedgroups_new[] = $grp;
+        }
+        // Set $this->view->...
+        $this->view->linkedgroups = $linkedgroups_new;
+    }
+
+    /**
+     * feedsAction
+     *
+     * @author Mikko Korpinen
+     */
+    public function feedsAction()
+    {
+        // User identity, group header and group menu:
+
+        // Group id
+        $grpId = $this->_request->getParam('groupid');
+        $grpModel = new Default_Model_Groups();
+        // Check if group exists
+        if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {
+            $target = $this->_urlHelper->url(array('controller'    => 'group',
+                                                   'action'        => 'index',
+                                                   'language'      => $this->view->language),
+                                             'lang_default', true);
+            $this->_redirector->gotoUrl($target);
+        }
+        // Group data
+        $grpData = $this->getGroupData($grpId);
+        // Menudata
+        $menuData['id_grp'] = $grpId;
+        $menuData['grp_action'] = 'feeds';
+        $menuData['group_name_grp'] = $grpData['group_name_grp'];
+        $menuData['grp_admins'] = $grpData['grp_admins'];
+        // Set $this->view->...
+        $this->view->grpData = $grpData;
+        $this->view->menuData = $menuData;
+
+
+        // Group feedsAction special stuff:
+
+        // Get feeds
+        $feedsModel = new Oibs_Controller_Plugin_RssReader();
+        $hasFeeds = $feedsModel->hasFeeds($grpId, "group");
+        $feedsData = array();
+        $feedsData = $feedsModel->read($grpId, "group");
+        $isAdmin = false;
+		if ($grpData['user_identity']) $isAdmin = $feedsModel->isAdmin($grpData['user_id']);
+        $editLink = $feedsModel->getEditLink();
+        // Set $this->view->...
+        $this->view->hasFeeds = $hasFeeds;
+        $this->view->feeds = $feedsData;
+        $this->view->isAdmin = $isAdmin;
+        $this->view->editFeedsLink = $editLink;
+    }
+
+
 
     /**
      * getGroupData - Get group data and realted stuff
@@ -1057,17 +1259,21 @@
         // Get group data
         $grpModel = new Default_Model_Groups();
         $grpData = $grpModel->getGroupData($grpId);
-        $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
-        $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
+        $grpData['description_grp'] = $this->oibs_nl2p($grpData['description_grp']);
+        //$grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
+        $grpData['body_grp'] = $this->oibs_nl2p($grpData['body_grp'], "");
+        //$grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
         // User has identity
         if ($auth->hasIdentity()) {
             $grpData['user_identity'] = true;
+            $grpData['user_id'] = $auth->getIdentity()->user_id;
         } else {
             $grpData['user_identity'] = false;
         }
         // Group admins
         $grpAdminsModel = new Default_Model_GroupAdmins();
         $grpAdmins = $grpAdminsModel->getGroupAdmins($grpId);
+        $grpData['grp_admins'] = $grpAdmins;
         $user = $auth->getIdentity();
         $grpData['user_is_group_admin'] = isset($user->user_id) ? $this->checkIfArrayHasKeyWithValue($grpAdmins, 'id_usr', $user->user_id) : false;
         // Group type
@@ -1080,6 +1286,7 @@
             $grpData['user_has_group'] = $usrHasGrpModel->userHasGroup($grpId, $user->user_id);
             $usrHasGrpWaitingModel = new Default_Model_UserHasGroupWaiting();
             $grpData['user_has_group_waiting'] = $usrHasGrpWaitingModel->userWaitingGroup($grpId, $user->user_id);
+            $grpData['usr_waiting_count'] = $usrHasGrpWaitingModel->getUserCountByGroup($grpId);
         } else {
             $grpData['user_has_group'] = false;
             $grpData['user_has_group_waiting'] = false;
@@ -1087,5 +1294,17 @@
 
         return $grpData;
     }
+
+}
+
+/**
+ * compareComments - Compare comments created time
+ *
+ * @param array $a
+ * @param array $b
+ * @return int
+ */
+function compareComments($a, $b) {
+    return strcmp($a['created_cmt'], $b['created_cmt']) * -1;
 
 }

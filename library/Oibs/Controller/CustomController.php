@@ -335,4 +335,29 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         return $str;
     }
 
+    /**
+     * oibs_nl2p - Convert multiple new lines to p tags with an optional class assigned to the p tags
+     *
+     * @param string $string
+     * @param string $class
+     * @return string
+     */
+    function oibs_nl2p($string, $class='') {
+        $class_attr = ($class!='') ? ' class="'.$class.'"' : '';
+        return
+            '<p'.$class_attr.'>'
+            .preg_replace('#(<br\s*?/?>\s*?){2,}#', '</p>'."\n".'<p'.$class_attr.'>', $this->oibs_nl2br($string))
+            .'</p>';
+    }
+
+    /**
+     * oibs_nl2br - Replace all \n with just <br />
+     *
+     * @param $text
+     * @return string
+     */
+    function oibs_nl2br($text) {
+        return strtr($text, array("\r\n" => '<br />', "\r" => '<br />', "\n" => '<br />'));
+    }
+
 } // end of class

@@ -104,7 +104,7 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
                    array('id_usr'))
             ->join(array('usr' =>'users_usr'),
                    'uhg.id_usr = usr.id_usr',
-                   array('login_name_usr'))
+                   array('login_name_usr', 'last_login_usr'))
             ->join('usr_profiles_usp',
                    'usr.id_usr = usr_profiles_usp.id_usr_usp',
                    array('city' => 'usr_profiles_usp.profile_value_usp'))
