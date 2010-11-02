@@ -4,15 +4,31 @@
     <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
     <div id="activity" class="right">
         <div class="left">
-            <div id="group-text">
+            <div id="group-description" class="group-text">
                 <?php echo $this->grpData['description_grp']; ?>
             </div>
-            <div id="group-text">
+            <div id="group-body" class="group-text">
                 <?php echo $this->grpData['body_grp']; ?><?php //Zend_Debug::dump($this->grpData); ?>
             </div>
+            <div id="group-admin" class="group-text">
+                <?php $grpAdminsCount = count($this->grpData['grp_admins']); ?>
+                <p>Group admin:
+                    <?php $adminUrl = $this->url(array('controller' => 'account',
+                                                       'action' => 'view',
+                                                       'user' => $this->grpData['grp_admins'][0]['login_name_usr'],
+                                                       'language' =>  $this->language),
+                                                 'lang_default', true); ?>
+                    <a href="<?php echo $adminUrl; ?>"><?php echo $this->grpData['grp_admins'][0]['login_name_usr']; ?>
+                        (<?php echo $this->grpData['grp_admins'][0]['count']; ?>)</a>
+                </p>
+            </div>
             <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
-            <?php // Tähän ryhmän liitetiedosto ?>
-            <div id="group-links">
+            <?php /*
+            <div id="group-files" class="group-text">
+
+            </div>
+            */ ?>
+            <div id="group-links" class="group-text">
                 <p class="group-links">Group web links:
                     <?php
                     $count = count($this->grpData['groupWeblinks']);

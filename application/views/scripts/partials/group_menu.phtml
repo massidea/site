@@ -1,16 +1,16 @@
 <?php
 $language = Zend_Layout::getMvcInstance()->getView()->language;
 
-$homeUrl = $this->url(array('groupid'    => $this->id_grp,
+$homeUrl = $this->url(array('groupid'  => $this->id_grp,
                             'language' => $language),
                       'group_shortview', true);
 
-$campaignsUrl = $this->url(array('groupid'      => $this->id_grp,
-                                 'language'   => $language),
+$campaignsUrl = $this->url(array('groupid'  => $this->id_grp,
+                                 'language' => $language),
                            'group_campaigns_shortview', true);
 
-$infoUrl = $this->url(array('groupid'      => $this->id_grp,
-                            'language'   => $language),
+$infoUrl = $this->url(array('groupid'  => $this->id_grp,
+                            'language' => $language),
                       'group_info_shortview', true);
 
 $membersUrl = $this->url(array('controller' => 'account',
@@ -19,20 +19,20 @@ $membersUrl = $this->url(array('controller' => 'account',
                                'list'       => 'asc',
                                'country'    => 0,
                                'group'      => $this->group_name_grp,
-                               'exactq'     => 1,
+                               'exactg'     => 1,
                                'language'   => $language),
                          'lang_default', true);
 
-$feedsUrl = $this->url(array('groupid'      => $this->id_grp,
-                             'language'   => $language),
+$feedsUrl = $this->url(array('groupid'  => $this->id_grp,
+                             'language' => $language),
                        'group_feeds_shortview', true);
 
-$commentsUrl = $this->url(array('groupid'      => $this->id_grp,
-                                  'language'   => $language),
+$commentsUrl = $this->url(array('groupid'  => $this->id_grp,
+                                'language' => $language),
                             'group_comments_shortview', true);
 
-$linkedgroupsUrl = $this->url(array('groupid'      => $this->id_grp,
-                                    'language'   => $language),
+$linkedgroupsUrl = $this->url(array('groupid'  => $this->id_grp,
+                                    'language' => $language),
                               'group_linkedgroups_shortview', true);
 ?>
 
@@ -61,19 +61,4 @@ $linkedgroupsUrl = $this->url(array('groupid'      => $this->id_grp,
             <a href="<?php echo $feedsUrl; ?>">Feeds</a>
         </li>
     </ul>
-    <div id="group-admins">
-        <?php $grpAdminsCount = count($this->grp_admins); ?>
-        <ul class="light-gray">
-            <li>Group admin<?php if ($grpAdminsCount > 1) echo 's'; ?>:</li>
-        <?php foreach ($this->grp_admins as $admin): ?>
-            <?php $usrUrl = $this->url(array('controller' => 'account',
-                                             'action' => 'view',
-                                             'user' => $admin['login_name_usr'],
-                                             'language' =>  $this->language),
-                                       'lang_default', true); ?>
-            <li><a href="<?php echo $usrUrl; ?>"><?php echo $admin['login_name_usr']; ?>
-                (<?php echo $admin['count']; ?>)</a></li>
-        <?php endforeach; ?>
-        </ul>
-    </div>
 </div>

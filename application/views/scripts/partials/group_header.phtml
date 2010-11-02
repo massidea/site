@@ -14,7 +14,15 @@ function deleteconfirmation(url) {
 <div id="group-header">
     <div id="group-name">
         <h2><?php echo $this->group_name_grp; ?></h2>
-        <div id="group-founded" class="light-gray"><?php echo $this->translate('group-founded') . ': '; ?><?php echo $date_founded->toString('dd MMM, yyyy'); ?></div>
+        <div id="group-founded" class="light-gray">
+            <?php $adminUrl = $this->url(array('controller' => 'account',
+                                             'action' => 'view',
+                                             'user' => $this->grp_admins[0]['login_name_usr'],
+                                             'language' =>  $this->language),
+                                       'lang_default', true); ?>
+            Admin: <a href="<?php echo $adminUrl; ?>"><?php echo $this->grp_admins[0]['login_name_usr']; ?>(<?php echo $this->grp_admins[0]['count']; ?>)</a>
+            <?php echo $this->translate('group-founded') . ': '; ?><?php echo $date_founded->toString('dd MMM, yyyy'); ?>
+        </div>
     </div>
     <div id="group-signup">
         <?php if ($this->user_identity == true) : ?>
