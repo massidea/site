@@ -327,7 +327,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		}
 		if($this->_noNewContents($updatedContents)) return false;
 		
-		//print_r($updatedContents);die;
+		//print_r($updatedContents);
 		
 		$sortedUpdated = array();
 		$uniqueUsers = array();
@@ -341,14 +341,15 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 						$actorUsers[$info['id_cnt']]['bin'][] = $bin;
 						$actorUsers[$info['id_cnt']]['time'][] = $info['time'];
 						$uniqueUsers[$info['id_usr']] = 1;						
-						
 						if(!isset($sortedUpdated[$k][$info['id_cnt']])) $sortedUpdated[$k][$info['id_cnt']] = array('time' => $info['time'], 'id_usr' => $info['id_usr']);
-						else if(strtotime($sortedUpdated[$k][$info['id_cnt']]['time']) < strtotime($info['time']))
+						elseif(strtotime($sortedUpdated[$k][$info['id_cnt']]['time']) < strtotime($info['time']))
 								$sortedUpdated[$k][$info['id_cnt']] = array('time' => $info['time'], 'id_usr' => $info['id_usr']);
 					}
 				}
 			}
 		}
+		
+		//print_r($actorUsers);die;
 
 		$userModel = new Default_Model_User();
 		$actorUsersInfo = $userModel->getUserInfo(array_keys($uniqueUsers));
@@ -426,7 +427,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		$contents = array();
 		//print_r($merge);die;
 		//print_r($sortedUpdated);die;
-		//print_r($actorList);die;
+		//print_r($actorList);die; AAARAAAAAAAAAAAAAAAAAAAAAAAAAAAARGGGGGGGGGGGGGGGGGGGG
 		
 		foreach($sortedUpdated as $k => $contentArray) {
 			foreach($contentArray as $id => $time) {
@@ -547,7 +548,7 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
                                              ;
                                           
         $result = $this->_db->fetchAll($select);
-
+        
         $newComments = array();
         foreach($result as $res) {
         	if(strtotime($res['created_cmt']) > strtotime($contentIds[$res['id_target_cmt']]))

@@ -1468,6 +1468,28 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
        return $result;
     }
     
+    
+    
+    public function deleteNotificationCache($id_cnt = 0) {
+    	$cache = Zend_Registry::get('cache');
+    	
+    	if($id_cnt > 0) {
+    		$contentModel = new Default_Model_Content();
+    		$owner = $contentModel->getOwnerId($id_cnt);
+    		$cache->remove('Notifications_'.$owner);
+    		
+    		$favouriteModel = new Default_Model_UserHasFavourites();
+    		$idlist = $favouriteModel->getAllUserIdsFromFavouriteContent($id_cnt);
+    		foreach($idlist as $id) {
+    			$cache->remove('Notifications_'.$id['id_usr']);
+    		}
+    		
+    		return true;
+    	}
+    	
+    	return false;
+    }
+        
     /**
      * To be deleted after first use.
      */
@@ -1484,7 +1506,7 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
 		;
 		$result = array_keys($this->_db->fetchAssoc($selectUsers));
 		
-		
+		print_r($result);
    		$ownfollows = array(
 			'profile_key_usp' => 'own_follows',
 			'profile_value_usp' => 7,

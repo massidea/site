@@ -47,7 +47,8 @@ class Default_Form_RegistrationForm extends Zend_Form
         $city->setLabel($translate->_("account-register-city"))
                 ->setRequired(true)
 				->addValidators(array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
+				array('Regex', true, array('/^[\\p{L}0-9.\- ]*$/')) 
 				))
 				->setDecorators(array('RegistrationDecorator'))
 				;

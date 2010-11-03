@@ -565,18 +565,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$content->modified_cnt = new Zend_Db_Expr('NOW()');
 		$content->language_cnt = $data['content_language'];
 			
-		//Zend_Debug::dump($content, $label=null, $echo=true); die();
-			
-		/*$query = "INSERT INTO contents_cnt (id_cty_cnt, id_ind_cnt, title_cnt, lead_cnt, body_cnt, views_cnt, published_cnt, created_cnt, modified_cnt) ";
-		 $query .= "VALUES (".$data['content_type'].", ".$data['content_industry_id'].", '".strip_tags($data['content_header'])."', '".strip_tags($data['content_textlead'])."', '";
-		 $query .= strip_tags($data['content_text'])."', 0, 0, ".new Zend_Db_Expr('NOW()').", ".new Zend_Db_Expr('NOW()').")";*/
-		//Zend_Debug::dump($query, $label=null, $echo=true); die();
-		/*mysql_connect("localhost", "root", "lollero");
-		 mysql_query($query);
-		 echo mysql_error();
-		 mysql_close();
-		 die();*/
-
 		if(!$content->save()) {
 			$return = false;
 		} else {
@@ -711,7 +699,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
         } // end if
         
         // Add industry to content
-        $contentHasIndustry = new Default_Model_ContentHasIndustries();
+        /*$contentHasIndustry = new Default_Model_ContentHasIndustries();
         
         if(isset($data['content_industry'])) {
             $id_ind = 0;
@@ -730,6 +718,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
         if($id_ind != 0) {
             $contentHasIndustry->addIndustryToContent($content->id_cnt, $id_ind);
         }
+        */
         
         // Add future info classification to content
         if(isset($data['content_finfo_class'])) {
@@ -1587,6 +1576,25 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		}
 
 		return false;
+	}
+	
+	public function getOwnerId($contentId)
+	{
+
+		$select = $this->_db->select()
+						->from(array('cnt' => 'contents_cnt'),
+								array())
+						->joinLeft(array('chu' => 'cnt_has_usr'),
+                                    'chu.id_cnt = cnt.id_cnt',
+								array())
+						->joinLeft(array('usr' => 'users_usr'),
+                                    'usr.id_usr = chu.id_usr',
+								array('usr.id_usr'))
+						->where('cnt.id_cnt = ?', $contentId)
+		;
+
+		$result = $this->_db->fetchAll($select);
+		return $result[0]['id_usr'];
 	}
 
 	public function hasCntLinks($id_cnt) {

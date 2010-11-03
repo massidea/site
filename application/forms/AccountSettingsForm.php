@@ -382,7 +382,10 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                  ->setAttrib('id', 'hometown')
                  ->setRequired(true)
                  ->addValidators(array(
-                            array('NotEmpty', true, array('messages' => array('isEmpty' => 'Hometown empty')))
+                            array('NotEmpty', true,
+                            	 array('messages' => array('isEmpty' => 'Hometown empty'))),
+                            array('Regex', true, array('/^[\\p{L}0-9.\- ]*$/'))
+                            	 
                  ));
         $hometownpublic = new Zend_Form_Element_Checkbox('city_publicity');
         $hometownpublic->setLabel($publictext);

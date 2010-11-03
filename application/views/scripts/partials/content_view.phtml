@@ -211,7 +211,7 @@ $(document).ready(function() {
                 <div id="content-view-viewers-list" class="right"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
                 <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
                 <div class="clear"></div>
-	            <!-- <div id="content_view_favourite"></div>  -->
+	            <div id="content_view_favourite"></div>
 
 	     <?php endif; ?>
 	     <div class="clear"></div>

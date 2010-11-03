@@ -6,7 +6,7 @@
 	<li><a href="<?php echo "#".$k; ?>"><?php echo $k; ?></a></li>
 	<?php endforeach; ?>
 	<li id="notification_close" style="float: right;">
-		<a role="button">X</a>
+		<a>X</a>
 	</li>
 	</ul>
 	<?php foreach($this->notifications as $k => $contentArray):	if($k == "own") $k = "Own";	elseif($k == "fvr") $k = "Favourite"; ?>
@@ -143,4 +143,5 @@
 	
 	<?php endforeach; //$this->notifications as $k => $contentArray ?>
 	<div id="notification_ids" style="visibility: hidden; display: none;"><?php echo $this->ids; ?></div>
+	<div id="notification_total" style="visibility: hidden; display: none;"><?php echo $this->total; ?></div>
 <?php endif; //$this->notifications ?>

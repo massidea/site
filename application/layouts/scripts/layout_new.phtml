@@ -101,27 +101,43 @@ echo $this->doctype();
                                         */ ?>
                                 	</ul>
                                 </div>
+                                <span class="grey"> | </span> 
                             <?php
                                 if($this->unread_privmsgs > 0) {
                                     if($this->controller == "privmsg" && $this->action == "index") {
                                         $Default_Model_privmsg = New Default_Model_PrivateMessages();
                                         $Default_Model_privmsg->markUnreadMessagesAsRead($this->userid);
-                                    } else {
+                                    }
                                         ?>
                                         <a href="<?php echo $this->url(array('controller' => 'privmsg',
                                                                              'action' => 'index',
                                                                              'language' => $this->language),
                                                                        'lang_default', true); ?>">
-                                            (<?php echo $this->unread_privmsgs; ?>)
+                                        <img src="<?php echo $this->baseUrl("/images/icon_message_on.png");?>" id="message_link"/>
                                         </a>
+                                        <span class="grey">
+                                        (<?php echo $this->unread_privmsgs; ?>)
+                                        |</span>
                                         <?php
-                                    }
-                                } ?>
-                                <?php /* RC fix :)
+                                    
+                                } 
+                                else { ?>
+                                   <a href="<?php echo $this->url(array('controller' => 'privmsg',
+                                                                             'action' => 'index',
+                                                                             'language' => $this->language),
+                                                                       'lang_default', true); ?>">
+                                   <img src="<?php echo $this->baseUrl("/images/icon_message_off.png");?>" id="message_link"/>
+                                   </a>
+                                   <span class="grey">|</span>                             
+                                <?php } ?>
+                                
+
                                 <img src="<?php echo $this->baseUrl("/images/notifications_b.png");?>" id="notification_link"/>
+                                <span id="notification_totals" class="grey"></span>
+
                                 <div id="notification_box"></div>
-                                */ ?>
-                                |
+                                
+                                <span class="grey"> |</span>
                                 <a href="<?php echo $this->url(array('controller' => 'account',
                                                                      'action' => 'logout',
                                                                      'language' => $this->language),

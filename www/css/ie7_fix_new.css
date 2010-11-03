@@ -85,3 +85,6 @@
 #add_new_content .add_new_info h3 { font-size: 16px; }
 #login_box { margin-top: -3px; }
 #add_new_content .add_new_title a {  }
+#header #search #search-top img { margin-top: -3px; }
+#header #search #search-top a { text-decoration: none; }
+
