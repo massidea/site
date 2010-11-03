@@ -340,7 +340,8 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 						$actorUsers[$info['id_cnt']]['users'][] = $info['id_usr'];
 						$actorUsers[$info['id_cnt']]['bin'][] = $bin;
 						$actorUsers[$info['id_cnt']]['time'][] = $info['time'];
-						$uniqueUsers[$info['id_usr']] = 1;						
+						$uniqueUsers[$info['id_usr']] = 1;
+						//echo $bin . " " . $info['id_cnt'] . ": ". $info['time'] . " \n";					
 						if(!isset($sortedUpdated[$k][$info['id_cnt']])) $sortedUpdated[$k][$info['id_cnt']] = array('time' => $info['time'], 'id_usr' => $info['id_usr']);
 						elseif(strtotime($sortedUpdated[$k][$info['id_cnt']]['time']) < strtotime($info['time']))
 								$sortedUpdated[$k][$info['id_cnt']] = array('time' => $info['time'], 'id_usr' => $info['id_usr']);
@@ -350,7 +351,12 @@ class Default_Model_UserHasFavourites extends Zend_Db_Table_Abstract
 		}
 		
 		//print_r($actorUsers);die;
-
+		
+		foreach($actorUsers as $id_cnt => $dataArray) {
+			array_multisort($dataArray['time'], SORT_DESC, $dataArray['users'],$dataArray['bin']);
+			$actorUsers[$id_cnt] = array("time" => $dataArray['time'],"users" => $dataArray['users'], "bin" => $dataArray['bin']);
+		}
+		//print_r($actorUsers);die;
 		$userModel = new Default_Model_User();
 		$actorUsersInfo = $userModel->getUserInfo(array_keys($uniqueUsers));
 		$actorList = array();
