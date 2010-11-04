@@ -142,9 +142,15 @@
             
 	        if($favouriteModel->checkIfContentIsUsersFavourite($id,$usrId)) {
 	        	$favouriteModel->updateLastChecked($usrId,$id);
+	        	$profileModel = new Default_Model_UserProfiles();
+				$profileModel->deleteNotificationCache($id,$usrId);
 	        }
 	        
-	        if($user_is_owner) $cntHasUsrModel->updateLastChecked($ownerId,$id);            
+	        if($user_is_owner) {
+	        	$cntHasUsrModel->updateLastChecked($ownerId,$id);
+	        	$profileModel = new Default_Model_UserProfiles();
+				$profileModel->deleteNotificationCache($id,$usrId);       
+	        }      
             // generate comment form
             //$comment_form = new Default_Form_CommentForm($parentId);
      

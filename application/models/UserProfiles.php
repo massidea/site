@@ -1470,20 +1470,24 @@ class Default_Model_UserProfiles extends Zend_Db_Table_Abstract
     
     
     
-    public function deleteNotificationCache($id_cnt = 0) {
+    public function deleteNotificationCache($id_cnt = 0, $user_id = 0) {
     	$cache = Zend_Registry::get('cache');
     	
     	if($id_cnt > 0) {
-    		$contentModel = new Default_Model_Content();
-    		$owner = $contentModel->getOwnerId($id_cnt);
-    		$cache->remove('Notifications_'.$owner);
+    		if($user_id == 0) {
+	    		$contentModel = new Default_Model_Content();
+	    		$owner = $contentModel->getOwnerId($id_cnt);
+	    		$cache->remove('Notifications_'.$owner);
     		
-    		$favouriteModel = new Default_Model_UserHasFavourites();
-    		$idlist = $favouriteModel->getAllUserIdsFromFavouriteContent($id_cnt);
-    		foreach($idlist as $id) {
-    			$cache->remove('Notifications_'.$id['id_usr']);
+	    		$favouriteModel = new Default_Model_UserHasFavourites();
+	    		$idlist = $favouriteModel->getAllUserIdsFromFavouriteContent($id_cnt);
+	    		foreach($idlist as $id) {
+	    			$cache->remove('Notifications_'.$id['id_usr']);
+	    		}
     		}
-    		
+    		else {
+    			$cache->remove('Notifications_'.$user_id);
+    		}
     		return true;
     	}
     	
