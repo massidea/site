@@ -1276,7 +1276,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 					// Get contents filenames from database
 					$filesModel = new Default_Model_Files();
-					$filenames = $filesModel->getFilenamesByCntId($contentId);
+					$filenames = $filesModel->getFilenames($contentId, "content");
 					$formData['filenames'] = $filenames;
 
 					// Form for content adding
@@ -1508,6 +1508,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 					if($contentRemoveSuccessful == true) {
 						$message = 'content-remove-successful';
+						die;
 						$this->flash($message, $url);
 					} else {
 						$message = $this->view->translate('content-remove-not-successful') . '<br />';

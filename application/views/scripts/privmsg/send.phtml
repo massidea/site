@@ -1,4 +1,18 @@
-﻿<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+﻿<script type="text/javascript">
+$(document).ready(function() {
+	$("textarea[id=privmsg_message]").bind("keydown keyup change",function(){
+		var limit = 1000;
+		var newLines = $(this).val().split("\n").length - 1;
+		var length = $(this).val().length + newLines;
+		if(limit < length)
+			$("#privmsg-charcount-cut").show();
+		else $("#privmsg-charcount-cut").hide();
+
+		$('#privmsg-charcount').html("Character limit: " + length+"/"+limit);
+	});
+});
+</script>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <div id="privmsg_title">
     <h2>
         <?php echo $this->translate('privmsg-send-title'); ?>

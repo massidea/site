@@ -73,7 +73,8 @@ function refreshComments(timer) {
 		$.getJSON(jsMeta.commentUrls[0].getCommentsUrl, function(data) {
 			if (data != "0") {
 				$.each(data, function(key, value) {
-					addCommentRow(value.id, value.parent, value.commentDiv);
+					var scrollToComment = !timer;
+					addCommentRow(value.id, value.parent, value.commentDiv, scrollToComment);
 				});
 			}
 		});
@@ -91,7 +92,8 @@ function refreshComments(timer) {
  * @param div		commentrow
  * @return
  */
-function addCommentRow(id, parent, div) {
+function addCommentRow(id, parent, div, scrollToComment) {
+	scrollToComment = (typeof(scrollToComment) != 'undefined') ? scrollToComment : false;
 	target = "";
 	level = "";
 	if (parent != 0) {
@@ -110,7 +112,9 @@ function addCommentRow(id, parent, div) {
 	$("div#content_view_comment_"+id+"_container").removeClass("content_view_comment_container_");
 	$("div#content_view_comment_"+id+"_container").addClass("content_view_comment_container_" + level);
 	$("div#content_view_comment_"+id+"_container").effect("highlight", {}, 2000);
-	$(window).scrollTop($("div#content_view_comment_"+id+"_container").offset().top);
+	if (scrollToComment) {
+		$(window).scrollTop($("div#content_view_comment_"+id+"_container").offset().top);
+	}
 }
 
 /**

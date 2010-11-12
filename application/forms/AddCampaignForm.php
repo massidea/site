@@ -287,6 +287,29 @@ class Default_Form_AddCampaignForm extends Zend_Form
         $weblinks_name_site5->setDecorators(array('InputWebsiteNameDecorator'));
         $weblinks_url_site5->setDecorators(array('InputWebsiteUrlDecorator'));
 
+		// File upload
+        $file = new Zend_Form_Element_File('content_file_upload');
+        $file->setDestination('../www/upload')
+        	 ->removeDecorator('DtDdWrapper')
+			 //->addValidator('Count', false, 1)
+			 ->addValidator('Size', false, 2097152)
+			 ->addValidator('Extension', false, 'png,gif,jpg,jpeg,doc,zip,xls,mpp,pdf,wmv,avi,mkv,mov,mpeg,mp4,divx,flv,ogg,3gp');
+        $file->setLabel($translate->_("content-add-upload-file"))
+             ->setDescription($translate->_("content-add-file-upload-help-text"))
+             ->setDecorators(array('UploadDecorator'))
+             ->setAttrib("onchange", "multiFile(this, '".$translate->_("content-add-file-delete-file-button")."');");
+        
+		$uploadedFilesBoxes = array();
+        if ($options['mode'] == 'edit' && !empty($options['fileNames'])) {
+	        $uploadedFilesBoxes = new Zend_Form_Element_MultiCheckbox('uploadedFiles');
+	        $uploadedFilesBoxes->setMultiOptions($options['fileNames'])
+	        				   ->setRequired(false)
+	        				   //->setDecorators(array('FieldDecorator'))
+	        				   ->setDecorators(array('FormElementDecorator'))
+	        				   ->setLabel($translate->_('content-add-file-delete-files-label'));
+        }
+        
+        
         $save = new Zend_Form_Element_Submit('save');
         $save->setAttrib('id', 'publish')
              ->setAttrib('class', 'submit-button')
@@ -303,56 +326,58 @@ class Default_Form_AddCampaignForm extends Zend_Form
 
         if ($date->compare($startdate) == -1) {
             $this->addElements(array(
-                    $campaignname,
-                    $campaignname_clear,
-                    $campaigningress,
-                    $campaigningress_clear,
-                    $campaigndesc,
-                    $campaigndesc_clear,
-                    $campaignstart,
-                    $campaignstart_clear,
-                    $campaignend,
-                    $campaignend_clear,
-                    $weblinks_websites,
-                    $weblinks_name,
-                    $weblinks_url,
-                    $weblinks_name_site1,
-                    $weblinks_url_site1,
-                    $weblinks_name_site2,
-                    $weblinks_url_site2,
-                    $weblinks_name_site3,
-                    $weblinks_url_site3,
-                    $weblinks_name_site4,
-                    $weblinks_url_site4,
-                    $weblinks_name_site5,
-                    $weblinks_url_site5,
-                    $save,
-                ));
+                $campaignname,
+                $campaignname_clear,
+                $campaigningress,
+                $campaigningress_clear,
+                $campaigndesc,
+                $campaigndesc_clear,
+                $campaignstart,
+                $campaignstart_clear,
+                $campaignend,
+                $campaignend_clear,
+                $weblinks_websites,
+                $weblinks_name,
+                $weblinks_url,
+                $weblinks_name_site1,
+                $weblinks_url_site1,
+                $weblinks_name_site2,
+                $weblinks_url_site2,
+                $weblinks_name_site3,
+                $weblinks_url_site3,
+                $weblinks_name_site4,
+                $weblinks_url_site4,
+                $weblinks_name_site5,
+                $weblinks_url_site5,
+                $file,
+                $uploadedFilesBoxes,
+                $save,
+            ));
         } else {
             $this->addElements(array(
-                    $campaignname,
-                    $campaignname_clear,
-                    $campaigningress,
-                    $campaigningress_clear,
-                    $campaigndesc,
-                    $campaigndesc_clear,
-                    $campaignend,
-                    $campaignend_clear,
-                    $weblinks_websites,
-                    $weblinks_name,
-                    $weblinks_url,
-                    $weblinks_name_site1,
-                    $weblinks_url_site1,
-                    $weblinks_name_site2,
-                    $weblinks_url_site2,
-                    $weblinks_name_site3,
-                    $weblinks_url_site3,
-                    $weblinks_name_site4,
-                    $weblinks_url_site4,
-                    $weblinks_name_site5,
-                    $weblinks_url_site5,
-                    $save,
-                ));
+                $campaignname,
+                $campaignname_clear,
+                $campaigningress,
+                $campaigningress_clear,
+                $campaigndesc,
+                $campaigndesc_clear,
+                $weblinks_websites,
+                $weblinks_name,
+                $weblinks_url,
+                $weblinks_name_site1,
+                $weblinks_url_site1,
+                $weblinks_name_site2,
+                $weblinks_url_site2,
+                $weblinks_name_site3,
+                $weblinks_url_site3,
+                $weblinks_name_site4,
+                $weblinks_url_site4,
+                $weblinks_name_site5,
+                $weblinks_url_site5,
+                $file,
+                $uploadedFilesBoxes,
+				$save,
+            ));
         }
 
         $save->setDecorators(array(

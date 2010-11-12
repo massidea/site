@@ -577,16 +577,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 			 }*/
 				
 			$filesModel = new Default_Model_Files();
-			for ($i=1;$i < count($data['files']['name']);$i++)
-			{
-				$files = $data['files'];
-				$file['name'] = $files['name'][$i];
-				$file['type'] = $files['type'][$i];
-				$file['tmp_name'] = $files['tmp_name'][$i];
-				$file['error'] = $files['error'][$i];
-				$file['size'] = $files['size'][$i];
-				$filesModel->newFile($content->id_cnt, $data['User']['id_usr'], $file);
-			}
+			$filesModel->newFiles($content->id_cnt, "content", $data['files']);
 		}
         
         // What is this used for
@@ -1034,21 +1025,9 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		 }*/
 		if ($return) {
 			$filesModel = new Default_Model_Files();
+			$filesModel->newFiles($data['content_id'], "content", $data['files']);
 
-			for ($i=1;$i < count($data['files']['name']);$i++)
-			{
-				$files = $data['files'];
-				$file['name'] = $files['name'][$i];
-				$file['type'] = $files['type'][$i];
-				$file['tmp_name'] = $files['tmp_name'][$i];
-				$file['error'] = $files['error'][$i];
-				$file['size'] = $files['size'][$i];
-				$filesModel->newFile($data['content_id'], $data['User']['id_usr'], $file);
-			}
-				
-			if (isset($data['uploadedFiles'])) $filesModel->deleteFiles($data['uploadedFiles']);
-
-			//die;
+			if (isset($data['uploadedFiles'])) $filesModel->deleteCertainFiles($data['content_id'], "content", $data['uploadedFiles']);
 		}
 		if($contentType == "idea") {
 			// Update innovation type to content
@@ -1068,7 +1047,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 *   Publishes specified content
 	 *
 	 *   @param int id_cnt The id of content to be published
-	 * 	@param(optional) int pubFlag Value for "published"-flag, set to true (1) by default.
+	 * 	 @param(optional) int pubFlag Value for "published"-flag, set to true (1) by default.
 	 *   @return bool $return
 	 *   @author Pekka Piispanen
 	 */
@@ -1238,7 +1217,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
             // files_fil
             $files = new Default_Model_Files();
-            if (!$files->removeContentFiles($id_cnt))
+            if (!$files->removeFiles($id_cnt, "content"))
                 $contentRemoveChecker['removeContentFiles'] = false;
 
             // links_lnk

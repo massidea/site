@@ -176,13 +176,12 @@ class Default_Model_Comments extends Zend_Db_Table_Abstract
     					   ->where('type_cmt = ?' , $type)
     					   ->order('created_cmt DESC')
     					   ;
-    	//Zend_Debug::dump($select->__toString());
+
    		if ($time != 0) {
    			$select->where('created_cmt >= from_unixtime('.$time.') and id_usr != '.$id_usr);
-   			$select->orWhere('created_cmt > from_unixtime('.$time.') and id_usr = '.$id_usr);
+   			if ($id_usr != 0) $select->orWhere('created_cmt > from_unixtime('.$time.') and id_usr = '.$id_usr);
    		}
 		$result = $this->fetchAll($select);
-		//Zend_Debug::dump($result->toArray()); die;
 		return $result->toArray();
     }
     
