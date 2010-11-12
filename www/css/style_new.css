@@ -32,6 +32,8 @@ hr { display:none; }
 
 .italic { font-style:italic; }
 .column { width:220px; float:left; margin:0px 20px 10px 0px; }
+.nolist { word-wrap: break-word; }
+.nolist ul { list-style: none outside none; }
 
 input.submit-button {
 	font:12px Arial, Helvetica, sans-serif;

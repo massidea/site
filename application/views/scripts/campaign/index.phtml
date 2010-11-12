@@ -26,6 +26,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <?php $this->headScript()->captureEnd()?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcampaigns.js')); ?>
 
+
 <div id="gaccampaignlist" class="left narrow">
     <h3 class="left">Campaigns</h3>
 
@@ -34,11 +35,23 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
     <div class="clear"></div>
     <div id="campaign-status" class="ui-tabs">
-        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-            <li id="active_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Active</a></li>
-            <li id="forthcoming_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>
-            <li id="ended_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>
+        <ul >
+            <li id="active_tab" ><a href="<?php echo $this->baseUrl ?>/en/ajax/getrecentcampaigns/offset/1/status/active" title="active">Active</a></li>
+            <li id="forthcoming_tab" ><a href="<?php echo $this->baseUrl ?>/en/ajax/getrecentcampaigns/offset/1/status/forthcoming" title="forthcoming">Forthcoming</a></li>
+            <li id="ended_tab" ><a href="<?php echo $this->baseUrl ?>/en/ajax/getrecentcampaigns/offset/1/status/ended" title="ended">Ended</a></li>
         </ul>
+        
+        <div id="active" class="nolist">
+        
+        </div>
+        <div id="forthcoming" class="nolist">
+        
+        </div>
+        <div id="ended" class="nolist">
+        
+        </div>
+
+        
     </div>
     
     <div id="campaign-list" class="campaign-list"></div>
