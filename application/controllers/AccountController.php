@@ -387,17 +387,18 @@ class AccountController extends Oibs_Controller_CustomController
 		$views = new Default_Model_ContentViews();
 		$myViews = $this->getViewRows($data['id_usr']);
 		$myViews = array_merge($myViews,$myFavourites['contents']);
+		//print_r($myFavourites);die;
 		//print_r($myViews);die;
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
 		$box	->setHeader("My Views & Favourites")
 				->setName("my-views")
 				->setClass("right")
 				->addTab("Views", "views", "views selected")
-				->addTab("Updated","updated","fvr_updated",$myFavourites['counts']['updated'])
-				->addTab("Challenges","problem","fvr_problem",$myFavourites['counts']['problem'])
-				->addTab("Ideas","idea","fvr_idea",$myFavourites['counts']['idea'])
-				->addTab("Visions","finfo","fvr_finfo",$myFavourites['counts']['finfo']);
-		//$boxes[] = $box;
+				->addTab("Favourites","problem","fvr_problem fvr_idea fvr_finfo",$myFavourites['counts']['total'])
+				//->addTab("Updated","updated","fvr_updated",$myFavourites['counts']['updated'])
+				;
+
+		$boxes[] = $box;
 		
 		$myReaders = $user->getUsersViewers($data['id_usr']);
 		$box = new Oibs_Controller_Plugin_AccountViewBox();
@@ -1165,10 +1166,13 @@ class AccountController extends Oibs_Controller_CustomController
 				$formdata = $this->getRequest()->getPost();
                 
 				if($form->isValid($formdata)) {
-					function plus($a, $b) { return $a += $b; }
-					//$formdata['own_follows'] = array_reduce($formdata['own_follows'], "plus");
-					//$formdata['fvr_follows'] = array_reduce($formdata['fvr_follows'], "plus");
 
+					/* RC fix
+					$formdata['own_follows'] = array_sum($formdata['own_follows']);
+					$formdata['fvr_follows'] = array_sum($formdata['fvr_follows']);
+					*/
+					$formdata['own_follows'] = 7;
+					$formdata['fvr_follows'] = 23;
                     // if form is valid
                     // Updates checked notifications
 
@@ -1303,8 +1307,8 @@ class AccountController extends Oibs_Controller_CustomController
 		$userCities= null;
 		
         $userLocations = $this->getAllCitiesAndCountries();
-        if(isset($userLocations['countries'])) $userCountries = json_encode($userLocations['countries']);
-        if(isset($userLocations['cities'])) $userCities = json_encode($userLocations['cities']);
+        if(isset($userLocations['countries'])) $userCountries = Zend_Json::encode($userLocations['countries']);
+        if(isset($userLocations['cities'])) $userCities = Zend_Json::encode($userLocations['cities']);
 
         $formData['countries'][] = $this->view->translate('userlist-filter-country-all');
         if(isset($userLocations['countries'])) {
@@ -1839,11 +1843,12 @@ class AccountController extends Oibs_Controller_CustomController
                 }
                 
                 if(isset($favourite['last_checked']) && isset($favourite['modified_cnt'])) {
-                	if(strtotime($favourite['last_checked']) < strtotime($favourite['modified_cnt'])) {
+                	/*if(strtotime($favourite['last_checked']) < strtotime($favourite['modified_cnt'])) {
                 		$dataa['favouriteCounts']['updated']++;
                 		$favouriteList[$k] = array_merge($favourite,array('updated' => '1'));
                 	}
-                	else $favouriteList[$k] = array_merge($favourite,array('updated' => '0'));
+                	else $favouriteList[$k] = array_merge($favourite,array('updated' => '0'));*/
+                	$favouriteList[$k] = array_merge($favourite,array('updated' => '0')); // This row makes all favourites look like there are no updates since we dont need that check
                 }  
         	}
 

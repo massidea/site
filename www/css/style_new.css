@@ -27,6 +27,8 @@ hr { display:none; }
 .left { float:left; }
 .right { float:right; }
 .center { text-align:center; }
+.grey { color: #CCCCCC }
+.hidden { display: none; }
 
 .italic { font-style:italic; }
 .column { width:220px; float:left; margin:0px 20px 10px 0px; }
@@ -143,9 +145,10 @@ input.submit-button {
 #header #search { float:left; /* color:#fff; */ margin:5px 20px 0px 290px; }
 #header #search input.top_search_field { width:350px; margin:0px 10px 10px 0px; padding:2px; float:left; }
 #header #search #search-top { text-align:right; width:358px; margin:4px 0px 4px 0px; }
-#header #search #search-top img { vertical-align: bottom; margin-bottom: -3px;}
+#header #search #search-top #notification_link { vertical-align: bottom; margin-bottom: -3px;}
+#header #search #search-top #message_link { vertical-align: bottom; margin-bottom: -4px;}
 
-#header #search #search-top #notification_box { display: none; position: absolute; z-index: 10000; background: none repeat scroll 0 0 #FFFFFF; width: 500px; border: 2px solid #999999; text-align: left; height: 420px; left:50%; }
+#header #search #search-top #notification_box { display: none; position: absolute; z-index: 10000; background: none repeat scroll 0 0 #FFFFFF; width: 500px; border: 2px solid #999999; text-align: left; height: 420px; left:40%; }
 #header #search #search-top #notification_box #notification_tabs { position: relative; }
 #header #search #search-top #notification_box #notification_tabs li a { color: black; cursor: pointer; text-decoration: none; }
 #header #search #search-top #notification_box #notification_tabs .notification_close_button { background-color: #EEE; border: 1px solid #555; margin: -1px; }

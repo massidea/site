@@ -159,9 +159,9 @@ $(document).ready(function() {
             <div id="linked-visions">
                 <div class="left">
 					<strong><?php echo $this->translate('content-linked-visions'); if(isset($linked_futures)) echo " (".sizeof($linked_futures).")";?></strong>
-					<br />
+					
                     	<?php if(isset($linked_futures) && sizeof($linked_futures) > 3): ?><img alt="" src="<?php echo $this->baseUrl("/images/icon_plus_tiny.png"); ?>" id="content_view_linked_content_visions_more" /><?php endif; ?>
-                    	
+                    	<br />
                    	<?php if (isset($linked_futures)): ?>
 	                <?php $i= 0; foreach ($linked_futures as $future): $i++; ?>
                         <?php if($i == 4): ?> <div id="content_view_linked_content_visions_extra" class="content_view_linked_content_extra"> <?php endif; ?>
@@ -211,7 +211,7 @@ $(document).ready(function() {
                 <div id="content-view-viewers-list" class="right"><?php printf($this->translate('content-view-view_times'), $this->views); ?></div>
                 <div id="content-view-viewers-list-content" style="display: none"><?php echo $this->partial('partials/account_view_user_box_contents_my-reads.phtml', array('myReaders' => $this->viewers)); ?></div>          <?php if ($this->contentData['id_usr'] != $this->userid): ?>
                 <div class="clear"></div>
-	            <!-- <div id="content_view_favourite"></div>  -->
+	            <div id="content_view_favourite"></div>
 
 	     <?php endif; ?>
 	     <div class="clear"></div>

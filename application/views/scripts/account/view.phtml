@@ -93,9 +93,14 @@ $(document).ready(function() {
 function filterList(selected, box) {
 	$("#" + box + " > .scroll-box > ul > li").each(function() {
 		curClass =$(this).attr('class');
-		if( !$(this).hasClass(selected) && !$(this).hasClass('popup')) {
+		classes = selected.split(" ");
+		hasIt = false;
+		
+		for(i=0; i < classes.length; i++) {	if($(this).hasClass(classes[i])) hasIt = true; }
+		
+		if( !hasIt && !$(this).hasClass('popup')) {
 			$(this).hide();
-		} else if ($(this).hasClass(selected) && !$(this).hasClass('popup')) {
+		} else if (hasIt && !$(this).hasClass('popup')) {
 			$(this).show();
 			$(this).scrollTop();
 		}

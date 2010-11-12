@@ -143,7 +143,7 @@ $(document).ready(function(){
 			 );
 
 	*/
-	 /*
+	 
 	 $("#notification_close").live("mouseover mouseout click", function(event){ 
 		 if(event.type == "mouseover")
 			 $("a",this).addClass("notification_close_button");
@@ -172,10 +172,12 @@ $(document).ready(function(){
 				 });
 				$("#notification_box").tabs();
 				$("#notification_link").attr("src",meta.baseUrl+"/images/notifications_a.png");
+				$("#notification_totals").html("("+$("#notification_total").text()+")");
+				
 			}
 		}	
 	 });
-	 */
+	 
 });
 
 function highlightContentMenuItem(target)
