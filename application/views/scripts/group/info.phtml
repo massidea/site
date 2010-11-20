@@ -23,11 +23,19 @@
                 </p>
             </div>
             <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
-            <?php /*
+            <?php if(!empty($this->files)) : ?>
             <div id="group-files" class="group-text">
-
+                <p>Added files:
+                    <?php $filecount = count($this->files);
+                    $file_i = 0;
+                    foreach ($this->files as $id_fil => $filename):
+                        $file_i++; ?>
+                        <a href="<?php echo $this->baseUrl('/en/file/view/'.$id_fil); ?>">
+                        <?php echo $filename; ?></a><?php if($file_i < $filecount) echo ', ';
+                    endforeach;?>
+                </p>
             </div>
-            */ ?>
+            <?php endif; ?>
             <div id="group-links" class="group-text">
                 <p class="group-links">Group web links:
                     <?php

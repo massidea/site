@@ -949,10 +949,13 @@ form div.login-column2 { width: 160px; }
 
 /** Sending private messages page */
 form#send_privmsg_form { margin-left: auto; margin-right: auto; }
-form#send_privmsg_form label { font-weight: bold; display: block; float: left; width: 170px; }
 form#send_privmsg_form input:focus, form#send_privmsg_form textarea:focus{ background-color: lightyellow; }
 .form_privmsg_row { margin-left: 10px; margin-top: 10px; }
-.form_privmsg_row label { font-weight: bold; display: block; float: left; width: 170px; }
+.form_privmsg_row label { font-weight: bold; display: block; float: left; width: 150px; }
+form#send_privmsg_form #privmsg_message { float: left; }
+form#send_privmsg_form #privmsg-charcount { padding: 10px 0 0 10px; }
+form#send_privmsg_form #privmsg-charcount-cut { padding: 0 0 0 10px; color: red; }
+
 
 /** Font size bigger on certain pages */
 #content .user_content_list .user div.context p,
@@ -1078,3 +1081,10 @@ div.tag_cloud { padding-bottom: 5px; }
 .border-finfo { border-left: solid 5px #FFC726; padding: 0 0 0 10px !important; }
 .border-idea { border-left: solid 5px #4B9B07; padding: 0 0 0 10px !important; }
 .border-problem { border-left: solid 5px #D21034; padding: 0 0 0 10px !important; }
+
+button.content_manage_button { margin: 10px 0; }
+
+/** Youtube things */
+.reference-row { padding: 5px; }
+.youtube-title { padding: 0 0 0 5px; }
+.thumbnail-image-play { width: 120px; height: 90px; }

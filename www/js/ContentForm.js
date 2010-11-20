@@ -52,10 +52,10 @@ $(document).ready(function() {
 	
 	var inputHelps = {
 		'content_header': "<strong>Headline</strong><br /> Grab’s attention, summarize the whole thought and attracts to read the rest of the story.",
-		'content_keywords': "<strong>Keywords</strong><br /> Words that capture the essence of the topic of your content. <br /> Are important, since we use them for related content automatization. <br />Use commas '<strong>,</strong>' to seperate tags!",
-		'content_textlead': "<strong>Lead chapter</strong><br /> Together with headline answers to what, why and whom questions and sum up the whole thought.",
+		'content_keywords': "<strong>Keywords</strong><br /> Words that capture the essence of the topic of your content. <br /> Are important, since we use them for related content automatization. <br />Use commas '<strong>,</strong>' to separate tags!",
+		'content_textlead': "<strong>Lead chapter</strong><br /> Together with headline answers to what, why and whom questions and sum up the whole thought. <br /> This text is shown in search result lists",
 		'content_text': "<strong>Body text</strong><br /> Is elaborating the headline and lead paragraph. Answer following questions:  <br /> 1) What is the insight, <br /> 2) Why the insight is important and valuable, <br /> 3) Who is the target group and whom should be interested, <br /> 4) When (temporal dimension) the insight is topical and <br /> 5) Where (geographical, physical location or circumstances) the insight is topical?",
-		'content_related_companies': "<strong>Related companies and organizations</strong><br /> Similar as keywords but present existing companies and organizations, which are related to your insight.",		
+		'content_related_companies': "<strong>Related companies and organizations</strong><br /> Similar as keywords but present existing companies and organizations, which are related to your insight. <br />Use commas '<strong>,</strong>' to separate",		
 		'content_research': "<strong>Research question</strong><br /> The single question in which you need an answer.",
 		'content_opportunity': "<strong>Opportunity</strong><br /> Identify the most important opportunity if vision is realized.",
 		'content_threat': "<strong>Threat</strong><br /> Identify the most important threat if vision is realized.",

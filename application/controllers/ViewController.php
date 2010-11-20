@@ -80,7 +80,7 @@
         }
         
         $filesModel = new Default_Model_Files();
-        $files = $filesModel->getFilenamesByCntId($id);
+        $files = $filesModel->getFilenames($id, "content");
         
         // Get content owner id (groups to be implemented later)
         $contentHasUserModel = new Default_Model_ContentHasUser();
@@ -142,9 +142,15 @@
             
 	        if($favouriteModel->checkIfContentIsUsersFavourite($id,$usrId)) {
 	        	$favouriteModel->updateLastChecked($usrId,$id);
+	        	$profileModel = new Default_Model_UserProfiles();
+				$profileModel->deleteNotificationCache($id,$usrId);
 	        }
 	        
-	        if($user_is_owner) $cntHasUsrModel->updateLastChecked($ownerId,$id);            
+	        if($user_is_owner) {
+	        	$cntHasUsrModel->updateLastChecked($ownerId,$id);
+	        	$profileModel = new Default_Model_UserProfiles();
+				$profileModel->deleteNotificationCache($id,$usrId);       
+	        }      
             // generate comment form
             //$comment_form = new Default_Form_CommentForm($parentId);
      
@@ -357,10 +363,10 @@
         // enable comment form        
 		if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) $comments->allowComments(true);
 		$comments->loadComments();
-
-		$contentData['references_cnt'];
-   		$contentData['references_cnt'] = nl2br($this->clickable($contentData['references_cnt']));
 		
+		//$contentData['references_cnt'];
+   		$contentData['references_cnt'] = Oibs_Controller_Plugin_Utils::clickable($contentData['references_cnt'], true);
+		$contentData['body_cnt'] = Oibs_Controller_Plugin_Utils::clickable($contentData['body_cnt']);
    		
         // Inject data to view
         $this->view->files 				= $files;
@@ -440,31 +446,5 @@
     		return false;
     	}
     	
-    }
-    
-    /** clickable
-     * 
-     * Makes an url in text clickable link
-     * loaned from http://www.php.net/manual/en/function.preg-replace.php#85722
-     * 
-     * @author tal at ashkenazi dot co dot il
-     * @param string $url
-     * @return string
-     */
-    function clickable($url){
-        $url                                    =    str_replace("\\r","\r",$url);
-        $url                                    =    str_replace("\\n","\n<BR>",$url);
-        $url                                    =    str_replace("\\n\\r","\n\r",$url);
-
-        $in=array(
-      	  	'`((?:https?|ftp)://\S+[[:alnum:]]/?)`si',
-        	'`((?<!//)(www\.\S+[[:alnum:]]/?))`si'
-        );
-        $out=array(
-	        '<a href="$1"  rel=nofollow>$1</a> ',
-	        '<a href="http://$1" rel=\'nofollow\'>$1</a>'
-        );
-        
-        return preg_replace($in,$out,$url);
     }
 }

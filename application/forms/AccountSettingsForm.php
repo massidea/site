@@ -242,7 +242,7 @@ class Default_Form_AccountSettingsForm extends Zend_Form
         $intereststext = new Oibs_Form_Element_Note('intereststext');
         $intereststext->setValue(
                 '<div class="input-column1"></div>'
-                . '<div class="input-column2 help">(Use commas to seperate tags)</div><div class="clear"></div>');
+                . '<div class="input-column2 help">(Use commas to separate tags)</div><div class="clear"></div>');
         $interests = new Zend_Form_Element_Text('interests');
         $interests->setLabel('My interest (tags)')
                    ->setAttrib('id', 'interests');
@@ -382,7 +382,10 @@ class Default_Form_AccountSettingsForm extends Zend_Form
                  ->setAttrib('id', 'hometown')
                  ->setRequired(true)
                  ->addValidators(array(
-                            array('NotEmpty', true, array('messages' => array('isEmpty' => 'Hometown empty')))
+                            array('NotEmpty', true,
+                            	 array('messages' => array('isEmpty' => 'Hometown empty'))),
+                            array('Regex', true, array('/^[\\p{L}0-9.\- ]*$/'))
+                            	 
                  ));
         $hometownpublic = new Zend_Form_Element_Checkbox('city_publicity');
         $hometownpublic->setLabel($publictext);

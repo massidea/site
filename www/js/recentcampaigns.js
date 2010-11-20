@@ -1,95 +1,49 @@
 $(document).ready(function(){
-	recentcampaignsdiv  = '#campaign-list';
-	recentcampaignslink = '#recent_campaigns_ajax_link';
-    active = '#active_tab';
-    forthcoming = '#forthcoming_tab';
-    ended = '#ended_tab';
-    var status = 'active';
-    campaignStatus = '#campaign-status';
-	recentcampaignslink_orig = $(recentcampaignslink).html();
-	var pagecount = 1;
 
-	$(recentcampaignslink+' a').live('click', function(){
-		pagecount = pagecount + 1;
-		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, false);
-	});
+	//initial data
+	var index = 0;
+	var status = 'active';
+	var data, ndata
+	
+	var pageCounts = {'active':1, 'forthcoming':1, 'ended':1};
+	
+	$('#recent_campaigns_ajax_link > h3 > a').live('click', function(){
+		pageCounts[status] = pageCounts[status] + 1;
 
-    $(active+' a').live('click', function(){
-        pagecount = 1;
-        status = 'active';
-		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, true);
+		var url = jsMeta.baseUrl + "/en/ajax/getrecentcampaigns/offset/" + pageCounts[status] + "/status/" + status;
+		$("#campaign-status").tabs("url",index,url);
+		$("#campaign-status").tabs("load",index);
+		
 	});
-    $(forthcoming+' a').live('click', function(){
-        pagecount = 1;
-        status = 'forthcoming';
-		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, true);
-	});
-    $(ended+' a').live('click', function(){
-        pagecount = 1;
-        status = 'ended';
-		ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, true);
-	});
-
-	ajaxLoad_getRecentCampaigns(recentcampaignsdiv, pagecount, status, false);
-});
-
-function ajaxLoad_getRecentCampaigns(obj, offset, stat, empty, prepend){
-	$.ajax({
-		beforeSend: function(){
-			$(recentcampaignslink).html(
-				'<h3 style="vertical-align: middle;"><img src="'+url_ajaxloader+'" style="padding-right: 10px;" /> ' + 
-				'Please wait...</h3>'
-			);
-            if (empty) {
-                $(recentcampaignsdiv).html('');
-            }
-            if (stat == 'forthcoming') {
-                $(campaignStatus).html(
-                    '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
-                    '<li id="active_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
-                    '<li id="forthcoming_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Forthcoming</a></li>' +
-                    '<li id="ended_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
-                    '</ul>'
-                );
-            } else if (stat == 'ended') {
-                $(campaignStatus).html(
-                    '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
-                    '<li id="active_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Active</a></li>' +
-                    '<li id="forthcoming_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
-                    '<li id="ended_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Ended</a></li>' +
-                    '</ul>'
-                );
-            } else {
-                $(campaignStatus).html(
-                    '<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">' +
-                    '<li id="active_tab" class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#" onclick="return false;">Active</a></li>' +
-                    '<li id="forthcoming_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Forthcoming</a></li>' +
-                    '<li id="ended_tab" class="ui-state-default ui-corner-top"><a href="#" onclick="return false;">Ended</a></li>' +
-                    '</ul>'
-                );
-            }
-		},
-		complete: function(){
-            $(recentcampaignslink).html(recentcampaignslink_orig);
-		},
-		url: url_getrecentcampaigns+"/offset/"+offset+"/status/"+stat,
-		success: function(result){
-			if(prepend == 1) {
-				$(obj).prepend(result);
-			} else {
-				$(obj).append(result);
+	
+	$(function() {
+		$("#campaign-status").tabs({
+			select: function(event,ui) {
+				pagecount = 1;
+				index = ui.index;
+				
+				var tab_name = ui.tab.toString();
+				var a = tab_name.split("#");
+				status = a[1];
+			},
+			load: function(event,ui) {
+				ndata = $(ui.panel).html();
+				if(data.match(ndata))
+					$(ui.panel).html(data);
+				else
+					$(ui.panel).html(data + ndata);
+			},
+			
+			ajaxOptions: {
+				error: function(xhr, status, index, anchor) {
+					$(anchor.hash).html("Couldn't load this tab.");
+				},
+				beforeSend: function() {
+					data = $('#' + status).html();
+				}
 			}
-			removeDupes_recentCampaigns(recentcampaignsdiv);
-		}
+		});
 	});
-};
 
-function removeDupes_recentCampaigns(obj){
-	$(recentcampaignsdiv + ' [id]').each(function(){
-		var ids = $('[id='+this.id+']');
-		if(ids.length > 1 && ids[0]!=this){
-			console.warn('Multiple IDs #'+this.id);
-			$(this).remove();
-		}
-	});
-}
+	
+});

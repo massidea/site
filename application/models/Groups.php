@@ -169,10 +169,14 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         $grpAdm = new Default_Model_GroupAdmins();
         $grpAdm->removeAdminsFromGroup($id_grp);
         
+        // Delete groups files
+        $filesModel = new Default_Model_Files();
+        $filesModel->removeFiles($id_grp, "group");
+        
         // Delete group.
         $where = $this->getAdapter()->quoteInto('id_grp = ?', $id_grp);
         $this->delete($where);
-    } // end of removeCampaign
+    } // end of removeGroup
     
     /**
      * Checks if a group exists in db.

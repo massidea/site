@@ -49,6 +49,29 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
 		)
     );
     
+    
+    /**
+     * 
+     * adds files to database
+     * @param mixed $id_target id_cnt/id_cmp whatever
+     * @param string $type "content"/"account" etc
+     * @param array $data $_FILES
+     * @author sami suuriniemi 2010
+     */
+    public function newFiles($id_target, $type, $data) {
+
+    	for ($i=1;$i < count($data['name']);$i++)
+		{
+			$files = $data;
+			$file['name'] = $files['name'][$i];
+			$file['type'] = $files['type'][$i];
+			$file['tmp_name'] = $files['tmp_name'][$i];
+			$file['error'] = $files['error'][$i];
+			$file['size'] = $files['size'][$i];
+			$this->newFile($id_target, $type, $file);
+		}
+    }
+    
     /**
     *   newFile
     *   
@@ -59,45 +82,58 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     *   @param  uploadedFile array  has info of file, if left empty will use $_FILES 
     *   @return success boolean was the procedure succesful?
     */
-    public function newFile($id_cnt, $id_usr, $uploadedFile = "") 
+    private function newFile($id_target, $type, $uploadedFile = "") 
     {
     	if ($uploadedFile == "") {
     		$uploadedFile = $_FILES['content_file_upload'];
     	}
     	
-    	$hash = hash_hmac_file('sha1', $uploadedFile['tmp_name'], $id_cnt.$uploadedFile['name']);
-		$dir = "files/".$id_usr."/";
+    	$hash = hash_file('sha1', $uploadedFile['tmp_name']);
+		$dir = "files/";
     	if (! file_exists($dir)) {
     		mkdir($dir, 0777, true);
     	} 
     	
-    	if ( !file_exists($dir) || file_exists($dir.$hash)) {
+    	$select = $this->select();
+    	$select->from($this, array("*"))
+    			->where("hash_fil = ?", $hash);
+    	$result = $this->fetchAll($select);
+    	$id = 0;
+    	if ( !file_exists($dir)) {
     		return false;
+    	} else if ($result->count() != 0) {
+    		$id = $result->current()->id_fil;
+    	} else {
+	    	move_uploaded_file($uploadedFile['tmp_name'], $dir.$hash);
+	    	$file = $this->createRow();
+	    	$file->filetype_fil = $uploadedFile['type'];
+	    	$file->filename_fil = $uploadedFile['name'];
+	    	$file->hash_fil = $hash;
+	    	
+	 	    $file->created_fil = new Zend_Db_Expr('NOW()');
+	        $file->modified_fil = new Zend_Db_Expr('NOW()');
+	    	$id = $file->save();
     	}
+    	$ptpModel = new Default_Model_PageTypes();
+    	$id_type = $ptpModel->getId($type);
+    	$fliModel = new Default_Model_FileLinks();
     	
-    	move_uploaded_file($uploadedFile['tmp_name'], $dir.$hash);
-    	$file = $this->createRow();
-    	$file->id_cnt_fil = $id_cnt;
-    	$file->id_usr_fil = $id_usr;
-    	$file->filetype_fil = $uploadedFile['type'];
-    	$file->filename_fil = $uploadedFile['name'];
-    	$file->hash_fil = $hash;
-    	
- 	    $file->created_fil = new Zend_Db_Expr('NOW()');
-        $file->modified_fil = new Zend_Db_Expr('NOW()');
-    	$file->save();
+    	$fliModel->addLink($id, $id_target, $id_type);
+    	return true;
     }
     
-    public function getFilenamesByCntId($id_cnt){
-    	$select = $this->select()
-    				   ->from($this, array('id_fil', 'filename_fil'))
-    				   ->where('id_cnt_fil = ?', $id_cnt);
-    	$result = $this->fetchAll($select);
+    public function getFilenames($id_cnt, $type){
+    	$fliModel = new Default_Model_FileLinks();
+    	$ptpModel = new Default_Model_PageTypes();
+    	
+    	$id_type = $ptpModel->getId($type); 
+    	$ids = $fliModel->getFileIds($id_cnt, $id_type);
+    	$result =  $this->find($ids);
     	$rows = array();
     	foreach ($result as $row) {
     		$rows[$row->id_fil] = $row->filename_fil;
     	}
-		return $rows;
+    	return $rows;
     }
     
     public function getFile($id_fil = 0)
@@ -111,25 +147,17 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     {
         // Get file data        
         if ($id_fil != 0) {
-        
-            // Create query
-            /*$select = $this->_db->select()
-                                ->from('files_fil', 
-                                       array('data_fil', 'filetype_fil'))
-                                ->where('id_fil = ?', $id_fil);
-            
-            // Fetch data from database
-            $result = $this->_db->fetchAll($select);*/
         	
         	$rs = $this->find($id_fil);
     		$cur = $rs->current();
-    		$dir = "files/".$cur->id_usr_fil."/".$cur->hash_fil;
+    		$dir = "files/".$cur->hash_fil;
     		
             $result = file_get_contents($dir);
             return $result;
         }
     }
     
+    /* Commenting since its not in use
     public function getContentFiles($id_cnt = 0) {
     	if ($id_cnt != 0) {
     		$select = $this->select()->from($this, array("id_fil", "filename_fil"))
@@ -137,54 +165,74 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     		$result = $this->fetchAll($select);
     		return $result;
     	}
-    }
-    
-    public function deleteFiles($files) {
+    }*/
+    /**
+     * 
+     * Enter description here ...
+     * @param unknown_type $id_target
+     * @param unknown_type $type
+     * @param array $files ids of files to be deleted from certain content/campaign
+     */
+    public function deleteCertainFiles($id_target, $type, $files) {
     	if (isset($files))
     	{
 	    	foreach ($files as $file) {
-	      		// Delete from filesystem
-				$this->deleteFromFilesystem($file);
-
-    			// Delete link from database
-    			$this->delete('id_fil = ' . $file);
+				$this->deleteFile($file, $id_target, $type);
 	    	}	
     	}
     }
     
-    /* deleleteFromFilesystem
+    /** deleleteFromFilesystem
      * 
      * delete a file from filesystem according to database link
      * 
-     * @param	id_fil		files_fil tables id
-     * @return  success 	whether removing file from filesystem was successfull or not
+     * @param	mixed files_fil tables id
+     * @return  boolean  whether removing file from filesystem was successfull or not
      */
     private function deleteFromFilesystem($id_fil)
     {
     	     // Delete from filesystem
     		$rs = $this->find($id_fil);
     		$cur = $rs->current();
-    		$dir = "files/".$cur->id_usr_fil."/".$cur->hash_fil;
-    		$success = @unlink($dir);
+    		$dir = "files/".$cur->hash_fil;
+    		$success = unlink($dir);
 
     		return $success;
     }
     
-    /* deleteFromFilsystemByContentId
+    /** deleteFromFilsystem
      * 
      * Deletes specified contents files from filesystem
      * 
-     * $param 	$id_cnt_fil 	content id
-     * $return  bool			if fileremoval was successfull
+     * @param  	int			 	content id
+     * @param 	mixed
+     * @param   bool			if fileremoval was successfull
      */
-    private function deleteFromFilesystemByContentId($id_cnt_fil){
-        $select = $this->select()//->from($this, array('id_fil'))
-        			   ->where('id_cnt_fil = ?', $id_cnt_fil);
-		$result = $this->fetchAll($select);
-      	$results = array();
+    private function deleteFilesById($id_target, $type){
+    	$fliModel = new Default_Model_FileLinks();
+    	$ids = $fliModel->getFileIds($id_target, $type);
 
-        foreach ($result as $row) {
-        	array_push($results, $this->deleteFromFilesystem($row->id_fil));
+      	$results = array();
+        foreach ($ids as $id) {
+        	$results[] = $this->deleteFile($id['id_file'], $id_target, $type);
+        }
+        return !in_array(false, $results);
+    }
+
+    /**
+     * 
+     * delete single file from single content, check if the file is still needed
+     * @param $id file id
+     * @param $id_target
+     * @param $type
+     */
+    public function deleteFile($id, $id_target, $type) {
+		$fliModel = new Default_Model_FileLinks();
+    	$results = array();
+		if (!$fliModel->removeLink($id, $id_target, $type)) {
+        	array_push($results, $this->deleteFromFilesystem($id['id_file']));
+        	$where = $this->_db->quoteInto('id_fil = ?', $id['id_file']);
+        	array_push($results, $this->delete($where));
         }
         return !in_array(false, $results);
     }
@@ -223,21 +271,14 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
     *   @param		int		id_cnt_fil	Id of the content
     *   @author		Mikko Korpinen
     */
-    public function removeContentFiles($id_cnt_fil)
+    public function removeFiles($id_target, $type)
     {
-        $where = $this->getAdapter()->quoteInto('id_cnt_fil = ?', $id_cnt_fil);
-        
-        $filesystemDeleteResult = $this->deleteFromFilesystemByContentId($id_cnt_fil);
-        $this->delete($where);
-        $databaseDeleteResult = !$this->fetchAll($where)->count();
-        if ($databaseDeleteResult && $filesystemDeleteResult) {
-            return true;
-        } else {
-            return false;
-        }
+        $deleteResult = $this->deleteFilesById($id_target, $type);
+        return $deleteResult;
     }
 
-    public function convertFiles() {
+    /* Older convert files
+     * public function convertFiles() {
     	$select = $this->_db->select()
     						->from("files_fil_old");
     	$rs = $this->_db->fetchAll($select);
@@ -264,6 +305,13 @@ class Default_Model_Files extends Zend_Db_Table_Abstract
 	    		}
     		}
     	}
+	}*/
+	
+	public function getAll() {
+		$select = $this->select();
+		$select->from($this, '*');
+		$result = $this->fetchAll($select)->toArray();
+		return $result;	
 	}
 } // end of class
 ?>

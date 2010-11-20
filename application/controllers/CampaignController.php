@@ -89,7 +89,7 @@ class CampaignController extends Oibs_Controller_CustomController
                     $desc = $post['campaign_desc'];
                     $start = $post['campaign_start'];
                     $end = $post['campaign_end'];
-
+                    
                     $newCampaign = $campaignModel->createCampaign(
                         $name, $ingress, $desc, $start, $end, $grpId);
 
@@ -115,7 +115,11 @@ class CampaignController extends Oibs_Controller_CustomController
                         $campaignWeblinksModel->setWeblink($newCampaign['id_cmp'], $post['weblinks_name_site5'],
                                 $post['weblinks_url_site5'], 5);
                     }
-
+					
+					$filesModel = new Default_Model_Files();
+					$files = $_FILES['content_file_upload'];
+                    $filesModel->newFiles($newCampaign->id_cmp, "campaign", $files);
+        
                     $target = $this->_urlHelper->url(
                         array(
                             'groupid'    => $grpId,
@@ -257,7 +261,10 @@ class CampaignController extends Oibs_Controller_CustomController
         $linkedcampaigns = $cmpHasCmpModel->getCampaignCampaigns($cmpid);
         $linkedcampaigns = array_merge($linkedcampaigns['parents'], $linkedcampaigns['childs']);
         
-
+        // Get files
+        $filesModel = new Default_Model_Files();
+        $files = $filesModel->getFilenames($cmpid, "campaign");
+        
         $comments = new Oibs_Controller_Plugin_Comments("campaign", $cmpid);
         if ($this->view->identity) $comments->allowComments(true);
   		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
@@ -270,6 +277,7 @@ class CampaignController extends Oibs_Controller_CustomController
         $this->view->grpname         = $grpname;
         $this->view->linkedcampaigns = $linkedcampaigns;
         $this->view->status          = $cmpmodel->getStatus($cmpid);
+        $this->view->files 			 = $files;
     }
 
     function editAction() {
@@ -310,10 +318,16 @@ class CampaignController extends Oibs_Controller_CustomController
                 $this->_redirector->gotoUrl($redirectUrl);
             }
 
+			// Get contents filenames from database
+			$filesModel = new Default_Model_Files();
+			$filenames = $filesModel->getFilenames($cmpId, "campaign");
+			$formData['filenames'] = $filenames;
+            
             // Create & populate the form.
             $form = new Default_Form_AddCampaignForm($this, array(
                 'mode'     => 'edit',
                 'startdate' => $cmp['start_time_cmp'],
+            	'fileNames' => $filenames,
             ));
             $formData = array();
             $formData['campaign_name'] = $cmp['name_cmp'];
@@ -330,7 +344,7 @@ class CampaignController extends Oibs_Controller_CustomController
                 $formData['weblinks_name_site'.$campaignWeblink['count_cwl']] = $campaignWeblink['name_cwl'];
                 $formData['weblinks_url_site'.$campaignWeblink['count_cwl']] = $campaignWeblink['url_cwl'];
             }
-
+            
             $form->populate($formData);
 
             $this->view->form = $form;
@@ -380,6 +394,12 @@ class CampaignController extends Oibs_Controller_CustomController
                         $campaignWeblinksModel->setWeblink($cmpId, $post['weblinks_name_site5'], $post['weblinks_url_site5'], 5);
                     }
 
+					$filesModel = new Default_Model_Files();
+					$files = $_FILES['content_file_upload'];
+                    $filesModel->newFiles($cmpId, "campaign", $files);
+                    
+                    if (isset($post['uploadedFiles'])) $filesModel->deleteCertainFiles($cmpId, "campaign", $post['uploadedFiles']);
+                    
                     // Redirect back to the campaign page.
                     $target = $this->_urlHelper->url(
                         array(

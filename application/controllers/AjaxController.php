@@ -384,6 +384,8 @@ class AjaxController extends Oibs_Controller_CustomController
 				if($rate == 1 || $rate == -1)
 				{
 		            $contentRatingsModel->addRating($this->params['id_cnt'], $userId, $rate);
+		            $profileModel = new Default_Model_UserProfiles();
+		            $profileModel->deleteNotificationCache($this->params['id_cnt']);
 				}
 			}
         }
@@ -455,6 +457,9 @@ class AjaxController extends Oibs_Controller_CustomController
 			
 			$comments = new Oibs_Controller_Plugin_Comments($type, $id);
 			$comments->addComment($user->user_id, $parent, $msg);
+			
+			$profileModel = new Default_Model_UserProfiles();
+		    $profileModel->deleteNotificationCache($id);
 		}
 	}
 	
@@ -464,17 +469,16 @@ class AjaxController extends Oibs_Controller_CustomController
 				
 		$auth = Zend_Auth::getInstance();
 		
-		if ($auth->hasIdentity()) {
-			$type = $this->params['type'];
-			$id = $this->params['id'];
-			
-			$comments = new Oibs_Controller_Plugin_Comments($type, $id);
-			$newComments = array();
-			$newComments = $comments->getNewComments($auth->getIdentity()->user_id);
-			
-			if (count($newComments) != 0) {
-				$this->view->comments = $newComments;
-			}
+		$user_id = ($auth->hasIdentity()) ? $auth->getIdentity()->user_id : "0";
+		$type = $this->params['type'];
+		$id = $this->params['id'];
+		
+		$comments = new Oibs_Controller_Plugin_Comments($type, $id);
+		$newComments = array();
+		$newComments = $comments->getNewComments($user_id);
+		
+		if (count($newComments) != 0) {
+			$this->view->comments = $newComments;
 		}
 	}
 	
@@ -518,16 +522,27 @@ class AjaxController extends Oibs_Controller_CustomController
 	}
 	
 	public function getnotificationsAction() {
-		return; //RC fix :)
 		$favouritesModel = new Default_Model_UserHasFavourites();
 
 		$auth = Zend_Auth::getInstance();
 		$id_usr = 0;
 		if ($auth->hasIdentity()) $id_usr = $auth->getIdentity()->user_id;
 
-		$notifications = $favouritesModel->getAllUpdatedContents($id_usr);
+		
 		//print_r($notifications);die;
 		$ids = array();
+		$total = 0;
+		
+		$cache = Zend_Registry::get('cache');
+		
+		if(!$cacheResult = $cache->load('Notifications_'.$id_usr)) {
+			$notifications = $favouritesModel->getAllUpdatedContents($id_usr);
+			$cache->save($notifications,'Notifications_'.$id_usr);
+		}
+		else {
+			$notifications = $cacheResult;
+		}
+		//print_r($notifications);die;
 		if($notifications) {
 			foreach($notifications as $k => $notification) {
 				foreach($notification as $l => $content) {
@@ -537,14 +552,25 @@ class AjaxController extends Oibs_Controller_CustomController
 					$notifications[$k][$l]['original']['translang'] = $translang;
 			    	$notifications[$k][$l]['translated']['translang'] = $translang;
 			    	$ids[] = $l;
+			    	$total += $content['updates']['total'];
 				}
 			}
 		}
 		else $this->_helper->viewRenderer->setNoRender(true);
 
-		$jsonIds = json_encode($ids);
+		$jsonIds = Zend_Json::encode($ids);
 		
 		$this->view->notifications = $notifications;
 		$this->view->ids = $jsonIds;
+		$this->view->total = $total;
+	}
+	
+	/**
+	 * To be deleted after first use.
+	 */
+	public function setdefaultfollowsAction() {
+		$db = new Default_Model_UserProfiles();
+		$db->setDefaultFollows();
+		$this->_helper->viewRenderer->setNoRender(true);
 	}
 }

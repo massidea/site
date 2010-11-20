@@ -66,21 +66,43 @@ class Default_Form_PrivMsgForm extends Zend_Form
 				new Oibs_Validators_MessageTime(''),
 				))
 				->setDecorators(array('PrivMsgMessageDecorator'));
-                
-        $sender_id = new Zend_Form_Element_Hidden('privmsg_sender_id');
+		
+		$charCount = new Oibs_Form_Element_Note('charCount');
+		$charCount->setValue("Character limit: 0/1000")
+					->removeDecorator('Label')
+					->addDecorator('HtmlTag', array('tag' => 'div', 'id' => 'privmsg-charcount', 'class' => 'left'));
+
+		$overlimit = new Oibs_Form_Element_Note('overlimit');
+		$overlimit->setValue("Characters over the limit will be cut.")
+					->removeDecorator('Label')
+					->addDecorator('HtmlTag', array('tag' => 'div', 
+													'id' => 'privmsg-charcount-cut', 
+													'class' => 'left', 
+													'style' => 'display: none')
+					);
+					
+					
+		$clear = new Oibs_Form_Element_Note('clear');
+		$clear		->setValue("")
+					->removeDecorator('Label')
+					->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'clear'));
+
+		$sender_id = new Zend_Form_Element_Hidden('privmsg_sender_id');
 		$sender_id->setValue($data['sender_id'])
                   ->removeDecorator('DtDdWrapper');
         
         $receiver_id = new Zend_Form_Element_Hidden('privmsg_receiver_id');
 		$receiver_id->setValue($data['receiver_id'])
                     ->removeDecorator('DtDdWrapper');
-                
+
         // Form submit buttom form element
 		$submit = new Zend_Form_Element_Submit('privmsg_submit');
 		$submit->setLabel($translate->_("privmsg-send"))
                ->removeDecorator('DtDdWrapper');
         
-        $this->addElements(array($header, $message, $sender_id, $receiver_id, $submit));
+               
+               
+        $this->addElements(array($header, $message, $charCount, $overlimit, $clear, $sender_id, $receiver_id, $submit));
 	
     }
 }

@@ -98,7 +98,7 @@
         $this->view->menuData = $menuData;
 
 
-        // Group campaignAction special stuff:
+        // Group viewAction special stuff:
 
         $maxCharacters = 140;   // Max characters before we cut string and add ...
         $maxObjects = 3;        // Max campaigns, comments, linked groups and feeds in group home
@@ -185,7 +185,9 @@
         $grpData = $grpModel->getGroupData($grpId);
         $grpData['description_grp'] = str_replace("\n", '<br>', $grpData['description_grp']);
         $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
-
+        $filesModel = new Default_Model_Files();
+        $files = $filesModel->getFilenames($grpId, "group");
+        
         // Group type
         $grpTypeId = $grpModel->getGroupTypeId($grpId);
         $grpTypeModel = new Default_Model_GroupTypes();
@@ -214,8 +216,6 @@
   		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
 		$comments->loadComments();
         
-
-		
 		$this->view->comments		 = $comments;
 		$this->view->hasFeeds 		 = Oibs_Controller_Plugin_RssReader::hasFeeds($grpId, "group");
 		
@@ -334,10 +334,16 @@
             $grpModel = new Default_Model_Groups();
             $grpData = $grpModel->getGroupData($grpId);
 
+            
+			$filesModel = new Default_Model_Files();
+			$filenames = $filesModel->getFilenames($grpId, "group");
+			$formData['filenames'] = $filenames;
+			
             // Create the form in edit mode.
             $form = new Default_Form_AddGroupForm($this, array(
                 'mode' => 'edit',
                 'oldname' => $grpData['group_name_grp'],
+            	'fileNames' => $filenames,
             ));
 
             // Populate the form.
@@ -392,6 +398,13 @@
                         $groupWeblinksModel->setWeblink($grpId, $post['weblinks_name_site5'], $post['weblinks_url_site5'], 5);
                     }
 
+					$filesModel = new Default_Model_Files();
+					$files = $_FILES['content_file_upload'];
+                    $filesModel->newFiles($grpId, "group", $files);
+                    
+                    if (isset($post['uploadedFiles'])) $filesModel->deleteCertainFiles($grpId, "group", $post['uploadedFiles']);
+                    
+                    
                     // Redirect back to the group page.
                     $target = $this->_urlHelper->url(
                         array(
@@ -454,6 +467,11 @@
                         $groupWeblinksModel->setWeblink($newGroupId, $post['weblinks_name_site5'], $post['weblinks_url_site5'], 5);
                     }
 
+                    // Add the files to the group
+                    $files = $_FILES['content_file_upload'];
+                    $filesModel = new Default_Model_Files();
+                    $filesModel->newFiles($newGroupId, "group", $files);
+                    
                     // Add the current user to the new group.
                     $userHasGroupModel = new Default_Model_UserHasGroup();
                     $userHasGroupModel->addUserToGroup(
@@ -1058,8 +1076,12 @@
             }
             $i++;
         }
+        // Group files
+        $filesModel = new Default_Model_Files();
+        $files = $filesModel->getFilenames($grpId, "group");
         // Set $this->view->...
         $this->view->grpData = $grpData;
+        $this->view->files = $files;
 
     }
 

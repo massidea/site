@@ -434,6 +434,7 @@ class ContentController extends Oibs_Controller_CustomController
 					// Get user id
 					$data['User']['id_usr'] = $auth->getIdentity()->user_id;
 
+					/*
 					if($data['content_division'] == 0) {
 						$data['content_industry_id'] = $data['content_industry'];
 					} elseif($data['content_group'] == 0) {
@@ -443,7 +444,8 @@ class ContentController extends Oibs_Controller_CustomController
 					} elseif($data['content_class'] != 0) {
 						$data['content_industry_id'] = $data['content_class'];
 					}
-
+*/
+					
 					$languages = new Default_Model_Languages();
 
 					if($data['content_language'] == 0) {
@@ -457,7 +459,11 @@ class ContentController extends Oibs_Controller_CustomController
 					// Add a new content
 					$content = new Default_Model_Content();
 					$add = $content->addContent($data);
-
+					
+					if($data['content_relatesto_id'] != 0) {
+						$profileModel = new Default_Model_UserProfiles();
+		   				$profileModel->deleteNotificationCache($data['content_relatesto_id']);
+					}
 
 					if(!$add) {
 						$add_successful = false;
@@ -565,6 +571,9 @@ class ContentController extends Oibs_Controller_CustomController
 				$model_cnt_has_cnt = new Default_Model_ContentHasContent();
 				$model_cnt_has_cnt->addContentToContent($relatestoid, $linkedcontentid);
 
+				$profileModel = new Default_Model_UserProfiles();
+		    	$profileModel->deleteNotificationCache($relatestoid);
+				
 				// Send email to owner of content about a new link
 				// if user allows linking notifications
 
@@ -1267,7 +1276,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 					// Get contents filenames from database
 					$filesModel = new Default_Model_Files();
-					$filenames = $filesModel->getFilenamesByCntId($contentId);
+					$filenames = $filesModel->getFilenames($contentId, "content");
 					$formData['filenames'] = $filenames;
 
 					// Form for content adding
@@ -1371,6 +1380,10 @@ class ContentController extends Oibs_Controller_CustomController
                                                           		'lang_default', true);
 
 							if($edit) {
+								
+								$profileModel = new Default_Model_UserProfiles();
+				   				$profileModel->deleteNotificationCache($contentId);
+								
 								//$favourite = new Default_Model_UserHasFavourites();
 								//$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
 								if($oldData['published_cnt'] == 1 || (isset($data['content_publish']) && $data['content_publish'] == 1)) {
@@ -1495,6 +1508,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 					if($contentRemoveSuccessful == true) {
 						$message = 'content-remove-successful';
+						die;
 						$this->flash($message, $url);
 					} else {
 						$message = $this->view->translate('content-remove-not-successful') . '<br />';

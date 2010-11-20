@@ -332,7 +332,7 @@ function createGraphs(user_id, data) {
 		title: 'User content distribution',
 		type: 'pie3D',
 		series: data,
-		dataLabels: ['Visions', 'Ideas', 'Problems']
+		dataLabels: ['Visions', 'Ideas', 'Challenges']
 	}).delay(500).queue(function() {
 		$("#user_list_"+user_id+"_show_graphs_loading").hide();
 		$("#user_list_user_"+user_id+"_statistics_load_graphs").html("Hide graphs").show();
