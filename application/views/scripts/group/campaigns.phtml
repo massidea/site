@@ -1,0 +1,101 @@
+<?php
+Zend_Layout::getMvcInstance()->setLayout('layout_new');
+$this->headScript()->captureStart();
+?>
+$(document).ready(function() {
+    $("#group-page-campaigns").tabs();
+  });
+<?php
+$this->headScript()->captureEnd();
+?>
+<div id="group-page">
+    <?php echo $this->partial('partials/group_header.phtml', $this->grpData); ?>
+    <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
+    <div id="activity" class="right">
+        <div class="left">
+            <!--<p>To collect multiple insights, group can launch a campaign and summarize
+                individual user's insights into one united theme. Basically campaign is
+                group's organized and coordinated effort to promote content production
+                to a specified theme.</p>
+            <p>Adding content to campaign requires group membership. Moreover, users
+                can only link their own already published contents to campaigns.
+                However, one content can be linked to multiple campaigns. Content
+                linking is always done in a campaign page.</p>-->
+            <?php
+            if ($this->grpData['user_is_group_admin']):
+                 $cmpCreateLink = $this->url(
+                     array(
+                        'controller' => 'campaign',
+                        'action'     => 'create',
+                        'language'   => $this->language,
+                        'grpid'      => $this->grpData['id_grp']
+                     ), 'lang_default', true
+                );
+            ?>
+            <p id="group-create-campaign">
+                <a href="<?php echo $cmpCreateLink; ?>">&gt;&nbsp;Create a campaign</a>
+            </p>
+            <?php endif; ?>
+            <div id="group-page-campaigns">
+                <ul>
+                    <li><a href="#campaigns-active"><span>Active</span></a></li>
+                    <li><a href="#campaigns-forthcoming"><span>Forthcoming</span></a></li>
+                    <li><a href="#campaigns-ended"><span>Ended</span></a></li>
+                </ul>
+                <div id="campaigns-active" class="scroll-box">
+                    <ul>
+                    <?php
+                    if (count($this->openCampaigns) != 0) {
+                        echo $this->partialLoop('partials/campaign-row.phtml', $this->openCampaigns);
+                    } else {
+                        ?> <p>No open campaigns.</p> <?php
+                    }
+                    ?>
+                    </ul>
+                </div>
+                <div id="campaigns-forthcoming" class="scroll-box">
+                    <ul>
+                    <?php
+                    if (count($this->notstartedCampaigns) != 0) {
+                        echo $this->partialLoop('partials/campaign-row.phtml', $this->notstartedCampaigns);
+                    } else {
+                        ?> <p>No forthcoming campaigns.</p> <?php
+                    }
+                    ?>
+                    </ul>
+                </div>
+                <div id="campaigns-ended" class="scroll-box">
+                    <ul>
+                    <?php
+                    if (count($this->endedCampaigns) != 0) {
+                        echo $this->partialLoop('partials/campaign-row.phtml', $this->endedCampaigns);
+                    } else {
+                        ?> <p>No ended campaigns.</p> <?php
+                    }
+                    ?>
+                    </ul>
+                </div>
+            </div>
+
+            <?php /*
+            <div class="scroll-box">
+                <ul>
+                    <?php //echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
+                    <?php if (count($this->openCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Active:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->openCampaigns); ?>
+                    <?php endif;
+                    if (count($this->notstartedCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Forthcoming:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->notstartedCampaigns); ?>
+                    <?php endif;
+                    if (count($this->endedCampaigns) != 0) : ?>
+                    <li style="border: none;"><h4 style="margin-bottom: 0;">Ended:</h4></li>
+                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->endedCampaigns); ?>
+                    <?php endif; ?>
+                </ul>
+            </div>
+            */ ?>
+        </div>
+    </div>
+</div>

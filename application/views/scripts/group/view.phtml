@@ -1,294 +1,106 @@
-<?php $this->headScript()->captureStart(); ?>
-function deleteconfirmation(url) {
-    var answer = confirm("Delete group? This will also delete all of the group's campaigns.");
-    if (answer) {
-        alert("Group deleted");
-        window.location = url;
-    } else {
-        //alert("");
-    }
-}
-<?php $this->headScript()->captureEnd(); ?>
-<?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
-<?php $this->headScript()->prependFile($this->baseUrl('/js/autoresize.jquery.js')); ?>
-<?php $this->headScript()->appendFile($this->baseUrl('/js/rssfeeds.js')); ?>
-<?php
-Zend_Layout::getMvcInstance()->setLayout('layout_new');
-$date_founded = new Zend_Date($this->grpData['created_grp'], Zend_Date::ISO_8601);
-
-$signupUrl = $this->url(array('controller' => 'account',
-								'action' => 'register',
-								'language' => $this->language),
-						'lang_default', true);
-?>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <div id="group-page">
-    <h2><?php echo $this->grpData["group_name_grp"]; ?></h2>
-        <div id="group-founded" class="light-gray"><?php echo $this->translate('group-founded') . ': '; ?><?php echo $date_founded->toString('dd MMM, yyyy'); ?></div>
-    <div id="profile-meta">
-        <?php //TODO: tähän tulostetaan ryhmän kuva, ei tätä kiinteää kuvaa ?>
-        <!-- <img class="avatar" alt="Group profile picture" src="/en/account/profilethumb/id/1/thumb/true" /> -->
-
-        <p><?php echo $this->grpData["description_grp"]; ?></p>
-        <?php //TODO:muutä tätä järkevämmäksi? ?>
-        <!--
-        <p><strong><a href="<?php echo $this->url(array('controller' => 'tag',
-                                                        'action' => 'index',
-                                                        'language' => $this->language),
-                                                        'lang_default', true); ?>">
-                  <?php echo $this->translate('content-view-tags'); ?>
-                  </a>
-            </strong><?php // tägit tähän väliin ?></p>
-        -->
-        <h4><?php echo $this->translate('group-admins') . ':'; ?></h4>
-		<ul>
-        <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpAdmins); ?>
-        </ul>
-        <h4><a href="<?php echo $this->url(array('controller' => 'account',
-                                                        'action' => 'userlist',
-        												'group' => $this->grpData["group_name_grp"],
-        												'exactg' => "1",
-                                                        'language' => $this->language),
-                                                        'lang_default', true); ?>"><?php echo $this->translate('group-members'); ?></a></h4>
-        <div class="clear"></div>
-        <ul>
-           <?php echo $this->partialLoop('partials/user_row.phtml', $this->grpUsers); ?>
-        </ul>
-        <!--<span class="more"><strong><a href="">Show all</a></strong></span>-->
-        <div id="group-links">
-			<h4>Linked groups </h4>
+    <?php echo $this->partial('partials/group_header.phtml', $this->grpData); ?>
+    <?php //Zend_Debug::dump($this->grpData); ?>
+    <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
+    <div id="activity" class="right">
+        <div class="left group-home">
+            <div id="group-home-info">
+                <?php $infoUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                  'language' => $this->language),
+                                            'group_info_shortview', true); ?>
+                <h3><a href="<?php echo $infoUrl; ?>">Info</a></h3>
+                <?php echo $this->grpData['description_grp']; ?>
+                <?php /*<a href="<?php echo $infoUrl; ?>">Read more</a>*/ ?>
+                <?php //Zend_Debug::dump($this->grpData); ?>
+            </div>
+            <?php if (!empty($this->cmpData)): ?>
+            <div id="group-home-campaigns">
+                <?php $campaignsUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                       'language' => $this->language),
+                                                 'group_campaigns_shortview', true); ?>
+                <h3>New <a href="<?php echo $campaignsUrl; ?>">campaigns</a></h3>
+                <?php //Zend_Debug::dump($this->cmpData); ?>
                 <ul>
-                    <?php //var_dump($this->linkedgroups); ?>
-                    <?php foreach($this->linkedgroups as $group): ?>
-                    	<?php 
-                        $grpurl = $this->url(array('groupid'    => $group['id_grp'],
-                                                   'language'   => $this->language),
-                                             'group_shortview', true);
-                        ?>
-                        <li class="linked_groups">
-                            <div class="linked_groups">
-								<a href="<?php echo $grpurl; ?>"><?php echo $group['group_name_grp']; ?></a>
-                            </div>
-                        </li>
-                	<?php endforeach; ?>
-                </ul>
-            <?php
-            $addgroups = $this->url(
-                                array(
-                                    'controller' => 'group',
-                                    'action'     => 'linkgroup',
-                                    'language'   => $this->language,
-                                    'grpid'      => $this->grpData["id_grp"]
-                                 ), 'lang_default', true
-                            );
-            $editgrouplinks = $this->url(
-                                array(
-                                    'controller' => 'group',
-                                    'action'     => 'unlinkgroup',
-                                    'language'   => $this->language,
-                                    'grpid'      => $this->grpData["id_grp"]
-                                 ), 'lang_default', true
-                            );
-            ?>
-            <div class="right"><a href="<?php echo $addgroups; ?>">> Link groups</a></div>
-            <div class="clear"></div>
-            <?php if ($this->userIsGroupAdmin): ?>
-                <div class="right"><a href="<?php echo $editgrouplinks; ?>">> Edit group links</a></div>
-            <?php endif; ?>
-            <div class="clear"></div>
-        </div>
-        <div id='rss'>
-        	<?php if ($this->hasFeeds): ?>  	
-        		<h4>Feed</h4>
-        		<img src="<?php echo $this->baseUrl;?>/images/ajax-loader-black.gif" style="float: right; vertical-align:text-top;"/></p>
-        	<?php endif;?>
-        </div>
-    </div>
-    <div id="activity" class="right narrow">
-        <div class="left">
-            <div id="group-info">
-                <?php if ($this->userIsGroupAdmin):
-                    $editlink = $this->url(
-                        array(
-                            'controller' => 'group',
-                            'action'     => 'edit',
-                            'language'   => $this->language,
-                            'id'         => $this->grpData["id_grp"]
-                        ), 'lang_default', true
-                    );
-                    $dellink = $this->url(
-                        array(
-                            'controller' => 'group',
-                            'action'     => 'remove',
-                            'language'   => $this->language,
-                            'id'         => $this->grpData["id_grp"]
-                         ), 'lang_default', true
-                    );
-                    $waitinglist = $this->url(
-                        array(
-                            'controller' => 'group',
-                            'action'     => 'waitinglist',
-                            'language'   => $this->language,
-                            'grpid'      => $this->grpData["id_grp"]
-                        ), 'lang_default', true
-                    );
-                ?>
-                <div id="edit-group-etc">
-                    <p class="join">
-                        <a href="<?php echo $editlink; ?>">Edit group</a> |
-                        <!--<a href="#">Edit group links</a> |-->
-                        <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete group</a> |
-                        <a href="<?php echo $waitinglist; ?>">Waiting&nbsp;list (<?php echo $this->usrWaitingCount; ?>)</a>
-                    </p>
-                </div>
-                <?php endif; ?>
-
-                <p><?php echo $this->grpData['body_grp']; ?></p>
-				<?php if(!empty($this->files)) : ?>
-		        	<div id="campaign-files">
-			        	<div class="light-gray">
-		        		<span>Added files: </span>
-			        		<?php $filecount = count($this->files); ?>
-			        		<?php $file_i = 0; ?>
-		       				<?php foreach ($this->files as $id_fil => $filename): ?>
-		       					<?php $file_i++; ?>
-			        			<a href="<?php echo $this->baseUrl('/en/file/view/'.$id_fil); ?>">
-			        				<?php echo $filename; ?></a><?php if($file_i < $filecount) echo ', '; ?>
-		        			<?php endforeach;?>
-			        	</div>
-			    	</div>
-				<?php endif; ?>
-                <?php if (isset($this->grpData['groupWeblinks']) && $this->grpData['groupWeblinks'] != NULL) : ?>
-                <div id="group-links">
-                    <p class="group-links light-gray">Group web links:
-                        <?php
-                        $count = count($this->grpData['groupWeblinks']);
-                        $i = 1;
-                        foreach ($this->grpData['groupWeblinks'] as $weblink) {
-                        ?>
-                        <a href="<?php echo $weblink['url_gwl']; ?>"><?php
-                            echo $weblink['name_gwl'];
-                        ?></a><?php
-                        if ($i != $count)
-                            echo ',';
-                        $i++;
-                        }
-                        ?>
-                    </p>
-                </div>
-                <?php endif; ?>
-            </div>
-            <div class="clear"></div>
-            <div id="group-campaigns">
-                <h3>Campaigns</h3>
-                <p>Group's call of contents</p>
-            </div>
-			<div id="join-group">
-            <?php if ($this->identity == true) : ?>
                 <?php
-                if ($this->userIsGroupAdmin):
-                     $cmplink = $this->url(
-                         array(
-                            'controller' => 'campaign',
-                            'action'     => 'create',
-                            'language'   => $this->language,
-                            'grpid'      => $this->grpData["id_grp"]
-                         ), 'lang_default', true
-                );
+                foreach ($this->cmpData as $cmp) {
+                    $cmpUrl = $this->url(array('cmpid'    => $cmp['id_cmp'],
+                                               'language' => $this->language),
+                                         'campaign_view', true);
+                    ?>
+                    <li><a href="<?php echo $cmpUrl; ?>"><?php echo $cmp['name_cmp']; ?></a>
+                    <?php //echo $cmp['ingress_cmp']; ?></li>
+                    <?php
+                }
                 ?>
-                <p class="join">
-                    <a href="<?php echo $cmplink; ?>">&gt;&nbsp;Create a campaign</a>
-                </p>
-                <?php else : ?>
-                    <?php if ($this->isClosed && !$this->userHasGroup->userHasGroup($this->grpId, $this->userid)) : ?>
-                        <?php if (!$this->userHasGroupWaiting->userWaitingGroup($this->grpId, $this->userid)):
-                            $joinwaitingurl = $this->url(
-                                array(
-                                    'controller' => 'group',
-                                    'action' => 'join',
-                                    'groupid' => $this->grpId,
-                                    'language' => $this->language
-                                ), 'lang_default', true
-                            );
-                        ?>
-                        <p class="join">
-                            <a href="<?php echo $joinwaitingurl; ?>">&gt; <?php echo $this->translate('group-join-waiting_group'); ?></a>
-                        </p>
-                        <?php else:
-                            $leavewaitingurl = $this->url(
-                                array(
-                                    'controller' => 'group',
-                                    'action' => 'leavewaiting',
-                                    'groupid' => $this->grpId,
-                                    'language' => $this->language
-                                ), 'lang_default', true);
-                        ?>
-                        <p class="join">
-                            <a href="<?php echo $leavewaitingurl; ?>">&gt; <?php echo $this->translate('group-leave-waiting_group'); ?></a>
-                        </p>
-                        <?php endif; ?>
-                    <?php else : ?>
-                        <?php if (!$this->userHasGroup->userHasGroup($this->grpId, $this->userid)):
-                            $joinurl = $this->url(
-                                array(
-                                    'controller' => 'group',
-                                    'action' => 'join',
-                                    'groupid' => $this->grpId,
-                                    'language' => $this->language
-                                ), 'lang_default', true
-                            );
-                        ?>
-
-                        <p class="join">
-                            <a href="<?php echo $joinurl; ?>">&gt; <?php echo $this->translate('group-join_group'); ?></a>
-                        </p>
-                        <?php else:
-                            $leaveurl = $this->url(
-                                array(
-                                    'controller' => 'group',
-                                    'action' => 'leave',
-                                    'confirm' => 0,
-                                    'groupid' => $this->grpId,
-                                    'language' => $this->language
-                                ), 'lang_default', true);
-                        ?>
-                        <p class="join">
-                            <a href="<?php echo $leaveurl; ?>">&gt; <?php echo $this->translate('group-leave_group'); ?></a>
-                        </p>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                <?php endif; ?>
-                <p>Only by joining you can add contents to campaigns</p>
-            <?php else: ?>
-				<div id="group-not-logged" class="light-gray">
-					<a id="login_link" href="#">Log in</a> or <a href="<?php echo $signupUrl; ?>">Sign up</a> to join this group.
-				</div>
-				<p>Only by joining you can add contents to campaigns</p>
-            <?php endif;?>
-			</div>
-            <div class="clear"></div>
-            <div class="scroll-box">
-                <ul>
-                    <?php //echo $this->partialLoop('partials/campaign-row.phtml', $this->campaigns); ?>
-                    <?php if (count($this->openCampaigns) != 0) : ?>
-                    <li style="border: none;"><h4 style="margin-bottom: 0;">Active:</h4></li>
-                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->openCampaigns); ?>
-                    <?php endif;
-                    if (count($this->notstartedCampaigns) != 0) : ?>
-                    <li style="border: none;"><h4 style="margin-bottom: 0;">Forthcoming:</h4></li>
-                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->notstartedCampaigns); ?>
-                    <?php endif;
-                    if (count($this->endedCampaigns) != 0) : ?>
-                    <li style="border: none;"><h4 style="margin-bottom: 0;">Ended:</h4></li>
-                    <?php echo $this->partialLoop('partials/campaign-row.phtml', $this->endedCampaigns); ?>
-                    <?php endif; ?>
                 </ul>
             </div>
-            <div class="clear"></div>
+            <?php endif;
+            if (!empty($this->comments)): ?>
+            <div id="group-home-comments">
+                <?php $commentsUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                      'language' => $this->language),
+                                                'group_comments_shortview', true); ?>
+                <h3>New <a href="<?php echo $commentsUrl; ?>">comments</a></h3>
+                <?php //Zend_Debug::dump($this->comments); ?>
+                <ul>
+                <?php
+                foreach ($this->comments as $comment) {
+                    $usrUrl = $this->url(array('controller' => 'account',
+                                               'action' => 'view',
+                                               'user' => $comment['login_name_usr'],
+                                               'language' => $this->language),
+                                         'lang_default', true);
+                    ?>
+                    <li><a href="<?php echo $usrUrl; ?>"><?php echo $comment['login_name_usr']; ?></a>:&nbsp;<?php echo $comment['body_cmt']; ?></li>
+                    <?php
+                }
+                ?>
+                </ul>
+            </div>
+            <?php endif;
+            if (!empty($this->linkedgroups)): ?>
+            <div id="group-home-linkedgroups">
+                <?php $membersUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                     'language' => $this->language),
+                                               'group_linkedgroups_shortview', true); ?>
+                <h3>New <a href="<?php echo $membersUrl; ?>">linked groups</a></h3>
+                <?php //Zend_Debug::dump($this->linkedgroups); ?>
+                <ul>
+                <?php
+                foreach ($this->linkedgroups as $grp) {
+                    $grpUrl = $this->url(array('groupid' => $grp['id_grp'],
+                                               'language' => $this->language),
+                                         'group_shortview', true);
+                    ?>
+                    <li><a href="<?php echo $grpUrl; ?>"><?php echo $grp['group_name_grp']; ?></a>
+                        <?php //echo $grp['description_grp']; ?></li>
+                    <?php
+                }
+                ?>
+                </ul>
+            </div>
+            <?php endif;
+            if ($this->hasFeeds): ?>
+            <div id="group-home-feeds">
+                <?php $feedsUrl = $this->url(array('groupid'  => $this->grpData['id_grp'],
+                                                   'language' => $this->language),
+                                             'group_feeds_shortview', true); ?>
+                <h3>New <a href="<?php echo $feedsUrl; ?>">feeds</a></h3>
+                <?php //Zend_Debug::dump($this->feeds); ?>
+                <ul>
+                <?php
+                foreach ($this->feeds as $feed) {
+                    ?>
+                    <li><a href="<?php echo $feed['link']; ?>"><?php echo $feed['title']; ?></a></li>
+                    <?php
+                }
+                ?>
+                </ul>
+            </div>
+            <?php endif; ?>
+            <div><h3></h3></div>
         </div>
-		<div class="clear"></div>
-        <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
-
     </div>
-	<div class="clear"></div>
 </div>
 <div class="clear"></div>

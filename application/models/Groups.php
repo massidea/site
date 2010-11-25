@@ -199,6 +199,22 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
     }
 
     /**
+     * Checks if a group exists in db.
+     *
+     * @author Mikko Korpinen
+     * @param int $id_grp
+     * @return boolean
+     */
+    public function groupExistsById($id_grp)
+    {
+        $select = $this->select()->where('id_grp = ?', $id_grp);
+
+        $result = $this->fetchAll($select)->toArray();
+
+        return !empty($result);
+    }
+
+    /**
      * getGroupTypeId - Get group type id by group id
      *
      * @param int $id_grp

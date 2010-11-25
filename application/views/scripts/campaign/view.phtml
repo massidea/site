@@ -23,9 +23,6 @@ if ($this->campaign['end_time_cmp'] == '0000-00-00') {
     $cmpend = $cmpend->toString('dd MMM, yyyy');
 }
 
-$linkurl = $this->url(array('cmpid'      => $this->campaign['id_cmp'],
-                            'language'   => $this->language),
-                            'linkcampaign', true);
 $grpurl = $this->url(array('groupid'    => $this->campaign['id_grp_cmp'],
                            'language'   => $this->language),
                      'group_shortview', true);
@@ -153,7 +150,7 @@ $signupUrl = $this->url(array('controller' => 'account',
     	</div>
     </div>
     
-    <div id="activity" class="right">
+    <div id="activity" class="right narrow">
         <div class="left">
             <div id="campaign-info">
                 <?php if ($this->userIsGroupAdmin):
@@ -161,6 +158,14 @@ $signupUrl = $this->url(array('controller' => 'account',
                         array(
                             'controller' => 'campaign',
                             'action'     => 'edit',
+                            'language'   => $this->language,
+                            'id'         => $this->campaign["id_cmp"]
+                         ), 'lang_default', true
+                    );
+                    $endlink = $this->url(
+                        array(
+                            'controller' => 'campaign',
+                            'action'     => 'end',
                             'language'   => $this->language,
                             'id'         => $this->campaign["id_cmp"]
                          ), 'lang_default', true
@@ -173,19 +178,15 @@ $signupUrl = $this->url(array('controller' => 'account',
                             'id'         => $this->campaign["id_cmp"]
                          ), 'lang_default', true
                     );
-                    $adminuncontentlink = $this->url(
-                        array(
-                            'relatestoid' => $this->campaign['id_cmp'],
-                            'groupid'     => $this->campaign['id_grp_cmp'],
-                            'language' => $this->language),
-                            'adminunlinkcampaign', true
-                    );
                 ?>
-                <p class="link" style="text-align: right; padding-top: 10px;">
-                    <a href="<?php echo $editlink; ?>">Edit campaign</a> |
-                    <a href="<?php echo $adminuncontentlink; ?>">Edit content links</a> |
-                    <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete campaign</a>
-                </p>
+                <div class="link light-gray">
+                    <p>Manage campaign</p>
+                    <a href="<?php echo $editlink; ?>">Edit</a> |
+                    <?php if ($this->status !== "ended"): ?>
+                    <a href="<?php echo $endlink; ?>">End</a> |
+                    <?php endif; ?>
+                    <a href="#" onclick="deleteconfirmation('<?php echo $dellink; ?>')">Delete</a>
+                </div>
                 <?php endif; ?>
                 <p><?php echo $this->campaign['description_cmp']; ?></p>
                 
@@ -228,9 +229,25 @@ $signupUrl = $this->url(array('controller' => 'account',
                 <?php if ($this->identity == true) : ?>
                     <?php if ($this->status === 'open') : ?>
                         <?php if ($this->userHasGroup): ?>
+                        <?php
+                        $linkurl = $this->url(
+                            array(
+                                'cmpid'      => $this->campaign['id_cmp'],
+                                'language'   => $this->language),
+                                'linkcampaign', true
+                        );
+                        $adminuncontentlink = $this->url(
+                            array(
+                                'relatestoid' => $this->campaign['id_cmp'],
+                                'groupid'     => $this->campaign['id_grp_cmp'],
+                                'language'    => $this->language),
+                                'adminunlinkcampaign', true
+                        );
+                        ?>
     		                <h2>I want to contribute:</h2>
 							<div class="right">
-								<a href="<?php echo $linkurl; ?>">&gt; Link content</a>
+								<a href="<?php echo $linkurl; ?>">&gt; Link content</a><br />
+                                <a href="<?php echo $adminuncontentlink; ?>">&gt; Edit content links</a>
 							</div>
                         <?php else: ?>
                         	<h3 class="light-gray">Join <a href="<?php echo $grpurl; ?>"><?php echo $this->grpname; ?></a> group to link your content(s) to this campaign</h3>
@@ -265,4 +282,5 @@ $signupUrl = $this->url(array('controller' => 'account',
         </div>
  		<?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
     </div>
+    <div class="clear"></div>
 </div>

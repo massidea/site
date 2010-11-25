@@ -1,0 +1,12 @@
+<?php $this->headScript()->prependFile($this->baseUrl('/js/comments.js')); ?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/autoresize.jquery.js')); ?>
+<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div id="group-page">
+    <?php echo $this->partial('partials/group_header.phtml', $this->grpData); ?>
+    <?php echo $this->partial('partials/group_menu.phtml', $this->menuData); ?>
+    <div id="activity" class="right">
+        <div class="left">
+            <?php echo $this->partial('partials/comments.phtml', array('comments' => $this->comments)); ?>
+        </div>
+    </div>
+</div>

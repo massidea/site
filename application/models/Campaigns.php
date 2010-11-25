@@ -114,7 +114,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
                 ->where('id_grp_cmp = ?', $groupid)
                 ->where('start_time_cmp <= ?', $thisDay)
                 ->where('end_time_cmp >= ? OR end_time_cmp = 0000-00-00', $thisDay)
-                ->order('id_cmp ASC');
+                ->order('id_cmp DESC');
 
         return $this->fetchAll($select)->toArray();
     }
@@ -133,7 +133,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $select = $this->select()
                 ->where('id_grp_cmp = ?', $groupid)
                 ->where('start_time_cmp > ?', $thisDay)
-                ->order('id_cmp ASC');
+                ->order('id_cmp DESC');
 
         return $this->fetchAll($select)->toArray();
     }
@@ -152,7 +152,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $select = $this->select()
                 ->where('id_grp_cmp = ?', $groupid)
                 ->where('end_time_cmp < ? AND end_time_cmp != 0000-00-00', $thisDay)
-                ->order('id_cmp ASC');
+                ->order('id_cmp DESC');
 
         return $this->fetchAll($select)->toArray();
     }
@@ -245,6 +245,33 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     }
 
     /**
+     * endCampaign - Set campaign end date to yesterday
+     *
+     * @author Mikko Korpinen
+     * @param int $id
+     * @param date $start_time_cmp
+     */
+    public function endCampaign($id, $start_time_cmp)
+    {
+        $end = date("Y-m-d", time()-(1*24*60*60));
+
+        // Set also start date if it is after end date
+        if ($start_time_cmp <= $end) {
+            $data = array(
+                'end_time_cmp' => $end,
+            );
+        } else {
+            $data = array(
+                'start_time_cmp' => $end,
+                'end_time_cmp' => $end,
+            );
+        }
+
+		$where = $this->getAdapter()->quoteInto('id_cmp = ?', $id);
+		$this->update($data, $where);
+    }
+
+    /**
     *   getAll
     *
     *   Gets all campaigns
@@ -278,6 +305,38 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
                     ->limit($limit);
         } else {
             $select = $this->select()
+                    ->order('id_cmp DESC')
+                    ->limit($limit);
+        }
+
+        return $this->fetchAll($select)->toArray();
+    }
+
+    /**
+     * getRecentByGroup
+     *
+     * Gets the specified number of the most recently created campaigns by group.
+     *
+     * @param int $limit
+     * @param int $groupid
+     * @param boolean $onlyOpen
+     * @return array
+     */
+    public function getRecentByGroup($limit, $groupid, $onlyOpen=true)
+    {
+        if (!isset($limit)) $limit = 10;
+
+        if ($onlyOpen) {
+            $thisDay = date("Y-m-d", time());
+            $select = $this->select()
+                    ->where('start_time_cmp <= ?', $thisDay)
+                    ->where('end_time_cmp >= ? OR end_time_cmp = 0000-00-00', $thisDay)
+                    ->where('id_grp_cmp = ?', $groupid)
+                    ->order('start_time_cmp DESC')
+                    ->limit($limit);
+        } else {
+            $select = $this->select()
+                    ->where('id_grp_cmp = ?', $groupid)
                     ->order('id_cmp DESC')
                     ->limit($limit);
         }
@@ -482,7 +541,7 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
      *
      * @author Mikko Korpinen
      * @param int $id_cmp
-     * @return string
+     * @return string (not_started, open, ended)
      */
     public function getStatus($id_cmp)
     {
