@@ -407,7 +407,7 @@ class AccountController extends Oibs_Controller_CustomController
 			->setName("my-reads")
 			->addTab("Readers", "readers", "all selected");
 			
-		//$boxes[] = $box;
+		$boxes[] = $box;
 		
 		/*Box for user profile custom layout settings*/
 		$box = new Oibs_Controller_Plugin_AccountViewBox();

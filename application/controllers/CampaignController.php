@@ -27,6 +27,7 @@
  */ 
 class CampaignController extends Oibs_Controller_CustomController
 {
+	
     public function indexAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -204,6 +205,7 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function viewAction()
     {
+    	
         $auth = Zend_Auth::getInstance();
 
         $user = $auth->getIdentity();
@@ -278,6 +280,7 @@ class CampaignController extends Oibs_Controller_CustomController
         $this->view->linkedcampaigns = $linkedcampaigns;
         $this->view->status          = $cmpmodel->getStatus($cmpid);
         $this->view->files 			 = $files;
+        
     }
 
     function editAction() {
