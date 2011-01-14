@@ -372,8 +372,8 @@ class CampaignController extends Oibs_Controller_CustomController
                             $post['campaign_name'],
                             $post['campaign_ingress'],
                             $post['campaign_desc'],
-                            'keepExisting',
-                            $post['campaign_end']
+                            $cmp['start_time_cmp'],
+                            $cmp['end_time_cmp']
                         );
                     }
 
