@@ -177,7 +177,6 @@ $(document).ready(function(){
 			}
 		}	
 	 });
-
 	
 	$('.youtube-reference').click(function() {
 		$(this).removeClass('hover-link');

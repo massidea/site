@@ -16,34 +16,34 @@ $(document).ready(function(){
 		
 	});
 	
-	$(function() {
-		$("#campaign-status").tabs({
-			select: function(event,ui) {
-				pagecount = 1;
-				index = ui.index;
-				
-				var tab_name = ui.tab.toString();
-				var a = tab_name.split("#");
-				status = a[1];
-			},
-			load: function(event,ui) {
-				ndata = $(ui.panel).html();
-				if(data.match(ndata))
-					$(ui.panel).html(data);
-				else
-					$(ui.panel).html(data + ndata);
-			},
+
+	$("#campaign-status").tabs({
+		select: function(event,ui) {
+			pagecount = 1;
+			index = ui.index;
 			
-			ajaxOptions: {
-				error: function(xhr, status, index, anchor) {
-					$(anchor.hash).html("Couldn't load this tab.");
-				},
-				beforeSend: function() {
-					data = $('#' + status).html();
-				}
+			var tab_name = ui.tab.toString();
+			var a = tab_name.split("#");
+			status = a[1];
+		},
+		load: function(event,ui) {
+			ndata = $(ui.panel).html();
+			if(data.match(ndata))
+				$(ui.panel).html(data);
+			else
+				$(ui.panel).html(data + ndata);
+		},
+		
+		ajaxOptions: {
+			error: function(xhr, status, index, anchor) {
+				$(anchor.hash).html("Couldn't load this tab.");
+			},
+			beforeSend: function() {
+				data = $('#' + status).html();
 			}
-		});
+		}
 	});
+
 
 	
 });
