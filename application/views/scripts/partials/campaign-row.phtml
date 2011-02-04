@@ -34,7 +34,9 @@ if ($thisDate->compare($startDate) == -1) {
 <li>
     <div>
         <p class="campaign_list_paragraph">
-            <strong><a href="<?php echo $cmpurl; ?>"><?php echo $this->name_cmp; ?></a></strong>
+            <?php $a = explode("/", $cmpurl);
+                $campaign_url = $a[count($a)-1]; ?>
+            <strong><a href="<?php echo "campaign/view/$campaign_url"; ?>"><?php echo $this->name_cmp; ?></a></strong>
             <?php if ((isset($this->group_name_grp)) && (isset($this->id_grp_cmp))): ?>
                 <br />by <a href="<?php echo $grpurl; ?>"><?php echo $this->group_name_grp; ?></a> group
             <?php endif; ?>
