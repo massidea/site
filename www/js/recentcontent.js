@@ -7,7 +7,7 @@ $(document).ready(function(){
 	refreshTime = 30000;
 
 	$(recentpostslink+' a').live('click', function(){
-		pagecount = pagecount + 1;
+		//pagecount = pagecount + 1;
 		ajaxLoad_getRecentPosts(recentpostsdiv, pagecount);
 	});
 
@@ -27,6 +27,7 @@ function ajaxLoad_getRecentPosts(obj, offset, prepend){
 		},
 		url: url_getrecentcontent+"/offset/"+offset,
 		success: function(result){
+            $(obj).empty();
 			if(prepend == 1) {
 				$(obj).prepend(result);
 			} else {
