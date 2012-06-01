@@ -55,6 +55,43 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <!-- Small hack to force a small space between the h2 and content... might help the Symbian -browsers a bit -->
 <div style="height: 2px;"></div>
 
+<div id="menu">
+    <a class="teaser" href="<?php echo $this->url(array(
+            'type' => 'problem',
+            'language' => $this->language),
+        'content_list', true); ?>">
+        <img src="" alt="challenge_icon" />
+        <h1><?php echo $this->translate('Challenges'); ?></h1>
+        <div class="preview_cat" >
+            <div class="challenge_button">Create challenge</div>
+        </div>
+        <p class="description"><?php echo $this->translate('challenge_desc'); ?></p>
+    </a>
+    <a class="teaser" href="<?php echo $this->url(array(
+            'type' => 'idea',
+            'language' => $this->language),
+        'content_list', true); ?>">
+        <img src="" alt="vision_icon" />
+        <h1><?php echo $this->translate('Visions'); ?></h1>
+        <div class="preview_cat" >
+            <div class="vision_button">Create vision</div>
+        </div>
+        <p class="description"><?php echo $this->translate('vision_desc'); ?></p>
+    </a>
+    <a class="teaser" href="<?php echo $this->url(array(
+            'type' => 'finfo',
+            'language' => $this->language),
+        'content_list', true); ?>">
+        <img src="" alt="idea_icon" />
+        <h1><?php echo $this->translate('Ideas'); ?></h1>
+        <div class="preview_cat">
+            <div class="idea_button">Create idea</div>
+        </div>
+        <p class="description"><?php echo $this->translate('idea_desc'); ?></p>
+    </a>
+</div>
+
+
 <div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
 	<div id="recent_posts_ajax" style="width: 500px;"></div>
     	<div class="user_content_spacer"></div>

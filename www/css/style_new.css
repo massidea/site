@@ -235,31 +235,32 @@ input.submit-button {
 	text-decoration:none; color:#0089CF !important; }
 
 /** Menu */
-#menu { margin:14px 0px; height:48px; border-bottom:5px solid #ccc; font-size:.9em;
-line-height:1.3em; font-weight:bold; position:relative; }
-#menu ul { list-style:none; margin:0px 0px 0px 16px; padding:0px; }
-#menu ul li { float:left; margin:0px 15px 0px 0px; }
-
-#menu ul li a, #menu ul li a:visited { text-decoration:none;  height:48px; display:block; max-width:80px; }
-#menu ul li a:hover { height:43px; }
-
-#menu ul li a { color:black; border-bottom:5px solid black; }
-#menu ul li a:hover { color:black; border-bottom:10px solid #333; }
-
-#menu ul li.red a { color:#D21034; border-bottom:5px solid #D21034; }
-#menu ul li.red a:hover { color:#D21034; border-bottom:10px solid #D21034; }
-
-#menu ul li.green a { color:#4B9B07; border-bottom:5px solid #4B9B07; }
-#menu ul li.green a:hover { color:#4B9B07; border-bottom:10px solid #4B9B07; }
-
-#menu ul li.orange a { color:#FFC726; border-bottom:5px solid #FFC726; }
-#menu ul li.orange a:hover { color:#FFC726; border-bottom:10px solid #FFC726; }
-
-#menu ul li.blue a { color:#0089CF; border-bottom:5px solid #0089CF; }
-#menu ul li.blue a:hover { color:#0089CF; border-bottom:10px solid #0089CF; }
-
-#menu ul li.deepblue a { color:#003581; border-bottom:5px solid #003581; }
-#menu ul li.deepblue a:hover { color:#003581; border-bottom:10px solid #003581; }
+#menu .teaser {
+    float: left;
+    width: 200px;
+    padding-right: 20px;
+    color: #000;
+}
+#menu .teaser:last-child {
+    padding-right: 0px;
+}
+#menu .preview_cat {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background-color: #ccc;
+    -moz-border-radius: 5px;
+    margin: 10px 0px;
+}
+.preview_cat .challenge_button, .preview_cat .idea_button, .preview_cat .vision_button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 125px;
+    height: 25px;
+    -moz-border-radius: 5px;
+    background-color: #fff;
+}
 
 /* Menu --> Left */
 #menu ul.left { float:left; }
