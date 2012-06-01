@@ -104,14 +104,14 @@ echo $this->doctype();
                                                                 'action' => 'images',
                                         						'language' => $this->language),
                                                                'lang_default', true); ?>">Profile image</a></li>
-                                		<?php /* 
+                                		<?php /*
                                 		<li id="user_options_groups">
 	                                        <img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" />
 	                                        <span>Manage Groups</span>
 	                                        <ul id="user_options_sub_1">
 	                                        		<li>
 	                                        		<img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'group',
-	                                                                'action' => 'create',     
+	                                                                'action' => 'create',
 	                                        						'language' => $this->language),
 	                                                               'lang_default', true); ?>">Create</a>
 	                                        		</li>
@@ -120,7 +120,7 @@ echo $this->doctype();
                                         */ ?>
                                 	</ul>
                                 </div>
-                                <span class="grey"> | </span> 
+                                <span class="grey"> | </span>
                             <?php
                                 if($this->unread_privmsgs > 0) {
                                     if($this->controller == "privmsg" && $this->action == "index") {
@@ -147,15 +147,15 @@ echo $this->doctype();
                                                                        'lang_default', true); ?>">
                                    <img src="<?php echo $this->baseUrl("/images/icon_message_off.png");?>" id="message_link"/>
                                    </a>
-                                   <span class="grey">|</span>                             
+                                   <span class="grey">|</span>
                                 <?php } ?>
-                                
+
 
                                 <img src="<?php echo $this->baseUrl("/images/notifications_b.png");?>" id="notification_link"/>
                                 <span id="notification_totals" class="grey"></span>
 
                                 <div id="notification_box"></div>
-                                
+
                                 <span class="grey"> |</span>
                                 <a href="<?php echo $this->url(array('controller' => 'account',
                                                                      'action' => 'logout',
@@ -218,7 +218,7 @@ echo $this->doctype();
                                             <a id="login_link_openid" href="#">
                                                 <?php echo $this->translate('account-login-via-openid-loginbox-link'); ?>
                                             </a>
-                                            </span> 
+                                            </span>
                                            <img style="vertical-align: middle;" src="<?php echo $this->baseUrl("/images/openid.png");?>" alt="OpenID" />
                                     </div>
 
@@ -414,7 +414,7 @@ echo $this->doctype();
                         </a>
                         <?php /*
                         <div id="add_content_menu">
-                        
+
                             <div onmouseover="highlightContentMenuItem(this.id)"
                                     onmouseout="dimContentMenuItem(this.id)"
                                     id="add_content_menu_challenge">

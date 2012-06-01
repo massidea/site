@@ -173,7 +173,7 @@ input.submit-button {
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child .notification_photo_child img { width: 30px; height: 30px; }
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul { list-style: none outside none; margin-left: 25px; margin-bottom: 5px;  }
 #header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul li { margin-bottom: 5px; }
-#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul li a { color: #0089CF; text-decoration: none; } 
+#header #search #search-top #notification_box .notification_class .notification_list_row_other .notification_list_row_child ul li a { color: #0089CF; text-decoration: none; }
 
 
 #header #search #search-top #user_options { position: absolute; display: none; width: 130px; background: none repeat scroll 0 0 #FFFFFF; text-align: left; font-size: 11px; font-weight: bold; z-index: 9999; }
@@ -195,7 +195,7 @@ input.submit-button {
 
 /** Header --> Login */
 #login_box{
-	background: #eee; color: #333; 
+	background: #eee; color: #333;
 	font-size:11px;
 	padding: 6px;
 	border: 1px solid #ccc;
@@ -212,7 +212,7 @@ input.submit-button {
 #login_box input { width: 222px; }
 
 #login_box_openid{
-	background: #eee; color: #333; 
+	background: #eee; color: #333;
 	font-size: 11px;
 	padding:6px 6px 6px 8px;
 	text-align: left;
@@ -283,7 +283,7 @@ line-height:1.3em; font-weight:bold; position:relative; }
 	margin-top: -3px;
 	overflow: visible;
 	display: none;
-	width: 126px; 
+	width: 126px;
 	border: 1px solid #ccc;
 	vertical-align: middle;
 	font-size: 12px; font-weight: bold;
@@ -792,7 +792,7 @@ background:transparent url("../images/gray_dot_line_500.png") bottom no-repeat; 
 /*#content #activity .input-column4 { width:120px; float:left; text-align:left; margin-bottom:5px; margin-left:10px; margin-top:0px; }*/
 #content #activity .input-column5 { width:60px; float:left; text-align:left; margin-right:10px; /*margin-left:10px;*/ /*margin-top:10px;*/ }
 #content #activity .input-column6 { width:150px; float:left; text-align:left; margin-bottom:5px; /*margin-left:25px;*/ /*margin-top:10px;*/ }
-	
+
 /** Campaign GUI **/
 #content #campaign-page h2 span.challenges { color:#D21034 !important; }
 #content #campaign-page h2 span.users { color:#0089CF !important; }
@@ -1135,14 +1135,14 @@ padding:0px 0px 30px 0px; margin:0px 15px 0px 15px; }
     left: 40%;
     display: block;
     clear: both;
-} 
+}
 
 .popup_close {
     padding: 0px;
     width: 590px;
    	position: fixed;
     margin-left: auto;
-    margin-right: auto;	
+    margin-right: auto;
 }
 
 div.privacy {
