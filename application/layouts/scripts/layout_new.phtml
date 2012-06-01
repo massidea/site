@@ -31,9 +31,9 @@ echo $this->doctype();
     $this->headScript()->prependFile($this->baseUrl('/js/scripts.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jsmeta.js'));
     $this->headScript()->prependFile($this->baseUrl('/js/jquery.js'));
-        
+
     $this->headScript()->prependFile('http://maps.google.com/jsapi');
-    
+
     echo $this->headLink();
     echo $this->headMeta();
     echo $this->headScript();
@@ -50,6 +50,25 @@ echo $this->doctype();
                                 'lang_default', true); ?>/"><span>Massidea.org</span></a>
                     </h1>
                 </div>
+
+                <div id="search">
+                    <?php
+                        if (!$this->authenticated) : ?>
+                            <?php echo $this->loginform; ?>
+                        <?php else : ?>
+                            <?php echo $this->username; ?>
+                            <span class="grey"> |</span>
+                            <a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action'     => 'logout',
+                                    'language'   => $this->language,
+                                ), 'lang_default', true); ?>">
+                                <?php echo $this->translate('index-logout'); ?>
+                            </a>
+                        <?php endif; ?>
+                </div>
+
+                <!--
                 <div id="search">
                     <div id="search-top">
                         <?php if($this->authenticated) : ?>
@@ -58,7 +77,7 @@ echo $this->doctype();
 																		 'action' => 'index',
 																		 'language' => $this->language),
 																		 'lang_default', true); ?>">
-								<?php echo $this->translate('index-admin-tools');?></a> | 
+								<?php echo $this->translate('index-admin-tools');?></a> |
 							<?php endif; ?>
                             <?php echo $this->translate('index-logged_in'); ?>
                                 <a id="loginlink" href="<?php echo $this->url(array('controller' => 'account',
@@ -82,7 +101,7 @@ echo $this->doctype();
                                                                      'language' => $this->language),
                                                                'lang_default', true); ?>">Private messages</a></li>
                                         <li onclick="makeLink(this);"><img src="<?php echo $this->baseUrl("/images/icon_arrow_right.png");?>" /><a href="<?php echo $this->url(array('controller' => 'account',
-                                                                'action' => 'images',     
+                                                                'action' => 'images',
                                         						'language' => $this->language),
                                                                'lang_default', true); ?>">Profile image</a></li>
                                 		<?php /* 
@@ -119,8 +138,8 @@ echo $this->doctype();
                                         (<?php echo $this->unread_privmsgs; ?>)
                                         |</span>
                                         <?php
-                                    
-                                } 
+
+                                }
                                 else { ?>
                                    <a href="<?php echo $this->url(array('controller' => 'privmsg',
                                                                              'action' => 'index',
@@ -157,7 +176,6 @@ echo $this->doctype();
                             <a href="<?php echo $url_sign_up; ?>">
                                 <?php echo $this->translate('index-signup'); ?>
                             </a>
-                                <!-- Tätä joutuu luultavasti vielä muuttamaan :) -->
                             <div id="login_box">
                                 <form action="<?php echo $this->url(array(
                                             'controller' => 'account',
@@ -277,9 +295,10 @@ echo $this->doctype();
                     <div class="clear"></div>
                 </div>
             </div>
+                -->
             </div>
-            
-            <?php 
+
+            <?php
             /*
             	Here lies the code for adding new content screen
             */
@@ -296,7 +315,7 @@ echo $this->doctype();
                $url_add_v = $this->url(array('contenttype' => 'finfo',
                                              'language' => $this->language),
                                              'addcnttype', true);
-                
+
             ?>
             <div id="add_new_content">
 				<div id="add_new_challenge" class="add_new">
@@ -305,7 +324,7 @@ echo $this->doctype();
 						<span class="add_new_title">> Add your challenge</span>
 						<?php echo $this->translate('help-guidelines-paragraph2'); ?>
 					</a>
-					</div>            		
+					</div>
 				</div>
 				<div id="add_new_idea" class="add_new">
 					<div class="add_new_info">
@@ -326,7 +345,7 @@ echo $this->doctype();
 				<div class="clear"></div>
 			</div>
             <?php endif; ?>
-            
+
             <div id="menu">
                 <div class="left">
                     <ul>
@@ -393,7 +412,7 @@ echo $this->doctype();
                                 src="<?php echo $this->baseUrl('/images/add_new_content_en.png'); ?>"
                                 alt="Add content" />
                         </a>
-                        <?php /* 
+                        <?php /*
                         <div id="add_content_menu">
                         
                             <div onmouseover="highlightContentMenuItem(this.id)"
@@ -554,7 +573,7 @@ echo $this->doctype();
             </div>
         </div>
     </div>
-    <div id="backdrop" onclick="popup_close(); popup_terms_close()"></div>  
+    <div id="backdrop" onclick="popup_close(); popup_terms_close()"></div>
  	<div id="popup_privacy_" class="popup_terms" style="display:none;">
         <div class="popup_close">
             <div style="float:right;">
@@ -563,22 +582,22 @@ echo $this->doctype();
                 </a>
             </div>
         </div>
-        
+
         <div class="privacy">
             <?php echo $this->translate('register-description'); ?>
         </div>
     </div>
     <div id="popup_terms_" class="popup_terms" style="display:none;">
-        <div class="popup_close">  
+        <div class="popup_close">
             <div style="float:right;">
                 <a href="#" onclick="popup_terms_close(''); return false;">
                     <img src="<?php echo $this->baseUrl('/images/icon_close.png') ?>" alt="Close" />
                 </a>
-            </div>       
+            </div>
         </div>
         <div class="privacy">
             <?php echo $this->translate('network-service-agreement'); ?>
-        </div>      
+        </div>
     </div>
     <div id="jsmetabox" style="display:none;">
     	<?php echo $this->jsmetabox->output(); ?>

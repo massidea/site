@@ -202,6 +202,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		else
 		{
 			$this->view->authenticated = false;
+            $this->view->loginform = new Default_Form_LoginForm();
 		}
 		$this->view->title = $this->breadcrumbs->getTitle();
 		

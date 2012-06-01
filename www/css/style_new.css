@@ -205,6 +205,10 @@ input.submit-button {
 	width: 298px;
 }
 
+#returnurl-label, #returnurl-element, #submit-label {
+    display: none;
+}
+
 #login_box input { width: 222px; }
 
 #login_box_openid{

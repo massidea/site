@@ -41,28 +41,35 @@ class Default_Form_LoginForm extends Zend_Form
 		
 		$this->setName('login_form');
 		$this->setAction($actionUrl);
-		$this->addElementPrefixPath('Oibs_Decorators', 
-								'Oibs/Decorators/',
-								'decorator');
-		
+		//$this->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator');
+
+        $this->setDecorators(array(array(
+                'ViewScript',
+                array('viewScript' => 'forms/login.phtml')
+            )));
+
 		// Username input form element
 		$username = new Zend_Form_Element_Text('username');
-		$username->setLabel($translate->_("account-login-username"))
+		$username//->setLabel($translate->_("account-login-username"))
+                ->setAttrib('placeholder','E-Mail')
 				->addFilter('StringtoLower')
                 ->setRequired(true)
 				->addValidators(array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))), 
 				))
-				->setDecorators(array('LoginDecorator'));
+				//->setDecorators(array('LoginDecorator'))
+        ;
 				
 		// Password input form element
 		$password = new Zend_Form_Element_Password('password');
-		$password->setLabel($translate->_("account-register-password"))
+		$password//->setLabel($translate->_("account-register-password"))
+                ->setAttrib('placeholder', 'Password')
                 ->setRequired(true)
 				->addValidators(array(
 					array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))), 
 				))
-				->setDecorators(array('LoginDecorator'));
+				//->setDecorators(array('LoginDecorator'))
+        ;
 				
 		$hidden = new Zend_Form_Element_Hidden('returnurl');
 		$hidden->setValue($options);
