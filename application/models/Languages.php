@@ -80,7 +80,8 @@ class Default_Model_Languages extends Zend_Db_Table_Abstract
 	public function getAllNamesAndIds()
 	{
 		$select = $this->select()
-                       ->from($this, array('id_lng', 'name_lng'));
+                       ->from($this, array('id_lng', 'name_lng'))
+                        ->where("`active_lng` = '1'");
                                     
 		$result = $this->fetchAll($select)->toArray();
 		
@@ -97,8 +98,8 @@ class Default_Model_Languages extends Zend_Db_Table_Abstract
 	public function getAllNamesAndCodes()
 	{
 		$select = $this->select()
-                       ->from($this, array('iso6391_lng', 'name_lng'));
-                                    
+                       ->from($this, array('iso6391_lng', 'name_lng'))
+                       ->where("`active_lng` = 1");
 		$result = $this->fetchAll($select)->toArray();
 		
 		return $result;

@@ -68,7 +68,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		$this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		//$this->db = Zend_Registry::get('db');
 		$this->breadcrumbs = new Oibs_Controller_Plugin_BreadCrumbs();
-        
+
         // bbCode plugin
         $this->view->BBCode = new Oibs_Controller_Plugin_BBCode();
         

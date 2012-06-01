@@ -498,6 +498,8 @@ echo $this->doctype();
                     </ul>
                 </div>
                 <div class="dot-line-720 clear"></div>
+
+
                 <div class="left">
                     <p><?php echo $this->translate('index-funded'); ?></p>
                     <a href="http://www.rakennerahastot.fi/rakennerahastot/<?php echo $this->language; ?>/index.jsp">
@@ -505,6 +507,12 @@ echo $this->doctype();
                     </a>
                 </div>
                 <div class="right">
+                    <?php
+                        $languages = new Default_Model_Languages();
+                        $allLanguages = $languages->getAllNamesAndCodes();
+                        echo $translationForm = new Default_Form_ChangeTranslationLanguageForm($allLanguages);
+                    ?>
+                    <!--
                     <p><?php echo $this->translate('index-coordinator'); ?></p>
                     <?php
                         // This entire block should be done somewhere else than here
@@ -568,6 +576,7 @@ echo $this->doctype();
                             Finland Future Research Center
                         </option>
                     </select>
+                    -->
                 </div>
                 <div class="dot-line-720 clear"></div>
             </div>
