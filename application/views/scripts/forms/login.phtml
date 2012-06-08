@@ -1,22 +1,27 @@
+<div id="headerLogIn">
 <form id="<?php echo $this->escape($this->element->getName()); ?>"
     <?php //name="echo $this->escape($this->element->getName()); "?>
 	  action="<?php echo $this->escape($this->element->getAction()); ?>"
       method="<?php echo $this->escape($this->element->getMethod()); ?>"
       enctype="<?php echo $this->escape($this->element->getAttrib('enctype')); ?>">
 
-    <div style="float: left">
+    <div>
         <?php echo $this->element->username; ?>
         <?php echo $this->element->password; ?>
     </div>
-    <div style="float: left">
-        <?php echo $this->element->submit; ?>
-
-        <a href="<?php echo $this->url(array(
-            'controller' => 'account',
-            'action'     => 'register',
-            'language'   => $this->language,
-        ), 'lang_default', true); ?>">
+    <div>
+        <a class="signup" href="<?php echo $this->url(array(
+                                                           'controller' => 'account',
+                                                           'action'     => 'register',
+                                                           'language'   => $this->language,
+                                                      ), 'lang_default', true); ?>">
             <?php echo $this->translate('index-signup'); ?>
         </a>
+
+        <?php echo $this->element->submit; ?>
+
+
     </div>
+    <div class='clearfix'></div>
 </form>
+</div>

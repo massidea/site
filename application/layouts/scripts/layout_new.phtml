@@ -5,9 +5,9 @@
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
     <title><?php echo $this->translate($this->title); ?></title>
     <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_basic.css'));
-    $this->headScript()->prependFile($this->baseUrl('/js/jquery-1.7.2.min.js'));
-    $this->headScript()->prependFile($this->baseUrl('/js/bootstrap.min.js'));
-    $this->headScript()->prependFile($this->baseUrl('/js/massidea.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/jquery-1.7.2.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/bootstrap.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/massidea.js'));
 
     echo $this->headLink();
     echo $this->headMeta();
@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-    <section id="header">
+    <header>
         <a id="headerLogo" href="<?php echo $this->url(array('language' => $this->language),
             'lang_default', true); ?>/"><img src="/img/massideaLogo.png"/></a>
         <img id="headerSignet" src="/img/signet.png"/>
@@ -37,14 +37,16 @@
                 </a>
             </div>
             <?php endif; ?>
-    </section>
+    </header>
     <section id="content">
         <?php echo $this->layout()->content; ?>
     </section>
-    <section id="footer">
 
 
-    </section>
+    <footer>
+     Here will be Lisa´s cool and sophisticated footer :)
+
+    </footer>
 </div>
 </body>
 </html>
