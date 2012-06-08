@@ -16,37 +16,64 @@
     ?>
 </head>
 <body>
-<div class="container">
-    <header>
-        <a id="headerLogo" href="<?php echo $this->url(array('language' => $this->language),
-            'lang_default', true); ?>/"><img src="/img/massideaLogo.png"/></a>
-        <img id="headerSignet" src="/img/signet.png"/>
-        <?php
-        if (!$this->authenticated) : ?>
-            <?php echo $this->loginform; ?>
-            <?php else : ?>
-            <div id="headerLoggedIn">
-                <?php echo $this->username; ?>
-                <span class="grey"> |</span>
-                <a href="<?php echo $this->url(array(
-                    'controller' => 'account',
-                    'action' => 'logout',
-                    'language' => $this->language,
-                ), 'lang_default', true); ?>">
-                    <?php echo $this->translate('index-logout'); ?>
-                </a>
+<div id="footerBackground">
+    <div class="container">
+        <header>
+            <a id="headerLogo" href="<?php echo $this->url(array('language' => $this->language),
+                'lang_default', true); ?>/"><img src="/img/massideaLogo.png"/></a>
+            <img id="headerSignet" src="/img/signet.png"/>
+            <?php
+            if (!$this->authenticated) : ?>
+                <?php echo $this->loginform; ?>
+                <?php else : ?>
+                <div id="headerLoggedIn">
+                    <?php echo $this->username; ?>
+                    <span class="grey"> |</span>
+                    <a href="<?php echo $this->url(array(
+                                                        'controller' => 'account',
+                                                        'action'     => 'logout',
+                                                        'language'   => $this->language,
+                                                   ), 'lang_default', true); ?>">
+                        <?php echo $this->translate('index-logout'); ?>
+                    </a>
+                </div>
+                <?php endif; ?>
+        </header>
+        <section id="content">
+            <?php echo $this->layout()->content; ?>
+        </section>
+
+
+        <footer>
+            <div id="leftFooterSection">
+                <p><a href="#"><?php echo $this->translate('About MassIdea'); ?></a></p>
+
+                <p><a href="#"><?php echo $this->translate('Terms'); ?></a></p>
+
+                <p><a href="#"><?php echo $this->translate('Privacy'); ?></a></p>
+
+                <p><a href="#"><?php echo $this->translate('Imprint'); ?></a></p>
+
             </div>
-            <?php endif; ?>
-    </header>
-    <section id="content">
-        <?php echo $this->layout()->content; ?>
-    </section>
+            <div id="middleFooterSection">
+                <p><a href="#"><?php echo $this->translate('Join our Community'); ?></a></p>
 
+                <p><a href="#"><?php echo $this->translate('Sign-up'); ?></a></p>
 
-    <footer>
-     Here will be Lisa´s cool and sophisticated footer :)
-
-    </footer>
+                <p><a href="#"><?php echo $this->translate('Create a Post!'); ?></a></p>
+            </div>
+            <div id="languageSelection">
+                <?php echo $this->translate('Select your Platform Language'); ?>:
+                <select>
+                    <option><?php echo $this->translate('Language'); ?></option>
+                    <option><?php echo $this->translate('Finish'); ?></option>
+                    <option><?php echo $this->translate('German'); ?></option>
+                    <option><?php echo $this->translate('French'); ?></option>
+                </select>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+    </div>
 </div>
 </body>
 </html>
