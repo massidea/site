@@ -186,6 +186,12 @@ header {
     width:      80px;
 }
 
+#headerLoggedIn {
+	position: absolute;
+	top: 45px;
+	right: 35px;
+}
+
 /* ****************************************** */
 
 /* startpage */

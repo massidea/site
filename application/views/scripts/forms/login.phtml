@@ -4,7 +4,7 @@
 	  action="<?php echo $this->escape($this->element->getAction()); ?>"
       method="<?php echo $this->escape($this->element->getMethod()); ?>"
       enctype="<?php echo $this->escape($this->element->getAttrib('enctype')); ?>">
-
+	<?php echo $this->element->returnurl; ?>
     <div>
         <?php echo $this->element->username; ?>
         <?php echo $this->element->password; ?>
