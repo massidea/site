@@ -110,8 +110,9 @@ class AjaxController extends Oibs_Controller_CustomController
 
 	function getrecentcontentAction()
 	{
+
 		// Get requests
-        $offset = isset($this->params['offset']) ? $this->params['offset'] : 0;
+        $offset = isset($this->params['offset']) ? $this->params['offset'] :0;
         $contentType = isset($this->params['type']) ? $this->params['type'] : 'all';
 
         // Get models
@@ -120,7 +121,7 @@ class AjaxController extends Oibs_Controller_CustomController
 	
     	// Get recent post data
     	$recentposts_raw = $contentModel->listRecent(
-			$contentType, $offset, 15, 'created', $this->view->language, -1
+			$contentType, $offset, 3, 'random', $this->view->language, -1
     	);
 
     	$recentposts = array();
@@ -150,7 +151,9 @@ class AjaxController extends Oibs_Controller_CustomController
 
     	$this->view->recentposts = $recentposts;
 	}
-	
+
+
+
 	function checkrecentcontentAction()
 	{
         // Get cache from registry

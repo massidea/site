@@ -1,64 +1,215 @@
 <?php
-// some variable initiation    
-$url_sign_up = $this->url(array('controller' => 'account',
-                                'action' => 'register',
-                                'language' => $this->language), 
-                          		'lang_default', true);
-    
-$url_more = $this->url(array('controller' => 'search',
-                             'action' => 'result',
-                             'page' => '2',
-                             'language' => $this->language), 
-                        	 'lang_default', true);
+    // some variable initiation
+    $url_sign_up = $this->url(array('controller' => 'account',
+                                    'action'     => 'register',
+                                    'language'   => $this->language),
+        'lang_default', true);
 
-$url_getRecentContent = $this->url(array('controller' => 'ajax',
-							 'action' => 'getrecentcontent',
-							 'type' => 'all',
-							 'language' => $this->language), 
-							 'lang_default', true);
+    $url_more = $this->url(array('controller' => 'search',
+                                 'action'     => 'result',
+                                 'page'       => '2',
+                                 'language'   => $this->language),
+        'lang_default', true);
 
-$url_checkRecentContent = $this->url(array('controller' => 'ajax',
-										   'action' => 'checkrecentcontent',
-										   'language' => $this->language), 
-										   'lang_default', true);
+    $url_getRecentContent = $this->url(array('controller' => 'ajax',
+                                             'action'     => 'getrecentcontent',
+                                             'type'       => 'all',
+                                             'language'   => $this->language),
+        'lang_default', true);
 
-$url_tag_cloud = $this->url(array('controller' => 'tag',
-                             	  'action' => 'index',
-								  'list_type' => 'index',
-                             	  'language' => $this->language),
-                             	  'lang_default', true);
+    $url_checkRecentContent = $this->url(array('controller' => 'ajax',
+                                               'action'     => 'checkrecentcontent',
+                                               'language'   => $this->language),
+        'lang_default', true);
+
+    $url_tag_cloud = $this->url(array('controller' => 'tag',
+                                      'action'     => 'index',
+                                      'list_type'  => 'index',
+                                      'language'   => $this->language),
+        'lang_default', true);
 ?>
-<?php $this->headScript()->captureStart()?>
+<?php $this->headScript()->captureStart() ?>
 
 // Variables for ajax requests
 var url_checkrecentcontent = '<?php echo $url_checkRecentContent; ?>';
 var url_getrecentcontent = '<?php echo $url_getRecentContent; ?>';
 var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif'); ?>';
 
-<?php $this->headScript()->captureEnd()?>
+<?php $this->headScript()->captureEnd() ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
-    <h3 class="recent_posts"><?php echo $this->translate('index-recent-posts'); ?>
-        <a href="<?php echo $this->url(array('controller' => 'rss',
-                                             'action' => 'generate',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-                                           
-        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 5px; vertical-align: middle;" /></a>
-        <a href="<?php echo $this->url(array('controller' => 'voice',
-                                             'action' => 'generate',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-                                           
-        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 4px; vertical-align: middle;" /></a>
-	</h3>
+
+<section class="startpageCategories">
+    <div class="startpageCategoriesWrapper challenge">
+        <h2><?php echo $this->translate('Challenges'); ?></h2>
+
+        <div class="contentWrapper">
+            <div class="image">
+                <button class="buttonChallenge"><?php echo $this->translate('Create a Challenges'); ?></button>
+            </div>
+            <div class="desc"><?php echo $this->translate('content-list-right-problem'); ?></div>
+        </div>
+    </div>
+    <div class="startpageCategoriesWrapper idea">
+        <h2><?php echo $this->translate('Ideas'); ?></h2>
+
+        <div class="contentWrapper">
+            <div class="image">
+                <button class="buttonIdea"><?php echo $this->translate('Create an Idea'); ?></button>
+            </div>
+            <div class="desc"><?php echo $this->translate('content-list-right-idea'); ?></div>
+        </div>
+    </div>
+    <div class="startpageCategoriesWrapper vision">
+        <h2><?php echo $this->translate('Visions'); ?></h2>
+
+        <div class="contentWrapper">
+            <div class="image">
+                <button class="buttonVision"><?php echo $this->translate('Create a Vision'); ?></button>
+            </div>
+            <div class="desc"><?php echo $this->translate('content-list-right-finfo'); ?></div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+</section>
+
+<div class="startpageWrapper">
+    <section class="startpageAbout">
+        <h2><?php echo $this->translate('What is Massidea.org?'); ?></h2>
+        <ul class="startpageAboutAdvantages">
+            <li class="platform">Open Innovation Platform</li>
+            <li class="global">Global and huge Community</li>
+            <li class="share">Share your Challenges, Ideas and Visions</li>
+            <li class="contacts">Find new contacts and create own groups</li>
+            <li class="be-a-part">Be a part of Massidea!</li>
+        </ul>
+        <div class="join">
+            Start <span>now</span> and
+            <button class="buttonNormal">Join our Community!</button>
+        </div>
+    </section>
+    <section class="startpageFeed">
+        <div class="feedContent">
+            <ul>
+                <li class="vision">
+                    <div class="headline">Headline of the Content</div>
+                    <div class="author">by Tobias Curth</div>
+                    <div class="desc">Here are two or three lines of textbox to have a short
+                        introduction of it‘s content. So maybe you are
+                        interested in this and go to the post.
+                    </div>
+                </li>
+                <li class="idea">
+                    <div class="headline">Headline of the Content</div>
+                    <div class="author">by Tobias Curth</div>
+                    <div class="desc">Here are two or three lines of textbox to have a short
+                        introduction of it‘s content. So maybe you are
+                        interested in this and go to the post.
+                    </div>
+                </li>
+                <li class="challenge">
+                    <div class="headline">Headline of the Content</div>
+                    <div class="author">by Tobias Curth</div>
+                    <div class="desc">Here are two or three lines of textbox to have a short
+                        introduction of it‘s content. So maybe you are
+                        interested in this and go to the post.
+                    </div>
+                </li>
+                <li class="idea">
+                    <div class="headline">Headline of the Content</div>
+                    <div class="author">by Tobias Curth</div>
+                    <div class="desc">Here are two or three lines of textbox to have a short
+                        introduction of it‘s content. So maybe you are
+                        interested in this and go to the post.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="feedControl">more</div>
+
+    </section>
+    <div class="clearfix"></div>
+</div>
+
+    <section class="startpageFeatured">
+        <h2>Last Featured Visions</h2>
+        <div class="slider">
+            <img src="/img/startpageFeaturedDemo.png">
+        </div>
+    </section>
+
+
+
+
+<?php /*
+<h3 class="recent_posts"><?php echo $this->translate('index-recent-posts'); ?>
+    <a href="<?php echo $this->url(array('controller' => 'rss',
+                                         'action'     => 'generate',
+                                         'language'   => $this->language),
+        'lang_default', true); ?>">
+
+        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18"
+             height="18" style="padding-left: 5px; vertical-align: middle;"/></a>
+    <a href="<?php echo $this->url(array('controller' => 'voice',
+                                         'action'     => 'generate',
+                                         'language'   => $this->language),
+        'lang_default', true); ?>">
+
+        <img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18"
+             height="18" style="padding-left: 4px; vertical-align: middle;"/></a>
+</h3>
 <!-- Small hack to force a small space between the h2 and content... might help the Symbian -browsers a bit -->
 <div style="height: 2px;"></div>
 
+<div id="menu">
+    <a class="teaser" href="<?php echo $this->url(array(
+                                                       'type'     => 'problem',
+                                                       'language' => $this->language),
+        'content_list', true); ?>">
+        <img src="" alt="challenge_icon"/>
+
+        <h1><?php echo $this->translate('Challenges'); ?></h1>
+
+        <div class="preview_cat">
+            <div class="challenge_button">Create challenge</div>
+        </div>
+        <p class="description"><?php echo $this->translate('content-list-right-problem'); ?></p>
+    </a>
+    <a class="teaser" href="<?php echo $this->url(array(
+                                                       'type'     => 'idea',
+                                                       'language' => $this->language),
+        'content_list', true); ?>">
+        <img src="" alt="vision_icon"/>
+
+        <h1><?php echo $this->translate('Visions'); ?></h1>
+
+        <div class="preview_cat">
+            <div class="vision_button">Create vision</div>
+        </div>
+        <p class="description"><?php echo $this->translate('content-list-right-finfo'); ?></p>
+    </a>
+    <a class="teaser" href="<?php echo $this->url(array(
+                                                       'type'     => 'finfo',
+                                                       'language' => $this->language),
+        'content_list', true); ?>">
+        <img src="" alt="idea_icon"/>
+
+        <h1><?php echo $this->translate('Ideas'); ?></h1>
+
+        <div class="preview_cat">
+            <div class="idea_button">Create idea</div>
+        </div>
+        <p class="description"><?php echo $this->translate('content-list-right-idea'); ?></p>
+    </a>
+</div>
+
+
 <div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
-	<div id="recent_posts_ajax" style="width: 500px;"></div>
-    	<div class="user_content_spacer"></div>
-    
+    <div id="recent_posts_ajax" style="width: 500px;"></div>
+    <div class="user_content_spacer"></div>
+
     <div id="recent_posts_ajax_link" style="margin-top: 10px; margin-left: 220px;">
         <h3>
             <a href="#" onclick="return false;"><?php echo $this->translate('index-view-more'); ?></a>
@@ -66,30 +217,31 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     </div>
 </div>
 </div>
-<?php 
-/*
-Assign the partial view to the layout :) 
-If there is nothing, the layout just prints nothing. 
-However, if you assign a file that does not exist, the site will 
-throw an application error instantly, so be careful!
+<?php
 
-Commented to fix temporary problem, will be researched further later
-*/
-//$this->layout()->right_side = $this->partial('partials/index.phtml'); 
+    //Assign the partial view to the layout :)
+    //If there is nothing, the layout just prints nothing.
+    //However, if you assign a file that does not exist, the site will
+    //throw an application error instantly, so be careful!
+
+    //Commented to fix temporary problem, will be researched further later
+
+    //$this->layout()->right_side = $this->partial('partials/index.phtml');
 ?>
 
 <div id="sidebar">
     <!-- For some mystical reason, paragraphs seem to need an empty style-attribute in order to extend a CSS -class -->
     <div class="box">
-	    <h2>
-	        <?php echo $this->translate('index-what-is'); ?>
-	    </h2>
+        <h2>
+            <?php echo $this->translate('index-what-is'); ?>
+        </h2>
+
         <div class="box-content">
             <?php echo $this->translate('index-what-is-long'); ?>
             <?php // <span class="top_right_box_links"><a href="#"> echo $this->translate('index-learn-more'); </a></span> ?>
         </div>
     </div>
-    <?php if(!$this->isLoggedIn): ?>
+    <?php if (!$this->isLoggedIn): ?>
     <p id="sign_up_now" style="padding-bottom: 10px; text-align: center" class="top_right_box_links">
         <b>
             <a href="<?php echo $url_sign_up; ?>">
@@ -100,10 +252,10 @@ Commented to fix temporary problem, will be researched further later
     <?php endif; ?>
     <!-- Campaigns -->
     <div id="campaigns">
-            <?php $cmpurl = $this->url(array('controller' => 'campaign',
-                                         'action' => 'index',
-                                         'language' => $this->language),
-                                   'lang_default', true); ?>
+        <?php $cmpurl = $this->url(array('controller' => 'campaign',
+                                         'action'     => 'index',
+                                         'language'   => $this->language),
+        'lang_default', true); ?>
         <h2>Recent <a href="<?php echo $cmpurl;?>">campaigns</a></h2>
         <ul class="campaigns">
             <?php echo $this->partialLoop('partials/campaign_row_small.phtml', $this->campaigns); ?>
@@ -113,9 +265,9 @@ Commented to fix temporary problem, will be researched further later
     <!-- Groups -->
     <div id="groups">
         <?php $grpurl = $this->url(array('controller' => 'group',
-                                         'action' => 'index',
-                                         'language' => $this->language),
-                                   'lang_default', true); ?>
+                                         'action'     => 'index',
+                                         'language'   => $this->language),
+        'lang_default', true); ?>
         <h2>Recent <a href="<?php echo $grpurl;?>">groups</a></h2>
         <ul class="groups">
             <?php echo $this->partialLoop('partials/group_row_extra_small.phtml', $this->groups); ?>
@@ -126,49 +278,52 @@ Commented to fix temporary problem, will be researched further later
     <h2 id="most_active_users">
         <?php echo $this->translate('index-most-active')?>
         <a href="<?php echo $this->url(array('controller' => 'account',
-                                             'action' => 'userlist',
-        									 'order' => 'content',
-        									 'list' => 'desc',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
+                                             'action'     => 'userlist',
+                                             'order'      => 'content',
+                                             'list'       => 'desc',
+                                             'language'   => $this->language),
+            'lang_default', true); ?>">
             <?php echo "users"; ?></a>
     </h2>
+
     <div class="top_right_box_links_users">
-    <ul class="users">
-        <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
-	</ul>
+        <ul class="users">
+            <?php echo $this->partialLoop('partials/user_row.phtml', $this->activeusers); ?>
+        </ul>
     </div>
     <!-- End of users -->
     <!-- Tags -->
     <h2>
         <?php echo $this->translate('index-most-popular')?>
         <a href="<?php echo $this->url(array('controller' => 'tag',
-                                             'action' => 'index',
-        									 'order' => 'popularity',
-        									 'direction' => 'desc',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
+                                             'action'     => 'index',
+                                             'order'      => 'popularity',
+                                             'direction'  => 'desc',
+                                             'language'   => $this->language),
+            'lang_default', true); ?>">
             <?php echo $this->translate('index-tags')?>
         </a>
-    </h2> 
+    </h2>
+
     <div class="tag_cloud">
         <ul class="tags">
-        	<?php foreach($this->poptags as $tag): ?>
-        	<li class="tags">
-        		<?php echo $this->partial('partials/tag.phtml', $tag); ?>
-        	</li>
-        	<?php endforeach; ?>
-			<div class="clear"></div>
+            <?php foreach ($this->poptags as $tag): ?>
+            <li class="tags">
+                <?php echo $this->partial('partials/tag.phtml', $tag); ?>
+            </li>
+            <?php endforeach; ?>
+            <div class="clearfix"></div>
         </ul>
-     </div>
-     <div class="clear"></div>
-    <!-- End of tags --> 
+    </div>
+    <div class="clearfix"></div>
+    <!-- End of tags -->
     <!--  Missing a feature? -->
-	<h2>
-		<?php echo $this->translate('content-list-missing-header'); ?>
-	</h2> 
-	<p>
-		<?php echo $this->translate('index-opensource'); ?>
-	</p>
-	<!--  End of Missing a feature? -->
-    
+    <h2>
+        <?php echo $this->translate('content-list-missing-header'); ?>
+    </h2>
+
+    <p>
+        <?php echo $this->translate('index-opensource'); ?>
+    </p>
+    <!--  End of Missing a feature? -->
+       */

@@ -45,8 +45,9 @@
 		$translation_select = new Zend_Form_Element_Select('translation_select');
 		$translation_select->setAttrib('onchange', '$("#submit").click();');
 		$translation_select->removeDecorator('Errors');
-		$translation_select->removeDecorator('Label');
+		//$translation_select->removeDecorator('Label');
 		$translation_select->removeDecorator('HtmlTag');
+        $translation_select->setLabel('Select your Platform Language');
 		
 		foreach($options as $language)
 			$translation_select->addMultiOption($language['iso6391_lng'], $language['name_lng']);

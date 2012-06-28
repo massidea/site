@@ -106,6 +106,9 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		 	case 'views':
 				$order = 'viewCount ASC';
 		 		break;
+            case 'random':
+                $order = 'RAND()';
+                break;
 			default:
 				$order = 'created_cnt DESC';
 		}
