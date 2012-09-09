@@ -1,0 +1,28 @@
+/* Jani Penttinen
+ * IE7 CSS FIX
+*/
+
+div.right_side{ width: 200px !important; }
+div.top_row_center_right_login_links, div.user_content_spacer, div.user_content_spacer img, div.user_content_row, div.linking_content, #form_content_add_container, .form_helptext_line, .form_addcontent_row , #content_production_container_left, div.top_row_center_right_login_links{ width: 490px !important;}
+.add_content_button {cursor: pointer;}
+#add_content_menu { margin-left: -132px; margin-top: 27px;}
+.rsslogo {margin-top: -10px;}
+.user_list_left_side,.user_list_right_side,.user_list_last_login,.user_list_username,.user_list_city,.user_list_country,.user_list_rating,.user_list_rating_amount { float:left; }
+.user_list_moreless { margin-left: 25px; }
+.user_list_last_login { float: right; }
+.user_list_city,.user_list_country,.user_list_rating,.user_list_rating_amount { padding-left: 5px; }
+#user_list_search_form { padding-bottom: 0px; }
+.user_list_top_box_runnerups_rank, .user_list_top_box_runnerups_names { float: left; }
+.user_list_top_box_show_more {  margin-bottom: 0px; }
+.user_list_top_box_runnerups_title_points { margin-top: -15px; }
+.user_list_top_column { display: inline; }
+.user_list_top_box { margin-right: 4px; }
+#user_options { top: 25px; }
+.search_result_details_left div, .search_result_details div { display: inline; }
+.search_result_details_left { float: left; }
+#current_rating div { display: inline; }
+.view_content_left_header_btm { padding: 0px; padding-top: 2px; }
+.top_right_box div { float: left; margin-bottom: 10px; }
+#backdrop { filter:alpha(opacity=65) !important;zoom:1 !important; }
+div.top_row_center_right_language{	margin-left: 7px; }
+div.top_row_center_right_layout{ margin-right: 4px; }

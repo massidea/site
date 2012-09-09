@@ -78,6 +78,8 @@ input[type=submit], .buttonNormal {
     box-shadow:            inset 0px 0px 1px 1px rgba(255, 255, 255, 0.5);
     -webkit-box-shadow:    inset 0px 0px 1px 1px rgba(255, 255, 255, 0.5);
     -moz-box-shadow:       inset 0px 0px 1px 1px rgba(255, 255, 255, 0.5);
+
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
 }
 
 .buttonChallenge {
@@ -115,7 +117,6 @@ input[type=submit], .buttonNormal {
     filter:     progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f0c93c', endColorstr = '#bd9e2f', GradientType = 0); /* IE6-9 */
     border:     1px solid #a38929;
 
-    color: #333;
 }
 
 /* ****************************************** */
