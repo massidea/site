@@ -4,10 +4,16 @@
 <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
     <title><?php echo $this->translate($this->title); ?></title>
-    <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/style_basic.css'));
+
+    <?php
+
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/massidea.min.css'));
+
+
     $this->headScript()->appendFile($this->baseUrl('/js/jquery-1.7.2.min.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/bootstrap.min.js'));
     $this->headScript()->appendFile($this->baseUrl('/js/massidea.js'));
+
 
     echo $this->headLink();
     echo $this->headMeta();
