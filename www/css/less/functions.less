@@ -4,6 +4,7 @@
     -moz-border-radius:    @radius;
 }
 
+//
 .gradient(@colorStart, @colorEnd, @positionStart: top, @positionEnd: bottom, @percentStart: 0%, @percentEnd: 100%){
     background: -moz-linear-gradient(@positionStart, @colorStart @percentStart,  @colorEnd @percentEnd); /* FF3.6+ */
     background: -webkit-gradient(linear, left @positionStart, left  @positionEnd, color-stop(@percentStart, @colorStart), color-stop(@percentEnd, @colorEnd)); /* Chrome,Safari4+ */
@@ -18,6 +19,10 @@
     box-shadow:         @shadow @color;
     -webkit-box-shadow: @shadow @color;
     -moz-box-shadow:    @shadow @color;
+}
+
+.text-shadow(@color: rgba(0, 0, 0, .5), @position: 0 1px 1px) {
+    text-shadow: @color @position;
 }
 
 .border(@color, @settings: solid 1px) {
