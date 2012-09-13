@@ -1,22 +1,24 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <div id="sign-up-page" class="narrow left">
-            <h2 class="left"><?php echo $this->translate('account-register-page_header'); ?></h2>
+    <h2 class="left"><?php echo $this->translate('account-register-page_header'); ?></h2>
+
     <div class="clear"></div>
     <div id="edit-profile-form">
-	<?php
+        <?php
         if (isset($this->form)) {
             echo $this->form;
         } else {
             // PANIC!!
         }
-    ?>
-	</div>
-</div>
+        ?>
+    </div>
 </div>
 <div id="sidebar">
     <div class="box">
         <h2><?php echo $this->translate('registration-box-header'); ?></h2>
-    	<div class="box-content">
+
+        <div class="box-content">
             <p><?php echo $this->translate('account-register'); ?></p>
-		</div>
+        </div>
     </div>
+</div>
