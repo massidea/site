@@ -348,3 +348,64 @@ header {
 }
 
 /* ****************************************** */
+
+footer{
+    color: #768fb4;
+    background:url('/img/footerLine.png') no-repeat;
+
+
+}
+
+footer p{
+    font-size: 10px;
+
+}
+
+footer a{
+    color: #768fb4;
+}
+
+#leftFooterSection{
+   margin-top: 20px;
+   float:left;
+   width: 230px;
+}
+
+#leftFooterSection p{
+   padding-left: 70px;
+    margin-bottom: 7px;
+
+
+}
+
+#middleFooterSection{
+  margin-top: 20px;
+  float: left;
+  width: 480px;
+}
+
+#languageSelection{
+ margin-top: 20px;
+ float:left;
+}
+
+#languageSelection p{
+ margin-left: 23px;
+}
+
+footer select{
+  width: 160px;
+    height: 23px;
+    color: #aaaaaa;
+    font-size:10px;
+    border:                1px solid #566882;
+    border-radius:         7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius:    7px;
+    box-shadow:            inset 0px 0px 1px 1px #c7ccd4
+;
+    -webkit-box-shadow:    inset 0px 0px 1px 1px #c7ccd4
+;
+    -moz-box-shadow:       inset 0px 0px 1px 1px #c7ccd4
+;
+}

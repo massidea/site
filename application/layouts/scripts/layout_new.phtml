@@ -44,8 +44,28 @@
 
 
     <footer>
-     Here will be Lisa´s cool and sophisticated footer :) :)
+    <div id="leftFooterSection">
+        <p><a href="#"><?php echo $this->translate('About MassIdea'); ?></a></p>
+        <p><a href="#"><?php echo $this->translate('Terms'); ?></a></p>
+        <p><a href="#"><?php echo $this->translate('Privacy'); ?></a></p>
+        <p><a href="#"><?php echo $this->translate('Imprint'); ?></a></p>
 
+    </div>
+    <div id="middleFooterSection">
+        <p><a href="#"><?php echo $this->translate('Join our Community'); ?></a></p>
+        <p><a href="#"><?php echo $this->translate('Sign-up'); ?></a></p>
+        <p><a href="#"><?php echo $this->translate('Create a Post!'); ?></a></p>
+    </div>
+    <div id="languageSelection">
+    <p><?php echo $this->translate('Select your Platform Language'); ?>:</p>
+    <select>
+     <option><?php echo $this->translate('Language'); ?></option>
+     <option><?php echo $this->translate('Finish'); ?></option>
+     <option><?php echo $this->translate('German'); ?></option>
+     <option><?php echo $this->translate('French'); ?></option>
+    </select>
+    </div>
+        <div class="clearfix"></div>
     </footer>
 </div>
 </body>
