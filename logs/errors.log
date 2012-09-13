@@ -596,3 +596,12 @@ STACK TRACE:
 #12 /Users/cybertron/Web/massidea/library/Zend/Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
 #13 /Users/cybertron/Web/massidea/www/index.php(30): Zend_Application->run()
 #14 {main}
+2012-09-13T11:03:56+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
