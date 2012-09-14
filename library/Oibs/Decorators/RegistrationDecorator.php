@@ -87,7 +87,7 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 		if ($name == 'city') {
 			$output = "<h3>" . $translator->translate('register-personal-information') . "</h3>";
 		} else if ($name == 'username') {
-			$output = "<div class='clear'></div><h3>" . $translator->translate('register-account-information') . "</h3>";
+			$output = "<h3>" . $translator->translate('register-account-information') . "</h3>";
 		}
         if ($element->isRequired()) {
             $output .=  ' <div class="row">' .
@@ -96,16 +96,14 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 						' <div class="row">' .
 						' <div class=span6">' . $input .'</div>' .
 						' </div> '
-                        . $errors
-            			. '<div class="clear"></div>';
+                        . $errors;
         } else {
              $output .= '
                         <div class="input-column1">
                             '. $label .'</div>
                             <div class="input-column2">
                                 '. $input
-                            . '</div>' 
-                            . '<div class="clear"></div>';
+                            . '</div>';
         }
 
         switch ($placement) 
