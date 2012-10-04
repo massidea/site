@@ -1,15 +1,6 @@
 <?php 
 class Oibs_Decorators_LoginDecorator extends Zend_Form_Decorator_Abstract
 {
-	public function buildLabel()
-	{
-		$element = $this->getElement();
-		$label = $element->getLabel();
-		
-		return $element->getView()
-						->formLabel($element->getName(), $label);
-	}
-
 	public function buildInput()
     {
         $element = $this->getElement();
@@ -61,19 +52,11 @@ class Oibs_Decorators_LoginDecorator extends Zend_Form_Decorator_Abstract
 
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
-        $label     = $this->buildLabel();
         $input     = $this->buildInput();
-        $errors    = $this->buildErrors();
-        $desc      = $this->buildDescription();
 
-        $output = '<div class="login-row">' .
-				  '<div class="login-column1 left">'. $label . '</div>' .
-				  '<div class="login-column2 left">' . $input . '</div>'
-					. $errors
-					. $desc
-					. '<div class="clear"></div>'
-					. '</div>';
-					
+
+        $output = '<div class="span4">' .$input . '</div>';
+
 
         switch ($placement) 
 		{

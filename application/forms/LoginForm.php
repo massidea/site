@@ -41,12 +41,12 @@ class Default_Form_LoginForm extends Zend_Form
 
 		$this->setName('login_form');
 		$this->setAction($actionUrl);
-		//$this->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator');
+		$this->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator');
 
-        $this->setDecorators(array(array(
-                'ViewScript',
-                array('viewScript' => 'forms/login.phtml')
-            )));
+             $this->setDecorators(array(array(
+            'ViewScript',
+            array('viewScript' => 'forms/login.phtml')
+        )));
 
 		// Username input form element
 		$username = new Zend_Form_Element_Text('username');
@@ -57,7 +57,7 @@ class Default_Form_LoginForm extends Zend_Form
 				->addValidators(array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
 				))
-				//->setDecorators(array('LoginDecorator'))
+				->setDecorators(array('ViewHelper'))
         ;
 
 		// Password input form element
@@ -68,17 +68,17 @@ class Default_Form_LoginForm extends Zend_Form
 				->addValidators(array(
 					array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
 				))
-				//->setDecorators(array('LoginDecorator'))
+				->setDecorators(array('ViewHelper'))
         ;
-
-		$hidden = new Zend_Form_Element_Hidden('returnurl');
-		$hidden->setValue($options['returnurl']);
 
 		// Form submit buttom element
 		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel($translate->_("account-login-submit"));
+		$submit->setLabel($translate->_("account-login-submit"))
+            ->removeDecorator('DtDdWrapper')
+            ->setAttrib('class', 'btn')
+         ;
 
 		// Add elements to form
-		$this->addElements(array($username, $password, $hidden, $submit));
+		$this->addElements(array($username, $password, $submit));
 	}
 }

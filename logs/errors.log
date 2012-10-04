@@ -632,3 +632,264 @@ STACK TRACE:
 #2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
 #3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
 #4 {main}
+2012-10-04T10:00:34+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T10:27:10+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:23:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:24:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:27:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:32:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:35:43+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:37:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:39:19+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:39:53+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:40:58+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:41:49+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:45:25+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:46:32+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:47:15+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:47:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:48:36+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:49:22+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:50:37+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:52:27+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:53:17+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T11:59:40+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T12:00:59+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T12:02:29+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T12:03:12+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T12:03:55+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T12:04:16+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T12:04:41+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-04T12:06:02+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\MassIdeaProject\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
+#4 {main}
