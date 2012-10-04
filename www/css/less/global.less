@@ -1,77 +1,83 @@
-body {
-    ul {
-        list-style: none;
-        margin:     0;
-        padding:    0;
-    }
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-    background: url("/img/bodyBg.png") repeat-x;
+background:
 
-    .header {
-        position:   relative;
-        background: url("/img/headerBg.png") white;
-        height:     124px;
+url
+(
+"/img/bodyBg.png"
+)
+repeat-x
 
-        #massidea-logo {
-            position: absolute;
-            top:      35px;
-            left:     35px;
-        }
-        #massidea-signet {
-            position: absolute;
-            top:      8px;
-            left:     420px;
-        }
-    }
+;
 
-    .footer {
-        padding: 30px 0 0 0;
-        background: url('/img/footerLine.png') no-repeat;
-        height: 115px;
-    }
+.header {
+  position: relative;
+  background: url("/img/headerBg.png") white;
+  height: 124px;
 
-    #footerBackground {
-        background: url('/img/footerBg.png') bottom repeat-x;
-    }
+  #massidea-logo {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+  }
+  #massidea-signet {
+    position: absolute;
+    top: 8px;
+    left: 420px;
+  }
+}
+
+.footer {
+  padding: 30px 0 0 0;
+  background: url('/img/footerLine.png') no-repeat;
+  height: 115px;
+}
+
+#footerBackground {
+  background: url('/img/footerBg.png') bottom repeat-x;
 }
 
 .btn {
-    .gradient(@colorStandardFirst, @colorStandardSecond);
-    .border(@colorStandardThird);
+  .gradient(@colorStandardFirst, @colorStandardSecond);
+  .border(@colorStandardThird);
+  color: white;
+  .text-shadow;
+
+  &:hover, &:active {
     color: white;
     .text-shadow;
+    background: @colorStandardFirst;
+  }
 
-    &:hover {
-        color:      white;
-        .text-shadow;
-        background: @colorStandardFirst;
+  &.btn-challenge {
+    .gradient(@colorChallengeFirst, @colorChallengeSecond);
+    .border(@colorChallengeThird);
+
+    &:hover, &:active {
+      background: @colorChallengeFirst;
     }
+  }
 
-    &.btn-challenge {
-        .gradient(@colorChallengeFirst, @colorChallengeSecond);
-        .border(@colorChallengeThird);
+  &.btn-idea {
+    .gradient(@colorIdeaFirst, @colorIdeaSecond);
+    .border(@colorIdeaThird);
 
-        &:hover {
-            background: @colorChallengeFirst;
-        }
+    &:hover, &:active {
+      background: @colorIdeaFirst;
     }
+  }
 
-    &.btn-idea {
-        .gradient(@colorIdeaFirst, @colorIdeaSecond);
-        .border(@colorIdeaThird);
+  &.btn-vision {
+    .gradient(@colorVisionFirst, @colorVisionSecond);
+    .border(@colorVisionThird);
 
-        &:hover {
-            background: @colorIdeaFirst;
-        }
+    &:hover, &:active {
+      background: @colorVisionFirst;
     }
-
-    &.btn-vision {
-        .gradient(@colorVisionFirst, @colorVisionSecond);
-        .border(@colorVisionThird);
-
-        &:hover {
-            background: @colorVisionFirst;
-        }
-    }
+  }
 
 }
