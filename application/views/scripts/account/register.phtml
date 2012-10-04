@@ -1,9 +1,7 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
-<div id="sign-up-page" class="narrow left">
-    <h2 class="left"><?php echo $this->translate('account-register-page_header'); ?></h2>
-
-    <div class="clear"></div>
-    <div id="edit-profile-form">
+<div class="row">
+    <div class="span6">
+        <h2><?php echo $this->translate('account-register-page_header'); ?></h2>
         <?php
         if (isset($this->form)) {
             echo $this->form;
@@ -12,13 +10,9 @@
         }
         ?>
     </div>
-</div>
-<div id="sidebar">
-    <div class="box">
+    <!-- TODO: Delete breaks - but don't know, where they come from :/ -->
+    <div class="span6">
         <h2><?php echo $this->translate('registration-box-header'); ?></h2>
-
-        <div class="box-content">
-            <p><?php echo $this->translate('account-register'); ?></p>
-        </div>
+        <?php echo $this->translate('account-register'); ?>
     </div>
 </div>
