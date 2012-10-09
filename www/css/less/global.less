@@ -3,17 +3,15 @@ body {
 }
 
 ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+	list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .header {
     position:   relative;
     background: url("/img/headerBg.png") white;
     height:     124px;
-
-
 
     #massidea-logo {
         position: absolute;
@@ -34,7 +32,6 @@ ul {
         input[type="password"]{
             width: 186px;
 		    height: 18px;
-	        float: left;
         }
 
         input[type="submit"] {
@@ -48,63 +45,56 @@ ul {
 	}
 }
 
-
-.startPage {
-	.startPageFeed {
-		float:  left;
-		width:  320px;
-		border: 1px solid #768fb4;
-	}
-}
-
-
 .footer {
-  padding: 30px 0 0 0;
-  background: url('/img/footerLine.png') no-repeat;
-  height: 115px;
+	padding: 30px 0 0 0;
+	background: url('/img/footerLine.png') no-repeat;
+	height: 115px;
 }
 
 #footerBackground {
-  background: url('/img/footerBg.png') bottom repeat-x;
+	background: url('/img/footerBg.png') bottom repeat-x;
 }
 
 .btn {
-  .gradient(@colorStandardFirst, @colorStandardSecond);
-  .border(@colorStandardThird);
-  color: white;
-  .text-shadow;
+	.gradient(@colorStandardFirst, @colorStandardSecond);
+	.border(@colorStandardThird);
+	color: white;
+	.text-shadow;
 
-  &:hover, &:active {
-    color: white;
-    .text-shadow;
-    background: @colorStandardFirst;
+	&:hover, &:active {
+		color: white;
+	    .text-shadow;
+		background: @colorStandardFirst;
+	  }
+
+	&.btn-challenge {
+		.gradient(@colorChallengeFirst, @colorChallengeSecond);
+	    .border(@colorChallengeThird);
+
+	    &:hover, &:active {
+	        background: @colorChallengeFirst;
+	    }
+	}
+
+	&.btn-idea {
+	    .gradient(@colorIdeaFirst, @colorIdeaSecond);
+	    .border(@colorIdeaThird);
+
+	    &:hover, &:active {
+		    background: @colorIdeaFirst;
+	    }
+	  }
+
+	&.btn-vision {
+		.gradient(@colorVisionFirst, @colorVisionSecond);
+	    .border(@colorVisionThird);
+
+	    &:hover, &:active {
+	        background: @colorVisionFirst;
+	    }
   }
+}
 
-  &.btn-challenge {
-    .gradient(@colorChallengeFirst, @colorChallengeSecond);
-    .border(@colorChallengeThird);
-
-    &:hover, &:active {
-      background: @colorChallengeFirst;
-    }
-  }
-
-  &.btn-idea {
-    .gradient(@colorIdeaFirst, @colorIdeaSecond);
-    .border(@colorIdeaThird);
-
-    &:hover, &:active {
-      background: @colorIdeaFirst;
-    }
-  }
-
-  &.btn-vision {
-    .gradient(@colorVisionFirst, @colorVisionSecond);
-    .border(@colorVisionThird);
-
-    &:hover, &:active {
-      background: @colorVisionFirst;
-    }
-  }
-
+.margin-top {
+	margin: 20px 0 0 0;
 }

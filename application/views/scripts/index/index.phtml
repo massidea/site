@@ -38,7 +38,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <?php $this->headScript()->captureEnd() ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
-<div class="row startpage">
+<div class="row startPage">
     <div class="span12">
         <div class="row threeBigSections">
             <div class="span4">
@@ -81,7 +81,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row margin-top">
             <div class="span6 advantages">
                 <h2><?php echo $this->translate('What is Massidea.org?'); ?></h2>
                 <ul>
@@ -102,8 +102,8 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                     </a>
                 </div>
             </div>
-            <div class="span5 offset1 startPageFeed">
-                <ul>
+            <div class="span5 offset1 startPageFeed pull-right">
+                <ul class="feedContent">
                     <li class="vision">
                         <div class="headline">Headline of the Content</div>
                         <div class="author">by Tobias Curth</div>
@@ -137,6 +137,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                         </div>
                     </li>
                 </ul>
+	            <div class="feedControl">more</div>
             </div>
         </div>
         <div class="row">
