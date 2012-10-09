@@ -38,25 +38,25 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 
 		//$params = $this->getRequest()->getParams();
 		
-		$language = 'en';
+		$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
-		/*
-		if(isset($params['language']))
-		{
-			$language = $params['language'];
-		}
-		
-		if($language == false)
-		{
-			$language = $translate->isAvailable($locale->getLanguage) ? $locale->getLanguage() : $config->language->default;
-		}
+        /*
+          if(isset($params['language']))
+          {
+              $language = $params['language'];
+          }
 
-		if(!$translate->isAvailable($language))
-		{
-			$language = 'en';
-			//throw new Zend_Controller_Action_Exception('This page does not exist', 404);
-		}
-		*/
+          if($language == false)
+          {
+              $language = $translate->isAvailable($locale->getLanguage) ? $locale->getLanguage() : $config->language->default;
+          }
+
+          if(!$translate->isAvailable($language))
+          {
+              $language = 'en';
+              //throw new Zend_Controller_Action_Exception('This page does not exist', 404);
+          }
+          */
 		//else
 		//{
 			$locale->setLocale($language);

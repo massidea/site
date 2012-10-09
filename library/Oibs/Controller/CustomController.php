@@ -167,7 +167,23 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		echo '</pre>';
 		*/
 
-	} // end of init
+
+        // fill footer comboBox with languages
+        $languageModel = new Default_Model_Languages();
+
+        $languages = $languageModel->getAllNames();
+
+        $activeLanguages = array();
+
+        foreach($languages as $lang) {
+            $activeLanguages[] = $lang['name_lng'];
+        }
+
+        $this->view->activeLanguages = $activeLanguages;
+
+
+
+    } // end of init
 
 	/**
 	 *	getUrl
