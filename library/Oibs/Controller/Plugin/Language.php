@@ -15,12 +15,28 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 		
 		// Get languages
 		$locale = new Zend_Locale();		
-		$options = array('scan' => Zend_Translate::LOCALE_FILENAME, 'disableNotices' => true);
-		$cache = Zend_Registry::get('cache');
-		Zend_Translate::setCache($cache);
-		$translate = @new Zend_Translate('tmx', APPLICATION_PATH . '/languages/', 'auto', $options);
+		//$options = array('scan' => Zend_Translate::LOCALE_FILENAME, 'disableNotices' => true);
+		//$cache = Zend_Registry::get('cache');
+		//Zend_Translate::setCache($cache);
 
-		$params = $this->getRequest()->getParams();
+        $config = Zend_Registry::get('config');
+        $languagefiles = $config->language->files;
+        //var_dump($languagefiles);
+        //$languagefilesEn = $config->language->files->en->toArray();
+        //var_dump($languagefilesEn);
+        $translate = new Zend_Translate('csv', APPLICATION_PATH . '/languages/index_en.csv', 'en');
+
+        $langArr = $languagefiles->toArray();
+        foreach($langArr as $lang => $files)
+        {
+            foreach ($files as $file)
+            {
+                $translate->addTranslation(APPLICATION_PATH . '/languages/' . $file, $lang);
+            }
+        }
+
+
+		//$params = $this->getRequest()->getParams();
 		
 		$language = 'en';
 
@@ -46,6 +62,9 @@ class Oibs_Controller_Plugin_Language extends Zend_Controller_Plugin_Abstract
 			$locale->setLocale($language);
 			$translate->setLocale($locale);
 			Zend_Form::setDefaultTranslator($translate);
+
+            //var_dump($translate->getLocale());
+        //var_dump(Zend_Translate::LOCALE_FILENAME);
 			
 			//setcookie('lang', $locale->getLanguage(), null, '/');
 			
