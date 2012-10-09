@@ -42,13 +42,17 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     <div class="span12">
         <div class="row threeBigSections">
             <div class="span4">
-                <h2><img src="/img/icons/challenge.png" alt="Challenges"><?php echo $this->translate('Challenges'); ?></h2>
+                <h2><img src="/img/icons/challenge.png" alt="Challenges"><?php echo $this->translate('Challenges'); ?>
+                </h2>
                 <a class="thumbnail">
                     <img src="http://placehold.it/300x200" alt="">
                     <button class="btn btn-challenge"><?php echo $this->translate('Create a Challenges'); ?></button>
                 </a>
 
-                <div class="desc"><?php echo $this->translate('content-list-right-problem'); ?></div>
+                <div class="desc"><?php echo $this->translate('content-list-right-problem'); ?>
+                    <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'problem',
+                            'language' => $this->language),
+                        'content_list', true); ?>"><?php echo $this->translate('Recent Challenges'); ?></a></div>
             </div>
             <div class="span4">
                 <h2><img src="/img/icons/idea.png" alt="Ideas"><?php echo $this->translate('Ideas'); ?></h2>
@@ -57,7 +61,10 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                     <button class="btn btn-idea"><?php echo $this->translate('Create an Idea'); ?></button>
                 </a>
 
-                <div class="desc"><?php echo $this->translate('content-list-right-idea'); ?></div>
+                <div class="desc"><?php echo $this->translate('content-list-right-idea'); ?>
+                    <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'idea',
+                            'language' => $this->language),
+                        'content_list', true); ?>"><?php echo $this->translate('Recent Ideas'); ?></a></div>
             </div>
             <div class="span4">
                 <h2><img src="/img/icons/vision.png" alt="Visions"><?php echo $this->translate('Visions'); ?></h2>
@@ -67,11 +74,15 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                     <button class="btn btn-vision"><?php echo $this->translate('Create a Vision'); ?></button>
                 </a>
 
-                <div class="desc"><?php echo $this->translate('content-list-right-finfo'); ?></div>
+                <div class="desc"><?php echo $this->translate('content-list-right-finfo'); ?>
+                    <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'vision',
+                            'language' => $this->language),
+                        'content_list', true); ?>"><?php echo $this->translate('Recent Visions'); ?></a>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="span5 startpage-advantages">
+            <div class="span6 advantages">
                 <h2><?php echo $this->translate('What is Massidea.org?'); ?></h2>
                 <ul>
                     <li class="platform">Open Innovation Platform</li>
@@ -80,8 +91,15 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                     <li class="contacts">Find new contacts and create own groups</li>
                     <li class="be-a-part">Be a part of Massidea!</li>
                 </ul>
-                <div>Start <span>now</span> and
-                    <button class="btn">Join our Community!</button>
+                <div class="start-now">
+                    Start <span>now</span> and
+                    <a class="btn" href="<?php echo $this->url(array(
+                        'controller' => 'account',
+                        'action' => 'login',
+                        'language' => $this->language,
+                    ), 'lang_default', true); ?>">
+                        <?php echo $this->translate('Join our Community'); ?>
+                    </a>
                 </div>
             </div>
             <div class="span6 offset1 startPageFeed">
