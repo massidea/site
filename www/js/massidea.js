@@ -1,0 +1,1 @@
+$('*[rel=popup]').hide();
