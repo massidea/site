@@ -1433,3 +1433,30 @@ STACK TRACE:
 #2 C:\xampp\htdocs\MassIdeaProject\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
 #3 C:\xampp\htdocs\MassIdeaProject\www\index.php(30): Zend_Application->run()
 #4 {main}
+2012-10-09T15:40:04+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-09T18:30:18+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\www\index.php(30): Zend_Application->run()
+#4 {main}
+2012-10-09T18:36:54+03:00 NOTICE (5): FROM: 127.0.0.1. 
+URI: /js/recentcontent.js
+MESSAGE: Invalid controller specified (recentcontent.js). 
+STACK TRACE:
+#0 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Controller\Front.php(946): Zend_Controller_Dispatcher_Standard->dispatch(Object(Zend_Controller_Request_Http), Object(Zend_Controller_Response_Http))
+#1 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Application\Bootstrap\Bootstrap.php(77): Zend_Controller_Front->dispatch()
+#2 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\library\Zend\Application.php(358): Zend_Application_Bootstrap_Bootstrap->run()
+#3 C:\xampp\htdocs\Projektgruppe-Hgb\massidea_zend\www\index.php(30): Zend_Application->run()
+#4 {main}
