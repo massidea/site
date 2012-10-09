@@ -89,6 +89,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
             <button class="buttonNormal">Join our Community!</button>
         </div>
     </section>
+    <? /*
     <section class="startpageFeed">
         <div class="feedContent">
             <ul>
@@ -129,8 +130,20 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
         <div class="feedControl">more</div>
 
-    </section>
+    </section> */?>
+
+    <?=$this->render('ajax/getlivefeed.phtml')?>
+
+    <div id='container'>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#container').load('/default/index/list/format/html');
+        });
+    </script>
+
     <div class="clearfix"></div>
+
 </div>
 
     <section class="startpageFeatured">
