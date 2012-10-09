@@ -5,7 +5,9 @@
           method="<?php echo $this->escape($this->element->getMethod()); ?>"
           enctype="<?php echo $this->escape($this->element->getAttrib('enctype')); ?>">
         <div class="row">
-            <?php echo $this->element->username; ?>
+            <div class="span2">
+	            <?php echo $this->element->username; ?>
+            </div>
             <div class="span2">
                 <a class="signup" href="<?php echo $this->url(array(
                     'controller' => 'account',
@@ -18,7 +20,9 @@
         </div>
 
         <div class="row">
-           <?php echo $this->element->password; ?>
+           <div class="span2">
+	            <?php echo $this->element->password; ?>
+	       </div>
            <div class="span2">
                <?php echo $this->element->submit; ?>
            </div>

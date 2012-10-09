@@ -13,14 +13,7 @@ ul {
     background: url("/img/headerBg.png") white;
     height:     124px;
 
-    input {
-      width: 146px;
-      float: left;
-    }
 
-    .signup {
-        margin: 0 0 0 20px;
-    }
 
     #massidea-logo {
         position: absolute;
@@ -33,11 +26,37 @@ ul {
         left:     420px;
     }
 
-    .headerLogin input {
-      width: 50px;
-    }
 
+    .headerLogin {
+		margin: 20px 0 0 0;
+
+	    input[type="text"],
+        input[type="password"]{
+            width: 186px;
+		    height: 18px;
+	        float: left;
+        }
+
+        input[type="submit"] {
+	        height: 27px;
+	        margin: 1px 0 0 90px;
+        }
+
+	    .signup {
+		    margin: 0 0 0 90px;
+	    }
+	}
 }
+
+
+.startPage {
+	.startPageFeed {
+		float:  left;
+		width:  320px;
+		border: 1px solid #768fb4;
+	}
+}
+
 
 .footer {
   padding: 30px 0 0 0;
