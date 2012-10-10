@@ -1,12 +1,12 @@
 <?php 
 class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 {
-	public function buildLabel()
+	public function buildLabel($text)
 	{
 		$element = $this->getElement();
 		$label = $element->getLabel();
 
-		return "<label><strong>".$label."</strong></label>";//$element->getView()
+		return "<label><strong>".$label . " " . $text ."</strong></label>";//$element->getView()
 						//->formLabel($element->getName(),$label);
 	}
 
@@ -74,7 +74,7 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
-        $label     = $this->buildLabel();
+        $label     = $this->buildLabel($text);
         $input     = $this->buildInput();
         $errors    = $this->buildErrors();
         $desc      = $this->buildDescription();
@@ -87,22 +87,23 @@ class Oibs_Decorators_RegistrationDecorator extends Zend_Form_Decorator_Abstract
 		if ($name == 'city') {
 			$output = "<h3>" . $translator->translate('register-personal-information') . "</h3>";
 		} else if ($name == 'username') {
-			$output = "<div class='clear'></div><h3>" . $translator->translate('register-account-information') . "</h3>";
+			$output = "<h3>" . $translator->translate('register-account-information') . "</h3>";
 		}
         if ($element->isRequired()) {
-            $output .=   '<div class="input-column1">' . $label . '</div>' .
-                            '<div class="input-column2">'. $input .'</div>'
-                            . '<div class="input-column3">'. $text . '</div>'
-                        . $errors
-            			. '<div class="clear"></div>';
+            $output .=  ' <div class="row">' .
+						' <div class=span2">' . $label . '</div>' .
+						' </div> ' .
+						' <div class="row">' .
+						' <div class=span6">' . $input .'</div>' .
+						' </div> '
+                        . $errors;
         } else {
              $output .= '
                         <div class="input-column1">
                             '. $label .'</div>
                             <div class="input-column2">
                                 '. $input
-                            . '</div>' 
-                            . '<div class="clear"></div>';
+                            . '</div>';
         }
 
         switch ($placement) 

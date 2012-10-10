@@ -1,0 +1,123 @@
+.startPage {
+	.threeBigSections {
+
+		h2 {
+			margin-bottom: 0;
+
+			img {
+				margin: 0 10px 5px 10px;
+			}
+		}
+		.thumbnail {
+			position: relative;
+
+			button {
+				position: absolute;
+				bottom: 15px;
+				right: 15px;
+			}
+		}
+		.desc {
+			padding: 5px;
+
+			.recent {
+				margin: 10px 5px;
+				display: block;
+			}
+		}
+	}
+
+	.advantages {
+		ul {
+			list-style: none;
+
+			li {
+				color: #999;
+				padding: 0 0 0 75px;
+				font-size: 18px;
+				line-height: 70px;
+
+			}
+		}
+		.start-now {
+			color: @colorStandardFirst;
+			padding: 0 0 0 75px;
+			font-size: 18px;
+			line-height: 70px;
+		}
+		.startpageAboutAdvantages .platform {
+			background: url("/img/icons/startpage/platform.png") no-repeat;
+			background-position: 21px 17px;
+		}
+
+		.startpageAboutAdvantages .global {
+			background: url("/img/icons/startpage/global.png") no-repeat;
+			background-position: 21px 17px;
+		}
+
+		.startpageAboutAdvantages .share {
+			background: url("/img/icons/startpage/share.png") no-repeat;
+			background-position: 21px 17px;
+		}
+
+		.startpageAboutAdvantages .contacts {
+			background: url("/img/icons/startpage/contacts.png") no-repeat;
+			background-position: 21px 17px;
+		}
+
+		.startpageAboutAdvantages .be-a-part {
+			background: url("/img/icons/startpage/be-a-part.png") no-repeat;
+			background-position: 21px 17px;
+		}
+	}
+	.startPageFeed {
+		width: 320px;
+		border: 1px solid @colorLiveFeed;
+
+		.feedControl {
+			background: @colorLiveFeed;
+			color: white;
+			text-align: center;
+			line-height: 20px;
+		}
+
+		.feedContent {
+			.headline,
+			.author {
+				padding: 0 0 0 30px;
+			}
+
+			.headline {
+				font-size: 18px;
+				font-weight: bold;
+			}
+
+			.author {
+				color: #999;
+			}
+
+			li {
+				height: 80px;
+				display: block;
+				padding: 15px;
+				border-bottom: 1px solid @colorLiveFeed;
+				box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
+				-webkit-box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
+				-moz-box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
+
+				&.challenge {
+					background: url("/img/icons/challenge.png") 16px 18px no-repeat;
+				}
+
+				&.idea {
+					background: url("/img/icons/idea.png") 16px 18px no-repeat;
+				}
+
+				&.vision {
+					background: url("/img/icons/vision.png") 16px 18px no-repeat;
+				}
+			}
+		}
+
+	}
+}
