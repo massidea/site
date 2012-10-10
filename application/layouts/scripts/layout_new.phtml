@@ -34,7 +34,7 @@
                                                         'action'     => 'logout',
                                                         'language'   => $this->language,
                                                    ), 'lang_default', true); ?>">
-                        <?php echo $this->translate('index-logout'); ?>
+                        <?php echo $this->translate('logout'); ?>
                     </a>
                 </div>
                 <?php endif; ?>
@@ -46,29 +46,29 @@
 
         <footer>
             <div id="leftFooterSection">
-                <p><a href="#"><?php echo $this->translate('About MassIdea'); ?></a></p>
+                <p><a href="#"><?php echo $this->translate('about-Massidea'); ?></a></p>
 
-                <p><a href="#"><?php echo $this->translate('Terms'); ?></a></p>
+                <p><a href="#"><?php echo $this->translate('terms'); ?></a></p>
 
-                <p><a href="#"><?php echo $this->translate('Privacy'); ?></a></p>
+                <p><a href="#"><?php echo $this->translate('privacy'); ?></a></p>
 
-                <p><a href="#"><?php echo $this->translate('Imprint'); ?></a></p>
+                <p><a href="#"><?php echo $this->translate('imprint'); ?></a></p>
 
             </div>
             <div id="middleFooterSection">
-                <p><a href="#"><?php echo $this->translate('Join our Community'); ?></a></p>
+                <p><a href="#"><?php echo $this->translate('join-our-community-footer'); ?></a></p>
 
-                <p><a href="#"><?php echo $this->translate('Sign-up'); ?></a></p>
+                <p><a href="#"><?php echo $this->translate('sign-up'); ?></a></p>
 
-                <p><a href="#"><?php echo $this->translate('Create a Post!'); ?></a></p>
+                <p><a href="#"><?php echo $this->translate('create-a-post'); ?></a></p>
             </div>
             <div id="languageSelection">
-                <?php echo $this->translate('Select your Platform Language'); ?>:
+                <?php echo $this->translate('select-your-platform-language'); ?>:
                 <select>
-                    <option><?php echo $this->translate('Language'); ?></option>
-                    <option><?php echo $this->translate('Finish'); ?></option>
-                    <option><?php echo $this->translate('German'); ?></option>
-                    <option><?php echo $this->translate('French'); ?></option>
+                        <option><?php echo $this->translate('language'); ?></option>
+                    <?php foreach($this->activeLanguages as $language) {?>
+                        <option><?php echo $this->translate($language); ?></option>
+                    <?php } ?>
                 </select>
             </div>
             <div class="clearfix"></div>
@@ -77,5 +77,4 @@
 </div>
 </body>
 </html>
-
 

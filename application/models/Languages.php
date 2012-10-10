@@ -104,6 +104,16 @@ class Default_Model_Languages extends Zend_Db_Table_Abstract
 		
 		return $result;
 	} // end of getAllNamesAndIds
+
+    public function getAllNames()
+    {
+        $select = $this->select()
+            ->from($this, array('name_lng'))
+            ->where("`active_lng` = 1");
+        $result = $this->fetchAll($select)->toArray();
+
+        return $result;
+    } // end of getAllNamesAndIds
 	
 	
 	/**

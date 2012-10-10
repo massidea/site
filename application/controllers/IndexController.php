@@ -159,4 +159,6 @@ class IndexController extends Oibs_Controller_CustomController
         $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();
         $this->view->recentCampaignsCount = $recentCampaignsCount;        
     }
+
+
 }

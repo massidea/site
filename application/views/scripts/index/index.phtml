@@ -129,7 +129,18 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
         <div class="feedControl">more</div>
 
-    </section>
+    </section> */?>
+
+    <?=$this->render('ajax/getlivefeed.phtml')?>
+
+    <div id='container'>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#container').load('/default/index/list/format/html');
+        });
+    </script>
+
     <div class="clearfix"></div>
 </div>
 

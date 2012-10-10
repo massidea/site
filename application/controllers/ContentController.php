@@ -41,6 +41,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
 		$ajaxContext->addActionContext('list', 'xml')->initContext();
+		$ajaxContext->addActionContext('feed', 'html')->initContext();
 		$this->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$this->view->title = 'content-title';
 	} // end of init()
@@ -1776,5 +1777,10 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 	*/
+    public function feedAction()
+    {
+        $data = array('red', 'green', 'yellow', 'blue');
+        $this->view->data = $data;
+    }
 }
 
