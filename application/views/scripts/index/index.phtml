@@ -1,32 +1,32 @@
 <?php
-    // some variable initiation
-    $url_sign_up = $this->url(array('controller' => 'account',
-                                    'action'     => 'register',
-                                    'language'   => $this->language),
-        'lang_default', true);
+// some variable initiation
+$url_sign_up = $this->url(array('controller' => 'account',
+        'action' => 'register',
+        'language' => $this->language),
+    'lang_default', true);
 
-    $url_more = $this->url(array('controller' => 'search',
-                                 'action'     => 'result',
-                                 'page'       => '2',
-                                 'language'   => $this->language),
-        'lang_default', true);
+$url_more = $this->url(array('controller' => 'search',
+        'action' => 'result',
+        'page' => '2',
+        'language' => $this->language),
+    'lang_default', true);
 
-    $url_getRecentContent = $this->url(array('controller' => 'ajax',
-                                             'action'     => 'getrecentcontent',
-                                             'type'       => 'all',
-                                             'language'   => $this->language),
-        'lang_default', true);
+$url_getRecentContent = $this->url(array('controller' => 'ajax',
+        'action' => 'getrecentcontent',
+        'type' => 'all',
+        'language' => $this->language),
+    'lang_default', true);
 
-    $url_checkRecentContent = $this->url(array('controller' => 'ajax',
-                                               'action'     => 'checkrecentcontent',
-                                               'language'   => $this->language),
-        'lang_default', true);
+$url_checkRecentContent = $this->url(array('controller' => 'ajax',
+        'action' => 'checkrecentcontent',
+        'language' => $this->language),
+    'lang_default', true);
 
-    $url_tag_cloud = $this->url(array('controller' => 'tag',
-                                      'action'     => 'index',
-                                      'list_type'  => 'index',
-                                      'language'   => $this->language),
-        'lang_default', true);
+$url_tag_cloud = $this->url(array('controller' => 'tag',
+        'action' => 'index',
+        'list_type' => 'index',
+        'language' => $this->language),
+    'lang_default', true);
 ?>
 <?php $this->headScript()->captureStart() ?>
 
@@ -38,111 +38,141 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <?php $this->headScript()->captureEnd() ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
+<div class="row startPage">
+    <div class="span12">
+        <div class="row threeBigSections">
+            <div class="span4">
+                <h2><img src="/img/icons/challenge.png" alt="Challenges"><?php echo $this->translate('Challenges'); ?>
+                </h2>
+                <a class="thumbnail">
+                    <img src="http://placehold.it/300x200" alt="">
+                    <button class="btn btn-challenge"><?php echo $this->translate('Create a Challenges'); ?></button>
+                </a>
 
-<section class="startpageCategories">
-    <div class="startpageCategoriesWrapper challenge">
-        <h2><?php echo $this->translate('Challenges'); ?></h2>
-
-        <div class="contentWrapper">
-            <div class="image">
-                <button class="buttonChallenge"><?php echo $this->translate('Create a Challenges'); ?></button>
+                <div class="desc"><?php echo $this->translate('content-list-right-problem'); ?>
+                    <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'problem',
+                            'language' => $this->language),
+                        'content_list', true); ?>"><?php echo $this->translate('Recent Challenges'); ?></a></div>
             </div>
-            <div class="desc"><?php echo $this->translate('content-list-right-problem'); ?></div>
+            <div class="span4">
+                <h2><img src="/img/icons/idea.png" alt="Ideas"><?php echo $this->translate('Ideas'); ?></h2>
+                <a class="thumbnail">
+                    <img src="http://placehold.it/300x200" alt="">
+                    <button class="btn btn-idea"><?php echo $this->translate('Create an Idea'); ?></button>
+                </a>
+
+                <div class="desc"><?php echo $this->translate('content-list-right-idea'); ?>
+                    <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'idea',
+                            'language' => $this->language),
+                        'content_list', true); ?>"><?php echo $this->translate('Recent Ideas'); ?></a></div>
+            </div>
+            <div class="span4">
+                <h2><img src="/img/icons/vision.png" alt="Visions"><?php echo $this->translate('Visions'); ?></h2>
+
+                <a class="thumbnail">
+                    <img src="http://placehold.it/300x200" alt="">
+                    <button class="btn btn-vision"><?php echo $this->translate('Create a Vision'); ?></button>
+                </a>
+
+                <div class="desc"><?php echo $this->translate('content-list-right-finfo'); ?>
+                    <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'vision',
+                            'language' => $this->language),
+                        'content_list', true); ?>"><?php echo $this->translate('Recent Visions'); ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top">
+            <div class="span6 advantages">
+                <a href="#" class="btn btn-large btn-danger" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">Click to toggle popover</a>
+                <h2><?php echo $this->translate('What is Massidea.org?'); ?></h2>
+                <ul>
+                    <li class="platform">Open <a href="#" rel="popup" data-content="foo" data-title="blub">Innovation</a> Platform</li>
+                    <li class="global">Global and huge Community</li>
+                    <li class="share">Share your Challenges, Ideas and Visions</li>
+                    <li class="contacts">Find new contacts and create own groups</li>
+                    <li class="be-a-part">Be a part of Massidea!</li>
+                </ul>
+                <div class="start-now">
+                    Start <span>now</span> and
+                    <a class="btn" href="<?php echo $this->url(array(
+                        'controller' => 'account',
+                        'action' => 'login',
+                        'language' => $this->language,
+                    ), 'lang_default', true); ?>">
+                        <?php echo $this->translate('Join our Community'); ?>
+                    </a>
+                </div>
+            </div>
+            <div class="span5 offset1 startPageFeed pull-right">
+                <ul class="feedContent">
+                    <li class="vision">
+                        <div class="headline">Headline of the Content</div>
+                        <div class="author">by Tobias Curth</div>
+                        <div class="desc">Here are two or three lines of textbox to have a short
+                            introduction of it‘s content. So maybe you are
+                            interested in this and go to the post.
+                        </div>
+                    </li>
+                    <li class="idea">
+                        <div class="headline">Headline of the Content</div>
+                        <div class="author">by Tobias Curth</div>
+                        <div class="desc">Here are two or three lines of textbox to have a short
+                            introduction of it‘s content. So maybe you are
+                            interested in this and go to the post.
+                        </div>
+                    </li>
+                    <li class="challenge">
+                        <div class="headline">Headline of the Content</div>
+                        <div class="author">by Tobias Curth</div>
+                        <div class="desc">Here are two or three lines of textbox to have a short
+                            introduction of it‘s content. So maybe you are
+                            interested in this and go to the post.
+                        </div>
+                    </li>
+                    <li class="idea">
+                        <div class="headline">Headline of the Content</div>
+                        <div class="author">by Tobias Curth</div>
+                        <div class="desc">Here are two or three lines of textbox to have a short
+                            introduction of it‘s content. So maybe you are
+                            interested in this and go to the post.
+                        </div>
+                    </li>
+                </ul>
+	            <div class="feedControl">more</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <h2>Last Featured Visions</h2>
+
+                <div id="startpage-featured-visions" class="carousel slide">
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                        <div class="active item">
+                            <img src="/img/startpageFeaturedDemo.png">
+                        </div>
+                        <div class="item">
+                            <img src="http://www.placehold.it/810x160&text=second%20one" alt="">
+                        </div>
+
+                        <div class="item">
+                            <img src="http://www.placehold.it/810x160&text=to%20be%20developed..." alt="">
+                        </div>
+                        <div class="item">
+                            <img src="http://www.placehold.it/810x160&text=It%20works!" alt="">
+                        </div>
+                        <div class="item">
+                            <img src="http://www.placehold.it/810x160&text=thanks%20Bootstrap" alt="">
+                        </div>
+                    </div>
+                    <!-- Carousel nav -->
+                    <a class="carousel-control left" href="#startpage-featured-visions" data-slide="prev">&lsaquo;</a>
+                    <a class="carousel-control right" href="#startpage-featured-visions" data-slide="next">&rsaquo;</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="startpageCategoriesWrapper idea">
-        <h2><?php echo $this->translate('Ideas'); ?></h2>
-
-        <div class="contentWrapper">
-            <div class="image">
-                <button class="buttonIdea"><?php echo $this->translate('Create an Idea'); ?></button>
-            </div>
-            <div class="desc"><?php echo $this->translate('content-list-right-idea'); ?></div>
-        </div>
-    </div>
-    <div class="startpageCategoriesWrapper vision">
-        <h2><?php echo $this->translate('Visions'); ?></h2>
-
-        <div class="contentWrapper">
-            <div class="image">
-                <button class="buttonVision"><?php echo $this->translate('Create a Vision'); ?></button>
-            </div>
-            <div class="desc"><?php echo $this->translate('content-list-right-finfo'); ?></div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-
-</section>
-
-<div class="startpageWrapper">
-    <section class="startpageAbout">
-        <h2><?php echo $this->translate('What is Massidea.org?'); ?></h2>
-        <ul class="startpageAboutAdvantages">
-            <li class="platform">Open Innovation Platform</li>
-            <li class="global">Global and huge Community</li>
-            <li class="share">Share your Challenges, Ideas and Visions</li>
-            <li class="contacts">Find new contacts and create own groups</li>
-            <li class="be-a-part">Be a part of Massidea!</li>
-        </ul>
-        <div class="join">
-            Start <span>now</span> and
-            <button class="buttonNormal">Join our Community!</button>
-        </div>
-    </section>
-    <section class="startpageFeed">
-        <div class="feedContent">
-            <ul>
-                <li class="vision">
-                    <div class="headline">Headline of the Content</div>
-                    <div class="author">by Tobias Curth</div>
-                    <div class="desc">Here are two or three lines of textbox to have a short
-                        introduction of it‘s content. So maybe you are
-                        interested in this and go to the post.
-                    </div>
-                </li>
-                <li class="idea">
-                    <div class="headline">Headline of the Content</div>
-                    <div class="author">by Tobias Curth</div>
-                    <div class="desc">Here are two or three lines of textbox to have a short
-                        introduction of it‘s content. So maybe you are
-                        interested in this and go to the post.
-                    </div>
-                </li>
-                <li class="challenge">
-                    <div class="headline">Headline of the Content</div>
-                    <div class="author">by Tobias Curth</div>
-                    <div class="desc">Here are two or three lines of textbox to have a short
-                        introduction of it‘s content. So maybe you are
-                        interested in this and go to the post.
-                    </div>
-                </li>
-                <li class="idea">
-                    <div class="headline">Headline of the Content</div>
-                    <div class="author">by Tobias Curth</div>
-                    <div class="desc">Here are two or three lines of textbox to have a short
-                        introduction of it‘s content. So maybe you are
-                        interested in this and go to the post.
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="feedControl">more</div>
-
-    </section>
-    <div class="clearfix"></div>
 </div>
-
-    <section class="startpageFeatured">
-        <h2>Last Featured Visions</h2>
-        <div class="slider">
-            <img src="/img/startpageFeaturedDemo.png">
-        </div>
-    </section>
-
-
-
-
 <?php /*
 <h3 class="recent_posts"><?php echo $this->translate('index-recent-posts'); ?>
     <a href="<?php echo $this->url(array('controller' => 'rss',
