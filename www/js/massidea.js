@@ -3,4 +3,4 @@ jQuery(document).ready(function () {
         trigger:'hover',
         html:'true'
     });
-});
+}); 
