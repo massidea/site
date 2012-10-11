@@ -83,23 +83,52 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         </div>
         <div class="row margin-top">
             <div class="span6 advantages">
-                <a href="#" class="btn btn-large btn-danger" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">Click to toggle popover</a>
                 <h2><?php echo $this->translate('What is Massidea.org?'); ?></h2>
                 <ul>
-                    <li class="platform">Open <a href="#" rel="popup" data-content="foo" data-title="blub">Innovation</a> Platform</li>
-                    <li class="global">Global and huge Community</li>
-                    <li class="share">Share your Challenges, Ideas and Visions</li>
-                    <li class="contacts">Find new contacts and create own groups</li>
-                    <li class="be-a-part">Be a part of Massidea!</li>
+                    <li class="platform">
+                        <a rel="popover-hover"
+                           data-title="<?php echo $this->translate('index-open-innovation-platform'); ?>"
+                           data-content="<?php echo $this->translate('index-open-innovation-platform-description'); ?>">
+                            <?php echo $this->translate('index-open-innovation-platform'); ?>
+                        </a>
+                    </li>
+                    <li class="global">
+                        <a rel="popover-hover"
+                           data-title="<?php echo $this->translate('index-global-and-huge-community'); ?>"
+                           data-content="<?php echo $this->translate('index-global-and-huge-community-description'); ?>">
+                            <?php echo $this->translate('index-global-and-huge-community'); ?>
+                        </a>
+                    </li>
+                    <li class="share">
+                        <a rel="popover-hover"
+                           data-title="<?php echo $this->translate('index-share-your-challenges-ideas-ideas-visions'); ?>"
+                           data-content="<?php echo $this->translate('index-share-your-challenges-ideas-ideas-visions-description'); ?>">
+                            <?php echo $this->translate('index-share-your-challenges-ideas-ideas-visions'); ?>
+                        </a>
+                    </li>
+                    <li class="contacts">
+                        <a rel="popover-hover"
+                           data-title="<?php echo $this->translate('index-find-new-contacts'); ?>"
+                           data-content="<?php echo $this->translate('index-find-new-contacts-description'); ?>">
+                            <?php echo $this->translate('index-find-new-contacts'); ?>
+                        </a>
+                    </li>
+                    <li class="be-a-part">
+                        <a rel="popover-hover"
+                           data-title="<?php echo $this->translate('index-be-part-of-Massidea'); ?>"
+                           data-content="<?php echo $this->translate('index-be-part-of-Massidea-description'); ?>">
+                            <?php echo $this->translate('index-be-part-of-Massidea'); ?>
+                        </a>
+                    </li>
                 </ul>
-                <div class="start-now">
-                    Start <span>now</span> and
+                <div class="start-now pull-right">
+                    <?php echo $this->translate('index-Start-now-and'); ?>
                     <a class="btn" href="<?php echo $this->url(array(
                         'controller' => 'account',
                         'action' => 'login',
                         'language' => $this->language,
                     ), 'lang_default', true); ?>">
-                        <?php echo $this->translate('Join our Community'); ?>
+                        <?php echo $this->translate('index-join-our-community'); ?>
                     </a>
                 </div>
             </div>
@@ -138,7 +167,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                         </div>
                     </li>
                 </ul>
-	            <div class="feedControl">more</div>
+                <div class="feedControl">more</div>
             </div>
         </div>
         <div class="row">
