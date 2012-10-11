@@ -40,8 +40,9 @@ class ContentController extends Oibs_Controller_CustomController
 		parent::init();
 
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
-		$ajaxContext->addActionContext('list', 'xml')->initContext();
-		$ajaxContext->addActionContext('feed', 'html')->initContext();
+		$ajaxContext->addActionContext('list', 'xml')
+                    ->addActionContext('feed', 'html')
+                    ->initContext();
 		$this->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$this->view->title = 'content-title';
 	} // end of init()
@@ -1781,6 +1782,13 @@ class ContentController extends Oibs_Controller_CustomController
     {
         $data = array('red', 'green', 'yellow', 'blue');
         $this->view->data = $data;
+    }
+
+    public function getLanguage()
+    {
+        $translate = Zend_Registry::get('Zend_Translate');
+        $curr_language = $translate->getLocale();
+        return $curr_language;
     }
 }
 

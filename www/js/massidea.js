@@ -1,1 +1,5 @@
-$('*[rel=popup]').hide();
+$(function() {
+
+    $('*[rel=popup]').hide();
+
+});

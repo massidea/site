@@ -13,12 +13,17 @@
         $this->headScript()->appendFile($this->baseUrl('/js/jquery-1.7.2.min.js'));
         $this->headScript()->appendFile($this->baseUrl('/js/bootstrap.min.js'));
         $this->headScript()->appendFile($this->baseUrl('/js/massidea.js'));
+        $this->headScript()->appendFile($this->baseUrl('/js/newsfeed.js'));
 
 
         echo $this->headLink();
         echo $this->headMeta();
         echo $this->headScript();
     ?>
+
+    <script type="text/javascript">
+        var LANGUAGE = "<?php echo $this->language;?>";
+    </script>
 </head>
 <body>
 <div id="footerBackground">
