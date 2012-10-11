@@ -1,31 +1,9 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 
-<div id="login-page">
 	<h2><?php echo $this->translate('account-login-title'); ?></h2>
 
 	<?php if(isset($this->errormsg)): ?>
         <h4> <?php echo $this->errormsg; ?></h4>
     <?php endif; ?>
 
-    
 	<?php echo $this->form; ?>
-	<div id="login-page-links">
-	<div class="left">
-			<a href="<?php echo $this->url(array('controller' => 'account', 
-                                                 'action' => 'fetchpassword', 
-                                                 'language' => $this->language), 
-                                           'lang_default', true); ?>">
-                 <?php echo $this->translate('account-login-forgot_password'); ?>
-            </a>
-		</div>
-	<div class="right">
-		<img src="<?php echo $this->baseUrl('/images/icon_openid_16x16.gif'); ?>" alt="OpenID login" style="vertical-align: middle;" />
-		<a href="<?php echo $this->url(array('controller' => 'account',
-                                             'action' => 'openid',
-                                             'language' => $this->language),
-                                       'lang_default', true); ?>">
-			<?php echo $this->translate('account-login-via-openid'); ?></a>
-	</div>
-	</div>
-	<div class="clear"></div>
-</div>

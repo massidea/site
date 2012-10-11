@@ -2,9 +2,8 @@
 	/** @var $form Default_Form_LoginForm */
 	$form = $this->element;
 ?>
-
-<div class="headerLogin">
-    <form id="<?php echo $this->escape($form->getName()); ?>"
+<div class="loginSite">
+    <form id="<?php echo $this->escape($form->getName()); ?>" class="form-horizontal"
         <?php //name="echo $this->escape($form->getName()); "?>
           action="<?php echo $this->escape($form->getAction()); ?>"
           method="<?php echo $this->escape($form->getMethod()); ?>"
@@ -12,28 +11,47 @@
 
 	    <?php echo $form->returnurl; ?>
 
-        <div class="row">
-            <div class="span2">
-	            <?php echo $form->username; ?>
-            </div>
-            <div class="span2">
-                <a class="signup" href="<?php echo $this->url(array(
-                    'controller' => 'account',
-                    'action'     => 'register',
-                    'language'   => $this->language,
-                ), 'lang_default', true); ?>">
-                    <?php echo $this->translate('signup'); ?>
-                </a>
-            </div>
-        </div>
+            <div class="control-group">
 
-        <div class="row">
-           <div class="span2">
-	            <?php echo $form->password; ?>
-	       </div>
-           <div class="span2">
-               <?php echo $form->submit; ?>
-           </div>
+	            <label class="control-label" for="username">
+					<?php echo $this->translate('email');?>
+                </label>
+                <div class="controls">
+	                <?php echo $form->username; ?>
+                </div>
+            </div>
+	        <div class="row">
+		        <div class="span2">
+					<?php echo $this->translate('password');?>
+                </div>
+                <div class="span2 inputText">
+			        <?php echo $form->password; ?>
+                </div>
+	        </div>
+			<div class="row">
+                <div class="span2">
+                    <a class="signup" href="<?php echo $this->url(array(
+						'controller' => 'account',
+						'action'     => 'register',
+						'language'   => $this->language,
+					), 'lang_default', true); ?>">
+						<?php echo $this->translate('signup'); ?>
+                    </a>
+                </div>
+                <div class="span2">
+					<?php echo $form->submit; ?>
+                </div>
+			</div>
+	        <div class="row">
+                <div class="span2">
+                    <a href="<?php echo $this->url(array('controller' => 'account',
+					        'action' => 'fetchpassword',
+					        'language' => $this->language),
+				        'lang_default', true); ?>">
+				        <?php echo $this->translate('account-login-forgot_password'); ?>
+                    </a>
+                </div>
+		    </div>
         </div>
-    </form>
+     </form>
 </div>
