@@ -42,6 +42,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
 		$ajaxContext->addActionContext('list', 'xml')
                     ->addActionContext('feed', 'html')
+                    ->addActionContext('lang_switcher', 'html')
                     ->initContext();
 		$this->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$this->view->title = 'content-title';
