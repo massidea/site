@@ -194,12 +194,9 @@ class Default_Form_RegistrationForm extends Zend_Form
 		$submit = new Zend_Form_Element_Submit('submit');
 		$submit->setLabel($translate->_("account-register-submit"))
                ->removeDecorator('DtDdWrapper')
-               ->setDecorators(array(
-                                    'ViewHelper',
-                                     array('HtmlTag', array('tag' => 'div', 'class' => 'registration_submit_div'))
-                                ))
-               ->setAttrib('class', 'registration_form_submit_' . $translate->getLocale())
+              ->setAttrib('class', 'btn')
                ;
+
         
 		$this->addElements(array($username, $password, $confirm_password, 
                                 $city, $email, $employment, 
