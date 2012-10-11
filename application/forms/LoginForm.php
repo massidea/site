@@ -77,7 +77,7 @@ class Default_Form_LoginForm extends Zend_Form
 
 		// Form submit buttom element
 		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel($translate->_("login"))
+		$submit->setLabel($translate->_("layout-login"))
             ->removeDecorator('DtDdWrapper')
             ->setAttrib('class', 'btn')
          ;

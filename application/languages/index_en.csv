@@ -6,29 +6,31 @@ index-ideas;Ideas
 index-create-an-idea;Create an Idea
 index-content-list-right-idea;Ideas are solutions to today’s challenges and visions of the future related opportunities and threats. Idea is always the starting point, plan or intention for potential innovation.
 index-recent-ideas;Recent Ideas
-visions;Visions
-create-a-vision;Create a Vision
-content-list-right-finfo;Visions of the future or foresight, concern the long-term futures that are usually at least 10 years away. Vision can be a future scenario, trend or anti-trend, which is most likely expected to be realized in the long run. It can also describe alternative future based on seed of change or a weak signal, which might significantly change our life to unexpected path. Visions identify opportunities and threats and help generating new ideas. Ideas founded on vision are more likely resulting radical innovations.
-what-is-Massidea.org?;What is Massidea.org?
-open-innovation-platform;Open <a href="#" rel="popup" data-content="foo" data-title="blub">Innovation</a> Platform
-global-and-huge-community;Global and huge Community
-share-your-challenges-ideas-ideas-visions;Share your Challenges, Ideas and Visions
-find-new-contacts;Find new contacts and create own groups
-be-part-of-Massidea;Be a part of Massidea!
-start-now-and;Start <span>now</span> and
-join-our-community-button;Join our Community!
-about-Massidea;About MassIdea
-terms;Terms
-privacy;Privacy
-imprint;Imprint
-join-our-community-footer;Join our Community
-sign-up;Sign-up
-create-a-post;Create a Post!
-select-your-platform-language;Select your Platform Language:
-language;Language
-Finish;Finish
-German;German
-French;French
-login;Login
-logout;Logout
-signup;Sign up
+index-visions;Visions
+index-create-a-vision;Create a Vision
+index-content-list-right-finfo;Visions of the future or foresight, concern the long-term futures that are usually at least 10 years away. Vision can be a future scenario, trend or anti-trend, which is most likely expected to be realized in the long run. It can also describe alternative future based on seed of change or a weak signal, which might significantly change our life to unexpected path. Visions identify opportunities and threats and help generating new ideas. Ideas founded on vision are more likely resulting radical innovations.
+index-recent-visions;Recent Visions
+index-what-is-Massidea.org?;What is Massidea.org?
+index-open-innovation-platform;Open <a href="#" rel="popup" data-content="foo" data-title="blub">Innovation</a> Platform
+index-global-and-huge-community;Global and huge Community
+index-share-your-challenges-ideas-ideas-visions;Share your Challenges, Ideas and Visions
+index-find-new-contacts;Find new contacts and create own groups
+index-be-part-of-Massidea;Be a part of Massidea!
+index-start-now-and;Start <span>now</span> and
+index-join-our-community-button;Join our Community!
+layout-about-Massidea;About MassIdea
+layout-terms;Terms
+layout-privacy;Privacy
+layout-imprint;Imprint
+layout-join-our-community-footer;Join our Community
+layout-sign-up;Sign-up
+layout-create-a-post;Create a Post!
+layout-select-your-platform-language;Select your Platform Language:
+layout-language;Language
+layout-Finish;Finish
+layout-German;German
+layout-French;French
+
+layout-login;Login
+layout-logout;Logout
+layout-signup;Sign up

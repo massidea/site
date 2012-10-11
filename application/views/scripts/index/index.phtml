@@ -42,36 +42,36 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
     <div class="span12">
         <div class="row threeBigSections">
             <div class="span4">
-                <h2><img src="/img/icons/challenge.png" alt="Challenges"><?php echo $this->translate('Challenges'); ?>
+                <h2><img src="/img/icons/challenge.png" alt="Challenges"><?php echo $this->translate('index-challenges'); ?>
                 </h2>
                 <a class="thumbnail">
                     <img src="http://placehold.it/300x200" alt="">
-                    <button class="btn btn-challenge"><?php echo $this->translate('Create a Challenges'); ?></button>
+                    <button class="btn btn-challenge"><?php echo $this->translate('index-create-a-challenge'); ?></button>
                 </a>
 
-                <div class="desc"><?php echo $this->translate('content-list-right-problem'); ?>
+                <div class="desc"><?php echo $this->translate('index-content-list-right-problem'); ?>
                     <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'problem',
                             'language' => $this->language),
-                        'content_list', true); ?>"><?php echo $this->translate('Recent Challenges'); ?></a></div>
+                        'content_list', true); ?>"><?php echo $this->translate('index-recent-challenges'); ?></a></div>
             </div>
             <div class="span4">
-                <h2><img src="/img/icons/idea.png" alt="Ideas"><?php echo $this->translate('Ideas'); ?></h2>
+                <h2><img src="/img/icons/idea.png" alt="Ideas"><?php echo $this->translate('index-ideas'); ?></h2>
                 <a class="thumbnail">
                     <img src="http://placehold.it/300x200" alt="">
-                    <button class="btn btn-idea"><?php echo $this->translate('Create an Idea'); ?></button>
+                    <button class="btn btn-idea"><?php echo $this->translate('index-create-an-idea'); ?></button>
                 </a>
 
-                <div class="desc"><?php echo $this->translate('content-list-right-idea'); ?>
+                <div class="desc"><?php echo $this->translate('index-content-list-right-idea'); ?>
                     <a class="recent pull-right" href="<?php echo $this->url(array('type' => 'idea',
                             'language' => $this->language),
-                        'content_list', true); ?>"><?php echo $this->translate('Recent Ideas'); ?></a></div>
+                        'content_list', true); ?>"><?php echo $this->translate('index-recent-ideas'); ?></a></div>
             </div>
             <div class="span4">
-                <h2><img src="/img/icons/vision.png" alt="Visions"><?php echo $this->translate('Visions'); ?></h2>
+                <h2><img src="/img/icons/vision.png" alt="Visions"><?php echo $this->translate('index-visions'); ?></h2>
 
                 <a class="thumbnail">
                     <img src="http://placehold.it/300x200" alt="">
-                    <button class="btn btn-vision"><?php echo $this->translate('Create a Vision'); ?></button>
+                    <button class="btn btn-vision"><?php echo $this->translate('index-create-a-vision'); ?></button>
                 </a>
 
                 <div class="desc"><?php echo $this->translate('content-list-right-finfo'); ?>
@@ -84,22 +84,22 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         <div class="row margin-top">
             <div class="span6 advantages">
                 <a href="#" class="btn btn-large btn-danger" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">Click to toggle popover</a>
-                <h2><?php echo $this->translate('What is Massidea.org?'); ?></h2>
+                <h2><?php echo $this->translate('index-what-is-Massidea.org?'); ?></h2>
                 <ul>
-                    <li class="platform">Open <a href="#" rel="popup" data-content="foo" data-title="blub">Innovation</a> Platform</li>
-                    <li class="global">Global and huge Community</li>
-                    <li class="share">Share your Challenges, Ideas and Visions</li>
-                    <li class="contacts">Find new contacts and create own groups</li>
-                    <li class="be-a-part">Be a part of Massidea!</li>
+                    <li class="platform"><?php echo $this->translate('index-open-innovation-platform'); ?></li>
+                    <li class="global"><?php echo $this->translate('index-global-and-huge-community'); ?></li>
+                    <li class="share"><?php echo $this->translate('index-share-your-challenges-ideas-ideas-visions'); ?></li>
+                    <li class="contacts"><?php echo $this->translate('index-find-new-contacts'); ?></li>
+                    <li class="be-a-part"><?php echo $this->translate('index-be-part-of-Massidea'); ?></li>
                 </ul>
                 <div class="start-now">
-                    Start <span>now</span> and
+                    <?php echo $this->translate('index-start-now-and'); ?>
                     <a class="btn" href="<?php echo $this->url(array(
                         'controller' => 'account',
                         'action' => 'login',
                         'language' => $this->language,
                     ), 'lang_default', true); ?>">
-                        <?php echo $this->translate('Join our Community'); ?>
+                        <?php echo $this->translate('index-join-our-community-button'); ?>
                     </a>
                 </div>
             </div>
