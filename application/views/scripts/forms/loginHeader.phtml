@@ -2,8 +2,9 @@
 	/** @var $form Default_Form_LoginForm */
 	$form = $this->element;
 ?>
-<div class="loginSite">
-    <form id="<?php echo $this->escape($form->getName()); ?>" class="form-horizontal"
+
+<div class="headerLogin">
+    <form id="<?php echo $this->escape($form->getName()); ?>"
         <?php //name="echo $this->escape($form->getName()); "?>
           action="<?php echo $this->escape($form->getAction()); ?>"
           method="<?php echo $this->escape($form->getMethod()); ?>"
