@@ -204,7 +204,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
         $_SESSION['language'] = $language;
 
-        $this->_redirect('/'.$language.$return_url);
+        $this->_redirect('/'.$language.'/'.$return_url);
 
     }
 
