@@ -199,7 +199,8 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
      */
     public function changeLanguageAction() {
         $language = $this->_getParam('language');
-        $return_url = $this->_getParam('returnUrl');
+        $return_url = substr($this->_getParam('returnUrl'),1);
+        $return_url = substr($this->_getParam('returnUrl'),str_pos($this->_getParam('returnUrl'), '/'));
 
         $_SESSION['language'] = $language;
 
