@@ -59,10 +59,16 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	*/
 	public function init()
 	{
+
+        if (isset($_SESSION['language'])) {
+            $this->view->language = $_SESSION['language'];
+
+        } else {
         // Zend_Controller_Action_Helper_Redirector::setPrependBase(false);
 		// Load languages to view
-		$this->view->languages = Zend_Registry::get('Available_Translations');
-		$this->view->language = Zend_Registry::get('Zend_Locale');
+		    $this->view->languages = Zend_Registry::get('Available_Translations');
+		    $this->view->language = Zend_Registry::get('Zend_Locale');
+        }
 
         // this can be used in any view now...useful I believe :)
 		$this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -187,6 +193,21 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
 
     } // end of init
+
+    /**
+     * change Lanugage Action
+     */
+    public function changeLanguageAction() {
+        $language = $this->_getParam('language');
+        $return_url = $this->_getParam('returnUrl');
+
+        $_SESSION['language'] = $language;
+
+        $this->_redirect($return_url);
+
+    }
+
+
 
 	/**
 	 *	getUrl
