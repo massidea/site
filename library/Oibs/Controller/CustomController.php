@@ -171,12 +171,15 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         // fill footer comboBox with languages
         $languageModel = new Default_Model_Languages();
 
-        $languages = $languageModel->getAllNames();
+        $languages = $languageModel->getAllNamesAndCodes();
 
         $activeLanguages = array();
 
         foreach($languages as $lang) {
-            $activeLanguages[] = $lang['name_lng'];
+            $activeLanguages[] = array(
+                'id'   => $lang['iso6391_lng'],
+                'name' => $lang['name_lng'],
+            );
         }
 
         $this->view->activeLanguages = $activeLanguages;

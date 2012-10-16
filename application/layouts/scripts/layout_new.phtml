@@ -17,7 +17,6 @@
 
         echo $this->headLink();
         echo $this->headMeta();
-        echo $this->headScript();
     ?>
 </head>
 <body>
@@ -63,7 +62,7 @@
                 <ul>
                 <li><a href="#"><?php echo $this->translate('layout-join-our-community-footer'); ?></a></li>
                 <li><a href="#"><?php echo $this->translate('layout-sign-up'); ?></a></li>
-                <li><a href="#"><?php echo $this->translate('layout-create-a-post'); ?></a</li>
+                <li><a href="#"><?php echo $this->translate('layout-create-a-post'); ?></a></li>
                 </ul>
             </div>
             <div class="span4">
@@ -71,13 +70,16 @@
                 <select id="languageMenu">
                     <option><?php echo $this->translate('layout-language'); ?></option>
                     <?php foreach($this->activeLanguages as $language) {?>
-                    <option><?php echo $this->translate($language); ?></option>
+                        <option value="<?php echo $language['id']; ?>"><?php echo $this->translate($language['name']); ?></option>
                     <?php } ?>
                 </select>
             </div>
         </div>
     </div>
 </div>
+<?php
+echo $this->headScript();
+?>
 </body>
 </html>
 
