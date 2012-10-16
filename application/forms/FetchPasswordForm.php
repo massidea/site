@@ -100,7 +100,7 @@ class Default_Form_FetchPasswordForm extends Zend_Form
 	    // Username input form element
 	    $email = new Zend_Form_Element_Text('email');
 	    $email//->setLabel($translate->_("account-login-username"))
-		    ->setAttrib('placeholder','E-Mail')
+		    ->setAttrib('placeholder',$translate->_('email'))
 		    ->addFilter('StringtoLower')
 		    ->setRequired(true)
 		    ->addValidators(array(

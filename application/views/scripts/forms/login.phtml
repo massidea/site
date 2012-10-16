@@ -12,7 +12,7 @@
 	    <?php echo $form->returnurl; ?>
             <div class="control-group">
 	            <label class="control-label" for="username">
-					<?php echo $this->translate('E-Mail');?>
+					<?php echo $this->translate('email');?>
                 </label>
                 <div class="controls">
 	                <?php echo $form->username; ?>
@@ -21,7 +21,7 @@
 
 	        <div class="control-group">
 		        <label class="control-label for="password">
-					<?php echo $this->translate('Password');?>
+					<?php echo $this->translate('password');?>
                 </label>
                 <div class="controls">
 			        <?php echo $form->password; ?>
@@ -44,7 +44,7 @@
 				            'action' => 'fetchpassword',
 				            'language' => $this->language),
 			            'lang_default', true); ?>">
-			            <?php echo $this->translate('Forgot Password'); ?>?
+			            <?php echo $this->translate('forgotPassword'); ?>?
                     </a>
                 </div>
 	        </div>

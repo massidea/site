@@ -30,5 +30,28 @@ French;Französisch
 login;Anmelden
 logout;Abmelden
 signup;Registrieren
+email; E-Mail
+password; Passwort
+forgotPassword; Passwort vergessen
 account-login-title; Login
-
+account-register-page_header;Registrierung
+register-account-information; Registrierungsinformationen
+account-register-username; Benutzername
+account-register-password; Passwort
+account-register-password_confirm; Passwort bestätigen
+register-personal-information; Persönliche Informationen
+account-register-city; Stadt
+account-register-email; E-Mail
+account-register-employment; Beruf
+account-select; Auswählen
+account-register_private-sector; Privater Bereich
+account-register_public-sector; Öffentlicher Bereich
+account-register_education-sector; Ausbildung
+account-register_student; Student
+account-register_pentioner; Pensionist
+account-register_other; Sonstiges
+account-register-enter_text; Text eingeben
+account-register-terms_and_privacy; Ich akzeptiere die allgemeinen Geschäftsbedingungen
+account-register-submit; Registrieren
+account-fetchpassword-request; Passwort anfordern
+account-fetchpassword-submit; Ok
