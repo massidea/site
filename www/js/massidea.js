@@ -3,5 +3,10 @@ $('*[rel=popup]').hide();
 //language selection
 $("#languageMenu").change(function() {
    var curLan = $(":selected", this).val();
-   location.href = '/index/changeLanguage?language=' + curLan + '&returnUrl=' + location.pathname;
+    // not at startepage without any language (/de/...)
+   var curLocation = location.pathname;
+   if (curLocation.length > 1) {
+       curLocation = curLocation.substr(3);
+   }
+   location.href = '/' + curLan + '/index/change-language?language=' + curLan + '&returnUrl=' + curLocation;
 });

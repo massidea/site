@@ -59,9 +59,11 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	*/
 	public function init()
 	{
-
-        if (isset($_SESSION['language'])) {
-            $this->view->language = $_SESSION['language'];
+        $massideaNamespace = new Zend_Session_Namespace('Default');
+        if (isset($massideaNamespace->language)) {
+            $this->view->language = $massideaNamespace->language;
+            $translate = Zend_Registry::get('Zend_Translate');
+            $translate->setLocale($massideaNamespace->language);
 
         } else {
         // Zend_Controller_Action_Helper_Redirector::setPrependBase(false);
@@ -199,12 +201,12 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
      */
     public function changeLanguageAction() {
         $language = $this->_getParam('language');
-        $return_url = substr($this->_getParam('returnUrl'),1);
-        $return_url = substr($this->_getParam('returnUrl'),str_pos($this->_getParam('returnUrl'), '/'));
+        $return_url = $this->_getParam('returnUrl');
 
-        $_SESSION['language'] = $language;
+        $massideaNamespace = new Zend_Session_Namespace('Default');
+        $massideaNamespace->language = $language;
 
-        $this->_redirect('/'.$language.'/'.$return_url);
+        $this->_redirect('/'.$language.$return_url);
 
     }
 
