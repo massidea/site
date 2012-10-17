@@ -8,5 +8,5 @@ $("#languageMenu").change(function() {
    if (curLocation.length > 1) {
        curLocation = curLocation.substr(3);
    }
-   location.href = '/' + curLan + '/index/change-language?language=' + curLan + '&returnUrl=' + curLocation;
+   location.href = '/' + curLan + '/index/change-language?language=' + curLan + '&returnUrl=' + escape(curLocation);
 });
