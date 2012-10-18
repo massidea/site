@@ -52,6 +52,9 @@ account-register_other; Other
 account-register-enter_text; Enter Text
 account-register-terms_and_privacy; accept terms and privacy
 account-register-submit; Submit
+account-register-field-empty;No text entered
+account-register-field-too-short;Text is too short
+account-register-field-too-long;Text is too long
 forgotPassword; Forgot Password
 account-fetchpassword-request; Request Password
 account-fetchpassword-submit; Ok

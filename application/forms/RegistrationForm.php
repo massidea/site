@@ -85,8 +85,8 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             'label' => $translate->_("account-register-username"),
             'required' => true,
             'validators' => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
-                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long'))),
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'account-register-field-empty'))),
+                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'account-register-field-too-short', 'stringLengthTooLong' => 'account-register-field-too-long'))),
                 new Oibs_Validators_UsernameExists('username'),
                 new Oibs_Validators_Username('username')
             ),
@@ -96,9 +96,9 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             'label' => $translate->_("account-register-password"),
             'required' => true,
             'validators' => array(
-                new Oibs_Validators_RepeatValidator('confirm_password'),
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
-                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long')))
+                new Oibs_Validators_RepeatValidator('register_confirm_password'),
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'account-register-field-empty'))),
+                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'account-register-field-too-short', 'stringLengthTooLong' => 'account-register-field-too-long')))
             ),
         ));
 
@@ -106,8 +106,8 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             'label' => $translate->_("account-register-password_confirm"),
             'required' => true,
             'validators' => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
-                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long'))),
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'account-register-field-empty'))),
+                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'account-register-field-too-short', 'stringLengthTooLong' => 'account-register-field-too-long'))),
             )
         ));
 
@@ -115,7 +115,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             'label' => $translate->_("account-register-city"),
             'required' => true,
             'validators' => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'account-register-field-empty'))),
                 array('Regex', true, array('/^[\\p{L}0-9.\- ]*$/'))
             ),
         ));
@@ -142,7 +142,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             'label' => $translate->_("account-register-employment"),
             'required' => true,
             'validators' => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty')))
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'account-register-field-empty')))
             ),
             'multiOptions' => $e_options
         ));
@@ -155,7 +155,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             'required' => true,
             'validators' => array(
                 new Oibs_Validators_CaptchaValidator(),
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'account-register-field-empty'))),
             ),
         ));
 

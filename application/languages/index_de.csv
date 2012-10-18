@@ -53,5 +53,8 @@ account-register_other; Sonstiges
 account-register-enter_text; Text eingeben
 account-register-terms_and_privacy; Ich akzeptiere die allgemeinen Geschäftsbedingungen
 account-register-submit; Registrieren
+account-register-field-empty;Kein Text eingegeben
+account-register-field-too-short;Der eingegebene Text ist zu kurz
+account-register-field-too-long;Der eingegebene Text ist zu lang
 account-fetchpassword-request; Passwort anfordern
 account-fetchpassword-submit; Ok
