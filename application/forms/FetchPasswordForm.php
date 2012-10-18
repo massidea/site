@@ -47,7 +47,6 @@ class Default_Form_FetchPasswordForm extends Zend_Form
 			    array('viewScript' => 'forms/fetchPassword.phtml')
 		    )));
 
-
 	    $mailvalid = new Zend_Validate_EmailAddress();
 		$mailvalid->setMessage(
 			'email-invalid',
@@ -108,6 +107,7 @@ class Default_Form_FetchPasswordForm extends Zend_Form
 	    ))
 		    ->setDecorators(array('ViewHelper'))
 	    ;
+
         // Add elements to form
         $this->addElements(array($email, $submit, $hidden));
     }
