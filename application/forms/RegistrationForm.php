@@ -103,7 +103,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
         ));
 
         $this->addElement('password', 'register_confirm_password', array(
-            'label' => $translate->_("account-register-password_confirm"),
+            'label' => $translate->_("account-register-password-confirm"),
             'required' => true,
             'validators' => array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'account-register-field-empty'))),
@@ -130,12 +130,12 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 
         $e_options = array(
             "" => "account-select",
-            "private_sector" => "account-register_private_sector",
-            "public_sector" => "account-register_public_sector",
-            "education_sector" => "account-register_education_sector",
-            "student" => "account-register_student",
-            "pentioner" => "account-register_pentioner",
-            "other" => "account-register_other",
+            "private_sector" => "account-register-private-sector",
+            "public_sector" => "account-register-public-sector",
+            "education_sector" => "account-register-education-sector",
+            "student" => "account-register-student",
+            "pentioner" => "account-register-pentioner",
+            "other" => "account-register-other",
         );
 
         $this->addElement('select', 'register_employment', array(
@@ -150,8 +150,8 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
         $captcha = new Zend_Form_Element('captcha');
         $captcha->setDecorators(array('CaptchaDecorator'));
 
-        $this->addElement('text', 'account-register-enter_text', array(
-            'label' => $translate->_("account-register-enter_text"),
+        $this->addElement('text', 'account-register-enter-text', array(
+            'label' => $translate->_("account-register-enter-text"),
             'required' => true,
             'validators' => array(
                 new Oibs_Validators_CaptchaValidator(),
@@ -160,7 +160,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
         ));
 
         $this->addElement('checkbox', 'register_terms', array(
-            'label' => $translate->_("account-register-terms"),
+            'label' => $translate->_("account-register-terms-and-privacy"),
             'required' => true,
             'validators' => array(
                 new Oibs_Validators_CheckboxValidator(),

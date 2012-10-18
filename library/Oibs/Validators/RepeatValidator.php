@@ -29,7 +29,7 @@ class Oibs_Validators_RepeatValidator extends Zend_Validate_Abstract
 	const NOT_MATCH = 'notMatch';
 
 	protected $_messageTemplates = array(
-		self::NOT_MATCH => 'value-not-same'
+		self::NOT_MATCH => 'error-value-not-same'
 	);
 	
 	private $repeatedField; 

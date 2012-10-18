@@ -33,24 +33,24 @@ signup;Sign up
 email; E-Mail
 password; Password
 account-login-title; Login
-account-register-page_header;Registration
+account-register-page-header;Registration
 register-account-information; Registration Information
 account-register-username; Username
 account-register-password; Password
-account-register-password_confirm; Confirm Password
+account-register-password-confirm; Confirm Password
 register-personal-information; Personal Information
 account-register-city; City
 account-register-employment; Employment
 account-register-email; E-Mail
 account-select; Select
-account-register_private-sector; Private Sector
-account-register_public-sector; Public Sector
-account-register_education-sector; Education Sector
-account-register_student; Student;
-account-register_pentioner; Pensioner
-account-register_other; Other
-account-register-enter_text; Enter Text
-account-register-terms_and_privacy; accept terms and privacy
+account-register-private-sector; Private Sector
+account-register-public-sector; Public Sector
+account-register-education-sector; Education Sector
+account-register-student; Student;
+account-register-pentioner; Pensioner
+account-register-other; Other
+account-register-enter-text; Enter Text
+account-register-terms-and-privacy; accept terms and privacy
 account-register-submit; Submit
 account-register-field-empty;No text entered
 account-register-field-too-short;Text is too short
@@ -58,3 +58,6 @@ account-register-field-too-long;Text is too long
 forgotPassword; Forgot Password
 account-fetchpassword-request; Request Password
 account-fetchpassword-submit; Ok
+error-value-not-same;Values must match
+error-captcha-no-same;Captcha messages did not match
+error-checkbox-not-checked;Mandatory

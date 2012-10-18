@@ -29,7 +29,7 @@ class Oibs_Validators_CheckboxValidator extends Zend_Validate_Abstract
 	const UNCHECKED_BOX = 'checkboxNotChecked';
 
 	protected $_messageTemplates = array(
-		self::UNCHECKED_BOX => 'checkbox-not-checked'
+		self::UNCHECKED_BOX => 'error-checkbox-not-checked'
 	);
 	
 	/**
