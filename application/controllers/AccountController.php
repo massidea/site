@@ -465,13 +465,14 @@ class AccountController extends Oibs_Controller_CustomController
         $urlHelper = $this->_helper->getHelper('url');
         
         // if user is already logged in redirect away from here
-        if ($auth->hasIdentity()) {    
-            $target = $urlHelper->url(array('controller' => 'index', 
-                                            'action' => 'index', 
-                                            'language' => $this->view->language), 
-                                      'lang_default', true);
-                                      
-            $this->_redirect($target);
+        if ($auth->hasIdentity()) {
+            $this->_forward('view', 'account');
+            // $target = $urlHelper->url(array('controller' => 'index',
+            //                                 'action' => 'index',
+            //                                 'language' => $this->view->language),
+            //                           'lang_default', true);
+            //
+            // $this->_redirect($target);
         } // end if
         
         // login ajax functionality: 
