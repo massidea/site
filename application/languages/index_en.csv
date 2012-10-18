@@ -53,12 +53,12 @@ account-register-enter-text; Enter Text
 account-register-captcha; Captcha
 account-register-terms-and-privacy; accept terms and privacy
 account-register-submit; Submit
-account-register-field-empty;No text entered
-account-register-field-too-short;Text is too short
-account-register-field-too-long;Text is too long
 forgotPassword; Forgot Password
 account-fetchpassword-request; Request Password
 account-fetchpassword-submit; Ok
+error-field-empty;No text entered
+error-field-too-short;Text is too short
+error-field-too-long;Text is too long
 error-value-not-same;Values must match
 error-captcha-no-same;Captcha messages did not match
 error-checkbox-not-checked;Mandatory
