@@ -2,7 +2,7 @@
 <?php foreach($this->randomFeedContents as $content) :?>
     <li class="<?php echo $content['key_cty'] ?>">
         <div class="headline"><?php echo $content['title_cnt'] ?></div>
-        <div class="author"><?php echo $content['first_name_usr'] ." " . $content['surname_usr'] ?></div>
+        <div class="author"><?php echo $content['login_name_usr'] ?></div>
         <div class="desc"><?php if(strlen($content['body_cnt']) > 140) {echo substr($content['body_cnt'],0,140) . "..."; } else { echo $content['body_cnt'];} ?></div>
     </li>
 <?php endforeach; ?>

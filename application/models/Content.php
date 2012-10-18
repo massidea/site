@@ -122,13 +122,13 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
         $adapter = $this->getAdapter();
 
-        $sql = "(SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =1 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
+        $sql = "(SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.login_name_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =1 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
                 UNION ALL
-                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =2 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
+                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.login_name_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =2 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
                 UNION ALL
-                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =3 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
+                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.login_name_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =3 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
                 UNION ALL
-                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 2);";
+                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.login_name_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 2);";
 
         $statement = $adapter->query($sql);
 
