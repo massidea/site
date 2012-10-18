@@ -51,6 +51,7 @@ account-register-pentioner; Pensioner
 account-register-other; Other
 account-register-enter-text; Enter Text
 account-register-captcha; Captcha
+account-register-gtc;GTC
 account-register-terms-and-privacy; accept terms and privacy
 account-register-submit; Submit
 forgotPassword; Forgot Password
