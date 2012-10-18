@@ -3,15 +3,18 @@ $(function (){
     var $liveFeed = $(".startPageFeed");
     var $liveFeedContent = $(".feedContent");
     var $liveFeedControl = $(".feedControl");
+    var $feedOverlay = $(".feedOverlay");
     var time = 0;
 
     $liveFeed.hover(stopTimer, resetTimer);
     $liveFeedControl.click(loadContent);
-    resetTimer();
-
+    loadContent();
 
     function loadContent(){
-        $liveFeedContent.load('/'+LANGUAGE+'/content/feed/format/html');
+        $feedOverlay.removeClass("hidden");
+        $liveFeedContent.load('/'+LANGUAGE+'/content/feed/format/html', function (){
+            $feedOverlay.addClass("hidden");
+        });
     }
 
     function resetTimer(){
