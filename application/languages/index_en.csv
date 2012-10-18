@@ -30,3 +30,28 @@ French;French
 login;Login
 logout;Logout
 signup;Sign up
+email; E-Mail
+password; Password
+account-login-title; Login
+account-register-page_header;Registration
+register-account-information; Registration Information
+account-register-username; Username
+account-register-password; Password
+account-register-password_confirm; Confirm Password
+register-personal-information; Personal Information
+account-register-city; City
+account-register-employment; Employment
+account-register-email; E-Mail
+account-select; Select
+account-register_private-sector; Private Sector
+account-register_public-sector; Public Sector
+account-register_education-sector; Education Sector
+account-register_student; Student;
+account-register_pentioner; Pensioner
+account-register_other; Other
+account-register-enter_text; Enter Text
+account-register-terms_and_privacy; accept terms and privacy
+account-register-submit; Submit
+forgotPassword; Forgot Password
+account-fetchpassword-request; Request Password
+account-fetchpassword-submit; Ok

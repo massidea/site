@@ -488,6 +488,11 @@ class AccountController extends Oibs_Controller_CustomController
         
         // creata new LoginForm and set to view
         $form = new Default_Form_LoginForm($formOptions);
+		$form->setDecorators(array(array(
+			'ViewScript',
+			array('viewScript' => 'forms/login.phtml'))));
+	    unset($form->getElement('username')->placeholder);
+	    unset($form->getElement('password')->placeholder);
         $this->view->form = $form;
 
         // Get request
