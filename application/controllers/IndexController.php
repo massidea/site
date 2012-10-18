@@ -39,6 +39,15 @@ class IndexController extends Oibs_Controller_CustomController
 	 */
     function indexAction()
     {
+
+        // Check if user is logged in
+        $auth = Zend_Auth::getInstance();
+        // if user is already logged in redirect away from here
+        if ($auth->hasIdentity()) {
+            $this->_forward('view', 'account');
+        } // end if
+
+
     	// Variable for number recent campaigns to be sent to view
     	$recentCampaignsCount = 0;
     	
