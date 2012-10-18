@@ -37,13 +37,18 @@ class Default_Form_FetchPasswordForm extends Zend_Form
         $baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
         $actionUrl = $baseurl.'/'.$language.'/account/fetchpassword';
         
-        $this->setName('fetchpassword_form');
-        $this->setAction($actionUrl);
-        $this->addElementPrefixPath('Oibs_Decorators', 
-                                'Oibs/Decorators/',
-                                'decorator');
-        
-		$mailvalid = new Zend_Validate_EmailAddress();
+        $this->setName('fetchpassword_form')
+            ->setAction($actionUrl)
+            ->addElementPrefixPath('Oibs_Decorators',
+                'Oibs/Decorators/',
+                'decorator')
+	        ->setDecorators(array(array(
+			    'ViewScript',
+			    array('viewScript' => 'forms/fetchPassword.phtml')
+		    )));
+
+
+	    $mailvalid = new Zend_Validate_EmailAddress();
 		$mailvalid->setMessage(
 			'email-invalid',
 			Zend_Validate_EmailAddress::INVALID);
@@ -81,27 +86,29 @@ class Default_Form_FetchPasswordForm extends Zend_Form
 			'hostname-undecipherable-tld',
 			Zend_Validate_Hostname::UNDECIPHERABLE_TLD);
         
-        // Username input form element
-        $username = new Zend_Form_Element_Text('email');
-        $username->setLabel($translate->_("account-fetchpassword-email"))
-        		->removeDecorator('DtDdWrapper')
-                ->addFilter('StringtoLower')
-                ->setRequired(true)
-				->addValidators(array(
-					$mailvalid
-				))
-                ->setDecorators(array('FetchPasswordDecorator'));
-                
-        $hidden = new Zend_Form_Element_Hidden('submittedform');
-        $hidden->setValue('fetchpassword');
+
         
-        // Form submit buttom element
+        // Form submit button element
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel($translate->_("account-fetchpassword-submit"))
         		->removeDecorator('DtDdWrapper')
-               ->setAttrib('class', 'fetchpassword-submit left');
-        
+               ->setAttrib('class', 'btn');
+
+	    $hidden = new Zend_Form_Element_Hidden('submittedform');
+	    $hidden->setValue('fetchpassword');
+
+	    // Username input form element
+	    $email = new Zend_Form_Element_Text('email');
+	    $email//->setLabel($translate->_("account-login-username"))
+		    ->setAttrib('placeholder',$translate->_('email'))
+		    ->addFilter('StringtoLower')
+		    ->setRequired(true)
+		    ->addValidators(array(
+		    array($mailvalid),
+	    ))
+		    ->setDecorators(array('ViewHelper'))
+	    ;
         // Add elements to form
-        $this->addElements(array($username, $submit, $hidden));
+        $this->addElements(array($email, $submit, $hidden));
     }
 }
