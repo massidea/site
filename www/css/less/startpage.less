@@ -71,8 +71,11 @@
 		}
 	}
 	.startPageFeed {
+		min-height: 442px;
 		width: 320px;
 		border: 1px solid @colorLiveFeed;
+		position: relative;
+		z-index: 1;
 
 		.feedControl {
 			background: @colorLiveFeed;
@@ -80,6 +83,22 @@
 			text-align: center;
 			line-height: 20px;
 		}
+
+		.feedOverlay {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 100%;
+			width: 100%;
+			opacity: 0.8;
+			z-index: 1000;
+			background: url("/img/icons/startpage/loadCircle.gif") white center center no-repeat;
+
+			&hidden {
+				dislay: none;
+			}
+		}
+
 
 		.feedContent {
 			.headline,
