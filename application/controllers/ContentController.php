@@ -77,6 +77,7 @@ class ContentController extends Oibs_Controller_CustomController
 	 */
 	public function listAction()
 	{
+
 		
 		$url = $this->_urlHelper->url(array('controller' => 'index',
                                             'language' => $this->view->language), 
@@ -1781,8 +1782,12 @@ class ContentController extends Oibs_Controller_CustomController
 	*/
     public function feedAction()
     {
-        $data = array('red', 'green', 'yellow', 'blue');
-        $this->view->data = $data;
+        $contentModel = new Default_Model_Content();
+
+        $randomFeedContents = $contentModel->listRandom();
+
+        $this->view->randomFeedContents = $randomFeedContents;
+
     }
 
     public function getLanguage()
