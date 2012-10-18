@@ -465,13 +465,14 @@ class AccountController extends Oibs_Controller_CustomController
         $urlHelper = $this->_helper->getHelper('url');
         
         // if user is already logged in redirect away from here
-        if ($auth->hasIdentity()) {    
-            $target = $urlHelper->url(array('controller' => 'index', 
-                                            'action' => 'index', 
-                                            'language' => $this->view->language), 
-                                      'lang_default', true);
-                                      
-            $this->_redirect($target);
+        if ($auth->hasIdentity()) {
+            $this->_forward('view', 'account');
+            // $target = $urlHelper->url(array('controller' => 'index',
+            //                                 'action' => 'index',
+            //                                 'language' => $this->view->language),
+            //                           'lang_default', true);
+            //
+            // $this->_redirect($target);
         } // end if
         
         // login ajax functionality: 
@@ -560,13 +561,9 @@ class AccountController extends Oibs_Controller_CustomController
         $urlHelper = $this->_helper->getHelper('url');
         
         // if user is already logged in redirect away from here
-        if ($auth->hasIdentity()) {    
-            $target = $urlHelper->url(array('controller' => 'index', 
-                                            'action' => 'index', 
-                                            'language' => $this->view->language), 
-                                      'lang_default', true);
-            
-            $this->_redirect($target);
+        // if user is already logged in redirect away from here
+        if ($auth->hasIdentity()) {
+            $this->_forward('view', 'account');
         } // end if
         
         // if openid provider returns data
@@ -659,16 +656,11 @@ class AccountController extends Oibs_Controller_CustomController
     public function registercompleteAction() 
     {
         $auth = Zend_Auth::getInstance();
-        
-        if (!$auth->hasIdentity()) { 
-            $urlHelper = $this->_helper->getHelper('url');
-            
-            $target = $urlHelper->url(array('controller' => 'index', 
-                                            'action' => 'index', 
-                                            'language' => $this->view->language), 
-                                      'lang_default', true);
-            $this->_redirect($target);
-        }
+
+        // if user is already logged in redirect away from here
+        if ($auth->hasIdentity()) {
+            $this->_forward('view', 'account');
+        } // end if
         
         // Create new registration form
         $form = new Default_Form_RegistercompleteForm();
@@ -703,17 +695,12 @@ class AccountController extends Oibs_Controller_CustomController
     {
         // if user is logged in, redirect away
         $auth = Zend_Auth::getInstance();
-        
-        if ($auth->hasIdentity()) { 
-            $urlHelper = $this->_helper->getHelper('url');
-            
-            $target = $urlHelper->url(array('controller' => 'index', 
-                                            'action' => 'index', 
-                                            'language' => $this->view->language), 
-                                      'lang_default', true);
-                                      
-            $this->_redirect($target);
-        }
+
+
+        // if user is already logged in redirect away from here
+        if ($auth->hasIdentity()) {
+            $this->_forward('view', 'account');
+        } // end if
     
         // Create new registration form
         $form = new Default_Form_RegistrationForm();
