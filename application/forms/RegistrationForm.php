@@ -76,20 +76,19 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             ),
         ));
 
-/*	    $this->addElement('captcha', 'captcha', array(
+	    $this->addElement('captcha', 'captcha', array(
 		    'captcha'    => array(
 			    'captcha' => 'Image',
 			    'wordLen' => 8,
 			    'timeout' => 300,
-			    'font'    => 'library/Fonts/Verdana.ttf',
-			    'imgDir'  => 'www/img/captcha.png',
-			    'imgUrl'  => '//img/captcha.png',
+			    'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
+			    'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
+			    'imgUrl'  => '/img/captcha',
 		    ),
 		    'required'   => true,
 		    'label'      => $translate->_('account-register-captcha'),
-	        'decorators' => array('CaptchaDecorator'),
 	    ));
-*/
+
         $this->addElement('text', 'account-register-enter_text', array(
             'label'      => $translate->_('account-register-enter_text'),
             'required'   => true,
