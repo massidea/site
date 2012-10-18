@@ -50,14 +50,15 @@ account-register-education-sector; Ausbildung
 account-register-student; Student
 account-register-pentioner; Pensionist
 account-register-other; Sonstiges
+account-register-captcha; Captcha
 account-register-enter-text; Text eingeben
 account-register-terms-and-privacy; Ich akzeptiere die allgemeinen Geschäftsbedingungen
 account-register-submit; Registrieren
 account-register-field-empty;Kein Text eingegeben
-account-register-field-too-short;Der eingegebene Text ist zu kurz
-account-register-field-too-long;Der eingegebene Text ist zu lang
+account-register-field-too-short; Der eingegebene Text ist zu kurz
+account-register-field-too-long; Der eingegebene Text ist zu lang
 account-fetchpassword-request; Passwort anfordern
 account-fetchpassword-submit; Ok
-error-value-not-same;Werte müssen übereinstimmen
-error-captcha-no-same;Captchanachricht stimmt nicht überein
-error-checkbox-not-checked;Verpflichtend
+error-value-not-same; Werte müssen übereinstimmen
+error-captcha-no-same; Captchanachricht stimmt nicht überein
+error-checkbox-not-checked; Verpflichtend

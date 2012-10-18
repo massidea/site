@@ -50,6 +50,7 @@ account-register-student; Student;
 account-register-pentioner; Pensioner
 account-register-other; Other
 account-register-enter-text; Enter Text
+account-register-captcha; Captcha
 account-register-terms-and-privacy; accept terms and privacy
 account-register-submit; Submit
 account-register-field-empty;No text entered
