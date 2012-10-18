@@ -75,7 +75,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             ),
         ));
 
-	    $this->addElement('captcha', 'captcha', array(
+	    $this->addElement('captcha', 'register_captcha', array(
 		    'captcha'    => array(
 			    'captcha' => 'Image',
 			    'wordLen' => 8,
@@ -103,6 +103,37 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             'validators' => array(),
         ));
 
+	    $this->addDisplayGroup(array(
+			    'register_username',
+			    'register_password',
+			    'register_confirm_password',
+			    'register_email',
+		    ),
+	        'login',
+	        array('legend' => 'account-register-legend-login'));
+
+	    $this->addDisplayGroup(array(
+		        'register_city',
+		        'register_employment',
+		    ),
+		    'coredata',
+	        array('legend' => 'account-register-legend-core'));
+
+	    $this->addDisplayGroup(array(
+		        'register_terms',
+		        'register_captcha',
+		    ),
+		    'general',
+	        array('legend' => 'account-register-legend-general'));
+
+	    $this->addDisplayGroup(array(
+			    'register_submit'
+		    ),
+		    'Actions',
+	        array(
+		        'disableLoadDefaultDecorators' => true,
+		        'decorators' => array('Actions'),
+	        ));
 
         parent::init();
     }
