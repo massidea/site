@@ -53,7 +53,7 @@ class Default_Form_NewPasswordForm extends Zend_Form
                                                                               'stringLengthTooLong' => 'field-too-long')))
                 ))
                 ->setDecorators(array('NewPasswordDecorator'));
-        
+
         // Confirm input form element
         $confirm = new Zend_Form_Element_Password('confirm');
         $confirm->setLabel($translate->_("account-fetchpassword-confirm"))
@@ -62,7 +62,8 @@ class Default_Form_NewPasswordForm extends Zend_Form
                 
         $hidden = new Zend_Form_Element_Hidden('submittedform');
         $hidden->setValue('newpassword');
-                
+
+
         // Form submit buttom element
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel($translate->_("account-fetchpassword-newpassword-submit"))
