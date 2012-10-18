@@ -52,8 +52,12 @@ account-register-pentioner; Pensionist
 account-register-other; Sonstiges
 account-register-captcha; Captcha
 account-register-enter-text; Text eingeben
+account-register-gtc; AGB
 account-register-terms-and-privacy; Ich akzeptiere die allgemeinen Geschäftsbedingungen
 account-register-submit; Registrieren
+account-register-legend-login;Logindaten
+account-register-legend-core;Stammdaten
+account-register-legend-general;Allgemein
 account-fetchpassword-request; Passwort anfordern
 account-fetchpassword-submit; Ok
 error-field-empty;Kein Text eingegeben
