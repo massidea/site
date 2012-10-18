@@ -1,14 +1,14 @@
-$(function (){
+var $liveFeed = $(".startPageFeed");
+var $liveFeedContent = $(".feedContent");
+var $liveFeedControl = $(".feedControl");
+var $feedOverlay = $(".feedOverlay");
+var time = 0;
 
-    var $liveFeed = $(".startPageFeed");
-    var $liveFeedContent = $(".feedContent");
-    var $liveFeedControl = $(".feedControl");
-    var $feedOverlay = $(".feedOverlay");
-    var time = 0;
+$liveFeed.hover(stopTimer, resetTimer);
+$liveFeedControl.click(loadContent);
+loadContent();
+resetTimer();
 
-    $liveFeed.hover(stopTimer, resetTimer);
-    $liveFeedControl.click(loadContent);
-    loadContent();
 
     function loadContent(){
         $feedOverlay.removeClass("hidden");
@@ -28,5 +28,3 @@ $(function (){
             clearTimeout(time);
         time = 0;
     }
-
-});
