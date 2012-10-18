@@ -94,8 +94,56 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 *    @param string $cty
 	 *    @return array
 	 */
+    public function listRandom()
+    {
+
+        /* Zend_Framework Database query
+        $select1 = $this ->select()->from($this, "id_cnt")
+                        ->where("id_cty_cnt = 1")
+                        ->order("RAND()")
+                        ->limit(1);
+
+        $select2 = $this ->select()->from($this, "id_cnt")
+                         ->where("id_cty_cnt = 2")
+                         ->order("RAND()")
+                         ->limit(1);
+
+        $select3 = $this ->select()->from($this, "id_cnt")
+                         ->where("id_cty_cnt = 3")
+                         ->order("RAND()")
+                         ->limit(1);
+
+
+        $select4 = $this ->select()->from($this, "id_cnt")
+                         ->order("RAND()")
+                         ->limit(2);
+
+        */
+
+        $adapter = $this->getAdapter();
+
+        $sql = "(SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =1 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
+                UNION ALL
+                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =2 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
+                UNION ALL
+                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.id_cty_cnt =3 AND c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 1)
+                UNION ALL
+                (SELECT c.id_cnt, c.title_cnt, c.published_cnt, c.body_cnt, u.first_name_usr, u.surname_usr, t.key_cty FROM contents_cnt c, users_usr u, content_types_cty t WHERE c.published_cnt = u.id_usr AND t.id_cty = c.id_cty_cnt ORDER BY RAND( ) LIMIT 2);";
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+        /* Zend_Framework Database query
+        $ids = $this->fetchAll($select);
+        $data = $this->getContentRows($ids->toArray(), 'id_cnt', true);
+        return $data;
+        */
+    }
+
 	public function listRecent($cty = 'all', $page = 1, $count = -1, $order = 'created', $lang = 'en', $ind = 0)
 	{
+
 		switch ($order) {
 			case 'author':
 				$order = 'login_name_usr';
@@ -126,14 +174,13 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		} else {
 			$select->limit($page);
 		}
-
 		// Content data
 		//$data = $this->_db->fetchAll($select);
 		$ids = $this->fetchAll($select);
 		$data = $this->getContentRows($ids->toArray(), 'id_cnt', true);
 		return $data;
 	}
-	
+
 	/* getcontentRows
 	 * 
 	 * Function to get data for content_row partial from given id parameters

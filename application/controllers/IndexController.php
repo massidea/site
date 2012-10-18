@@ -52,7 +52,10 @@ class IndexController extends Oibs_Controller_CustomController
         
         // Load recent posts from cache
         $cachePosts = 'IndexPosts_' . $this->view->language;
-        
+
+
+
+
         if(!$result = $cache->load($cachePosts)) {
             $contentModel = new Default_Model_Content();
             $contentHasTagModel = new Default_Model_ContentHasTag();
@@ -157,7 +160,7 @@ class IndexController extends Oibs_Controller_CustomController
         $this->view->poptags = $tags;
         $this->view->activeusers = $activeusers;
         $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();
-        $this->view->recentCampaignsCount = $recentCampaignsCount;        
+        $this->view->recentCampaignsCount = $recentCampaignsCount;
     }
 
 
