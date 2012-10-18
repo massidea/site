@@ -1,9 +1,16 @@
 <ul>
 <?php foreach($this->randomFeedContents as $content) :?>
-    <li class="<?php echo $content['key_cty'] ?>">
-        <div class="headline"><?php echo $content['title_cnt'] ?></div>
-        <div class="author"><?php echo $content['login_name_usr'] ?></div>
-        <div class="desc"><?php if(strlen($content['body_cnt']) > 140) {echo substr($content['body_cnt'],0,140) . "..."; } else { echo $content['body_cnt'];} ?></div>
+    <li class="<?php  echo htmlentities($content['key_cty']) ?>">
+        <div class="headline">
+            <a href="<?php echo $this->url(array('controller' => 'view',
+                'content_id' => '1',
+                'language' => $this->language),
+                'lang_default', true); ?>">
+                <?php echo htmlentities($content['title_cnt']) ?>
+            </a>
+        </div>
+        <div class="author"><?php echo htmlentities($content['login_name_usr']) ?></div>
+        <div class="desc"><?php if(strlen($content['body_cnt']) > 140) {echo htmlentities(substr($content['body_cnt'],0,140) . "..."); } else { echo htmlentities($content['body_cnt']);} ?></div>
     </li>
 <?php endforeach; ?>
 </ul>

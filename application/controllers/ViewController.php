@@ -55,6 +55,8 @@
         $request = $this->getRequest();
         $params = $request->getParams();
 
+        var_dump($this->_getParam('content_id')); exit;
+
         $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
     						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
