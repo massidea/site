@@ -1,32 +1,17 @@
-<li class="vision">
-    <div class="headline">Headline of the Content</div>
-    <div class="author">by Tobias Curth</div>
-    <div class="desc">Here are two or three lines of textbox to have a short
-        introduction of it‘s content. So maybe you are
-        interested in this and go to the post.
+<?php foreach($this->randomFeedContents as $content) {?>
+
+<li class="<?php echo $content['key_cty'] ?>">
+    <div class="headline"><?php echo $content['title_cnt'] ?></div>
+    <div class="author"><?php echo $content['first_name_usr'] ." " . $content['surname_usr'] ?></div>
+    <div class="desc"><?php echo substr($content['body_cnt'],0,140) . "..."; ?>
     </div>
 </li>
-<li class="idea">
-    <div class="headline">Headline of the Content</div>
-    <div class="author">by Tobias Curth</div>
-    <div class="desc">Here are two or three lines of textbox to have a short
-        introduction of it‘s content. So maybe you are
-        interested in this and go to the post.
-    </div>
-</li>
-<li class="challenge">
-    <div class="headline">Headline of the Content</div>
-    <div class="author">by Tobias Curth</div>
-    <div class="desc">Here are two or three lines of textbox to have a short
-        introduction of it‘s content. So maybe you are
-        interested in this and go to the post.
-    </div>
-</li>
-<li class="idea">
-    <div class="headline">Headline of the Content</div>
-    <div class="author">by Tobias Curth</div>
-    <div class="desc">Here are two or three lines of textbox to have a short
-        introduction of it‘s content. So maybe you are
-        interested in this and go to the post.
-    </div>
-</li>
+<?php } ?>
+
+<? /*
+<ul>
+    <?php foreach($this->data as $color) : ?>
+    <li><?=$color;?></li>
+    <?php endforeach; ?>
+</ul>
+*/ ?>
