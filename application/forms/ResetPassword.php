@@ -49,3 +49,4 @@ class ResetPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 
 	    parent::init();
     }
+}
