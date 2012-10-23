@@ -1,123 +1,131 @@
 .startPage {
-	.threeBigSections {
+  .threeBigSections {
 
-		h2 {
-			margin-bottom: 0;
+    h2 {
+      margin-bottom: 0;
 
-			img {
-				margin: 0 10px 5px 10px;
-			}
-		}
-		.thumbnail {
-			position: relative;
+      img {
+        margin: 0 10px 5px 10px;
+      }
+    }
+    .thumbnail {
+      position: relative;
 
-			button {
-				position: absolute;
-				bottom: 15px;
-				right: 15px;
-			}
-		}
-		.desc {
-			padding: 5px;
+      button {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+    .desc {
+      padding: 5px;
 
-			.recent {
-				margin: 10px 5px;
-				display: block;
-			}
-		}
-	}
+      .recent {
+        margin: 10px 5px;
+        display: block;
+      }
+    }
+  }
 
-	.advantages {
-		ul {
-			list-style: none;
+  .advantages {
+    ul {
+      list-style: none;
 
-			li {
-				color: #999;
-				padding: 0 0 0 75px;
-				font-size: 18px;
-				line-height: 70px;
+      li {
+        color: #999;
+        padding: 0 0 0 75px;
+        font-size: 18px;
+        line-height: 70px;
+        a {
+          cursor: pointer;
+          color: @colorDarkGray;
 
-			}
-		}
-		.start-now {
-			color: @colorStandardFirst;
-			padding: 0 0 0 75px;
-			font-size: 18px;
-			line-height: 70px;
-		}
-		.platform {
-			background: url("/img/icons/startpage/platform.png") no-repeat;
-			background-position: 21px 17px;
-		}
+          &:hover {
+            color: @colorStandardFirst;
+          }
+        }
 
-		.global {
-			background: url("/img/icons/startpage/global.png") no-repeat;
-			background-position: 21px 17px;
-		}
+      }
+    }
+    .start-now {
+      color: @colorDarkGray;
+      padding: 0 0 0 75px;
+      font-size: 18px;
+      line-height: 70px;
+    }
+    .platform {
+      background: url("/img/icons/startpage/platform.png") no-repeat;
+      background-position: 21px 17px;
+    }
 
-		.share {
-			background: url("/img/icons/startpage/share.png") no-repeat;
-			background-position: 21px 17px;
-		}
+    .global {
+      background: url("/img/icons/startpage/global.png") no-repeat;
+      background-position: 21px 17px;
+    }
 
-		.contacts {
-			background: url("/img/icons/startpage/contacts.png") no-repeat;
-			background-position: 21px 17px;
-		}
+    .share {
+      background: url("/img/icons/startpage/share.png") no-repeat;
+      background-position: 21px 17px;
+    }
 
-		.be-a-part {
-			background: url("/img/icons/startpage/be-a-part.png") no-repeat;
-			background-position: 21px 17px;
-		}
-	}
-	.startPageFeed {
-		width: 320px;
-		border: 1px solid @colorLiveFeed;
+    .contacts {
+      background: url("/img/icons/startpage/contacts.png") no-repeat;
+      background-position: 21px 17px;
+    }
 
-		.feedControl {
-			background: @colorLiveFeed;
-			color: white;
-			text-align: center;
-			line-height: 20px;
-		}
+    .be-a-part {
+      background: url("/img/icons/startpage/be-a-part.png") no-repeat;
+      background-position: 21px 17px;
+    }
+  }
+  .startPageFeed {
+    width: 320px;
+    border: 1px solid @colorLiveFeed;
 
-		.feedContent {
-			.headline,
-			.author {
-				padding: 0 0 0 30px;
-			}
+    .feedControl {
+      background: @colorLiveFeed;
+      color: white;
+      text-align: center;
+      line-height: 20px;
+    }
 
-			.headline {
-				font-size: 18px;
-				font-weight: bold;
-			}
+    .feedContent {
+      .headline,
+      .author {
+        padding: 0 0 0 30px;
+      }
 
-			.author {
-				color: #999;
-			}
+      .headline {
+        font-size: 18px;
+        font-weight: bold;
+      }
 
-			li {
-				height: 80px;
-				display: block;
-				padding: 15px;
-				border-bottom: 1px solid @colorLiveFeed;
-				box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
-				-webkit-box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
-				-moz-box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
+      .author {
+        color: #999;
+      }
 
-				&.challenge {
-					background: url("/img/icons/challenge.png") 16px 18px no-repeat;
-				}
+      li {
+        height: 80px;
+        display: block;
+        padding: 15px;
+        border-bottom: 1px solid @colorLiveFeed;
+        box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
+        -webkit-box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
+        -moz-box-shadow: inset 0px 0px 2px 1px rgba(102, 102, 102, 0.5);
 
-				&.idea {
-					background: url("/img/icons/idea.png") 16px 18px no-repeat;
-				}
+        &.challenge {
+          background: url("/img/icons/challenge.png") 16px 18px no-repeat;
+        }
 
-				&.vision {
-					background: url("/img/icons/vision.png") 16px 18px no-repeat;
-				}
-			}
-		}
+        &.idea {
+          background: url("/img/icons/idea.png") 16px 18px no-repeat;
+        }
 
-	}
+        &.vision {
+          background: url("/img/icons/vision.png") 16px 18px no-repeat;
+        }
+      }
+    }
+
+  }
 }
