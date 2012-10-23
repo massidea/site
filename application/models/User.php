@@ -5,14 +5,14 @@
 *     Copyright (c) <2009>, Markus Riihel�
 *     Copyright (c) <2009>, Mikko Sallinen
 *
- * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * License text found in /license/
@@ -26,31 +26,31 @@
  *  @copyright     2009 Markus Riihel� & Mikko Sallinen
  *  @license     GPL v2
  *  @version     1.0
- */ 
+ */
 class Default_Model_User extends Zend_Db_Table_Abstract
 {
     // Table name
     protected $_name = 'users_usr';
-    
+
     // Primary key of table
     protected $_primary = 'id_usr';
-    
+
     // Tables model depends on
     protected $_dependentTables = array('Default_Model_UserProfiles', 'Default_Model_UserImages',
-                                        'Default_Model_PrivateMessages', 'Default_Model_CommentRatings', 
-                                        'Default_Model_Comments', 'Default_Model_ContentPublishTimes', 
-                                        'Default_Model_ContentHasUser', 'Default_Model_UserHasGroup', 
+                                        'Default_Model_PrivateMessages', 'Default_Model_CommentRatings',
+                                        'Default_Model_Comments', 'Default_Model_ContentPublishTimes',
+                                        'Default_Model_ContentHasUser', 'Default_Model_UserHasGroup',
                                         'Default_Model_Links', 'Default_Model_Files',
                                         'Default_Model_ContentRatings','Default_Model_UserHasFavourites',
                                         'Default_Model_UserHasNotifications','Default_Model_UserFavourites');
 
-        
+
     // Table references  to other tables
     protected $_referenceMap    = array(
         'UserLanguage' => array(
             'columns'            => array('id_lng_usr'),
             'refTableClass'        => 'Default_Model_Languages',
-            'refColumns'        =>    array('id_lng')        
+            'refColumns'        =>    array('id_lng')
         ),
         'CommentUser' => array(
             'columns'            => array('id_usr'),
@@ -58,10 +58,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             'refColumns'        => array('id_usr_cmt')
         )
     );
-    
+
     protected $_id = 0;
     protected $_data = null;
-    
+
     /**
     *   __construct
     *
@@ -72,58 +72,58 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     public function __construct($id = -1)
     {
         parent::__construct();
-        
+
         $this->_id = $id;
-        
+
         if ($id != -1){
             $this->_data = $this->find((int)$id)->current();
         } // end if
     }
-        
+
     public function loginUser($data)
     {
         $id = $this->getIdByUsername($data['username']);
         $user = $this->find((int)$id)->current();
         $salt = $user['password_salt_usr'];
         $auth = Zend_Auth::getInstance();
-        $authAdapter = new 
+        $authAdapter = new
         Zend_Auth_Adapter_DbTable($this->getAdapter(),'users_usr');
         $authAdapter->setIdentityColumn('login_name_usr')
                     ->setCredentialColumn('password_usr');
         $authAdapter->setIdentity($data['username'])
                      ->setCredential(md5($salt.$data['password'].$salt));
-				
+
         $result = $auth->authenticate($authAdapter);
         if($result->isValid())
         {
             $storage = new Zend_Auth_Storage_Session();
             $storage->write($authAdapter->getResultRowObject());
             return true;
-        } 
+        }
 
         return false;
     }
 
-        
+
     /**
     *    getUserImageData
     *
     *    Function to get users image data, if $thumb
     *    is true return data for thumbnail version of
-    *    userimage, else return data for full version 
+    *    userimage, else return data for full version
     *    of userimage.
     *
     *    FIX TODO:
-    *    Currently when editing user settings, 
+    *    Currently when editing user settings,
     *    new empty image is created to database.
     *    This function returns the most recently
     *    created image. Since new image is created
-    *    anytime user edits his/her settings, 
+    *    anytime user edits his/her settings,
     *    this function will return null if user
     *    has not added image with his/her most
     *    recent profile.
     *    FIXED: Works somehow, new empty images
-    *    should not be created when editing 
+    *    should not be created when editing
     *    profile anymore.
     *
     *    @param integer $id is of user
@@ -132,33 +132,33 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     */
     public function getUserImageData($id=0, $thumb=true)
     {
-        // Get image data        
+        // Get image data
         if ($id != 0) {
             // Check if we should get data for thumbnail
             // or the full image
-            $thumbnail = $thumb ? 'thumbnail_usi' : 'image_usi'; 
-        
+            $thumbnail = $thumb ? 'thumbnail_usi' : 'image_usi';
+
             // Create query
             $select = $this->_db->select()
-                                ->from('usr_images_usi', 
+                                ->from('usr_images_usi',
                                        array($thumbnail, 'created_usi', 'modified_usi'))
                                 ->where('id_usr_usi = ?', $id)
                                 ->order('modified_usi DESC');
-            
+
             // Fetch data from database
             $result = $this->_db->fetchAll($select);
-            
+
             // There's no need for this check here
             //if($result != null) {
             //    $imageData = $result[0][$thumbnail];
             //} else {
             //    $imageData = null;
             //}
-            
+
            //$rowset = $this->find((int)$id)->current();
-            
+
             //$row = $rowset->findDependentRowset('Default_Model_UserImages', 'UserUser')->current();
-            
+
             // Basically same check as above
             // if (!empty($row)) {
             //if (!empty($imageData)){
@@ -166,14 +166,14 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                 //  $imageData = $thumb ? $imageData : $imageData;
             //}
         }// end if
-        
+
         // If there is no image return null
         //$hasImage = empty($imageData) ? null : $imageData;
         $hasImage = $result != null ? $result[0] : null;
-        
+
         return $hasImage;
     } // end of getUserImageData
-    
+
     /**
     * userHasProfileImage
     *
@@ -184,38 +184,38 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     */
     public function userHasProfileImage($id = 0)
     {
-        // Get image data        
+        // Get image data
         if ($id != 0) {
             $rowset = $this->find((int)$id)->current();
-            
+
             $row = $rowset->findDependentRowset('Default_Model_UserImages', 'UserUser')->current();
-            
+
             if(isset($row->thumbnail_usi) && isset($row->image_usi)) {
                 //$image_data = $row->thumbnail_usi;
                 return true;
             } // end if
         } // end if
-        
+
         // If there is no image return null
-        return false;//empty($image_data) ? null : $image_data;    
+        return false;//empty($image_data) ? null : $image_data;
     } // end of userHasProfileImage
-    
+
     /**
     *    loginSuccess
     *
-    *    Log successfull user logins 
+    *    Log successfull user logins
     *
     */
     public function loginSuccess()
     {
         //$this->getUserRow();
-        
+
         // Update users last login time
         $this->_data->last_login_usr = new Zend_Db_Expr('NOW()');
         $this->_data->save();
-        
+
     } // end of loginSuccess
-    
+
     /**
     *    createAuthIdentity
     *
@@ -227,7 +227,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     {
         //$this->getUserRow();
         $identity = new stdClass;
-        
+
         $identity->user_id = $this->_data->id_usr;
         $identity->username = $this->_data->login_name_usr;
         //$identity->user_type = $this->userlevel;
@@ -237,7 +237,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $identity->created = $this->_data->created_usr;
         return $identity;
     } // end of createAuthIdentity
-    
+
     /**
     * registerUser Adds user register data to database
     *
@@ -245,37 +245,37 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     * @todo user languages
     * @param array $formData register form data
-    */    
+    */
     public function registerUser($formData = null)
     {
         if ($formData == null) {
             return false;
         }
-        
+
         // Create new empty user row
         $row = $this->createRow();
-        
+
         // Set user data (needs sanitation)
-        $row->login_name_usr = htmlentities($formData['username']);
-        $row->email_usr = htmlentities($formData['email']);
-        
+        $row->login_name_usr = htmlentities($formData['register_username']);
+        $row->email_usr = htmlentities($formData['register_email']);
+
         // Set language to some random language (needs fixing)
         $row->id_lng_usr = 12;
-        
+
         // Generate salt
         $salt = $this->generateSalt();
-        
+
         // Create and set password hash - md5(salt + password string + salt)
-        $row->password_usr = md5($salt.$formData['password'].$salt);
+        $row->password_usr = md5($salt.$formData['register_password'].$salt);
         $row->password_salt_usr = $salt;
-        
+
         $row->created_usr = new Zend_Db_Expr('NOW()');
         $row->modified_usr = new Zend_Db_Expr('NOW()');
-        
+
         // Save user data
         return $row->save();
     } // end of registerUser
-        
+
     /**
     *    generateSalt
     *
@@ -288,20 +288,20 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     {
         // Valid characters
         $pattern = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        
+
         // Get count of valid characters
         $k = strlen($pattern) - 1;
-        
+
         // Get random character from valid characters and add it to output
         $salt = $pattern{rand(0, $k)};
-        
+
         for($i = 1; $i < $length; $i++) {
             $salt .= $pattern{rand(0, $k)};
         } // end for
-    
+
         return $salt;
     } // end of generateSalt
-    
+
     /**
     *    sendVerificationEmail
     *
@@ -371,7 +371,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         // Return the result of the used SQL-query
         return $result;
     }
-    
+
     /**
     *    getUserByName
     *
@@ -386,12 +386,12 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $select = $this->_db->select()
             ->from('users_usr', array('*'))
             ->where('login_name_usr = ?', $username);
-        
+
         $stmt = $this->_db->query($select);
 
         $result = $stmt->fetchAll();
         */
-        
+
         $where = $this->select()->where('login_name_usr = ?', $username);
         $result = $this->fetchAll($where)->current();
         /*
@@ -406,8 +406,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             return null;
         }
     } // end of getUserByName
-    
-    
+
+
     /**
     *    getUserRow
     *
@@ -421,15 +421,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         if($id == -1) {
             $id = $this->_id;
         } // end if
-        
+
         return $this->find((int)$id)->current();
     } // end of getUserRow
-    
+
     /**
     * getUserContent
     *
-    * Get (all) content from a specific user. This is a horrible, horrible 
-    * function but will have to do for now. 
+    * Get (all) content from a specific user. This is a horrible, horrible
+    * function but will have to do for now.
     *
     * Edited 11/09/2009 by Pekka Piispanen:
     * Removed the retrieval of user id and username. That data was never needed
@@ -442,7 +442,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     * Edited 19.7.2010 by Sami Suuriniemi
     * Remdae the function, tried to be sure everything works with the new one
-    * 
+    *
     * @author Pekka Piispanen
     * @author Joel Peltonen
     * @author Mikko Aatola
@@ -454,30 +454,30 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     * @param string $type limit search to a specific content type
     * @param integer $id_cnt 	id to be skipped
     * @return array
-    */    
+    */
     /*public function getUserContent($author_id = 0, $type = 0, $id_cnt = 0, $limit = -1)
     {
         $result = array();  // container for final results array
-        
+
         $whereType = 1;
         if($type !== 0) {
             $whereType = $this->_db->quoteInto('cty.key_cty = ?', $type);
         } else {
             $whereType = '1 = 1';
         }
-        
+
         // If author id is set get users content
         if ($author_id != 0) {
             //if($count == -1) {
                 $contentSelect = $this->_db->select()
-                                           ->from(array('chu' => 'cnt_has_usr'), 
+                                           ->from(array('chu' => 'cnt_has_usr'),
                                                   array('id_usr', 'id_cnt'))
-                                           ->joinLeft(array('cnt' => 'contents_cnt'),         
+                                           ->joinLeft(array('cnt' => 'contents_cnt'),
                                                   'cnt.id_cnt = chu.id_cnt',
-                                                  array('id_cnt', 'id_cty_cnt', 'title_cnt', 
+                                                  array('id_cnt', 'id_cty_cnt', 'title_cnt',
                                                         'lead_cnt', 'language_cnt', 'published_cnt', 'created_cnt'))
-                                           ->joinLeft(array('cty' => 'content_types_cty'),    
-                                                  'cty.id_cty = cnt.id_cty_cnt',  
+                                           ->joinLeft(array('cty' => 'content_types_cty'),
+                                                  'cty.id_cty = cnt.id_cty_cnt',
                                                   array('key_cty'))
                                            ->joinLeft(array('vws' => 'cnt_views_vws'),
                                                       'vws.id_cnt_vws = cnt.id_cnt',
@@ -509,17 +509,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 				if($limit != -1) $contentSelect->limit($limit);
 
                 $result = $this->_db->fetchAll($contentSelect);
-                
+
             //}
             //else {
             //    $select = $this->select()->limitPage($page, $count)
             //                             ->order('id_cty_cnt ASC')
             //                             ->order('created_cnt DESC');
             //}
-            
+
             //$row = $this->find((int)$author_id)->current();
             //$result = $row->findDefault_Model_ContentViaDefault_Model_ContentHasUser($select);
-        } // end if        
+        } // end if
 
         return $result;
     } // end of getUserContent*/
@@ -532,14 +532,14 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     									->group('contents_cnt.id_cnt')
     									->where('cnt_has_usr.id_usr = ?', $id_usr)
     									;
-    	
+
     	if (isset($options['exclude'])) $select->where('contents_cnt.id_cnt != ?', $options['exclude']);
     	if (isset($options['limit'])) $select->limit($options['limit']);
     	if (isset($options['order'])) $select->order('cnt_has_usr.id_cnt '.$options['order']);
 
     	return $this->_db->fetchAll($select);
     }
-    
+
     /**
      * getUserCampaigns - Get all campaigns which belong to group where user is admin
      *
@@ -606,7 +606,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                            ;
 
         $result = $this->_db->fetchAll($campaignSelect);
-        
+
         return $result;
     }
 
@@ -670,23 +670,23 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     }
 
-    public function getSimpleUserDataById($id = -1) 
+    public function getSimpleUserDataById($id = -1)
     {
         $data = array();
-        
+
         if ($id != -1) {
             $select = $this->_db->select()
                             ->from(array('users_usr' => 'users_usr'), array('id_usr', 'id_lng_usr', 'login_name_usr', 'created_usr'))
                             ->where('id_usr = ?', $id)
             ;
             $result = $this->_db->fetchAll($select);
-            
+
             if (count($result == 1)) $data = $result;
         }
-        
+
         return $data[0];
     }
-    
+
     /**
     *   getUserListing
     *
@@ -701,13 +701,13 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	//For some odd reason this order and list default set has to be done here and wont work on ^...
 		if(!$order) $order = 'username';
 		if(!$list) $list = 'ASC';
-		
+
 		//Get full sorted and filtered userIdList
     	$userIdList = $this->sortAndFilterUsers($filter, $order, $list);
     	$listSize = sizeof($userIdList);
-    	
+
     	if($listSize == 0) return array(); //If list size is 0, we just return
-    	
+
     	//Then we choose the part of id list we want to show and collect data on
     	$userIdListCut = array();
     	$i = ($page-1)*$count;
@@ -717,11 +717,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     		$userIdListCut[] = $userIdList[$i];
     	}
     	if(sizeof($userIdListCut) == 0) return array();
-    	
+
     	$userIdList = $userIdListCut; //We replace the whole list with the user Ids we want (this is for final ordering purpose)
     	$userInfo = $this->getUserInfo($userIdList); //Get basic user information
     	$userData = $userInfo; //We start to collect data about users to $userData array
-    	
+
     	$userContents = $this->getUsersContents($userIdList); //Get all content ID's from users in id list
 
     	//Add these contents to $userData array in which we collect data (if user doesnt have content we add empty array)
@@ -729,7 +729,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     		 if (!isset($userContents[$data['id_usr']]))
     		 	 $userContents[$data['id_usr']] = array();
     		 $userData[$key]['contents'] = $userContents[$data['id_usr']];
-    		 
+
     	}
     	ksort($userContents); //We sort $userContents again because we might have added empty arrays
 
@@ -737,16 +737,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	foreach($userData as $key => $data) {
     		$userData[$key]['contentCount'] = sizeof($data['contents']);
     	}
-    	
+
     	//Get Ratings statistics
     	$userRatings = $this->getUserContentRatings($userContents);
     	$userData = $this->intersectMergeArray($userData,$userRatings);
-    	
+
     	//Get location info
     	$profileModel = new Default_Model_UserProfiles();
     	$userLocations = $profileModel->getUsersLocation($userIdList);
     	$userData = $this->intersectMergeArray($userData,$userLocations);
-    	
+
     	//Finally we sort the $userData array to same order as our $userIdList
     	$final = array();
     	foreach($userIdList as $id) {
@@ -760,12 +760,12 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         return $final;
     }
-    
+
     /**
      * sortAndFilterUsers
-     * 
+     *
      * Sort and Filter Users
-     * 
+     *
      * @param array $filter
      * @param string $order
      * @param string $list
@@ -776,9 +776,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
    	 	$serializedParams = serialize($filter).$order.$list;
 		$cacheFile = md5($serializedParams);
 		$cache = Zend_Registry::get('cache');
-		
+
 		if(!$cacheResult = $cache->load('UserList_'.$cacheFile)) {
-			
+
 			$orderGroups = array(
 			'userInfo' => array(
 						'username' => 'login_name_usr',
@@ -790,39 +790,39 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 			'contentRatings' => array('rating' => 'SUM(rating_crt)'),
 			'contentComments' => array('comments' => 'COUNT(id_cmt)')
 			);
-			
+
 	        $groupName = "";
 	        foreach($orderGroups as $key => $group) {
 	        	if(isset($group[$order])) {
 	        		$groupName = $key;
 	        	}
 	        }
-	
+
 	   		if($order) $sort = $orderGroups[$groupName][$order]." ".$list;
 	        else $sort = "id_usr";
-	
+
 	        $select = $this->select()->from($this, 'id_usr')
 	                                 ->order('id_usr');
-	                                 
+
 		        if(isset($filter['city']) && $filter['city'] != "")
 		          $select->where('id_usr IN (?)',$this->getCityFilter($filter['city']));
-		
+
 		        if(isset($filter['username']) && $filter['username'] != "")
-		          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));  
-		          
+		          $select->where('id_usr IN (?)',$this->getUsernameFilter($filter['username']));
+
 		        if(isset($filter['country']) && $filter['country'] != "0")
 		          $select->where('id_usr IN (?)',$this->getCountryFilter($filter['country']));
-		        
+
 		        if(isset($filter['group']) && $filter['group'] != "")
 		          $select->where('id_usr IN (?)',$this->getGroupFilter($filter['group'],$filter['exactg']));
-	
+
 		    if(!$order && !$list) {
-		         $result = $this->_db->fetchAll($select);         
+		         $result = $this->_db->fetchAll($select);
 		         if(!$result) { $cache->save(array(), 'UserList_'.$cacheFile); return array(); }
 		         $output = $this->simplifyArray($result,'id_usr');
 	        }
 	        else $output = array();
-	        
+
 	        if($groupName == "userInfo")
 	       		$output = $this->sortByUserInfo($select, $sort, $list);
 	        elseif($groupName == "contentInfo")
@@ -832,25 +832,25 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	        elseif($groupName == "contentRatings")
 	        	$output = $this->sortUsersByRating($select, $sort, $list, null);
 	        elseif($groupName == "contentPopularity")
-	        	$output = $this->sortUsersByPopularity($select, $sort, $list, null);	
-	        elseif($groupName == "contentComments")	
+	        	$output = $this->sortUsersByPopularity($select, $sort, $list, null);
+	        elseif($groupName == "contentComments")
 	        	$output = $this->sortUsersByComments($select, $sort, $list, null);
-			
+
 	        $cache->save($output, 'UserList_'.$cacheFile);
 		}
 		else {
 			$output = $cacheResult;
 		}
- 	
+
         return $output;
-        
+
     }
-    
+
     /**
      * intersectMergeArray
-     * 
-     * This function merges data in same keys in 2 arrays together 
-     * 
+     *
+     * This function merges data in same keys in 2 arrays together
+     *
      * @param array $arr1
      * @param array $arr2
      * @return array
@@ -863,14 +863,14 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     		$merged_array[$key] = array_merge($a, $arr2[$key]);
     	}
     	return $merged_array;
-    } 
+    }
 
     /**
      * simplyfyArray
-     * 
+     *
      * There might be function in Zend so we dont need this but I didnt find, perhaps you can? ;)
-     * This function makes associative array to nonassociative 
-     * 
+     * This function makes associative array to nonassociative
+     *
      * @param $result
      * @return non associative array $userIdList
      * @author Jari Korpela
@@ -883,7 +883,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         }
         return $userIDList;
     }
-    
+
     private function addMissingIdsToResult($result, $userIDList, $list) {
         if($list == "desc") {
 	        foreach($userIDList as $id) {
@@ -902,7 +902,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         }
         return $result;
     }
-    
+
     private function finalizeToSortingOrderByUserId($arr1,$arr2) {
     	$final = array();
     	foreach($arr1 as $id) {
@@ -914,13 +914,13 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     		}
     	}
     	return $final;
-    }   
-    
+    }
+
     /**
      * getUserIds
-     * 
+     *
      * This function retrieves all user ID:s
-     * 
+     *
      * @return array
      * @author Jari Korpela
      */
@@ -929,13 +929,13 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                  ->order('id_usr');
         $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr');
         return $result;
-    } 
+    }
 
     /**
      * getUserIdSearch
-     * 
+     *
      * This function give SQL query to get all user IDs
-     * 
+     *
      * @return $select
      * @author Jari Korpela
      */
@@ -943,18 +943,18 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	$select = $this->select()->from($this, 'id_usr')
                                  ->order('id_usr');
         return $select;
-    } 
+    }
 
-     
+
     /**
      * getUsersViews
-     * 
+     *
      * gets users views count
-     * 
+     *
      * @param array $userIDList
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     public function getUsersViews($userIDList) {
 
     	$select = $this->_db->select()->from('cnt_views_vws',
@@ -964,20 +964,20 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->group('id_usr_vws')
     							->order('id_usr_vws')
     							;
-    							
-        $result = $this->_db->fetchAll($select); 
-        
+
+        $result = $this->_db->fetchAll($select);
+
 		return $result;
-    }    
-    
+    }
+
     /**
      * getUsersPopularity
      * Popularity means how many unique users has viewed users contents
-     * 
+     *
      * @param array $userIDList
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     public function getUsersPopularity($userIDList) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
@@ -993,16 +993,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
 		return $result;
     }
-    
+
     /**
      * getUsersRating
-     * 
+     *
      * Gets users rating sum
-     * 
+     *
      * @param array $userIDList
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     public function getUsersRating($userIDList) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
@@ -1014,27 +1014,27 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->group('id_usr')
     							->order('id_usr')
     							;
-					
+
         $result = $this->_db->fetchAll($select);
         //print_r($result);die;
         foreach($result as $key => $data) {
         	if($data['value'] == "") unset($result[$key]);
         }
-   
+
         $result = array_values($result);
         //print_r($result);
 		return $result;
     }
-    
+
     /**
      * getUsersCommentCount
-     * 
+     *
      * Gets users comment count
-     * 
+     *
      * @param array $userIDList
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     public function getUsersCommentCount($userIDList) {
 
     	$select = $this->_db->select()->from('comments_cmt',
@@ -1045,16 +1045,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->order('id_usr_cmt')
     							;
 
-        $result = $this->_db->fetchAll($select); 
- 
+        $result = $this->_db->fetchAll($select);
+
 		return $result;
-    }       
-    
+    }
+
     /**
      * getUserContentRatings
-     * 
+     *
      * Gets Users Content Ratings info
-     * 
+     *
      * @param array $userContents as $userId => $content
      * @return array $list
      * @author Jari Korpela
@@ -1083,24 +1083,24 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 						            'ratingRatioPositive' => '',
 						            'ratingRatioNegative' => '',
 						            'ratingAmount' => '',
-						            'ratedContents' => ''  			
+						            'ratedContents' => ''
     								));
     		}
     	}
         return $userRatings;
     }
-    
+
     /**
-     * getUserInfo 
-     * 
+     * getUserInfo
+     *
      * Gets basic user information from users_usr table
-     * 
+     *
      * @param array $userIdList
      * @return array $list
      * @author Jari Korpela
      */
 	public function getUserInfo($userIdList) {
-		$select = $this->_db->select()->from(array('usr' => 'users_usr'), 
+		$select = $this->_db->select()->from(array('usr' => 'users_usr'),
                                              array('id_usr',
                                                    'login_name_usr',
                                                    'last_login_usr',
@@ -1108,30 +1108,30 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                              ->where('id_usr IN (?)',$userIdList)
                                              ->order('id_usr')
                                              ;
-        return $this->_db->fetchAll($select);                                      
+        return $this->_db->fetchAll($select);
     }
 
     /**
      * getUsersContentCount
-     * 
+     *
      *  Gets Users content counts
-     *  
+     *
      *  @param array $userIdList
      *  @return array $list
      *  @author Jari Korpela
-     * 
+     *
      */
     public function getUsersContentCount($userIdList) {
     	sort($userIdList);
-    	
-    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
+
+    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'),
                                              array('id_usr',
                                              	   'value' => 'COUNT(id_cnt)'))
                                              ->where('id_usr IN (?)', $userIdList)
                                              ->group('id_usr')
                                              ->order('id_usr')
                                              ;
-                        
+
         $result = $this->_db->fetchAll($select);
         $resultList = array();
 
@@ -1145,21 +1145,21 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         	$resultList[] = array('id_usr' => $id, 'value' => 0);
         }
-                
+
         return $resultList;
     }
-    
+
     /**
      * getUsersContents
-     * 
+     *
      *  Gets users content ID:s
-     *  
+     *
      *  @param array $userIdList
      *  @return array $list
      *  @author Jari Korpela
      */
     public function getUsersContents($userIdList) {
-    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
+    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'),
                                              array('id_usr',
                                              	   'id_cnt'))
                                              ->group('id_cnt')
@@ -1167,19 +1167,19 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                              ->order(array('id_usr','id_cnt DESC'))
                                              ;
         $result = $this->_db->fetchAll($select);
-        
+
         $contentArray = array();
-        
+
         foreach($result as $res) {
         	$contentArray[$res['id_usr']][] = $res['id_cnt'];
         }
-        
+
         return $contentArray;
-        
+
     }
-    
+
     public function getUsersContentsLastCheck($userIds) {
-    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'), 
+    	$select = $this->_db->select()->from(array('chu' => 'cnt_has_usr'),
                                              array('id_usr',
                                              	   'id_cnt',
                                              		'last_checked'))
@@ -1194,41 +1194,41 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         }
         return $contentArray;
     }
-    
+
     private function getUserStatisticsContentTypes($contentIdList) {
-		
+
     	$select = $this->_db->select()->from(array('cnt' => 'contents_cnt'),
     											array())
-    									->joinLeft(array('cty' => 'content_types_cty'),    
-                                                  'cty.id_cty = cnt.id_cty_cnt',  
+    									->joinLeft(array('cty' => 'content_types_cty'),
+                                                  'cty.id_cty = cnt.id_cty_cnt',
                                                   array('type' => 'key_cty',
                                                   'amount' => 'COUNT(key_cty)'))
                                         ->where('id_cnt IN (?)',$contentIdList)
                                         ->group('key_cty')
          ;
-                           
+
         $result = $this->_db->fetchAll($select);
-        
-        return $result;                                 
+
+        return $result;
     }
-    
+
     /**
      * sortUsersByContentInfo
-     * 
+     *
      * Sorts $userIdList by $sort
-     * 
+     *
      * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
-     */    
+     */
     public function sortUsersByContentInfo($search, $sort, $list, $limit) {
-    	$content = new Default_Model_ContentHasUser(); 
+    	$content = new Default_Model_ContentHasUser();
     	$select = $content->select()->from('cnt_has_usr',
     									array('id_usr'))
     							->where('id_usr IN (?)',$search)
     							->order(array($sort,'id_usr'))
-    							->group('id_usr')    							
+    							->group('id_usr')
     							;
     	if($limit) $select->limit($limit,0);
     	//print_r($select->assemble());echo "\n";
@@ -1239,17 +1239,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         return $result;
     }
-    
+
     /**
      * sortByUserInfo
-     * 
+     *
      * Sorts $userIdList by $sort
-     * 
+     *
      * @param array $userIDList
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     private function sortByUserInfo($userIDList, $sort) {
     	$select = $this->select()->from($this,
     									array('id_usr'))
@@ -1257,20 +1257,20 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->order($sort)
     							;
         $result = $this->_db->fetchAll($select);
-        
+
 		return $this->simplifyArray($result,'id_usr');
     }
-    
+
     /**
      * sortUsersByViews
-     * 
+     *
      * Sorts $userIdList by $sort
-     * 
+     *
      * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     public function sortUsersByViews($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('cnt_views_vws',
@@ -1280,24 +1280,24 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->order(array($sort,'id_usr_vws'))
     							;
     	if($limit) $select->limit($limit,0);
-        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws'); 
+        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_vws');
         if($list) $result = $this->addMissingIdsToResult($result,
 							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
-        
+
 		return $result;
     }
-    
+
     /**
      * sortUsersByComments
-     * 
+     *
      * Sorts $userIdList by $sort
-     * 
+     *
      * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     public function sortUsersByComments($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from('comments_cmt',
@@ -1307,24 +1307,24 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->order(array($sort,'id_usr_cmt'))
     							;
     	if($limit) $select->limit($limit,0);
-        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt'); 
+        $result = $this->simplifyArray($this->_db->fetchAll($select),'id_usr_cmt');
         if($list) $result = $this->addMissingIdsToResult($result,
 							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
-        
+
 		return $result;
-    }    
-    
+    }
+
     /**
      * sortUsersByPopularity
      * Popularity means how many unique users has viewed users contents
      * Sorts $userIdList by $sort
-     * 
+     *
      * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
-     */   
+     */
     public function sortUsersByPopularity($search, $sort, $list, $limit) {
 
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
@@ -1342,20 +1342,20 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         if($list) $result = $this->addMissingIdsToResult($result,
 							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
-        
+
 		return $result;
     }
-     
+
     /**
      * sortUsersByRating
-     * 
+     *
      * Sorts $userIdList by $sort
-     * 
+     *
      * @param ZEND SQL search query returning array of user id:s
      * @param string $sort
      * @return $resultList
      * @author Jari Korpela
-     */ 
+     */
     public function sortUsersByRating($search, $sort, $list, $limit) {
     	$select = $this->_db->select()->from(array('cnt' => 'cnt_has_usr'),
     									array('id_usr'))
@@ -1366,17 +1366,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							->group('id_usr')
     							->order(array($sort,'id_usr'))
     							;
-    	if($limit) $select->limit($limit,0);						
+    	if($limit) $select->limit($limit,0);
         $result = $this->_db->fetchAll($select);
         //print_r($result);die;
         $result = $this->simplifyArray($result,'id_usr');
         if($list) $result = $this->addMissingIdsToResult($result,
 							 $this->simplifyArray($this->_db->fetchAll($search),'id_usr'),
 							 $list);
-        
+
 		return $result;
     }
-    
+
     /**
     *   getCityFilter
     *
@@ -1385,17 +1385,17 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *   @param int $city
     *   @return string
     */
-    private function getCityFilter(&$city) 
+    private function getCityFilter(&$city)
     {
-    	
+
         $profile = new Default_Model_UserProfiles();
     	$select = $profile->select()->from($profile, 'id_usr_usp')
     								->where('public_usp = 1 AND profile_key_usp = "city" AND profile_value_usp LIKE ?','%'. $city. '%');
-        
+
         return $select;
     }
-    
-    
+
+
     /**
     *   getCountryFilter
     *
@@ -1404,16 +1404,16 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *   @param int $country
     *   @return string
     */
-    private function getCountryFilter(&$country) 
+    private function getCountryFilter(&$country)
     {
 
         $profile = new Default_Model_UserProfiles();
     	$select = $profile->select()->from($profile, 'id_usr_usp')
     								->where('public_usp = 1 AND profile_key_usp = "country" AND profile_value_usp = ?', $country);
-        						
+
         return $select;
     }
-    
+
     /**
     *   getGroupFilter
     *
@@ -1421,24 +1421,24 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *
     *   @param string $group
     *   @return string
-    */    
-    private function getGroupFilter(&$group,$exactg) 
+    */
+    private function getGroupFilter(&$group,$exactg)
     {
-    	
+
         if($exactg == "1") {
     		$select1 = $this->_db->select()->from('usr_groups_grp', 'id_grp')
 	    								->where('group_name_grp = ?',$group);
     	}
-    	else { 
+    	else {
 	    	$select1 = $this->_db->select()->from('usr_groups_grp', 'id_grp')
 	    								->where('group_name_grp LIKE ?','%'. $group .'%');
     	}
-    							
+
 		$select = $this->_db->select()->from('usr_has_grp', 'id_usr')
     								->where('id_grp IN (?)', $select1);
         return $select;
-    } 
-    
+    }
+
     /**
     *   getUsernameFilter
     *
@@ -1447,15 +1447,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *   @param string $username
     *   @return string
     */
-    private function getUsernameFilter(&$username) 
+    private function getUsernameFilter(&$username)
     {
     	$select = $this->select()->from($this, 'id_usr')
     								->where('login_name_usr LIKE ?','%'. $username. '%');
-        
+
         return $select;
-    } 
-    
-    
+    }
+
+
     /**
     *   getUserSearchContentCountFilter
     *
@@ -1465,15 +1465,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     *   @param int $type
     *   @return string
     */
-    /*public function getUserSearchContentCountFilter(&$count, &$type) 
+    /*public function getUserSearchContentCountFilter(&$count, &$type)
     {
         $result = 1;
-        if(!empty($count) && 
+        if(!empty($count) &&
             $char = $this->checkContentCount($type)) {
-            $result = $this->_db->quoteInto('contentCount ' . $char . ' ?', 
+            $result = $this->_db->quoteInto('contentCount ' . $char . ' ?',
                                                   $count);
         }
-        
+
        return $result;
     }
     */
@@ -1507,11 +1507,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                 //}
                 //break;
             default:
-                return false;        
+                return false;
         }
     }
     */
-    
+
 	/*
     *   changeUserEmail
     *
@@ -1522,11 +1522,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	public function changeUserEmail($id = -1, $email_address)
 	{
 		// this is the simplest possible example of the update() -function :) -sokuni
-		$data = array('email_usr' => $email_address);			
+		$data = array('email_usr' => $email_address);
 		$where = $this->getAdapter()->quoteInto('id_usr = ?', $id);
-		$this->update($data, $where);	
+		$this->update($data, $where);
 	}
-	
+
     /**
     * getUserEmail
     *
@@ -1538,14 +1538,14 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         if ($id == -1) {
             return false;
         }
-        
+
         $select = $this->select()
                     ->from($this, array('email_usr'))
                     ->where('id_usr = ?', $id);
-                    
+
         $result = $this->fetchRow($select)->toArray();
 
-        
+
         return $result['email_usr'];
     }
 
@@ -1559,14 +1559,14 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         if ($email == '') {
             return null;
         }
-        
+
         $select = $this->select()
                     ->from('users_usr', 'id_usr')
                     ->where('email_usr = ?', $email);
-                    
+
         $result = $this->fetchAll($select);
 
-        
+
         if (isset($result[0])) {
             return $result[0]['id_usr'];
         }
@@ -1574,7 +1574,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             return null;
         }
     }
-    
+
 	/*
     *   changeUserPassword
     *
@@ -1588,15 +1588,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                             ->from($this, array('password_salt_usr'))
                             ->where('id_usr = ?', $id);
         $result = $this->fetchRow($select)->toArray();
-		
+
 		$salt = $result['password_salt_usr'];
 		$hashed_password = md5($salt.$password.$salt);
-		
-		$data = array('password_usr' => $hashed_password);			
+
+		$data = array('password_usr' => $hashed_password);
 		$where = $this->getAdapter()->quoteInto('id_usr = ?', $id);
-		$this->update($data, $where);	
+		$this->update($data, $where);
 	}
-    
+
     /**
     *   Checks if username exists in database
     *
@@ -1633,18 +1633,18 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                         ->from(array('users_usr' => 'users_usr'), array('id_usr'))
                         ->where('login_name_usr = ?', $username)
         ;
-        
+
         $result = $this->_db->fetchAll($select);
-        
+
         if (isset($result[0])) {
             $uid = $result[0]['id_usr'];
         } else {
             $uid = null;
         }
-    
+
         return $uid;
     }
-    
+
     public function getUserNameById($id_usr)
     {
         if($id_usr != 0)
@@ -1654,7 +1654,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                     ->where("`id_usr` = $id_usr");
 
             $result = $this->fetchAll($select)->toArray();
-            
+
             return $result[0]['login_name_usr'];
         }
         else
@@ -1662,9 +1662,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             return "privmsg-message-sender-system";
         }
     } // end of getUserNameById
-    
+
     public function getContentOwner($contentId) {
-    	
+
     	$select = $this->select()
     					->from('users_usr')
     					->join(array('cnt_has_usr'), 'cnt_has_usr.id_usr = users_usr.id_usr', array())
@@ -1673,20 +1673,20 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $result = $this->fetchAll($select)->toArray();
 	    return $result[0];
     }
-    
+
    /**
     * getUserFavouriteContent
     *
-    * Get (all) favourite content from a specific user. 
+    * Get (all) favourite content from a specific user.
     *
     * @author Jari Korpela
     * @param integer $author_id id of whose favourite content to get
     * @return array
-    */    
+    */
     public function getUserFavouriteContent($author_id = 0)
     {
         $result = array();  // container for final results array
-        
+
         // If author id is set get users content
         if ($author_id != 0) {
 
@@ -1695,10 +1695,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	                			array('id_cnt','last_checked'))
 	                ->joinLeft(array('cnt' => 'contents_cnt'),
 	                			'uhf.id_cnt = cnt.id_cnt',
-	                			array('id_cnt', 'id_cty_cnt', 'title_cnt', 
+	                			array('id_cnt', 'id_cty_cnt', 'title_cnt',
 	                                  'lead_cnt', 'language_cnt' ,'published_cnt', 'modified_cnt'))
-	                ->joinLeft(array('cty' => 'content_types_cty'),    
-	                                  'cty.id_cty = cnt.id_cty_cnt',  
+	                ->joinLeft(array('cty' => 'content_types_cty'),
+	                                  'cty.id_cty = cnt.id_cty_cnt',
 	                                  array('key_cty'))
 	                ->joinLeft(array('chs' => 'cnt_has_usr'),
 	                				'chs.id_cnt = cnt.id_cnt',
@@ -1706,8 +1706,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	                ->joinLeft(array('chs2' => 'cnt_has_usr'),
 	                				'chs2.id_usr = chs.id_usr',
 	                				array('COUNT(chs2.id_cnt) as count'))
-	                ->joinLeft(array('usr' => 'users_usr'),    
-	                                  'chs.id_usr = usr.id_usr',  
+	                ->joinLeft(array('usr' => 'users_usr'),
+	                                  'chs.id_usr = usr.id_usr',
 	                                  array('login_name_usr','id_usr'))
 	                /*->joinLeft(array('vws' => 'cnt_views_vws'),
 	                                 'vws.id_cnt_vws = cnt.id_cnt',
@@ -1723,47 +1723,47 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 	                ->order('cnt.created_cnt DESC')
 	                ->group('cnt.id_cnt')
 	                ;
-                
+
                 $result = $this->_db->fetchAll($contentSelect);
-               
-        } 
+
+        }
         return $result;
     } // end of getUserFavouriteContent
-    
-   
 
-    
+
+
+
 
       public function getUserContentList($contentIdList, $amount) {
         $result = array();  // container for final results array
-                
+
         $contentSelect = $this->_db->select()
-                                           ->from(array('cnt' => 'contents_cnt'),         
+                                           ->from(array('cnt' => 'contents_cnt'),
                                                   array('id_cnt', 'title_cnt', 'created_cnt'))
-                                           ->joinLeft(array('cty' => 'content_types_cty'),    
-                                                  'cty.id_cty = cnt.id_cty_cnt',  
+                                           ->joinLeft(array('cty' => 'content_types_cty'),
+                                                  'cty.id_cty = cnt.id_cty_cnt',
                                                   array('key_cty'))
                                             ->where('cnt.id_cnt IN (?)', $contentIdList)
                                             ->where('cnt.published_cnt = 1')
                                             ->order('cnt.created_cnt DESC')
                                             ->limit($amount)
-                ;       
+                ;
         $result = $this->_db->fetchAll($contentSelect);
         return $result;
     } // end of getUserContentList
-    
+
     /**
      * array $statisticsList holds info about what statistics you want to have
      */
     public function getUserStatistics($userId, $contentIdList, $statisticsList) {
-    	
+
     	$statistics = array();
     	if(in_array("contentTypes",$statisticsList)) {
     		$statistics = array_merge($statistics,$this->getUserStatisticsContentTypes($contentIdList));
     	}
     	return $statistics;
     }
-    
+
     public function getWholeUserContentList($userId, $contentIdList) {
     	$result = "";
     	if(is_numeric($userId) && is_array($contentIdList)) {
@@ -1788,30 +1788,30 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                                                   'cty.id_cty = cnt.id_cty_cnt',
                                                   array('key_cty'))
                                            ->where('chu.id_cnt IN (?)', $contentIdList)
-                                           ->group(array('chu.id_cnt'))          
-            ;                                
-            $result = $this->_db->fetchAll($contentSelect);                         
+                                           ->group(array('chu.id_cnt'))
+            ;
+            $result = $this->_db->fetchAll($contentSelect);
 		}
-			
+
 		return $result;
     }
-    
+
     /**
      * getUsersViewers
-     * 
+     *
      * gets list of users who has read users content, sorted last viewed
-     * 
+     *
      * @param 	id 			users id
      * @param 	limit		limit of users, default 10
      * @return 	array		array (views => viewcount, id_usr_vws => viewers user id)
      */
     public function getUsersViewers($id, $limit = 10) {
-    	// select max(modified_vws), id_usr_vws from cnt_has_usr,cnt_views_vws 
+    	// select max(modified_vws), id_usr_vws from cnt_has_usr,cnt_views_vws
     	// where id_usr=2 and id_cnt=id_cnt_vws and modified_vws is not null and id_usr_vws != 0 group by id_usr_vws order by modified_vws desc;
     	$select = $this->select()->setIntegrityCheck(false)
     							 ->from('cnt_has_usr', array())
     							 ->where('cnt_has_usr.id_usr = ?', $id)
-    							 ->join('cnt_views_vws', 
+    							 ->join('cnt_views_vws',
     							 		'cnt_views_vws.id_cnt_vws = cnt_has_usr.id_cnt',
     							  		array('latest' => 'max(modified_vws)', 'id_usr' => 'id_usr_vws' ))
     							 ->join('users_usr', 'id_usr_vws = users_usr.id_usr', array('login_name_usr'))
@@ -1823,9 +1823,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     							 ->limit($limit)
     							 ;
 		$result = $this->_db->fetchAll($select);
-		return $result;		   		 
+		return $result;
     }
-    
+
     /**
      * getGravatarStatus
      * @return 1 or 0 (true, false)
@@ -1837,11 +1837,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
                             ->where('id_usr = ?', $id);
 
         // Fetch data from database
-        $result = $this->_db->fetchRow($select); 
-        
+        $result = $this->_db->fetchRow($select);
+
         return $result['gravatar_usr'];
     }
-    
+
     /**
      * changeGravatarStatus
      * @return true, false
@@ -1852,21 +1852,21 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     	if($status == -1) return false;
 
     	$status == false ? $status = 0 : $status = 1;
-    	
-    	$data = array('gravatar_usr' => $status);			
+
+    	$data = array('gravatar_usr' => $status);
 		$where = $this->getAdapter()->quoteInto('id_usr = ?', $id);
 		if ($this->update($data, $where)) return true;
 		return false;
     }
-    
-    
+
+
     /**
-     * 
+     *
      * @return array of toplist classes
      */
     public function getUserTopList() {
     		$cache = Zend_Registry::get('short_cache');
-			
+
         	if(!$cacheResult = $cache->load('UserTopList')) {
 				$topListUsers = new Oibs_Controller_Plugin_Toplist_Users();
 				$topListUsers->setLimit(10)
@@ -1876,7 +1876,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 		        $topListCountries->fetchUserCountries()
 						        	->setTopAmount()
 						        	->autoSet()
-									;	
+									;
 				$topListGroups = new Oibs_Controller_Plugin_Toplist_Groups();
 				$topListGroups->fetchUsersInGroups()
 								->setTopAmount()
@@ -1887,7 +1887,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 								->setTopAmount()
 								->autoSet()
 								;
-				
+
 				$topListClasses = array(
 		        	'Users' => $topListUsers,
 		       		'Groups' => $topListGroups,
@@ -1901,5 +1901,5 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         	}
         return $topListClasses;
     }
-    
+
 } // end of class
