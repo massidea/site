@@ -17,13 +17,12 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 	 */
 	public function init()
     {
-        $translate = Zend_Registry::get('Zend_Translate');
         $this->setName('register_form')
             ->setAttrib('id', 'register_form')
 	        ->addElementPrefixPath('Oibs_Validators', 'OIBS/Validators/', 'validate', 'decorate');
 
         $this->addElement('text', 'register_username', array(
-            'label'      => $translate->_('account-register-username'),
+            'label'      => 'account-register-username',
             'required'   => true,
             'validators' => array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
@@ -34,7 +33,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
         ));
 
         $this->addElement('password', 'register_password', array(
-            'label'      => $translate->_('account-register-password'),
+            'label'      => 'account-register-password',
             'required'   => true,
             'validators' => array(
                 new Oibs_Validators_RepeatValidator('register_confirm_password'),
@@ -44,7 +43,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
         ));
 
         $this->addElement('password', 'register_confirm_password', array(
-            'label'      => $translate->_('account-register-password-confirm'),
+            'label'      => 'account-register-password-confirm',
             'required'   => true,
             'validators' => array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
@@ -53,7 +52,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
         ));
 
         $this->addElement('text', 'register_city', array(
-            'label'      => $translate->_('account-register-city'),
+            'label'      => 'account-register-city',
             'required'   => true,
             'validators' => array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
@@ -62,13 +61,13 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
         ));
 
         $this->addElement('text', 'register_email', array(
-            'label'      => $translate->_('account-register-email'),
+            'label'      => 'account-register-email',
             'required'   => true,
             'validators' => array($this->getMailValidator()),
         ));
 
         $this->addElement('select', 'register_employment', array(
-            'label'        => $translate->_('account-register-employment'),
+            'label'        => 'account-register-employment',
             'required'     => true,
 	        'multiOptions' => $this->getAccountOptions(),
             'validators'   => array(
@@ -76,7 +75,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
             ),
         ));
 
-	    $this->addElement('captcha', 'captcha', array(
+	    $this->addElement('captcha', 'register_captcha', array(
 		    'captcha'    => array(
 			    'captcha' => 'Image',
 			    'wordLen' => 8,
@@ -86,24 +85,55 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 			    'imgUrl'  => '/img/captcha',
 		    ),
 		    'required'   => true,
-		    'label'      => $translate->_('account-register-captcha'),
+		    'label'      => 'account-register-captcha',
 	    ));
 
         $this->addElement('checkbox', 'register_terms', array(
-            'label'      => $translate->_('account-register-terms-and-privacy'),
-            'required'   => true,
-	        'checked'    => false,
-            'validators' => array(
-                new Oibs_Validators_CheckboxValidator(),
-            ),
+            'label'          => 'account-register-gtc',
+            'required'       => true,
+	        'uncheckedValue' => '',
+	        'checked'        => false,
+	        'description'    => 'account-register-terms-and-privacy',
+	        'errorMessages'  => array('empty' => 'error-checkbox-not-checked'),
         ));
 
         $this->addElement('submit', 'register_submit', array(
-            'label'      => $translate->_('account-register-submit'),
+            'label'      => 'account-register-submit',
             'required'   => true,
             'validators' => array(),
         ));
 
+	    $this->addDisplayGroup(array(
+			    'register_username',
+			    'register_password',
+			    'register_confirm_password',
+			    'register_email',
+		    ),
+	        'login',
+	        array('legend' => 'account-register-legend-login'));
+
+	    $this->addDisplayGroup(array(
+		        'register_city',
+		        'register_employment',
+		    ),
+		    'coredata',
+	        array('legend' => 'account-register-legend-core'));
+
+	    $this->addDisplayGroup(array(
+		        'register_terms',
+		        'register_captcha',
+		    ),
+		    'general',
+	        array('legend' => 'account-register-legend-general'));
+
+	    $this->addDisplayGroup(array(
+			    'register_submit'
+		    ),
+		    'Actions',
+	        array(
+		        'disableLoadDefaultDecorators' => true,
+		        'decorators' => array('Actions'),
+	        ));
 
         parent::init();
     }
