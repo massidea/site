@@ -4,17 +4,26 @@ var $liveFeedControl = $(".feedControl");
 var $feedOverlay = $(".feedOverlay");
 var time = 0;
 
-//stop reloading of the page
-$liveFeedControl.click(function (event) {
-    event.stopPropagation();
-    return false;
-});
+    //stop reloading of the page
+    $liveFeedControl.click(function (event) {
+        event.stopPropagation();
+        return false;
+    });
 
 
-$liveFeed.hover(stopTimer, resetTimer);
-$liveFeedControl.click(loadContent);
-loadContent();
-resetTimer();
+    $liveFeed.hover(stopTimer, resetTimer);
+    $liveFeedControl.click(loadContentClick);
+    loadContent();
+    resetTimer();
+
+
+    function loadContentClick(){
+    console.log("loadClick");
+        $feedOverlay.removeClass("hidden");
+        $liveFeedContent.load('/'+LANGUAGE+'/content/feed/format/html', function (){
+            $feedOverlay.addClass("hidden");
+    });
+}
 
 
     function loadContent(){
@@ -22,22 +31,21 @@ resetTimer();
         $feedOverlay.removeClass("hidden");
         $liveFeedContent.load('/'+LANGUAGE+'/content/feed/format/html', function (){
             $feedOverlay.addClass("hidden");
+            resetTimer();
         });
     }
 
     function resetTimer(){
-        console.log(time + "timer");
+        console.log("reset");
         if (time) {
-            window.clearInterval(time);
-            console.log(time);
+            window.clearTimeout(time);
         }
-        time = window.setInterval(loadContent, 3000);
-        console.log(time);
+        time = window.setTimeout(loadContent, 3000);
     }
 
     function stopTimer(){
-        console.log("stop" + time);
+        console.log("stop");
         if (time)
-            window.clearInterval(time);
+            window.clearTimeout(time);
         time = 0;
     }
