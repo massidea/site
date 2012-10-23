@@ -28,10 +28,6 @@
  */
 class Default_Form_NewPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 {
-    public function __construct($options = null) 
-    { 
-        parent::__construct($options);
-    }
 
     public function init()
     {
@@ -48,10 +44,10 @@ class Default_Form_NewPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 
         // Password input form element
         $this->addElement('password', 'password', array(
-           'label'      => 'account-fetchpassword-password',
-           'filter'     => 'StringtoLower',
-           'required'   => true,
-            'validators'=> array(
+            'label'      => 'account-fetchpassword-password',
+            'filter'     => 'StringtoLower',
+            'required'   => true,
+            'validators' => array(array(
                 'StringLength',
                 false,
                 array(
@@ -60,14 +56,16 @@ class Default_Form_NewPasswordForm extends Twitter_Bootstrap_Form_Horizontal
                         'stringLengthTooShort' =>'field-too-short',
                         'stringLengthTooLong'  => 'field-too-long'
                     )
-                ))))
-            ->setDecorators(array('NewPasswordDecorator'));
+                ))),
+            'decorators' => array(array('NewPasswordDecorator')),
+        ));
 
         // password confirm field
-        $this->addElement('confirm', 'confirm', array(
+        $this->addElement('password', 'confirm', array(
             'label'     => 'account-fetchpassword-confirm',
-            'filter'    => 'StringtoLower'
-        ))->setDecorators(array('NewPasswordDecorator'));
+            'filter'    => 'StringtoLower',
+            'decorators'=> array(array('NewPasswordDecorator')),
+        ));
 
         // Form submit buttom element
         $this->addElement('submit', 'submit', array(
@@ -90,6 +88,5 @@ class Default_Form_NewPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 
         parent::init();
 
-        parent::ini();
     }
 }
