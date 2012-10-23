@@ -32,6 +32,8 @@ logout;Logout
 signup;Sign up
 email; E-Mail
 password; Password
+account-login-username; Username
+account-login-password; Password
 account-login-title; Login
 account-register-page-header;Registration
 register-account-information; Registration Information

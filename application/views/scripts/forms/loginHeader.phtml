@@ -14,7 +14,7 @@
 
         <div class="row">
             <div class="span2">
-	            <?php echo $form->username; ?>
+	            <?php echo $form->login_username; ?>
             </div>
             <div class="span2">
                 <a class="signup" href="<?php echo $this->url(array(
@@ -29,11 +29,14 @@
 
         <div class="row">
            <div class="span2">
-	            <?php echo $form->password; ?>
+	            <?php echo $form->login_password; ?>
 	       </div>
            <div class="span2">
-               <?php echo $form->submit; ?>
+               <?php echo $form->login_submit; ?>
            </div>
         </div>
+	    <div class="row">
+		    <?php echo $form->login_returnurl; ?>
+	    </div>
     </form>
 </div>

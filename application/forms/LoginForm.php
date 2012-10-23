@@ -28,61 +28,84 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */
-class Default_Form_LoginForm extends Zend_Form
+class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Inline
 {
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
 
+	/** @var string */
+	private $_returnUrl = '';
+
+	/**
+	 * @param string $returnUrl
+	 * @return Default_Form_LoginForm
+	 */
+	public function setReturnUrl($returnUrl)
+	{
+
+		$this->_returnUrl = $returnUrl;
+		//Problem!!!
+		//$this->getElement("login_returnurl")->setValue($returnUrl);
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReturnUrl()
+	{
+		return $this->_returnUrl;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function init()
+	{
 		$translate = Zend_Registry::get('Zend_Translate');
 		$language = $translate->getLocale();
 		$baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$actionUrl = $baseurl.'/'.$language.'/account/login';
 
-		$this->setName('login_form');
-		$this->setAction($actionUrl);
-		$this->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator');
-
-             $this->setDecorators(array(array(
+		$this->setName('login_form')
+			->setAction($actionUrl)
+			->setAttrib('id', 'login_form')
+			->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator')
+	        ->setDecorators(array(array(
             'ViewScript',
-            array('viewScript' => 'forms/loginHeader.phtml')
-        )));
+            array('viewScript' => 'forms/loginHeader.phtml'))));
 
-		// Username input form element
-		$username = new Zend_Form_Element_Text('username');
-		$username//->setLabel($translate->_("account-login-username"))
-                ->setAttrib('placeholder', $translate->_('email'))
-				->addFilter('StringtoLower')
-                ->setRequired(true)
-				->addValidators(array(
+
+		$this->addElement('text', 'login_username', array(
+			'label'      => 'account-login-username',
+			'placeholder'  => 'account-login-username',
+			'required'   => true,
+			'filters'    => array('StringtoLower'),
+			'validators' => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty'))))),
+		));
+
+		$this->addElement('password', 'login_password', array(
+			'label'      => 'account-login-password',
+			'placeholder'   => 'account-login-password',
+			'required'   => true,
+			'validators' => array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
-				))
-				->setDecorators(array('ViewHelper'))
-        ;
+			),
+		));
 
-		// Password input form element
-		$password = new Zend_Form_Element_Password('password');
-		$password//->setLabel($translate->_("account-register-password"))
-                ->setAttrib('placeholder', $translate->_('password'))
-                ->setRequired(true)
-				->addValidators(array(
-					array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
-				))
-				->setDecorators(array('ViewHelper'))
-        ;
+		//Doesn't work!
+		/*$this->addElement('hidden', 'login_returnurl', array (
+			'value' => $this->getReturnUrl(),
+			'validators' => array(array('ViewHelper')),
+		)); */
 
-		$hidden = new Zend_Form_Element_Hidden('returnurl');
-		$hidden->setValue($options['returnurl'])
-			->setDecorators(array(array('ViewHelper')));
+		$this->addElement('submit', 'login_submit', array(
+			'label'      => 'login',
+			'required'   => true,
+			'validators' => array(),
+		));
 
-		// Form submit buttom element
-		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel($translate->_("login"))
-            ->removeDecorator('DtDdWrapper')
-            ->setAttrib('class', 'btn')
-         ;
-
-		// Add elements to form
-		$this->addElements(array($username, $password, $submit, $hidden));
+		parent::init();
 	}
+
+
 }
