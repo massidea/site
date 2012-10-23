@@ -16,127 +16,127 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 	 * @inheritdoc
 	 */
 	public function init()
-    {
-        $this->setName('register_form')
-            ->setAttrib('id', 'register_form')
-	        ->addElementPrefixPath('Oibs_Validators', 'OIBS/Validators/', 'validate', 'decorate');
+	{
+		$this->setName('register_form')
+			->setAttrib('id', 'register_form')
+			->addElementPrefixPath('Oibs_Validators', 'OIBS/Validators/', 'validate', 'decorate');
 
-        $this->addElement('text', 'register_username', array(
-            'label'      => 'account-register-username',
-            'required'   => true,
-            'validators' => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
-                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long'))),
-                new Oibs_Validators_UsernameExists('username'),
-                new Oibs_Validators_Username('username')
-            ),
-        ));
+		$this->addElement('text', 'register_username', array(
+			'label'      => 'account-register-username',
+			'required'   => true,
+			'validators' => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long'))),
+				new Oibs_Validators_UsernameExists('username'),
+				new Oibs_Validators_Username('username')
+			),
+		));
 
-        $this->addElement('password', 'register_password', array(
-            'label'      => 'account-register-password',
-            'required'   => true,
-            'validators' => array(
-                new Oibs_Validators_RepeatValidator('register_confirm_password'),
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
-                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long')))
-            ),
-        ));
+		$this->addElement('password', 'register_password', array(
+			'label'      => 'account-register-password',
+			'required'   => true,
+			'validators' => array(
+				new Oibs_Validators_RepeatValidator('register_confirm_password'),
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long')))
+			),
+		));
 
-        $this->addElement('password', 'register_confirm_password', array(
-            'label'      => 'account-register-password-confirm',
-            'required'   => true,
-            'validators' => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
-                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long'))),
-            ),
-        ));
+		$this->addElement('password', 'register_confirm_password', array(
+			'label'      => 'account-register-password-confirm',
+			'required'   => true,
+			'validators' => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long'))),
+			),
+		));
 
-        $this->addElement('text', 'register_city', array(
-            'label'      => 'account-register-city',
-            'required'   => true,
-            'validators' => array(
+		$this->addElement('text', 'register_city', array(
+			'label'      => 'account-register-city',
+			'required'   => true,
+			'validators' => array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
 				array('Regex', true, array('/^[\\p{L}0-9.\- ]*$/'))
-            ),
-        ));
+			),
+		));
 
-        $this->addElement('text', 'register_email', array(
-            'label'      => 'account-register-email',
-            'required'   => true,
-            'validators' => array($this->getMailValidator()),
-        ));
+		$this->addElement('text', 'register_email', array(
+			'label'      => 'account-register-email',
+			'required'   => true,
+			'validators' => array($this->getMailValidator()),
+		));
 
-        $this->addElement('select', 'register_employment', array(
-            'label'        => 'account-register-employment',
-            'required'     => true,
-	        'multiOptions' => $this->getAccountOptions(),
-            'validators'   => array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty')))
-            ),
-        ));
+		$this->addElement('select', 'register_employment', array(
+			'label'        => 'account-register-employment',
+			'required'     => true,
+			'multiOptions' => $this->getAccountOptions(),
+			'validators'   => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty')))
+			),
+		));
 
-	    $this->addElement('captcha', 'register_captcha', array(
-		    'captcha'    => array(
-			    'captcha' => 'Image',
-			    'wordLen' => 8,
-			    'timeout' => 300,
-			    'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
-			    'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
-			    'imgUrl'  => '/img/captcha',
-		    ),
-		    'required'   => true,
-		    'label'      => 'account-register-captcha',
-	    ));
+		$this->addElement('captcha', 'register_captcha', array(
+			'captcha'    => array(
+				'captcha' => 'Image',
+				'wordLen' => 8,
+				'timeout' => 300,
+				'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
+				'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
+				'imgUrl'  => '/img/captcha',
+			),
+			'required'   => true,
+			'label'      => 'account-register-captcha',
+		));
 
-        $this->addElement('checkbox', 'register_terms', array(
-            'label'          => 'account-register-gtc',
-            'required'       => true,
-	        'uncheckedValue' => '',
-	        'checked'        => false,
-	        'description'    => 'account-register-terms-and-privacy',
-	        'errorMessages'  => array('empty' => 'error-checkbox-not-checked'),
-        ));
+		$this->addElement('checkbox', 'register_terms', array(
+			'label'          => 'account-register-gtc',
+			'required'       => true,
+			'uncheckedValue' => '',
+			'checked'        => false,
+			'description'    => 'account-register-terms-and-privacy',
+			'errorMessages'  => array('empty' => 'error-checkbox-not-checked'),
+		));
 
-        $this->addElement('submit', 'register_submit', array(
-            'label'      => 'account-register-submit',
-            'required'   => true,
-            'validators' => array(),
-        ));
+		$this->addElement('submit', 'register_submit', array(
+			'label'      => 'account-register-submit',
+			'required'   => true,
+			'validators' => array(),
+		));
 
-	    $this->addDisplayGroup(array(
-			    'register_username',
-			    'register_password',
-			    'register_confirm_password',
-			    'register_email',
-		    ),
-	        'login',
-	        array('legend' => 'account-register-legend-login'));
+		$this->addDisplayGroup(array(
+				'register_username',
+				'register_password',
+				'register_confirm_password',
+				'register_email',
+			),
+			'login',
+			array('legend' => 'account-register-legend-login'));
 
-	    $this->addDisplayGroup(array(
-		        'register_city',
-		        'register_employment',
-		    ),
-		    'coredata',
-	        array('legend' => 'account-register-legend-core'));
+		$this->addDisplayGroup(array(
+				'register_city',
+				'register_employment',
+			),
+			'coredata',
+			array('legend' => 'account-register-legend-core'));
 
-	    $this->addDisplayGroup(array(
-		        'register_terms',
-		        'register_captcha',
-		    ),
-		    'general',
-	        array('legend' => 'account-register-legend-general'));
+		$this->addDisplayGroup(array(
+				'register_terms',
+				'register_captcha',
+			),
+			'general',
+			array('legend' => 'account-register-legend-general'));
 
-	    $this->addDisplayGroup(array(
-			    'register_submit'
-		    ),
-		    'Actions',
-	        array(
-		        'disableLoadDefaultDecorators' => true,
-		        'decorators' => array('Actions'),
-	        ));
+		$this->addDisplayGroup(array(
+				'register_submit'
+			),
+			'Actions',
+			array(
+				'disableLoadDefaultDecorators' => true,
+				'decorators' => array('Actions'),
+			));
 
-        parent::init();
-    }
+		parent::init();
+	}
 
 	/**
 	 * Creates an email address validator with better messages.
