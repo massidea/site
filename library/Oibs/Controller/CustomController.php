@@ -50,6 +50,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	protected $_redirector;
 	protected $_flashMessenger;
     protected $_urlHelper;
+	protected $_identity;
 
 	/**
 	*	init
@@ -99,6 +100,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
 		// Get users name
 		$auth = Zend_Auth::getInstance();
+		$this->setIdentity($auth->getIdentity());
 
 		if(isset($auth->getIdentity()->username))
         {
@@ -381,5 +383,23 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
     function oibs_nl2br($text) {
         return strtr($text, array("\r\n" => '<br />', "\r" => '<br />', "\n" => '<br />'));
     }
+
+	/**
+	 * @param $identity
+	 * @return Oibs_Controller_CustomController
+	 */
+	protected function setIdentity($identity)
+	{
+		$this->_identity = $identity;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIdentity()
+	{
+		return $this->_identity;
+	}
 
 } // end of class
