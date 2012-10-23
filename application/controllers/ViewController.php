@@ -55,15 +55,15 @@
         $request = $this->getRequest();
         $params = $request->getParams();
 
-        var_dump($this->_getParam('content_id')); exit;
 
         $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
     						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
 		
         // get content id from params, if not set or invalid, send a message
-        $id = (int)$params['content_id'];
-                
+
+        $id = (int)$params['actual_content_id'];
+
         if ($id == 0) {
             $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');   
         }

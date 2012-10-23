@@ -3,7 +3,7 @@
     <li class="<?php  echo htmlentities($content['key_cty']) ?>">
         <div class="headline">
             <a href="<?php echo $this->url(array('controller' => 'view',
-                'content_id' => '1',
+                    'actual_content_id' => $content['id_cnt'],
                 'language' => $this->language),
                 'lang_default', true); ?>">
                 <?php echo htmlentities($content['title_cnt']) ?>
