@@ -944,12 +944,50 @@ class AccountController extends Oibs_Controller_CustomController
             (according to variables $action, $_POST['passwordgiven'] and $_GET['key']) **/
 
         // the user came here for the first time
+        $form = new Default_Form_FetchPasswordForm();
         if ($action == '' && $submittedForm == '' && $key == '') {
-            $form = new Default_Form_FetchPasswordForm();
             $this->view->form = $form;
         }
-        // user submitted an email
         else if ($action == 'submit' && $submittedForm == 'fetchpassword') {
+            $formData = $this->_request->getPost();
+            if ($form->isValid($formData)) {
+                //TODO send Verification Email
+                //TODO Flash Messenger
+
+                $newPassForm = new Default_Form_NewPasswordForm();
+                $formData = $this->_request->getPost();
+                $this->view->form = $newPassForm;
+
+            // invalid fetchPasswordform
+            } else {
+                $this->view->form = $form;
+            }
+        }
+        else if ($action == 'submit' && $submittedForm == 'newpassword') {
+
+            $newPassForm = new Default_Form_NewPasswordForm();
+            $formData = $this->_request->getPost();
+            // validate new Password Form
+            if($newPassForm->isValid($formData)) {
+                //TODO set new Password
+
+                // forward to Login page
+                $target = $this->_urlHelper->url(array('controller' => 'account',
+                        'action' => 'login',
+                        'language' => $this->view->language),
+                    'lang_default', true);
+                $this->_redirect($target);
+            // invalid newPasswordForm
+            } else {
+                $this->view->form = $newPassForm;
+            }
+        }
+
+        // DO NOT DELETE THESE CODES, COULD BE USEFULL FOR ABOVE TODOs
+
+
+        // user submitted an email
+        /*else if ($action == 'submit' && $submittedForm == 'fetchpassword') {
             $form = new Default_Form_NewPasswordForm();
             $formData = $this->_request->getPost();
 
@@ -997,9 +1035,10 @@ class AccountController extends Oibs_Controller_CustomController
                 $error = 'account-fetchpassword-error-invalidemail';
                 $this->view->form = $form;
             }
-        }
+        }*/
+
         // user submitted new password
-        else if ($action == 'submit' && $submittedForm == 'newpassword') {
+        /*else if ($action == 'submit' && $submittedForm == 'newpassword') {
             // create form and get form data
             $form = new Default_Form_NewPasswordForm();
             $formData = $this->getRequest()->getPost();
@@ -1031,9 +1070,10 @@ class AccountController extends Oibs_Controller_CustomController
                 // User failed (invalid input), show form again
                 $this->view->form = $form;
             }
-        }
+        }*/
+
         // user followed a verification link
-        else if ($action == '' && $key != '') {
+        /*else if ($action == '' && $key != '') {
             $this->view->keyGiven = true;
 
             $user = new Default_Model_User();
@@ -1067,7 +1107,7 @@ class AccountController extends Oibs_Controller_CustomController
             else {
                 $error = 'account-fetchpassword-error-nosuchkey';
             }
-        }
+        }*/
 
         // inject the variables to the view
         $this->view->error         = $error;
