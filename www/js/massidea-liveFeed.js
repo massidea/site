@@ -10,24 +10,18 @@ var time = 0;
         return false;
     });
 
-
     $liveFeed.hover(stopTimer, resetTimer);
     $liveFeedControl.click(loadContentClick);
     loadContent();
     resetTimer();
 
-
     function loadContentClick(){
-    console.log("loadClick");
         $feedOverlay.removeClass("hidden");
         $liveFeedContent.load('/'+LANGUAGE+'/content/feed/format/html', function (){
             $feedOverlay.addClass("hidden");
     });
 }
-
-
     function loadContent(){
-        console.log("load");
         $feedOverlay.removeClass("hidden");
         $liveFeedContent.load('/'+LANGUAGE+'/content/feed/format/html', function (){
             $feedOverlay.addClass("hidden");
@@ -36,7 +30,6 @@ var time = 0;
     }
 
     function resetTimer(){
-        console.log("reset");
         if (time) {
             window.clearTimeout(time);
         }
@@ -44,7 +37,6 @@ var time = 0;
     }
 
     function stopTimer(){
-        console.log("stop");
         if (time)
             window.clearTimeout(time);
         time = 0;
