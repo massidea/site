@@ -47,7 +47,7 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
             'placeholder' => 'account-fetchpassword-email',
             'filter'      => 'StringtoLower',
             'required'    => true,
-            'validators'  => array($this->getMailValidator()),
+            //'validators'  => array($this->getMailValidator()),
         ));
 
 	    // captcha input form element

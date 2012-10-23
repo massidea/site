@@ -7,7 +7,7 @@
 	 * @author      Lisa Jedinger
 	 * @version     1.0
 	 */
-class ResetPasswordForm extends Twitter_Bootstrap_Form_Horizontal
+class Default_Form_ResetPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 {
 
 	/**
@@ -46,6 +46,15 @@ class ResetPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 		    'required'   => true,
 		    'validators' => array(),
 	    ));
+
+        $this->addDisplayGroup(array(
+                'submit'
+            ),
+            'Actions',
+            array(
+                'disableLoadDefaultDecorators' => true,
+                'decorators' => array('Actions'),
+            ));
 
 	    parent::init();
     }
