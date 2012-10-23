@@ -72,6 +72,15 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
             'label'       => 'account-fetchpassword-submit',
         ))->removeDecorator('DtDdWrapper');
 
+        $this->addDisplayGroup(array(
+                'submit'
+            ),
+            'Actions',
+            array(
+                'disableLoadDefaultDecorators' => true,
+                'decorators' => array('Actions'),
+            ));
+
         parent::init();
     }
     /**

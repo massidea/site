@@ -79,6 +79,17 @@ class Default_Form_NewPasswordForm extends Twitter_Bootstrap_Form_Horizontal
             'value'      => 'newpassword'
         ));
 
+        $this->addDisplayGroup(array(
+                'submit'
+            ),
+            'Actions',
+            array(
+                'disableLoadDefaultDecorators' => true,
+                'decorators' => array('Actions'),
+            ));
+
+        parent::init();
+
         parent::ini();
     }
 }
