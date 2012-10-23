@@ -954,7 +954,7 @@ class AccountController extends Oibs_Controller_CustomController
         }
         // user submitted an email
         else if ($action == 'submit' && $submittedForm == 'fetchpassword') {
-            $form = new Default_Form_FetchPasswordForm();
+            $form = new Default_Form_NewPasswordForm();
             $formData = $this->_request->getPost();
             
             // check the form data
