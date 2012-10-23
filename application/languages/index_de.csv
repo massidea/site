@@ -66,3 +66,18 @@ error-field-too-long; Der eingegebene Text ist zu lang
 error-value-not-same; Werte müssen übereinstimmen
 error-captcha-no-same; Captchanachricht stimmt nicht überein
 error-checkbox-not-checked; Verpflichtend
+error-username-exists; Benutzername existiert bereits
+error-username-not-valid; Benutzername nicht gültig
+error-email-exists; E-Mail-Adresse ist bereits gespeichert
+email-invalid; Der eingegebene Wert ist vom falschen Typ, Der Wert muss ein string sein
+email-invalid-format; '%value%' ist keine gültige E-Mail-Adresse im Format lokal@hostname
+email-invalid-hostname; '%hostname%' ist kein gültiger Hostname für E-Mail-Adresse '%value%'
+email-invalid-ms-record; '%hostname%' scheint keinen gültigen MX Eintrag für E-Mail-Adresse '%value%' zu haben
+email-dot-atom; '%localPart%' entspricht nicht dem dot-atom Format
+email-quoted-string; '%localPart%' entspricht nicht dem Anführungszeichen Format
+email-invalid-local-part; '%localPart%' ist kein gültiger lokaler Teil der E-Mail-Adresse '%value%'
+email-length-exceeded; '%value%' überschreitet die erlaubte Länge
+hostname-invalid-local-name; Kein gültiger Hostname
+hostname-invalid-hostname; Kein gültiger Hostname
+hostname-undecipherable-tld; Hostname ist nicht entzifferbar
+hostname-unknown-tld; Hostname ist nicht bekannt

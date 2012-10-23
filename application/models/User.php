@@ -1619,6 +1619,21 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         }
     }
 
+    public function emailExists($email)
+    {
+        $select = $this->_db->select()
+                        ->from(array('users_usr' => 'users_usr'), array('id_usr'))
+                        ->where('email_usr = ?', $email)
+        ;
+        $result = $this->_db->fetchAll($select);
+
+        if (!isset($result[0])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
     *   Checks if username exists in database
     *

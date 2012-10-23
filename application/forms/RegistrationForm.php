@@ -63,7 +63,11 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 		$this->addElement('text', 'register_email', array(
 			'label'      => 'account-register-email',
 			'required'   => true,
-			'validators' => array($this->getMailValidator()),
+			'validators' => array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+                array($this->getMailValidator()),
+                new Oibs_Validators_EMailExists('email'),
+             ),
 		));
 
 		$this->addElement('select', 'register_employment', array(
