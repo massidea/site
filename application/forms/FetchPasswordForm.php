@@ -44,7 +44,7 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 	    // Username input form element
         $this->addElement('text', 'email', array(
             'label'       => 'account-fetchpassword-email',
-            'placeholder' => $translate->_('account-fetchpassword-email'),
+            'placeholder' => 'account-fetchpassword-email',
             'filter'      => 'StringtoLower',
             'required'    => true,
             'validators'  => array($this->getMailValidator()),
@@ -61,7 +61,7 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
                 'imgUrl'  => '/img/captcha',
             ),
             'required'   => true,
-            'label'      => $translate->_('account-fetchpassword-captcha'),
+            'label'      => 'account-fetchpassword-captcha',
         ));
 
         $this->addElement('hidden', 'submittedform', array(
@@ -69,7 +69,7 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
         ));
         // Form submit button element
         $this->addElement('submit', 'submit', array(
-            'label'       => $translate->_('account-fetchpassword-submit'),
+            'label'       => 'account-fetchpassword-submit',
         ))->removeDecorator('DtDdWrapper');
 
         parent::init();
