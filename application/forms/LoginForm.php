@@ -58,7 +58,7 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 			'required'    => true,
 			'filters'     => array('StringtoLower'),
 			'validators'  => array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty'))))),
+				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('error-field-empty'))))),
 		));
 
 		$this->addElement('password', 'login_password', array(
@@ -66,7 +66,7 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 			'placeholder' => $translate->translate('account-login-password'),
 			'required'    => true,
 			'validators'  => array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
+				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('error-field-empty')))),
 			),
 		));
 

@@ -36,6 +36,7 @@ account-login-username;Username
 account-login-password;Password
 account-login-title;Login
 account-login-submit;Login
+account-login-not-successful;Username and password are not correct
 account-register-page-header;Registration
 register-account-information;Registration Information
 account-register-username;Username

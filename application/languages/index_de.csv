@@ -37,6 +37,7 @@ account-login-title;Login
 account-login-username;Benutzername
 account-login-password;Passwort
 account-login-submit;Anmelden
+account-login-not-successful;Benutzername und Passwort stimmen nicht überein
 account-register-page-header;Registrierung
 register-account-information;Registrierungsinformationen
 account-register-username;Benutzername
