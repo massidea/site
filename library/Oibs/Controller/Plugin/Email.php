@@ -134,16 +134,16 @@ class Oibs_Controller_Plugin_Email {
 		//$this->_subject = "uus kommentti";
 		$templateDir = "../library/Oibs/Emails/"; 
 		$file = $templateDir."notification_email_".$this->_notificationType.".txt";
-		
-		$message = split("\n", @file_get_contents($file), 2);
 
-		$this->_subject = $message[0];
-		
-		$this->_message = nl2br($message[1]);
-		 
-		if ($this->_message == "") {
-			$this->_errorMessage = "Error when opening file";
-		}
+		$message = explode("\n", @file_get_contents($file), 2);
+        var_dump($message);
+        if ($this->_message == "") {
+            $this->_errorMessage = "Error when opening file";
+        } else {
+            $this->_subject = $message[0];
+
+            $this->_message = $message[1];
+        }
 	}
 	
 	/* _replaceMessageParameters
