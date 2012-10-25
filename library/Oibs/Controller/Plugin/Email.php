@@ -137,13 +137,13 @@ class Oibs_Controller_Plugin_Email {
 		
 		$message = explode("\n", @file_get_contents($file), 2);
 
-		$this->_subject = $message[0];
-		
-		$this->_message = nl2br($message[1]);
-		 
-		if ($this->_message == "") {
-			$this->_errorMessage = "Error when opening file";
-		}
+        if ($this->_message == "") {
+            $this->_errorMessage = "Error when opening file";
+        } else {
+            $this->_subject = $message[0];
+
+            $this->_message = $message[1];
+        }
 	}
 	
 	/* _replaceMessageParameters
