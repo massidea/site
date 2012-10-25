@@ -940,7 +940,8 @@ class AccountController extends Oibs_Controller_CustomController
                     $key_safe = md5($key);
 
                     // generate URL for the verification link
-                    $url = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) .
+                    $path = explode('/', $_SERVER['SERVER_PROTOCOL']);
+                    $url = strtolower(trim(array_shift($path))) .
                         '://' . $_SERVER['HTTP_HOST'];
                     $url .= $this->_urlHelper->url(array('controller' => 'account',
                             'action' => 'fetchpassword',
@@ -957,6 +958,13 @@ class AccountController extends Oibs_Controller_CustomController
                     // send verification email
                     if ($user->sendVerificationEmail($userId, $email, $url, $this->view->language->toString())) {
                         $action = 'emailsent';
+
+                        // forward to Login page
+                        $target = $this->_urlHelper->url(array('controller' => 'account',
+                                'action' => 'login',
+                                'language' => $this->view->language),
+                            'lang_default', true);
+                        $this->_redirect($target);
                     }
                     else {
                         $action = 'emailproblem';
