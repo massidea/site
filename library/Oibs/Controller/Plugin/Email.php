@@ -134,9 +134,9 @@ class Oibs_Controller_Plugin_Email {
 		//$this->_subject = "uus kommentti";
 		$templateDir = "../library/Oibs/Emails/"; 
 		$file = $templateDir."notification_email_".$this->_notificationType.".txt";
-		
-		$message = explode("\n", @file_get_contents($file), 2);
 
+		$message = explode("\n", @file_get_contents($file), 2);
+        var_dump($message);
         if ($this->_message == "") {
             $this->_errorMessage = "Error when opening file";
         } else {
