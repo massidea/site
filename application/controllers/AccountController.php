@@ -458,7 +458,7 @@ class AccountController extends Oibs_Controller_CustomController
     */
     public function loginAction()
     {
-	    $return_url = $this->_getParam('login_returnurl') ?: '/content/feed';
+	    $return_url = $this->_getParam('login_returnurl') ?: '/' . $this->view->language . '/content/feed';
 
 	    if ($this->getIdentity()) {
 		    $this->_forward('feed', 'content');
@@ -490,7 +490,7 @@ class AccountController extends Oibs_Controller_CustomController
 		$result = $users->loginUser($form_data);
 
 	    if (!$result) {
-		    $this->view->errormsg = $this->view->translate('account-login-not-successful');
+		    $form->getElement('login_password')->addError('account-login-not-successful');
 		    return;
 	    }
 
