@@ -11,20 +11,20 @@
 
 	    <?php echo $form->returnurl; ?>
             <div class="control-group">
-	            <label class="control-label" for="username">
+	            <label class="control-label" for="login_username">
 					<?php echo $this->translate('email');?>
                 </label>
                 <div class="controls">
-	                <?php echo $form->username; ?>
+	                <?php echo $form->login_username; ?>
                 </div>
             </div>
 
 	        <div class="control-group">
-		        <label class="control-label for="password">
+		        <label class="control-label for="login_password">
 					<?php echo $this->translate('password');?>
                 </label>
                 <div class="controls">
-			        <?php echo $form->password; ?>
+			        <?php echo $form->login_password; ?>
                 </div>
 	        </div>
             <div class="control-group">
@@ -36,7 +36,7 @@
 	                ), 'lang_default', true); ?>">
 		                <?php echo $this->translate('signup'); ?>
                     </a>
-	                <?php echo $form->submit; ?>
+	                <?php echo $form->login_submit; ?>
 
                 </div>
 	            <div class="controls">

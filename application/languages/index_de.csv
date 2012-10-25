@@ -34,6 +34,8 @@ email; E-Mail
 password; Passwort
 forgotPassword; Passwort vergessen
 account-login-title; Login
+account-login-username; Benutzername
+account-login-password; Passwort
 account-register-page-header;Registrierung
 register-account-information; Registrierungsinformationen
 account-register-username; Benutzername

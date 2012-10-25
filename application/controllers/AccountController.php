@@ -478,21 +478,22 @@ class AccountController extends Oibs_Controller_CustomController
         // login ajax functionality:
         // check where user came from (and use to redirect back later)
         if(isset($_SERVER['HTTP_REFERER'])){
-        	$formOptions = $_SERVER['HTTP_REFERER'];
+        	$returnurl = $_SERVER['HTTP_REFERER'];
         } else {
-        	$formOptions = $urlHelper->url(array('controller' => 'index',
+        	$returnurl = $urlHelper->url(array('controller' => 'index',
                                                  'action' => 'index',
                                                  'language' => $this->view->language),
                                            'lang_default', true);
         }
 
         // creata new LoginForm and set to view
-        $form = new Default_Form_LoginForm($formOptions);
+        $form = new Default_Form_LoginForm();
+	    $form->setReturnUrl($returnurl);
 		$form->setDecorators(array(array(
 			'ViewScript',
 			array('viewScript' => 'forms/login.phtml'))));
-	    unset($form->getElement('username')->placeholder);
-	    unset($form->getElement('password')->placeholder);
+	    unset($form->getElement('login_username')->placeholder);
+	    unset($form->getElement('login_password')->placeholder);
         $this->view->form = $form;
 
         // Get request
@@ -511,7 +512,7 @@ class AccountController extends Oibs_Controller_CustomController
                 // If user is authenticated
                 if ($result == true) {
                     // Get user id
-                    $id = $users->getIdByUsername($data['username']);
+                    $id = $users->getIdByUsername($data['login_username']);
 
                     // record login attempt
                     $user = new Default_Model_User($id);
@@ -539,7 +540,7 @@ class AccountController extends Oibs_Controller_CustomController
                         $logger['login']->notice($message);
                     }
 
-                    $redirect = $data['returnurl'];
+                    $redirect = $data['login_returnurl'];
                     $this->_redirect($redirect);
                 } else {
                     $this->view->errormsg = $this->view->translate('account-login-not-successful');
