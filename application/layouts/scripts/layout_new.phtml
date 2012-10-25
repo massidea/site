@@ -56,7 +56,11 @@
                     <li><a href="#"><?php echo $this->translate('About MassIdea'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('Terms'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('Privacy'); ?></a></li>
-                    <li><a href="#"><?php echo $this->translate('Imprint'); ?></a></li>
+                    <li><a href="<?php echo $this->url(array(
+                        'controller' => 'imprint',
+                        'action' => 'view',
+                        'language' => $this->language,
+                    ), 'lang_default', true); ?>"><?php echo $this->translate('Imprint'); ?></a></li>
                 </ul>
             </div>
             <div class="span4">
