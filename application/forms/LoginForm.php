@@ -53,26 +53,26 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 				array('viewScript' => 'forms/login.phtml'))));
 
 		$this->addElement('text', 'login_username', array(
-			'label'      => 'account-login-username',
-			'placeholder'  => 'account-login-username',
-			'required'   => true,
-			'filters'    => array('StringtoLower'),
-			'validators' => array(
+			'label'       => 'account-login-username',
+			'placeholder' => $translate->translate('account-login-username'),
+			'required'    => true,
+			'filters'     => array('StringtoLower'),
+			'validators'  => array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty'))))),
 		));
 
 		$this->addElement('password', 'login_password', array(
-			'label'      => 'account-login-password',
-			'placeholder'   => 'account-login-password',
-			'required'   => true,
-			'validators' => array(
+			'label'       => 'account-login-password',
+			'placeholder' => $translate->translate('account-login-password'),
+			'required'    => true,
+			'validators'  => array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
 			),
 		));
 
 		$this->addElement('hidden', 'login_returnurl', array (
-			'value' => $this->getReturnUrl(),
-			'validators' => array(array('ViewHelper')),
+			'value'      => $this->getReturnUrl(),
+			'decorators' => array(array('ViewHelper')),
 		));
 
 		$this->addElement('submit', 'login_submit', array(
