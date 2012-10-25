@@ -82,7 +82,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     public function loginUser($data)
     {
-        $id = $this->getIdByUsername($data['username']);
+	    $username = $data['login_username'];
+	    $password = $data['login_password'];
+
+        $id = $this->getIdByUsername($username);
         $user = $this->find((int)$id)->current();
         $salt = $user['password_salt_usr'];
         $auth = Zend_Auth::getInstance();
@@ -90,8 +93,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         Zend_Auth_Adapter_DbTable($this->getAdapter(),'users_usr');
         $authAdapter->setIdentityColumn('login_name_usr')
                     ->setCredentialColumn('password_usr');
-        $authAdapter->setIdentity($data['username'])
-                     ->setCredential(md5($salt.$data['password'].$salt));
+        $authAdapter->setIdentity($username)
+                     ->setCredential(md5($salt.$password.$salt));
 
         $result = $auth->authenticate($authAdapter);
         if($result->isValid())

@@ -5,14 +5,14 @@
 * 	Copyright (c) <2008>, Matti S�rkikoski <matti.sarkikoski@cs.tamk.fi>
 * 	Copyright (c) <2008>, Jani Palovuori <jani.palovuori@cs.tamk.fi>
 *
- * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * License text found in /license/
@@ -44,36 +44,36 @@ class IndexController extends Oibs_Controller_CustomController
         $auth = Zend_Auth::getInstance();
         // if user is already logged in redirect away from here
         if ($auth->hasIdentity()) {
-            $this->_forward('view', 'account');
+            $this->_forward('feed', 'content');
         } // end if
 
 
     	// Variable for number recent campaigns to be sent to view
     	$recentCampaignsCount = 0;
-    	
+
 		$this->view->title = "index-home";
-        
+
         // Get cache from registry
         $cache = Zend_Registry::get('cache');
-        
+
         // $contentTypesModel = new Default_Model_ContentTypes();
         // $userModel = new Default_Model_User();
-        
+
         // Load recent posts from cache
         $cachePosts = 'IndexPosts_' . $this->view->language;
-        
+
         if(!$result = $cache->load($cachePosts)) {
             $contentModel = new Default_Model_Content();
             $contentHasTagModel = new Default_Model_ContentHasTag();
-            
+
             // get data
             //($cty = 'all', $page = 1, $count = -1, $order = 'created', $lang = 'en', $ind = 0)
             $recentposts_raw = $contentModel->listRecent(
                 'all', 12, -1, 'created', $this->view->language, -1
             );
-            
+
             $recentposts = array();
-            
+
             $i = 0;
             // gather data for recent posts
             foreach ($recentposts_raw as $post) {
@@ -81,21 +81,21 @@ class IndexController extends Oibs_Controller_CustomController
                 $recentposts[$i]['tags'] = $contentHasTagModel->getContentTags(
                     $post['id_cnt']
                 );
-                
+
                 $i++;
             }
-            
+
             // Save recent posts data to cache
-            $cache->save($recentposts, $cachePosts);          
+            $cache->save($recentposts, $cachePosts);
         } else {
             $recentposts = $result;
         }
-        
+
         // Load most popular tags from cache
         if(!$result = $cache->load('IndexTags')) {
             $tagsModel = new Default_Model_Tags();
             $tags = $tagsModel->getPopular(20);
-            
+
             /*
             // resize tags
             foreach ($tags as $k => $tag) {
@@ -106,31 +106,31 @@ class IndexController extends Oibs_Controller_CustomController
                 $tags[$k]['tag_size'] = $size;
             }
             */
-            
+
             // Action helper for tags
             $tags = $this->_helper->tagsizes->popularTagCalc($tags);
-            
-            
+
+
             // Action helper for define is tag running number divisible by two
             $tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
-            
+
             // Save most popular tags data to cache
             $cache->save($tags, 'IndexTags');
         } else {
             $tags = $result;
         }
-        
+
         // Laod most active users from cache
         if(!$result = $cache->load('IndexUsers')) {
-            $contentHasUserModel = new Default_Model_ContentHasUser();        
+            $contentHasUserModel = new Default_Model_ContentHasUser();
             $activeusers = $contentHasUserModel->getMostActive(5);
-            
+
             // Save most active users data to cache
             $cache->save($activeusers, 'IndexUsers');
         } else {
             $activeusers = $result;
         }
-        
+
         // inject data to view
         if (isset($recentposts)) {
             $this->view->recentposts = $recentposts;
@@ -166,7 +166,7 @@ class IndexController extends Oibs_Controller_CustomController
         $this->view->poptags = $tags;
         $this->view->activeusers = $activeusers;
         $this->view->isLoggedIn = Zend_Auth::getInstance()->hasIdentity();
-        $this->view->recentCampaignsCount = $recentCampaignsCount;        
+        $this->view->recentCampaignsCount = $recentCampaignsCount;
     }
 
 

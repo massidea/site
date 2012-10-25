@@ -458,93 +458,65 @@ class AccountController extends Oibs_Controller_CustomController
     */
     public function loginAction()
     {
-        // Check if user is logged in
-        $auth = Zend_Auth::getInstance();
+	    $return_url = $this->_getParam('login_returnurl') ?: '/content/feed';
 
-        // Get url helper
-        $urlHelper = $this->_helper->getHelper('url');
+	    if ($this->getIdentity()) {
+		    $this->_forward('feed', 'content');
+	    }
 
-        // if user is already logged in redirect away from here
-        if ($auth->hasIdentity()) {
-            $this->_forward('view', 'account');
-            // $target = $urlHelper->url(array('controller' => 'index',
-            //                                 'action' => 'index',
-            //                                 'language' => $this->view->language),
-            //                           'lang_default', true);
-            //
-            // $this->_redirect($target);
-        } // end if
+        // create a new login form and inject it into the view
 
-        // login ajax functionality:
-        // check where user came from (and use to redirect back later)
-        if(isset($_SERVER['HTTP_REFERER'])){
-        	$returnurl = $_SERVER['HTTP_REFERER'];
-        } else {
-        	$returnurl = $urlHelper->url(array('controller' => 'index',
-				'action' => 'index',
-				'language' => $this->view->language),
-			'lang_default', true);
-        }
-
-        // creata new LoginForm and set to view
         $form = new Default_Form_LoginForm();
-	    $form->setReturnUrl($returnurl);
 	    $form->getElement('login_username')->placeholder = '';
 	    $form->getElement('login_password')->placeholder = '';
         $this->view->form = $form;
 
-        // Get request
-        $request = $this->getRequest();
-        $formData = $this->_request->getPost();
+	    if (!$this->getRequest()->isPost()) {
+		    return;
+	    }
 
-        // process login if request method is post
-        if ($request->isPost()) {
-            // Check user authentity if form data is valid
-            if($form->isValid($formData)) {
-                // Get username and password
-                $data = $form->getValues();
-                $users = new Default_Model_User;
-                $result = $users->loginUser($data);
+	    // the form has already been submitted -> validate it
 
-                // If user is authenticated
-                if ($result == true) {
-                    // Get user id
-                    $id = $users->getIdByUsername($data['login_username']);
+	    $form->populate($this->getRequest()->getPost());
+	    $form_data = $form->getValues();
 
-                    // record login attempt
-                    $user = new Default_Model_User($id);
-                    $user->loginSuccess();
+	    if(!$form->isValid($form_data)) {
+		    return;
+	    }
 
-                    // create identity data and write it to session
-                    $identity = $user->createAuthIdentity();
-                    $auth->getStorage()->write($identity);
+	    // form values are valid -> try to perform a login
 
-                    //echo var_dump($auth); die;
-                    // send user to front page (the old method)
-                    /*$redirect = $urlHelper->url(array('controller' => 'index', 'action' => 'index',
-                                                'language' => $this->view->language), 'lang_default', true);*/
-					//echo $data['returnurl']; die;
+		$users = new Default_Model_User;
+		$result = $users->loginUser($form_data);
 
-                    // Add login to log
-                    $logger = Zend_Registry::get('logs');
-                    if(isset($logger['login'])) {
-                        $message = sprintf(
-                            'Successful login attempt from %s user %s',
-                            $_SERVER['REMOTE_ADDR'],
-                            $identity->username
-                        );
+	    if (!$result) {
+		    $this->view->errormsg = $this->view->translate('account-login-not-successful');
+		    return;
+	    }
 
-                        $logger['login']->notice($message);
-                    }
+	    // login was successful -> store the identity in the session
 
-                    $redirect = $data['login_returnurl'];
-                    $this->_redirect($redirect);
-                } else {
-                    $this->view->errormsg = $this->view->translate('account-login-not-successful');
-                }
-            } //end if
-        } // end if
-    } // end of loginAction()
+	    $id = $users->getIdByUsername($form_data['login_username']);
+	    $user = new Default_Model_User($id);
+	    $user->loginSuccess();
+
+	    $identity = $user->createAuthIdentity();
+	    $this->setIdentity($identity);
+
+	    // Add login to log
+	    $logger = Zend_Registry::get('logs');
+	    if(isset($logger['login'])) {
+	        $message = sprintf(
+	            'Successful login attempt from %s user %s',
+	            $_SERVER['REMOTE_ADDR'],
+	            $identity->username
+	        );
+
+	        $logger['login']->notice($message);
+	    }
+
+	    $this->_redirect($return_url);
+    }
 
     /**
     *    openidAction
