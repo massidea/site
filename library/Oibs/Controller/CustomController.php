@@ -394,6 +394,10 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	protected function setIdentity($identity)
 	{
 		$this->_identity = $identity;
+
+		$auth = Zend_Auth::getInstance();
+		$auth->getStorage()->write($identity);
+
 		return $this;
 	}
 
