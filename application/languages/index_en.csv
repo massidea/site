@@ -30,55 +30,55 @@ French;French
 login;Login
 logout;Logout
 signup;Sign up
-email; E-Mail
-password; Password
-account-login-title; Login
+email;E-Mail
+password;Password
+account-login-title;Login
 account-register-page-header;Registration
-register-account-information; Registration Information
-account-register-username; Username
-account-register-password; Password
-account-register-password-confirm; Confirm Password
-register-personal-information; Personal Information
-account-register-city; City
-account-register-employment; Employment
-account-register-email; E-Mail
-account-select; Select
-account-register-private-sector; Private Sector
-account-register-public-sector; Public Sector
-account-register-education-sector; Education Sector
-account-register-student; Student;
-account-register-pentioner; Pensioner
-account-register-other; Other
-account-register-enter-text; Enter Text
-account-register-captcha; Captcha
+register-account-information;Registration Information
+account-register-username;Username
+account-register-password;Password
+account-register-password-confirm;Confirm Password
+register-personal-information;Personal Information
+account-register-city;City
+account-register-employment;Employment
+account-register-email;E-Mail
+account-select;Select
+account-register-private-sector;Private Sector
+account-register-public-sector;Public Sector
+account-register-education-sector;Education Sector
+account-register-student;Student;
+account-register-pentioner;Pensioner
+account-register-other;Other
+account-register-enter-text;Enter Text
+account-register-captcha;Captcha
 account-register-gtc;GTC
-account-register-terms-and-privacy; accept terms and privacy
-account-register-submit; Submit
+account-register-terms-and-privacy;accept terms and privacy
+account-register-submit;Submit
 account-register-legend-login;Login Data
 account-register-legend-core;Core Data
 account-register-legend-general;General
-forgotPassword; Forgot Password
-account-fetchpassword-request; Request Password
-account-fetchpassword-submit; Ok
+forgotPassword;Forgot Password
+account-fetchpassword-request;Request Password
+account-fetchpassword-submit;Ok
 error-field-empty;No text entered
-error-selection-empty; No selection
+error-selection-empty;No selection
 error-field-too-short;Text is too short
 error-field-too-long;Text is too long
 error-value-not-same;Values must match
 error-captcha-no-same;Captcha is wrong
 error-checkbox-not-checked;Mandatory
-error-username-exists; username already exists
-error-username-not-valid; username not valid
-email-exists; e-mail-adress already exists
-email-invalid; Invalid type given, value should be a string
-email-invalid-format; '%value%' is not a valid email address in the basic format local-part@hostname
-email-invalid-hostname; '%hostname%' is not a valid hostname for email address '%value%'
-email-invalid-ms-record; '%hostname%' does not appear to have a valid MX record for the email address '%value%'
-email-dot-atom; '%localPart%' not matched against dot-atom format
-email-quoted-string; '%localPart%' not matched against quoted-string format
-email-invalid-local-part; '%localPart%' is not a valid local part for email address '%value%'
-email-length-exceeded; '%value%' exceeds the allowed length
-hostname-invalid-local-name; no a valid hostname
-hostname-invalid-hostname; hostname is not a valid hostname
-hostname-undecipherable-tld; hostname is undecipherable
-hostname-unknown-tld; hostname is not known
+error-username-exists;username already exists
+error-username-not-valid;username not valid
+email-exists;e-mail-adress already exists
+email-invalid;Invalid type given, value should be a string
+email-invalid-format;'%value%' is not a valid email address in the basic format local-part@hostname
+email-invalid-hostname;'%hostname%' is not a valid hostname for email address '%value%'
+email-invalid-ms-record;'%hostname%' does not appear to have a valid MX record for the email address '%value%'
+email-dot-atom;'%localPart%' not matched against dot-atom format
+email-quoted-string;'%localPart%' not matched against quoted-string format
+email-invalid-local-part;'%localPart%' is not a valid local part for email address '%value%'
+email-length-exceeded;'%value%' exceeds the allowed length
+hostname-invalid-local-name;no a valid hostname
+hostname-invalid-hostname;hostname is not a valid hostname
+hostname-undecipherable-tld;hostname is undecipherable
+hostname-unknown-tld;hostname is not known
