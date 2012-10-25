@@ -75,7 +75,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 			'required'     => true,
 			'multiOptions' => $this->getAccountOptions(),
 			'validators'   => array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty')))
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-selection-empty')))
 			),
 		));
 
@@ -87,6 +87,9 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 				'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
 				'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
 				'imgUrl'  => '/img/captcha',
+                'Messages'    => array(
+                    'badCaptcha' => 'error-captcha-no-same',
+                 )
 			),
 			'required'   => true,
 			'label'      => 'account-register-captcha',

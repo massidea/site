@@ -61,10 +61,11 @@ account-register-legend-general;Allgemein
 account-fetchpassword-request; Passwort anfordern
 account-fetchpassword-submit; Ok
 error-field-empty;Kein Text eingegeben
+error-selection-empty; Keine Auswahl getroffen
 error-field-too-short; Der eingegebene Text ist zu kurz
 error-field-too-long; Der eingegebene Text ist zu lang
 error-value-not-same; Werte müssen übereinstimmen
-error-captcha-no-same; Captchanachricht stimmt nicht überein
+error-captcha-no-same; Der eingegebene Captcha ist falsch
 error-checkbox-not-checked; Verpflichtend
 error-username-exists; Benutzername existiert bereits
 error-username-not-valid; Benutzername nicht gültig

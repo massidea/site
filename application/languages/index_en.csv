@@ -61,10 +61,11 @@ forgotPassword; Forgot Password
 account-fetchpassword-request; Request Password
 account-fetchpassword-submit; Ok
 error-field-empty;No text entered
+error-selection-empty; No selection
 error-field-too-short;Text is too short
 error-field-too-long;Text is too long
 error-value-not-same;Values must match
-error-captcha-no-same;Captcha messages did not match
+error-captcha-no-same;Captcha is wrong
 error-checkbox-not-checked;Mandatory
 error-username-exists; username already exists
 error-username-not-valid; username not valid
