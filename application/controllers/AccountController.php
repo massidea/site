@@ -979,8 +979,8 @@ class AccountController extends Oibs_Controller_CustomController
                     // add new password request into the database
                     $user->addPasswordRequest($userId, $key_safe);
 
-                    var_dump($userId, $email, $url, $this->view->language);
-                    exit;
+                    var_dump($userId, $email, $url, $this->view->language->toString());
+                    //exit;
 
                     // send verification email
                     if ($user->sendVerificationEmail($userId, $email, $url, $this->view->language)) {
