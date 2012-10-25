@@ -952,11 +952,50 @@ class AccountController extends Oibs_Controller_CustomController
             $formData = $this->_request->getPost();
             if ($form->isValid($formData)) {
                 //TODO send Verification Email
+                $user = new Default_Model_User();
+
+                // get user's email and id
+                $email = trim($this->getRequest()->getPost('email'));
+                $userId = $user->getIdByEmail($email);
+
+                // if the email address was valid
+                if ($userId != null) {
+                    // create verification key and it's md5 hash
+                    $key = $user->generateSalt(30);
+                    $key_safe = md5($key);
+
+                    // generate URL for the verification link
+                    $url = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) .
+                        '://' . $_SERVER['HTTP_HOST'];
+                    $url .= $this->_urlHelper->url(array('controller' => 'account',
+                            'action' => 'fetchpassword',
+                            'language' => $this->view->language),
+                        'lang_default', true);
+                    $url .= '?key=' . $key;
+
+                    // add new password request into the database
+                    $user->addPasswordRequest($userId, $key_safe);
+
+                    // send verification email
+                    if ($user->sendVerificationEmail($userId, $email, $url, $this->view->language)) {
+                        $action = 'emailsent';
+                    }
+                    else {
+                        $action = 'emailproblem';
+                        $error = 'account-fetchpassword-error-email';
+                    }
+                }
+                else {
+                    $error = 'account-fetchpassword-error-nosuchemail';
+                    $this->view->form = $form;
+                }
+
                 //TODO Flash Messenger
 
+                /* TODO Delete this, will open directly by url in email
                 $newPassForm = new Default_Form_NewPasswordForm();
                 $formData = $this->_request->getPost();
-                $this->view->form = $newPassForm;
+                $this->view->form = $newPassForm;*/
 
             // invalid fetchPasswordform
             } else {
