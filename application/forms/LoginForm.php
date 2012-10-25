@@ -70,7 +70,6 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 			),
 		));
 
-		//Doesn't work!
 		$this->addElement('hidden', 'login_returnurl', array (
 			'value' => $this->getReturnUrl(),
 			'validators' => array(array('ViewHelper')),
@@ -91,9 +90,11 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 	 */
 	public function setReturnUrl($returnUrl)
 	{
-
 		$this->_returnUrl = $returnUrl;
-//		$this->getElement('login_returnurl')->setValue($returnUrl);
+
+		$element = $this->getElement('login_returnurl');
+		if ($element) $element->setValue($returnUrl);
+
 		return $this;
 	}
 
