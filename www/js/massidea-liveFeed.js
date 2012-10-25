@@ -33,7 +33,7 @@ var time = 0;
         if (time) {
             window.clearTimeout(time);
         }
-        time = window.setTimeout(loadContent, 3000);
+        time = window.setTimeout(loadContent, 15000);
     }
 
     function stopTimer(){
