@@ -32,36 +32,38 @@ logout;Logout
 signup;Sign up
 email; E-Mail
 password; Password
-account-login-username; Username
-account-login-password; Password
-account-login-title; Login
+account-login-username;Username
+account-login-password;Password
+account-login-title;Login
+account-login-submit;Login
 account-register-page-header;Registration
-register-account-information; Registration Information
-account-register-username; Username
-account-register-password; Password
-account-register-password-confirm; Confirm Password
-register-personal-information; Personal Information
+register-account-information;Registration Information
+account-register-username;Username
+account-register-password;Password
+account-register-password-confirm;Confirm Password
+register-personal-information;Personal Information
 account-register-city; City
-account-register-employment; Employment
-account-register-email; E-Mail
-account-select; Select
-account-register-private-sector; Private Sector
-account-register-public-sector; Public Sector
-account-register-education-sector; Education Sector
-account-register-student; Student;
-account-register-pentioner; Pensioner
-account-register-other; Other
-account-register-enter-text; Enter Text
-account-register-captcha; Captcha
+account-register-employment;Employment
+account-register-email;E-Mail
+account-select;Select
+account-register-private-sector;Private Sector
+account-register-public-sector;Public Sector
+account-register-education-sector;Education Sector
+account-register-student;Student;
+account-register-pentioner;Pensioner
+account-register-other;Other
+account-register-enter-text;Enter Text
+account-register-captcha;Captcha
 account-register-gtc;GTC
-account-register-terms-and-privacy; accept terms and privacy
-account-register-submit; Submit
+account-register-terms-and-privacy;accept terms and privacy
+account-register-submit;Submit
 account-register-legend-login;Login Data
 account-register-legend-core;Core Data
 account-register-legend-general;General
-forgotPassword; Forgot Password
-account-fetchpassword-request; Request Password
-account-fetchpassword-submit; Ok
+account-register-forgot-password;<strong>Forgot your password?</strong> <a href="%s">Reset your password</a> now!
+forgotPassword;Forgot Password
+account-fetchpassword-request;Request Password
+account-fetchpassword-submit;Ok
 error-field-empty;No text entered
 error-field-too-short;Text is too short
 error-field-too-long;Text is too long

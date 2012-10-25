@@ -31,40 +31,42 @@ login;Anmelden
 logout;Abmelden
 signup;Registrieren
 email; E-Mail
-password; Passwort
-forgotPassword; Passwort vergessen
-account-login-title; Login
-account-login-username; Benutzername
-account-login-password; Passwort
+password;Passwort
+forgotPassword;Passwort vergessen
+account-login-title;Login
+account-login-username;Benutzername
+account-login-password;Passwort
+account-login-submit;Anmelden
 account-register-page-header;Registrierung
-register-account-information; Registrierungsinformationen
-account-register-username; Benutzername
-account-register-password; Passwort
-account-register-password-confirm; Passwort bestätigen
-register-personal-information; Persönliche Informationen
-account-register-city; Stadt
-account-register-email; E-Mail
-account-register-employment; Beruf
-account-select; Auswählen
-account-register-private-sector; Privater Bereich
-account-register-public-sector; Öffentlicher Bereich
-account-register-education-sector; Ausbildung
-account-register-student; Student
-account-register-pentioner; Pensionist
-account-register-other; Sonstiges
-account-register-captcha; Captcha
-account-register-enter-text; Text eingeben
-account-register-gtc; AGB
-account-register-terms-and-privacy; Ich akzeptiere die allgemeinen Geschäftsbedingungen
-account-register-submit; Registrieren
+register-account-information;Registrierungsinformationen
+account-register-username;Benutzername
+account-register-password;Passwort
+account-register-password-confirm;Passwort bestätigen
+register-personal-information;Persönliche Informationen
+account-register-city;Stadt
+account-register-email;E-Mail
+account-register-employment;Beruf
+account-select;Auswählen
+account-register-private-sector;Privater Bereich
+account-register-public-sector;Öffentlicher Bereich
+account-register-education-sector;Ausbildung
+account-register-student;Student
+account-register-pentioner;Pensionist
+account-register-other;Sonstiges
+account-register-captcha;Captcha
+account-register-enter-text;Text eingeben
+account-register-gtc;AGB
+account-register-terms-and-privacy;Ich akzeptiere die allgemeinen Geschäftsbedingungen
+account-register-submit;Registrieren
 account-register-legend-login;Logindaten
 account-register-legend-core;Stammdaten
 account-register-legend-general;Allgemein
-account-fetchpassword-request; Passwort anfordern
-account-fetchpassword-submit; Ok
+account-register-forgot-password;<strong>Passwort vergessen?</strong> Setzen Sie ihr <a href="%s">Passwort jetzt zurück</a>!
+account-fetchpassword-request;Passwort anfordern
+account-fetchpassword-submit;Ok
 error-field-empty;Kein Text eingegeben
-error-field-too-short; Der eingegebene Text ist zu kurz
-error-field-too-long; Der eingegebene Text ist zu lang
-error-value-not-same; Werte müssen übereinstimmen
-error-captcha-no-same; Captchanachricht stimmt nicht überein
-error-checkbox-not-checked; Verpflichtend
+error-field-too-short;Der eingegebene Text ist zu kurz
+error-field-too-long;Der eingegebene Text ist zu lang
+error-value-not-same;Werte müssen übereinstimmen
+error-captcha-no-same;Captchanachricht stimmt nicht überein
+error-checkbox-not-checked;Verpflichtend
