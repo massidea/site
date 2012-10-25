@@ -220,11 +220,14 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		else
 		{
 			$this->view->authenticated = false;
-			$loginForm = new Default_Form_LoginForm(array('returnurl' => $this->getRequest()->getRequestUri()));
-			$loginForm->setDecorators(array(array(
-				'ViewScript',
-				array('viewScript' => 'forms/loginHeader.phtml')
-			)));
+
+			$loginForm = new Default_Form_LoginForm();
+			$loginForm->setReturnUrl($this->getRequest()->getRequestUri())
+				->setDecorators(array(array(
+					'ViewScript',
+					array('viewScript' => 'forms/loginHeader.phtml')
+				)));
+
             $this->view->loginform = $loginForm;
 		}
 		$this->view->title = $this->breadcrumbs->getTitle();

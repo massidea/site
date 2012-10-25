@@ -28,32 +28,11 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */
-class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Inline
+class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 {
 
 	/** @var string */
 	private $_returnUrl = '';
-
-	/**
-	 * @param string $returnUrl
-	 * @return Default_Form_LoginForm
-	 */
-	public function setReturnUrl($returnUrl)
-	{
-
-		$this->_returnUrl = $returnUrl;
-		//Problem!!!
-		//$this->getElement("login_returnurl")->setValue($returnUrl);
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getReturnUrl()
-	{
-		return $this->_returnUrl;
-	}
 
 	/**
 	 * @inheritdoc
@@ -69,10 +48,9 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Inline
 			->setAction($actionUrl)
 			->setAttrib('id', 'login_form')
 			->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator')
-	        ->setDecorators(array(array(
-            'ViewScript',
-            array('viewScript' => 'forms/loginHeader.phtml'))));
-
+			->setDecorators(array(array(
+				'ViewScript',
+				array('viewScript' => 'forms/login.phtml'))));
 
 		$this->addElement('text', 'login_username', array(
 			'label'      => 'account-login-username',
@@ -92,14 +70,13 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Inline
 			),
 		));
 
-		//Doesn't work!
-		/*$this->addElement('hidden', 'login_returnurl', array (
+		$this->addElement('hidden', 'login_returnurl', array (
 			'value' => $this->getReturnUrl(),
 			'validators' => array(array('ViewHelper')),
-		)); */
+		));
 
 		$this->addElement('submit', 'login_submit', array(
-			'label'      => 'login',
+			'label'      => 'account-login-submit',
 			'required'   => true,
 			'validators' => array(),
 		));
@@ -107,5 +84,26 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Inline
 		parent::init();
 	}
 
+	/**
+	 * @param string $returnUrl
+	 * @return Default_Form_LoginForm
+	 */
+	public function setReturnUrl($returnUrl)
+	{
+		$this->_returnUrl = $returnUrl;
+
+		$element = $this->getElement('login_returnurl');
+		if ($element) $element->setValue($returnUrl);
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReturnUrl()
+	{
+		return $this->_returnUrl;
+	}
 
 }

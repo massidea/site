@@ -481,19 +481,16 @@ class AccountController extends Oibs_Controller_CustomController
         	$returnurl = $_SERVER['HTTP_REFERER'];
         } else {
         	$returnurl = $urlHelper->url(array('controller' => 'index',
-                                                 'action' => 'index',
-                                                 'language' => $this->view->language),
-                                           'lang_default', true);
+				'action' => 'index',
+				'language' => $this->view->language),
+			'lang_default', true);
         }
 
         // creata new LoginForm and set to view
         $form = new Default_Form_LoginForm();
 	    $form->setReturnUrl($returnurl);
-		$form->setDecorators(array(array(
-			'ViewScript',
-			array('viewScript' => 'forms/login.phtml'))));
-	    unset($form->getElement('login_username')->placeholder);
-	    unset($form->getElement('login_password')->placeholder);
+	    $form->getElement('login_username')->placeholder = '';
+	    $form->getElement('login_password')->placeholder = '';
         $this->view->form = $form;
 
         // Get request
