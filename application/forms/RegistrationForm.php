@@ -63,7 +63,11 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 		$this->addElement('text', 'register_email', array(
 			'label'      => 'account-register-email',
 			'required'   => true,
-			'validators' => array($this->getMailValidator()),
+			'validators' => array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+                array($this->getMailValidator()),
+                new Oibs_Validators_EMailExists('email'),
+             ),
 		));
 
 		$this->addElement('select', 'register_employment', array(
@@ -71,7 +75,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 			'required'     => true,
 			'multiOptions' => $this->getAccountOptions(),
 			'validators'   => array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty')))
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-selection-empty')))
 			),
 		));
 
@@ -83,6 +87,9 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 				'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
 				'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
 				'imgUrl'  => '/img/captcha',
+                'Messages'    => array(
+                    'badCaptcha' => 'error-captcha-no-same',
+                 )
 			),
 			'required'   => true,
 			'label'      => 'account-register-captcha',

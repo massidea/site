@@ -30,7 +30,7 @@ French;Französisch
 login;Anmelden
 logout;Abmelden
 signup;Registrieren
-email; E-Mail
+email;E-Mail
 password;Passwort
 forgotPassword;Passwort vergessen
 account-login-title;Login
@@ -66,8 +66,9 @@ account-register-forgot-password;<strong>Passwort vergessen?</strong> Setzen Sie
 account-fetchpassword-request;Passwort anfordern
 account-fetchpassword-submit;Ok
 error-field-empty;Kein Text eingegeben
+error-selection-empty;Keine Auswahl getroffen
 error-field-too-short;Der eingegebene Text ist zu kurz
 error-field-too-long;Der eingegebene Text ist zu lang
 error-value-not-same;Werte müssen übereinstimmen
-error-captcha-no-same;Captchanachricht stimmt nicht überein
+error-captcha-no-same;Der eingegebene Captcha ist falsch
 error-checkbox-not-checked;Verpflichtend

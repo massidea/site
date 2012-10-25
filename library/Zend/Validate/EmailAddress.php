@@ -50,14 +50,14 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageTemplates = array(
-        self::INVALID            => "Invalid type given, value should be a string",
-        self::INVALID_FORMAT     => "'%value%' is not a valid email address in the basic format local-part@hostname",
-        self::INVALID_HOSTNAME   => "'%hostname%' is not a valid hostname for email address '%value%'",
-        self::INVALID_MX_RECORD  => "'%hostname%' does not appear to have a valid MX record for the email address '%value%'",
-        self::DOT_ATOM           => "'%localPart%' not matched against dot-atom format",
-        self::QUOTED_STRING      => "'%localPart%' not matched against quoted-string format",
-        self::INVALID_LOCAL_PART => "'%localPart%' is not a valid local part for email address '%value%'",
-        self::LENGTH_EXCEEDED    => "'%value%' exceeds the allowed length"
+        self::INVALID            => "email-invalid", // "Invalid type given, value should be a string",
+        self::INVALID_FORMAT     => "email-invalid-format",//"'%value%' is not a valid email address in the basic format local-part@hostname",
+        self::INVALID_HOSTNAME   => "email-invalid-hostname", //"'%hostname%' is not a valid hostname for email address '%value%'",
+        self::INVALID_MX_RECORD  => "email-invalid-ms-record", //"'%hostname%' does not appear to have a valid MX record for the email address '%value%'",
+        self::DOT_ATOM           => "email-dot-atom", //"'%localPart%' not matched against dot-atom format",
+        self::QUOTED_STRING      => "email-quoted-string", //"'%localPart%' not matched against quoted-string format",
+        self::INVALID_LOCAL_PART => "email-invalid-local-part", //"'%localPart%' is not a valid local part for email address '%value%'",
+        self::LENGTH_EXCEEDED    => "email-length-exceeded", //"'%value%' exceeds the allowed length"
     );
 
     /**
