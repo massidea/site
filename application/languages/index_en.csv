@@ -62,6 +62,20 @@ account-register-captcha;Captcha
 account-register-gtc;GTC
 account-register-terms-and-privacy;accept terms and privacy
 account-register-submit;Submit
+registration-box-header;Massidea.org registration
+account-create-account;CREATE ACCOUNT
+account-create-account-text;It is a free of charge and takes only a minute.
+account-upload-and-share;UPLOAD AND SHARE
+account-upload-and-share-text;After joining you can start sharing your insights with others.
+account-your-portfolio-is-extending;YOUR PORTFOLIO IS EXTENDING
+account-your-portfolio-is-extending-text;All your posts are extending your personal knowledge profile.
+account-connecting-people-and-contents;CONNECTING PEOPLE AND CONTENTS
+account-connecting-people-and-contents;Your posts acts as an interface to others users and their insight. More posts, the greater your possibilities to interact are.
+account-boosting-creativity;BOOSTING CREATIVITY
+account-boosting-creativity-text;Unexpected connections between people and insights creates a stimulating environment which is boosting your creativity. Meet new people and discover novel ideas
+account-learn-more;Learn more in our
+account-blog;blog
+account-registering;Registering with Massidea.org is free of charge. All fields are mandatory.
 account-register-legend-login;Login Data
 account-register-legend-core;Core Data
 account-register-legend-general;General
