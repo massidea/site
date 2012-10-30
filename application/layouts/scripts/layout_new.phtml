@@ -65,9 +65,24 @@
             </div>
             <div class="span4">
                 <ul>
-                <li><a href="#"><?php echo $this->translate('layout-join-our-community-footer'); ?></a></li>
-                <li><a href="#"><?php echo $this->translate('layout-sign-up'); ?></a></li>
-                <li><a href="#"><?php echo $this->translate('layout-create-a-post'); ?></a></li>
+                <li><a href="<?php echo $this->url(array(
+                                'controller' => 'account',
+                                'action' => 'login',
+                                'language' => $this->language),
+                                'lang_default', true);?>">
+                        <?php echo $this->translate('layout-join-our-community-footer'); ?></a></li>
+                <li><a href="<?php echo $this->url(array(
+                                'controller' => 'account',
+                                'action' => 'register',
+                                'language' => $this->language),
+                                'lang_default', true);?>">
+                        <?php echo $this->translate('layout-sign-up'); ?></a></li>
+                <li><a href="<?php echo $this->url(array(
+                                'controller' => 'content',
+                                'action' => 'add',
+                                'language' => $this->language),
+                                'lang_default', true);?>">
+                        <?php echo $this->translate('layout-create-a-post'); ?></a></li>
                 </ul>
             </div>
             <div class="span4">
