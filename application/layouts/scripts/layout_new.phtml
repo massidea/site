@@ -50,6 +50,12 @@
             </div>
         </div>
 
+        <?php foreach ($this->messages as $message) : ?>
+        <div class="alert alert-success">
+            <?php echo $message; ?>
+        </div>
+        <?php endforeach; ?>
+
         <section id="row content">
             <?php echo $this->layout()->content; ?>
         </section>
