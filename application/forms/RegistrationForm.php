@@ -174,19 +174,19 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 			'email-length-exceeded',
 			Zend_Validate_EmailAddress::LENGTH_EXCEEDED);
 		$mail_validator->hostnameValidator->setMessage(
-			'hostname-invalid-hostname',
+			'email-hostname-invalid-hostname',
 			Zend_Validate_Hostname::INVALID_HOSTNAME);
 		$mail_validator->hostnameValidator->setMessage(
-			'hostname-local-name-not-allowed',
+			'email-hostname-local-name-not-allowed',
 			Zend_Validate_Hostname::LOCAL_NAME_NOT_ALLOWED);
 		$mail_validator->hostnameValidator->setMessage(
-			'hostname-unknown-tld',
+			'email-hostname-unknown-tld',
 			Zend_Validate_Hostname::UNKNOWN_TLD);
 		$mail_validator->hostnameValidator->setMessage(
-			'hostname-invalid-local-name',
+			'email-hostname-invalid-local-name',
 			Zend_Validate_Hostname::INVALID_LOCAL_NAME);
 		$mail_validator->hostnameValidator->setMessage(
-			'hostname-undecipherable-tld',
+			'email-hostname-undecipherable-tld',
 			Zend_Validate_Hostname::UNDECIPHERABLE_TLD);
 
 		return $mail_validator;
@@ -207,7 +207,7 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 	protected function getAccountOptions()
 	{
 		return array(
-			''                 => 'account-select',
+			''                 => 'account-register-select',
 			'private_sector'   => 'account-register-private-sector',
 			'public_sector'    => 'account-register-public-sector',
 			'education_sector' => 'account-register-education-sector',
