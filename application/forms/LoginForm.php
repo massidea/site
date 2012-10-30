@@ -28,61 +28,82 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */
-class Default_Form_LoginForm extends Zend_Form
+class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 {
-    public function __construct($options = null)
-    {
-        parent::__construct($options);
 
+	/** @var string */
+	private $_returnUrl = '';
+
+	/**
+	 * @inheritdoc
+	 */
+	public function init()
+	{
 		$translate = Zend_Registry::get('Zend_Translate');
 		$language = $translate->getLocale();
 		$baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$actionUrl = $baseurl.'/'.$language.'/account/login';
 
-		$this->setName('login_form');
-		$this->setAction($actionUrl);
-		$this->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator');
+		$this->setName('login_form')
+			->setAction($actionUrl)
+			->setAttrib('id', 'login_form')
+			->addElementPrefixPath('Oibs_Decorators', 'Oibs/Decorators/', 'decorator')
+			->setDecorators(array(array(
+				'ViewScript',
+				array('viewScript' => 'forms/login.phtml'))));
 
-             $this->setDecorators(array(array(
-            'ViewScript',
-            array('viewScript' => 'forms/loginHeader.phtml')
-        )));
+		$this->addElement('text', 'login_username', array(
+			'label'       => 'account-login-username',
+			'placeholder' => $translate->translate('account-login-username'),
+			'required'    => true,
+			'filters'     => array('StringtoLower'),
+			'validators'  => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('error-field-empty'))))),
+		));
 
-		// Username input form element
-		$username = new Zend_Form_Element_Text('username');
-		$username//->setLabel($translate->_("account-login-username"))
-                ->setAttrib('placeholder','E-Mail')
-				->addFilter('StringtoLower')
-                ->setRequired(true)
-				->addValidators(array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
-				))
-				->setDecorators(array('ViewHelper'))
-        ;
+		$this->addElement('password', 'login_password', array(
+			'label'       => 'account-login-password',
+			'placeholder' => $translate->translate('account-login-password'),
+			'required'    => true,
+			'validators'  => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('error-field-empty')))),
+			),
+		));
 
-		// Password input form element
-		$password = new Zend_Form_Element_Password('password');
-		$password//->setLabel($translate->_("account-register-password"))
-                ->setAttrib('placeholder', 'Password')
-                ->setRequired(true)
-				->addValidators(array(
-					array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('account-login-field-empty')))),
-				))
-				->setDecorators(array('ViewHelper'))
-        ;
+		$this->addElement('hidden', 'login_returnurl', array (
+			'value'      => $this->getReturnUrl(),
+			'decorators' => array(array('ViewHelper')),
+		));
 
-		$hidden = new Zend_Form_Element_Hidden('returnurl');
-		$hidden->setValue($options['returnurl'])
-			->setDecorators(array(array('ViewHelper')));
+		$this->addElement('submit', 'login_submit', array(
+			'label'      => 'account-login-submit',
+			'required'   => true,
+			'validators' => array(),
+		));
 
-		// Form submit buttom element
-		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel($translate->_("layout-login"))
-            ->removeDecorator('DtDdWrapper')
-            ->setAttrib('class', 'btn')
-         ;
-
-		// Add elements to form
-		$this->addElements(array($username, $password, $submit, $hidden));
+		parent::init();
 	}
+
+	/**
+	 * @param string $returnUrl
+	 * @return Default_Form_LoginForm
+	 */
+	public function setReturnUrl($returnUrl)
+	{
+		$this->_returnUrl = $returnUrl;
+
+		$element = $this->getElement('login_returnurl');
+		if ($element) $element->setValue($returnUrl);
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReturnUrl()
+	{
+		return $this->_returnUrl;
+	}
+
 }

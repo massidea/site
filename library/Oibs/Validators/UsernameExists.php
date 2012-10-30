@@ -29,7 +29,7 @@ class Oibs_Validators_UsernameExists extends Zend_Validate_Abstract
 	const NOT_MATCH = 'notMatch';
 
 	protected $_messageTemplates = array(
-		self::NOT_MATCH => 'username-exists'
+		self::NOT_MATCH => 'error-username-exists'
 	);
 	
     /**

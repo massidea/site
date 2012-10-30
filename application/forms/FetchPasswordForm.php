@@ -26,82 +26,107 @@
  *  @license    GPL v2
  *  @version    1.0
  */
-class Default_Form_FetchPasswordForm extends Zend_Form
+class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 {
-    public function __construct($options = null) 
-    { 
-        parent::__construct($options);
-        
+    public function init()
+    {
         $translate = Zend_Registry::get('Zend_Translate'); 
         $language = $translate->getLocale();
         $baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
         $actionUrl = $baseurl.'/'.$language.'/account/fetchpassword';
         
-        $this->setName('fetchpassword_form');
-        $this->setAction($actionUrl);
-        $this->addElementPrefixPath('Oibs_Decorators', 
-                                'Oibs/Decorators/',
-                                'decorator');
-        
-		$mailvalid = new Zend_Validate_EmailAddress();
-		$mailvalid->setMessage(
-			'email-invalid',
-			Zend_Validate_EmailAddress::INVALID);
-		$mailvalid->setMessage(
-			'email-invalid-hostname',
-			Zend_Validate_EmailAddress::INVALID_HOSTNAME);
-		$mailvalid->setMessage(
-			'email-invalid-mx-record',
-			Zend_Validate_EmailAddress::INVALID_MX_RECORD);
-		$mailvalid->setMessage(
-			'email-dot-atom',
-			Zend_Validate_EmailAddress::DOT_ATOM);
-		$mailvalid->setMessage(
-			'email-quoted-string',
-			Zend_Validate_EmailAddress::QUOTED_STRING);
-		$mailvalid->setMessage(
-			'email-invalid-local-part',
-			Zend_Validate_EmailAddress::INVALID_LOCAL_PART);
-		$mailvalid->setMessage(
-			'email-length-exceeded',
-			Zend_Validate_EmailAddress::LENGTH_EXCEEDED);
-		$mailvalid->hostnameValidator->setMessage(
-			'hostname-invalid-hostname',
-			Zend_Validate_Hostname::INVALID_HOSTNAME);
-		$mailvalid->hostnameValidator->setMessage(
-			'hostname-local-name-not-allowed',
-			Zend_Validate_Hostname::LOCAL_NAME_NOT_ALLOWED);
-		$mailvalid->hostnameValidator->setMessage(
-			'hostname-unknown-tld',
-			Zend_Validate_Hostname::UNKNOWN_TLD);	
-		$mailvalid->hostnameValidator->setMessage(
-			'hostname-invalid-local-name',
-			Zend_Validate_Hostname::INVALID_LOCAL_NAME);	
-		$mailvalid->hostnameValidator->setMessage(
-			'hostname-undecipherable-tld',
-			Zend_Validate_Hostname::UNDECIPHERABLE_TLD);
-        
-        // Username input form element
-        $username = new Zend_Form_Element_Text('email');
-        $username->setLabel($translate->_("account-fetchpassword-email"))
-        		->removeDecorator('DtDdWrapper')
-                ->addFilter('StringtoLower')
-                ->setRequired(true)
-				->addValidators(array(
-					$mailvalid
-				))
-                ->setDecorators(array('FetchPasswordDecorator'));
-                
-        $hidden = new Zend_Form_Element_Hidden('submittedform');
-        $hidden->setValue('fetchpassword');
-        
-        // Form submit buttom element
-        $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel($translate->_("account-fetchpassword-submit"))
-        		->removeDecorator('DtDdWrapper')
-               ->setAttrib('class', 'fetchpassword-submit left');
-        
-        // Add elements to form
-        $this->addElements(array($username, $submit, $hidden));
+        $this->setName('fetchpassword_form')
+            ->setAction($actionUrl)
+            ->addElementPrefixPath('Oibs_Decorators',
+                'Oibs/Decorators/',
+                'decorator');
+
+	    // Username input form element
+        $this->addElement('text', 'email', array(
+            'label'       => 'account-fetchpassword-email',
+            'placeholder' => 'account-fetchpassword-email',
+            'filter'      => 'StringtoLower',
+            'required'    => true,
+            'validators'  => array($this->getMailValidator()),
+        ));
+
+	    // captcha input form element
+        $this->addElement('captcha', 'captcha', array(
+            'captcha'    => array(
+                'captcha' => 'Image',
+                'wordLen' => 8,
+                'timeout' => 300,
+                'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
+                'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
+                'imgUrl'  => '/img/captcha',
+            ),
+            'required'   => true,
+            'label'      => 'account-fetchpassword-captcha',
+        ));
+
+        $this->addElement('hidden', 'submittedform', array(
+            'value'       => 'fetchpassword'
+        ));
+        // Form submit button element
+        $this->addElement('submit', 'submit', array(
+            'label'       => 'account-fetchpassword-submit',
+        ))->removeDecorator('DtDdWrapper');
+
+        $this->addDisplayGroup(array(
+                'submit'
+            ),
+            'Actions',
+            array(
+                'disableLoadDefaultDecorators' => true,
+                'decorators' => array('Actions'),
+            ));
+
+        parent::init();
+    }
+    /**
+     * Creates an email address validator with better messages.
+     * @return Zend_Validate_EmailAddress
+     */
+    protected function getMailValidator()
+    {
+        $mail_validator = new Zend_Validate_EmailAddress();
+        $mail_validator->setMessage(
+            'email-invalid',
+            Zend_Validate_EmailAddress::INVALID);
+        $mail_validator->setMessage(
+            'email-invalid-hostname',
+            Zend_Validate_EmailAddress::INVALID_HOSTNAME);
+        $mail_validator->setMessage(
+            'email-invalid-mx-record',
+            Zend_Validate_EmailAddress::INVALID_MX_RECORD);
+        $mail_validator->setMessage(
+            'email-dot-atom',
+            Zend_Validate_EmailAddress::DOT_ATOM);
+        $mail_validator->setMessage(
+            'email-quoted-string',
+            Zend_Validate_EmailAddress::QUOTED_STRING);
+        $mail_validator->setMessage(
+            'email-invalid-local-part',
+            Zend_Validate_EmailAddress::INVALID_LOCAL_PART);
+        $mail_validator->setMessage(
+            'email-length-exceeded',
+            Zend_Validate_EmailAddress::LENGTH_EXCEEDED);
+        $mail_validator->hostnameValidator->setMessage(
+            'hostname-invalid-hostname',
+            Zend_Validate_Hostname::INVALID_HOSTNAME);
+        $mail_validator->hostnameValidator->setMessage(
+            'hostname-local-name-not-allowed',
+            Zend_Validate_Hostname::LOCAL_NAME_NOT_ALLOWED);
+        $mail_validator->hostnameValidator->setMessage(
+            'hostname-unknown-tld',
+            Zend_Validate_Hostname::UNKNOWN_TLD);
+        $mail_validator->hostnameValidator->setMessage(
+            'hostname-invalid-local-name',
+            Zend_Validate_Hostname::INVALID_LOCAL_NAME);
+        $mail_validator->hostnameValidator->setMessage(
+            'hostname-undecipherable-tld',
+            Zend_Validate_Hostname::UNDECIPHERABLE_TLD);
+
+        return $mail_validator;
     }
 }

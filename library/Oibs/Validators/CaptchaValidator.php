@@ -2,7 +2,7 @@
 /**
  *  CaptchaValidator -> Validates captcha 
  *
-* 	Copyright (c) <2009>, Markus Riihelä 
+* 	Copyright (c) <2009>, Markus Riihelï¿½ 
 * 	Copyright (c) <2009>, Mikko Sallinen
 *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
@@ -23,8 +23,8 @@
  *
  *  @package 	Oibs
  *  @subpackage	Validators
- *  @author 		Markus Riihelä & Mikko Sallinen
- *  @copyright 	2009 Markus Riihelä & Mikko Sallinen
+ *  @author 		Markus Riihelï¿½ & Mikko Sallinen
+ *  @copyright 	2009 Markus Riihelï¿½ & Mikko Sallinen
  *  @license 	GPL v2
  *  @version 	1.0
  */ 
@@ -33,7 +33,7 @@ class Oibs_Validators_CaptchaValidator extends Zend_Validate_Abstract
 	const MSG_URI = 'msgUri';
 	
     protected $_messageTemplates = array(
-        self::MSG_URI => "captcha-no-same",
+        self::MSG_URI => "error-captcha-no-same",
     );
 	
 	/**

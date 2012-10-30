@@ -26,49 +26,67 @@
  *  @license    GPL v2
  *  @version    1.0
  */
-class Default_Form_NewPasswordForm extends Zend_Form
+class Default_Form_NewPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 {
-    public function __construct($options = null) 
-    { 
-        parent::__construct($options);
-        
-        $translate = Zend_Registry::get('Zend_Translate'); 
+
+    public function init()
+    {
+        $translate = Zend_Registry::get('Zend_Translate');
         $language = $translate->getLocale();
         $baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
         $actionUrl = $baseurl.'/'.$language.'/account/fetchpassword';
-        
-        $this->setName('newpassword_form');
-        $this->setAction($actionUrl);
-        $this->addElementPrefixPath('Oibs_Decorators', 
-                                'Oibs/Decorators/',
-                                'decorator');
-        
+
+        $this->setName('newpassword_form')
+            ->setAction($actionUrl)
+            ->addElementPrefixPath('Oibs_Decorators',
+                'Oibs/Decorators/',
+                'decorator');
+
         // Password input form element
-        $password = new Zend_Form_Element_Password('password');
-        $password->setLabel($translate->_("account-fetchpassword-password"))
-                ->addFilter('StringtoLower')
-                ->setRequired(true)
-                ->addValidators(array(
-                array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short',
-                                                                              'stringLengthTooLong' => 'field-too-long')))
-                ))
-                ->setDecorators(array('NewPasswordDecorator'));
-        
-        // Confirm input form element
-        $confirm = new Zend_Form_Element_Password('confirm');
-        $confirm->setLabel($translate->_("account-fetchpassword-confirm"))
-                ->addFilter('StringtoLower')
-                ->setDecorators(array('NewPasswordDecorator'));
-                
-        $hidden = new Zend_Form_Element_Hidden('submittedform');
-        $hidden->setValue('newpassword');
-                
+        $this->addElement('password', 'password', array(
+            'label'      => 'account-fetchpassword-password',
+            'filter'     => 'StringtoLower',
+            'required'   => true,
+            'validators' => array(array(
+                'StringLength',
+                false,
+                array(
+                    4, 16,
+                    'messages' => array(
+                        'stringLengthTooShort' =>'field-too-short',
+                        'stringLengthTooLong'  => 'field-too-long'
+                    )
+                ))),
+            'decorators' => array(array('NewPasswordDecorator')),
+        ));
+
+        // password confirm field
+        $this->addElement('password', 'confirm', array(
+            'label'     => 'account-fetchpassword-confirm',
+            'filter'    => 'StringtoLower',
+            'decorators'=> array(array('NewPasswordDecorator')),
+        ));
+
         // Form submit buttom element
-        $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel($translate->_("account-fetchpassword-newpassword-submit"))
-               ->setAttrib('class', 'fetchpassword-submit');
-        
-        // Add elements to form
-        $this->addElements(array($password, $confirm, $submit, $hidden));
+        $this->addElement('submit', 'submit', array(
+            'label'     => 'account-fetchpassword-newpassword-submit'
+        ))->setAttrib('class', 'fetchpassword-submit');
+
+        // Hidden element for new password
+        $this->addElement('hidden', 'submittedform', array(
+            'value'      => 'newpassword'
+        ));
+
+        $this->addDisplayGroup(array(
+                'submit'
+            ),
+            'Actions',
+            array(
+                'disableLoadDefaultDecorators' => true,
+                'decorators' => array('Actions'),
+            ));
+
+        parent::init();
+
     }
 }

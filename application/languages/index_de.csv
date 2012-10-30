@@ -34,3 +34,60 @@ layout-French;Französisch
 layout-login;Anmelden
 layout-logout;Abmelden
 layout-signup;Registrieren
+email;E-Mail
+password;Passwort
+forgotPassword;Passwort vergessen
+account-login-title;Login
+account-login-username;Benutzername
+account-login-password;Passwort
+account-login-submit;Anmelden
+account-login-not-successful;Benutzername und Passwort stimmen nicht überein
+account-register-page-header;Registrierung
+register-account-information;Registrierungsinformationen
+account-register-username;Benutzername
+account-register-password;Passwort
+account-register-password-confirm;Passwort bestätigen
+register-personal-information;Persönliche Informationen
+account-register-city;Stadt
+account-register-email;E-Mail
+account-register-employment;Beruf
+account-select;Auswählen
+account-register-private-sector;Privater Bereich
+account-register-public-sector;Öffentlicher Bereich
+account-register-education-sector;Ausbildung
+account-register-student;Student
+account-register-pentioner;Pensionist
+account-register-other;Sonstiges
+account-register-captcha;Captcha
+account-register-enter-text;Text eingeben
+account-register-gtc;AGB
+account-register-terms-and-privacy;Ich akzeptiere die allgemeinen Geschäftsbedingungen
+account-register-submit;Registrieren
+account-register-legend-login;Logindaten
+account-register-legend-core;Stammdaten
+account-register-legend-general;Allgemein
+account-register-forgot-password;<strong>Passwort vergessen?</strong> Setzen Sie ihr <a href="%s">Passwort jetzt zurück</a>!
+account-fetchpassword-request;Passwort anfordern
+account-fetchpassword-submit;Ok
+error-field-empty;Kein Text eingegeben
+error-selection-empty; Keine Auswahl getroffen
+error-field-too-short; Der eingegebene Text ist zu kurz
+error-field-too-long; Der eingegebene Text ist zu lang
+error-value-not-same; Werte müssen übereinstimmen
+error-captcha-no-same; Der eingegebene Captcha ist falsch
+error-checkbox-not-checked; Verpflichtend
+error-username-exists; Benutzername existiert bereits
+error-username-not-valid; Benutzername nicht gültig
+error-email-exists; E-Mail-Adresse ist bereits gespeichert
+email-invalid; Der eingegebene Wert ist vom falschen Typ, Der Wert muss ein string sein
+email-invalid-format; '%value%' ist keine gültige E-Mail-Adresse im Format lokal@hostname
+email-invalid-hostname; '%hostname%' ist kein gültiger Hostname für E-Mail-Adresse '%value%'
+email-invalid-ms-record; '%hostname%' scheint keinen gültigen MX Eintrag für E-Mail-Adresse '%value%' zu haben
+email-dot-atom; '%localPart%' entspricht nicht dem dot-atom Format
+email-quoted-string; '%localPart%' entspricht nicht dem Anführungszeichen Format
+email-invalid-local-part; '%localPart%' ist kein gültiger lokaler Teil der E-Mail-Adresse '%value%'
+email-length-exceeded; '%value%' überschreitet die erlaubte Länge
+hostname-invalid-local-name; Kein gültiger Hostname
+hostname-invalid-hostname; Kein gültiger Hostname
+hostname-undecipherable-tld; Hostname ist nicht entzifferbar
+hostname-unknown-tld; Hostname ist nicht bekannt

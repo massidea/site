@@ -1,216 +1,220 @@
 <?php
-/**
- *  RegistrationForm -> Register form creation
- *
- * 	Copyright (c) <2009>, Markus Riihelä
- * 	Copyright (c) <2009>, Mikko Sallinen
- *	Copyright (c) <2009>, Joel Peltonen
- *
- * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
- * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
- * more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
- * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
- * License text found in /license/
- */
 
 /**
- *  RegistrationForm - class
+ * RegistrationForm - class
  *
- *  @package 	Forms
- *  @author 	Markus Riihelä & Mikko Sallinen &  Joel Peltonen
- *  @copyright 	2009 Markus Riihelä & Mikko Sallinen & Joel Peltonen
- *  @license 	GPL v2
- *  @version 	1.0
+ * @package     Forms
+ * @author      Markus Riihelä & Mikko Sallinen &  Joel Peltonen
+ * @copyright   2009 Markus Riihelä & Mikko Sallinen & Joel Peltonen
+ * @license     GPL v2
+ * @version     1.0
  */
-class Default_Form_RegistrationForm extends Zend_Form
+class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 {
-    public function __construct($options = null) 
-    { 
-        parent::__construct($options);
-		$translate = Zend_Registry::get('Zend_Translate'); 
-		$this->removeDecorator('DtDdWrapper');
-		$this->setName('register_form');
-		$this->setAttrib('id', 'register_form');
-		$this->addElementPrefixPath('Oibs_Decorators', 
-								'Oibs/Decorators/',
-								'decorator');
-                                
-		$this->addElementPrefixPath('Oibs_Validators', 'OIBS/Validators/', 'validate');
-        
-        $city = new Zend_Form_Element_Text('city');
-        $city->setLabel($translate->_("account-register-city"))
-                ->setRequired(true)
-				->addValidators(array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
-				array('Regex', true, array('/^[\\p{L}0-9.\- ]*$/')) 
-				))
-				->setDecorators(array('RegistrationDecorator'))
-				;
-    
-		$mailvalid = new Zend_Validate_EmailAddress();
-		$mailvalid->setMessage(
+
+	/**
+	 * @inheritdoc
+	 */
+	public function init()
+	{
+		$this->setName('register_form')
+			->setAttrib('id', 'register_form')
+			->addElementPrefixPath('Oibs_Validators', 'OIBS/Validators/', 'validate', 'decorate');
+
+		$this->addElement('text', 'register_username', array(
+			'label'      => 'account-register-username',
+			'required'   => true,
+			'validators' => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long'))),
+				new Oibs_Validators_UsernameExists('username'),
+				new Oibs_Validators_Username('username')
+			),
+		));
+
+		$this->addElement('password', 'register_password', array(
+			'label'      => 'account-register-password',
+			'required'   => true,
+			'validators' => array(
+				new Oibs_Validators_RepeatValidator('register_confirm_password'),
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long')))
+			),
+		));
+
+		$this->addElement('password', 'register_confirm_password', array(
+			'label'      => 'account-register-password-confirm',
+			'required'   => true,
+			'validators' => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'error-field-too-short', 'stringLengthTooLong' => 'error-field-too-long'))),
+			),
+		));
+
+		$this->addElement('text', 'register_city', array(
+			'label'      => 'account-register-city',
+			'required'   => true,
+			'validators' => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+				array('Regex', true, array('/^[\\p{L}0-9.\- ]*$/'))
+			),
+		));
+
+		$this->addElement('text', 'register_email', array(
+			'label'      => 'account-register-email',
+			'required'   => true,
+			'validators' => array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+                array($this->getMailValidator()),
+                new Oibs_Validators_EMailExists('email'),
+             ),
+		));
+
+		$this->addElement('select', 'register_employment', array(
+			'label'        => 'account-register-employment',
+			'required'     => true,
+			'multiOptions' => $this->getAccountOptions(),
+			'validators'   => array(
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-selection-empty')))
+			),
+		));
+
+		$this->addElement('captcha', 'register_captcha', array(
+			'captcha'    => array(
+				'captcha' => 'Image',
+				'wordLen' => 8,
+				'timeout' => 300,
+				'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
+				'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
+				'imgUrl'  => '/img/captcha',
+                'Messages'    => array(
+                    'badCaptcha' => 'error-captcha-no-same',
+                 )
+			),
+			'required'   => true,
+			'label'      => 'account-register-captcha',
+		));
+
+		$this->addElement('checkbox', 'register_terms', array(
+			'label'          => 'account-register-gtc',
+			'required'       => true,
+			'uncheckedValue' => '',
+			'checked'        => false,
+			'description'    => 'account-register-terms-and-privacy',
+			'errorMessages'  => array('empty' => 'error-checkbox-not-checked'),
+		));
+
+		$this->addElement('submit', 'register_submit', array(
+			'label'      => 'account-register-submit',
+			'required'   => true,
+			'validators' => array(),
+		));
+
+		$this->addDisplayGroup(array(
+				'register_username',
+				'register_password',
+				'register_confirm_password',
+				'register_email',
+			),
+			'login',
+			array('legend' => 'account-register-legend-login'));
+
+		$this->addDisplayGroup(array(
+				'register_city',
+				'register_employment',
+			),
+			'coredata',
+			array('legend' => 'account-register-legend-core'));
+
+		$this->addDisplayGroup(array(
+				'register_terms',
+				'register_captcha',
+			),
+			'general',
+			array('legend' => 'account-register-legend-general'));
+
+		$this->addDisplayGroup(array(
+				'register_submit'
+			),
+			'Actions',
+			array(
+				'disableLoadDefaultDecorators' => true,
+				'decorators' => array('Actions'),
+			));
+
+		parent::init();
+	}
+
+	/**
+	 * Creates an email address validator with better messages.
+	 * @return Zend_Validate_EmailAddress
+	 */
+	protected function getMailValidator()
+	{
+		$mail_validator = new Zend_Validate_EmailAddress();
+		$mail_validator->setMessage(
 			'email-invalid',
 			Zend_Validate_EmailAddress::INVALID);
-		$mailvalid->setMessage(
+		$mail_validator->setMessage(
 			'email-invalid-hostname',
 			Zend_Validate_EmailAddress::INVALID_HOSTNAME);
-		$mailvalid->setMessage(
+		$mail_validator->setMessage(
 			'email-invalid-mx-record',
 			Zend_Validate_EmailAddress::INVALID_MX_RECORD);
-		$mailvalid->setMessage(
+		$mail_validator->setMessage(
 			'email-dot-atom',
 			Zend_Validate_EmailAddress::DOT_ATOM);
-		$mailvalid->setMessage(
+		$mail_validator->setMessage(
 			'email-quoted-string',
 			Zend_Validate_EmailAddress::QUOTED_STRING);
-		$mailvalid->setMessage(
+		$mail_validator->setMessage(
 			'email-invalid-local-part',
 			Zend_Validate_EmailAddress::INVALID_LOCAL_PART);
-		$mailvalid->setMessage(
+		$mail_validator->setMessage(
 			'email-length-exceeded',
 			Zend_Validate_EmailAddress::LENGTH_EXCEEDED);
-		$mailvalid->hostnameValidator->setMessage(
+		$mail_validator->hostnameValidator->setMessage(
 			'hostname-invalid-hostname',
 			Zend_Validate_Hostname::INVALID_HOSTNAME);
-		$mailvalid->hostnameValidator->setMessage(
+		$mail_validator->hostnameValidator->setMessage(
 			'hostname-local-name-not-allowed',
 			Zend_Validate_Hostname::LOCAL_NAME_NOT_ALLOWED);
-		$mailvalid->hostnameValidator->setMessage(
+		$mail_validator->hostnameValidator->setMessage(
 			'hostname-unknown-tld',
-			Zend_Validate_Hostname::UNKNOWN_TLD);	
-		$mailvalid->hostnameValidator->setMessage(
+			Zend_Validate_Hostname::UNKNOWN_TLD);
+		$mail_validator->hostnameValidator->setMessage(
 			'hostname-invalid-local-name',
-			Zend_Validate_Hostname::INVALID_LOCAL_NAME);	
-		$mailvalid->hostnameValidator->setMessage(
+			Zend_Validate_Hostname::INVALID_LOCAL_NAME);
+		$mail_validator->hostnameValidator->setMessage(
 			'hostname-undecipherable-tld',
 			Zend_Validate_Hostname::UNDECIPHERABLE_TLD);
 
-		$email = new Zend_Form_Element_Text('email');
-		$email->setLabel($translate->_("account-register-email"))
-				->setRequired(true)
-				->addFilter('StringtoLower')
-				->addValidators(array(
-					$mailvalid
-					/*array('NotEmpty', 
-                        true, 
-                        array('messages' => array('isEmpty' => 'field-empty'))
-                    ),
-					array('StringLength', 
-                        true, 
-                        array(6, 50,
-                            'messages' => array(
-                                'stringLengthTooShort' => 'field-too-short', 
-                                'stringLengthTooLong' => 'field-too-long'
-                            )
-                        )
-                    ),*/
-				))
-                ->addErrorMessage('email-invalid')
-				->setDecorators(array('RegistrationDecorator'));
-
-        $e_options = array(
-                        "" => "account-select",
-                        "private_sector" => "account-register_private_sector",
-                        "public_sector" => "account-register_public_sector",
-                        "education_sector" => "account-register_education_sector",
-                        "student" => "account-register_student",
-                        "pentioner" => "account-register_pentioner",
-                        "other" => "account-register_other",
-                     );
-        
-        $employment = new Zend_Form_Element_Select('employment');
-        $employment->setLabel($translate->_("account-register-employment"))
-                    ->setRequired(true)
-                    ->addValidators(array(
-                        array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
-                    ))
-                    ->addMultiOptions($e_options)
-                    ->setDecorators(array('RegistrationDecorator'));
-                    
-		$username = new Zend_Form_Element_Text('username');
-		$username->setLabel($translate->_("account-register-username"))
-				->setRequired(true)
-				->addValidators(array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
-				array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long'))),
-                new Oibs_Validators_UsernameExists('username'),
-                new Oibs_Validators_Username('username')
-				))
-				->setDecorators(array('RegistrationDecorator'));
-		
-		$password = new Zend_Form_Element_Password('password');
-		$password->setLabel($translate->_("account-register-password"));
-		$password->setRequired(true);
-		$password->addValidators(array(
-					new Oibs_Validators_RepeatValidator('confirm_password'),
-					array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))), 
-					array('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long'))),
-				));
-		$password->setDecorators(array('RegistrationDecorator'));		
-		
-		$confirm_password = new Zend_Form_Element_Password('confirm_password');
-		$confirm_password->setLabel($translate->_("account-register-password_confirm"));
-		$confirm_password->setRequired(true);
-		$confirm_password->addValidator('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))); 
-		$confirm_password->addValidator('StringLength', false, array(4, 16, 'messages' => array('stringLengthTooShort' => 'field-too-short', 'stringLengthTooLong' => 'field-too-long')));
-		$confirm_password->setDecorators(array('RegistrationDecorator'));
-		     
-		$captcha = new Zend_Form_Element('captcha');
-		$captcha->setDecorators(array('CaptchaDecorator'));
-				
-		$captcha_text = new Zend_Form_Element_Text('captcha_text');
-		$captcha_text->setLabel($translate->_("account-register-enter_text"))
-					->addValidators(array(
-						new Oibs_Validators_CaptchaValidator(),
-						array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty')))
-						))
-					->setRequired(true)
-					->setDecorators(array('RegistrationDecorator'));
-       
-		$text = sprintf($translate->_("account-register-terms_and_privacy"), "terms", "privacy");
-		// this solution sucks. the codes are in the translate block directly. 
-        // anyone think of a fix to move codes out of there?
-        // - Joel
-        
-		$terms = new Zend_Form_Element_Checkbox('terms');
-		$terms->setDescription($text)
-				->setLabel("account-register-terms")
-				->setChecked(false)
-				->setRequired(true)
-				->addValidators(array(
-						new Oibs_Validators_CheckboxValidator(),
-						))
-				->setDecorators(array('RegistrationTermsDecorator'));
-		// checkboxes always have a value of 1or0, this is a "feature" in ZF
-		// custom validator is a workaround
-        // -Joel
-				
-		$submit = new Zend_Form_Element_Submit('submit');
-		$submit->setLabel($translate->_("account-register-submit"))
-               ->removeDecorator('DtDdWrapper')
-              ->setAttrib('class', 'btn')
-               ;
-
-        
-		$this->addElements(array($username, $password, $confirm_password, 
-                                $city, $email, $employment, 
-                                $captcha, $captcha_text, $terms, $submit));
-       
-       /*$this->addDisplayGroup(array('username', 'password', 'confirm_password'), 'account_information');
-       $this->account_information->setLegend('register-account-information');
-       $this->account_information->removeDecorator('DtDdWrapper');
-       $this->addDisplayGroup(array('city', 'email', 'employment'), 'personal_information');
-       $this->personal_information->removeDecorator('DtDdWrapper');
-       $this->personal_information->setLegend('register-personal-information');
-       
-       $this->addDisplayGroup(array('captcha', 'captcha_text', 'terms', 'submit'), 'confirmations');
-       $this->confirmations->removeDecorator('DtDdWrapper');
-       $this->confirmations->setLegend('register-confirmations');*/
+		return $mail_validator;
 	}
+
+	/**
+	 * Returns an array of account options for the type of the new account.
+	 *
+	 * These have three big sections:
+	 *  > Private Sector
+	 *  > Public Sector
+	 *  > Educational Sector
+	 *
+	 * Furthermore there are more detailed options: Student, Petitioner and Other.
+	 *
+	 * @return array
+	 */
+	protected function getAccountOptions()
+	{
+		return array(
+			''                 => 'account-select',
+			'private_sector'   => 'account-register-private-sector',
+			'public_sector'    => 'account-register-public-sector',
+			'education_sector' => 'account-register-education-sector',
+			'student'          => 'account-register-student',
+			'pentioner'        => 'account-register-pentioner',
+			'other'            => 'account-register-other',
+		);
+	}
+
 }

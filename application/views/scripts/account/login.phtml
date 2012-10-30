@@ -1,9 +1,7 @@
 <?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 
-	<h2><?php echo $this->translate('account-login-title'); ?></h2>
+<h2><?php echo $this->translate('account-login-title'); ?></h2>
 
-	<?php if(isset($this->errormsg)): ?>
-        <h4> <?php echo $this->errormsg; ?></h4>
-    <?php endif; ?>
-
+<div class="loginSite margin-top">
 	<?php echo $this->form; ?>
+</div>

@@ -32,7 +32,7 @@ class Oibs_Validators_Username extends Zend_Validate_Abstract
 	const NOT_VALID = 'notValid';
 	
     protected $_messageTemplates = array(
-        self::NOT_VALID => "username-not-valid",
+        self::NOT_VALID => "error-username-not-valid",
     );
 	
 	/**
