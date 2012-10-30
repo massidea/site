@@ -1,4 +1,7 @@
-$('*[rel=popup]').hide();
+$('*[rel=popover-hover]').popover({
+	trigger:'hover',
+	html:'true'
+});
 
 //language selection
 $("#languageMenu").change(function() {
