@@ -41,6 +41,7 @@ account-login-password;Password
 account-login-title;Login
 account-login-submit;Login
 account-login-not-successful;Username and password are not correct
+account-logout-succesful-msg;You have successfully been logged out
 account-register-page-header;Registration
 register-account-information;Registration Information
 account-register-username;Username

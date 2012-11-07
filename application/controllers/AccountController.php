@@ -614,7 +614,7 @@ class AccountController extends Oibs_Controller_CustomController
                                            'lang_default', true);
 
         // Redirect user
-        $this->flash('logout-succesful-msg', $redirect);
+        $this->flash('account-logout-succesful-msg', $redirect);
     } // end of logoutAction()
 
     /**
