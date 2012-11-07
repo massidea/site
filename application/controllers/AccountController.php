@@ -725,8 +725,8 @@ class AccountController extends Oibs_Controller_CustomController
 
 	    $user = new Default_Model_User($id);
 	    $result = $user->loginUser(array(
-		    'username' => $username,
-		    'password' => $password,
+		    'login_username' => $username,
+		    'login_password' => $password,
 	    ));
 
 	    // the logging in worked;
