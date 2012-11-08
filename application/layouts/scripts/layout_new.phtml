@@ -66,7 +66,11 @@
                     <li><a href="#"><?php echo $this->translate('layout-about-Massidea'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('layout-terms'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('layout-privacy'); ?></a></li>
-                    <li><a href="#"><?php echo $this->translate('layout-imprint'); ?></a></li>
+                    <li><a href="<?php echo $this->url(array(
+                        'controller' => 'imprint',
+                        'action' => 'view',
+                        'language' => $this->language,
+                    ), 'lang_default', true); ?>"><?php echo $this->translate('layout-imprint'); ?></a></li>
                 </ul>
             </div>
             <div class="span4">
