@@ -44,7 +44,7 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
 	    // Username input form element
         $this->addElement('text', 'email', array(
             'label'       => 'account-fetchpassword-email',
-            'placeholder' => 'account-fetchpassword-email',
+            'placeholder' => $translate->_('account-fetchpassword-email'),
             'filter'      => 'StringtoLower',
             'required'    => true,
             'validators'  => array($this->getMailValidator()),
