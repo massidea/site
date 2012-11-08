@@ -30,7 +30,6 @@ class AjaxController extends Oibs_Controller_CustomController
  	public function init()
  	{
  		parent::init();
-
 		// For debugging purposes set to true
 		$this->debug = true;
 		$ajaxRequest = $this->debug ? true : $this->_request->isXmlHttpRequest();

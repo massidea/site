@@ -2,9 +2,6 @@
 <?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/xregexp-unicode-base.js')); ?>
 
-
-<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
-
 <?php $previewUrl = $this->url(array('controller' => 'content',
 									 'action' => 'preview',
 									 'language' => $this->language),

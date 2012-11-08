@@ -34,6 +34,7 @@ class AdminController extends Oibs_Controller_CustomController
 		
         // Get authentication
         $auth = Zend_Auth::getInstance();
+        Zend_Layout::getMvcInstance()->setLayout('layout_public');
         // If user has identity
         if ($auth->hasIdentity()) 
         {   

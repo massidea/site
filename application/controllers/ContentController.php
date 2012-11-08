@@ -38,7 +38,7 @@ class ContentController extends Oibs_Controller_CustomController
 	public function init()
 	{
 		parent::init();
-
+        Zend_Layout::getMvcInstance()->setLayout('layout_public');
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
 		$ajaxContext->addActionContext('list', 'xml')
                     ->addActionContext('feed', 'html')

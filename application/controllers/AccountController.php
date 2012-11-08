@@ -42,6 +42,7 @@ class AccountController extends Oibs_Controller_CustomController
         $ajaxContext->addActionContext('login', 'html')->initContext();
 
         $this->view->title = 'account-title';
+        Zend_Layout::getMvcInstance()->setLayout('layout_public');
     } // end of init()
 
     /**
