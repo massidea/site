@@ -50,6 +50,13 @@
             </div>
         </div>
 
+        <?php foreach ($this->messages as $message) : ?>
+        <div class="alert alert-success">
+	        <button type="button" class="close" data-dismiss="alert">×</button>
+            <?php echo $message; ?>
+        </div>
+        <?php endforeach; ?>
+
         <section id="row content">
             <?php echo $this->layout()->content; ?>
         </section>
@@ -59,7 +66,11 @@
                     <li><a href="#"><?php echo $this->translate('layout-about-Massidea'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('layout-terms'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('layout-privacy'); ?></a></li>
-                    <li><a href="#"><?php echo $this->translate('layout-imprint'); ?></a></li>
+                    <li><a href="<?php echo $this->url(array(
+                        'controller' => 'imprint',
+                        'action' => 'view',
+                        'language' => $this->language,
+                    ), 'lang_default', true); ?>"><?php echo $this->translate('layout-imprint'); ?></a></li>
                 </ul>
             </div>
             <div class="span4">
