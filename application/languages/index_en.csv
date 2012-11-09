@@ -84,6 +84,11 @@ account-register-forgot-password;<strong>Forgot your password?</strong> <a href=
 forgotPassword;Forgot Password
 account-fetchpassword-request;Request Password
 account-fetchpassword-submit;Ok
+account-fetchpassword-email;Your Email
+account-fetchpassword-captcha;Captcha
+account-fetchpassword-error-nosuchkey;Password reset link is invalid
+account-fetchpassword-password;Password
+account-fetchpassword-confirm;Confirm password
 error-field-empty;No text entered
 error-selection-empty;No selection
 error-field-too-short;Text is too short
