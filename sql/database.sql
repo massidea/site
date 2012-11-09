@@ -1708,6 +1708,7 @@ alter table usr_has_fvr add last_checked datetime NOT NULL DEFAULT '0000-00-00 0
 -- For now it only has comment, rating and linking (translation does not exist yet)
 -- usr_flw_cnt is meant to hold data of actions that has happened in contents that are followed.
 -- bit in followed_cnt refers to follows_flw table's bit so we know what id the id_flw is (is it comment id, or rating id etc.)
+DROP TABLE IF EXISTS `follows_flw`;
 CREATE TABLE `follows_flw` (
   `bit` int(11) NOT NULL,
   `name` varchar(140) NOT NULL,
