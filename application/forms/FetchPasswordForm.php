@@ -47,7 +47,11 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
             'placeholder' => $translate->_('account-fetchpassword-email'),
             'filter'      => 'StringtoLower',
             'required'    => true,
-            'validators'  => array($this->getMailValidator()),
+            'validators' => array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
+                array($this->getMailValidator()),
+                new Oibs_Validators_EMailExists('email'),
+            ),
         ));
 
 	    // captcha input form element
@@ -59,6 +63,9 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
                 'font'    => APPLICATION_PATH . '/../library/Fonts/Verdana.ttf',
                 'imgDir'  => APPLICATION_PATH . '/../www/img/captcha',
                 'imgUrl'  => '/img/captcha',
+                'Messages'    => array(
+                    'badCaptcha' => 'error-captcha-no-same',
+                )
             ),
             'required'   => true,
             'label'      => 'account-fetchpassword-captcha',
