@@ -1,5 +1,2 @@
-# Ignore all dotfiles...
-.*
-
-# except for .gitignore
-!.gitignore
+www/img/captcha/*.png
+.idea

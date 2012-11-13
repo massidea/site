@@ -84,6 +84,11 @@ account-register-legend-general;Allgemein
 account-register-forgot-password;<strong>Passwort vergessen?</strong> Setzen Sie ihr <a href="%s">Passwort jetzt zurück</a>!
 account-fetchpassword-request;Passwort anfordern
 account-fetchpassword-submit;Ok
+account-fetchpassword-email;Deine Email
+account-fetchpassword-captcha;Captcha
+account-fetchpassword-error-nosuchkey;Passwort zurücksetzen Link ist ungültig.
+account-fetchpassword-password;Passwort
+account-fetchpassword-confirm;Passwort bestätigen
 error-field-empty;Kein Text eingegeben
 error-selection-empty; Keine Auswahl getroffen
 error-field-too-short; Der eingegebene Text ist zu kurz
