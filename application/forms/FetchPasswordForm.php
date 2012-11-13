@@ -50,7 +50,6 @@ class Default_Form_FetchPasswordForm extends Twitter_Bootstrap_Form_Horizontal
             'validators' => array(
                 array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
                 array($this->getMailValidator()),
-                new Oibs_Validators_EMailExists('email'),
             ),
         ));
 
