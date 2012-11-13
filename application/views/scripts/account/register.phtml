@@ -1,4 +1,3 @@
-<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 <div class="row">
     <div class="span8">
         <h2><?php echo $this->translate('account-register-page-header'); ?></h2>
@@ -13,6 +12,17 @@
     <!-- TODO: Delete breaks - but don't know, where they come from :/ -->
     <div class="span4">
         <h2><?php echo $this->translate('registration-box-header'); ?></h2>
-        <?php echo $this->translate('account-register'); ?>
+        <p><strong>1. <?php echo $this->translate('account-create-account'); ?></strong><br />
+            <?php echo $this->translate('account-create-account-text'); ?> </p>
+        <p><strong>2. <?php echo $this->translate('account-upload-and-share'); ?> </strong><br />
+            <?php echo $this->translate('account-upload-and-share-text'); ?> </p>
+        <p><strong>3. <?php echo $this->translate('account-your-portfolio-is-extending'); ?> </strong><br />
+            <?php echo $this->translate('account-your-portfolio-is-extending-text'); ?> </p>
+        <p><strong>4. <?php echo $this->translate('account-connecting-people-and-contents'); ?> </strong><br />
+            <?php echo $this->translate('account-connecting-people-and-contents-text'); ?> </p>
+        <p><strong>5. <?php echo $this->translate('account-boosting-creativity'); ?> </strong><br />
+            <?php echo $this->translate('account-boosting-creativity-text'); ?> </p>
+        <p> <?php echo $this->translate('account-learn-more'); ?> <a href="http://www.massidea.org/blog"><?php echo $this->translate('account-blog'); ?></a>.</p>
+        <p> <?php echo $this->translate('account-registering'); ?> </p>
     </div>
 </div>

@@ -42,6 +42,7 @@ class AccountController extends Oibs_Controller_CustomController
         $ajaxContext->addActionContext('login', 'html')->initContext();
 
         $this->view->title = 'account-title';
+        Zend_Layout::getMvcInstance()->setLayout('layout_public');
     } // end of init()
 
     /**
@@ -614,7 +615,7 @@ class AccountController extends Oibs_Controller_CustomController
                                            'lang_default', true);
 
         // Redirect user
-        $this->flash('logout-succesful-msg', $redirect);
+        $this->flash('account-logout-succesful-msg', $redirect);
     } // end of logoutAction()
 
     /**
@@ -725,8 +726,8 @@ class AccountController extends Oibs_Controller_CustomController
 
 	    $user = new Default_Model_User($id);
 	    $result = $user->loginUser(array(
-		    'username' => $username,
-		    'password' => $password,
+		    'login_username' => $username,
+		    'login_password' => $password,
 	    ));
 
 	    // the logging in worked;
