@@ -956,6 +956,7 @@ class AccountController extends Oibs_Controller_CustomController
                     //exit;
 
                     // send verification email
+                    var_dump($this->view->language);
                     if ($user->sendVerificationEmail($userId, $email, $url, $this->view->language->toString())) {
                         $action = 'emailsent';
                         $this->_flashMessenger->addMessage('account-fetchpassword-verification-email-sent-message');
