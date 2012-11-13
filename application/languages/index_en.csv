@@ -40,6 +40,7 @@ account-login-username;Username
 account-login-password;Password
 account-login-title;Login
 account-login-submit;Login
+account-login-signup;Sign up
 account-login-not-successful;Username and password are not correct
 account-logout-succesful-msg;You have successfully been logged out
 account-register-page-header;Registration
@@ -51,11 +52,11 @@ register-personal-information;Personal Information
 account-register-city;City
 account-register-employment;Employment
 account-register-email;E-Mail
-account-select;Select
+account-register-select;Select
 account-register-private-sector;Private Sector
 account-register-public-sector;Public Sector
 account-register-education-sector;Education Sector
-account-register-student;Student;
+account-register-student;Student
 account-register-pentioner;Pensioner
 account-register-other;Other
 account-register-enter-text;Enter Text
