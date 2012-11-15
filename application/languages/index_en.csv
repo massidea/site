@@ -111,3 +111,6 @@ hostname-invalid-local-name;no a valid hostname
 hostname-invalid-hostname;hostname is not a valid hostname
 hostname-undecipherable-tld;hostname is undecipherable
 hostname-unknown-tld;hostname is not known
+account-view-user-profile;Profile
+account-view-user-settings;Settings
+account-view-user-logout;Logout

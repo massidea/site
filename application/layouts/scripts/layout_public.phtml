@@ -5,19 +5,19 @@
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
     <title><?php echo $this->translate($this->title); ?></title>
 
-    <link rel="stylesheet/less" type="text/css" href="/css/massidea.less" media="all" />
-    <script type="text/javascript"> var less = { env : 'development' }; </script>
+    <link rel="stylesheet/less" type="text/css" href="/css/massidea.less" media="all"/>
+    <script type="text/javascript"> var less = { env:'development' }; </script>
     <script type="text/javascript" src="/js/less-1.3.0.min.js"></script>
 
     <?php
-        $this->headScript()->appendFile($this->baseUrl('/js/jquery-1.7.2.min.js'));
-        $this->headScript()->appendFile($this->baseUrl('/js/bootstrap.min.js'));
-        $this->headScript()->appendFile($this->baseUrl('/js/massidea.js'));
-		$this->headScript()->appendFile($this->baseUrl('/js/massidea-livefeed.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/jquery-1.7.2.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/bootstrap.min.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/massidea.js'));
+    $this->headScript()->appendFile($this->baseUrl('/js/massidea-livefeed.js'));
 
 
-        echo $this->headLink();
-        echo $this->headMeta();
+    echo $this->headLink();
+    echo $this->headMeta();
     ?>
 
     <script type="text/javascript">
@@ -35,27 +35,40 @@
             <div class="span4 login">
                 <?php
                 if (!$this->authenticated) :
-                    echo $this->loginform; else :
-                    echo $this->username;
-                    ?>
-                    <span class="grey"> |</span>
-                    <a href="<?php echo $this->url(array(
-                        'controller' => 'account',
-                        'action' => 'logout',
-                        'language' => $this->language,
-                    ), 'lang_default', true); ?>">
-                        <?php echo $this->translate('layout-logout'); ?>
-                    </a>
+                    echo $this->loginform;  ?>
+                    <?php else : ?>
+                    <div class="usermenu">
+                        <div class="btn-group pull-right">
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'view',
+                                    'user' => $this->username,
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-profile'); ?></a></li>
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'settings',
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-settings'); ?></a></li>
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'logout',
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-logout'); ?></a></li>
+                            </ul>
+                        </div>
+                        <div class="username pull-right">
+                            <span>username</span>
+                        </div>
+                        <div class="userImage pull-right"></div>
+                    </div>
                     <?php endif; ?>
             </div>
         </div>
-
-        <?php foreach ($this->messages as $message) : ?>
-        <div class="alert alert-success">
-	        <button type="button" class="close" data-dismiss="alert">×</button>
-            <?php echo $message; ?>
-        </div>
-        <?php endforeach; ?>
 
         <section id="row content">
             <?php echo $this->layout()->content; ?>
@@ -66,41 +79,22 @@
                     <li><a href="#"><?php echo $this->translate('layout-about-Massidea'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('layout-terms'); ?></a></li>
                     <li><a href="#"><?php echo $this->translate('layout-privacy'); ?></a></li>
-                    <li><a href="<?php echo $this->url(array(
-                        'controller' => 'imprint',
-                        'action' => 'view',
-                        'language' => $this->language,
-                    ), 'lang_default', true); ?>"><?php echo $this->translate('layout-imprint'); ?></a></li>
+                    <li><a href="#"><?php echo $this->translate('layout-imprint'); ?></a></li>
                 </ul>
             </div>
             <div class="span4">
                 <ul>
-                <li><a href="<?php echo $this->url(array(
-                                'controller' => 'account',
-                                'action' => 'login',
-                                'language' => $this->language),
-                                'lang_default', true);?>">
-                        <?php echo $this->translate('layout-join-our-community-footer'); ?></a></li>
-                <li><a href="<?php echo $this->url(array(
-                                'controller' => 'account',
-                                'action' => 'register',
-                                'language' => $this->language),
-                                'lang_default', true);?>">
-                        <?php echo $this->translate('layout-sign-up'); ?></a></li>
-                <li><a href="<?php echo $this->url(array(
-                                'controller' => 'content',
-                                'action' => 'add',
-                                'language' => $this->language),
-                                'lang_default', true);?>">
-                        <?php echo $this->translate('layout-create-a-post'); ?></a></li>
+                    <li><a href="#"><?php echo $this->translate('layout-join-our-community-footer'); ?></a></li>
+                    <li><a href="#"><?php echo $this->translate('layout-sign-up'); ?></a></li>
+                    <li><a href="#"><?php echo $this->translate('layout-create-a-post'); ?></a></li>
                 </ul>
             </div>
             <div class="span4">
                 <?php echo $this->translate('layout-select-your-platform-language'); ?>:
                 <select id="languageMenu">
                     <option><?php echo $this->translate('layout-language'); ?></option>
-                    <?php foreach($this->activeLanguages as $language) {?>
-                        <option value="<?php echo $language['id']; ?>"><?php echo $this->translate($language['name']); ?></option>
+                    <?php foreach ($this->activeLanguages as $language) { ?>
+                    <option value="<?php echo $language['id']; ?>"><?php echo $this->translate($language['name']); ?></option>
                     <?php } ?>
                 </select>
             </div>
