@@ -40,7 +40,7 @@ class ContentController extends Oibs_Controller_CustomController
 		parent::init();
         Zend_Layout::getMvcInstance()->setLayout('layout_public');
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
-		$ajaxContext->addActionContext('list', 'xml')
+		$ajaxContext//->addActionContext('list', 'xml')
                     ->addActionContext('feed', 'html')
                     ->addActionContext('lang_switcher', 'html')
                     ->initContext();
@@ -77,9 +77,10 @@ class ContentController extends Oibs_Controller_CustomController
 	 */
 	public function listAction()
 	{
+        // Get requests
+        $params = $this->getRequest()->getParams();
 
-		
-		$url = $this->_urlHelper->url(array('controller' => 'index',
+        $url = $this->_urlHelper->url(array('controller' => 'index',
                                             'language' => $this->view->language), 
                                             'lang_default', true); 
 
@@ -89,13 +90,11 @@ class ContentController extends Oibs_Controller_CustomController
 		// Set array for content data
 		$data = array();
 
-		// Get requests
-		$params = $this->getRequest()->getParams();
 
 		// Get content type
 		$cty = isset($params['type']) ? $params['type'] : 'all';
-		if($cty != "idea" && $cty != "finfo" && $cty != "problem") $this->_redirect($url);
-		
+		if($cty != "idea" && $cty != "vision" && $cty != "challenge") $this->_redirect($url);
+
 		// Get page nummber and items per page
 		$page = isset($params['page']) ? $params['page'] : 1;
 		$count = isset($params['count']) ? $params['count'] : 15;

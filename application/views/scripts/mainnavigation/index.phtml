@@ -1,0 +1,60 @@
+<ul>
+    <li><a href="<?php echo $this->url(array(
+        'controller' => 'account',
+        'action' => 'view',
+        'user' => $this->username,
+        'language' => $this->language,
+    ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section'); ?></a>
+        <ul>
+            <li><a href="<?php echo $this->url(array(
+                'controller' => 'account',
+                'action' => 'view',
+                'user' => $this->username,
+                'language' => $this->language,
+            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
+            <li><a href="<?php echo $this->url(array(
+                'controller' => 'content',
+                'action' => 'list',
+                'type' => 'vision',
+                'language' => $this->language,
+            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-vision'); ?></a></li>
+            <li><a href="<?php echo $this->url(array(
+                'controller' => 'account',
+                'action' => 'view',
+                'user' => $this->username,
+                'language' => $this->language,
+            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-challenge'); ?></a></li>
+            <li><a href="<?php echo $this->url(array(
+                'controller' => 'account',
+                'action' => 'view',
+                'user' => $this->username,
+                'language' => $this->language,
+            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-idea'); ?></a></li>
+        </ul>
+    </li>
+    <li><?php echo $this->translate('main-nav-mygroups'); ?></a>
+        <ul>
+            <li><a href="<?php echo $this->url(array(
+                'controller' => 'account',
+                'action' => 'view',
+                'user' => $this->username,
+                'language' => $this->language,
+            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li>
+        </ul>
+    </li>
+    <li><?php echo $this->translate('main-nav-myprojects'); ?></a>
+        <ul>
+            <li><a href="<?php echo $this->url(array(
+                'controller' => 'account',
+                'action' => 'view',
+                'user' => $this->username,
+                'language' => $this->language,
+            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-myprojects-newproject'); ?></a></li>
+        </ul>
+    </li>
+    <li><?php echo $this->translate('main-nav-categories'); ?></a>
+        <ul>
+            <li>categories</li>
+        </ul>
+    </li>
+</ul>

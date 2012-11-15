@@ -111,3 +111,13 @@ hostname-invalid-local-name; Kein gültiger Hostname
 hostname-invalid-hostname; Kein gültiger Hostname
 hostname-undecipherable-tld; Hostname ist nicht entzifferbar
 hostname-unknown-tld; Hostname ist nicht bekannt
+main-nav-section;Bereich
+main-nav-section-overview;Übersicht
+main-nav-section-vision;Vision
+main-nav-section-challenge;Challenge
+main-nav-section-idea;Idee
+main-nav-mygroups;Meine Gruppen
+main-nav-mygroups-newgroup;Neue Gruppe
+main-nav-myprojects;Meine Projekte
+main-nav-myprojects-newproject;Neues Projekt
+main-nav-categories;Kategorien
