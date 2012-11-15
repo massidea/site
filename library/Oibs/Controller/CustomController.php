@@ -195,6 +195,38 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         $this->view->activeLanguages = $activeLanguages;
 
 
+        // Get authentication
+        $auth = Zend_Auth::getInstance();
+
+        // If user has identity
+        if ($auth->hasIdentity()) {
+            $id = $auth->getIdentity()->user_id;
+            $this->view->username = $auth->getIdentity()->username;
+            $model = new Default_Model_UserImages;
+            $images = $model->getImagesByUsername($id);
+
+            if(count($images) > 0) {
+                for($a = 0; $a < count($images); $a++) {
+                    $dates[$a] = $images[$a]['modified_usi'];
+                }
+
+                $active = array_search(max($dates), $dates);
+                $images[$active]['status'] = 1;
+                $this->view->image_ids = $images;
+
+                $this->view->profile_image =
+                    $this->_helper->url(array(
+                        'controller' => 'account',
+                        'action' => 'showimage',
+                        'img' => $images[$active]["id_usi"],
+                        'thumb' => '1',
+                        'language' => $this->_getParam('language'),
+                    'lang_default', true));
+            } else {
+                $this->view->default_profile_image = "\images\default_profile_image.png";
+            }
+        }
+
 
     } // end of init
 
@@ -212,9 +244,38 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
     }
 
+    /**
+     * Get Profile Image for Layout
+     */
+    public function getProfileImage() {
+        // Get authentication
+        $auth = Zend_Auth::getInstance();
 
+        // If user has identity
+        if ($auth->hasIdentity()) {
+            $id = $auth->getIdentity()->user_id;
 
-	/**
+            $model = new Default_Model_UserImages;
+            $images = $model->getImagesByUsername($id);
+
+            var_dump(count($images));
+            exit;
+            if(count($images) > 0) {
+                for($a = 0; $a < count($images); $a++) {
+                    $dates[$a] = $images[$a]['modified_usi'];
+                }
+
+                $active = array_search(max($dates), $dates);
+                $images[$active]['status'] = 1;
+                $this->view->image_ids = $images;
+            } else {
+                $this->view->default_profile_image = "\images\default_profile_image.png";
+            }
+        }
+
+    }
+
+    /**
 	 *	getUrl
 	 *
 	 *	returns the url for the action and controller given as
