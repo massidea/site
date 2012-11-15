@@ -32,7 +32,8 @@ class IndexController extends Oibs_Controller_CustomController
 	function init()
 	{
 		parent::init();
-	}
+        Zend_Layout::getMvcInstance()->setLayout('layout_public');
+    }
 
 	/**
 	 *	Show mainpage and list newest and most viewed ideas and problems

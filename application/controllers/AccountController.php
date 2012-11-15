@@ -42,6 +42,7 @@ class AccountController extends Oibs_Controller_CustomController
         $ajaxContext->addActionContext('login', 'html')->initContext();
 
         $this->view->title = 'account-title';
+        Zend_Layout::getMvcInstance()->setLayout('layout_public');
     } // end of init()
 
     /**
@@ -614,7 +615,7 @@ class AccountController extends Oibs_Controller_CustomController
                                            'lang_default', true);
 
         // Redirect user
-        $this->flash('logout-succesful-msg', $redirect);
+        $this->flash('account-logout-succesful-msg', $redirect);
     } // end of logoutAction()
 
     /**
@@ -725,8 +726,8 @@ class AccountController extends Oibs_Controller_CustomController
 
 	    $user = new Default_Model_User($id);
 	    $result = $user->loginUser(array(
-		    'username' => $username,
-		    'password' => $password,
+		    'login_username' => $username,
+		    'login_password' => $password,
 	    ));
 
 	    // the logging in worked;
@@ -926,7 +927,7 @@ class AccountController extends Oibs_Controller_CustomController
         else if ($action == 'submit' && $submittedForm == 'fetchpassword') {
             $formData = $this->_request->getPost();
             if ($form->isValid($formData)) {
-                //TODO send Verification Email
+
                 $user = new Default_Model_User();
 
                 // get user's email and id
@@ -952,13 +953,13 @@ class AccountController extends Oibs_Controller_CustomController
                     // add new password request into the database
                     $user->addPasswordRequest($userId, $key_safe);
 
-                    var_dump($userId, $email, $url, $this->view->language->toString());
+                    //var_dump($userId, $email, $url, $this->view->language->toString());
                     //exit;
 
                     // send verification email
                     if ($user->sendVerificationEmail($userId, $email, $url, $this->view->language->toString())) {
                         $action = 'emailsent';
-
+                        $this->_flashMessenger->addMessage('account-fetchpassword-verification-email-sent-message');
                         // forward to Login page
                         $target = $this->_urlHelper->url(array('controller' => 'account',
                                 'action' => 'login',
@@ -976,12 +977,14 @@ class AccountController extends Oibs_Controller_CustomController
                     $this->view->form = $form;
                 }
 
-                //TODO Flash Messenger
+                //Flash Messenger
+                //$this->_flashMessenger->addMessage('account-fetchpassword-verification-email-sent-message');
+                //$this->_flashMessenger->addMessage(array('success' => $this->translate('account-fetchpassword-verification-email-sent-message')));
 
-                /* TODO Delete this, will open directly by url in email
-                $newPassForm = new Default_Form_NewPasswordForm();
-                $formData = $this->_request->getPost();
-                $this->view->form = $newPassForm;*/
+                // Delete this, will open directly by url in email
+                /*  $newPassForm = new Default_Form_NewPasswordForm();
+                    $formData = $this->_request->getPost();
+                    $this->view->form = $newPassForm;                  */
 
             // invalid fetchPasswordform
             } else {
@@ -996,7 +999,7 @@ class AccountController extends Oibs_Controller_CustomController
             // validate new Password Form
             if($newPassForm->isValid($formData)) {
                 if ($formData['password'] == $formData['confirm']) {
-                    //TODO set new Password
+
                     $user = new Default_Model_User();
 
                     // change password
@@ -1060,139 +1063,7 @@ class AccountController extends Oibs_Controller_CustomController
             else {
                 $error = 'account-fetchpassword-error-nosuchkey';
             }
-
-            /*
-            $newPassForm = new Default_Form_NewPasswordForm();
-            $formData = $this->_request->getPost();
-            $this->view->form = $newPassForm;
-            */
         }
-
-        // DO NOT DELETE THESE CODES, COULD BE USEFULL FOR ABOVE TODOs
-
-
-        // user submitted an email
-        /*else if ($action == 'submit' && $submittedForm == 'fetchpassword') {
-            $form = new Default_Form_NewPasswordForm();
-            $formData = $this->_request->getPost();
-
-            // check the form data
-            if ($form->isValid($formData)) {
-                $user = new Default_Model_User();
-
-                // get user's email and id
-                $email = trim($this->getRequest()->getPost('email'));
-                $userId = $user->getIdByEmail($email);
-
-                // if the email address was valid
-                if ($userId != null) {
-                    // create verification key and it's md5 hash
-                    $key = $user->generateSalt(30);
-                    $key_safe = md5($key);
-
-                    // generate URL for the verification link
-                    $url = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) .
-                           '://' . $_SERVER['HTTP_HOST'];
-                    $url .= $this->_urlHelper->url(array('controller' => 'account',
-                                                 'action' => 'fetchpassword',
-                                                 'language' => $this->view->language),
-                                                 'lang_default', true);
-                    $url .= '?key=' . $key;
-
-                    // add new password request into the database
-                    $user->addPasswordRequest($userId, $key_safe);
-
-                    // send verification email
-                    if ($user->sendVerificationEmail($userId, $email, $url, $this->view->language)) {
-                        $action = 'emailsent';
-                    }
-                    else {
-                        $action = 'emailproblem';
-                        $error = 'account-fetchpassword-error-email';
-                    }
-                }
-                else {
-                    $error = 'account-fetchpassword-error-nosuchemail';
-                    $this->view->form = $form;
-                }
-            }
-            else {
-                $error = 'account-fetchpassword-error-invalidemail';
-                $this->view->form = $form;
-            }
-        }*/
-
-        // user submitted new password
-        /*else if ($action == 'submit' && $submittedForm == 'newpassword') {
-            // create form and get form data
-            $form = new Default_Form_NewPasswordForm();
-            $formData = $this->getRequest()->getPost();
-
-            if ($form->isValid($formData)) {
-                if ($formData['password'] == $formData['confirm']) {
-                    $user = new Default_Model_User();
-
-                    // change password
-                    $user->changeUserPassword($_SESSION['request_userid'], $formData['password']);
-
-                    // delete the request
-                    $user->getAdapter()->delete('usr_has_npwd', 'id_usr_npwd='.$_SESSION['request_userid']);
-
-                    // unset the session to avoid conflicts
-                    unset($_SESSION['request_userid']);
-
-                    // password reset was successful
-                    $action = 'complete';
-                }
-                else {
-                    // User failed (passwords didn't match), show form again
-                    $form->getElement('confirm')->addErrorMessage('Passwords didn\'t match.');
-                    $form->getElement('confirm')->markAsError();
-                    $this->view->form = $form;
-                }
-            }
-            else {
-                // User failed (invalid input), show form again
-                $this->view->form = $form;
-            }
-        }*/
-
-        // user followed a verification link
-        /*else if ($action == '' && $key != '') {
-            $this->view->keyGiven = true;
-
-            $user = new Default_Model_User();
-
-            // create md5 hash of the key
-            $key_safe = md5($key);
-
-            // get password request
-            $selectQuery = $user->getAdapter()->select()
-                                              ->from('usr_has_npwd')
-                                              ->where('key_npwd = ?', $key_safe);
-            $npwdData = $user->getAdapter()->fetchAll($selectQuery);
-
-            // check if request existed
-            if ($npwdData != false) {
-                // Check if the password has expired or not
-                $dateNow = date('y-m-d H:i:s');
-                if ($dateNow < $npwdData[0]['expire_date_npwd']) {
-                    // Show the form for giving a new password
-                    $form = new Default_Form_NewPasswordForm();
-                    $this->view->form = $form;
-
-                    // Place the userId into a session in order for the script
-                    // above (new password confirmation) to know the id.
-                    $_SESSION['request_userid'] = $npwdData[0]['id_usr_npwd'];
-                }
-                else {
-                    $error = 'account-fetchpassword-error-keyexpired';
-                }
-            }
-            else {
-                $error = 'account-fetchpassword-error-nosuchkey';
-            }
-        }*/
 
         // inject the variables to the view
         $this->view->error         = $error;

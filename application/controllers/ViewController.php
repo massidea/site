@@ -32,6 +32,7 @@
     public function init()
     {
         parent::init();
+        Zend_Layout::getMvcInstance()->setLayout('layout_public');
     }
 
     /**

@@ -43,9 +43,22 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu pull-right">
-                                <li><a href="#">Profile </a></li>
-                                <li><a href="#">Settings</a></li>
-                                <li><a href="#">Ausloggen</a></li>
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'view',
+                                    'user' => $this->username,
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-profile'); ?></a></li>
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'settings',
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-settings'); ?></a></li>
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'logout',
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-logout'); ?></a></li>
                             </ul>
                         </div>
                         <div class="username pull-right">

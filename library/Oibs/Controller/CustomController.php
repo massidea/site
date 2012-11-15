@@ -341,7 +341,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	{
 		$this->setMessages();
 		parent::postDispatch();
-        $this->_flashMessenger->addMessage("");
 	} // end of postDispatch
 
 	/**
@@ -359,8 +358,8 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	 */
 	protected function setMessages()
 	{
-		$this->view->messages = join("",$this->_flashMessenger->getMessages());
-	} // end of setMessages
+		$this->view->messages = $this->_flashMessenger->getMessages();
+	}
 
 	/**
 	*   encodeParam

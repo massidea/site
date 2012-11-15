@@ -1694,3 +1694,60 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2010-08-18 15:50:13
+
+-- Adds created time for linked contents so that they can be sorted out by date
+alter table cnt_has_cnt add column `created_cnt` datetime NOT NULL DEFAULT '0000-0-0 00:00:00';
+
+ -- Changes favourites to more like subscribing to content
+alter table usr_has_fvr drop content_edited;
+alter table usr_has_fvr add last_checked datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+
+-- Creating follows_flw table to users so they can follow their own contents
+-- or follow their favourites. It is used to list options that can be followed when content is set to be followed.
+-- For now it only has comment, rating and linking (translation does not exist yet)
+-- usr_flw_cnt is meant to hold data of actions that has happened in contents that are followed.
+-- bit in followed_cnt refers to follows_flw table's bit so we know what id the id_flw is (is it comment id, or rating id etc.)
+DROP TABLE IF EXISTS `follows_flw`;
+CREATE TABLE `follows_flw` (
+  `bit` int(11) NOT NULL,
+  `name` varchar(140) NOT NULL,
+  PRIMARY KEY (`bit`)
+);
+
+INSERT INTO `follows_flw` (`bit`, `name`) VALUES(1,'comment'),(2,'rating'),(4,'linking'),(8,'translation'),(16,'modified');
+
+ALTER TABLE `cnt_has_usr` add `last_checked` datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+
+--
+-- Table structure for table `file_links_fli`
+--
+DROP TABLE IF EXISTS `file_links_fli`;
+CREATE TABLE `file_links_fli` (
+  `id_target_fli` varchar(50) NOT NULL,
+  `id_type_fli` int(11) NOT NULL,
+  `id_file` int(11) NOT NULL,
+  KEY `id_file` (`id_file`)
+) ENGINE=MyISAM;
+
+
+--
+-- adds a flag to the language table for active languages to be displayed in the language selection
+--
+ALTER TABLE languages_lng
+ADD COLUMN active_lng BOOLEAN DEFAULT false;
+
+UPDATE languages_lng
+SET active_lng=true
+WHERE (name_lng='English') OR (name_lng='Finnish');
+
+--
+--
+--
+UPDATE content_types_cty SET key_cty= 'vision', name_cty= 'Visions' WHERE id_cty = 1;
+UPDATE content_types_cty SET key_cty= 'idea', name_cty= 'Ideas' WHERE id_cty = 2;
+UPDATE content_types_cty SET key_cty= 'challenge', name_cty= 'Challenges' WHERE id_cty = 3;
+
+
+

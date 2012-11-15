@@ -37,7 +37,6 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
 <?php $this->headScript()->captureEnd()?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
-<?php Zend_Layout::getMvcInstance()->setLayout('layout_new'); ?>
 
 <div class="user_content_list">
 	<h3 class="recent_posts"><?php echo $this->translate('content-list-'.$this->type); ?>
