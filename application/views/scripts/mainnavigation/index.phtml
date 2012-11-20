@@ -20,14 +20,14 @@
             ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-vision'); ?></a></li>
             <li><a href="<?php echo $this->url(array(
                 'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
+                'action' => 'list',
+                'type' => 'challenge',
                 'language' => $this->language,
             ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-challenge'); ?></a></li>
             <li><a href="<?php echo $this->url(array(
                 'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
+                'action' => 'list',
+                'type' => 'idea',
                 'language' => $this->language,
             ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-idea'); ?></a></li>
         </ul>
@@ -35,9 +35,8 @@
     <li><?php echo $this->translate('main-nav-mygroups'); ?></a>
         <ul>
             <li><a href="<?php echo $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
+                'controller' => 'mainNavigation',
+                'action' => 'group',
                 'language' => $this->language,
             ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li>
         </ul>
