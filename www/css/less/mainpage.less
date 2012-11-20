@@ -1,0 +1,53 @@
+nav{
+  background-color: @colorNavigation;
+  height: 500px;
+  width: 100px;
+  margin-bottom: 10px;
+
+
+  li {
+    height: 32px;
+    margin: 0 auto 47px;
+    padding: 53px 0 0;
+    text-align: center;
+    width: 100px;
+
+    a {
+      text-align: center;
+      color: @colorLightGray;
+      &.active {
+        color: @colorDarkGray;
+      }
+    }
+
+    &.overview {
+      background: url("/img/icons/mainnavigation/overview_inactive.png") center top no-repeat;
+      &.active {
+        background: url("/img/icons/mainnavigation/overview_active.png") center top no-repeat;
+      }
+   }
+    &.mygroups {
+      background: url("/img/icons/mainnavigation/groups_inactive.png") center top no-repeat;
+      &.active {
+        background: url("/img/icons/mainnavigation/groups_active.png") center top no-repeat;
+      }
+    }
+
+    &.myprojects {
+       background: url("/img/icons/mainnavigation/projects_inactive.png") center top no-repeat;
+       &.active {
+         background: url("/img/icons/mainnavigation/projects_active.png") center top no-repeat;
+       }
+     }
+
+    &.categories {
+      background: url("/img/icons/mainnavigation/category_inactive.png") center top no-repeat;
+      &.active {
+        background: url("/img/icons/mainnavigation/category_active.png") center top no-repeat;
+      }
+    }
+
+
+
+  }
+}

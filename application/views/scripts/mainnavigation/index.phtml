@@ -1,60 +1,72 @@
-<ul>
-    <li><a href="<?php echo $this->url(array(
-        'controller' => 'account',
-        'action' => 'view',
-        'user' => $this->username,
-        'language' => $this->language,
-    ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section'); ?></a>
-        <ul>
-            <li><a href="<?php echo $this->url(array(
+<nav>
+    <ul>
+        <li class="overview">
+            <a rel="popover-hover"
+               data-title="<?php echo $this->translate('main-nav-section'); ?>"
+               data-content="<ul><li>
+
+                <a href='<?php echo $this->url(array(
+                    'controller' => 'account',
+                    'action' => 'view',
+                    'user' => $this->username,
+                    'language' => $this->language,
+                ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
+                <li>
+                <a href='<?php echo $this->url(array(
+                    'controller' => 'content',
+                    'action' => 'list',
+                    'type' => 'vision',
+                    'language' => $this->language,
+                ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-vision'); ?></a></li>
+                <li>
+                <a href='<?php echo $this->url(array(
                 'controller' => 'account',
                 'action' => 'view',
                 'user' => $this->username,
                 'language' => $this->language,
-            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
-            <li><a href="<?php echo $this->url(array(
-                'controller' => 'content',
-                'action' => 'list',
-                'type' => 'vision',
-                'language' => $this->language,
-            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-vision'); ?></a></li>
-            <li><a href="<?php echo $this->url(array(
+            ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-challenge'); ?></a></li>
+            <li>
+
+            <a href='<?php echo $this->url(array(
+            'controller' => 'account',
+            'action' => 'view',
+            'user' => $this->username,
+            'language' => $this->language,
+            ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-idea'); ?></a></li></ul>">
+                <?php echo $this->translate('main-nav-section'); ?>
+            </a>
+        </li>
+        <li class="mygroups">
+            <a rel="popover-hover"
+               data-title="<?php echo $this->translate('main-nav-mygroups'); ?>"
+               data-content="<ul><li><a href='<?php echo $this->url(array(
                 'controller' => 'account',
                 'action' => 'view',
                 'user' => $this->username,
                 'language' => $this->language,
-            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-challenge'); ?></a></li>
-            <li><a href="<?php echo $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
-                'language' => $this->language,
-            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-idea'); ?></a></li>
-        </ul>
-    </li>
-    <li><?php echo $this->translate('main-nav-mygroups'); ?></a>
-        <ul>
-            <li><a href="<?php echo $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
-                'language' => $this->language,
-            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li>
-        </ul>
-    </li>
-    <li><?php echo $this->translate('main-nav-myprojects'); ?></a>
-        <ul>
-            <li><a href="<?php echo $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
-                'language' => $this->language,
-            ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-myprojects-newproject'); ?></a></li>
-        </ul>
-    </li>
-    <li><?php echo $this->translate('main-nav-categories'); ?></a>
-        <ul>
-            <li>categories</li>
-        </ul>
-    </li>
-</ul>
+                 ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li></ul>">
+                <?php echo $this->translate('main-nav-mygroups'); ?>
+            </a>
+        </li>
+        <li class="myprojects">
+            <a rel="popover-hover"
+               data-title="<?php echo $this->translate('main-nav-myprojects'); ?>"
+               data-content="<ul><li><a href='<?php echo $this->url(array(
+            'controller' => 'account',
+            'action' => 'view',
+            'user' => $this->username,
+            'language' => $this->language,
+        ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-myprojects-newproject'); ?></a></li></ul>">
+                <?php echo $this->translate('main-nav-myprojects'); ?>
+            </a>
+        </li>
+
+        <li class="categories">
+            <a rel="popover-hover"
+               data-title="<?php echo $this->translate('main-nav-categories'); ?>"
+               data-content="<ul><li>categories</li></ul>">
+                <?php echo $this->translate('main-nav-categories'); ?>
+            </a>
+        </li>
+    </ul>
+</nav>
