@@ -70,11 +70,19 @@
             </li>
 
             <li class="categories">
-
-                <a class="mainnavigation_popover"
-                   data-title="<?php echo $this->translate('main-nav-categories'); ?>"
-                   data-content="<ul>
-                    <a href='#' <li>category items</li> </a>
+        <li class="categories">
+            <a rel="popover-hover"
+               data-title="<?php echo $this->translate('main-nav-categories'); ?>"
+               data-content="<ul>
+                     <?php foreach($this->categories as $category) : ?>
+                    <li>
+                    <a href='<?php echo $this->url(array(
+                   'controller' => '#',
+                   'action' => '#',
+                   'categoryid' => $category['id_ctg'],
+                   'language' => $this->language,
+               ), 'lang_default', true); ?>'> <?php echo $category['title_ctg']; ?>  </a> </li>
+                <?php endforeach; ?>
                 </ul>">
                     <?php echo $this->translate('main-nav-categories'); ?>
                 </a>

@@ -23,12 +23,20 @@ class MainNavigationController extends Oibs_Controller_CustomController
         }
 
         $userGroups = null;
+        $categories = null;
+
+        $categoryModel = null;
+        $userModel = null;
+
         if($this->id != -1){
             $userModel = new Default_Model_User();
+            $categoryModel = new Default_Model_Category();
+
             $userGroups = $userModel->getUserGroups($this->id);
+            $categories = $categoryModel->getCategories();
         }
         $this->view->groups = $userGroups;
-
+        $this->view->categories = $categories;
         /*$userCompaigns = null;
         if($this->id != -1){
             $userModel = new Default_Model_User();
