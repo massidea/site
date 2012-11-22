@@ -39,3 +39,10 @@ $('.popover .close').live('click', function() {
     popover = null;
 });
 
+$("#appendedInputButton").bind('focus', function(){
+    $(".search .btn").addClass("focus");
+});
+
+$('#appendedInputButton').blur(function() {
+    $(".search .btn").removeClass("focus");
+});
