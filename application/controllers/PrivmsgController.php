@@ -38,16 +38,16 @@ class PrivmsgController extends Oibs_Controller_CustomController
 	{
 		// Get user identity
 		$auth = Zend_Auth::getInstance();
-		
+
 		if ($auth->hasIdentity()) {
 			$Default_Model_privmsg = New Default_Model_PrivateMessages();
-			
+
 			// Delete button was pressed
        		if ($this->getRequest()->isPost()) {
 				// Get the IDs of the first and last selected message
 				$firstMsgId = $this->getRequest()->getPost('delete_first');
 				$lastMsgId = $this->getRequest()->getPost('delete_last');
-				
+
 				// Delete selected messages
         		for ($i = $firstMsgId; $i > ($firstMsgId - $lastMsgId); $i--) {
         			if ($this->getRequest()->getPost('select_'.$i) == 'on') {
@@ -80,11 +80,11 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$message = 'privmsg-view-not-logged';
 
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                'action' => 'index', 
-                                                'language' => $this->view->language), 
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
                                           'lang_default', true);
 
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	}
 
@@ -93,9 +93,9 @@ class PrivmsgController extends Oibs_Controller_CustomController
 
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
+		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) .
     						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
-		
+
 
 		// If user has identity
 		if ($auth->hasIdentity()) {
@@ -108,17 +108,17 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$model_user = New Default_Model_User();
 
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                'action' => 'index', 
-                                                'language' => $this->view->language), 
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
                                           		'lang_default', true);
 
 			if(!$model_user->usernameExists($receiver)) {
 				// If not logged, redirecting to system message page
 				$message = 'privmsg-send-invalid-receiver';
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			} else if($model_user->getIdByUsername($receiver) == $auth->getIdentity()->user_id) {
 				$message = 'privmsg-send-own-account';
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			}
 
 			// Receiver's username to view
@@ -140,7 +140,7 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			if($this->getRequest()->isPost()) {
 				// Get private message data
 				$data = $this->getRequest()->getPost();
-				 
+
 				if ($form->isValid($data)) {
 					// Add a private message
 					$Default_Model_privmsg = new Default_Model_PrivateMessages();
@@ -150,18 +150,18 @@ class PrivmsgController extends Oibs_Controller_CustomController
 					} else {
 						$message = 'privmsg-add-not-successful';
 					}
-	
+
 					// Send email to user about new private message
 					// if user allows private message notifications
 					$receiverId = $data['privmsg_receiver_id'];
 					$notificationsModel = new Default_Model_Notifications();
 					$notifications = $notificationsModel->getNotificationsById($receiverId);
-	
+
 					if (in_array('privmsg', $notifications)) {
-						
-						$senderName = $auth->getIdentity()->username; 
+
+						$senderName = $auth->getIdentity()->username;
 						$receiverUsername = $model_user->getUserNameById($receiverId);
-						
+
 						$emailNotification = new Oibs_Controller_Plugin_Email();
 		                $emailNotification->setNotificationType('privmsg')
 		                    			   ->setSenderId($auth->getIdentity()->user_id)
@@ -175,8 +175,8 @@ class PrivmsgController extends Oibs_Controller_CustomController
 		            	} else {
 							//echo $emailNotification->getErrorMessage(); die;
 		            	}
-					}	
-					$this->flash($message, $url);
+					}
+					$this->addFlashMessage($message, $url);
 				}
 			} // end if
 		} else {
@@ -184,11 +184,11 @@ class PrivmsgController extends Oibs_Controller_CustomController
 			$message = 'privmsg-send-not-logged';
 
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                'action' => 'index', 
-                                                'language' => $this->view->language), 
+                                                'action' => 'index',
+                                                'language' => $this->view->language),
                                           	 	'lang_default', true);
 
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	}
 }

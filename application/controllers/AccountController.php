@@ -158,7 +158,7 @@ class AccountController extends Oibs_Controller_CustomController
                                                  'language' => $this->view->language),
                                            'lang_default', true);
         // Redirect user
-        $this->flash('logout-succesful-msg', $redirect);
+        $this->addFlashMessage('logout-succesful-msg', $redirect);
     /*
         // Set array for userdata
         $data = array();
@@ -615,7 +615,7 @@ class AccountController extends Oibs_Controller_CustomController
                                            'lang_default', true);
 
         // Redirect user
-        $this->flash('account-logout-succesful-msg', $redirect);
+        $this->addFlashMessage('account-logout-succesful-msg', $redirect);
     } // end of logoutAction()
 
     /**
@@ -693,7 +693,7 @@ class AccountController extends Oibs_Controller_CustomController
 				    'language' => $this->view->language),
 			    'lang_default', true);
 
-		    $this->flash('registration-usermodel-data-procesing-failure', $redirect);
+		    $this->addFlashMessage('registration-usermodel-data-procesing-failure', $redirect);
 	    }
 
 	    // Add register to log
@@ -894,8 +894,6 @@ class AccountController extends Oibs_Controller_CustomController
     */
     public function fetchpasswordAction()
     {
-        $this->breadcrumbs->addStep('Fetchpassword');
-
         // if a user's already logged in, send them to their account home page
         if (Zend_Auth::getInstance()->hasIdentity()) {
             $target = $this->_urlHelper->url(array('controller' => 'index',
@@ -959,7 +957,7 @@ class AccountController extends Oibs_Controller_CustomController
                     // send verification email
                     if ($user->sendVerificationEmail($userId, $email, $url, $this->view->language)) {
                         $action = 'emailsent';
-                        $this->_flashMessenger->addMessage('account-fetchpassword-verification-email-sent-message');
+                        $this->getFlashMessenger()->addMessage('account-fetchpassword-verification-email-sent-message');
                         // forward to Login page
                         $target = $this->_urlHelper->url(array('controller' => 'account',
                                 'action' => 'login',
@@ -978,8 +976,8 @@ class AccountController extends Oibs_Controller_CustomController
                 }
 
                 //Flash Messenger
-                //$this->_flashMessenger->addMessage('account-fetchpassword-verification-email-sent-message');
-                //$this->_flashMessenger->addMessage(array('success' => $this->translate('account-fetchpassword-verification-email-sent-message')));
+                //$this->getFlashMessenger()->addMessage('account-fetchpassword-verification-email-sent-message');
+                //$this->getFlashMessenger()->addMessage(array('success' => $this->translate('account-fetchpassword-verification-email-sent-message')));
 
                 // Delete this, will open directly by url in email
                 /*  $newPassForm = new Default_Form_NewPasswordForm();

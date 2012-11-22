@@ -4,19 +4,19 @@
  *
  *  Copyright (c) <2009>, Pekka Piispanen <pekka.piispanen@cs.tamk.fi>
  *
- *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
- *  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ *  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  *  more details.
- * 
- *  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *
+ *  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  *  License text found in /license/
  */
- 
+
 /**
  *  AdminController - class
  *
@@ -25,65 +25,65 @@
  *  @copyright      2009 Pekka Piispanen
  *  @license        GPL v2
  *  @version        1.0
- */ 
-class AdminController extends Oibs_Controller_CustomController 
+ */
+class AdminController extends Oibs_Controller_CustomController
 {
 	public function init()
-	{	
+	{
         parent::init();
-		
+
         // Get authentication
         $auth = Zend_Auth::getInstance();
         Zend_Layout::getMvcInstance()->setLayout('layout_public');
         // If user has identity
-        if ($auth->hasIdentity()) 
-        {   
+        if ($auth->hasIdentity())
+        {
             if(!in_array("admin", $this->view->logged_user_roles))
             {
                 $message = 'admin-no-permission';
-                $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                $this->flash($message, $url);
+                                          'lang_default', true);
+                $this->addFlashMessage($message, $url);
             }
         }
         else
         {
             $message = 'admin-no-permission';
-                 $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                 $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-            $this->flash($message, $url);
+                                          'lang_default', true);
+            $this->addFlashMessage($message, $url);
         }
 		$this->view->title = "OIBS";
         $this->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 	}
-	
+
 	public function indexAction()
 	{
 		$this->view->title = "OIBS";
 	}
-    
+
     public function editrolesAction()
     {
         $params = $this->getRequest()->getParams();
-        $username = $params['user'];		
-        
+        $username = $params['user'];
+
         if($username != "")
         {
             $user = new Default_Model_User();
             if($user->usernameExists($username))
             {
                 $this->view->editrole_username = $username;
-                
+
                 $id_usr = $user->getIdByUsername($username);
-                
+
                 $userProfiles = new Default_Model_UserProfiles();
                 $user_roles = $userProfiles->getUserRoles($id_usr);
                 $this->view->user_roles = $user_roles;
-                
+
                 $userRoles = new Default_Model_UserRoles();
                 $roles = $userRoles->getRoles();
                 $this->view->roles = $roles;
@@ -91,175 +91,175 @@ class AdminController extends Oibs_Controller_CustomController
             else
             {
                 $message = 'admin-editrole-invalid-username';
-                $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                $this->flash($message, $url);
+                                          'lang_default', true);
+                $this->addFlashMessage($message, $url);
             }
         }
         else
         {
             $message = 'admin-editrole-missing-username';
-            $url = $this->_urlHelper->url(array('controller' => 'msg', 
+            $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-            $this->flash($message, $url);
+                                          'lang_default', true);
+            $this->addFlashMessage($message, $url);
         }
     }
-    
+
     public function addroleAction()
     {
         $params = $this->getRequest()->getParams();
         $username = $params['user'];
         $role = $params['role'];
-        
+
         if($username != "" && $role != "")
         {
             $user = new Default_Model_User();
             if($user->usernameExists($username))
             {
                 $id_usr = $user->getIdByUsername($username);
-                
+
                 $userRoles = new Default_Model_UserRoles();
                 $roles = $userRoles->getRoles();
-                
+
                 $userProfiles = new Default_Model_UserProfiles();
                 $user_roles = $userProfiles->getUserRoles($id_usr);
-                
+
                 if(in_array($role, $roles))
                 {
                     array_push($user_roles, $role);
-                    
+
                     if($userProfiles->setUserRoles($id_usr, $user_roles))
                     {
                         $message = 'admin-addrole-successful';
-                        $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                        $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                        $this->flash($message, $url);
+                                          'lang_default', true);
+                        $this->addFlashMessage($message, $url);
                     }
                     else
                     {
                         $message = 'admin-addrole-not-successful';
-                        $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                        $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                        $this->flash($message, $url);
+                                          'lang_default', true);
+                        $this->addFlashMessage($message, $url);
                     }
                 }
                 else
                 {
                     $message = 'admin-addrole-invalid-role';
-                    $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                    $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                    $this->flash($message, $url);
+                                          'lang_default', true);
+                    $this->addFlashMessage($message, $url);
                 }
             }
             else
             {
                 $message = 'admin-editrole-invalid-user';
-                $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                $this->flash($message, $url);
+                                          'lang_default', true);
+                $this->addFlashMessage($message, $url);
             }
         }
         else
         {
             $message = 'admin-editrole-missing-username-role';
-            $url = $this->_urlHelper->url(array('controller' => 'msg', 
+            $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-            $this->flash($message, $url);
+                                          'lang_default', true);
+            $this->addFlashMessage($message, $url);
         }
     }
-    
+
     public function removeroleAction()
     {
         $params = $this->getRequest()->getParams();
         $username = $params['user'];
         $role = $params['role'];
-        
+
         if($username != "" && $role != "")
         {
             $user = new Default_Model_User();
             if($user->usernameExists($username))
             {
                 $id_usr = $user->getIdByUsername($username);
-                
+
                 $userProfiles = new Default_Model_UserProfiles();
                 $user_roles = $userProfiles->getUserRoles($id_usr);
-                
+
                 if(in_array($role, $user_roles))
                 {
-                    foreach ($user_roles as $key => $value) 
+                    foreach ($user_roles as $key => $value)
                     {
                         if($value == $role)
                         {
                             unset($user_roles[$key]);
                         }
                     }
-                    
+
                     $user_roles = array_values($user_roles);
-                    
+
                     if($userProfiles->setUserRoles($id_usr, $user_roles))
                     {
                         $message = 'admin-removerole-successful';
-                        $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                        $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                        $this->flash($message, $url);
+                                          'lang_default', true);
+                        $this->addFlashMessage($message, $url);
                     }
                     else
                     {
                         $message = 'admin-removerole-not-successful';
-                        $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                        $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                        $this->flash($message, $url);
+                                          'lang_default', true);
+                        $this->addFlashMessage($message, $url);
                     }
                 }
                 else
                 {
                     $message = 'admin-removerole-role-not-found';
-                    $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                    $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                    $this->flash($message, $url);
+                                          'lang_default', true);
+                    $this->addFlashMessage($message, $url);
                 }
             }
             else
             {
                 $message = 'admin-editrole-invalid-user';
-                $url = $this->_urlHelper->url(array('controller' => 'msg', 
+                $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-                $this->flash($message, $url);
+                                          'lang_default', true);
+                $this->addFlashMessage($message, $url);
             }
         }
         else
         {
             $message = 'admin-editrole-missing-username-role';
-            $url = $this->_urlHelper->url(array('controller' => 'msg', 
+            $url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
-            $this->flash($message, $url);
+                                          'lang_default', true);
+            $this->addFlashMessage($message, $url);
         }
     }
-    
+
     public function managerolesAction()
     {
         $params = $this->getRequest()->getParams();
@@ -273,7 +273,7 @@ class AdminController extends Oibs_Controller_CustomController
             $this->view->managerolesaction = "";
         }
     }
-    
+
     public function commentflagsAction()
     {
     	// Get all POST-parameters
@@ -282,7 +282,7 @@ class AdminController extends Oibs_Controller_CustomController
     	$flagmodel = new Default_Model_CommentFlags();
     	$commentmodel = new Default_Model_Comments();
     	$contentmodel = new Default_Model_Content();
-    	
+
         if($posts)
     	{
         // Remove comment text ("Comment removed"-text)
@@ -320,11 +320,11 @@ class AdminController extends Oibs_Controller_CustomController
                 }
             }
         }
-    		
+
     	}
-    	
+
     	$flagItems = $flagmodel->getAllFlags();
-    	
+
     	// Awesome algorithm for counting how many flags each flagged comment has
     	$tmpCount = array();
     	foreach($flagItems as $flagItem)
@@ -335,7 +335,7 @@ class AdminController extends Oibs_Controller_CustomController
     	arsort($tmpCount);
     	$data = array();
     	$count = 0;
-    	
+
     	// Loop and re-arrange our variables
     	foreach($tmpCount as $cmt_id => $cmt_count)
     	{
@@ -343,11 +343,11 @@ class AdminController extends Oibs_Controller_CustomController
     		$comment = $comment['Data']['body_cmt'];
     		$content_id = $commentmodel->getContentIdsByCommentId($cmt_id);
     		$content_id = $content_id[0]['id_target_cmt'];
-    		$content_url = $this->_urlHelper->url(array('controller' => 'view', 
+    		$content_url = $this->_urlHelper->url(array('controller' => 'view',
 														'action' => $content_id,
 														'language' => $this->view->language),
-														'lang_default', true); 
-    		
+														'lang_default', true);
+
     		$data[$count]['cnt_id'] = $content_id;
     		$data[$count]['cnt_title'] = $contentmodel->getContentHeaderByContentId($content_id);
     		$data[$count]['cnt_url'] = $content_url;
@@ -356,7 +356,7 @@ class AdminController extends Oibs_Controller_CustomController
     		$data[$count]['cmt_count'] = $cmt_count;
     		$count++;
     	}
-    	
+
 		// Go!
     	$this->view->comments = $data;
     }
@@ -364,7 +364,7 @@ class AdminController extends Oibs_Controller_CustomController
     {
     	// Get all POST-parameters
     	$posts = $this->_request->getPost();
-    	
+
     	// Get models for the job
     	$contentflagmodel = new Default_Model_ContentFlags();
         $commentflagmodel = new Default_Model_CommentFlags();
@@ -407,7 +407,7 @@ class AdminController extends Oibs_Controller_CustomController
                     }
                 }
             }
-    		
+
             // Unpublish content
             if($posts['rm'] == "pubflag")
             {
@@ -451,7 +451,7 @@ class AdminController extends Oibs_Controller_CustomController
                 }
             }
         }
-    		
+
     	// Awesome algorithm for counting how many flags each flagged content has
     	$flagItems = $contentflagmodel->getAllFlags();
     	$tmpCount = array();
@@ -463,7 +463,7 @@ class AdminController extends Oibs_Controller_CustomController
     	arsort($tmpCount);
     	$data = array();
     	$count = 0;
-    	
+
     	// Loop and re-arrange our variables
     	foreach($tmpCount as $cnt_id => $cnt_count)
     	{
@@ -474,16 +474,16 @@ class AdminController extends Oibs_Controller_CustomController
     		$data[$count]['lead'] = $content['Content']['Data']['lead_cnt'];
     		$data[$count]['body'] = $content['Content']['Data']['body_cnt'];
     		$data[$count]['count'] = $cnt_count;
-    		$data[$count]['url'] = $this->_urlHelper->url(array('controller' => 'view', 
+    		$data[$count]['url'] = $this->_urlHelper->url(array('controller' => 'view',
 														'action' => $cnt_id,
 														'language' => $this->view->language),
-														'lang_default', true); 
+														'lang_default', true);
     		$count++;
     	}
 		// Go!
     	$this->view->contents = $data;
     }
-    
+
     public function cachemanagerAction()
     {
     	$flushrequest = $this->_request->getParam('clean', false) ? true : false;
@@ -498,8 +498,8 @@ class AdminController extends Oibs_Controller_CustomController
     		if(strstr($cacheFile, 'zend_cache---'))
     		{
     			$fileSize = filesize($cacheDir . $cacheFile) / 1024;
-    			
-    			if($flushrequest) 
+
+    			if($flushrequest)
     			{
 	    			if(unlink($cacheDir.$cacheFile))
 	    			{
@@ -516,7 +516,7 @@ class AdminController extends Oibs_Controller_CustomController
     			{
     				$totalSize += $fileSize;
     			}
-    			
+
     		}
     		else
     		{

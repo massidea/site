@@ -1,16 +1,16 @@
 <?php
 /**
- *  CommentController -> 
+ *  CommentController ->
  *
  *
- * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * License text found in /license/
@@ -20,8 +20,8 @@
  *  CommentController - class
  *
  *  @package     models
- *  @author        
- *  @copyright    
+ *  @author
+ *  @copyright
  *  @license     GPL v2
  *  @version     1.0
  */
@@ -30,10 +30,10 @@ class CommentController extends Oibs_Controller_CustomController
 	public function init()
 	{
 		parent::init();
-		
+
 		$this->view->title = 'comment-title';
 	}
-	
+
 	function indexAction()
 	{
 	}
@@ -41,24 +41,24 @@ class CommentController extends Oibs_Controller_CustomController
 	function listAction()
 	{
 		$params = $this->getRequest()->getParams();
-	
+
 		$model = new Default_Model_Comments();
 		$data = $model->getByContent((int)$params['id_cnt']);
-		
+
 		$this->view->comments = $data;
 	}
-	
+
 	function viewAction()
 	{
 		$params = $this->getRequest()->getParams();
-	
+
 		$model = new Default_Model_Comments();
 		$data = $model->getById((int)$params['id']);
-		
+
 		$this->view->comment = $data;
-	
+
 	}
-	
+
 	public function addAction()
 	{
 	}
@@ -68,11 +68,11 @@ class CommentController extends Oibs_Controller_CustomController
 	{
         // Set an empty layout for view
         $this->_helper->layout()->setLayout('empty');
-        
+
         // Get requests
         $params = $this->getRequest()->getParams();
         $flaggedId = $params['flaggedid'];
-        
+
         // Models for the job
         $auth = Zend_Auth::getInstance()->getIdentity();
         $userId = $auth->user_id;
@@ -135,13 +135,13 @@ class CommentController extends Oibs_Controller_CustomController
             $redirectUrl = $this->_urlHelper->url(array('content_id' => $cntid,
                                                         'language' => $this->view->language),
                                                     'content_shortview', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         } else {
             $redirectUrl = $this->_urlHelper->url(array('language' => $this->view->language),
                                                     'index', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         }
 	}
-	
+
 }
 ?>
