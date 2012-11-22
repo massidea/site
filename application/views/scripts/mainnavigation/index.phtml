@@ -4,35 +4,30 @@
         <li class="overview">
             <a class="mainnavigation_popover"
                data-title="<?php echo $this->translate('main-nav-section'); ?>"
-               data-content="<ul><li>
-                <a href='<?php echo $this->url(array(
-                    'controller' => 'account',
-                    'action' => 'view',
-                    'user' => $this->username,
-                    'language' => $this->language,
-                ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
-                <li>
-                <a href='<?php echo $this->url(array(
-                    'controller' => 'content',
-                    'action' => 'list',
-                    'type' => 'vision',
-                    'language' => $this->language,
-                ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-vision'); ?></a></li>
-                <li>
-                <a href='<?php echo $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
-                'language' => $this->language,
-            ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-challenge'); ?></a></li>
-            <li>
-
-            <a href='<?php echo $this->url(array(
-            'controller' => 'account',
-            'action' => 'view',
+               data-content="<ul><li><a href='<?php echo $this->url(array(
+            'controller' => 'content',
+            'action' => 'list',
             'user' => $this->username,
             'language' => $this->language,
-            ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-idea'); ?></a></li></ul>">
+        ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
+        <li><a href='<?php echo $this->url(array(
+            'controller' => 'content',
+            'action' => 'list',
+            'type' => 'vision',
+            'language' => $this->language,
+        ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-vision'); ?></a></li>
+        <li><a href='<?php echo $this->url(array(
+            'controller' => 'content',
+            'action' => 'list',
+            'type' => 'challenge',
+            'language' => $this->language,
+        ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-challenge'); ?></a></li>
+        <li><a href='<?php echo $this->url(array(
+            'controller' => 'content',
+            'action' => 'list',
+            'type' => 'idea',
+            'language' => $this->language,
+        ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-idea'); ?></a></li></ul>">
                 <?php echo $this->translate('main-nav-section'); ?>
             </a>
         </li>
@@ -40,12 +35,23 @@
 
             <a class="mainnavigation_popover"
                data-title="<?php echo $this->translate('main-nav-mygroups'); ?>"
-               data-content="<ul><li><a href='<?php echo $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
-                'user' => $this->username,
-                'language' => $this->language,
-                 ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li></ul>">
+               data-content="<ul>
+                <?php foreach($this->groups as $group) : ?>
+                    <li>
+                    <a href='<?php echo $this->url(array(
+                        'controller' => 'group',
+                        'action' => 'view',
+                        'groupid' => $group['id_grp'],
+                        'language' => $this->language,
+                    ), 'lang_default', true); ?>'> <?php echo $group['group_name_grp']; ?>  </a> </li>
+                <?php endforeach; ?>
+
+                        <li><a href='<?php echo $this->url(array(
+                            'controller' => 'mainNavigation',
+                            'action' => 'group',
+                            'language' => $this->language,
+                        ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li>
+                        </ul>">
                 <?php echo $this->translate('main-nav-mygroups'); ?>
             </a>
         </li>
@@ -54,8 +60,8 @@
             <a class="mainnavigation_popover"
                data-title="<?php echo $this->translate('main-nav-myprojects'); ?>"
                data-content="<ul><li><a href='<?php echo $this->url(array(
-            'controller' => 'account',
-            'action' => 'view',
+            'controller' => '#',
+            'action' => '#',
             'user' => $this->username,
             'language' => $this->language,
         ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-myprojects-newproject'); ?></a></li></ul>">
@@ -67,7 +73,9 @@
 
             <a class="mainnavigation_popover"
                data-title="<?php echo $this->translate('main-nav-categories'); ?>"
-               data-content="<ul><li>categories</li></ul>">
+               data-content="<ul>
+                    <a href='#' <li>category items</li> </a>
+                </ul>">
                 <?php echo $this->translate('main-nav-categories'); ?>
             </a>
         </li>

@@ -93,7 +93,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 		// Get content type
 		$cty = isset($params['type']) ? $params['type'] : 'all';
-		if($cty != "idea" && $cty != "vision" && $cty != "challenge") $this->_redirect($url);
+		//if($cty != "idea" && $cty != "vision" && $cty != "challenge") $this->_redirect($url);
 
 		// Get page nummber and items per page
 		$page = isset($params['page']) ? $params['page'] : 1;
