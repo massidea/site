@@ -85,6 +85,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         $this->gtranslate = new Oibs_Controller_Plugin_GTranslate();
         $translateSession = new Zend_Session_Namespace('translate');
         // If no session exist, set default translation language to english
+
         if(!isset($translateSession->translateTo)) $translateSession->translateTo = 'en';
         $this->gtranslate->setLangTo($translateSession->translateTo);
 
@@ -205,11 +206,12 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         $language = $this->_getParam('language');
         $return_url = $this->_getParam('returnUrl');
 
-        $massideaNamespace = new Zend_Session_Namespace('Default');
-        $massideaNamespace->language = $language;
+        //$massideaNamespace = new Zend_Session_Namespace('Default');
+        //$massideaNamespace->language = $language;
 
         $this->_redirect('/'.$language.$return_url);
 
+        setcookie('language', $language, null, '/');
     }
 
 
