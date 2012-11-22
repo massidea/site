@@ -32,6 +32,8 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 {
 
 	/** @var string */
+	public $_language = '';
+	/** @var string */
 	private $_returnUrl = '';
 
 	/**
@@ -39,10 +41,8 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 	 */
 	public function init()
 	{
-		$translate = Zend_Registry::get('Zend_Translate');
-		$language = $translate->getLocale();
-		$baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$actionUrl = $baseurl.'/'.$language.'/account/login';
+		$base_url = Zend_Controller_Front::getInstance()->getBaseUrl();
+		$actionUrl = $base_url.'/'.$this->getLanguage().'/account/login';
 
 		$this->setName('login_form')
 			->setAction($actionUrl)
@@ -54,19 +54,19 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 
 		$this->addElement('text', 'login_username', array(
 			'label'       => 'account-login-username',
-			'placeholder' => $translate->translate('account-login-username'),
+			'placeholder' => 'account-login-username',
 			'required'    => true,
 			'filters'     => array('StringtoLower'),
 			'validators'  => array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('error-field-empty'))))),
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty')))),
 		));
 
 		$this->addElement('password', 'login_password', array(
 			'label'       => 'account-login-password',
-			'placeholder' => $translate->translate('account-login-password'),
+			'placeholder' => 'account-login-password',
 			'required'    => true,
 			'validators'  => array(
-				array('NotEmpty', true, array('messages' => array('isEmpty' => $translate->_('error-field-empty')))),
+				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
 			),
 		));
 
@@ -82,6 +82,17 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 		));
 
 		parent::init();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage()
+	{
+		if ($this->_language === '') {
+			$this->_language = Zend_Registry::get('Zend_Translate')->getLocale();
+		}
+		return $this->_language;
 	}
 
 	/**
