@@ -47,31 +47,26 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	public $db;
 	public $breadcrumbs;
 
+	/** @var \Zend_Session_Namespace */
+	protected $_session;
+	/** @var \Zend_Controller_Action_Helper_Redirector */
 	protected $_redirector;
+	/** @var \Zend_Controller_Action_Helper_FlashMessenger */
 	protected $_flashMessenger;
+	/** @var \Zend_Controller_Action_Helper_Redirector */
     protected $_urlHelper;
+	/** @var mixed */
 	protected $_identity;
 
 	/**
-	*	init
-	*
-	*	Class initialization
-	*
-	*/
+	 * @inheritdoc
+	 */
 	public function init()
 	{
-        $massideaNamespace = new Zend_Session_Namespace('Default');
-        if (isset($massideaNamespace->language)) {
-            $this->view->language = $massideaNamespace->language;
-            $translate = Zend_Registry::get('Zend_Translate');
-            $translate->setLocale($massideaNamespace->language);
+        $session = $this->getSession();
 
-        } else {
-        // Zend_Controller_Action_Helper_Redirector::setPrependBase(false);
-		// Load languages to view
-		    $this->view->languages = Zend_Registry::get('Available_Translations');
-		    $this->view->language = Zend_Registry::get('Zend_Locale');
-        }
+		$this->view->language  = $session->language;
+		$this->view->languages = Zend_Registry::get('Available_Translations');
 
         // this can be used in any view now...useful I believe :)
 		$this->view->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -210,8 +205,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
         //$massideaNamespace->language = $language;
 
         $this->_redirect('/'.$language.$return_url);
-
-        setcookie('language', $language, null, '/');
     }
 
 
@@ -436,5 +429,17 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	{
 		return $this->_identity;
 	}
+
+	/**
+	 * @return Zend_Session_Namespace
+	 */
+	public function getSession()
+	{
+		if ($this->_session == null) {
+			$this->_session = new \Zend_Session_Namespace();
+		}
+		return $this->_session;
+	}
+
 
 } // end of class
