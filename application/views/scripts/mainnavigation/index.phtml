@@ -1,14 +1,9 @@
-<ul>
-    <li><a href="<?php echo $this->url(array(
-        'controller' => 'account',
-        'action' => 'view',
-        'user' => $this->username,
-        'language' => $this->language,
-    ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section'); ?></a>
+<ul xmlns="http://www.w3.org/1999/html">
+    <li><?php echo $this->translate('main-nav-section'); ?>
         <ul>
             <li><a href="<?php echo $this->url(array(
-                'controller' => 'account',
-                'action' => 'view',
+                'controller' => 'content',
+                'action' => 'list',
                 'user' => $this->username,
                 'language' => $this->language,
             ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
@@ -19,13 +14,13 @@
                 'language' => $this->language,
             ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-vision'); ?></a></li>
             <li><a href="<?php echo $this->url(array(
-                'controller' => 'account',
+                'controller' => 'content',
                 'action' => 'list',
                 'type' => 'challenge',
                 'language' => $this->language,
             ), 'lang_default', true); ?>"><?php echo $this->translate('main-nav-section-challenge'); ?></a></li>
             <li><a href="<?php echo $this->url(array(
-                'controller' => 'account',
+                'controller' => 'content',
                 'action' => 'list',
                 'type' => 'idea',
                 'language' => $this->language,
@@ -34,6 +29,17 @@
     </li>
     <li><?php echo $this->translate('main-nav-mygroups'); ?></a>
         <ul>
+            <?php foreach($this->groups as $group) : ?>
+                <li>
+                    <a href="<?php echo $this->url(array(
+                        'controller' => 'group',
+                        'action' => 'view',
+                        'groupid' => $group['id_grp'],
+                        'language' => $this->language,
+                    ), 'lang_default', true); ?>"> <?php echo $group['group_name_grp']; ?>  </a>
+                </li>
+            <?php endforeach; ?>
+
             <li><a href="<?php echo $this->url(array(
                 'controller' => 'mainNavigation',
                 'action' => 'group',
@@ -53,7 +59,7 @@
     </li>
     <li><?php echo $this->translate('main-nav-categories'); ?></a>
         <ul>
-            <li>categories</li>
+            <a href="#" <li>category items</li> </a>
         </ul>
     </li>
 </ul>

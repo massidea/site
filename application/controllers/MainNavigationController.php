@@ -21,17 +21,24 @@ class MainNavigationController extends Oibs_Controller_CustomController
                 'lang_default', true);
             $redirector->gotoUrl($target);
         }
+
+        $userGroups = null;
+        if($this->id != -1){
+            $userModel = new Default_Model_User();
+            $userGroups = $userModel->getUserGroups($this->id);
+        }
+        $this->view->groups = $userGroups;
+
+        /*$userCompaigns = null;
+        if($this->id != -1){
+            $userModel = new Default_Model_User();
+            $userCompaigns = $userModel->getUserCampaigns($this->id);
+        }
+        $this->view->campaigns = $userCompaigns;
+        */
     }
 
     function indexAction()
     {
-    }
-
-    function groupAction(){
-        if($this->id != -1){
-            $userModel = new Default_Model_User();
-            $userGroups = $userModel->getUserGroups($this->id);
-var_dump($userGroups); exit;
-        }
     }
 }
