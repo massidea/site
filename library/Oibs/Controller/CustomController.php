@@ -204,29 +204,9 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
             $this->view->username = $auth->getIdentity()->username;
             $model = new Default_Model_UserImages;
             $images = $model->getImagesByUsername($id);
-
-            if(count($images) > 0) {
-                for($a = 0; $a < count($images); $a++) {
-                    $dates[$a] = $images[$a]['modified_usi'];
-                }
-
-                $active = array_search(max($dates), $dates);
-                $images[$active]['status'] = 1;
-                $this->view->image_ids = $images;
-
-                $this->view->profile_image =
-                    $this->_helper->url(array(
-                        'controller' => 'account',
-                        'action' => 'showimage',
-                        'img' => $images[$active]["id_usi"],
-                        'thumb' => '1',
-                        'language' => $this->_getParam('language'),
-                    'lang_default', true));
-            } else {
-                $this->view->default_profile_image = "\images\default_profile_image.png";
-            }
         }
 
+        $this->getProfileImage();
 
     } // end of init
 
@@ -258,18 +238,15 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
             $model = new Default_Model_UserImages;
             $images = $model->getImagesByUsername($id);
 
-            var_dump(count($images));
-            exit;
             if(count($images) > 0) {
                 for($a = 0; $a < count($images); $a++) {
                     $dates[$a] = $images[$a]['modified_usi'];
                 }
-
                 $active = array_search(max($dates), $dates);
                 $images[$active]['status'] = 1;
-                $this->view->image_ids = $images;
+                $this->view->profile_image = $imagepath = $images[$active]['imagepath_usi'];
             } else {
-                $this->view->default_profile_image = "\images\default_profile_image.png";
+                $this->view->default_profile_image = "\img\user_avatar_24.png";
             }
         }
 

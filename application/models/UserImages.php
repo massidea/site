@@ -79,7 +79,7 @@ class Default_Model_UserImages extends Zend_Db_Table_Abstract
     public function getImagesByUsername($id)
     {
         $select = $this->select()
-                       ->from($this, array('id_usi', 'created_usi', 'modified_usi'))
+                       ->from($this, array('id_usi', 'imagepath_usi', 'created_usi', 'modified_usi'))
                        ->where('id_usr_usi = ?', $id);
     						
     	$result = $this->fetchAll($select)->toArray();
