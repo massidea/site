@@ -1,8 +1,62 @@
 .row {
   &.singleContent {
-    background: red;
-    height: 100px;
-    width: 200px;
+    margin: 0 0 40px 0;
+    &.vision {
+      border-right: 3px solid @colorVisionFirst;
+      .type {
+        color: @colorVisionFirst;
+      }
+    }
+
+    &.challenge {
+         border-right: 3px solid @colorChallengeFirst;
+         .type {
+           color: @colorChallengeFirst;
+         }
+    }
+
+    &.idea {
+      border-right: 3px solid @colorIdeaFirst;
+      .type {
+        color: @colorIdeaFirst;
+      }
+    }
+
+    .headline {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .metainfo {
+      color: @colorDarkGray;
+      span {
+
+
+      }
+      &.bottom {
+        margin: 10px 0 0 0;
+      }
+
+      &.top {
+        margin: 2px 0 10px 0;
+      }
+
+        a {
+        color: @colorDarkGray;
+          text-decoration: none;
+          padding-left: 9px;
+          padding-right: 9px;
+
+        }
+        a:hover {
+          border-radius: 3px 3px 3px 3px;
+
+          background-color: @colorDarkGray;
+          color: white;
+        }
+
+      }
+    }
+
   }
 
 
