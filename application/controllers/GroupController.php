@@ -46,7 +46,7 @@
                                                     'action' => 'index',
                                                     'language' => $this->view->language),
                                               'lang_default', true);
-        $this->_redirector->gotoUrl($redirectUrl);
+        $this->_redirect($redirectUrl);
         /*
         $grpmodel = new Default_Model_Groups();
         $cmpmodel = new Default_Model_Campaigns();
@@ -85,7 +85,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         // Group data
         $grpData = $this->getGroupData($grpId);
@@ -144,7 +144,7 @@
                 $feeds[$i] = $feedsData['items'][$i];
             }
         }
-        
+
         // Set $this->view->...
         $this->view->grpData = $grpData;
         $this->view->cmpData = $cmpData;
@@ -174,7 +174,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         $usrHasGrpModel = new Default_Model_UserHasGroup();
         $usrHasGrpWaitingModel = new Default_Model_UserHasGroupWaiting();
@@ -187,7 +187,7 @@
         $grpData['body_grp'] = str_replace("\n", '<br>', $grpData['body_grp']);
         $filesModel = new Default_Model_Files();
         $files = $filesModel->getFilenames($grpId, "group");
-        
+
         // Group type
         $grpTypeId = $grpModel->getGroupTypeId($grpId);
         $grpTypeModel = new Default_Model_GroupTypes();
@@ -215,10 +215,10 @@
         if ($this->view->identity) $comments->allowComments(true);
   		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
 		$comments->loadComments();
-        
+
 		$this->view->comments		 = $comments;
 		$this->view->hasFeeds 		 = Oibs_Controller_Plugin_RssReader::hasFeeds($grpId, "group");
-		
+
         // Add data to the view.
         $this->view->grpId = $grpId;
         $this->view->grpData = $grpData;
@@ -252,7 +252,7 @@
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             // Only group admins get to delete the group.
@@ -267,7 +267,7 @@
                         'language' => $this->view->language),
                     'group_shortview', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             // Get existing group info.
@@ -284,7 +284,7 @@
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             // Not logged in.
             $target = $this->_urlHelper->url(
@@ -293,7 +293,7 @@
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -303,7 +303,7 @@
 
         if ($auth->hasIdentity()) {
             $grpId = $this->_request->getParam('id');
-            
+
             if (!$grpId) {
                 $target = $this->_urlHelper->url(
                     array(
@@ -312,7 +312,7 @@
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             // Only group admins get to edit group info.
@@ -327,18 +327,18 @@
                         'language' => $this->view->language),
                     'group_shortview', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             // Get existing group info.
             $grpModel = new Default_Model_Groups();
             $grpData = $grpModel->getGroupData($grpId);
 
-            
+
 			$filesModel = new Default_Model_Files();
 			$filenames = $filesModel->getFilenames($grpId, "group");
 			$formData['filenames'] = $filenames;
-			
+
             // Create the form in edit mode.
             $form = new Default_Form_AddGroupForm($this, array(
                 'mode' => 'edit',
@@ -401,10 +401,10 @@
 					$filesModel = new Default_Model_Files();
 					$files = $_FILES['content_file_upload'];
                     $filesModel->newFiles($grpId, "group", $files);
-                    
+
                     if (isset($post['uploadedFiles'])) $filesModel->deleteCertainFiles($grpId, "group", $post['uploadedFiles']);
-                    
-                    
+
+
                     // Redirect back to the group page.
                     $target = $this->_urlHelper->url(
                         array(
@@ -412,7 +412,7 @@
                             'language' => $this->view->language),
                          'group_shortview', true
                     );
-                    $this->_redirector->gotoUrl($target);
+                    $this->_redirect($target);
                 }
             }
         } else {
@@ -423,7 +423,7 @@
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -471,7 +471,7 @@
                     $files = $_FILES['content_file_upload'];
                     $filesModel = new Default_Model_Files();
                     $filesModel->newFiles($newGroupId, "group", $files);
-                    
+
                     // Add the current user to the new group.
                     $userHasGroupModel = new Default_Model_UserHasGroup();
                     $userHasGroupModel->addUserToGroup(
@@ -486,7 +486,7 @@
                         'groupid' => $newGroupId,
                         'language' => $this->view->language),
                          'group_shortview', true);
-                    $this->_redirector->gotoUrl($target);
+                    $this->_redirect($target);
                 }
             }
         } else {
@@ -497,7 +497,7 @@
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -562,7 +562,7 @@
                     'groupid'    => $grpId,
                     'language'   => $this->view->language),
                 'group_shortview', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             // Not logged in - can't join a group.
             $target = $this->_urlHelper->url(
@@ -571,7 +571,7 @@
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -598,7 +598,7 @@
                         'action' => 'index',
                         'language' => $this->view->language),
                     'lang_default', true);
-                $this->flash($message, $url);
+                $this->addFlashMessage($message, $url);
             } else {
                 // Get group campaings where user have content linked
                 $usrModel = new Default_Model_User();
@@ -640,7 +640,7 @@
                         'groupid'    => $grpId,
                         'language'   => $this->view->language),
                     'group_shortview', true);
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
         } else {
             // Not logged in
@@ -650,7 +650,7 @@
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -674,7 +674,7 @@
                         'groupid'    => $grpId,
                         'language'   => $this->view->language),
                     'group_shortview', true);
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
         } else {
             // Not logged in
@@ -684,7 +684,7 @@
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -712,7 +712,7 @@
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $this->view->grpid = $grpId;
@@ -754,7 +754,7 @@
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -776,7 +776,7 @@
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $this->view->grpid = $grpId;
@@ -791,7 +791,7 @@
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $grpHasGrpModel = new Default_Model_GroupHasGroup();
@@ -815,7 +815,7 @@
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -837,7 +837,7 @@
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $grphasgrpmodel = new Default_Model_GroupHasGroup();
@@ -853,13 +853,13 @@
             $target = $this->_urlHelper->url(array('groupid' => $parentGrpId,
                                                    'language' => $this->view->language),
                                              'group_shortview', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             $target = $this->_urlHelper->url(array('controller' => 'group',
                                                    'action'     => 'index',
                                                    'language'   => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -879,7 +879,7 @@
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         }
 
         $grphasgrpmodel = new Default_Model_GroupHasGroup();
@@ -893,7 +893,7 @@
         $target = $this->_urlHelper->url(array('groupid' => $parentGrpId,
                                                'language' => $this->view->language),
                                          'group_shortview', true);
-        $this->_redirector->gotoUrl($target);
+        $this->_redirect($target);
     }
 
     /**
@@ -914,11 +914,11 @@
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $this->view->grpid = $grpId;
-            
+
             $usrHasGrpModel = new Default_Model_UserHasGroup();
             $usrHasGrpWaitingModel = new Default_Model_UserHasGroupWaiting();
 
@@ -974,7 +974,7 @@
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $this->view->grp = $grp;
@@ -987,7 +987,7 @@
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -1009,7 +1009,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         // Group data
         $grpData = $this->getGroupData($grpId);
@@ -1051,7 +1051,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         // Group data
         $grpData = $this->getGroupData($grpId);
@@ -1105,7 +1105,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         // Group data
         $grpData = $this->getGroupData($grpId);
@@ -1143,7 +1143,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         // Group data
         $grpData = $this->getGroupData($grpId);
@@ -1185,7 +1185,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         // Group data
         $grpData = $this->getGroupData($grpId);
@@ -1235,7 +1235,7 @@
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
         // Group data
         $grpData = $this->getGroupData($grpId);

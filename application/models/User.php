@@ -320,7 +320,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     {
         // Create the message
         $mail = new Oibs_Controller_Plugin_Email();
-        $mail->setNotificationType('email/passwordreset_'.$lang)
+        $mail->setNotificationType('passwordreset_'.$lang)
              ->setReceiverId($userId)
              ->setParameter('USER', $this->getUserNameById($userId))
              ->setParameter('URL', $url);

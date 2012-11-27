@@ -1,3 +1,4 @@
+index-home;Massidea.org
 index-challenges;Challenges
 index-create-a-challenge;Challenge erstellen
 index-content-list-right-problem;Eine Challenge ist verbunden mit einem persönlichen, geschäftlichen oder sozialen Problem, Bedürfniss, Situation oder Feststellung. Die Challenge beschreibt den aktuellen Status der Angelegenheit und erkennt den Bedarf für eine Lösung des Problems. Sie sind wichtig für die Erstellung neuer Ideen solange sie die Bedürfnisse des aktuellen Marktes decken. Mit dem teilen einer Challenge, lädst du andere ein, ihre eigene Lösung zu deiner Challenge vorzuschlagen.
@@ -41,6 +42,7 @@ account-login-title;Login
 account-login-username;Benutzername
 account-login-password;Passwort
 account-login-submit;Anmelden
+account-login-signup;Registrieren
 account-login-not-successful;Benutzername und Passwort stimmen nicht überein
 account-logout-succesful-msg;Sie wurden erfolgreich ausgeloggt!
 account-register-page-header;Registrierung
@@ -52,7 +54,7 @@ register-personal-information;Persönliche Informationen
 account-register-city;Stadt
 account-register-email;E-Mail
 account-register-employment;Beruf
-account-select;Auswählen
+account-register-select;Auswählen
 account-register-private-sector;Privater Bereich
 account-register-public-sector;Öffentlicher Bereich
 account-register-education-sector;Ausbildung
