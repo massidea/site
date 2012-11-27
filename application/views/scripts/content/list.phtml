@@ -38,94 +38,12 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 <?php $this->headScript()->captureEnd()?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
 
-<div class="user_content_list">
-	<h3 class="recent_posts"><?php echo $this->translate('content-list-'.$this->type); ?>
-		<a href="<?php echo $this->url(array('controller' => 'rss',
-                                             'action' => 'generate',
-                                             'type' => $this->type,
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-            <img class="rsslogo" src="<?php echo $this->baseUrl('/images/icon_rss_28x28.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 5px; vertical-align: middle;" /></a>
-        <a href="<?php echo $this->url(array('controller' => 'voice',
-                                             'action' => 'generate',
-                                             'type' => $this->type,
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-			<img class="rsslogo" src="<?php echo $this->baseUrl('/images/podcasts.png'); ?>" alt="RSS" width="18" height="18" style="padding-left: 4px; vertical-align: middle;" /></a>
-	</h3>
-	
-	<div class="user_content_list" style="padding: 0px; margin: 0px; overflow:hidden;">
-		<div id="recent_posts_ajax" style="width: 500px;"></div>   
-	    <div id="recent_posts_ajax_link" style="margin-top: 10px; margin-left: 220px;">
-	        <h3>
-	            <a href="#" onclick="return false;"><?php echo $this->translate('index-view-more'); ?></a>
-	        </h3>
-	    </div>
-	</div>
-   </div>
-   </div>
-    <div id="sidebar" >
-    <div class="box">
-   	    <h2>
-   	        <?php echo $this->translate('content-list-right-header-'.$this->type); ?>
-   	    </h2>
-        
-        <div class="box-content">
-            <p><?php echo str_replace("\n", "</p><p>", $this->translate('content-list-right-'.$this->type)); ?></p>
-        </div>
-     </div>
-		<?php /* commented until best rated is fixed! ?>
-		<div class="see_also_title">
-			<h2><?php echo $this->translate('index-see-also-'.$this->type); ?></h2>
-			<div class="see_also_links">
 
-				<a href="<?php echo $this->url(array('controller' => 'search', 
-							      'action' => 'result',  
-							      'language' => $this->language, 
-							      'order' => 'views'), 
-							'lang_default', true); ?>">
-					<?php echo $this->translate('content-most-viewed'); ?>
-					</a>
-				<?php echo ' | '; ?>
-				<a href="#"><?php echo $this->translate('content-best-rated'); ?></a>
-			</div>
-		 </div>
-		<?php */ ?>
-		<?php 
-			$mostViewedUrl = $this->url(array('controller' => 'search',
-                                             'action' => 'result',
-        									 'order' => 'views',
-        									 'page' => '1',
-                                             'language' => $this->language),
-                                             'lang_default', true);
-		?>
-		<h2 class="no-bg">Most <a href="<?php echo $mostViewedUrl; ?>">viewed</a></h2>
-		 <div class="scroll-box">
-		 	<ul>
-			<?php echo $this->partialLoop('partials/mini_content_row.phtml', $this->mostViewedData); ?>
-			</ul>
-        </div>
-        <h2><?php echo $this->translate('index-most-popular')?>
-            <a href="<?php echo $this->url(array('controller' => 'tag',
-                                             'action' => 'index',
-        									 'order' => 'popularity',
-        									 'direction' => 'desc',
-                                             'language' => $this->language),
-                                             'lang_default', true); ?>">
-                <?php echo $this->translate('index-tags'); ?></a></h2>
-        <div class="tag_cloud">
-        <ul class="tags">
-        	<?php foreach($this->tags as $tag): ?>
-        	<li class="tags">
-        		<?php echo $this->partial('partials/tag.phtml', $tag); ?>
-        	</li>
-        	<?php endforeach; ?>
-        </ul>
-	     <div class="clear"></div>
-	    </div>
-        <h2>
-            <?php echo $this->translate('content-list-missing-header'); ?>
-        </h2> 
-        <p>
-            <?php echo $this->translate('index-opensource'); ?>
-        </p>
+<div class="row">
+    <div class="row singleContent">
+        <div class="contentImage"></div>
+        <h2>Headline of the Content</h2>
+        <p></p>
+
+    </div>
+</div>
