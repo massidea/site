@@ -62,15 +62,10 @@
                             </ul>
                         </div>
                         <div class="username pull-right">
-                            <span><?php echo $this->username;?></span>
+                            <span><?php echo $this->identity->username;?></span>
                         </div>
                         <div class="userImage pull-right">
-                            <?php if(isset($this->profile_image)) :?>
-                                <img  src="<?php echo $this->profile_image; ?>" alt="User Image" />
-                            <?php endif; ?>
-                            <?php  if(isset($this->default_profile_image)): ?>
-                                <img src="<?php echo $this->default_profile_image;?>" alt="User Image" />
-                            <?php endif; ?>
+                            <img  src="<?php echo $this->profile_image; ?>" alt="User Image" />
                         </div>
                     </div>
                     <?php endif; ?>

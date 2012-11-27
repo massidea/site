@@ -69,7 +69,10 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	public function postDispatch()
 	{
 		// create the login form, if necessary
-		if (!$this->hasIdentity()) {
+        if ($this->hasIdentity()) {
+            $this->view->identity      = $this->getIdentity();
+            $this->view->profile_image = $this->getProfileImage();
+        } else {
 			$login_form = new Default_Form_LoginForm();
 			$login_form
 				->setReturnUrl($this->getRequest()->getRequestUri())
@@ -79,7 +82,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
 		// set layout view variables
 		$this->view->authenticated   = $this->hasIdentity();
-		$this->view->identity        = $this->getIdentity();
 		$this->view->language        = $this->getSession()->language;
 		$this->view->activeLanguages = $this->getTranslatedLanguages();
 		$this->view->baseUrl         = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -180,6 +182,30 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	{
 		return $this->getIdentity() != null;
 	}
+
+    /**
+     * Get Profile Image for Layout
+     * @return string
+     */
+    public function getProfileImage() {
+        if ($this->hasIdentity()) {
+            $id = $this->getIdentity()->user_id;
+
+            $model = new Default_Model_UserImages;
+            $images = $model->getImagesByUsername($id);
+
+            if(count($images) > 0) {
+                $dates = array();
+                for($a = 0; $a < count($images); $a++) {
+                    $dates[$a] = $images[$a]['modified_usi'];
+                }
+                $active = array_search(max($dates), $dates);
+                return $images[$active]['imagepath_usi'];
+            }
+        }
+
+        return "/img/user_avatar_24.png";
+    }
 
 	/**
 	 * Returns the flash messenger action helper.
