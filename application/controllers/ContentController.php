@@ -61,9 +61,9 @@ class ContentController extends Oibs_Controller_CustomController
 
 		$url = $this->_urlHelper->url(array('controller' => 'help',
                                             'action' => 'guidelines',
-                                            'language' => $this->view->language), 
-                                            'lang_default', true); 
-			
+                                            'language' => $this->view->language),
+                                            'lang_default', true);
+
 		$this->_redirect($url);
 
 		//}
@@ -78,10 +78,10 @@ class ContentController extends Oibs_Controller_CustomController
 	public function listAction()
 	{
 
-		
+
 		$url = $this->_urlHelper->url(array('controller' => 'index',
-                                            'language' => $this->view->language), 
-                                            'lang_default', true); 
+                                            'language' => $this->view->language),
+                                            'lang_default', true);
 
 		// Get cache from registry
 		$cache = Zend_Registry::get('cache');
@@ -95,7 +95,7 @@ class ContentController extends Oibs_Controller_CustomController
 		// Get content type
 		$cty = isset($params['type']) ? $params['type'] : 'all';
 		if($cty != "idea" && $cty != "finfo" && $cty != "problem") $this->_redirect($url);
-		
+
 		// Get page nummber and items per page
 		$page = isset($params['page']) ? $params['page'] : 1;
 		$count = isset($params['count']) ? $params['count'] : 15;
@@ -134,7 +134,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 		// Calculate total page count
 		$pageCount = ceil($contentCount / $count);
-		
+
 		// Most viewed content
 		$mostViewedData = $contentModel->getMostViewedType($cty, $page, $count, 'views', 'en', $ind);
 
@@ -165,7 +165,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 			//Action helper for define is tag running number divisible by two
             $tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
-            
+
 			// Save most popular tags data to cache
 			$cache->save($tags, 'IndexTags');
 		} else {
@@ -194,7 +194,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 		// RSS type for the layout
 		$this->view->rsstype = $cty;
-			
+
 	} // end of listAction()
 
 	/**
@@ -245,9 +245,9 @@ class ContentController extends Oibs_Controller_CustomController
 				$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                         		'lang_default', true); 
+                                         		'lang_default', true);
 
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			} elseif($relatesToId != 0) {
 
 				/*if($relatesToId == 0) {
@@ -257,7 +257,7 @@ class ContentController extends Oibs_Controller_CustomController
 				 'language' => $this->view->language),
 				 'lang_default', true);
 
-				 $this->flash($message, $url);
+				 $this->addFlashMessage($message, $url);
 				 } */
 
 				// Checking if the content that idea is related to exists
@@ -268,9 +268,9 @@ class ContentController extends Oibs_Controller_CustomController
 					$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
-                                                  		'lang_default', true); 
+                                                  		'lang_default', true);
 
-					$this->flash($message, $url);
+					$this->addFlashMessage($message, $url);
 				}
 			}
 
@@ -370,7 +370,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 				$formData['Classes'] = array();
 				$formData['Classes'][0] = $this->view->translate("content-add-select-class-no-group");
-				
+
 				$cache->save($formData, $formDataCacheTag);
 			}
 
@@ -384,17 +384,17 @@ class ContentController extends Oibs_Controller_CustomController
 
 			elseif (!($form = $cache->load($formCacheTag))  ) {
 				$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
-					
+
 				$cache->save($form, $formCacheTag);
 			}
-			
-			
-			
+
+
+
 			$this->view->form = $form;
 
 			// Get requests
 			if($this->getRequest()->isPost()) {
-					
+
 				// Get content data
 				$data = $this->getRequest()->getPost();
 
@@ -449,7 +449,7 @@ class ContentController extends Oibs_Controller_CustomController
 						$data['content_industry_id'] = $data['content_class'];
 					}
 */
-					
+
 					$languages = new Default_Model_Languages();
 
 					if($data['content_language'] == 0) {
@@ -463,7 +463,7 @@ class ContentController extends Oibs_Controller_CustomController
 					// Add a new content
 					$content = new Default_Model_Content();
 					$add = $content->addContent($data);
-					
+
 					if($data['content_relatesto_id'] != 0) {
 						$profileModel = new Default_Model_UserProfiles();
 		   				$profileModel->deleteNotificationCache($data['content_relatesto_id']);
@@ -481,33 +481,33 @@ class ContentController extends Oibs_Controller_CustomController
                                                   		'lang_default', true);
 
 					if($add_successful) {
-						
+
 						// Get cache from registry
 				        $cache = Zend_Registry::get('cache');
-				        
+
 				        // Load most popular tags from cache
 						$output = md5(time());
 						$cache->save($output, 'LatestPostHash');
 						// Force refresh to tags on front page
-				        $cache->remove('IndexTags'); 
-						
+				        $cache->remove('IndexTags');
+
 						if($data['publish'] == 1) {
 							$url = $this->_urlHelper->url(array('content_id' => $add,
-                                         						'language' => $this->view->language), 
+                                         						'language' => $this->view->language),
                                          						'content_shortview', true);
 							$this->_redirect($url);
 						}
 						else {
 							/*$userpage = $this->_urlHelper->url(array('controller' => 'account',
-                                                         			 'action' => 'view', 
-                                                         			 'user' => $auth->getIdentity()->username, 
-			                                                         'language' =>  $this->view->language), 
+                                                         			 'action' => 'view',
+                                                         			 'user' => $auth->getIdentity()->username,
+			                                                         'language' =>  $this->view->language),
             			                                             'lang_default', true);
 							$savedTab = $this->_urlHelper->url(array('controller' => 'account',
-                                                   				     'action' => 'view', 
+                                                   				     'action' => 'view',
                                                          			 'user' => $auth->getIdentity()->username,
                                                          			 'type' => 'saved',
-                                                         			 'language' =>  $this->view->language), 
+                                                         			 'language' =>  $this->view->language),
                                                          			 'lang_default', true);
 
 							$message_ok = $this->view->translate('content-save-successful');
@@ -516,7 +516,7 @@ class ContentController extends Oibs_Controller_CustomController
 							$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
 							$message_ok .= ' ' . $this->view->translate('content-save-successful4');
 							$message_ok .= ' <a href="'.$savedTab.'">'.$this->view->translate('content-save-successful5').'</a>.';
-							$this->flash($message_ok, $url);*/
+							$this->addFlashMessage($message_ok, $url);*/
 							$url = $this->_urlHelper->url(array('controller' => 'account',
 																'action' => 'view',
 																'language' => $this->view->language,
@@ -526,11 +526,11 @@ class ContentController extends Oibs_Controller_CustomController
 						}
 					}
 					else {
-						
-						$this->flash($message_error, $url);
+
+						$this->addFlashMessage($message_error, $url);
 					}
 				}
-				
+
 			} // end if
 
 		} else {
@@ -540,9 +540,9 @@ class ContentController extends Oibs_Controller_CustomController
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
+                                          'lang_default', true);
 
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		} // end if
 	} // end of addAction()
 
@@ -577,7 +577,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 				$profileModel = new Default_Model_UserProfiles();
 		    	$profileModel->deleteNotificationCache($relatestoid);
-				
+
 				// Send email to owner of content about a new link
 				// if user allows linking notifications
 
@@ -614,12 +614,12 @@ class ContentController extends Oibs_Controller_CustomController
 
 
 				$url = $this->_urlHelper->url(array('controller' => 'view',
-                                                    'action' => $relatestoid, 
-                                                    'language' => $this->view->language), 
+                                                    'action' => $relatestoid,
+                                                    'language' => $this->view->language),
                                               		'lang_default', true);
 
 				$message = "content-linked-successfully";
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			}
 		}
 		else {
@@ -629,9 +629,9 @@ class ContentController extends Oibs_Controller_CustomController
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
-                                          'lang_default', true); 
+                                          'lang_default', true);
 
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	}
 
@@ -668,7 +668,7 @@ class ContentController extends Oibs_Controller_CustomController
 				$model_cnt_has_cnt = new Default_Model_ContentHasContent();
 				$model_cnt_has_cnt->removeContentFromContent($relatestoid, $linkedcontentid);
 			}
-			
+
 			//$message = 'content-unlink-successful';
 
             // TODO:
@@ -680,7 +680,7 @@ class ContentController extends Oibs_Controller_CustomController
         												 'relatestoid' => $relatestoid,
                                                          'language' => $this->view->language),
                                                          'unlinkcontent', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
 
             /*
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
@@ -688,7 +688,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'language' => $this->view->language),
                                                 'lang_default', true);
 
-			$this->flash($message, $url); */
+			$this->addFlashMessage($message, $url); */
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -698,7 +698,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'language' => $this->view->language),
                                           'lang_default', true);
 
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	}
 
@@ -765,7 +765,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           		'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	}
 
@@ -790,7 +790,7 @@ class ContentController extends Oibs_Controller_CustomController
 			? $params['relatestoid'] : '';
 
 			$id_usr = $auth->getIdentity()->user_id;
-			
+
 			$contenttype = '';
 			$contents = array();
 
@@ -799,7 +799,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$isOwner = $model_content->checkIfUserIsOwner($relatestoid,$id_usr);
 
 			if ($contentexists && $isOwner) {
-				
+
 				$relatesToContent = $model_content->getDataAsSimpleArray($relatestoid);
 				$this->view->relatesToContentTitle = $relatesToContent['title_cnt'];
 
@@ -824,7 +824,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	}
 
@@ -882,7 +882,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                                 'language' => $this->view->language),
                                                           		'lang_default', true);
 
-							$this->flash($message, $url);
+							$this->addFlashMessage($message, $url);
 						}
 
 						$auth = Zend_Auth::getInstance();
@@ -895,31 +895,31 @@ class ContentController extends Oibs_Controller_CustomController
 							$message = 'content-link-not-content-owner';
 
 							$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                                'action' => 'index', 
-                                                                'language' => $this->view->language), 
+                                                                'action' => 'index',
+                                                                'language' => $this->view->language),
                                                           		'lang_default', true);
 
-							$this->flash($message, $url);
+							$this->addFlashMessage($message, $url);
 						}
 					} else {
 						$message = 'content-link-linked-content-not-exist';
 
 						$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                            'action' => 'index', 
-                                                            'language' => $this->view->language), 
+                                                            'action' => 'index',
+                                                            'language' => $this->view->language),
                                                       		'lang_default', true);
 
-						$this->flash($message, $url);
+						$this->addFlashMessage($message, $url);
 					}
 				} else {
 					$message = 'content-link-not-published';
 
 					$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    	'action' => 'index', 
-                                                   	 	'language' => $this->view->language), 
+                                                    	'action' => 'index',
+                                                   	 	'language' => $this->view->language),
                                               			'lang_default', true);
 
-					$this->flash($message, $url);
+					$this->addFlashMessage($message, $url);
 				}
 			}
 		} else {
@@ -927,20 +927,20 @@ class ContentController extends Oibs_Controller_CustomController
 				$message = 'content-link-invalid-contenttype';
 
 				$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    'action' => 'index', 
-                                                    'language' => $this->view->language), 
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
                                               		'lang_default', true);
 
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			} elseif($invalid_relatestoid) {
 				$message = 'content-link-invalid-relatestoid';
 
 				$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                    'action' => 'index', 
-                                                    'language' => $this->view->language), 
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
                                               		'lang_default', true);
 
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			}
 		}
 	}
@@ -949,10 +949,10 @@ class ContentController extends Oibs_Controller_CustomController
 	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
-		
+
 		// Disable layout to be rendered
 		$this->_helper->layout->disableLayout();
-		
+
 		// If user has authenticated
 		if($auth->hasIdentity())
 		{
@@ -961,7 +961,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$userName = $auth->getIdentity()->username;
 			$userModel = new Default_Model_User();
 			$userData = $userModel->getSimpleUserDataById($userId);
-			
+
 			// Get requests
 			if($this->getRequest()->isPost())
 			{
@@ -972,11 +972,11 @@ class ContentController extends Oibs_Controller_CustomController
 
 				// Set today's date and time
 				$today = date('Y-m-d H:i:m');
-	
+
 				// Get content type of the specific content viewed
 				$contentTypesModel = New Default_Model_ContentTypes();
 				$contentType = $contentTypesModel->getTypeById($postData['content_type']);
-	
+
 				// Reformat preview data
 				$contentData =
 				array('id_cnt' 					=> 'preview',
@@ -1005,10 +1005,10 @@ class ContentController extends Oibs_Controller_CustomController
 				$tags = null;
 				foreach($rawtags as $rawtag)
 					$tags[count($tags)]['name_tag'] = $rawtag;
-	
+
 				// Get form
 				$form = new Default_Form_PreviewContentForm();
-	
+
 				// Inject previewdata to view
 				$this->view->previewMode		= 1;
 				$this->view->files 				= null;
@@ -1036,7 +1036,7 @@ class ContentController extends Oibs_Controller_CustomController
 				//$this->view->count              = $count;
 				$this->view->form				= $form;
 				//$this->view->favourite			= $favourite;
-	
+
 				// Inject title to view
 				$this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
 			}
@@ -1046,11 +1046,11 @@ class ContentController extends Oibs_Controller_CustomController
 			$message = 'content-preview-not-logged-in';
 
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
-	                                            'action' => 'index', 
-	                                            'language' => $this->view->language), 
+	                                            'action' => 'index',
+	                                            'language' => $this->view->language),
 	                                            'lang_default', true);
 
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	}
 
@@ -1288,7 +1288,7 @@ class ContentController extends Oibs_Controller_CustomController
 					$form->populate($formData);
 					$this->view->form = $form;
 					$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                        'action' => 'index', 
+                                                        'action' => 'index',
                                                         'language' => $this->view->language),
                                                   		'lang_default', true);
 
@@ -1384,30 +1384,30 @@ class ContentController extends Oibs_Controller_CustomController
                                                           		'lang_default', true);
 
 							if($edit) {
-								
+
 								$profileModel = new Default_Model_UserProfiles();
 				   				$profileModel->deleteNotificationCache($contentId);
-								
+
 								//$favourite = new Default_Model_UserHasFavourites();
 								//$favouriteEdited = $favourite->setFavouriteModifiedTrue($edit);
 								if($oldData['published_cnt'] == 1 || (isset($data['content_publish']) && $data['content_publish'] == 1)) {
 									$url = $this->_urlHelper->url(array('content_id' => $edit,
-                                                                        'language' => $this->view->language), 
+                                                                        'language' => $this->view->language),
                                                                   'content_shortview', true);
 									$this->_redirect($url);
 								} else {
 									/*$message_ok = $this->view->translate('content-save-successful');
 									$message_ok .= ' ('.$content->getContentHeaderByContentId($edit).')';
-									
+
 									$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
 									$userpage = $this->_urlHelper->url(array('controller' => 'account',
-                                                                             'action' => 'view', 
-                                                                             'user' => $auth->getIdentity()->username, 
-                                                                             'language' =>  $this->view->language), 
+                                                                             'action' => 'view',
+                                                                             'user' => $auth->getIdentity()->username,
+                                                                             'language' =>  $this->view->language),
                                                                        'lang_default', true);
 									$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
 									$message_ok .= ' ' . $this->view->translate('content-save-successful4');
-									$this->flash($message_ok, $url);*/
+									$this->addFlashMessage($message_ok, $url);*/
 									$url = $this->_urlHelper->url(array('controller' => 'account',
 																		'action' => 'view',
 																		'language' => $this->view->language,
@@ -1416,7 +1416,7 @@ class ContentController extends Oibs_Controller_CustomController
 									$this->_redirect($url);
 								}
 							} else {
-								$this->flash($message_error, $url);
+								$this->addFlashMessage($message_error, $url);
 							}
 						} else {
 							// What is this?
@@ -1443,20 +1443,20 @@ class ContentController extends Oibs_Controller_CustomController
 						 } else {
 						 $message = 'content-edit-not-successful';
 						 }
-						 $this->flash($message, $url);*/
+						 $this->addFlashMessage($message, $url);*/
 					}
 				} else {
 					$message = 'content-edit-no-id';
-					$this->flash($message, $url);
+					$this->addFlashMessage($message, $url);
 				}
 			} else {
 				$message = 'content-edit-not-owner';
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			}
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-edit-not-logged';
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		} // end else
 	}
 
@@ -1513,7 +1513,7 @@ class ContentController extends Oibs_Controller_CustomController
 					if($contentRemoveSuccessful == true) {
 						$message = 'content-remove-successful';
 						die;
-						$this->flash($message, $url);
+						$this->addFlashMessage($message, $url);
 					} else {
 						$message = $this->view->translate('content-remove-not-successful') . '<br />';
 						// User don't have to see these explanations
@@ -1535,21 +1535,21 @@ class ContentController extends Oibs_Controller_CustomController
 						 if(!$contentRemoveChecker['removeContentFiles']) $message .= $this->view->translate('content-remove-removeContentFiles-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeUserHasFavorites']) $message .= $this->view->translate('content-remove-removeUserHasFavorites-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContent']) $message .= $this->view->translate('content-remove-removeContent-content-not-successful') . '<br />';
-						 if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';*/						
+						 if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';*/
 
-						$this->flash($message, $url);
+						$this->addFlashMessage($message, $url);
 					}
 				} else {
 					$message = 'content-remove-not-owner';
-					$this->flash($message, $url);
+					$this->addFlashMessage($message, $url);
 				}
 			} else {
 				$message = 'content-remove-invalid-content-id';
-				$this->flash($message, $url);
+				$this->addFlashMessage($message, $url);
 			}
 		} else {
 			$message = 'content-remove-not-authed';
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
 	} // end of removeAction
 
@@ -1576,7 +1576,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 			$content = new Default_Model_Content();
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                'action' => 'index', 
+                                                'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
 
@@ -1584,7 +1584,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 				//$contentUrl = $this->baseUrl ."/". $this->view->language ."/view/".$contentId;
 				$contentUrl = $this->_urlHelper->url(array('controller' => 'view',
-                                                'action' => $contentId, 
+                                                'action' => $contentId,
                                                 'language' => $this->view->language),
                                           'lang_default', true);
 
@@ -1599,29 +1599,29 @@ class ContentController extends Oibs_Controller_CustomController
 						$message .= " ".$this->view->translate('content-publish-here');
 						$message .= "</a> ";
 						$message .= " ".$this->view->translate('content-publish-view-content');
-						//$this->flash($message, $url);
+						//$this->addFlashMessage($message, $url);
 					} else {
 						$message = 'content-publish-not-successful';
-						//$this->flash($message, $url);
+						//$this->addFlashMessage($message, $url);
 					}
 				} else {
 					$message = 'content-publish-not-owner';
-					//$this->flash($message, $url);
+					//$this->addFlashMessage($message, $url);
 				}
 			} else {
 				$message = 'content-publish-invalid-content-id';
-				//$this->flash($message, $url);
+				//$this->addFlashMessage($message, $url);
 			}
 		} else {
 			$message = 'content-publish-not-authed';
-			//$this->flash($message, $url);
+			//$this->addFlashMessage($message, $url);
 		}
 
 		// Add login to log
 		$logger = Zend_Registry::get('logs');
 		if(isset($logger['contentpublish'])) {
 			$logMessage = sprintf(
-                'Publish attempt FROM: %s USER: %s. MESSAGE: %s. CONTENT ID: %s.', 
+                'Publish attempt FROM: %s USER: %s. MESSAGE: %s. CONTENT ID: %s.',
 			$_SERVER['REMOTE_ADDR'],
 			$username,
 			$this->view->translate($message, 'en'),
@@ -1631,7 +1631,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$logger['contentpublish']->notice($logMessage);
 		}
 
-		$this->flash($message, $url);
+		$this->addFlashMessage($message, $url);
 	} // end of publishAction
 
 
