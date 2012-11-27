@@ -35,7 +35,8 @@
             <div class="span4 login">
                 <?php
                 if (!$this->authenticated) :
-                    echo $this->loginform; else :
+                    echo $this->loginform;
+                else :
                     echo $this->username;
                     ?>
                     <span class="grey"> |</span>
@@ -46,7 +47,7 @@
                     ), 'lang_default', true); ?>">
                         <?php echo $this->translate('layout-logout'); ?>
                     </a>
-                    <?php endif; ?>
+                <?php endif; ?>
             </div>
         </div>
 
