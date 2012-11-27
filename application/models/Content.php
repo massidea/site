@@ -197,6 +197,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
 																	"title_cnt",
 																	"lead_cnt",
+                                                                    "body_cnt",
 																	"language_cnt",
 																	"created_cnt"))
 								->joinLeft(	"cnt_has_usr", 
@@ -1646,5 +1647,55 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$result = $this->_db->fetchAll($select);
 		return !empty($result);
 	}
+
+    public function listUserContent($id, $sect = 0, $cty = 0, $page = 1, $count = -1, $order = 'created')
+    {
+
+        switch ($order) {
+            case 'author':
+                $order = 'login_name_usr';
+                break;
+            case 'header':
+                $order = 'title_cnt';
+                break;
+            case 'views':
+                $order = 'viewCount ASC';
+                break;
+            case 'random':
+                $order = 'RAND()';
+                break;
+            default:
+                $order = 'created_cnt DESC';
+        }
+
+        $select = $this->select()->from($this, array(	"id_cnt",
+            "title_cnt",
+            "lead_cnt",
+            "body_cnt",
+            "language_cnt",
+            "created_cnt"))
+            ->where('published_cnt = 1')
+            ->order($order);
+
+        $select->join('cnt_has_usr', 'cnt_has_usr.id_cnt = contents_cnt.id_cnt', array())
+            ->where('cnt_has_usr.id_usr = ?', $id);
+        if ($sect != 0) {
+            $select->join('content_types_cty', 'content_types_cty.id_cty = contents_cnt.id_cty_cnt',array())
+                ->where('content_types_cty.id_cty = ?', $sect);
+        }
+
+        //TODO if ($cty != 0)
+
+        if ($count > 0){
+            $select->limitPage($page, $count);
+        } else {
+            $select->limit($page);
+        }
+        // Content data
+        //$data = $this->_db->fetchAll($select);
+        $ids = $this->fetchAll($select);
+        $data = $this->getContentRows($ids->toArray(), 'id_cnt', true);
+        return $data;
+    }
 } // end of class
 

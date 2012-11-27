@@ -42,6 +42,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
 		$ajaxContext->addActionContext('list', 'xml')
                     ->addActionContext('feed', 'html')
+                    ->addActionContext('getContent', 'html')
                     ->addActionContext('lang_switcher', 'html')
                     ->initContext();
 		$this->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -77,9 +78,7 @@ class ContentController extends Oibs_Controller_CustomController
 	 */
 	public function listAction()
 	{
-
-
-		$url = $this->_urlHelper->url(array('controller' => 'index',
+        $url = $this->_urlHelper->url(array('controller' => 'index',
                                             'language' => $this->view->language),
                                             'lang_default', true);
 
@@ -94,19 +93,15 @@ class ContentController extends Oibs_Controller_CustomController
 
 		// Get content type
 		$cty = isset($params['type']) ? $params['type'] : 'all';
-		if($cty != "idea" && $cty != "finfo" && $cty != "problem") $this->_redirect($url);
+		//if($cty != "idea" && $cty != "finfo" && $cty != "problem") $this->_redirect($url);
 
 		// Get page nummber and items per page
-		$page = isset($params['page']) ? $params['page'] : 1;
+		$page = isset($params['page']) ? $params['page'] : 1;      //category, section
 		$count = isset($params['count']) ? $params['count'] : 15;
 
 		// Get list oreder value
 		$order = isset($params['order']) ? $params['order'] : 'created';
 		$ind = isset($params['ind']) ? $params['ind'] : 0;
-
-		// Get current language id
-		// $languages = new Default_Model_Languages();
-		// $idLngInd = $languages->getLangIdByLangName($this->view->language);
 
 		// Get recent content by type
 		$contentModel = new Default_Model_Content();
@@ -114,7 +109,7 @@ class ContentController extends Oibs_Controller_CustomController
 		$results = array();
 
 		// gather other content data and insert to results array
-		if(isset($data[0])) {
+		if($data != null) {
 			$contentHasTagModel = new Default_Model_ContentHasTag();
 			// $contentRatingsModel = new Default_Model_ContentRatings();
 
@@ -138,13 +133,6 @@ class ContentController extends Oibs_Controller_CustomController
 		// Most viewed content
 		$mostViewedData = $contentModel->getMostViewedType($cty, $page, $count, 'views', 'en', $ind);
 
-		// Get all industries
-		//$industries = new Default_Model_Industries();
-		//$this->view->industries = $industries->getNamesAndIdsById($ind, $idLngInd);
-
-		// Get industry data by id
-		//$this->view->industryParent = $industries->getById($ind);
-
 		// Load most popular tags from cache
 		if(!$result = $cache->load('IndexTags')) {
 			$tagsModel = new Default_Model_Tags();
@@ -157,8 +145,7 @@ class ContentController extends Oibs_Controller_CustomController
 			 $size = 300;
 			 }
 			 $tags[$k]['tag_size'] = $size;
-			 }
-			 */
+			 }*/
 
 			// Action helper for tags
 			$tags = $this->_helper->tagsizes->popularTagCalc($tags);
@@ -173,29 +160,74 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 
 		// Custom pagination to fix memory error on large amount of data
-		/*
-		$paginator = new Zend_View();
+		/*$paginator = new Zend_View();
 		$paginator->setScriptPath('../application/views/scripts');
 		$paginator->pageCount = $pageCount;
 		$paginator->currentPage = $page;
-		$paginator->pagesInRange = 10;
-		*/
+		$paginator->pagesInRange = 10;    */
 
 		// Send to view
 		$this->view->tags = $tags;
 		//$this->view->contentPaginator = $paginator;
-		$this->view->contentData = $results;
+        $this->view->contentData = $results;
 		$this->view->type = $cty;
 		$this->view->count = $count;
 		$this->view->page = $page;
 		$this->view->contentCount = $contentCount;
 		$this->view->ind = $ind;
 		$this->view->mostViewedData = $mostViewedData;
-
-		// RSS type for the layout
-		$this->view->rsstype = $cty;
+		//$this->view->rsstype = $cty;
 
 	} // end of listAction()
+
+    /**
+     *   whateverAction
+     *
+     *   Lists user content
+     *
+     */
+    public function getContentAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $user = $auth->getIdentity();
+        $id = $user->user_id;
+
+        // Get cache from registry
+        $cache = Zend_Registry::get('cache');
+
+        // Set array for content data
+        $data = array();
+
+        // Get requests
+        $params = $this->getRequest()->getParams();
+
+        // Get page nummber and items per page
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        // Get content type
+        $sect = isset($params['section']) ? $params['section'] : 0;
+        $cty = isset($params{'category'}) ? $params['category'] : 0;
+
+        // Get list oreder value
+        $order = isset($params['order']) ? $params['order'] : 'created';
+
+        // Get recent content by type
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->listRecent($cty, $page, $count, $order);
+        $results = array();
+
+        // Get recent content by type
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->listUserContent($id, $sect, $cty, $page, $count, $order);
+
+
+        $this->view->contentData = $data;
+        $this->view->type = $cty;
+        $this->view->count = $count;
+        $this->view->page = $page;
+
+    }
 
 	/**
 	 *   addAction
