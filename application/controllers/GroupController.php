@@ -29,6 +29,12 @@
  */
  class GroupController extends Oibs_Controller_CustomController
 {
+     public function init()
+     {
+         parent::init();
+         Zend_Layout::getMvcInstance()->setLayout('layout_public');
+     }
+
     function indexAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -78,6 +84,7 @@
 
         // Group id
         $grpId = $this->_request->getParam('groupid');
+
         $grpModel = new Default_Model_Groups();
         // Check if group exists
         if (!isset($grpId) || !$grpModel->groupExistsById($grpId)) {

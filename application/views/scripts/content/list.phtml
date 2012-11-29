@@ -1,50 +1,55 @@
-<?php
-// some variable initiation
-$url_tag_cloud = $this->url(array('controller' => 'tag',
-        'action' => 'index',
-        'ctype' => $this->type,
-        'order' => 'popularity',
-        'direction' => 'desc',
-        'language' => $this->language),
-    'lang_default', true);
-
-$url_sign_up = $this->url(array('controller' => 'account',
-        'action' => 'register',
-        'language' => $this->language),
-    'lang_default', true);
-
-$url_getRecentContent = $this->url(array('controller' => 'ajax',
-        'action' => 'getrecentcontent',
-        'type' => $this->type,
-        'language' => $this->language),
-    'lang_default', true);
-
-$url_checkRecentContent = $this->url(array('controller' => 'ajax',
-        'action' => 'checkrecentcontent',
-        'language' => $this->language),
-    'lang_default', true);
-$tags_type = 'index-' . $this->type . '-tags';
-
-$type = $this->type;
-?>
-
-<?php $this->headScript()->captureStart() ?>
-
-// Variables for ajax requests
-var url_checkrecentcontent = '<?php echo $url_checkRecentContent; ?>';
-var url_getrecentcontent = '<?php echo $url_getRecentContent; ?>';
-var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif'); ?>';
-
-<?php $this->headScript()->captureEnd() ?>
-<?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
-
-
 <div class="row">
+    <div class="btn-toolbar filter">
+        <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                Section: All
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#">All</a>
+                </li>
+                <li>
+                    <a href="#">Vision</a>
+                </li>
+                <li>
+                    <a href="#">Challenge</a>
+                </li>
+                <li>
+                    <a href="#">Idea</a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group pull-right">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                Category: All
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#">Category1</a>
+                </li>
+                <li>
+                    <a href="#">Category2</a>
+                </li>
+                <li>
+                    <a href="#">Category3</a>
+                </li>
+                <li>
+                    <a href="#">Category4</a>
+                </li>
+            </ul>
+        </div>
+
+
+     </div>
+
+
     <div id="content-list push-left" class="row">
         <div class="row singleContent challenge">
             <div class="span2 push-left">
                 <a class="thumbnail">
-                    <img alt="headline of the content" src="/img/fallbackContent/challenge.png">
+                    <div class="image"></div>
                 </a>
             </div>
             <div class="span9 push-right">
@@ -104,7 +109,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
         </div>
     </div>
     <a id="load-more">more</a>
-
-
-
 </div>
+
+<script type="text/javascript" src="/js/massidea-content.js"></script>
+<script type="text/javascript"> Content.init(); </script>
