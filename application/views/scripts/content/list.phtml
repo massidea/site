@@ -40,11 +40,57 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
 
 <div class="row">
+    <div class="btn-toolbar filter">
+        <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                Section: All
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#">All</a>
+                </li>
+                <li>
+                    <a href="#">Vision</a>
+                </li>
+                <li>
+                    <a href="#">Challenge</a>
+                </li>
+                <li>
+                    <a href="#">Idea</a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group pull-right">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                Category: All
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#">Category1</a>
+                </li>
+                <li>
+                    <a href="#">Category2</a>
+                </li>
+                <li>
+                    <a href="#">Category3</a>
+                </li>
+                <li>
+                    <a href="#">Category4</a>
+                </li>
+            </ul>
+        </div>
+
+
+     </div>
+
+
     <div id="content-list push-left" class="row">
         <div class="row singleContent challenge">
             <div class="span2 push-left">
                 <a class="thumbnail">
-                    <img alt="headline of the content" src="/img/fallbackContent/challenge.png">
+                    <div class="image"></div>
                 </a>
             </div>
             <div class="span9 push-right">
