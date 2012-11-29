@@ -26,6 +26,7 @@ class ContentController extends Oibs_Controller_CustomController
 
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
 		$ajaxContext->addActionContext('feed', 'html')
+                    ->addActionContext('get-content', 'html')
                     ->initContext();
 
 		$this->view->title = 'content-title';
@@ -53,7 +54,27 @@ class ContentController extends Oibs_Controller_CustomController
 		$this->view->sections   = $sections;
 	}
 
-	public function addAction()
+    public function getContentAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $user = $auth->getIdentity();
+        $userid = $user->user_id;
+
+        $params = $this->getRequest()->getParams();
+
+        $sect = isset($params['section']) ? $params['section'] : 0;
+        $cat = isset($params{'category'}) ? $params['category'] : 0;
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->listUserContent($userid, $sect, $cat, $page, $count);
+
+        $this->view->contentData = $data;
+        $this->view->page = $page;
+    }
+
+    public function addAction()
 	{
 		if (!$this->hasIdentity()) {
 			$this->flash('content-add-not-logged', '/');
