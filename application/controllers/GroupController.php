@@ -29,11 +29,7 @@
  */
  class GroupController extends Oibs_Controller_CustomController
 {
-     public function init()
-     {
-         parent::init();
-         Zend_Layout::getMvcInstance()->setLayout('layout_public');
-     }
+
 
     function indexAction()
     {
@@ -43,7 +39,16 @@
         $this->view->logged_in = $logged_in;
     }
 
-    /**
+     public function init()
+     {
+         parent::init();
+         $this->view->title = 'create-group-title';
+         Zend_Layout::getMvcInstance()->setLayout('layout_public');
+
+     }
+
+
+     /**
      * listAction - shows a list of all groups
      */
     function listAction()

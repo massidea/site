@@ -130,3 +130,14 @@ main-nav-mygroups-newgroup;Neue Gruppe
 main-nav-myprojects;Meine Projekte
 main-nav-myprojects-newproject;Neues Projekt
 main-nav-categories;Kategorien
+
+create-group-title;Neue Gruppe
+create-group-form-groupname;Name
+create-group-form-category;Kategorie
+create-group-form-description;Beschreibung
+create-group-form-keyword;Schlagwörter
+create-group-form-privacy;Privatsphäre
+create-group-form-public;öffentlich
+create-group-form-private;privat
+
+
