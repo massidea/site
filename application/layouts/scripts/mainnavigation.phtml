@@ -1,4 +1,4 @@
-<div class="row">
+<div class="col mainnav">
     <nav class="pull-left">
         <div class="indicator"></div>
         <ul>
@@ -70,18 +70,18 @@
             </li>
 
             <li class="categories">
-        <li class="categories">
-            <a rel="popover-hover"
-               data-title="<?php echo $this->translate('main-nav-categories'); ?>"
-               data-content="<ul>
+            <li class="categories">
+                <a rel="popover-hover"
+                   data-title="<?php echo $this->translate('main-nav-categories'); ?>"
+                   data-content="<ul>
                      <?php foreach($this->categories as $category) : ?>
                     <li>
                     <a href='<?php echo $this->url(array(
-                   'controller' => '#',
-                   'action' => '#',
-                   'categoryid' => $category['id_ctg'],
-                   'language' => $this->language,
-               ), 'lang_default', true); ?>'> <?php echo $category['title_ctg']; ?>  </a> </li>
+                       'controller' => '#',
+                       'action' => '#',
+                       'categoryid' => $category['id_ctg'],
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'> <?php echo $category['title_ctg']; ?>  </a> </li>
                 <?php endforeach; ?>
                 </ul>">
                     <?php echo $this->translate('main-nav-categories'); ?>
@@ -89,13 +89,4 @@
             </li>
         </ul>
     </nav>
-
-
-    <div class="matchMaking pull-right">
-        <div class="input-append search">
-            <input class="span2" id="appendedInputButton" type="text">
-            <button class="btn" type="button"><i class="icon-search icon-white"></i></button>
-        </div>
-    </div>
 </div>
-
