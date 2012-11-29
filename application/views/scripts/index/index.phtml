@@ -1,45 +1,6 @@
-<?php
-// some variable initiation
-$url_sign_up = $this->url(array('controller' => 'account',
-        'action' => 'register',
-        'language' => $this->language),
-    'lang_default', true);
-
-$url_more = $this->url(array('controller' => 'search',
-        'action' => 'result',
-        'page' => '2',
-        'language' => $this->language),
-    'lang_default', true);
-
-$url_getRecentContent = $this->url(array('controller' => 'ajax',
-        'action' => 'getrecentcontent',
-        'type' => 'all',
-        'language' => $this->language),
-    'lang_default', true);
-
-$url_checkRecentContent = $this->url(array('controller' => 'ajax',
-        'action' => 'checkrecentcontent',
-        'language' => $this->language),
-    'lang_default', true);
-
-$url_tag_cloud = $this->url(array('controller' => 'tag',
-        'action' => 'index',
-        'list_type' => 'index',
-        'language' => $this->language),
-    'lang_default', true);
-?>
-<?php $this->headScript()->captureStart() ?>
-
-// Variables for ajax requests
-var url_checkrecentcontent = '<?php echo $url_checkRecentContent; ?>';
-var url_getrecentcontent = '<?php echo $url_getRecentContent; ?>';
-var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif'); ?>';
-
-<?php $this->headScript()->captureEnd() ?>
-<?php $this->headScript()->appendFile($this->baseUrl('/js/recentcontent.js')); ?>
-
 <div class="row startPage">
     <div class="span12">
+
         <div class="row threeBigSections">
             <div class="span4">
                 <h2><img src="/img/icons/challenge.png" alt="Challenges"><?php echo $this->translate('index-challenges'); ?>
@@ -54,6 +15,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                             'language' => $this->language),
                         'content_list', true); ?>"><?php echo $this->translate('index-recent-challenges'); ?></a></div>
             </div>
+
             <div class="span4">
                 <h2><img src="/img/icons/idea.png" alt="Ideas"><?php echo $this->translate('index-ideas'); ?></h2>
                 <a class="thumbnail">
@@ -66,7 +28,8 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                             'language' => $this->language),
                         'content_list', true); ?>"><?php echo $this->translate('index-recent-ideas'); ?></a></div>
             </div>
-            <div class="span4">
+
+	        <div class="span4">
                 <h2><img src="/img/icons/vision.png" alt="Visions"><?php echo $this->translate('index-visions'); ?></h2>
 
                 <a class="thumbnail">
@@ -81,6 +44,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                 </div>
             </div>
         </div>
+
         <div class="row margin-top">
             <div class="span6 advantages">
                 <h2><?php echo $this->translate('index-what-is-massidea'); ?></h2>
@@ -140,6 +104,7 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
 
                 <a href class="feedControl">more</a>
             </div>
+	        <script type="text/javascript"> $(function () { LiveFeed.init(); }); </script>
         </div>
 
         <div class="row">
@@ -172,5 +137,6 @@ var url_ajaxloader = '<?php echo $this->baseUrl('/images/ajax-loader-black.gif')
                 </div>
             </div>
         </div>
+
     </div>
 </div>

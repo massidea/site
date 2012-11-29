@@ -51,15 +51,19 @@ var MassIdea = new (function () {
 	 * @param {String|jQuery} target
 	 * @param {String}        url
 	 * @param {Object}        [params]
+	 * @param {Function}      [callback]
 	 */
-	function loadHTML (target, url, params) {
+	function loadHTML (target, url, params, callback) {
 		params = params || {};
+		callback = (typeof callback === 'function') ? callback : new Function();
+		callback = (typeof params === 'function') ? params : callback;
 
 		params.format = 'html';
 		var $target = (typeof target === 'string') ? $(target) : target;
 
 		$.post(zendUrl(url, params), function (response) {
 			$target.html(response);
+			callback();
 		});
 	}
 
