@@ -3,8 +3,6 @@ $('*[rel=popover-hover]').popover({
 	html    : 'true'
 });
 
-
-
 //language selection
 $("#languageMenu").change(function () {
 	var curLan = $(":selected", this).val();
@@ -16,7 +14,7 @@ $("#languageMenu").change(function () {
 	location.href = '/' + curLan + '/index/change-language?language=' + curLan + '&returnUrl=' + escape(pathName);
 });
 
-var MassIdea = (function () {
+var MassIdea = new (function () {
 
 	/**
 	 * Generates a Zend Framework URL
@@ -29,9 +27,9 @@ var MassIdea = (function () {
 		params = params || {};
 		for (key in params) {
 			if (!params.hasOwnProperty(key)) continue;
-			url += '/' + escape(key) + '/' + escape(value);
+			url += '/' + escape(key) + '/' + escape(params[key]);
 		}
-		return url;
+		return '/' + LANGUAGE + url;
 	}
 
 	/**
@@ -52,9 +50,12 @@ var MassIdea = (function () {
 	 *
 	 * @param {String|jQuery} target
 	 * @param {String}        url
-	 * @param {Object}        params
+	 * @param {Object}        [params]
 	 */
 	function loadHTML (target, url, params) {
+		params = params || {};
+
+		params.format = 'html';
 		var $target = (typeof target === 'string') ? $(target) : target;
 
 		$.post(zendUrl(url, params), function (response) {

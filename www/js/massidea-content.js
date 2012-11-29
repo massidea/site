@@ -26,11 +26,11 @@ var Content = new (function () {
 	function init() {
 		$contentList    = $(SEL_CONTENT_LIST);
 		$loadMoreButton = $(SEL_LOAD_MORE).click(loadMore);
-		$sectionFilter  = $(SEL_SECTION).change(function () {
-			applySectionFilter($(':selected', this).val());
+		$sectionFilter  = $(SEL_SECTION).delegate('a', 'click', function () {
+			applySectionFilter($(this).attr('rel'));
 		});
-		$categoryFilter = $(SEL_CATEGORY).change(function () {
-			applyCategoryFilter($(':selected', this).val());
+		$categoryFilter = $(SEL_CATEGORY).delegate('a', 'click', function () {
+			applyCategoryFilter($(this).attr('rel'));
 		});
 		loadContent();
 	}
