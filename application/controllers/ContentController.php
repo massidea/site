@@ -42,12 +42,8 @@ class ContentController extends Oibs_Controller_CustomController
 
 	public function listAction()
 	{
-		// load categories
-
 		$category_model = new Default_Model_Category();
 		$categories = $category_model->getCategories();
-
-		// load sections
 
 		$sections[] = array('id' => 1, 'title' => 'general-vision');
 		$sections[] = array('id' => 2, 'title' => 'general-idea');
