@@ -1,3 +1,43 @@
+general-vision;Vision
+general-challenge;Challenge
+general-idea;Idee
+
+error-field-empty;Kein Text eingegeben
+error-selection-empty; Keine Auswahl getroffen
+error-field-too-short; Der eingegebene Text ist zu kurz
+error-field-too-long; Der eingegebene Text ist zu lang
+error-value-not-same; Werte müssen übereinstimmen
+error-captcha-no-same; Der eingegebene Captcha ist falsch
+error-checkbox-not-checked; Verpflichtend
+error-username-exists; Benutzername existiert bereits
+error-username-not-valid; Benutzername nicht gültig
+error-email-exists; E-Mail-Adresse ist bereits gespeichert
+
+email-invalid; Der eingegebene Wert ist vom falschen Typ, Der Wert muss ein string sein
+email-invalid-format; '%value%' ist keine gültige E-Mail-Adresse im Format lokal@hostname
+email-invalid-hostname; '%hostname%' ist kein gültiger Hostname für E-Mail-Adresse '%value%'
+email-invalid-ms-record; '%hostname%' scheint keinen gültigen MX Eintrag für E-Mail-Adresse '%value%' zu haben
+email-dot-atom; '%localPart%' entspricht nicht dem dot-atom Format
+email-quoted-string; '%localPart%' entspricht nicht dem Anführungszeichen Format
+email-invalid-local-part; '%localPart%' ist kein gültiger lokaler Teil der E-Mail-Adresse '%value%'
+email-length-exceeded; '%value%' überschreitet die erlaubte Länge
+
+layout-about-Massidea;Über MassIdea
+layout-terms;AGB
+layout-privacy;Datenschutz
+layout-imprint;Impressum
+layout-join-our-community-footer;Betrete die Community
+layout-sign-up;Registrieren
+layout-create-a-post;Erstelle einen Beitrag!
+layout-select-your-platform-language;Sprache für die Plattform wählen
+layout-language;Sprache
+layout-Finish;Finnisch
+layout-German;Deutsch
+layout-French;Französisch
+layout-login;Anmelden
+layout-logout;Abmelden
+layout-signup;Registrieren
+
 index-home;Massidea.org
 index-challenges;Challenges
 index-create-a-challenge;Challenge erstellen
@@ -20,24 +60,11 @@ index-find-new-contacts;Finde neue Kontakte und erstelle Gruppen
 index-be-part-of-massidea;Nimm teil an Massidea!
 index-start-now-and;Starte <span>jetzt</span> und
 index-join-our-community-button;betrete die Community
-layout-about-Massidea;Über MassIdea
-layout-terms;AGB
-layout-privacy;Datenschutz
-layout-imprint;Impressum
-layout-join-our-community-footer;Betrete die Community
-layout-sign-up;Registrieren
-layout-create-a-post;Erstelle einen Beitrag!
-layout-select-your-platform-language;Sprache für die Plattform wählen
-layout-language;Sprache
-layout-Finish;Finnisch
-layout-German;Deutsch
-layout-French;Französisch
-layout-login;Anmelden
-layout-logout;Abmelden
-layout-signup;Registrieren
+
 email;E-Mail
 password;Passwort
 forgotPassword;Passwort vergessen
+
 account-login-title;Login
 account-login-username;Benutzername
 account-login-password;Passwort
@@ -91,33 +118,13 @@ account-fetchpassword-captcha;Captcha
 account-fetchpassword-error-nosuchkey;Passwort zurücksetzen Link ist ungültig.
 account-fetchpassword-password;Passwort
 account-fetchpassword-confirm;Passwort bestätigen
-error-field-empty;Kein Text eingegeben
-error-selection-empty; Keine Auswahl getroffen
-error-field-too-short; Der eingegebene Text ist zu kurz
-error-field-too-long; Der eingegebene Text ist zu lang
-error-value-not-same; Werte müssen übereinstimmen
-error-captcha-no-same; Der eingegebene Captcha ist falsch
-error-checkbox-not-checked; Verpflichtend
-error-username-exists; Benutzername existiert bereits
-error-username-not-valid; Benutzername nicht gültig
-error-email-exists; E-Mail-Adresse ist bereits gespeichert
-email-invalid; Der eingegebene Wert ist vom falschen Typ, Der Wert muss ein string sein
-email-invalid-format; '%value%' ist keine gültige E-Mail-Adresse im Format lokal@hostname
-email-invalid-hostname; '%hostname%' ist kein gültiger Hostname für E-Mail-Adresse '%value%'
-email-invalid-ms-record; '%hostname%' scheint keinen gültigen MX Eintrag für E-Mail-Adresse '%value%' zu haben
-email-dot-atom; '%localPart%' entspricht nicht dem dot-atom Format
-email-quoted-string; '%localPart%' entspricht nicht dem Anführungszeichen Format
-email-invalid-local-part; '%localPart%' ist kein gültiger lokaler Teil der E-Mail-Adresse '%value%'
-email-length-exceeded; '%value%' überschreitet die erlaubte Länge
+
 hostname-invalid-local-name; Kein gültiger Hostname
 hostname-invalid-hostname; Kein gültiger Hostname
 hostname-undecipherable-tld; Hostname ist nicht entzifferbar
 hostname-unknown-tld; Hostname ist nicht bekannt
 main-nav-section;Bereich
 main-nav-section-overview;Übersicht
-main-nav-section-vision;Vision
-main-nav-section-challenge;Challenge
-main-nav-section-idea;Idee
 main-nav-mygroups;Meine Gruppen
 main-nav-mygroups-newgroup;Neue Gruppe
 main-nav-myprojects;Meine Projekte
