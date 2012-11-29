@@ -1,0 +1,99 @@
+<div class="row">
+    <nav class="pull-left">
+        <div class="indicator"></div>
+        <ul>
+            <li class="overview">
+                <a class="mainnavigation_popover"
+                   data-title="<?php echo $this->translate('main-nav-section'); ?>"
+                   data-content="<ul><li><a href='<?php echo $this->url(array(
+                       'controller' => 'content',
+                       'action' => 'list',
+                       'user' => $this->username,
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
+        <li><a href='<?php echo $this->url(array(
+                       'controller' => 'content',
+                       'action' => 'list',
+                       'type' => 'vision',
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'><?php echo $this->translate('general-vision'); ?></a></li>
+        <li><a href='<?php echo $this->url(array(
+                       'controller' => 'content',
+                       'action' => 'list',
+                       'type' => 'challenge',
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'><?php echo $this->translate('general-challenge'); ?></a></li>
+        <li><a href='<?php echo $this->url(array(
+                       'controller' => 'content',
+                       'action' => 'list',
+                       'type' => 'idea',
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'><?php echo $this->translate('general-idea'); ?></a></li></ul>">
+                    <?php echo $this->translate('main-nav-section'); ?>
+                </a>
+            </li>
+            <li class="mygroups">
+
+                <a class="mainnavigation_popover"
+                   data-title="<?php echo $this->translate('main-nav-mygroups'); ?>"
+                   data-content="<ul>
+                <?php foreach ($this->groups as $group) : ?>
+                    <li>
+                    <a href='<?php echo $this->url(array(
+                       'controller' => 'group',
+                       'action' => 'view',
+                       'groupid' => $group['id_grp'],
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'> <?php echo $group['group_name_grp']; ?>  </a> </li>
+                <?php endforeach; ?>
+                        <li><a href='<?php echo $this->url(array(
+                       'controller' => 'mainNavigation',
+                       'action' => 'group',
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li>
+                        </ul>">
+                    <?php echo $this->translate('main-nav-mygroups'); ?>
+                </a>
+            </li>
+            <li class="myprojects">
+
+                <a class="mainnavigation_popover"
+                   data-title="<?php echo $this->translate('main-nav-myprojects'); ?>"
+                   data-content="<ul><li><a href='<?php echo $this->url(array(
+                       'controller' => '#',
+                       'action' => '#',
+                       'user' => $this->username,
+                       'language' => $this->language,
+                   ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-myprojects-newproject'); ?></a></li></ul>">
+                    <?php echo $this->translate('main-nav-myprojects'); ?>
+                </a>
+            </li>
+        <li class="categories">
+            <a class="mainnavigation_popover"
+               data-title="<?php echo $this->translate('main-nav-categories'); ?>"
+               data-content="<ul>
+                     <?php foreach($this->categories as $category) : ?>
+                    <li>
+                    <a href='<?php echo $this->url(array(
+                   'controller' => '#',
+                   'action' => '#',
+                   'categoryid' => $category['id_ctg'],
+                   'language' => $this->language,
+               ), 'lang_default', true); ?>'> <?php echo $category['title_ctg']; ?>  </a> </li>
+                <?php endforeach; ?>
+                </ul>">
+                    <?php echo $this->translate('main-nav-categories'); ?>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="matchMaking pull-right">
+        <div class="input-append search">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn" type="button"><i class="icon-search icon-white"></i></button>
+        </div>
+    </div>
+</div>
+
