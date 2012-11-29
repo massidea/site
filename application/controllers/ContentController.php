@@ -1,558 +1,357 @@
 <?php
 /**
- *  ContentController -> Viewing content
+ *  ContentController
  *
- *  Copyright (c) <2009>, Joel Peltonen <joel.peltonen@cs.tamk.fi>
- *  Copyright (c) <2009>, Pekka Piispanen <pekka.piispanen@cs.tamk.fi>
- *
- *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- *  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- *  more details.
- *
- *  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
- *  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
- *  License text found in /license/
+ *  @package        controllers
+ *  @license        GPL v2
+ *  @version        2.0
  */
 
 /**
- *  ContentController - class
+ *  ContentController
  *
  *  @package        controllers
- *  @author         Joel Peltonen & Pekka Piispanen
- *  @copyright      2009 Joel Peltonen & Pekka Piispanen
  *  @license        GPL v2
- *  @version        1.0
+ *  @version        2.0
  */
 class ContentController extends Oibs_Controller_CustomController
 {
 	/**
-	 *   init
-	 *
-	 *   Initialization of content controller
-	 *
+	 * @inheritdoc
 	 */
 	public function init()
 	{
 		parent::init();
         Zend_Layout::getMvcInstance()->setLayout('layout_public');
+
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
-		$ajaxContext->addActionContext('list', 'xml')
-                    ->addActionContext('feed', 'html')
-                    ->addActionContext('lang_switcher', 'html')
+		$ajaxContext->addActionContext('feed', 'html')
                     ->initContext();
-		$this->baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
+
 		$this->view->title = 'content-title';
-	} // end of init()
-
-	/**
-	 *   indexAction
-	 *
-	 *   Content index -- redicrects user to help/guidelines for adding content
-	 */
-	public function indexAction()
-	{
-		//$this->view->title = "Massidea.org";
-
-		//if (!$this->view->authenticated){
-
-		$url = $this->_urlHelper->url(array('controller' => 'help',
-                                            'action' => 'guidelines',
-                                            'language' => $this->view->language),
-                                            'lang_default', true);
-
-		$this->_redirect($url);
-
-		//}
 	}
 
-	/**
-	 *   listAction
-	 *
-	 *   Lists content by content type.
-	 *
-	 */
+	public function indexAction()
+	{
+		if ($this->hasIdentity()) {
+			$this->_forward('list');
+		} else {
+			$this->_redirect('/');
+		}
+	}
+
 	public function listAction()
 	{
+		// load categories
 
+		$category_model = new Default_Model_Category();
+		$categories = $category_model->getCategories();
 
-		$url = $this->_urlHelper->url(array('controller' => 'index',
-                                            'language' => $this->view->language),
-                                            'lang_default', true);
+		// load sections
 
-		// Get cache from registry
-		$cache = Zend_Registry::get('cache');
+		$sections[] = array('id' => 1, 'title' => 'general-vision');
+		$sections[] = array('id' => 2, 'title' => 'general-idea');
+		$sections[] = array('id' => 3, 'title' => 'general-challenge');
 
-		// Set array for content data
-		$data = array();
+		$this->view->categories = $categories;
+		$this->view->sections   = $sections;
+	}
+
+	public function addAction()
+	{
+		if (!$this->hasIdentity()) {
+			$this->flash('content-add-not-logged', '/');
+		}
 
 		// Get requests
 		$params = $this->getRequest()->getParams();
 
 		// Get content type
-		$cty = isset($params['type']) ? $params['type'] : 'all';
-		if($cty != "idea" && $cty != "finfo" && $cty != "problem") $this->_redirect($url);
+		$contentType = isset($params['contenttype']) ? $params['contenttype'] : '';
+		$relatesToId = isset($params['relatestoid']) ? $params['relatestoid'] : 0;
 
-		// Get page nummber and items per page
-		$page = isset($params['page']) ? $params['page'] : 1;
-		$count = isset($params['count']) ? $params['count'] : 15;
+		// Get all content types from the database
+		$modelContentTypes = new Default_Model_ContentTypes();
+		$validContentType = $modelContentTypes->contentTypeExists($contentType);
 
-		// Get list oreder value
-		$order = isset($params['order']) ? $params['order'] : 'created';
-		$ind = isset($params['ind']) ? $params['ind'] : 0;
+		// Variable $relatesToId is set to 0, just in case that user is not
+		// adding idea and there's no relatesto_id set
 
-		// Get current language id
-		// $languages = new Default_Model_Languages();
-		// $idLngInd = $languages->getLangIdByLangName($this->view->language);
+		$content = new Default_Model_Content();
 
-		// Get recent content by type
-		$contentModel = new Default_Model_Content();
-		$data = $contentModel->listRecent($cty, $page, $count, $order, $this->view->language, $ind);
-		$results = array();
-
-		// gather other content data and insert to results array
-		if(isset($data[0])) {
-			$contentHasTagModel = new Default_Model_ContentHasTag();
-			// $contentRatingsModel = new Default_Model_ContentRatings();
-
-			$i = 0;
-			foreach ($data as $content) {
-				$results[$i] = $content;
-				$results[$i]['tags'] = $contentHasTagModel
-				->getContentTags($content['id_cnt']);
-				//$results[$i]['ratingdata'] = $contentRatingsModel
-				//                        ->getPercentagesById($content['id_cnt']);
-				$i++;
-			}
-		}
-
-		// Get total content count
-		$contentCount = $contentModel->getContentCountByContentType($cty, $this->view->language);
-
-		// Calculate total page count
-		$pageCount = ceil($contentCount / $count);
-
-		// Most viewed content
-		$mostViewedData = $contentModel->getMostViewedType($cty, $page, $count, 'views', 'en', $ind);
-
-		// Get all industries
-		//$industries = new Default_Model_Industries();
-		//$this->view->industries = $industries->getNamesAndIdsById($ind, $idLngInd);
-
-		// Get industry data by id
-		//$this->view->industryParent = $industries->getById($ind);
-
-		// Load most popular tags from cache
-		if(!$result = $cache->load('IndexTags')) {
-			$tagsModel = new Default_Model_Tags();
-			$tags = $tagsModel->getPopular(20);
-			/*
-			 // resize tags
-			 foreach ($tags as $k => $tag) {
-			 $size = round(50 + ($tag['count'] * 30));
-			 if ($size > 300) {
-			 $size = 300;
-			 }
-			 $tags[$k]['tag_size'] = $size;
-			 }
-			 */
-
-			// Action helper for tags
-			$tags = $this->_helper->tagsizes->popularTagCalc($tags);
-
-			//Action helper for define is tag running number divisible by two
-            $tags = $this->_helper->tagsizes->isTagDivisibleByTwo($tags);
-
-			// Save most popular tags data to cache
-			$cache->save($tags, 'IndexTags');
-		} else {
-			$tags = $result;
-		}
-
-		// Custom pagination to fix memory error on large amount of data
-		/*
-		$paginator = new Zend_View();
-		$paginator->setScriptPath('../application/views/scripts');
-		$paginator->pageCount = $pageCount;
-		$paginator->currentPage = $page;
-		$paginator->pagesInRange = 10;
-		*/
-
-		// Send to view
-		$this->view->tags = $tags;
-		//$this->view->contentPaginator = $paginator;
-		$this->view->contentData = $results;
-		$this->view->type = $cty;
-		$this->view->count = $count;
-		$this->view->page = $page;
-		$this->view->contentCount = $contentCount;
-		$this->view->ind = $ind;
-		$this->view->mostViewedData = $mostViewedData;
-
-		// RSS type for the layout
-		$this->view->rsstype = $cty;
-
-	} // end of listAction()
-
-	/**
-	 *   addAction
-	 *
-	 *   Adds new content by content type.
-	 *
-	 */
-	public function addAction()
-	{
-		// Get authentication
-		$auth = Zend_Auth::getInstance();
-
-		// If user has identity
-		if ($auth->hasIdentity()) {
-			// Get requests
-			$params = $this->getRequest()->getParams();
-
-			// Get content type
-			$contentType = isset($params['contenttype']) ? $params['contenttype'] : '';
-			$relatesToId = isset($params['relatestoid']) ? $params['relatestoid'] : 0;
-
-			// Get all content types from the database
-			$modelContentTypes = new Default_Model_ContentTypes();
-			//$contentTypes = $modelContentTypes->getAllNamesAndIds();
-			$validContentType = $modelContentTypes->contentTypeExists($contentType);
-
-			/*
-			 // Setting the variable first to be true
-			 $invalidContentType = true;
-
-			 // If set content type exists in database, invalidContentType
-			 // is set to false
-			 foreach($contentTypes as $cty){
-			 if($contentType == $cty['key_cty']) {
-			 $invalidContentType = false;
-			 }
-			 }
-			 */
-
-			// Variable $relatesToId is set to 0, just in case that user is not
-			// adding idea and there's no relatesto_id set
-
-			$content = new Default_Model_Content();
-
-			if(!$validContentType) {
-				$message = 'content-add-contenttype-missing-or-invalid';
-				$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                'action' => 'index',
-                                                'language' => $this->view->language),
-                                         		'lang_default', true);
-
-				$this->flash($message, $url);
-			} elseif($relatesToId != 0) {
-
-				/*if($relatesToId == 0) {
-				 $message = 'content-add-relatesto-id-missing';
-				 $url = $this->_urlHelper->url(array('controller' => 'msg',
-				 'action' => 'index',
-				 'language' => $this->view->language),
-				 'lang_default', true);
-
-				 $this->flash($message, $url);
-				 } */
-
-				// Checking if the content that idea is related to exists
-				$contentExists = $content->checkIfContentExists($relatesToId);
-
-				if(!$contentExists) {
-					$message = 'content-add-invalid-related-content';
-					$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                        'action' => 'index',
-                                                        'language' => $this->view->language),
-                                                  		'lang_default', true);
-
-					$this->flash($message, $url);
-				}
-			}
-
-			$this->view->contenttype = $this->view->translate($contentType);
-			$this->view->short_contenttype = $contentType;
-			$this->view->relatesToId = $relatesToId;
-
-			if($relatesToId != 0) {
-				$relatesToTypeId = $content->getContentTypeIdByContentId($relatesToId);
-				$this->view->relatesToType = $modelContentTypes->getTypeById($relatesToTypeId);
-				$this->view->relatesToHeader = $content->getContentHeaderByContentId($relatesToId);
-			}
-
-			// Content type id is needed when adding content  to database
-			$contentTypeId = $modelContentTypes->getIdByType($contentType);
-
-			// Cacheing of formData
-			$cache = Zend_Registry::get('cache');
-			$formDataCacheTag = 'formData_'.$contentType.'_'.$this->view->language;
-
-			if (!($formData = $cache->load($formDataCacheTag) ) || $relatesToId != 0 || true) {
-				// Creating array for form data
-				$formData = array();
-
-				// Adding data to formData
-				$formData['content_type'] = $contentTypeId;
-				$formData['content_relatesto_id'] = $relatesToId;
-
-				// Content classifications
-				$modelFutureinfoClasses = new Default_Model_FutureinfoClasses();
-				$futureinfoClasses = $modelFutureinfoClasses->getAllNamesAndIds();
-
-				$formData['FutureinfoClasses'] = array();
-				$formData['FutureinfoClasses'][0] = $this->view->translate("content-add-select-finfo-classification");
-
-				foreach($futureinfoClasses as $fic) {
-					$formData['FutureinfoClasses'][$fic['id_fic']] = $fic['name_fic'];
-				} // end foreach
-
-				if(empty($formData['FutureinfoClasses'])) {
-					$formData['FutureinfoClasses'] = array(0 => '----');
-				}
-
-				$modelInnovationTypes = new Default_Model_InnovationTypes();
-				$innovationTypes = $modelInnovationTypes->getAllNamesAndIds();
-
-				$formData['InnovationTypes'] = array();
-				$formData['InnovationTypes'][0] =
-				$this->view->translate("content-add-select-innovation");
-
-				foreach($innovationTypes as $ivt) {
-					$formData['InnovationTypes'][$ivt['id_ivt']] =
-					$ivt['name_ivt'];
-				} // end foreach
-
-				if(empty($formData['InnovationTypes'])) {
-					$formData['InnovationTypes'] = array(0 => '----');
-				}
-
-				$languages = New Default_Model_Languages();
-				$idLngInd = $languages->getLangIdByLangName($this->view->language);
-				$allLanguages = $languages->getAllNamesAndIds();
-
-				$formData['languages'] = array();
-				$formData['languages'][0] = $this->view->translate("content-add-select-language");
-				foreach($allLanguages as $lng) {
-					$formData['languages'][$lng['id_lng']] = $lng['name_lng'];
-				}
-
-				$modelIndustries = new Default_Model_Industries();
-				$industries = $modelIndustries->getNamesAndIdsById(0, $idLngInd);
-
-				$formData['Industries'] = array();
-				$formData['Industries'][0] =
-				$this->view->translate("content-add-select-industry");
-
-				foreach($industries as $ind) {
-					$formData['Industries'][$ind['id_ind']] = $ind['name_ind'];
-				} // end foreach
-
-				if(empty($formData['Industries'])) {
-					$formData['Industries'] = array(0 => '----');
-				}
-
-				// The id of first industry listed is needed when listing the
-				// divisions for the first time
-				$firstIndustryId = $modelIndustries->getIndustryId();
-				$divisions = $modelIndustries->getNamesAndIdsById(
-				$firstIndustryId, $idLngInd
-				);
-
-				$formData['Divisions'] = array();
-				$formData['Divisions'][0] = $this->view->translate("content-add-select-division-no-industry");
-
-				$formData['Groups'] = array();
-				$formData['Groups'][0] = $this->view->translate("content-add-select-group-no-division");
-
-				$formData['Classes'] = array();
-				$formData['Classes'][0] = $this->view->translate("content-add-select-class-no-group");
-
-				$cache->save($formData, $formDataCacheTag);
-			}
-
-
-			$formCacheTag = 'form_'.$contentType.'_'.$this->view->language;
-			// Form for content adding, cacheing if not cached.
-			// Generate new form if is post because cache will save post parameters and fail
-			if ($this->getRequest()->isPost()) {
-				$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
-			}
-
-			elseif (!($form = $cache->load($formCacheTag))  ) {
-				$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
-
-				$cache->save($form, $formCacheTag);
-			}
-
-
-
-			$this->view->form = $form;
-
-			// Get requests
-			if($this->getRequest()->isPost()) {
-
-				// Get content data
-				$data = $this->getRequest()->getPost();
-
-				// If form data is valid, handle database insertions
-				$validForm = $form->isValid($data) ? true : (isset($data['content_save']) && $data['content_save'] != '');
-				if ($validForm) {
-
-					// If form data is going to be published
-					if(isset($data['content_publish']) && $data['content_publish'] != '') {
-						$data['publish'] = 1;
-						$message_error = 'content-publish-not-successful';
-					}
-					// If form data is going to be saved
-					elseif(isset($data['content_save']) && $data['content_save'] != '') {
-						$data['publish'] = 0;
-						$message_error = 'content-save-not-successful';
-					}
-
-					// Content keywords
-					/* FIXED: split() is deprecated in PHP 5.3.0 -> and removed in
-					 * PHP 6.0, so changed to explode(). Also trim(array) doesn't
-					 * trim array values, so this is done with foreach now.
-					 */
-					$keywords = array();
-					foreach(explode(',', $data['content_keywords']) as $keyword) {
-						if(trim($keyword) != "") {
-							$keywords[] = strip_tags(trim($keyword));
-						}
-					}
-					$data['content_keywords'] = array_unique($keywords);
-
-					// Related companies
-					$relatedCompanies = array();
-					foreach(explode(',', $data['content_related_companies']) as $relatedCompany) {
-						if(trim($relatedCompany) != "") {
-							$relatedCompanies[] = strip_tags(trim($relatedCompany));
-						}
-					}
-					$data['content_related_companies'] = array_unique($relatedCompanies);
-
-					// Get user id
-					$data['User']['id_usr'] = $auth->getIdentity()->user_id;
-
-					/*
-					if($data['content_division'] == 0) {
-						$data['content_industry_id'] = $data['content_industry'];
-					} elseif($data['content_group'] == 0) {
-						$data['content_industry_id'] = $data['content_division'];
-					} elseif($data['content_class'] == 0) {
-						$data['content_industry_id'] = $data['content_group'];
-					} elseif($data['content_class'] != 0) {
-						$data['content_industry_id'] = $data['content_class'];
-					}
-*/
-
-					$languages = new Default_Model_Languages();
-
-					if($data['content_language'] == 0) {
-						$data['content_language'] = $this->view->language;
-					}
-					else {
-						$data['content_language'] = $languages->getLangNameByLangId($data['content_language']);
-					}
-
-					$data['files'] = $_FILES['content_file_upload'];
-					// Add a new content
-					$content = new Default_Model_Content();
-					$add = $content->addContent($data);
-
-					if($data['content_relatesto_id'] != 0) {
-						$profileModel = new Default_Model_UserProfiles();
-		   				$profileModel->deleteNotificationCache($data['content_relatesto_id']);
-					}
-
-					if(!$add) {
-						$add_successful = false;
-					} else {
-						$add_successful = true;
-					} // end if
-
-					$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                       	'action' => 'index',
-                                                        'language' => $this->view->language),
-                                                  		'lang_default', true);
-
-					if($add_successful) {
-
-						// Get cache from registry
-				        $cache = Zend_Registry::get('cache');
-
-				        // Load most popular tags from cache
-						$output = md5(time());
-						$cache->save($output, 'LatestPostHash');
-						// Force refresh to tags on front page
-				        $cache->remove('IndexTags');
-
-						if($data['publish'] == 1) {
-							$url = $this->_urlHelper->url(array('content_id' => $add,
-                                         						'language' => $this->view->language),
-                                         						'content_shortview', true);
-							$this->_redirect($url);
-						}
-						else {
-							/*$userpage = $this->_urlHelper->url(array('controller' => 'account',
-                                                         			 'action' => 'view',
-                                                         			 'user' => $auth->getIdentity()->username,
-			                                                         'language' =>  $this->view->language),
-            			                                             'lang_default', true);
-							$savedTab = $this->_urlHelper->url(array('controller' => 'account',
-                                                   				     'action' => 'view',
-                                                         			 'user' => $auth->getIdentity()->username,
-                                                         			 'type' => 'saved',
-                                                         			 'language' =>  $this->view->language),
-                                                         			 'lang_default', true);
-
-							$message_ok = $this->view->translate('content-save-successful');
-							$message_ok .= ' ('.$content->getContentHeaderByContentId($add).')';
-							$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
-							$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
-							$message_ok .= ' ' . $this->view->translate('content-save-successful4');
-							$message_ok .= ' <a href="'.$savedTab.'">'.$this->view->translate('content-save-successful5').'</a>.';
-							$this->flash($message_ok, $url);*/
-							$url = $this->_urlHelper->url(array('controller' => 'account',
-																'action' => 'view',
-																'language' => $this->view->language,
-																'user' => $auth->getIdentity()->username),
-																'lang_default', true);
-							$this->_redirect($url);
-						}
-					}
-					else {
-
-						$this->flash($message_error, $url);
-					}
-				}
-
-			} // end if
-
-		} else {
-			// If not logged, redirecting to system message page
-			$message = 'content-add-not-logged';
-
+		if(!$validContentType) {
+			$message = 'content-add-contenttype-missing-or-invalid';
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
-                                                'action' => 'index',
-                                                'language' => $this->view->language),
-                                          'lang_default', true);
+                                            'action' => 'index',
+                                            'language' => $this->view->language),
+                                            'lang_default', true);
 
 			$this->flash($message, $url);
-		} // end if
-	} // end of addAction()
+		} else if($relatesToId != 0) {
+			// Checking if the content that idea is related to exists
+			$contentExists = $content->checkIfContentExists($relatesToId);
 
-	/**
-	 *   makelinksAction
-	 *
-	 *   Make content link to content.
-	 *
-	 */
-	public function makelinksAction() {
+			if(!$contentExists) {
+				$message = 'content-add-invalid-related-content';
+				$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
+                                                    'lang_default', true);
+
+				$this->flash($message, $url);
+			}
+		}
+
+		$this->view->contenttype = $this->view->translate($contentType);
+		$this->view->short_contenttype = $contentType;
+		$this->view->relatesToId = $relatesToId;
+
+		if($relatesToId != 0) {
+			$relatesToTypeId = $content->getContentTypeIdByContentId($relatesToId);
+			$this->view->relatesToType = $modelContentTypes->getTypeById($relatesToTypeId);
+			$this->view->relatesToHeader = $content->getContentHeaderByContentId($relatesToId);
+		}
+
+		// Content type id is needed when adding content  to database
+		$contentTypeId = $modelContentTypes->getIdByType($contentType);
+
+		// Cacheing of formData
+		$cache = Zend_Registry::get('cache');
+		$formDataCacheTag = 'formData_'.$contentType.'_'.$this->view->language;
+
+		if (!($formData = $cache->load($formDataCacheTag) ) || $relatesToId != 0 || true) {
+			// Creating array for form data
+			$formData = array();
+
+			// Adding data to formData
+			$formData['content_type'] = $contentTypeId;
+			$formData['content_relatesto_id'] = $relatesToId;
+
+			// Content classifications
+			$modelFutureinfoClasses = new Default_Model_FutureinfoClasses();
+			$futureinfoClasses = $modelFutureinfoClasses->getAllNamesAndIds();
+
+			$formData['FutureinfoClasses'] = array();
+			$formData['FutureinfoClasses'][0] = $this->view->translate("content-add-select-finfo-classification");
+
+			foreach($futureinfoClasses as $fic) {
+				$formData['FutureinfoClasses'][$fic['id_fic']] = $fic['name_fic'];
+			} // end foreach
+
+			if(empty($formData['FutureinfoClasses'])) {
+				$formData['FutureinfoClasses'] = array(0 => '----');
+			}
+
+			$modelInnovationTypes = new Default_Model_InnovationTypes();
+			$innovationTypes = $modelInnovationTypes->getAllNamesAndIds();
+
+			$formData['InnovationTypes'] = array();
+			$formData['InnovationTypes'][0] =
+			$this->view->translate("content-add-select-innovation");
+
+			foreach($innovationTypes as $ivt) {
+				$formData['InnovationTypes'][$ivt['id_ivt']] =
+				$ivt['name_ivt'];
+			} // end foreach
+
+			if(empty($formData['InnovationTypes'])) {
+				$formData['InnovationTypes'] = array(0 => '----');
+			}
+
+			$languages = New Default_Model_Languages();
+			$idLngInd = $languages->getLangIdByLangName($this->view->language);
+			$allLanguages = $languages->getAllNamesAndIds();
+
+			$formData['languages'] = array();
+			$formData['languages'][0] = $this->view->translate("content-add-select-language");
+			foreach($allLanguages as $lng) {
+				$formData['languages'][$lng['id_lng']] = $lng['name_lng'];
+			}
+
+			$modelIndustries = new Default_Model_Industries();
+			$industries = $modelIndustries->getNamesAndIdsById(0, $idLngInd);
+
+			$formData['Industries'] = array();
+			$formData['Industries'][0] =
+			$this->view->translate("content-add-select-industry");
+
+			foreach($industries as $ind) {
+				$formData['Industries'][$ind['id_ind']] = $ind['name_ind'];
+			} // end foreach
+
+			if(empty($formData['Industries'])) {
+				$formData['Industries'] = array(0 => '----');
+			}
+
+			// The id of first industry listed is needed when listing the
+			// divisions for the first time
+			$firstIndustryId = $modelIndustries->getIndustryId();
+			$divisions = $modelIndustries->getNamesAndIdsById(
+			$firstIndustryId, $idLngInd
+			);
+
+			$formData['Divisions'] = array();
+			$formData['Divisions'][0] = $this->view->translate("content-add-select-division-no-industry");
+
+			$formData['Groups'] = array();
+			$formData['Groups'][0] = $this->view->translate("content-add-select-group-no-division");
+
+			$formData['Classes'] = array();
+			$formData['Classes'][0] = $this->view->translate("content-add-select-class-no-group");
+
+			$cache->save($formData, $formDataCacheTag);
+		}
+
+
+		$formCacheTag = 'form_'.$contentType.'_'.$this->view->language;
+		// Form for content adding, cacheing if not cached.
+		// Generate new form if is post because cache will save post parameters and fail
+		if ($this->getRequest()->isPost()) {
+			$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
+		}
+
+		elseif (!($form = $cache->load($formCacheTag))  ) {
+			$form = new Default_Form_AddContentForm(null, $formData, $this->view->language, $contentType);
+
+			$cache->save($form, $formCacheTag);
+		}
+
+
+
+		$this->view->form = $form;
+
+		// Get requests
+		if($this->getRequest()->isPost()) {
+
+			// Get content data
+			$data = $this->getRequest()->getPost();
+
+			// If form data is valid, handle database insertions
+			$validForm = $form->isValid($data) ? true : (isset($data['content_save']) && $data['content_save'] != '');
+			if ($validForm) {
+
+				// If form data is going to be published
+				if(isset($data['content_publish']) && $data['content_publish'] != '') {
+					$data['publish'] = 1;
+					$message_error = 'content-publish-not-successful';
+				}
+				// If form data is going to be saved
+				elseif(isset($data['content_save']) && $data['content_save'] != '') {
+					$data['publish'] = 0;
+					$message_error = 'content-save-not-successful';
+				}
+
+				// Content keywords
+				/* FIXED: split() is deprecated in PHP 5.3.0 -> and removed in
+				 * PHP 6.0, so changed to explode(). Also trim(array) doesn't
+				 * trim array values, so this is done with foreach now.
+				 */
+				$keywords = array();
+				foreach(explode(',', $data['content_keywords']) as $keyword) {
+					if(trim($keyword) != "") {
+						$keywords[] = strip_tags(trim($keyword));
+					}
+				}
+				$data['content_keywords'] = array_unique($keywords);
+
+				// Related companies
+				$relatedCompanies = array();
+				foreach(explode(',', $data['content_related_companies']) as $relatedCompany) {
+					if(trim($relatedCompany) != "") {
+						$relatedCompanies[] = strip_tags(trim($relatedCompany));
+					}
+				}
+				$data['content_related_companies'] = array_unique($relatedCompanies);
+
+				// Get user id
+				$data['User']['id_usr'] = $this->getIdentity()->user_id;
+
+				$languages = new Default_Model_Languages();
+
+				if($data['content_language'] == 0) {
+					$data['content_language'] = $this->view->language;
+				}
+				else {
+					$data['content_language'] = $languages->getLangNameByLangId($data['content_language']);
+				}
+
+				$data['files'] = $_FILES['content_file_upload'];
+				// Add a new content
+				$content = new Default_Model_Content();
+				$add = $content->addContent($data);
+
+				if($data['content_relatesto_id'] != 0) {
+					$profileModel = new Default_Model_UserProfiles();
+	                $profileModel->deleteNotificationCache($data['content_relatesto_id']);
+				}
+
+				if(!$add) {
+					$add_successful = false;
+				} else {
+					$add_successful = true;
+				} // end if
+
+				$url = $this->_urlHelper->url(array('controller' => 'msg',
+                                                    'action' => 'index',
+                                                    'language' => $this->view->language),
+                                                    'lang_default', true);
+
+				if($add_successful) {
+
+					// Get cache from registry
+			        $cache = Zend_Registry::get('cache');
+
+			        // Load most popular tags from cache
+					$output = md5(time());
+					$cache->save($output, 'LatestPostHash');
+					// Force refresh to tags on front page
+			        $cache->remove('IndexTags');
+
+					if($data['publish'] == 1) {
+						$url = $this->_urlHelper->url(array('content_id' => $add,
+                                                            'language' => $this->view->language),
+                                                            'content_shortview', true);
+						$this->_redirect($url);
+					}
+					else {
+						/*$userpage = $this->_urlHelper->url(array('controller' => 'account',
+                                                                 'action' => 'view',
+                                                                 'user' => $auth->getIdentity()->username,
+		                                                         'language' =>  $this->view->language),
+                                                                 'lang_default', true);
+						$savedTab = $this->_urlHelper->url(array('controller' => 'account',
+                                                                 'action' => 'view',
+                                                                 'user' => $auth->getIdentity()->username,
+                                                                 'type' => 'saved',
+                                                                 'language' =>  $this->view->language),
+                                                                 'lang_default', true);
+
+						$message_ok = $this->view->translate('content-save-successful');
+						$message_ok .= ' ('.$content->getContentHeaderByContentId($add).')';
+						$message_ok .= '<br /><br />' . $this->view->translate('content-save-successful2');
+						$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
+						$message_ok .= ' ' . $this->view->translate('content-save-successful4');
+						$message_ok .= ' <a href="'.$savedTab.'">'.$this->view->translate('content-save-successful5').'</a>.';
+						$this->flash($message_ok, $url);*/
+						$url = $this->_urlHelper->url(array('controller' => 'account',
+															'action' => 'view',
+															'language' => $this->view->language,
+															'user' => $this->getIdentity()->username),
+															'lang_default', true);
+						$this->_redirect($url);
+					}
+				}
+				else {
+
+					$this->flash($message_error, $url);
+				}
+			}
+
+		} // end if
+	}
+
+	public function makelinksAction()
+	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
 		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) .
@@ -635,14 +434,8 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 
-	/**
-	 *   removelinksAction
-	 *
-	 *   Remove content link from content.
-	 *
-	 *   @author Mikko Korpinen
-	 */
-	public function removelinksAction() {
+	public function removelinksAction()
+	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
 		// If user has identity
@@ -702,16 +495,8 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 
-	/**
-	 *   linkAction
-	 *
-	 *   Get user contents which are related to particular content type
-	 *
-	 *   @author ???
-	 *   @author 2010 Mikko Korpinen
-	 *
-	 */
-	public function linkAction() {
+	public function linkAction()
+	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
 		// If user has identity
@@ -769,15 +554,8 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 
-	/**
-	 *   unlinkAction
-	 *
-	 *   Get user contents which are related to particular content
-	 *
-	 *   @author 2010 Mikko Korpinen
-	 *
-	 */
-	public function unlinkAction() {
+	public function unlinkAction()
+	{
 		// Get authentication
 		$auth = Zend_Auth::getInstance();
 		// If user has identity
@@ -829,10 +607,13 @@ class ContentController extends Oibs_Controller_CustomController
 	}
 
 	/**
-	 *  This function validates linking before linking is made
-	 *
+	 * @param $contenttype
+	 * @param $relatestoid
+	 * @param $linkedcontentid
+	 * @return bool
 	 */
-	public function validateLinking($contenttype, $relatestoid, $linkedcontentid = -1) {
+	public function validateLinking($contenttype, $relatestoid, $linkedcontentid = -1)
+	{
 		// Get all content types from the database
 		$model_content_types = new Default_Model_ContentTypes();
 		$model_content = new Default_Model_Content();
@@ -1054,12 +835,6 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 	}
 
-	/**
-	 *   editAction
-	 *
-	 *   Edit content
-	 *
-	 */
 	public function editAction()
 	{
 		// Get authentication
@@ -1460,12 +1235,6 @@ class ContentController extends Oibs_Controller_CustomController
 		} // end else
 	}
 
-	/**
-	 *   removeAction
-	 *
-	 *   Remove content
-	 *   @author ???? ? ? & 2010 Mikko Korpinen
-	 */
 	public function removeAction()
 	{
 		$params = $this->getRequest()->getParams();
@@ -1551,15 +1320,8 @@ class ContentController extends Oibs_Controller_CustomController
 			$message = 'content-remove-not-authed';
 			$this->flash($message, $url);
 		}
-	} // end of removeAction
+	}
 
-	/**
-	 *   publishAction
-	 *
-	 *   Set a content to published by id
-	 *
-	 *   @param id   integer     ID of content to be published
-	 */
 	public function publishAction()
 	{
 		$params = $this->getRequest()->getParams();
@@ -1632,84 +1394,8 @@ class ContentController extends Oibs_Controller_CustomController
 		}
 
 		$this->flash($message, $url);
-	} // end of publishAction
-
-
-	/**
-	 * TODO: The below 3 functions (divisionAction, groupAction, classAction)
-	 * should be made as 1
-	 *
-	 */
-
-	/**
-	 *   divisionAction  Imports data for ajax
-	 */
-	/*
-	public function divisionAction()
-	{
-		// Set views layout to empty
-		$this->_helper->layout()->setLayout('empty');
-
-		// Get requests
-		$params = $this->getRequest()->getParams();
-
-		// Get industry id
-		$industryid = isset($params['industry']) ? $params['industry'] : '0';
-
-		$languages = new Default_Model_Languages();
-		$idLngInd = $languages->getLangIdByLangName($this->view->language);
-
-		$modelIndustries = new Default_Model_Industries();
-		$divisions = $modelIndustries->getNamesAndIdsById($industryid, $idLngInd);
-		$this->view->divisions = $divisions;
 	}
-/*
-	/**
-	 *   groupAction Imports data for ajax
-	 */
-/*
-	public function groupAction()
-	{
-		// Set views layout to empty
-		$this->_helper->layout()->setLayout('empty');
 
-		// Get requests
-		$params = $this->getRequest()->getParams();
-
-		// Get division id
-		$divisionid = isset($params['division']) ? $params['division'] : '0';
-
-		$languages = New Default_Model_Languages();
-		$idLngInd = $languages->getLangIdByLangName($this->view->language);
-
-		$modelIndustries = new Default_Model_Industries();
-		$groups = $modelIndustries->getNamesAndIdsById($divisionid, $idLngInd);
-		$this->view->groups = $groups;
-	}
-*/
-	/**
-	 *   classAction Imports data for ajax
-	 */
-	/*
-	public function classAction()
-	{
-		// Set views layout to empty
-		$this->_helper->layout()->setLayout('empty');
-
-		// Get requests
-		$params = $this->getRequest()->getParams();
-
-		// Get group id
-		$groupid = isset($params['group']) ? $params['group'] : '0';
-
-		$languages = New Default_Model_Languages();
-		$idLngInd = $languages->getLangIdByLangName($this->view->language);
-
-		$modelIndustries = new Default_Model_Industries();
-		$classes = $modelIndustries->getNamesAndIdsById($groupid, $idLngInd);
-		$this->view->classes = $classes;
-	}
-*/
 	public function flagAction()
 	{
 		// Set an empty layout for view
@@ -1746,40 +1432,6 @@ class ContentController extends Oibs_Controller_CustomController
 		$this->view->success = $success;
 	}
 
-	/**
-	 * ajaxIndustryAction
-	 *
-	 * This function handles the population of industry selection
-	 * used in addAction and editAction.
-	 *
-	 * NOTE: This function is to replace functions:
-	 * classAction, divisionAction and groupAction,
-	 * since it's bad to have 3 functions for the same thing.
-	 */
-	/*
-	public function ajaxindustryAction()
-	{
-		// Set views layout to empty
-		$this->_helper->layout()->setLayout('empty');
-
-		// Get paramesters
-		$type = $this->_request->getParam('type');
-		$id = $this->_request->getParam('id');
-
-		if(isset($type) && isset($id)) {
-			// Get language id
-			$languages = New Default_Model_Languages();
-			$langId = $languages->getLangIdByLangName($this->view->language);
-
-			$industriesModel = new Default_Model_Industries();
-			$industries = $industriesModel->getNamesAndIdsById($id, $langId);
-
-			// Set to view
-			$this->view->industries = $industries;
-			$this->view->type = $type;
-		}
-	}
-	*/
     public function feedAction()
     {
         $contentModel = new Default_Model_Content();
@@ -1790,11 +1442,5 @@ class ContentController extends Oibs_Controller_CustomController
 
     }
 
-    public function getLanguage()
-    {
-        $translate = Zend_Registry::get('Zend_Translate');
-        $curr_language = $translate->getLocale();
-        return $curr_language;
-    }
 }
 
