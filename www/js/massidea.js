@@ -1,12 +1,15 @@
 var MassIdea = new (function () {
 
+	var URL_CHANGE_LANGUAGE = '/index/change-language';
+	var SEL_LANGUAGE_MENU   = '#languageMenu';
+
 	/** @type {String} */
 	var _language;
 
 	function init (language) {
 		_language = language;
 
-		$("#languageMenu").change(function () {
+		$(SEL_LANGUAGE_MENU).change(function () {
 			changeLanguage($(":selected", this).val());
 		});
 	}
@@ -81,7 +84,7 @@ var MassIdea = new (function () {
 			returnUrl = '/' + returnUrl.split('/').slice(2).join('/');
 		}
 
-		redirect('/index/change-language', {
+		redirect(URL_CHANGE_LANGUAGE, {
 			language : language,
 			returnUrl : returnUrl
 		});
@@ -104,38 +107,43 @@ var MassIdea = new (function () {
 
 })();
 
-$('*[rel=popover-hover]').popover({
-	trigger : 'hover',
-	html    : 'true'
-});
 
-var popover = null;
-$('.mainnavigation_popover').popover({
-    trigger:'manual',
-    html:'true'
-}).live("click", function () {
-        // open new one
-        if (this != popover) {
-            $(popover).popover('hide');
-            $(this).popover('show');
-            $('.popover-title:not(:has(a))').append('<a class="close">x</a>');
-            popover = this;
+// TODO: refactor popovers
 
-        } else { // close
-            $(this).popover('hide');
-            popover = null;
-        }
+!function () {
+	$('*[rel=popover-hover]').popover({
+		trigger : 'hover',
+		html    : 'true'
+	});
 
-    });
-$('.popover .close').live('click', function() {
-    $(popover).popover('hide');
-    popover = null;
-});
+	var popover = null;
+	$('.mainnavigation_popover').popover({
+		trigger:'manual',
+		html:'true'
+	}).live("click", function () {
+			if (this != popover) {
+				// open new one
+				$(popover).popover('hide');
+				$(this).popover('show');
+				$('.popover-title:not(:has(a))').append('<a class="close">x</a>');
+				popover = this;
+			} else {
+				// close
+				$(this).popover('hide');
+				popover = null;
+			}
+		});
 
-$("#appendedInputButton").bind('focus', function(){
-    $(".search .btn").addClass("focus");
-});
+	$('.popover .close').live('click', function() {
+		$(popover).popover('hide');
+		popover = null;
+	});
 
-$('#appendedInputButton').blur(function() {
-    $(".search .btn").removeClass("focus");
-});
+	$("#appendedInputButton").bind('focus', function(){
+		$(".search .btn").addClass("focus");
+	});
+
+	$('#appendedInputButton').blur(function() {
+		$(".search .btn").removeClass("focus");
+	});
+}();
