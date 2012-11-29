@@ -1,22 +1,15 @@
-$('*[rel=popover-hover]').popover({
-	trigger : 'hover',
-	html    : 'true'
-});
+var MassIdea = new (function () {
 
+	/** @type {String} */
+	var _language;
 
+	function init (language) {
+		_language = language;
 
-//language selection
-$("#languageMenu").change(function () {
-	var curLan = $(":selected", this).val();
-	// not at startepage without any language (/de/...)
-	var pathName = location.pathname;
-	if (pathName.length > 1) {
-		pathName = '/' + pathName.split('/').slice(2).join('/');
+		$("#languageMenu").change(function () {
+			changeLanguage($(":selected", this).val());
+		});
 	}
-	location.href = '/' + curLan + '/index/change-language?language=' + curLan + '&returnUrl=' + escape(pathName);
-});
-
-var MassIdea = (function () {
 
 	/**
 	 * Generates a Zend Framework URL
@@ -29,9 +22,9 @@ var MassIdea = (function () {
 		params = params || {};
 		for (key in params) {
 			if (!params.hasOwnProperty(key)) continue;
-			url += '/' + escape(key) + '/' + escape(value);
+			url += '/' + escape(key) + '/' + escape(params[key]);
 		}
-		return url;
+		return '/' + getLanguage() + url;
 	}
 
 	/**
@@ -52,21 +45,69 @@ var MassIdea = (function () {
 	 *
 	 * @param {String|jQuery} target
 	 * @param {String}        url
-	 * @param {Object}        params
+	 * @param {Object}        [params]
+	 * @param {Function}      [callback]
 	 */
-	function loadHTML (target, url, params) {
+	function loadHTML (target, url, params, callback) {
+		params = params || {};
+		callback = (typeof callback === 'function') ? callback : new Function();
+		callback = (typeof params === 'function') ? params : callback;
+
+		params.format = 'html';
 		var $target = (typeof target === 'string') ? $(target) : target;
 
 		$.post(zendUrl(url, params), function (response) {
 			$target.html(response);
+			callback();
 		});
 	}
 
-	this.url = zendUrl;
-	this.load = load;
-	this.loadHTML = loadHTML;
+	/**
+	 * Redirects the page to the given url.
+	 * @param {String} url
+	 * @param {Object} [params]
+	 */
+	function redirect(url, params) {
+		location.href = zendUrl(url, params);
+	}
+
+	/**
+	 * Redirects the browser to change the language and then returns to the specified url.
+	 * @param {String} language
+	 */
+	function changeLanguage(language) {
+		var returnUrl = location.pathname;
+		if (returnUrl.length > 1) {
+			returnUrl = '/' + returnUrl.split('/').slice(2).join('/');
+		}
+
+		redirect('/index/change-language', {
+			language : language,
+			returnUrl : returnUrl
+		});
+	}
+
+	/**
+	 * Returns the current page language.
+	 * @return {String}
+	 */
+	function getLanguage() {
+		return _language;
+	}
+
+	this.init        = init;
+	this.url         = zendUrl;
+	this.redirect    = redirect;
+	this.load        = load;
+	this.loadHTML    = loadHTML;
+	this.getLanguage = getLanguage();
 
 })();
+
+$('*[rel=popover-hover]').popover({
+	trigger : 'hover',
+	html    : 'true'
+});
 
 var popover = null;
 $('.mainnavigation_popover').popover({

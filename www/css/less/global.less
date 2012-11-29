@@ -4,52 +4,51 @@ body {
 
 ul {
 	list-style: none;
-    margin: 0;
-    padding: 0;
+	margin:     0;
+	padding:    0;
 }
 
 .header {
-    position:   relative;
-    background: url("/img/headerBg.png") white;
-    height:     124px;
+	position:   relative;
+	background: url("/img/headerBg.png") white;
+	height:     124px;
 
-    #massidea-logo {
-        position: absolute;
-        top:      35px;
-        left:     35px;
-    }
-    #massidea-signet {
-        position: absolute;
-        top:      8px;
-        left:     420px;
-    }
+	#massidea-logo {
+		position: absolute;
+		top:      35px;
+		left:     35px;
+	}
+	#massidea-signet {
+		position: absolute;
+		top:      8px;
+		left:     420px;
+	}
 
-
-    .headerLogin {
+	.headerLogin {
 		margin: 20px 0 0 0;
 
-	    input[type="text"],
-        input[type="password"]{
-            width: 186px;
-		    height: 18px;
-        }
+		input[type="text"],
+		input[type="password"] {
+			width:  186px;
+			height: 18px;
+		}
 
-        input[type="submit"] {
-	        height: 27px;
-	        margin: 1px 0 0 90px;
-        }
+		input[type="submit"] {
+			height: 27px;
+			margin: 1px 0 0 90px;
+		}
 
-	    .signup {
-		    display: block;
-		    margin: 6px 0 0 90px;
-	    }
+		.signup {
+			display: block;
+			margin:  6px 0 0 90px;
+		}
 	}
 }
 
 .footer {
-	padding: 30px 0 0 0;
+	padding:    30px 0 0 0;
 	background: url('/img/footerLine.png') no-repeat;
-	height: 115px;
+	height:     115px;
 }
 
 #footerBackground {
@@ -63,46 +62,45 @@ ul {
 	.text-shadow;
 
 	&:hover, &:active {
-		color: white;
-	    .text-shadow;
+		color:      white;
+		.text-shadow;
 		background: @colorStandardFirst;
-	  }
+	}
 
 	&.btn-challenge {
 		.gradient(@colorChallengeFirst, @colorChallengeSecond);
-	    .border(@colorChallengeThird);
+		.border(@colorChallengeThird);
 
-	    &:hover, &:active {
-	        background: @colorChallengeFirst;
-	    }
+		&:hover, &:active {
+			background: @colorChallengeFirst;
+		}
 	}
 
 	&.btn-idea {
-	    .gradient(@colorIdeaFirst, @colorIdeaSecond);
-	    .border(@colorIdeaThird);
+		.gradient(@colorIdeaFirst, @colorIdeaSecond);
+		.border(@colorIdeaThird);
 
-	    &:hover, &:active {
-		    background: @colorIdeaFirst;
-	    }
-	  }
+		&:hover, &:active {
+			background: @colorIdeaFirst;
+		}
+	}
 
 	&.btn-vision {
 		.gradient(@colorVisionFirst, @colorVisionSecond);
-	    .border(@colorVisionThird);
+		.border(@colorVisionThird);
 
-	    &:hover, &:active {
-	        background: @colorVisionFirst;
-	    }
-  }
+		&:hover, &:active {
+			background: @colorVisionFirst;
+		}
+	}
 }
 
 .margin-top {
 	margin: 20px 0 0 0;
 }
 
-
 .popover {
-  min-width: 300px;
+	min-width: 300px;
 }
 
 .loginSite {

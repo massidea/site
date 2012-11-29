@@ -5,111 +5,36 @@
                 Section: All
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
+            <ul id="filter-section" class="dropdown-menu">
                 <li>
-                    <a href="#">All</a>
+                    <a rel="0" href="#">All</a>
                 </li>
-                <li>
-                    <a href="#">Vision</a>
-                </li>
-                <li>
-                    <a href="#">Challenge</a>
-                </li>
-                <li>
-                    <a href="#">Idea</a>
-                </li>
+	            <?php foreach ($this->sections as $section): ?>
+	                <li>
+	                    <a rel="<?php echo $section['id']; ?>" href="#"><?php echo $this->translate($section['title']); ?></a>
+	                </li>
+		        <?php endforeach; ?>
             </ul>
         </div>
+
         <div class="btn-group pull-right">
             <button class="btn dropdown-toggle" data-toggle="dropdown">
                 Category: All
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="#">Category1</a>
-                </li>
-                <li>
-                    <a href="#">Category2</a>
-                </li>
-                <li>
-                    <a href="#">Category3</a>
-                </li>
-                <li>
-                    <a href="#">Category4</a>
-                </li>
+            <ul id="filter-category" class="dropdown-menu">
+	            <?php foreach ($this->categories as $category): ?>
+	                <li>
+		                <a rel="<?php echo $category['id_ctg']; ?>" href="#"><?php echo $this->translate($category['title_ctg']); ?></a>
+	                </li>
+                <?php endforeach; ?>
             </ul>
         </div>
 
-
      </div>
 
-
-    <div id="content-list push-left" class="row">
-        <div class="row singleContent challenge">
-            <div class="span2 push-left">
-                <a class="thumbnail">
-                    <div class="image"></div>
-                </a>
-            </div>
-            <div class="span9 push-right">
-                <div class="headline">Headline of the Content</div>
-                <div class="metainfo top">
-                    <span>by Lisa Jedinger</span> ·
-                    <span>21.December 2012</span>
-                </div>
-                <div class="content">
-                    fjafskjsdkfjdskjfksdjfölkdlkjfdsöjfkdsjkdsjökdsjfjdskfjdskljfkdsjflkdsjfkjdskfjdsf,
-                    fsdkfdsjfkjdskjfkdsfjkdsjfökdlsjfldjflkdsjlkfjdskölfjdajfödjfkldsjfkdsjf
-                    fsdkfjdslkjfkdsjfölsdkjfkdslöjflkdsjfkljdskljfkdlsjfklödsjfksdjkfajdslkjfklsjdfaklsd
-                    jfasjsfjdslköfjldsjflökdsjafölsdjfölkjdskljsfakljsdkfljsjfsdjfdsajöfjsakösajdöjfk
-                </div>
-                <div class="metainfo bottom">
-                    <div class="pull-left">
-                        <span class="type">Vision</span> |
-                        <span>5 Comments</span> |
-                        <span>2 Documents</span>
-                    </div>
-                    <div class="read-more pull-right">
-                        <a href="#">» read more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row singleContent vision">
-            <div class="span2 push-left">
-                <a class="thumbnail">
-                    <img alt="headline of the content" src="/img/fallbackContent/challenge.png">
-                </a>
-            </div>
-            <div class="span9 push-right">
-                <div class="headline">Headline of the Content</div>
-                <div class="metainfo top">
-                    <span>by Lisa Jedinger</span> ·
-                    <span>21.December 2012</span>
-                </div>
-                <div class="content">
-                    fjafskjsdkfjdskjfksdjfölkdlkjfdsöjfkdsjkdsjökdsjfjdskfjdskljfkdsjflkdsjfkjdskfjdsf,
-                    fsdkfdsjfkjdskjfkdsfjkdsjfökdlsjfldjflkdsjlkfjdskölfjdajfödjfkldsjfkdsjf
-                    fsdkfjdslkjfkdsjfölsdkjfkdslöjflkdsjfkljdskljfkdlsjfklödsjfksdjkfajdslkjfklsjdfaklsd
-                    jfasjsfjdslköfjldsjflökdsjafölsdjfölkjdskljsfakljsdkfljsjfsdjfdsajöfjsakösajdöjfk
-                </div>
-                <div class="metainfo bottom">
-                    <div class="pull-left">
-                        <span class="type">Vision</span> |
-                        <span>5 Comments</span> |
-                        <span>2 Documents</span>
-                    </div>
-                    <div class="read-more pull-right">
-                        <a href="#">» read more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="#" id="load-more">Load more</a>
-    </div>
+    <div id="content-list push-left" class="row"></div>
+    <a id="load-more">more</a>
 </div>
 
-<script type="text/javascript" src="/js/massidea-content.js"></script>
-<script type="text/javascript"> Content.init(); </script>
+<script type="text/javascript"> $(function () { Content.init(); }); </script>
