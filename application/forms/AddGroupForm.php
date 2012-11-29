@@ -26,53 +26,54 @@
  *  @license 	GPL v2
  *  @version 	1.0
  */
-class Default_Form_AddGroupForm extends Zend_Form
+
+class Default_Form_AddGroupForm extends Twitter_Bootstrap_Form_Vertical
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+    }
+
+
+
+
     public function __construct($parent = null, $options = null)
     {
-        parent::__construct($options);
-    
-        $parentId = 0;
-        if ($parent != null) {
-            $parentId = $parent;
-        }
-        
-        $translate = Zend_Registry::get('Zend_Translate'); 
-        
-        $this->setName('add_group_form');
-        $this->addElementPrefixPath('Oibs_Form_Decorator',
-                    'Oibs/Form/Decorator/',
-                    'decorator');
 
-        $clear = '<div class="clear"></div>';
+        $this->setName('create-group-form')
+            ->addElementPrefixPath('Oibs_Form_Decorators', 'Oibs/Form/Decorators/', 'decorator')
+            ->setDecorators(array(array(
+            'ViewScript',
+            array('viewScript' => 'forms/login.phtml'))));
 
-        // Group name (must be unique).
-        $groupname = new Zend_Form_Element_Text('groupname');
-        $groupname
-            //->setLabel($translate->_('groups-new_group_name'))
-            ->setLabel('Name')
-            ->setRequired(true)
-            ->setFilters(array('StringTrim'))
-            ->setValidators(array(
-                array('NotEmpty', true, array('messages' => array('isEmpty' => 'field-empty'))),
+
+        $this->addElement('text', 'create-group-form-groupname', array(
+            'label'       => 'create-group-form-groupname',
+            'required'    => true,
+            'filters'     => array('StringTrim'),
+            'validators'  => array(
+                array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty')))),
                 array('StringLength',
                     false,
-                    array(
+                     array(
                         1,
                         140,
                         'encoding' => 'UTF-8',
                         'messages' =>
-                            array('stringLengthTooLong' => 'Name too long.'))),
+                        array('stringLengthTooLong' => 'Name too long.'))),
                 array(new Oibs_Validators_GroupExists($options), false),
-            ))
-            ->setDescription(
-                '<div id="progressbar_groupname" class="limit ok"></div>')
-            ->setDecorators(array('FieldDecorator'));
+        ));
 
-        $groupname_clear = new Oibs_Form_Element_Note('groupname_clear');
-        $groupname_clear
-            ->setValue($clear)
-            ->setDecorators(array('ViewHelper'));
+
+
+
+
+
+
 
         // Group type
         $groupTypes_model = new Default_Model_GroupTypes();
