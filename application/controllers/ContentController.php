@@ -247,7 +247,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'language' => $this->view->language),
                                          		'lang_default', true);
 
-				$this->addFlashMessage($message, $url);
+				$this->flash($message, $url);
 			} elseif($relatesToId != 0) {
 
 				/*if($relatesToId == 0) {
@@ -257,7 +257,7 @@ class ContentController extends Oibs_Controller_CustomController
 				 'language' => $this->view->language),
 				 'lang_default', true);
 
-				 $this->addFlashMessage($message, $url);
+				 $this->flash($message, $url);
 				 } */
 
 				// Checking if the content that idea is related to exists
@@ -270,7 +270,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                         'language' => $this->view->language),
                                                   		'lang_default', true);
 
-					$this->addFlashMessage($message, $url);
+					$this->flash($message, $url);
 				}
 			}
 
@@ -516,7 +516,7 @@ class ContentController extends Oibs_Controller_CustomController
 							$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
 							$message_ok .= ' ' . $this->view->translate('content-save-successful4');
 							$message_ok .= ' <a href="'.$savedTab.'">'.$this->view->translate('content-save-successful5').'</a>.';
-							$this->addFlashMessage($message_ok, $url);*/
+							$this->flash($message_ok, $url);*/
 							$url = $this->_urlHelper->url(array('controller' => 'account',
 																'action' => 'view',
 																'language' => $this->view->language,
@@ -527,7 +527,7 @@ class ContentController extends Oibs_Controller_CustomController
 					}
 					else {
 
-						$this->addFlashMessage($message_error, $url);
+						$this->flash($message_error, $url);
 					}
 				}
 
@@ -542,7 +542,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'language' => $this->view->language),
                                           'lang_default', true);
 
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		} // end if
 	} // end of addAction()
 
@@ -619,7 +619,7 @@ class ContentController extends Oibs_Controller_CustomController
                                               		'lang_default', true);
 
 				$message = "content-linked-successfully";
-				$this->addFlashMessage($message, $url);
+				$this->flash($message, $url);
 			}
 		}
 		else {
@@ -631,7 +631,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'language' => $this->view->language),
                                           'lang_default', true);
 
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		}
 	}
 
@@ -680,7 +680,7 @@ class ContentController extends Oibs_Controller_CustomController
         												 'relatestoid' => $relatestoid,
                                                          'language' => $this->view->language),
                                                          'unlinkcontent', true);
-            $this->_redirect($redirectUrl);
+            $this->_redirector->gotoUrl($redirectUrl);
 
             /*
 			$url = $this->_urlHelper->url(array('controller' => 'msg',
@@ -688,7 +688,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'language' => $this->view->language),
                                                 'lang_default', true);
 
-			$this->addFlashMessage($message, $url); */
+			$this->flash($message, $url); */
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -698,7 +698,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'language' => $this->view->language),
                                           'lang_default', true);
 
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		}
 	}
 
@@ -765,7 +765,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           		'lang_default', true);
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		}
 	}
 
@@ -824,7 +824,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		}
 	}
 
@@ -882,7 +882,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                                 'language' => $this->view->language),
                                                           		'lang_default', true);
 
-							$this->addFlashMessage($message, $url);
+							$this->flash($message, $url);
 						}
 
 						$auth = Zend_Auth::getInstance();
@@ -899,7 +899,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                                 'language' => $this->view->language),
                                                           		'lang_default', true);
 
-							$this->addFlashMessage($message, $url);
+							$this->flash($message, $url);
 						}
 					} else {
 						$message = 'content-link-linked-content-not-exist';
@@ -909,7 +909,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                             'language' => $this->view->language),
                                                       		'lang_default', true);
 
-						$this->addFlashMessage($message, $url);
+						$this->flash($message, $url);
 					}
 				} else {
 					$message = 'content-link-not-published';
@@ -919,7 +919,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                    	 	'language' => $this->view->language),
                                               			'lang_default', true);
 
-					$this->addFlashMessage($message, $url);
+					$this->flash($message, $url);
 				}
 			}
 		} else {
@@ -931,7 +931,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                     'language' => $this->view->language),
                                               		'lang_default', true);
 
-				$this->addFlashMessage($message, $url);
+				$this->flash($message, $url);
 			} elseif($invalid_relatestoid) {
 				$message = 'content-link-invalid-relatestoid';
 
@@ -940,7 +940,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                     'language' => $this->view->language),
                                               		'lang_default', true);
 
-				$this->addFlashMessage($message, $url);
+				$this->flash($message, $url);
 			}
 		}
 	}
@@ -1050,7 +1050,7 @@ class ContentController extends Oibs_Controller_CustomController
 	                                            'language' => $this->view->language),
 	                                            'lang_default', true);
 
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		}
 	}
 
@@ -1407,7 +1407,7 @@ class ContentController extends Oibs_Controller_CustomController
                                                                        'lang_default', true);
 									$message_ok .= ' <a href="'.$userpage.'">'.$this->view->translate('content-save-successful3').'</a>';
 									$message_ok .= ' ' . $this->view->translate('content-save-successful4');
-									$this->addFlashMessage($message_ok, $url);*/
+									$this->flash($message_ok, $url);*/
 									$url = $this->_urlHelper->url(array('controller' => 'account',
 																		'action' => 'view',
 																		'language' => $this->view->language,
@@ -1416,7 +1416,7 @@ class ContentController extends Oibs_Controller_CustomController
 									$this->_redirect($url);
 								}
 							} else {
-								$this->addFlashMessage($message_error, $url);
+								$this->flash($message_error, $url);
 							}
 						} else {
 							// What is this?
@@ -1443,20 +1443,20 @@ class ContentController extends Oibs_Controller_CustomController
 						 } else {
 						 $message = 'content-edit-not-successful';
 						 }
-						 $this->addFlashMessage($message, $url);*/
+						 $this->flash($message, $url);*/
 					}
 				} else {
 					$message = 'content-edit-no-id';
-					$this->addFlashMessage($message, $url);
+					$this->flash($message, $url);
 				}
 			} else {
 				$message = 'content-edit-not-owner';
-				$this->addFlashMessage($message, $url);
+				$this->flash($message, $url);
 			}
 		} else {
 			// If not logged, redirecting to system message page
 			$message = 'content-edit-not-logged';
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		} // end else
 	}
 
@@ -1513,7 +1513,7 @@ class ContentController extends Oibs_Controller_CustomController
 					if($contentRemoveSuccessful == true) {
 						$message = 'content-remove-successful';
 						die;
-						$this->addFlashMessage($message, $url);
+						$this->flash($message, $url);
 					} else {
 						$message = $this->view->translate('content-remove-not-successful') . '<br />';
 						// User don't have to see these explanations
@@ -1537,19 +1537,19 @@ class ContentController extends Oibs_Controller_CustomController
 						 if(!$contentRemoveChecker['removeContent']) $message .= $this->view->translate('content-remove-removeContent-content-not-successful') . '<br />';
 						 if(!$contentRemoveChecker['removeContentComments']) $message .= $this->view->translate('content-remove-removeContentComments-not-successful') . '<br />';*/
 
-						$this->addFlashMessage($message, $url);
+						$this->flash($message, $url);
 					}
 				} else {
 					$message = 'content-remove-not-owner';
-					$this->addFlashMessage($message, $url);
+					$this->flash($message, $url);
 				}
 			} else {
 				$message = 'content-remove-invalid-content-id';
-				$this->addFlashMessage($message, $url);
+				$this->flash($message, $url);
 			}
 		} else {
 			$message = 'content-remove-not-authed';
-			$this->addFlashMessage($message, $url);
+			$this->flash($message, $url);
 		}
 	} // end of removeAction
 
@@ -1599,22 +1599,22 @@ class ContentController extends Oibs_Controller_CustomController
 						$message .= " ".$this->view->translate('content-publish-here');
 						$message .= "</a> ";
 						$message .= " ".$this->view->translate('content-publish-view-content');
-						//$this->addFlashMessage($message, $url);
+						//$this->flash($message, $url);
 					} else {
 						$message = 'content-publish-not-successful';
-						//$this->addFlashMessage($message, $url);
+						//$this->flash($message, $url);
 					}
 				} else {
 					$message = 'content-publish-not-owner';
-					//$this->addFlashMessage($message, $url);
+					//$this->flash($message, $url);
 				}
 			} else {
 				$message = 'content-publish-invalid-content-id';
-				//$this->addFlashMessage($message, $url);
+				//$this->flash($message, $url);
 			}
 		} else {
 			$message = 'content-publish-not-authed';
-			//$this->addFlashMessage($message, $url);
+			//$this->flash($message, $url);
 		}
 
 		// Add login to log
@@ -1631,7 +1631,7 @@ class ContentController extends Oibs_Controller_CustomController
 			$logger['contentpublish']->notice($logMessage);
 		}
 
-		$this->addFlashMessage($message, $url);
+		$this->flash($message, $url);
 	} // end of publishAction
 
 

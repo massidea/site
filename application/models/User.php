@@ -550,8 +550,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @param int $id_usr
      * @return array
      */
-    public function getUserCampaigns($id_usr) {
-        $result = array();
+     public function getUserCampaigns($id_usr) {
+        /*$result = array();
 
         $campaignSelect = $this->_db->select()
                                            ->from(array('ghau' => 'grp_has_admin_usr'),
@@ -576,7 +576,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             $i++;
         }
 
-        return $result;
+        return $result;*/
     }
 
     /**
@@ -652,24 +652,12 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      * @return array
      */
     public function getUserGroups($id_usr) {
-        $result = array();
+        $adapter = $this->getAdapter();
+        $sql = "SELECT grp.group_name_grp, grp.id_grp FROM usr_groups_grp grp, usr_has_grp has_grp WHERE grp.id_grp = has_grp.id_grp AND has_grp.id_usr =" . $id_usr;
 
-        $groupSelect = $this->_db->select()
-                                           ->from(array('ghau' => 'grp_has_admin_usr'),
-                                                  array('id_usr', 'id_grp'))
-                                           ->joinLeft(array('ugg' => 'usr_groups_grp'),
-                                                  'ghau.id_grp = ugg.id_grp',
-                                                  array('id_grp', 'group_name_grp', 'description_grp', 'body_grp'))
-                                           ->joinLeft(array('uu' => 'users_usr'),
-                                                  'uu.id_usr = ghau.id_usr',
-                                                  array('id_usr', 'login_name_usr'))
-                                           ->where('ghau.id_usr = ?', $id_usr)
-                                           ->order('ghau.id_grp ASC')
-                                           ->group('ugg.id_grp')
-                                           ;
+        $statement = $adapter->query($sql);
 
-        $result = $this->_db->fetchAll($groupSelect);
-
+        $result = $statement->fetchAll();
         return $result;
     }
 
