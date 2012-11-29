@@ -20,10 +20,7 @@
         echo $this->headLink();
         echo $this->headMeta();
     ?>
-
-    <script type="text/javascript">
-        var LANGUAGE = "<?php echo $this->language;?>";
-    </script>
+	<script type="text/javascript"> $(function () { MassIdea.init("<?php echo $this->language;?>"); }); </script>
 </head>
 <body>
 <div id="footerBackground">
@@ -109,9 +106,7 @@
         </div>
     </div>
 </div>
-<?php
-echo $this->headScript();
-?>
+<?php echo $this->headScript(); ?>
 </body>
 </html>
 

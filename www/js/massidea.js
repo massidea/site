@@ -1,20 +1,15 @@
-$('*[rel=popover-hover]').popover({
-	trigger : 'hover',
-	html    : 'true'
-});
-
-//language selection
-$("#languageMenu").change(function () {
-	var curLan = $(":selected", this).val();
-	// not at startepage without any language (/de/...)
-	var pathName = location.pathname;
-	if (pathName.length > 1) {
-		pathName = '/' + pathName.split('/').slice(2).join('/');
-	}
-	location.href = '/' + curLan + '/index/change-language?language=' + curLan + '&returnUrl=' + escape(pathName);
-});
-
 var MassIdea = new (function () {
+
+	/** @type {String} */
+	var _language;
+
+	function init (language) {
+		_language = language;
+
+		$("#languageMenu").change(function () {
+			changeLanguage($(":selected", this).val());
+		});
+	}
 
 	/**
 	 * Generates a Zend Framework URL
@@ -29,7 +24,7 @@ var MassIdea = new (function () {
 			if (!params.hasOwnProperty(key)) continue;
 			url += '/' + escape(key) + '/' + escape(params[key]);
 		}
-		return '/' + LANGUAGE + url;
+		return '/' + getLanguage() + url;
 	}
 
 	/**
@@ -67,11 +62,52 @@ var MassIdea = new (function () {
 		});
 	}
 
-	this.url = zendUrl;
-	this.load = load;
-	this.loadHTML = loadHTML;
+	/**
+	 * Redirects the page to the given url.
+	 * @param {String} url
+	 * @param {Object} [params]
+	 */
+	function redirect(url, params) {
+		location.href = zendUrl(url, params);
+	}
+
+	/**
+	 * Redirects the browser to change the language and then returns to the specified url.
+	 * @param {String} language
+	 */
+	function changeLanguage(language) {
+		var returnUrl = location.pathname;
+		if (returnUrl.length > 1) {
+			returnUrl = '/' + returnUrl.split('/').slice(2).join('/');
+		}
+
+		redirect('/index/change-language', {
+			language : language,
+			returnUrl : returnUrl
+		});
+	}
+
+	/**
+	 * Returns the current page language.
+	 * @return {String}
+	 */
+	function getLanguage() {
+		return _language;
+	}
+
+	this.init        = init;
+	this.url         = zendUrl;
+	this.redirect    = redirect;
+	this.load        = load;
+	this.loadHTML    = loadHTML;
+	this.getLanguage = getLanguage();
 
 })();
+
+$('*[rel=popover-hover]').popover({
+	trigger : 'hover',
+	html    : 'true'
+});
 
 var popover = null;
 $('.mainnavigation_popover').popover({
