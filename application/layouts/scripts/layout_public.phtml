@@ -33,42 +33,7 @@
                 <img id="massidea-signet" src="/img/signet.png"/>
             </div>
             <div class="span4 login">
-                <?php
-                if (!$this->authenticated) :
-                    echo $this->loginform;  ?>
-                    <?php else : ?>
-                    <div class="usermenu">
-                        <div class="btn-group pull-right">
-                            <button class="btn dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="<?php echo $this->url(array(
-                                    'controller' => 'account',
-                                    'action' => 'view',
-                                    'user' => $this->username,
-                                    'language' => $this->language,
-                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-profile'); ?></a></li>
-                                <li><a href="<?php echo $this->url(array(
-                                    'controller' => 'account',
-                                    'action' => 'settings',
-                                    'language' => $this->language,
-                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-settings'); ?></a></li>
-                                <li><a href="<?php echo $this->url(array(
-                                    'controller' => 'account',
-                                    'action' => 'logout',
-                                    'language' => $this->language,
-                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-logout'); ?></a></li>
-                            </ul>
-                        </div>
-                        <div class="username pull-right">
-                            <span><?php echo $this->identity->username;?></span>
-                        </div>
-                        <div class="userImage pull-right">
-                            <img  src="<?php echo $this->profile_image; ?>" alt="User Image" />
-                        </div>
-                    </div>
-                    <?php endif; ?>
+                <?php echo $this->loginform;  ?>
             </div>
         </div>
 
@@ -79,11 +44,7 @@
         </div>
         <?php endforeach; ?>"
         <section id="row content">
-            <?php include_once("mainnavigation.phtml"); ?>
-            <div class="col">
-                <?php echo $this->layout()->content; ?>
-            </div>
-            <?php include_once("searchbanner.phtml"); ?>
+            <?php echo $this->layout()->content; ?>
         </section>
         <div class="row footer">
             <div class="span4">
