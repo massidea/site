@@ -2,8 +2,8 @@
     <div class="indicator"></div>
     <ul>
 
-        <li class="overview">
-            <a class="mainnavigation_popover"
+        <li>
+            <a class="mainnavigation-popover overview"
                data-title="<?php echo $this->translate('main-nav-section'); ?>"
                data-content="<ul><li><a href='<?php echo $this->url(array(
                    'controller' => 'content',
@@ -33,8 +33,8 @@
             </a>
         </li>
 
-        <li class="mygroups">
-            <a class="mainnavigation_popover"
+        <li>
+            <a class="mainnavigation-popover mygroups"
                data-title="<?php echo $this->translate('main-nav-mygroups'); ?>"
                data-content="<ul>
             <?php foreach ($this->groups as $group) : ?>
@@ -56,8 +56,8 @@
             </a>
         </li>
 
-        <li class="myprojects">
-            <a class="mainnavigation_popover"
+        <li>
+            <a class="mainnavigation-popover myprojects"
                data-title="<?php echo $this->translate('main-nav-myprojects'); ?>"
                data-content="<ul><li><a href='<?php echo $this->url(array(
                    'controller' => '#',
@@ -69,8 +69,8 @@
             </a>
         </li>
 
-        <li class="categories">
-            <a rel="mainnavigation_popover"
+        <li>
+            <a class="mainnavigation-popover categories"
                data-title="<?php echo $this->translate('main-nav-categories'); ?>"
                data-content="<ul>
                  <?php foreach($this->categories as $category) : ?>
@@ -89,3 +89,5 @@
 
     </ul>
 </nav>
+
+<script type="text/javascript"> $(function () { Popover.register('.mainnavigation-popover'); }); </script>

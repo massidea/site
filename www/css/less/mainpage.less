@@ -13,52 +13,56 @@
 
 	.box-shadow(1px 0 0 0, @colorNavigationShadow);
 
-	li {
+	a {
+		text-align: center;
+		width:      100px;
+		display: block;
 		height:     32px;
 		margin:     0 auto 35px;
 		padding:    53px 0 0;
 		text-align: center;
-		width:      100px;
+		color:      @colorLightGray;
+		background-position: center top;
+		background-repeat: no-repeat;
 
-		a {
-			text-align: center;
-			color:      @colorLightGray;
-			&.active {
-				color: @colorDarkGray;
-			}
-			&.mainnavigation_popover {
-				width: 100px;
-				cursor: pointer;
-			}
+		&.active {
+			color: @colorDarkGray;
+		}
+
+		&.mainnavigation-popover {
+			width: 100px;
+			cursor: pointer;
 		}
 
 		&.overview {
-			background: url("/img/icons/mainnavigation/overview_inactive.png") center top no-repeat;
+			background-image: url("/img/icons/mainnavigation/overview_inactive.png");
 			&.active {
-				background: url("/img/icons/mainnavigation/overview_active.png") center top no-repeat;
+				background-image: url("/img/icons/mainnavigation/overview_active.png");
 			}
 		}
+
 		&.mygroups {
-			background: url("/img/icons/mainnavigation/groups_inactive.png") center top no-repeat;
+			background-image: url("/img/icons/mainnavigation/groups_inactive.png");
 			&.active {
-				background: url("/img/icons/mainnavigation/groups_active.png") center top no-repeat;
+				background-image: url("/img/icons/mainnavigation/groups_active.png");
 			}
 		}
 
 		&.myprojects {
-			background: url("/img/icons/mainnavigation/projects_inactive.png") center top no-repeat;
+			background-image: url("/img/icons/mainnavigation/projects_inactive.png");
 			&.active {
-				background: url("/img/icons/mainnavigation/projects_active.png") center top no-repeat;
+				background-image: url("/img/icons/mainnavigation/projects_active.png");
 			}
 		}
 
 		&.categories {
-			background: url("/img/icons/mainnavigation/category_inactive.png") center top no-repeat;
+			background-image: url("/img/icons/mainnavigation/category_inactive.png");
 			&.active {
-				background: url("/img/icons/mainnavigation/category_active.png") center top no-repeat;
+				background-image: url("/img/icons/mainnavigation/category_active.png");
 			}
 		}
 	}
+
 	.indicator {
 		width:      11px;
 		height:     21px;
