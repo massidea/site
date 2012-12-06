@@ -31,21 +31,7 @@
                 <img id="massidea-signet" src="/img/signet.png"/>
             </div>
             <div class="span4 login">
-                <?php
-                if (!$this->authenticated) :
-                    echo $this->loginform;
-                else :
-                    echo $this->username;
-                    ?>
-                    <span class="grey"> |</span>
-                    <a href="<?php echo $this->url(array(
-                        'controller' => 'account',
-                        'action' => 'logout',
-                        'language' => $this->language,
-                    ), 'lang_default', true); ?>">
-                        <?php echo $this->translate('layout-logout'); ?>
-                    </a>
-                <?php endif; ?>
+                <?php echo $this->loginform;  ?>
             </div>
         </div>
 
@@ -54,8 +40,7 @@
 	        <button type="button" class="close" data-dismiss="alert">×</button>
             <?php echo $message; ?>
         </div>
-        <?php endforeach; ?>
-
+        <?php endforeach; ?>"
         <section id="row content">
             <?php echo $this->layout()->content; ?>
         </section>

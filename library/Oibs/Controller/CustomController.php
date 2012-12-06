@@ -68,20 +68,10 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	 */
 	public function postDispatch()
 	{
-		// create the login form, if necessary
-		if (!$this->hasIdentity()) {
-			$login_form = new Default_Form_LoginForm();
-			$login_form
-				->setReturnUrl($this->getRequest()->getRequestUri())
-				->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/loginHeader.phtml'))));
-			$this->view->loginform = $login_form;
-		}
-
 		// set layout view variables
 		$this->view->authenticated   = $this->hasIdentity();
-		$this->view->identity        = $this->getIdentity();
 		$this->view->language        = $this->getSession()->language;
-		$this->view->activeLanguages = $this->getTranslatedLanguages();
+		$this->view->activeLanguages = $this->_getTranslatedLanguages();
 		$this->view->baseUrl         = Zend_Controller_Front::getInstance()->getBaseUrl();
 
 		// inject plugins into the view
@@ -89,6 +79,24 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
 		// inject flash messenger messages
 		$this->view->messages = $this->getFlashMessenger()->getMessages();
+
+		if ($this->hasIdentity()) {
+			// identity
+            $this->view->identity      = $this->getIdentity();
+            $this->view->profile_image = $this->getProfileImage();
+
+			// navigation
+			$this->view->groups = $this->_getNavigationGroups();
+			$this->view->categories = $this->_getNavigationCategories();
+			$this->view->campaigns = $this->_getNavigationCampains();
+        } else {
+
+			$login_form = new Default_Form_LoginForm();
+			$login_form
+				->setReturnUrl($this->getRequest()->getRequestUri())
+				->setDecorators(array(array('ViewScript', array('viewScript' => 'forms/loginHeader.phtml'))));
+			$this->view->loginform = $login_form;
+		}
 
 		parent::postDispatch();
 	}
@@ -181,6 +189,30 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		return $this->getIdentity() != null;
 	}
 
+    /**
+     * Get Profile Image for Layout
+     * @return string
+     */
+    public function getProfileImage() {
+        if ($this->hasIdentity()) {
+            $id = $this->getIdentity()->user_id;
+
+            $model = new Default_Model_UserImages;
+            $images = $model->getImagesByUsername($id);
+
+            if(count($images) > 0) {
+                $dates = array();
+                for($a = 0; $a < count($images); $a++) {
+                    $dates[$a] = $images[$a]['modified_usi'];
+                }
+                $active = array_search(max($dates), $dates);
+                return $images[$active]['imagepath_usi'];
+            }
+        }
+
+        return "/img/user_avatar_24.png";
+    }
+
 	/**
 	 * Returns the flash messenger action helper.
 	 *
@@ -230,7 +262,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	 *
 	 * @return array
 	 */
-	protected function getTranslatedLanguages()
+	private function _getTranslatedLanguages()
 	{
 		$lang_model = new Default_Model_Languages();
 		$languages  = $lang_model->getAllNamesAndCodes();
@@ -244,6 +276,43 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		}
 
 		return $translated_languages;
+	}
+
+	/**
+	 * Returns an array of groups for the currently displayed user
+	 * @return array
+	 */
+	private function _getNavigationGroups() {
+		if (!$this->hasIdentity()) return array();
+
+		$id = $this->getIdentity()->user_id;
+		$userModel = new Default_Model_User();
+
+		return $userModel->getUserGroups($id);
+	}
+
+	/**
+	 * Returns an array of categories for the navigation
+	 * @return array
+	 */
+	private function _getNavigationCategories() {
+		if (!$this->hasIdentity()) return array();
+
+		$categoryModel = new Default_Model_Category();
+		return $categoryModel->getCategories();
+	}
+
+	/**
+	 * Returns an array of campaigns for the navigation
+	 * @return array
+	 */
+	private function _getNavigationCampains() {
+		if (!$this->hasIdentity()) return array();
+
+		$id = $this->getIdentity()->user_id;
+		$userModel = new Default_Model_User();
+
+		return $userModel->getUserCampaigns($id);
 	}
 
 }

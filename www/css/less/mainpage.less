@@ -3,14 +3,13 @@
 	width:     auto;
 }
 
-nav {
+#page-navigation {
 	background-color: @colorNavigation;
-	height:           500px;
+	height:           505px;
 	margin:           -20px 0 -9px;
 	position:         relative;
-	width:            150px;
 	border-right:     1px solid @colorDarkGray;
-	padding:          35px 0;
+	padding:          30px 0;
 
 	.box-shadow(1px 0 0 0, @colorNavigationShadow);
 
@@ -29,6 +28,7 @@ nav {
 			}
 			&.mainnavigation_popover {
 				width: 100px;
+				cursor: pointer;
 			}
 		}
 
@@ -90,9 +90,8 @@ nav {
 	height:           535px;
 	margin:           -20px 0 -9px;
 	position:         relative;
-	width:            205px;
 	border-left:      1px solid @colorDarkGray;
-	padding:          35px 0 0 10px;
+	padding:          30px 0 0 10px;
 	.box-shadow(-1px 0 0 0, @colorNavigationShadow);
 	.search {
 		#appendedInputButton {

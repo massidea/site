@@ -12,6 +12,11 @@ error-checkbox-not-checked;Mandatory
 error-username-exists;username already exists
 error-username-not-valid;username not valid
 
+hostname-invalid-local-name;no a valid hostname
+hostname-invalid-hostname;hostname is not a valid hostname
+hostname-undecipherable-tld;hostname is undecipherable
+hostname-unknown-tld;hostname is not known
+
 email-exists;e-mail-adress already exists
 email-invalid;Invalid type given, value should be a string
 email-invalid-format;'%value%' is not a valid email address in the basic format local-part@hostname
@@ -63,6 +68,7 @@ index-join-our-community-button;Join our Community!
 
 email;E-Mail
 password;Password
+
 account-login-username;Username
 account-login-password;Password
 account-login-title;Login
@@ -117,19 +123,13 @@ account-fetchpassword-captcha;Captcha
 account-fetchpassword-error-nosuchkey;Password reset link is invalid
 account-fetchpassword-password;Password
 account-fetchpassword-confirm;Confirm password
+account-view-user-settings;Settings
+account-view-user-logout;Logout
 
-hostname-invalid-local-name;no a valid hostname
-hostname-invalid-hostname;hostname is not a valid hostname
-hostname-undecipherable-tld;hostname is undecipherable
-hostname-unknown-tld;hostname is not known
 main-nav-section;Section
 main-nav-section-overview;Overview
 main-nav-mygroups;My Groups
 main-nav-mygroups-newgroup;New Group
 main-nav-myprojects;My Project
 main-nav-myprojects-newproject;New Project
-main-nav-categories;Categories
-
-main-page-comments;Comments
-main-page-files;Documents
-main-page-read-more;read more
+main-nav-categories;Categoriesaccount-view-user-profile;Profile

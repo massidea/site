@@ -1,40 +1,32 @@
-<div class="row">
-    <div class="btn-toolbar filter">
-        <div class="btn-group">
-            <button class="btn dropdown-toggle" data-toggle="dropdown">
-                Section: All
-                <span class="caret"></span>
-            </button>
-            <ul id="filter-section" class="dropdown-menu">
-                <li>
-                    <a rel="0" href="#">All</a>
-                </li>
-	            <?php foreach ($this->sections as $section): ?>
-	                <li>
-	                    <a rel="<?php echo $section['id']; ?>" href="#"><?php echo $this->translate($section['title']); ?></a>
-	                </li>
-		        <?php endforeach; ?>
-            </ul>
-        </div>
+<div class="btn-toolbar filter">
 
-        <div class="btn-group pull-right">
-            <button class="btn dropdown-toggle" data-toggle="dropdown">
-                Category: All
-                <span class="caret"></span>
-            </button>
-            <ul id="filter-category" class="dropdown-menu">
-	            <?php foreach ($this->categories as $category): ?>
-	                <li>
-		                <a rel="<?php echo $category['id_ctg']; ?>" href="#"><?php echo $this->translate($category['title_ctg']); ?></a>
-	                </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
+    <div class="btn-group">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+            Section: All <span class="caret"></span>
+        </button>
 
-     </div>
+        <ul id="filter-section" class="dropdown-menu">
+            <li><a rel="0" href="#">All</a></li>
+            <?php foreach ($this->sections as $section): ?>
+                <li><a rel="<?php echo $section['id']; ?>" href="#"><?php echo $this->translate($section['title']); ?></a></li>
+	        <?php endforeach; ?>
+        </ul>
+    </div>
 
-	<div id="content-list" class="row push-left"></div>
-    <a id="load-more">more</a>
-</div>
+    <div class="btn-group pull-right">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+            Category: All <span class="caret"></span>
+        </button>
+        <ul id="filter-category" class="dropdown-menu">
+            <?php foreach ($this->categories as $category): ?>
+                <li><a rel="<?php echo $category['id_ctg']; ?>" href="#"><?php echo $this->translate($category['title_ctg']); ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+ </div>
+
+<div id="content-list" class="row push-left"></div>
+<a id="load-more">more</a>
 
 <script type="text/javascript"> $(function () { Content.init(); }); </script>

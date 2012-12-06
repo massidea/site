@@ -13,6 +13,11 @@ error-username-exists; Benutzername existiert bereits
 error-username-not-valid; Benutzername nicht gültig
 error-email-exists; E-Mail-Adresse ist bereits gespeichert
 
+hostname-invalid-local-name; Kein gültiger Hostname
+hostname-invalid-hostname; Kein gültiger Hostname
+hostname-undecipherable-tld; Hostname ist nicht entzifferbar
+hostname-unknown-tld; Hostname ist nicht bekannt
+
 email-invalid; Der eingegebene Wert ist vom falschen Typ, Der Wert muss ein string sein
 email-invalid-format; '%value%' ist keine gültige E-Mail-Adresse im Format lokal@hostname
 email-invalid-hostname; '%hostname%' ist kein gültiger Hostname für E-Mail-Adresse '%value%'
@@ -118,11 +123,10 @@ account-fetchpassword-captcha;Captcha
 account-fetchpassword-error-nosuchkey;Passwort zurücksetzen Link ist ungültig.
 account-fetchpassword-password;Passwort
 account-fetchpassword-confirm;Passwort bestätigen
+account-view-user-profile;Profil
+account-view-user-settings;Einstellungen
+account-view-user-logout;Abmelden
 
-hostname-invalid-local-name; Kein gültiger Hostname
-hostname-invalid-hostname; Kein gültiger Hostname
-hostname-undecipherable-tld; Hostname ist nicht entzifferbar
-hostname-unknown-tld; Hostname ist nicht bekannt
 main-nav-section;Bereich
 main-nav-section-overview;Übersicht
 main-nav-mygroups;Meine Gruppen
