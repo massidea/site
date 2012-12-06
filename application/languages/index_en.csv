@@ -120,4 +120,6 @@ main-nav-mygroups;My Groups
 main-nav-mygroups-newgroup;New Group
 main-nav-myprojects;My Project
 main-nav-myprojects-newproject;New Project
-main-nav-categories;Categories
+main-nav-categories;Categoriesaccount-view-user-profile;Profile
+account-view-user-settings;Settings
+account-view-user-logout;Logout

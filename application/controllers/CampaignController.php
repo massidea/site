@@ -4,18 +4,18 @@
  *
  *  Copyright (c) <2010>, Mikko Aatola
  *
- *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ *  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  *  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
- *  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *
+ *  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  *  License text found in /license/
  */
- 
+
 /**
  *  CampaignController - class
  *
@@ -24,10 +24,10 @@
  *  @copyright      2010 MassIdea.org
  *  @license        GPL v2
  *  @version        1.0
- */ 
+ */
 class CampaignController extends Oibs_Controller_CustomController
 {
-	
+
     public function indexAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -38,7 +38,7 @@ class CampaignController extends Oibs_Controller_CustomController
 //	FIXME: Notice: Undefined variable: grps_new in /home/iiuusit/massidea/application/controllers/CampaignController.php on line 37
 //      $this->view->groups = $grps_new;
     }
-    
+
     /**
      * createAction
      *
@@ -58,7 +58,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'action' => 'list',
                         'language' => $this->view->language),
                     'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $grpAdminModel = new Default_Model_GroupAdmins();
@@ -69,7 +69,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'groupid'    => $grpId,
                         'language'   => $this->view->language),
                     'group_shortview', true);
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             $this->view->grpid = $grpId;
@@ -90,7 +90,7 @@ class CampaignController extends Oibs_Controller_CustomController
                     $desc = $post['campaign_desc'];
                     $start = $post['campaign_start'];
                     $end = $post['campaign_end'];
-                    
+
                     $newCampaign = $campaignModel->createCampaign(
                         $name, $ingress, $desc, $start, $end, $grpId);
 
@@ -116,17 +116,17 @@ class CampaignController extends Oibs_Controller_CustomController
                         $campaignWeblinksModel->setWeblink($newCampaign['id_cmp'], $post['weblinks_name_site5'],
                                 $post['weblinks_url_site5'], 5);
                     }
-					
+
 					$filesModel = new Default_Model_Files();
 					$files = $_FILES['content_file_upload'];
                     $filesModel->newFiles($newCampaign->id_cmp, "campaign", $files);
-        
+
                     $target = $this->_urlHelper->url(
                         array(
                             'groupid'    => $grpId,
                             'language'   => $this->view->language),
                         'group_shortview', true);
-                    $this->_redirector->gotoUrl($target);
+                    $this->_redirect($target);
                 }
             }
         } else {
@@ -134,7 +134,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                         'action' => 'list',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         }
     }
 
@@ -153,7 +153,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             // Get group id from campaign info.
@@ -174,7 +174,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             // Delete campaign.
@@ -186,7 +186,7 @@ class CampaignController extends Oibs_Controller_CustomController
                     'groupid'    => $grpId,
                     'language'   => $this->view->language),
                 'group_shortview', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             // Not logged in - redirect to the group page.
             $target = $this->_urlHelper->url(
@@ -194,10 +194,10 @@ class CampaignController extends Oibs_Controller_CustomController
                     'groupid'    => $grpId,
                     'language'   => $this->view->language),
                 'group_shortview', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
-    
+
     /**
      * viewAction
      *
@@ -205,7 +205,7 @@ class CampaignController extends Oibs_Controller_CustomController
      */
     public function viewAction()
     {
-    	
+
         $auth = Zend_Auth::getInstance();
 
         $user = $auth->getIdentity();
@@ -218,7 +218,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                    'action'        => 'index',
                                                    'language'      => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
 
         // Get campaign & its contents.
@@ -241,7 +241,7 @@ class CampaignController extends Oibs_Controller_CustomController
         } else {
             $this->view->identity = false;
         }
-        
+
         // Campaign weblinks
         $campaignWeblinksModel = new Default_Model_CampaignWeblinks();
         $cmp['campaignWeblinks'] = $campaignWeblinksModel->getCampaignWeblinks($cmpid);
@@ -262,16 +262,16 @@ class CampaignController extends Oibs_Controller_CustomController
         $cmpHasCmpModel = new Default_Model_CampaignHasCampaign();
         $linkedcampaigns = $cmpHasCmpModel->getCampaignCampaigns($cmpid);
         $linkedcampaigns = array_merge($linkedcampaigns['parents'], $linkedcampaigns['childs']);
-        
+
         // Get files
         $filesModel = new Default_Model_Files();
         $files = $filesModel->getFilenames($cmpid, "campaign");
-        
+
         $comments = new Oibs_Controller_Plugin_Comments("campaign", $cmpid);
         if ($this->view->identity) $comments->allowComments(true);
   		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
 		$comments->loadComments();
-        
+
 		$this->view->hasFeeds 		 = Oibs_Controller_Plugin_RssReader::hasFeeds($cmpid, "campaign");
 		$this->view->comments		 = $comments;
         $this->view->campaign        = $cmp;
@@ -280,7 +280,7 @@ class CampaignController extends Oibs_Controller_CustomController
         $this->view->linkedcampaigns = $linkedcampaigns;
         $this->view->status          = $cmpmodel->getStatus($cmpid);
         $this->view->files 			 = $files;
-        
+
     }
 
     function editAction() {
@@ -297,7 +297,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             // Get group id from campaign info.
@@ -318,14 +318,14 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
 			// Get contents filenames from database
 			$filesModel = new Default_Model_Files();
 			$filenames = $filesModel->getFilenames($cmpId, "campaign");
 			$formData['filenames'] = $filenames;
-            
+
             // Create & populate the form.
             $form = new Default_Form_AddCampaignForm($this, array(
                 'mode'     => 'edit',
@@ -347,7 +347,7 @@ class CampaignController extends Oibs_Controller_CustomController
                 $formData['weblinks_name_site'.$campaignWeblink['count_cwl']] = $campaignWeblink['name_cwl'];
                 $formData['weblinks_url_site'.$campaignWeblink['count_cwl']] = $campaignWeblink['url_cwl'];
             }
-            
+
             $form->populate($formData);
 
             $this->view->form = $form;
@@ -400,9 +400,9 @@ class CampaignController extends Oibs_Controller_CustomController
 					$filesModel = new Default_Model_Files();
 					$files = $_FILES['content_file_upload'];
                     $filesModel->newFiles($cmpId, "campaign", $files);
-                    
+
                     if (isset($post['uploadedFiles'])) $filesModel->deleteCertainFiles($cmpId, "campaign", $post['uploadedFiles']);
-                    
+
                     // Redirect back to the campaign page.
                     $target = $this->_urlHelper->url(
                         array(
@@ -410,7 +410,7 @@ class CampaignController extends Oibs_Controller_CustomController
                             'language' => $this->view->language),
                         'campaign_view', true
                     );
-                    $this->_redirector->gotoUrl($target);
+                    $this->_redirect($target);
                 }
             }
         } else {
@@ -421,7 +421,7 @@ class CampaignController extends Oibs_Controller_CustomController
                     'action' => 'index',
                     'language' => $this->view->language),
                 'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -434,7 +434,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                     'action' => 'index',
                                                     'language' => $this->view->language),
                                               'lang_default', true);
-        $this->_redirector->gotoUrl($redirectUrl);
+        $this->_redirect($redirectUrl);
         /*
         $grpmodel = new Default_Model_Groups();
         $cmpmodel = new Default_Model_Campaigns();
@@ -470,7 +470,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             // Check if campaign is open
@@ -480,9 +480,9 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
-            
+
             $this->view->cmpid = $cmpId;
 
             $cmp = $cmpmodel->getCampaignById($cmpId);
@@ -499,7 +499,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'campaign_view', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             $usrmodel = new Default_Model_User();
@@ -530,7 +530,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -552,7 +552,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $this->view->cmpid = $cmpId;
@@ -594,7 +594,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -616,7 +616,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $this->view->cmpid = $cmpId;
@@ -631,7 +631,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cmpHasCmpModel = new Default_Model_CampaignHasCampaign();
@@ -655,7 +655,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -683,7 +683,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $contenttype = '';
@@ -715,7 +715,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
     }
 
@@ -744,7 +744,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $groupAdminsModel = new Default_Model_GroupAdmins();
@@ -756,7 +756,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $campaignModel = new Default_Model_Campaigns();
@@ -793,7 +793,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
 		}
     }
 
@@ -810,7 +810,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         }
 
         // Check if campaign is open
@@ -820,7 +820,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                         'action' => 'index',
                                                         'language' => $this->view->language),
                                                   'lang_default', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         }
 
         $cmphascntmodel = new Default_Model_CampaignHasContent();
@@ -833,7 +833,7 @@ class CampaignController extends Oibs_Controller_CustomController
         $target = $this->_urlHelper->url(array('cmpid' => $cmpId,
                                                'language' => $this->view->language),
                                          'campaign_view', true);
-        $this->_redirector->gotoUrl($target);
+        $this->_redirect($target);
     }
 
     /**
@@ -854,7 +854,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cmphascmpmodel = new Default_Model_CampaignHasCampaign();
@@ -870,13 +870,13 @@ class CampaignController extends Oibs_Controller_CustomController
             $target = $this->_urlHelper->url(array('cmpid' => $parentCmpId,
                                                    'language' => $this->view->language),
                                              'campaign_view', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             $target = $this->_urlHelper->url(array('controller' => 'campaign',
                                                    'action'     => 'index',
                                                    'language'   => $this->view->language),
                                              'lang_default', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         }
     }
 
@@ -905,7 +905,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cntHasUsrModel = new Default_Model_ContentHasUser();
@@ -917,7 +917,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'user' => $auth->getIdentity()->username,
                                                             'language' => $this->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cmphascntmodel = new Default_Model_CampaignHasContent();
@@ -932,7 +932,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                         'user' => $auth->getIdentity()->username,
                                                         'language' => $this->language),
                                                   'lang_default', true);
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         } else {
             // If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -941,7 +941,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -970,7 +970,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cmpModel = new Default_Model_Campaigns();
@@ -984,7 +984,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cmphascntmodel = new Default_Model_CampaignHasContent();
@@ -997,7 +997,7 @@ class CampaignController extends Oibs_Controller_CustomController
             $target = $this->_urlHelper->url(array('cmpid' => $cmpId,
                                                    'language' => $this->view->language),
                                              'campaign_view', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             // If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -1006,7 +1006,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -1031,7 +1031,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cmpModel = new Default_Model_Campaigns();
@@ -1045,7 +1045,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                             'action' => 'index',
                                                             'language' => $this->view->language),
                                                       'lang_default', true);
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             $cmphascmpmodel = new Default_Model_CampaignHasCampaign();
@@ -1059,7 +1059,7 @@ class CampaignController extends Oibs_Controller_CustomController
             $target = $this->_urlHelper->url(array('cmpid' => $parentCmpId,
                                                    'language' => $this->view->language),
                                              'campaign_view', true);
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             // If not logged, redirecting to system message page
 			$message = 'content-link-not-logged';
@@ -1068,7 +1068,7 @@ class CampaignController extends Oibs_Controller_CustomController
                                                 'action' => 'index',
                                                 'language' => $this->view->language),
                                           'lang_default', true);
-			$this->flash($message, $url);
+			$this->addFlashMessage($message, $url);
         }
     }
 
@@ -1087,7 +1087,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($target);
+                $this->_redirect($target);
             }
 
             // Get group id from campaign info.
@@ -1108,7 +1108,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             // Check if campaign status is ended
@@ -1121,7 +1121,7 @@ class CampaignController extends Oibs_Controller_CustomController
                         'language' => $this->view->language),
                     'lang_default', true
                 );
-                $this->_redirector->gotoUrl($redirectUrl);
+                $this->_redirect($redirectUrl);
             }
 
             // Chang end date to yesterday
@@ -1134,7 +1134,7 @@ class CampaignController extends Oibs_Controller_CustomController
                     'language' => $this->view->language),
                 'campaign_view', true
             );
-            $this->_redirector->gotoUrl($target);
+            $this->_redirect($target);
         } else {
             // Not logged in.
             $redirectUrl = $this->_urlHelper->url(
@@ -1144,7 +1144,7 @@ class CampaignController extends Oibs_Controller_CustomController
                     'language' => $this->view->language),
                 'lang_default', true
             );
-            $this->_redirector->gotoUrl($redirectUrl);
+            $this->_redirect($redirectUrl);
         }
     }
 

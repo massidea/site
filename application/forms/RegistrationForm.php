@@ -17,7 +17,13 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 	 */
 	public function init()
 	{
+        $translate = Zend_Registry::get('Zend_Translate');
+        $language = $translate->getLocale();
+        $baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();
+        $actionUrl = $baseurl.'/'.$language.'/account/register';
+
 		$this->setName('register_form')
+            ->setAction($actionUrl)
 			->setAttrib('id', 'register_form')
 			->addElementPrefixPath('Oibs_Validators', 'OIBS/Validators/', 'validate', 'decorate');
 

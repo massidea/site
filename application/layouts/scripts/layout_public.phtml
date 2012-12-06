@@ -35,17 +35,39 @@
             <div class="span4 login">
                 <?php
                 if (!$this->authenticated) :
-                    echo $this->loginform; else :
-                    echo $this->username;
-                    ?>
-                    <span class="grey"> |</span>
-                    <a href="<?php echo $this->url(array(
-                        'controller' => 'account',
-                        'action' => 'logout',
-                        'language' => $this->language,
-                    ), 'lang_default', true); ?>">
-                        <?php echo $this->translate('layout-logout'); ?>
-                    </a>
+                    echo $this->loginform;  ?>
+                    <?php else : ?>
+                    <div class="usermenu">
+                        <div class="btn-group pull-right">
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'view',
+                                    'user' => $this->username,
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-profile'); ?></a></li>
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'settings',
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-settings'); ?></a></li>
+                                <li><a href="<?php echo $this->url(array(
+                                    'controller' => 'account',
+                                    'action' => 'logout',
+                                    'language' => $this->language,
+                                ), 'lang_default', true); ?>"><?php echo $this->translate('account-view-user-logout'); ?></a></li>
+                            </ul>
+                        </div>
+                        <div class="username pull-right">
+                            <span><?php echo $this->identity->username;?></span>
+                        </div>
+                        <div class="userImage pull-right">
+                            <img  src="<?php echo $this->profile_image; ?>" alt="User Image" />
+                        </div>
+                    </div>
                     <?php endif; ?>
             </div>
         </div>

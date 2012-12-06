@@ -133,7 +133,7 @@ class Oibs_Controller_Plugin_Email {
 	private function _loadMessage() {
 		//
 		//$this->_subject = "uus kommentti";
-		$templateDir = "../library/Oibs/Emails/"; 
+		$templateDir = "../library/Oibs/Emails/";
 		$file = $templateDir."notification_email_".$this->_notificationType.".txt";
         var_dump('\n\n',$file);
 

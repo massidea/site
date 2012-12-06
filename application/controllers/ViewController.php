@@ -5,14 +5,14 @@
  *   Copyright (c) <2009>, Joel Peltonen <joel.peltonen@cs.tamk.fi>
  *   Copyright (c) <2009>, Pekka Piispanen <pekka.piispanen@cs.tamk.fi>
  *
- * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License 
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied  
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for  
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free 
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * License text found in /license/
@@ -26,7 +26,7 @@
  *  @copyright  2009 Joel Peltonen & Pekka Piispanen
  *  @license    GPL v2
  *  @version    1.0
- */ 
+ */
  class ViewController extends Oibs_Controller_CustomController
 {
     public function init()
@@ -58,33 +58,33 @@
 
 
         $baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
-		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) . 
+		$absoluteBaseUrl = strtolower(trim(array_shift(explode('/', $_SERVER['SERVER_PROTOCOL'])))) .
     						'://' . $_SERVER['HTTP_HOST'] . Zend_Controller_Front::getInstance()->getBaseUrl();
-		
+
         // get content id from params, if not set or invalid, send a message
 
         $id = (int)$params['actual_content_id'];
 
         if ($id == 0) {
-            $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');   
+            $this->addFlashMessage('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');
         }
 
         // Get specific content data -- this could fail? Needs check?
         $contentModel = new Default_Model_Content();
         $contentData = $contentModel->getDataAsSimpleArray($id);
-        
+
         $isTranslated = isset($params['notranslate']) ? false:true;
-        
+
         if($isTranslated)
         {
 	        // Translate content data
 			$this->gtranslate->setLangFrom($contentData['language_cnt']);
 			$contentData = $this->gtranslate->translateContent($contentData);
         }
-        
+
         $filesModel = new Default_Model_Files();
         $files = $filesModel->getFilenames($id, "content");
-        
+
         // Get content owner id (groups to be implemented later)
         $contentHasUserModel = new Default_Model_ContentHasUser();
         $owner = $contentHasUserModel->getContentOwners($id);
@@ -98,23 +98,23 @@
         if ($auth->hasIdentity()) {
             $usrId = $auth->getIdentity()->user_id;
         }
-        
-        if ($contentData['published_cnt'] == 0 && 
+
+        if ($contentData['published_cnt'] == 0 &&
         	$usrId != $ownerId &&
         	!in_array("admin", $this->view->logged_user_roles))
         {
-            $this->flash('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');  
+            $this->addFlashMessage('content-not-found', $baseUrl.'/'.$this->view->language.'/msg/');
         }
-   
+
         // get rating from params (if set)
         $rate = isset($params['rate']) ? $params['rate'] : "NONE";
-                
+
         // get page number and comments per page (if set)
         $page = isset($params['page']) ? $params['page'] : 1;
-              
+
         // turn commenting off by default
         $user_can_comment = false;
-        
+
         // turn rating off by default
         $user_can_rate = false;
 
@@ -123,15 +123,15 @@
 
         // Comment model
         $comment = new Default_Model_Comments();
-        
+
         $favouriteModel = new Default_Model_UserHasFavourites();
         $cntHasUsrModel = new Default_Model_ContentHasUser();
-                
+
         //$parentId = isset($params['replyto']) ? $params['replyto'] : 0;
-        
+
         // If user has identity
         if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) {
-        
+
             // enable rating if the content was not published by the user
             // (also used for flagging)
             if ($ownerId != $auth->getIdentity()->user_id) {
@@ -142,28 +142,28 @@
             if ($ownerId == $auth->getIdentity()->user_id) {
                 $user_is_owner = true;
             }
-            
+
 	        if($favouriteModel->checkIfContentIsUsersFavourite($id,$usrId)) {
 	        	$favouriteModel->updateLastChecked($usrId,$id);
 	        	$profileModel = new Default_Model_UserProfiles();
 				$profileModel->deleteNotificationCache($id,$usrId);
 	        }
-	        
+
 	        if($user_is_owner) {
 	        	$cntHasUsrModel->updateLastChecked($ownerId,$id);
 	        	$profileModel = new Default_Model_UserProfiles();
-				$profileModel->deleteNotificationCache($id,$usrId);       
-	        }      
+				$profileModel->deleteNotificationCache($id,$usrId);
+	        }
             // generate comment form
             //$comment_form = new Default_Form_CommentForm($parentId);
-     
+
             // if there is something in POST
             /*if ($request->isPost()) {
-            
+
                     if($user_id != $ownerId) {
                         $user = new Default_Model_User();
                         $comment_sender = $user->getUserNameById($user_id);
-                        
+
                         $Default_Model_privmsg = new Default_Model_PrivateMessages();
                         $data = array();
                         $data['privmsg_sender_id'] = 0;
@@ -172,14 +172,14 @@
                         $data['privmsg_message'] = '<a href="'.$baseUrl."/".$this->view->language.'/account/view/user/'.$comment_sender.'">'
                         .$comment_sender.'</a> commented your content <a href="'.$baseUrl."/".$this->view->language.'/view/'.$id.'">'.$contentData['title_cnt'].'</a>';
                         $data['privmsg_email'] = '';
-                        
+
                         // Send email to contentowner about new comment
                         // if its allowed
                         $notificationsModel = new Default_Model_Notifications();
 						$notifications = $notificationsModel->getNotificationsById($ownerId);
 
 	                    if (in_array('comment', $notifications)) {
-	                    	
+
 	                    	$emailNotification = new Oibs_Controller_Plugin_Email();
 	                    	$emailNotification->setNotificationType('comment')
 	                    					   ->setSenderId($user_id)
@@ -189,23 +189,23 @@
 	                    					   ->setParameter('CONTENT-ID', $id)
 	                    					   ->setParameter('CONTENT-TITLE', $contentData['title_cnt'])
 	                    					   ->setParameter('COMMENT', $formData['comment_message']);
-	                    					   
+
 							if ($emailNotification->isValid()) {
 								$emailNotification->send();
 							} else {
 								//echo $emailNotification->getErrorMessage(); die;
 							}
 	                    }
-                        
+
                         $Default_Model_privmsg->addMessage($data);
                 } // end if
             }*/ // end if
         } // end if
-        
+
         // get content type of the specific content viewed
         $contentTypesModel = New Default_Model_ContentTypes();
         $contentType = $contentTypesModel->getTypeById($contentData['id_cty_cnt']);
-        
+
         // Get content innovation type / industry / division / group / class
         // and send to view... somehow.
         // TO BE IMPLEMENTED
@@ -223,7 +223,7 @@
 			$contentViewsModel->increaseViewCount($id);
         }
         $views = $contentViewsModel->getViewsByContentId($id);
-        
+
         $languagesModel = new Default_Model_Languages();
         $languageName = $languagesModel->getLanguageByLangCode($contentData['language_cnt']);
         $gtranslateLangPair = $this->gtranslate->getLangPair();
@@ -232,7 +232,7 @@
         // needs updating to proper MVC?
         $contentHasTagModel = new Default_Model_ContentHasTag();
         $tags = $contentHasTagModel->getContentTags($id);
-        
+
         if($isTranslated)
         {
 			$tags = $this->gtranslate->translateTags($tags);
@@ -249,11 +249,11 @@
         // get content family (array of children, parents and siblings)
         $contentHasContentModel = new Default_Model_ContentHasContent();
         $family = $contentHasContentModel->getContentFamilyTree($id);
-        
+
         // split family array to child, parent and sibling arrays (full content)
         $children = array();
         $children_siblings = array();
-        
+
         //TODO: It would be best effiency to send just an array of childs to ContentModel
         //		and get all data in 1 query rather than querying many times. New function
         //		to models is needed for this or then edit the one we have now and allow it
@@ -262,7 +262,7 @@
             foreach ($family['children'] as $child) {
                 $contenttypeid = $contentModel->getContentTypeIdByContentId((int)$child);
                 $contenttype = $contentTypesModel->getTypeById($contenttypeid);
-                
+
                 if($contenttype == "idea") {
                     $children[] = $contentModel->getDataAsSimpleArray((int)$child);
                 } else {
@@ -274,12 +274,12 @@
 
         $parents = array();
         $parent_siblings = array();
-        
+
         if (isset($family['parents'])) {
             foreach ($family['parents'] as $parent) {
                 $contenttypeid = $contentModel->getContentTypeIdByContentId((int)$parent);
                 $contenttype = $contentTypesModel->getTypeById($contenttypeid);
-                
+
                 if($contenttype == "idea") {
                     $parents[] = $contentModel->getDataAsSimpleArray((int)$parent);
                 } else {
@@ -287,7 +287,7 @@
                 }
             }
         }
-            
+
         // Here we get the rival solutions for a solution
         $rivals = array();
         if($contentType == "idea" && isset($family['parents'])) {
@@ -297,7 +297,7 @@
             foreach ($family['parents'] as $parent) {
                 // Get the family of the problem or future info
                 $parents_family = $contentHasContentModel->getContentFamilyTree((int)$parent);
-                
+
                 // Get the children of the problem or future info
                 if(isset($parents_family['children'])) {
                     // Going through the children
@@ -313,33 +313,33 @@
             }
         }
 
-        // get comments data 
+        // get comments data
         // $commentList = $comment->getAllByContentId($id, $page, $count);
         /*$commentList = $comment->getCommentsByContent($id);
-        
+
         $commentsSorted = array();
         $this->getCommentChilds($commentList, $commentsSorted, 0, 0, 3);
-        
+
         // Get total comment count
         $commentCount = $comment->getCommentCountByContentId($id);
-        
+
         // Calculate total page count
         $pageCount = ceil($commentCount / $count);
-        
+
         // Custom pagination to fix memory error on large amount of data
         $paginator = new Zend_View();
         $paginator->setScriptPath('../application/views/scripts');
         $paginator->pageCount = $pageCount;
         $paginator->currentPage = $page;
         $paginator->pagesInRange = 10;*/
-        
+
         // get content industries -- will be updated later.
         /*$cntHasIndModel = new Default_Model_ContentHasIndustries();
         $hasIndustry = $cntHasIndModel->getIndustryIdOfContent($id);
-        
+
         $industriesModel = new Default_Model_Industries();
         $industriesArray = $industriesModel->getAllContentIndustryIds($hasIndustry);*/
-        
+
         // roll values to an array
         /*$industries = array();
         foreach ($industriesArray as $industry) {
@@ -350,7 +350,7 @@
                 $industries[] = $value;
             }
         }*/
-        
+
         // Check if and when the content is modified and if its more than 10minutes ago add for the view
         $dateCreated = strtotime( $contentData['created_cnt'] );
         $dateModified = strtotime( $contentData['modified_cnt'] );
@@ -359,18 +359,18 @@
         	$modified = $contentData['modified_cnt'];
         }
 
-        
+
         // Comment module
         $comments = new Oibs_Controller_Plugin_Comments("content", $id);
 		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
-        // enable comment form        
+        // enable comment form
 		if ($auth->hasIdentity() && $contentData['published_cnt'] == 1) $comments->allowComments(true);
 		$comments->loadComments();
-		
+
 		//$contentData['references_cnt'];
    		$contentData['references_cnt'] = Oibs_Controller_Plugin_Utils::clickable($contentData['references_cnt'], true);
 		$contentData['body_cnt'] = Oibs_Controller_Plugin_Utils::clickable($contentData['body_cnt']);
-   		
+
         // Inject data to view
         $this->view->files 				= $files;
         $this->view->id					= $id;
@@ -397,21 +397,21 @@
         //$this->view->campaigns          = $campaigns;
         $this->view->viewers			= $this->getViewers($id);
         $this->view->boxStates			= $this->getBoxStates();
-        
+
         // Inject title to view
         $this->view->title = $this->view->translate('index-home') . " - " . $contentData['title_cnt'];
 	} // end of viewAction
-    
+
 
 	private function getViewers($id_cnt) {
 		$cntVwModel = new Default_Model_ContentViews();
 		return $cntVwModel->getContentViewers($id_cnt, 10);
-	} 
-	
+	}
+
 	/** getBoxStates
-	 * 
+	 *
 	 * checks if contentview sideboxes are to be shown or hidden initially
-	 * 
+	 *
 	 * @return $states array of states.
 	 */
 	private function getBoxStates() {
@@ -419,18 +419,18 @@
 		$states = array (
 			'user' => isset($_COOKIE['user']) ? $_COOKIE['user'] : $defaultState,
 			'campaign' => isset($_COOKIE['campaign']) ? $_COOKIE['campaign'] : $defaultState,
-			'content' => isset($_COOKIE['content']) ? $_COOKIE['content'] : $defaultState 
+			'content' => isset($_COOKIE['content']) ? $_COOKIE['content'] : $defaultState
 		);
-		return $states;	
+		return $states;
 	}
-	
+
     /** alreadyViewed
-     * 
-     * checks if user has viewed specific content during this session 
-     * 
+     *
+     * checks if user has viewed specific content during this session
+     *
      * @param 	$cntId	content id
      * @param   $username username, 0 if not logged
-     * @return  bool	if user has viewed page or not 
+     * @return  bool	if user has viewed page or not
      */
     private function alreadyViewed($cntId, $username) {
     	$session = new Zend_Session_Namespace();
@@ -438,7 +438,7 @@
     		$session->viewedPages = array();
     		$session->user = "0";
     	}
-    	
+
     	if (!isset($session->viewedPages[$username]) || !is_array($session->viewedPages[$username])) {
     		$session->viewedPages[$username] = array();
     	}
@@ -448,6 +448,6 @@
     		$session->viewedPages[$username][] = $cntId;
     		return false;
     	}
-    	
+
     }
 }
