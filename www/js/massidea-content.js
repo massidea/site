@@ -60,7 +60,8 @@ var Content = new (function () {
 		MassIdea.load(URL_LOAD_CONTENT, {
 			category : _category,
 			section  : _section,
-			page     : page
+			page     : page,
+			format   : 'html'
 		}, function (body) {
 			$contentList.append(body);
 		});

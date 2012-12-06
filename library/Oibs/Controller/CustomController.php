@@ -130,16 +130,22 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	/**
 	 * Returns a formatted URL for the given parameters
 	 *
-	 * @param string $action     When omitted, the active action will be used.
-	 * @param string $controller When omitted, the active controller will be used.
-	 * @return string
+	 * @param  array  $urlOptions Options passed to the assemble method of the Route object.
+	 * @param  mixed  $name       The name of a Route to use. If null it will use the current Route
+	 * @param  bool   $reset      Whether or not to reset the route defaults with those provided
+	 * @param  bool   $encode     Whether or not to encode url parameters
+	 * @return string Url for the link href attribute.
 	 */
-	public function getUrl($action = null, $controller = null)
+	public function getUrl(array $urlOptions = array(), $name = null, $reset = true, $encode = true)
 	{
-		return $this->_urlHelper->url(array(
-			'action'     => $action,
-			'controller' => $controller,
-		));
+		if (!isset($urlOptions['action']))
+			$urlOptions['action'] = $this->_getParam('action');
+		if (!isset($urlOptions['controller']))
+			$urlOptions['controller'] = $this->_getParam('controller');
+		if (!isset($urlOptions['language']))
+			$urlOptions['language'] = $this->getActiveLanguage();
+
+		return $this->_urlHelper->url($urlOptions, 'lang_default', true);
 	}
 
 	/**

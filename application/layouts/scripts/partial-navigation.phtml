@@ -8,25 +8,21 @@
                data-content="<ul><li><a href='<?php echo $this->url(array(
                    'controller' => 'content',
                    'action' => 'list',
-                   'user' => $this->username,
                    'language' => $this->language,
                ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-section-overview'); ?></a></li>
     <li><a href='<?php echo $this->url(array(
                    'controller' => 'content',
-                   'action' => 'list',
-                   'type' => 'vision',
+                   'action' => 'list-visions',
                    'language' => $this->language,
                ), 'lang_default', true); ?>'><?php echo $this->translate('general-vision'); ?></a></li>
     <li><a href='<?php echo $this->url(array(
                    'controller' => 'content',
-                   'action' => 'list',
-                   'type' => 'challenge',
+                   'action' => 'list-challenges',
                    'language' => $this->language,
                ), 'lang_default', true); ?>'><?php echo $this->translate('general-challenge'); ?></a></li>
     <li><a href='<?php echo $this->url(array(
                    'controller' => 'content',
-                   'action' => 'list',
-                   'type' => 'idea',
+                   'action' => 'list-ideas',
                    'language' => $this->language,
                ), 'lang_default', true); ?>'><?php echo $this->translate('general-idea'); ?></a></li></ul>">
                 <?php echo $this->translate('main-nav-section'); ?>
