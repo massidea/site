@@ -1,0 +1,38 @@
+<?php foreach($this->contentData as $content) { ?>
+    <div class="row singleContent <?php echo $content['key_cty']; ?>">
+        <div class="span2 push-left">
+            <a class="thumbnail" href="<?php echo $this->url(array('controller' => 'view',
+                    'actual_content_id' => $content['id_cnt'],
+                    'language' => $this->language),
+                'lang_default', true); ?>">
+                <img alt="<?php echo $content['title_cnt'] ?>" src="/img/fallbackContent/<?php echo $content['key_cty']; ?>.png">
+            </a>
+        </div>
+        <div class="span9 push-right">
+            <div class="headline"><a href="<?php echo $this->url(array('controller' => 'view',
+                    'actual_content_id' => $content['id_cnt'],
+                    'language' => $this->language),
+                'lang_default', true); ?>"><?php echo $content['title_cnt'] ?></a></div>
+            <div class="metainfo top">
+                <span>by <?php echo $content['login_name_usr']; ?></span> ·
+                <span><?php echo $content['created_cnt']; ?></span>
+            </div>
+            <div class="content">
+                <?php echo $content['lead_cnt']; ?>
+            </div>
+            <div class="metainfo bottom">
+                <div class="pull-left">
+                    <span class="type"><?php echo $content['name_cty']; ?></span> |
+                    <span><?php echo $content['commentsCount']; echo ' '; echo $this->translate('main-page-comments'); ?></span> |
+                    <span><?php echo $content['filesCount']; echo ' '; echo $this->translate('main-page-files'); ?></span>
+                </div>
+                <div class="read-more pull-right">
+                    <a href="<?php echo $this->url(array('controller' => 'view',
+                            'actual_content_id' => $content['id_cnt'],
+                            'language' => $this->language),
+                            'lang_default', true); ?>">» <?php echo $this->translate('main-page-read-more'); ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>

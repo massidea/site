@@ -82,7 +82,7 @@ class Default_Form_RegistercompleteForm extends Zend_Form
    
         // $bio_counter here...
         
-        $select_str = $translate->_("account-select");
+        $select_str = $translate->_("account-register-select");
 
         $country = new Zend_Form_Element_Select('country');
         $country->setLabel($translate->_("account-register-country"))

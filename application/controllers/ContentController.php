@@ -22,13 +22,14 @@ class ContentController extends Oibs_Controller_CustomController
 	public function init()
 	{
 		parent::init();
-        Zend_Layout::getMvcInstance()->setLayout('layout_public');
+        Zend_Layout::getMvcInstance()->setLayout('layout');
 
 		$ajaxContext = $this->_helper->getHelper('AjaxContext');
 		$ajaxContext->addActionContext('feed', 'html')
+                    ->addActionContext('get-content', 'html')
                     ->initContext();
 
-		$this->view->title = 'content-title';
+		$this->view->title = $this->view->translate('index-home');
 	}
 
 	public function indexAction()
@@ -53,7 +54,78 @@ class ContentController extends Oibs_Controller_CustomController
 		$this->view->sections   = $sections;
 	}
 
-	public function addAction()
+    public function listVisionsAction()
+    {
+        $params = $this->getRequest()->getParams();
+
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->getContentTypeIdByContentId(1, $page, $count);
+
+        $category_model = new Default_Model_Category();
+        $categories = $category_model->getCategories();
+
+        $this->view->categories = $categories;
+        $this->view->contentData = $data;
+    }
+
+    public function listIdeasAction()
+    {
+        $params = $this->getRequest()->getParams();
+
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->getContentTypeIdByContentId(2, $page, $count);
+
+        $category_model = new Default_Model_Category();
+        $categories = $category_model->getCategories();
+
+        $this->view->categories = $categories;
+        $this->view->contentData = $data;
+    }
+
+    public function listChallengesAction()
+    {
+        $params = $this->getRequest()->getParams();
+
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->getContentTypeIdByContentId(3, $page, $count);
+
+        $category_model = new Default_Model_Category();
+        $categories = $category_model->getCategories();
+
+        $this->view->categories = $categories;
+        $this->view->contentData = $data;
+    }
+
+    public function getContentAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $user = $auth->getIdentity();
+        $userid = $user->user_id;
+
+        $params = $this->getRequest()->getParams();
+
+        $sect = isset($params['section']) ? $params['section'] : 0;
+        $cat = isset($params{'category'}) ? $params['category'] : 0;
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->listUserContent($userid, $sect, $cat, $page, $count);
+
+        $this->view->contentData = $data;
+        $this->view->page = $page;
+    }
+
+    public function addAction()
 	{
 		if (!$this->hasIdentity()) {
 			$this->flash('content-add-not-logged', '/');

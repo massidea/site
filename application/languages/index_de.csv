@@ -1,6 +1,9 @@
 general-vision;Vision
+general-visions;Visionen
 general-challenge;Challenge
+general-challenges;Challenges
 general-idea;Idee
+general-ideas;Ideen
 
 error-field-empty;Kein Text eingegeben
 error-selection-empty; Keine Auswahl getroffen
@@ -12,6 +15,11 @@ error-checkbox-not-checked; Verpflichtend
 error-username-exists; Benutzername existiert bereits
 error-username-not-valid; Benutzername nicht gültig
 error-email-exists; E-Mail-Adresse ist bereits gespeichert
+
+hostname-invalid-local-name; Kein gültiger Hostname
+hostname-invalid-hostname; Kein gültiger Hostname
+hostname-undecipherable-tld; Hostname ist nicht entzifferbar
+hostname-unknown-tld; Hostname ist nicht bekannt
 
 email-invalid; Der eingegebene Wert ist vom falschen Typ, Der Wert muss ein string sein
 email-invalid-format; '%value%' ist keine gültige E-Mail-Adresse im Format lokal@hostname
@@ -39,15 +47,12 @@ layout-logout;Abmelden
 layout-signup;Registrieren
 
 index-home;Massidea.org
-index-challenges;Challenges
 index-create-a-challenge;Challenge erstellen
 index-content-list-right-problem;Eine Challenge ist verbunden mit einem persönlichen, geschäftlichen oder sozialen Problem, Bedürfniss, Situation oder Feststellung. Die Challenge beschreibt den aktuellen Status der Angelegenheit und erkennt den Bedarf für eine Lösung des Problems. Sie sind wichtig für die Erstellung neuer Ideen solange sie die Bedürfnisse des aktuellen Marktes decken. Mit dem teilen einer Challenge, lädst du andere ein, ihre eigene Lösung zu deiner Challenge vorzuschlagen.
 index-recent-challenges;Aktuelle Challenges
-index-ideas;Ideen
 index-create-an-idea;Idee erstellen
 index-content-list-right-idea;Ideen sind Lösungen zu aktuellen Challenges und Visionen verbunden mit Möglichkeiten und Bedrohungen der Zukunft. Eine Idee ist immer der Startpunkt, der Plan, oder die Absicht einer potentiellen Innovation.
 index-recent-ideas;Aktuelle Ideen
-index-visions;Visionen
 index-create-a-vision;Vision erstellen
 index-content-list-right-finfo;Visionen oder Vorhersagen betreffend der nachhaltigen Zukunft sind normalerweise mindestens 10 Jahre voraus. Sie können ein Zukunftsszenario, einen Trend oder Anti-Trend, welcher warscheinlich in der Zukunft realisiert wird. Eine Vision kann eine Zukunft basierend an einem Keim der Veränderung oder einem kleinen Signal, das unser Leben unerwartet verändert sein. Visions identifizieren Möglichkeiten und Gefahren und helfen bei der Generirung von Ideen. Ideen entwickelt auf Basis einer Vision sind oft eine radikale Innovation.
 index-recent-visions;Aktuelle Visionen
@@ -118,11 +123,10 @@ account-fetchpassword-captcha;Captcha
 account-fetchpassword-error-nosuchkey;Passwort zurücksetzen Link ist ungültig.
 account-fetchpassword-password;Passwort
 account-fetchpassword-confirm;Passwort bestätigen
+account-view-user-profile;Profil
+account-view-user-settings;Einstellungen
+account-view-user-logout;Abmelden
 
-hostname-invalid-local-name; Kein gültiger Hostname
-hostname-invalid-hostname; Kein gültiger Hostname
-hostname-undecipherable-tld; Hostname ist nicht entzifferbar
-hostname-unknown-tld; Hostname ist nicht bekannt
 main-nav-section;Bereich
 main-nav-section-overview;Übersicht
 main-nav-mygroups;Meine Gruppen
@@ -130,6 +134,10 @@ main-nav-mygroups-newgroup;Neue Gruppe
 main-nav-myprojects;Meine Projekte
 main-nav-myprojects-newproject;Neues Projekt
 main-nav-categories;Kategorien
+
+main-page-comments;Kommentare
+main-page-files;Dokumente
+main-page-read-more;Weiterlesen
 
 create-group-title;Neue Gruppe
 create-group-form-groupname;Name
@@ -139,5 +147,3 @@ create-group-form-keyword;Schlagwörter
 create-group-form-privacy;Privatsphäre
 create-group-form-public;öffentlich
 create-group-form-private;privat
-
-
