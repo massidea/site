@@ -1,0 +1,27 @@
+<div class="row">
+    <h1 class="pull-left"><?php echo $this->translate('index-visions')?></h1>
+    <div class="span8 pull-left"><?php echo $this->translate('vision-list-description')?></div>
+    <div class="image vision"></div>
+    <div id="content-list" class="row push-left"></div>
+    <a id="load-more">more</a>
+</div>
+
+<div class="row">
+    <div class="btn-toolbar filter">
+        <div class="btn-group pull-right">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                Category: All
+                <span class="caret"></span>
+            </button>
+            <ul id="filter-category" class="dropdown-menu">
+                <?php foreach ($this->categories as $category): ?>
+                <li>
+                    <a rel="<?php echo $category['id_ctg']; ?>" href="#"><?php echo $this->translate($category['title_ctg']); ?></a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"> $(function () { Content.init(); }); </script>
