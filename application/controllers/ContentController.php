@@ -54,6 +54,57 @@ class ContentController extends Oibs_Controller_CustomController
 		$this->view->sections   = $sections;
 	}
 
+    public function listVisionsAction()
+    {
+        $params = $this->getRequest()->getParams();
+
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->getContentTypeIdByContentId(1, $page, $count);
+
+        $category_model = new Default_Model_Category();
+        $categories = $category_model->getCategories();
+
+        $this->view->categories = $categories;
+        $this->view->contentData = $data;
+    }
+
+    public function listIdeasAction()
+    {
+        $params = $this->getRequest()->getParams();
+
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->getContentTypeIdByContentId(2, $page, $count);
+
+        $category_model = new Default_Model_Category();
+        $categories = $category_model->getCategories();
+
+        $this->view->categories = $categories;
+        $this->view->contentData = $data;
+    }
+
+    public function listChallengesAction()
+    {
+        $params = $this->getRequest()->getParams();
+
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $count = isset($params['count']) ? $params['count'] : 15;
+
+        $contentModel = new Default_Model_Content();
+        $data = $contentModel->getContentTypeIdByContentId(3, $page, $count);
+
+        $category_model = new Default_Model_Category();
+        $categories = $category_model->getCategories();
+
+        $this->view->categories = $categories;
+        $this->view->contentData = $data;
+    }
+
     public function getContentAction()
     {
         $auth = Zend_Auth::getInstance();

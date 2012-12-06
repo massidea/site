@@ -1334,18 +1334,28 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 *
 	 *
 	 */
-	public function getContentHeaderByContentId($id_cnt = 0) {
+	public function getContentHeaderByContentId($id_cnt = 0, $page = 1, $count = -1) {
 		if((int)$id_cnt != 0) {
 			$select = $this->select()
 			->from('contents_cnt', array('title_cnt'))
 			->where('id_cnt = ?', (int)$id_cnt);
 
+            if ($count > 0){
+                $select->limitPage($page, $count);
+            } else {
+                $select->limit($page);
+            }
+
 			$result = $this->fetchAll($select)->toArray();
 
 			return $result[0]['title_cnt'];
+
 		} else {
 			return NULL;
 		}
+
+
+
 	}
 
 	/**
