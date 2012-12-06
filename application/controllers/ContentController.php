@@ -29,7 +29,7 @@ class ContentController extends Oibs_Controller_CustomController
                     ->addActionContext('get-content', 'html')
                     ->initContext();
 
-		$this->view->title = 'content-title';
+		$this->view->title = $this->view->translate('index-home');
 	}
 
 	public function indexAction()

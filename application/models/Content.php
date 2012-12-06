@@ -1650,17 +1650,63 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 
     public function listUserContent($userid, $sect = 0, $cat = 0, $page = 1, $count = -1)
     {
-        $select = $this->select()->from($this, array(	"id_cnt",
+       /* $select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
             "title_cnt",
             "lead_cnt",
             "body_cnt",
             "language_cnt",
             "created_cnt"))
-            ->join('users_usr', 'users_usr.id_usr = cnt_has_usr.id_cnt', array('login_name_usr'))
-            ->join('content_types_cty', 'content_types_cty.id_cty = contents_cnt.id_cty_cnt', array('key_cty', 'name_cty'))
-            ->join('comments_cmt', 'comments_cmt.id_target_cmt = contents_cnt.id_cnt', array("commentsCount" => "count(*)"))
-            ->join('file_fil', 'files_fil.id_cnt_fil = contents_cnt.id_cnt', array("filesCount" => "count(*)"))
-            ->where('published_cnt = 1');
+            ->joinLeft(	"cnt_has_usr",
+            "contents_cnt.id_cnt = cnt_has_usr.id_cnt",
+            array())
+            ->join(	"users_usr",
+            "users_usr.id_usr = cnt_has_usr.id_usr",
+            array("login_name_usr", "id_usr"))
+            ->joinLeft( "content_types_cty",
+            "content_types_cty.id_cty = contents_cnt.id_cty_cnt",
+            array("id_cty", "key_cty", "name_cty"))
+            ->joinLeft(	array("chu" => "cnt_has_usr"),
+            "cnt_has_usr.id_usr = chu.id_usr",
+            array("count" => "count(*)"))
+            ->group('contents_cnt.id_cnt')
+        ;
+    */
+        $select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
+                                                        "title_cnt",
+                                                        "lead_cnt",
+                                                        "body_cnt",
+                                                        "language_cnt",
+                                                        "created_cnt"))
+            ->join("cnt_has_usr",
+            "contents_cnt.id_cnt = cnt_has_usr.id_cnt",
+            array())
+            ->join('users_usr',
+            'users_usr.id_usr = cnt_has_usr.id_usr',
+            array('login_name_usr'))
+            ->join( "content_types_cty",
+            "content_types_cty.id_cty = contents_cnt.id_cty_cnt",
+            array("key_cty", "name_cty"))
+            ->joinLeft( 'comments_cmt',
+            'comments_cmt.id_target_cmt = contents_cnt.id_cnt',
+            array("commentsCount" => "count(id_cmt)"))
+            ->joinLeft( "files_fil",
+            "files_fil.id_cnt_fil = contents_cnt.id_cnt",
+            array("filesCount" => "count(id_fil)"))
+            ->group('contents_cnt.id_cnt')
+            ->where('published_cnt = 1')
+            ->order('modified_cnt DESC');
+
+        /*
+         *
+            ->joinRight( 'comments_cmt',
+            'comments_cmt.id_target_cmt = contents_cnt.id_cnt',
+            array("commentsCount" => "count(*)"))
+
+            ->join( "files_fil",
+            "files_fil.id_cnt_fil = contents_cnt.id_cnt",
+            array("filesCount" => "count(*)"))
+
+         */
 
         //$select->join('cnt_has_usr', 'cnt_has_usr.id_cnt = contents_cnt.id_cnt', array())
         //    ->where('cnt_has_usr.id_usr = ?', $userid);
@@ -1677,7 +1723,8 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
         } else {
             $select->limit($page);
         }
-        return $this->_db->fetchAll($select);
+        $data = $this->_db->fetchAll($select);
+        return $data;
     }
 } // end of class
 
