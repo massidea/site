@@ -1,6 +1,13 @@
 "use strict";
 
+/**
+ * Manages content feeds and lists.
+ *
+ * @namespace
+ * @const
+ */
 var Content = new (function () {
+
 	/** @const */ var URL_LOAD_CONTENT = '/content/get-content';
 	/** @const */ var SEL_CONTENT_LIST = '#content-list';
 	/** @const */ var SEL_LOAD_MORE    = '#load-more';
@@ -85,6 +92,7 @@ var Content = new (function () {
 		return false;
 	}
 
-
+	// module exports
 	this.init = init;
+
 })();

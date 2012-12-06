@@ -1,3 +1,11 @@
+"use strict";
+
+/**
+ * Manages the start page live feed.
+ *
+ * @namespace
+ * @const
+ */
 var LiveFeed = new (function () {
 
 	/** @const */ var URL_LOAD_FEED = '/content/feed';
@@ -5,6 +13,7 @@ var LiveFeed = new (function () {
 	/** @const */ var SEL_CONTENT   = '.feedContent';
 	/** @const */ var SEL_CONTROL   = '.feedControl';
 	/** @const */ var SEL_OVERLAY   = '.feedOverlay';
+	/** @const */ var LOAD_INTERVAL = 15000;
 
 	/** @type {jQuery} */
 	var $liveFeed;
@@ -35,12 +44,15 @@ var LiveFeed = new (function () {
 		resetTimer();
 	}
 
+	/** Loads content without resetting the timer */
 	function loadContentClick () {
 		$feedOverlay.removeClass("hidden");
 		MassIdea.loadHTML(SEL_CONTENT, URL_LOAD_FEED, function () {
 			$feedOverlay.addClass("hidden");
 		});
 	}
+
+	/** Loads content and resets the timer */
 	function loadContent () {
 		$feedOverlay.removeClass("hidden");
 		MassIdea.loadHTML(SEL_CONTENT, URL_LOAD_FEED, function () {
@@ -49,13 +61,15 @@ var LiveFeed = new (function () {
 		});
 	}
 
+	/** Resets the timer to load new content in the next LOAD_INTERVAL milliseconds */
 	function resetTimer () {
 		if (time) {
 			window.clearTimeout(time);
 		}
-		time = window.setTimeout(loadContent, 15000);
+		time = window.setTimeout(loadContent, LOAD_INTERVAL);
 	}
 
+	/** Resets the timer, to stop autoloading content */
 	function stopTimer () {
 		if (time) {
 			window.clearTimeout(time);
@@ -63,6 +77,7 @@ var LiveFeed = new (function () {
 		time = 0;
 	}
 
+	// module exports
 	this.init = init;
 
 })();
