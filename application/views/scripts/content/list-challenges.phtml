@@ -1,21 +1,29 @@
-<div class="btn-group pull-right">
-	<button class="btn dropdown-toggle" data-toggle="dropdown">
-		Category: All
-		<span class="caret"></span>
-	</button>
-	<ul id="filter-category" class="dropdown-menu">
-		<?php foreach ($this->categories as $category): ?>
-		<li>
-			<a rel="<?php echo $category['id_ctg']; ?>" href="#"><?php echo $this->translate($category['title_ctg']); ?></a>
-		</li>
-		<?php endforeach; ?>
-	</ul>
+<div class="row">
+    <h1 class="pull-left headline span3"><?php echo $this->translate('general-challenge')?></h1>
+    <div class="span3 btn-toolbar pull-right">
+        <div class="btn-group pull-right">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                Category: All
+                <span class="caret"></span>
+            </button>
+            <ul id="filter-category" class="dropdown-menu">
+                <?php foreach ($this->categories as $category): ?>
+                <li>
+                    <a rel="<?php echo $category['id_ctg']; ?>" href="#"><?php echo $this->translate($category['title_ctg']); ?></a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
 </div>
 
-<h1><?php echo $this->translate('general-challenges')?></h1>
-<div><?php echo $this->translate('challenge-list-description')?></div>
-<div class="image challenge"></div>
+    <div class="description-content row">
+        <div class="span2 pull-left" >
+            <img class="thumbnail" src="/img/fallbackContent/challenge.png" />
+        </div>
+        <div class="span5 pull-right "><?php echo $this->translate('challenge-list-description')?></div>
 
+    </div>
 <div id="content-list" class="row push-left"></div>
 <a id="load-more">more</a>
 
