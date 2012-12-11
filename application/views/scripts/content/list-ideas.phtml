@@ -1,4 +1,6 @@
-<div class="btn-toolbar filter">
+<div class="row">
+<h1 class="pull-left headline span3"><?php echo $this->translate('general-ideas')?></h1>
+<div class="span3 btn-toolbar pull-right">
 	<div class="btn-group pull-right">
 		<button class="btn dropdown-toggle" data-toggle="dropdown">
 			Category: All
@@ -13,11 +15,15 @@
 		</ul>
 	</div>
 </div>
+</div>
 
-<h1><?php echo $this->translate('general-ideas')?></h1>
-<div><?php echo $this->translate('idea-list-description')?></div>
-<div class="image idea"></div>
 
+<div class="description-content row">
+    <div class="span2 pull-left" >
+        <img class="thumbnail" src="/img/fallbackContent/idea.png" />
+    </div>
+    <div class="span5 pull-right "><?php echo $this->translate('idea-list-description')?></div>
+</div>
 <div id="content-list" class="row push-left"></div>
 <a id="load-more">more</a>
 
