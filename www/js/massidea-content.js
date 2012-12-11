@@ -34,10 +34,12 @@ var Content = new (function () {
 		$contentList    = $(SEL_CONTENT_LIST);
 		$loadMoreButton = $(SEL_LOAD_MORE).click(loadMore);
 		$sectionFilter  = $(SEL_SECTION).delegate('a', 'click', function () {
-			applySectionFilter($(this).attr('rel'));
+            var $this = $(this);
+			applySectionFilter($this.attr('rel'), $this.text());
 		});
 		$categoryFilter = $(SEL_CATEGORY).delegate('a', 'click', function () {
-			applyCategoryFilter($(this).attr('rel'));
+            var $this = $(this);
+			applyCategoryFilter($this.attr('rel'), $this.text());
 		});
 		loadContent();
 	}
@@ -70,21 +72,25 @@ var Content = new (function () {
 	/**
 	 * Changes the selected number and updates the list
 	 * @param {Number} category
+     * @param {String} caption
 	 */
-	function applyCategoryFilter(category) {
+	function applyCategoryFilter(category, caption) {
 		_category = category;
 		_page = 0;
+        $(SEL_CATEGORY).find('.caption').text(caption);
 		loadContent();
 	}
 
 	/**
 	 * Changes the selected section and updates the list
 	 * @param {Number} section
-	 */
-	function applySectionFilter(section) {
+     * @param {String} caption
+     */
+	function applySectionFilter(section, caption) {
 		_section = section;
 		_page = 0;
-		loadContent();
+        $(SEL_SECTION).find('.caption').text(caption);
+        loadContent();
 	}
 
 	/** Loads more content */
