@@ -30,6 +30,7 @@ class ContentController extends Oibs_Controller_CustomController
                     ->initContext();
 
 		$this->view->title = $this->view->translate('index-home');
+        $this->view->indicator ="overview";
 	}
 
 	public function indexAction()

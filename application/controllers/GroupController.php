@@ -33,6 +33,7 @@
      {
          parent::init();
          Zend_Layout::getMvcInstance()->setLayout('layout_public');
+         $this->view->indicator ="groups";
      }
 
     function indexAction()
