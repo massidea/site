@@ -97,20 +97,61 @@
 	border-left:      1px solid @colorDarkGray;
 	padding:          30px 0 0 10px;
 	.box-shadow(-1px 0 0 0, @colorNavigationShadow);
-	.search {
-		#appendedInputButton {
-			height: 17px;
-			border: 1px solid @colorNavigationShadow;
-			&:focus {
-				border: 1px solid #768FB4;
-			}
-		}
-		.btn {
-			.gradient(@colorGrayFirst, @colorGraySecond);
-			&.focus {
-				background: green;
-			}
-		}
+   #searchbar {
+     width: 150px;
+     border-radius: 4px 0 0 4px;
+     border-right: 1px solid transparent;
 
-	}
+   }
+
+  .icon {
+    border-radius: 0 4px 4px 0;
+    margin-left: -1px;
+    border: 1px solid #768FB4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: normal;
+    height: 16px;
+    line-height: 16px;
+    min-width: 16px;
+    padding: 4px 5px;
+    text-align: center;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: auto;
+
+    &.search {
+      background: url("/img/icons/searchbar/search.png") no-repeat center white;
+    }
+    &.close{
+      background: url("/img/icons/searchbar/close.png") no-repeat center white;
+    }
+
+  }
+
+  .accordion-group {
+    border: 1px solid @colorStandardFirst;
+    border-radius: 3px;
+    margin-bottom: 2px;
+    margin-right: 18px;
+    background: #fafafa;
+
+    .accordion-heading {
+      a {
+        text-decoration: none;
+        margin-right: 9px;
+        color: black;
+      }
+      .accordion-toggle {
+        background: url("/img/icons/accordeon/arrow-down.png") no-repeat right;
+      }
+      .accordion-inner {
+        background: white;
+      }
+
+    }
+  }
+
+
+
 }
