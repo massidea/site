@@ -111,3 +111,14 @@ FOREIGN KEY (`id_usr`)
 REFERENCES `users_usr` (`id_usr`);
 
 UPDATE `usr_groups_grp` SET `id_usr` = 1 WHERE `id_grp` = 1;
+
+
+ALTER TABLE `contents_cnt`
+ADD COLUMN `id_meta` INT(11);
+
+ALTER TABLE `contents_cnt`
+ADD CONSTRAINT `meta_content_fk`
+FOREIGN KEY (`id_meta`)
+REFERENCES `meta`(`id_meta`);
+
+UPDATE `contents_cnt` SET `id_meta` = 1 WHERE `id_cnt` = 1;
