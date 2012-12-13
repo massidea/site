@@ -284,4 +284,30 @@ class SearchController extends Oibs_Controller_CustomController
 
     }
 
+    function searchContentByFilter() {
+
+        $params = $this->getRequest()->getParams();
+        $pattern = isset($params['pattern']) ? $params['pattern'] : "";
+
+        if($pattern != "") {
+            $contentModel = new Default_Model_Content();
+            $searchResults = $contentModel->getContentByFilter($pattern);
+            $this->getSidebarHelper()->setSearchContentResults($searchResults);
+        }
+
+    }
+
+    function searchGroupByFilter() {
+
+        $params = $this->getRequest()->getParams();
+        $pattern = isset($params['pattern']) ? $params['pattern'] : "";
+
+        if($pattern != "") {
+            $groupModel = new Default_Model_Groups();
+            $searchResults = $groupModel->getGroupByFilter($pattern);
+            $this->getSidebarHelper()->setSearchGroupResults($searchResults);
+        }
+
+    }
+
 }
