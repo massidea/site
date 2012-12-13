@@ -17,15 +17,17 @@
 class Oibs_Controller_CustomController extends Zend_Controller_Action
 {
 	/** @var \Zend_Session_Namespace */
-	protected $_session;
+	private $_session;
 	/** @var \Zend_Controller_Action_Helper_FlashMessenger */
-	protected $_flashMessenger;
+	private $_flashMessenger;
 	/** @var \Zend_View_Helper_Url */
-	protected $_urlHelper;
+	private $_urlHelper;
+	/** @var \Oibs_View_Helper_Navi */
+	private $_navigationHelper;
 	/** @var \Oibs_View_Helper_Sidebar */
-	protected $_sidebarHelper;
+	private $_sidebarHelper;
 	/** @var mixed */
-	protected $_identity;
+	private $_identity;
 
 	/**
 	 * @inheritdoc
@@ -64,6 +66,12 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		if (isset($_SESSION["msg"])) {
 			$_SESSION["FlashMessenger"]["default"][0] = $_SESSION["msg"];
 		}
+
+		if ($this->hasIdentity()) {
+			$this->getNavigationHelper()
+				->setGroups($this->_getNavigationGroups())
+				->setCategories($this->_getNavigationCategories());
+		}
 	}
 
 	/**
@@ -84,16 +92,9 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		$this->view->messages = $this->getFlashMessenger()->getMessages();
 
 		if ($this->hasIdentity()) {
-			// identity
             $this->view->identity      = $this->getIdentity();
             $this->view->profile_image = $this->getProfileImage();
-
-			// navigation
-			$this->view->groups     = $this->_getNavigationGroups();
-			$this->view->categories = $this->_getNavigationCategories();
-			$this->view->campaigns  = $this->_getNavigationCampaigns();
         } else {
-
 			$login_form = new Default_Form_LoginForm();
 			$login_form
 				->setReturnUrl($this->getRequest()->getRequestUri())
@@ -251,6 +252,19 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	}
 
 	/**
+	 * Retrieves the active navigation helper instance.
+	 *
+	 * @return \Oibs_View_Helper_Navi
+	 */
+	public function getNavigationHelper()
+	{
+		if ($this->_navigationHelper == null) {
+			$this->_navigationHelper = $this->view->getHelper('navi');
+		}
+		return $this->_navigationHelper;
+	}
+
+	/**
 	 * Retrieves the active sidebar helper instance.
 	 *
 	 * @return Oibs_View_Helper_Sidebar
@@ -321,19 +335,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 
 		$categoryModel = new Default_Model_Category();
 		return $categoryModel->getCategories();
-	}
-
-	/**
-	 * Returns an array of campaigns for the navigation
-	 * @return array
-	 */
-	private function _getNavigationCampaigns() {
-		if (!$this->hasIdentity()) return array();
-
-		$id = $this->getIdentity()->user_id;
-		$userModel = new Default_Model_User();
-
-		return $userModel->getUserCampaigns($id);
 	}
 
 }

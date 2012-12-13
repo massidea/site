@@ -270,4 +270,18 @@ class SearchController extends Oibs_Controller_CustomController
         $value = urlencode($value);
         $key = urlencode($key);
     } // end of encodeParam
+
+    function searchUserByFilter() {
+
+        $params = $this->getRequest()->getParams();
+        $pattern = isset($params['pattern']) ? $params['pattern'] : "";
+
+        if($pattern != "") {
+            $userModel = new Default_Model_User();
+            $searchResults = $userModel->getUserByFilter($pattern);
+            $this->getSidebarHelper()->setSearchUserResults($searchResults);
+        }
+
+    }
+
 }

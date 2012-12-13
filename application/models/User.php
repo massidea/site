@@ -653,7 +653,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      */
     public function getUserGroups($id_usr) {
         $adapter = $this->getAdapter();
-        $sql = "SELECT grp.group_name_grp, grp.id_grp FROM usr_groups_grp grp, usr_has_grp has_grp WHERE grp.id_grp = has_grp.id_grp AND has_grp.id_usr =" . $id_usr;
+        $sql = 'SELECT grp.group_name_grp, grp.id_grp FROM usr_groups_grp grp, usr_has_grp has_grp WHERE grp.id_grp = has_grp.id_grp AND has_grp.id_usr =' . $id_usr;
 
         $statement = $adapter->query($sql);
 
@@ -1906,6 +1906,22 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         		$topListClasses = $cacheResult;
         	}
         return $topListClasses;
+    }
+
+    public function getUserByFilter($pattern) {
+        $adapter = $this->getAdapter();
+        $sql = 'SELECT description_job, location, name_atr
+                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
+                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
+                AND meta_has_atr.id_atr = attributes_atr.id_atr
+                AND (description_job LIKE '%$pattern%' OR location LIKE '%$pattern%' OR name_atr LIKE '%$pattern%')';
+
+
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
     }
 
 } // end of class
