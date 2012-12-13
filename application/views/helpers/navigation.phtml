@@ -25,7 +25,7 @@
                    'action' => 'list-ideas',
                    'language' => $this->language,
                ), 'lang_default', true); ?>'><?php echo $this->translate('general-ideas'); ?></a></li></ul>">
-                <?php echo $this->translate('main-nav-section'); ?>
+                <?php echo $this->translate($this->active_section); ?>
             </a>
         </li>
 
@@ -48,7 +48,7 @@
                    'language' => $this->language,
                ), 'lang_default', true); ?>'><?php echo $this->translate('main-nav-mygroups-newgroup'); ?></a></li>
                     </ul>">
-                <?php echo $this->translate('main-nav-mygroups'); ?>
+                <?php echo $this->translate($this->active_group); ?>
             </a>
         </li>
 
@@ -79,7 +79,7 @@
                ), 'lang_default', true); ?>'> <?php echo $category['title_ctg']; ?>  </a> </li>
             <?php endforeach; ?>
             </ul>">
-                <?php echo $this->translate('main-nav-categories'); ?>
+                <?php echo $this->translate($this->active_category); ?>
             </a>
         </li>
 
@@ -87,3 +87,4 @@
 </nav>
 
 <script type="text/javascript"> $(function () { Popover.register('.mainnavigation-popover'); }); </script>
+
