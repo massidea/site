@@ -1910,7 +1910,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     public function getUserByFilter($pattern) {
         $adapter = $this->getAdapter();
-        $sql = 'SELECT description_job, location, name_atr
+        $sql = 'SELECT *
                 FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
                 WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
                 AND meta_has_atr.id_atr = attributes_atr.id_atr
