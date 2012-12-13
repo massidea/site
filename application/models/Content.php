@@ -181,6 +181,49 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		return $data;
 	}
 
+    public function getMetaData($id_cnt) {
+
+        $select = $this->_db->select()
+            ->from('contents_cnt', array('id_cnt'))
+            ->where('id_cnt = ?', $id_cnt)
+            ->join('meta',
+                'meta.id_meta = contents_cnt.id_meta',
+                array())
+            ->join('jobs_job',
+                'meta.id_job = jobs_job.id_job',
+                array('job' => 'description_job'))
+            ->join('categories_ctg',
+                'meta.id_ctg = categories_ctg.id_ctg',
+                array('category' => 'title_ctg'))
+        ;
+        $select_atr = $this->_db->select()
+            ->from('contents_cnt', array('id_cnt'))
+            ->where('id_cnt = ?', $id_cnt)
+            ->join('meta',
+            'meta.id_meta = contents_cnt.id_meta',
+            array())
+            ->join('meta_has_atr',
+            'meta.id_meta = meta_has_atr.id_meta',
+            array())
+            ->join('attributes_atr',
+            'meta_has_atr.id_atr = attributes_atr.id_atr',
+            array('attribute' => 'name_atr'))
+        ;
+
+        $result = $this->_db->fetchAll($select);
+        if ($result != null) {
+            $result_atr = $this->_db->fetchAll($select_atr);
+            $i = 0;
+            foreach ($result_atr as $atr) {
+                $result[0]['attributes'][$i] = $atr['attribute'];
+                $i++;
+            }
+            return $result[0];//->toArray();
+        }
+        else
+            return null;
+    }
+
 	/* getcontentRows
 	 * 
 	 * Function to get data for content_row partial from given id parameters
@@ -1642,8 +1685,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 									  ->where('id_parent_cnt = ?', $id_cnt)
 									  ->orWhere('id_child_cnt = ?', $id_cnt)
 									  ;
-									  
-		//echo $select->__toString(); die;
+
 		$result = $this->_db->fetchAll($select);
 		return !empty($result);
 	}
@@ -1652,35 +1694,13 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$select = $this->_db->select()->from('cmp_has_cnt', 'id_cmp')
 									  ->where('id_cnt = ?', $id_cnt)
 									  ;
-									  
-		//echo $select->__toString(); die;
+
 		$result = $this->_db->fetchAll($select);
 		return !empty($result);
 	}
 
     public function listUserContent($userid, $sect = 0, $cat = 0, $page = 1, $count = -1)
     {
-       /* $select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
-            "title_cnt",
-            "lead_cnt",
-            "body_cnt",
-            "language_cnt",
-            "created_cnt"))
-            ->joinLeft(	"cnt_has_usr",
-            "contents_cnt.id_cnt = cnt_has_usr.id_cnt",
-            array())
-            ->join(	"users_usr",
-            "users_usr.id_usr = cnt_has_usr.id_usr",
-            array("login_name_usr", "id_usr"))
-            ->joinLeft( "content_types_cty",
-            "content_types_cty.id_cty = contents_cnt.id_cty_cnt",
-            array("id_cty", "key_cty", "name_cty"))
-            ->joinLeft(	array("chu" => "cnt_has_usr"),
-            "cnt_has_usr.id_usr = chu.id_usr",
-            array("count" => "count(*)"))
-            ->group('contents_cnt.id_cnt')
-        ;
-    */
         $select = $this->_db->select()->from("contents_cnt", array(	"id_cnt",
                                                         "title_cnt",
                                                         "lead_cnt",
@@ -1706,20 +1726,6 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
             ->where('published_cnt = 1')
             ->order('modified_cnt DESC');
 
-        /*
-         *
-            ->joinRight( 'comments_cmt',
-            'comments_cmt.id_target_cmt = contents_cnt.id_cnt',
-            array("commentsCount" => "count(*)"))
-
-            ->join( "files_fil",
-            "files_fil.id_cnt_fil = contents_cnt.id_cnt",
-            array("filesCount" => "count(*)"))
-
-         */
-
-        //$select->join('cnt_has_usr', 'cnt_has_usr.id_cnt = contents_cnt.id_cnt', array())
-        //    ->where('cnt_has_usr.id_usr = ?', $userid);
         if ($sect != 0) {
             $select->join('content_types_cty', 'content_types_cty.id_cty = contents_cnt.id_cty_cnt',array())
                 ->where('content_types_cty.id_cty = ?', $sect);

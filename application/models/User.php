@@ -94,12 +94,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             ->join('categories_ctg',
                 'meta.id_ctg = categories_ctg.id_ctg',
                 array('category' => 'title_ctg'))
-            ->join('offer_needs',
-                'meta.id_offer = offer_needs.id_on',
-                array('offer' => 'title_on'))
-            ->join('offer_needs',
-                'meta.id_needs = offer_needs.id_on',
-                array('need' => 'title_on'))
         ;
         $select_atr = $this->_db->select()
             ->from('users_usr', array('id_usr'))
