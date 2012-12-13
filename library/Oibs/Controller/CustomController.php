@@ -22,6 +22,8 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	protected $_flashMessenger;
 	/** @var \Zend_View_Helper_Url */
 	protected $_urlHelper;
+	/** @var \Oibs_View_Helper_Sidebar */
+	protected $_sidebarHelper;
 	/** @var mixed */
 	protected $_identity;
 
@@ -31,6 +33,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	public function init()
 	{
 		// initialize actions, view helpers and other components
+		$this->view->addHelperPath('Oibs/View/Helper', 'Oibs_View_Helper');
 		$this->_urlHelper = $this->_helper->getHelper('url');
 		$this->_identity = Zend_Auth::getInstance()->getIdentity();
 
@@ -86,9 +89,9 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
             $this->view->profile_image = $this->getProfileImage();
 
 			// navigation
-			$this->view->groups = $this->_getNavigationGroups();
+			$this->view->groups     = $this->_getNavigationGroups();
 			$this->view->categories = $this->_getNavigationCategories();
-			$this->view->campaigns = $this->_getNavigationCampains();
+			$this->view->campaigns  = $this->_getNavigationCampaigns();
         } else {
 
 			$login_form = new Default_Form_LoginForm();
@@ -248,6 +251,18 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	}
 
 	/**
+	 * Retrieves the active sidebar helper instance.
+	 *
+	 * @return Oibs_View_Helper_Sidebar
+	 */
+	public function getSidebarHelper() {
+		if ($this->_sidebarHelper == null) {
+			$this->_sidebarHelper = $this->view->getHelper('sidebar');
+		}
+		return $this->_sidebarHelper;
+	}
+
+	/**
 	 * Returns the currently active language.
 	 *
 	 * @return string
@@ -312,7 +327,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	 * Returns an array of campaigns for the navigation
 	 * @return array
 	 */
-	private function _getNavigationCampains() {
+	private function _getNavigationCampaigns() {
 		if (!$this->hasIdentity()) return array();
 
 		$id = $this->getIdentity()->user_id;
