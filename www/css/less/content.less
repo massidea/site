@@ -26,8 +26,11 @@
 
 }
 
-.row {
+#content-list {
+    margin-top: 40px;
+}
 
+.row {
     .image {
       height: 104px;
       &.vision {
@@ -46,9 +49,15 @@
 
 	&.singleContent {
 		margin: 0 0 40px 0;
+        
+        .contentContainer {
+            margin-left: 170px;
+        }
+        
 		.image {
 			height: 104px
 		}
+
 		&.vision {
 			.image {
 				background: url("/img/fallbackContent/vision.png") no-repeat;
