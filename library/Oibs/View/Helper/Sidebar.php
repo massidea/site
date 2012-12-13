@@ -9,6 +9,12 @@ class Oibs_View_Helper_Sidebar extends Zend_View_Helper_Abstract
 {
 	/** @var \Zend_View_Interface */
 	protected $_sidebarView;
+    /** @var Array */
+    protected $_searchUserResults;
+    /** @var Array */
+    protected $_searchGroupResults;
+    /** @var Array */
+    protected $_searchContentResults;
 
 	/**
 	 * Renders the sidebar.
@@ -61,5 +67,58 @@ class Oibs_View_Helper_Sidebar extends Zend_View_Helper_Abstract
 		}
 		return $this->_sidebarView;
 	}
+
+    /**
+     * @return Array
+     */
+    public function getSearchUserResults()
+    {
+        return $this->_searchUserResults;
+    }
+
+    /**
+     * @param $searchUserResults
+     * @return Oibs_View_Helper_Sidebar
+     */
+    public function setSearchUserResults($searchUserResults)
+    {
+        $this->_searchUserResults = $searchUserResults;
+        return $this;
+    }
+
+    /**
+     * @return Array
+     */
+    public function getSearchGroupResults()
+    {
+        return $this->_searchGroupResults;
+    }
+
+    /**
+     * @param Array $searchGroupResults
+     */
+    public function setSearchGroupResults($searchGroupResults)
+    {
+        $this->_searchGroupResults = $searchGroupResults;
+        return $this;
+    }
+
+    /**
+     * @return Array
+     */
+    public function getSearchContentResults()
+    {
+        return $this->_searchContentResults;
+    }
+
+    /**
+     * @param Array $searchContentResults
+     */
+    public function setSearchContentResults($searchContentResults)
+    {
+        $this->_searchContentResults = $searchContentResults;
+        return $this;
+    }
+
 
 }
