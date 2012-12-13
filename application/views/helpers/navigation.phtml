@@ -1,9 +1,8 @@
 <nav id="page-navigation">
     <div class="indicator <?php echo $this->indicator ?>"></div>
     <ul>
-
         <li>
-            <a class="mainnavigation-popover overview"
+            <a class="mainnavigation-popover overview <?php echo ($this->active_area == 'content') ? 'active' : '' ?>"
                data-title="<?php echo $this->translate('main-nav-section'); ?>"
                data-content="<ul><li><a href='<?php echo $this->url(array(
                    'controller' => 'content',
@@ -30,7 +29,7 @@
         </li>
 
         <li>
-            <a class="mainnavigation-popover mygroups"
+            <a class="mainnavigation-popover mygroups <?php echo ($this->active_area == 'group') ? 'active' : '' ?>"
                data-title="<?php echo $this->translate('main-nav-mygroups'); ?>"
                data-content="<ul>
             <?php foreach ($this->groups as $group) : ?>
@@ -53,7 +52,7 @@
         </li>
 
         <li>
-            <a class="mainnavigation-popover myprojects"
+            <a class="mainnavigation-popover myprojects <?php echo ($this->active_area == 'project') ? 'active' : '' ?>"
                data-title="<?php echo $this->translate('main-nav-myprojects'); ?>"
                data-content="<ul><li><a href='<?php echo $this->url(array(
                    'controller' => '#',
@@ -66,7 +65,7 @@
         </li>
 
         <li>
-            <a class="mainnavigation-popover categories"
+            <a class="mainnavigation-popover categories <?php echo ($this->active_area == 'category') ? 'active' : '' ?>"
                data-title="<?php echo $this->translate('main-nav-categories'); ?>"
                data-content="<ul>
                  <?php foreach($this->categories as $category) : ?>

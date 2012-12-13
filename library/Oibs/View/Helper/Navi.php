@@ -27,6 +27,7 @@ class Oibs_View_Helper_Navi extends Oibs_View_Helper_Viewable
 	public function navi($script)
 	{
 		return $this->renderView($script, array(
+			'active_area'     => Zend_Controller_Front::getInstance()->getRequest()->getParam('controller'),
 			'active_section'  => $this->getActiveSection(),
 			'groups'          => $this->getGroups(),
 			'active_group'    => $this->getActiveGroup(),
