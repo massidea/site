@@ -41,6 +41,62 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
      * @param id_grp id of the group
      * @return array of data of the group specified by id_grp
      */
+
+    public function getMetaData($id_grp) {
+
+        $select = $this->_db->select()
+            ->from('usr_groups_grp', array('id_grp', 'description' => 'description_grp'))
+            ->where('usr_groups_grp.id_grp = ?', $id_grp)
+            ->join('users_usr',
+            'users_usr.id_usr = usr_groups_grp.id_usr',
+            array('founder' => 'login_name_usr'))
+            ->join('meta',
+            'meta.id_meta = usr_groups_grp.id_meta',
+            array('location' => 'location'))
+            ->join('jobs_job',
+            'meta.id_job = jobs_job.id_job',
+            array('job' => 'description_job'))
+            ->join('categories_ctg',
+            'meta.id_ctg = categories_ctg.id_ctg',
+            array('category' => 'title_ctg'))
+            ->join('offer_needs',
+            'meta.id_offer = offer_needs.id_on',
+            array('offer' => 'title_on'))
+            ->join('offer_needs',
+            'meta.id_needs = offer_needs.id_on',
+            array('need' => 'title_on'))
+            ->joinLeft( "usr_has_grp",
+            "usr_has_grp.id_grp = usr_groups_grp.id_grp",
+            array("membersCount" => "count(*)"))
+        ;
+        $select_atr = $this->_db->select()
+            ->from('usr_groups_grp', array('id_grp'))
+            ->where('id_grp = ?', $id_grp)
+            ->join('meta',
+            'meta.id_meta = usr_groups_grp.id_meta',
+            array())
+            ->join('meta_has_atr',
+            'meta.id_meta = meta_has_atr.id_meta',
+            array())
+            ->join('attributes_atr',
+            'meta_has_atr.id_atr = attributes_atr.id_atr',
+            array('attribute' => 'name_atr'))
+        ;
+
+        $result = $this->_db->fetchAll($select);
+        if ($result != null) {
+            $result_atr = $this->_db->fetchAll($select_atr);
+            $i = 0;
+            foreach ($result_atr as $atr) {
+                $result[0]['attributes'][$i] = $atr['attribute'];
+                $i++;
+            }
+            return $result[0];//->toArray();
+        }
+        else
+            return null;
+    }
+
     public function getGroupData($id_grp)
     {
         $data = $this->_db->select()
