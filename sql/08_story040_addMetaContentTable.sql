@@ -14,7 +14,6 @@ PRIMARY KEY (`id_on`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `offer_needs`(`title_on`) VALUES ("Cooperation");
 
-DROP TABLE IF EXISTS `meta_cnt`;
 DROP TABLE IF EXISTS `meta`;
 CREATE TABLE IF NOT EXISTS `meta` (
 
