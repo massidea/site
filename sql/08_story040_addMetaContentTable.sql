@@ -91,3 +91,43 @@ FOREIGN KEY (`id_meta`)
 REFERENCES `meta`(`id_meta`);
 
 UPDATE `users_usr` SET `id_meta` = 1 WHERE `id_usr` = 1;
+
+ALTER TABLE `usr_groups_grp`
+ADD COLUMN `id_meta` INT(11);
+
+ALTER TABLE `usr_groups_grp`
+ADD CONSTRAINT `meta_group_fk`
+FOREIGN KEY (`id_meta`)
+REFERENCES `meta` (`id_meta`);
+
+UPDATE `usr_groups_grp` SET `id_meta` = 1 WHERE `id_grp` = 1;
+
+ALTER TABLE `usr_groups_grp`
+ADD COLUMN `id_usr` INT(11);
+
+ALTER TABLE `usr_groups_grp`
+ADD CONSTRAINT `founder_group_fk`
+FOREIGN KEY (`id_usr`)
+REFERENCES `users_usr` (`id_usr`);
+
+UPDATE `usr_groups_grp` SET `id_usr` = 1 WHERE `id_grp` = 1;
+
+
+ALTER TABLE `contents_cnt`
+ADD COLUMN `id_meta` INT(11);
+
+ALTER TABLE `contents_cnt`
+ADD CONSTRAINT `meta_content_fk`
+FOREIGN KEY (`id_meta`)
+REFERENCES `meta`(`id_meta`);
+
+UPDATE `contents_cnt` SET `id_meta` = 1 WHERE `id_cnt` = 1;
+
+ALTER TABLE `campaigns_cmp`
+ADD COLUMN `id_meta` INT(11);
+
+ALTER TABLE `campaigns_cmp`
+ADD COLUMN `task` varchar(255);
+
+ALTER TABLE `campaigns_cmp`
+ADD COLUMN `id_usr` INT(11);
