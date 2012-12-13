@@ -181,6 +181,49 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		return $data;
 	}
 
+    public function getMetaData($id_cnt) {
+
+        $select = $this->_db->select()
+            ->from('contents_cnt', array('id_cnt'))
+            ->where('id_cnt = ?', $id_cnt)
+            ->join('meta',
+                'meta.id_meta = contents_cnt.id_meta',
+                array())
+            ->join('jobs_job',
+                'meta.id_job = jobs_job.id_job',
+                array('job' => 'description_job'))
+            ->join('categories_ctg',
+                'meta.id_ctg = categories_ctg.id_ctg',
+                array('category' => 'title_ctg'))
+        ;
+        $select_atr = $this->_db->select()
+            ->from('contents_cnt', array('id_cnt'))
+            ->where('id_cnt = ?', $id_cnt)
+            ->join('meta',
+            'meta.id_meta = contents_cnt.id_meta',
+            array())
+            ->join('meta_has_atr',
+            'meta.id_meta = meta_has_atr.id_meta',
+            array())
+            ->join('attributes_atr',
+            'meta_has_atr.id_atr = attributes_atr.id_atr',
+            array('attribute' => 'name_atr'))
+        ;
+
+        $result = $this->_db->fetchAll($select);
+        if ($result != null) {
+            $result_atr = $this->_db->fetchAll($select_atr);
+            $i = 0;
+            foreach ($result_atr as $atr) {
+                $result[0]['attributes'][$i] = $atr['attribute'];
+                $i++;
+            }
+            return $result[0];//->toArray();
+        }
+        else
+            return null;
+    }
+
 	/* getcontentRows
 	 * 
 	 * Function to get data for content_row partial from given id parameters
