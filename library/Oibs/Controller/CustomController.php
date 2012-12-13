@@ -92,9 +92,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			$this->view->groups     = $this->_getNavigationGroups();
 			$this->view->categories = $this->_getNavigationCategories();
 			$this->view->campaigns  = $this->_getNavigationCampaigns();
-
-			//helpers
-			$this->view->sidebar = $this->getSidebarHelper();
         } else {
 
 			$login_form = new Default_Form_LoginForm();
@@ -254,9 +251,14 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	}
 
 	/**
+	 * Retrieves the active sidebar helper instance.
+	 *
 	 * @return Oibs_View_Helper_Sidebar
 	 */
 	public function getSidebarHelper() {
+		if ($this->_sidebarHelper == null) {
+			$this->_sidebarHelper = $this->view->getHelper('sidebar');
+		}
 		return $this->_sidebarHelper;
 	}
 

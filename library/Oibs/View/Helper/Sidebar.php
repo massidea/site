@@ -10,6 +10,12 @@ class Oibs_View_Helper_Sidebar extends Zend_View_Helper_Abstract
 	/** @var \Zend_View_Interface */
 	protected $_sidebarView;
 
+	/**
+	 * Renders the sidebar.
+	 *
+	 * @param string $script The view script path to render (relative to /views/helpers)
+	 * @return string
+	 */
 	public function sidebar($script)
 	{
 		return $this->getSidebarView()->render($script);
