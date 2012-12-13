@@ -57,6 +57,7 @@ class ContentController extends Oibs_Controller_CustomController
 
     public function listVisionsAction()
     {
+	    $this->getNavigationHelper()->setActiveSection('general-visions');
         $params = $this->getRequest()->getParams();
 
         $page = isset($params['page']) ? $params['page'] : 1;
@@ -74,6 +75,7 @@ class ContentController extends Oibs_Controller_CustomController
 
     public function listIdeasAction()
     {
+	    $this->getNavigationHelper()->setActiveSection('general-ideas');
         $params = $this->getRequest()->getParams();
 
         $page = isset($params['page']) ? $params['page'] : 1;
@@ -91,6 +93,7 @@ class ContentController extends Oibs_Controller_CustomController
 
     public function listChallengesAction()
     {
+	    $this->getNavigationHelper()->setActiveSection('general-challenges');
         $params = $this->getRequest()->getParams();
 
         $page = isset($params['page']) ? $params['page'] : 1;
