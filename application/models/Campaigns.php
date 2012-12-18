@@ -177,24 +177,8 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $row->name_cmp = $name;
         $row->ingress_cmp = $ingress;
         $row->description_cmp = $desc;
+        $row->id_meta = $id_meta;
 
-        // MM/DD/YYYY -> YYYY-MM-DD
-        // If start day is empty: set current day
-        /*
-        if (isset($start) && !empty($start)) {
-            $start = explode('/', $start);
-            $start = implode('-', array($start[2], $start[0], $start[1]));
-        } else {
-            $start = date("Y-m-d", time());
-        }
-        // If end day is empty: set 0000-00-00 day, this means campaign stays open always
-        if (isset($end) && !empty($end)) {
-            $end = explode('/', $end);
-            $end = implode('-', array($end[2], $end[0], $end[1]));
-        } else {
-            $end = "0000-00-00";
-        }
-        */
         if (!isset($start) || empty($start)) {
             $start = date("Y-m-d", time());
         }
@@ -216,8 +200,11 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         return $row;
     } // end of createCampaign
 
-    public function editCampaign($id, $name, $ingress, $desc, $start, $end)
+    public function editCampaign($id, $name, $ingress, $desc, $start, $end, $metaId, $jobId, $ctgId, $location, $offerId, $needsId, $attributes)
     {
+        $meta_model = new Default_Model_Meta();
+        $meta_model->editMeta($metaId, $jobId, $ctgId, $location, $offerId, $needsId, $attributes);
+
         if (empty($start)) {
             $start = date("Y-m-d", time());
         }

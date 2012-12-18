@@ -182,6 +182,7 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         $row->modified_grp = new Zend_Db_Expr('NOW()');
         $row->id_type_grp = $typeId;
         $row->id_meta = $id_meta;
+        $row->id_usr = $founderId;
         
         // Save data to database
         $row->save();
@@ -189,13 +190,17 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         return $row->id_grp;
     }
 
-    public function editGroup($id, $name, $typeId, $description, $body)
+    public function editGroup($id, $name, $typeId, $description, $body,$metaId, $jobId, $ctgId, $location, $founderId, $attributes)
     {
-		$data = array(
+        $meta_model = new Default_Model_Meta();
+        $meta_model->editMeta($metaId, $jobId, $ctgId, $location, null, null, $attributes);
+
+        $data = array(
             'group_name_grp' => $name,
             'description_grp' => $description,
             'body_grp' => $body,
             'id_type_grp' => $typeId,
+            'id_usr' => $founderId,
         );
 		$where = $this->getAdapter()->quoteInto('id_grp = ?', $id);
 		$this->update($data, $where);
