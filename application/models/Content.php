@@ -837,6 +837,9 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 */
 	public function editContent($data)
 	{
+        $meta_model = new Default_Model_Meta();
+        $meta_model->editMeta($data['id_meta'], $data['id_job'], $data['id_ctg'], "", null, null, $data['attributes'] );
+
 		// Get the original content
 		$content = $this->getContentRow($data['content_id']);
 
