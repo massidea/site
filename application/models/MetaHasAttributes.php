@@ -64,6 +64,20 @@ class Default_Model_MetaHasAttributes extends Zend_Db_Table_Abstract
         }
     }
 
+    public function getAttributesByMetaId($id_meta = 0) {
+        $data = $this->_db->select()
+            ->from(array('mha' => 'meta_has_atr'),
+                   array('id_atr'))
+            ->join(array('atr' => 'attributes_atr'),
+                    'atr.id_atr = mha.id_atr',
+                    array('name_atr'))
+            ->where('id_meta = ?', $id_meta);
+
+        $result = $this->_db->fetchAll($data);
+
+        return $result;
+    }
+
 
 } // end of class
 ?>
