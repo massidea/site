@@ -163,7 +163,11 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		$this->_identity = $identity;
 
 		$auth = Zend_Auth::getInstance();
-		$auth->getStorage()->write($identity);
+		if ($identity == null) {
+			$auth->clearIdentity();
+		} else {
+			$auth->getStorage()->write($identity);
+		}
 
 		return $this;
 	}
