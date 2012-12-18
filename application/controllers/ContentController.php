@@ -43,8 +43,8 @@ class ContentController extends Oibs_Controller_CustomController
 
 	public function listAction()
 	{
-        $meta_model = new Default_Model_User();
-        $foo = $meta_model->getMetaData(1);
+        $meta_model = new Default_Model_MetaHasAttributes();
+        $foo = $meta_model->Create(1, 2);
         var_dump($foo);
         exit;
 
