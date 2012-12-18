@@ -298,6 +298,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             return false;
         }
 
+        $meta_model = new Default_Model_Meta();
+        $meta_id = $meta_model->createMeta($formData['register_employment'],null,$formData['register_city'],null, null, array());
+
         // Create new empty user row
         $row = $this->createRow();
 
@@ -317,6 +320,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         $row->created_usr = new Zend_Db_Expr('NOW()');
         $row->modified_usr = new Zend_Db_Expr('NOW()');
+
+        $row->id_meta = $meta_id;
 
         // Save user data
         return $row->save();
