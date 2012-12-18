@@ -25,4 +25,58 @@ class Oibs_View_Helper_Sidebar extends Oibs_View_Helper_Viewable
 		return $this->renderView($script);
 	}
 
+	/**
+	 * @return Array
+	 */
+	public function getSearchUserResults()
+	{
+		return $this->_searchUserResults;
+	}
+
+	/**
+	 * @param $searchUserResults
+	 * @return Oibs_View_Helper_Sidebar
+	 */
+	public function setSearchUserResults($searchUserResults)
+	{
+		$this->_searchUserResults = $searchUserResults;
+		return $this;
+	}
+
+	/**
+	 * @return Array
+	 */
+	public function getSearchGroupResults()
+	{
+		return $this->_searchGroupResults;
+	}
+
+	/**
+	 * @param array $searchGroupResults
+	 * @return Oibs_View_Helper_Sidebar
+	 */
+	public function setSearchGroupResults($searchGroupResults)
+	{
+		$this->_searchGroupResults = $searchGroupResults;
+		return $this;
+	}
+
+	/**
+	 * @return Array
+	 */
+	public function getSearchContentResults()
+	{
+		return $this->_searchContentResults;
+	}
+
+	/**
+	 * @param array $searchContentResults
+	 * @return Oibs_View_Helper_Sidebar
+	 */
+	public function setSearchContentResults($searchContentResults)
+	{
+		$this->_searchContentResults = $searchContentResults;
+		return $this;
+	}
+
 }
