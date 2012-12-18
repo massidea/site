@@ -212,15 +212,25 @@ class Default_Form_RegistrationForm extends Twitter_Bootstrap_Form_Horizontal
 	 */
 	protected function getAccountOptions()
 	{
-		return array(
-			''                 => 'account-register-select',
-			'private_sector'   => 'account-register-private-sector',
-			'public_sector'    => 'account-register-public-sector',
-			'education_sector' => 'account-register-education-sector',
-			'student'          => 'account-register-student',
-			'pentioner'        => 'account-register-pentioner',
-			'other'            => 'account-register-other',
-		);
+        $meta_model = new Default_Model_Jobs();
+        $jobs = $meta_model->getJobs();
+
+        $jobs_arr = array();
+        foreach($jobs as $job) {
+            $jobs_arr[$job['id_job']] = $job['description_job'];
+        }
+
+        return $jobs_arr;
+
+//		return array(
+//			''                 => 'account-register-select',
+//			'private_sector'   => 'account-register-private-sector',
+//			'public_sector'    => 'account-register-public-sector',
+//			'education_sector' => 'account-register-education-sector',
+//			'student'          => 'account-register-student',
+//			'pentioner'        => 'account-register-pentioner',
+//			'other'            => 'account-register-other',
+//		);
 	}
 
 }
