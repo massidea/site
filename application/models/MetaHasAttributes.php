@@ -35,11 +35,22 @@ class Default_Model_MetaHasAttributes extends Zend_Db_Table_Abstract
     }
 
     public  function  CreateAttributes($id_meta, array $arr_id_atr) {
+        $this->RemoveAll($id_meta);
         foreach ($arr_id_atr as $id_atr) {
             $this->Create($id_meta, $id_atr);
         }
     }
 
+    public function RemoveAll($id_meta) {
+
+        $meta_model = new Default_Model_Meta();
+        if ($meta_model->getMetaById($id_meta) != null) {
+
+            $this->_db->delete('meta_has_atr', array(
+                'id_meta'       => $id_meta
+            ));
+        }
+    }
 
     public function Remove($id_meta, $id_atr) {
 
