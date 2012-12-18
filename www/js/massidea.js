@@ -33,7 +33,7 @@ var MassIdea = new (function () {
 		params = params || {};
 		for (var key in params) {
 			if (!params.hasOwnProperty(key)) continue;
-			url += '/' + escape(key) + '/' + escape(params[key]);
+			url += '/' + encodeURIComponent(key) + '/' + encodeURIComponent(params[key]);
 		}
 		return '/' + getLanguage() + url;
 	}
@@ -92,10 +92,7 @@ var MassIdea = new (function () {
 			returnUrl = '/' + returnUrl.split('/').slice(2).join('/');
 		}
 
-		redirect(URL_CHANGE_LANGUAGE, {
-			language : language,
-			returnUrl : returnUrl
-		});
+		window.location.href = '/' + language + returnUrl;
 	}
 
 	/**
