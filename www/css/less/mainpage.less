@@ -89,14 +89,16 @@
   }
 }
 
-.matchMaking {
+#page-sidebar {
   background-color: @colorNavigation;
   height: 535px;
   margin: -20px 0 -9px;
   position: relative;
   border-left: 1px solid @colorDarkGray;
   padding: 30px 0 0 5px;
+
   .box-shadow(-1px 0 0 0, @colorNavigationShadow);
+
   #searchbar {
     width: 168px;
     border-radius: 4px 0 0 4px;
@@ -123,9 +125,14 @@
     &.search {
       background: url("/img/icons/searchbar/search.png") no-repeat center white;
     }
-    &.close {
+    &.stop-search {
       background: url("/img/icons/searchbar/close.png") no-repeat center white;
+
     }
+  }
+
+  .user {
+    border: 1px solid @colorGraySecond;
   }
 
   .accordion-group {
