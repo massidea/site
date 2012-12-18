@@ -624,7 +624,9 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 */
 	public function addContent($data)
 	{
-		$auth = Zend_Auth::getInstance();
+		$meta_model = new Default_Model_Meta();
+        $array[] = array(4);
+        $id_meta = $meta_model->createMeta(1,1,"Hagenberg",1,0,$array);
 
 		// Create a new row
 		$content = $this->createRow();
@@ -635,6 +637,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 		$content->title_cnt = htmlspecialchars($data['content_header']);
 		$content->lead_cnt = htmlspecialchars($data['content_textlead']);
 		$content->body_cnt = htmlspecialchars($data['content_text']);
+        $content->id_meta = $id_meta;
 
 		if(isset($data['content_research'])) {
 			$content->research_question_cnt = htmlspecialchars($data['content_research']);

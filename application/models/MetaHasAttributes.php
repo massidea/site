@@ -45,10 +45,8 @@ class Default_Model_MetaHasAttributes extends Zend_Db_Table_Abstract
 
         $meta_model = new Default_Model_Meta();
         if ($meta_model->getMetaById($id_meta) != null) {
+            $this->delete("id_meta = '$id_meta'");
 
-            $this->_db->delete('meta_has_atr', array(
-                'id_meta'       => $id_meta
-            ));
         }
     }
 
