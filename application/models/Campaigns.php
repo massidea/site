@@ -165,8 +165,11 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     *   @param string $name name of campaign that will be created
     *   @return array
     */
-    public function createCampaign($name, $ingress, $desc, $start, $end, $group)
+    public function createCampaign($name, $ingress, $desc, $start, $end, $group, $jobId, $ctgId, $location, $offerId, $needsId, $attributes)
     {
+        $meta_model = new Default_Model_Meta();
+        $id_meta = $meta_model->createMeta($jobId, $ctgId, $location, $offerId, $needsId, $attributes);
+
         // Create new empty row
         $row = $this->createRow();
         

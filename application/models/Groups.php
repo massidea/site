@@ -166,8 +166,11 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
      * @param groupname string
      * @return id of the new group
      */
-    public function createGroup($name, $typeId = 1, $description = "", $body = "")
+    public function createGroup($name, $typeId = 1, $description = "", $body = "", $jobId, $ctgId, $location, $founderId, $attributes)
     {
+        $meta_model = new Default_Model_Meta();
+        $id_meta = $meta_model->createMeta($jobId, $ctgId, $location, null, null, $attributes);
+
         // Create new empty row.
         $row = $this->createRow();
         
@@ -178,6 +181,7 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
         $row->created_grp = new Zend_Db_Expr('NOW()');
         $row->modified_grp = new Zend_Db_Expr('NOW()');
         $row->id_type_grp = $typeId;
+        $row->id_meta = $id_meta;
         
         // Save data to database
         $row->save();

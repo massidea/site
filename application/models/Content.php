@@ -625,8 +625,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	public function addContent($data)
 	{
 		$meta_model = new Default_Model_Meta();
-        $array[] = array(4);
-        $id_meta = $meta_model->createMeta(1,1,"Hagenberg",1,0,$array);
+        $id_meta = $meta_model->createMeta($data['id_job'],$data['id_ctg'],"",null, null,$data['attributes']);
 
 		// Create a new row
 		$content = $this->createRow();
