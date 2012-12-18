@@ -106,17 +106,6 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 	}
 
 	/**
-	 * Action for all controllers to change the language
-	 */
-	public function changeLanguageAction()
-	{
-		$language   = $this->_getParam('language');
-		$return_url = $this->_getParam('returnUrl');
-		// simply redirect, the language will automatically change
-		$this->_redirect('/' . $language . $return_url);
-	}
-
-	/**
 	 * Adds a new message to the flash messenger view helper.
 	 * When a redirect url is given, it
 	 *
@@ -174,7 +163,11 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		$this->_identity = $identity;
 
 		$auth = Zend_Auth::getInstance();
-		$auth->getStorage()->write($identity);
+		if ($identity == null) {
+			$auth->clearIdentity();
+		} else {
+			$auth->getStorage()->write($identity);
+		}
 
 		return $this;
 	}
