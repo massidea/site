@@ -121,7 +121,7 @@ class AccountController extends Oibs_Controller_CustomController
         $contents = $content_model->listUserContent($id);
 
 		$this->view->user = $user;
-		$this->view->user_has_image = $user->userHasProfileImage($user['id_usr']);
+		//$this->view->user_has_image = $user->userHasProfileImage($user['id_usr']);
         $this->view->meta = $meta;
         $this->view->attributes = $attributes;
         $this->view->posts = $cntHasUsr;
