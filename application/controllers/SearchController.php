@@ -32,6 +32,10 @@ class SearchController extends Oibs_Controller_CustomController
     public function init()
     {
         parent::init();
+
+        $ajaxContext = $this->_helper->getHelper('AjaxContext');
+        $ajaxContext->addActionContext('get-results', 'html')
+            ->initContext();
         
         $this->view->title = 'search-title';
     }
@@ -321,6 +325,25 @@ class SearchController extends Oibs_Controller_CustomController
         $matchingUsers = $userModel->getMatchingUser($job, $location, $attribute);
         $this->getSidebarHelper()->setMatchingUsers($matchingUsers);
 
+    }
+
+    public function getResults() {
+        $params = $this->getRequest()->getParams();
+
+        $pattern = isset($params['pattern']) ? $params['pattern'] : 0;
+
+        $userModel = new Default_Model_User();
+        $userResults = $userModel->getUserByFilter($pattern);
+
+        $groupModel = new Default_Model_Groups();
+        $groupResults = $groupModel->getGroupByFilter($pattern);
+
+        $contentModel = new Default_Model_Content();
+        $contentResults = $contentModel->getContentByFilter($pattern);
+
+        $this->view->userResults = $userResults;
+        $this->view->groupResults = $groupResults;
+        $this->view->contentResults = $contentResults;
     }
 
 }

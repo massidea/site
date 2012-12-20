@@ -1,6 +1,5 @@
 "use strict";
 
-
 var Search = new (function () {
     /** @const */ var SEL_SEARCH       = '#search-accordion';
     /** @const */ var SEL_MATCHMAKING  = '#match-making-accordion';
@@ -13,6 +12,9 @@ var Search = new (function () {
 	var $searchIcon  = $(SEL_SEARCH_ICON);
     var $matchMaking = $(SEL_MATCHMAKING);
 
+	/** @type {Boolean} */
+	var searching;
+
 	/** Initializes the search and binds all event handlers */
 	function init() {
 		$searchInput.keyup(onSearch);
@@ -22,6 +24,7 @@ var Search = new (function () {
 
 	/** Shows match making and hides the search */
 	function showMatchMaking() {
+		searching = false;
 		$matchMaking.show();
 		$search.hide();
 		setSearchIcon(false);
@@ -30,7 +33,10 @@ var Search = new (function () {
 
 	/** Shows the search results and hides match making */
 	function showSearch() {
-		$search.show();
+		if (searching) return;
+
+		searching = true;
+		$search.empty().show();
 		$matchMaking.hide();
 		setSearchIcon(true);
 	}
@@ -46,7 +52,7 @@ var Search = new (function () {
 			showMatchMaking();
 		} else {
 			showSearch();
-			MassIdea.loadHTML(SEL_SEARCHBAR, URL_LOAD_RESULTS);
+			MassIdea.loadHTML($search, URL_LOAD_RESULTS);
 		}
 	}
 
