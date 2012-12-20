@@ -52,7 +52,7 @@ var Search = new (function () {
 			showMatchMaking();
 		} else {
 			showSearch();
-			MassIdea.loadHTML($search, URL_LOAD_RESULTS);
+			MassIdea.loadHTML($search, URL_LOAD_RESULTS, { pattern : input });
 		}
 	}
 

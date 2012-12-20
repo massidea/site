@@ -38,9 +38,7 @@ class SearchController extends Oibs_Controller_CustomController
 	}
 
 	public function getResultsAction() {
-		$params = $this->getRequest()->getParams();
-
-		$pattern = isset($params['pattern']) ? $params['pattern'] : 0;
+        $pattern = $this->_getParam('pattern', 0);
 
 		$userModel = new Default_Model_User();
 		$userResults = $userModel->getUserByFilter($pattern);
