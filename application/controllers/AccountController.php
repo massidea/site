@@ -40,10 +40,8 @@ class AccountController extends Oibs_Controller_CustomController
 	    }
 
 	    $this->_redirect($this->getUrl(array(
-		    'controller' => 'account',
 		    'action'     => 'view',
 		    'user'       => $this->getIdentity()->user_id,
-		    'language'   => $this->getActiveLanguage(),
 	    )));
     }
 
@@ -103,217 +101,41 @@ class AccountController extends Oibs_Controller_CustomController
 
 	public function viewAction()
 	{
-
-		if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
-			$redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
-		}
-
-		$hometargeturl = $this->_urlHelper->url(array('controller' => 'index',
-				'action' => 'index',
-				'language' => $this->getActiveLanguage()),
-			'lang_default', true);
-
-		// Get user identity
-		$auth = Zend_Auth::getInstance();
-
-		// Disable edit profile by default
-		$userEdit = false;
-
-		// Get params
-		$params = $this->getRequest()->getParams();
-		if (isset($params['user'])) {
-			// Get username from params
-			$username = $params['user'];
-		} else {
-			$redirector->gotoUrl($hometargeturl);
-		}
-
-		// Get content types
-		$contentTypes = new Default_Model_ContentTypes();
-		$this->view->content_types = $contentTypes->getAllNamesAndIds();
+        $id = $this->_getParam('id', $this->getIdentity()->user_id);
+        $user_model = new Default_Model_User();
+        $meta_model = new Default_Model_Meta();
+        $attribute_model = new Default_Model_MetaHasAttributes();
+        $cntHasUsr_model = new Default_Model_ContentHasUser();
+        $content_model = new Default_Model_Content();
 
 		// Get user data from User Model
-		$user = new Default_Model_User();
-		$data = $user->getUserByName($username);
+        $user = $user_model->getUserByName($user_model->getUserNameById($id));
 
-		if ($data == null) {
-			$redirector->gotoUrl($hometargeturl);
-		}
+		if ($user == null) {
+			$this->_redirect('/');
+        }
 
-		$this->view->user = $data;
-		$id = $data['id_usr'];
+        $meta = $meta_model->getMetaById($user['id_meta']);
+        $attributes = $attribute_model->getAttributesByMetaId($meta['id_meta']);
+        $cntHasUsr = $cntHasUsr_model->getContentCountByUser($id);
+        $contents = $content_model->listUserContent($id);
 
-		$topListClasses = $user->getUserTopList();
-		$topListUsers = $topListClasses['Users'];
-
-		if($id != 0) $topListUsers->addUser($id);
-		$topList = $topListUsers->getTopList();
-
-		// Get public user data from UserProfiles Model
-		$userProfile = new Default_Model_UserProfiles();
-		$dataa = $userProfile->getPublicData($id);
-		if (isset($dataa['biography'])) $dataa['biography'] = str_replace("\n", '<br>', $dataa['biography']);
-
-		// User weblinks
-		$userWeblinksModel = new Default_Model_UserWeblinks();
-		$dataa['userWeblinks'] = $userWeblinksModel->getUserWeblinks($id);
-		$i = 0;
-		foreach($dataa['userWeblinks'] as $weblink) {
-			if (strlen($weblink['name_uwl']) == 0 || strlen($weblink['url_uwl']) == 0) {
-				unset($dataa['userWeblinks'][$i]);
-			}
-			$i++;
-		}
-
-		// Get content user has released
-		$type = isset($params['type']) ? $params['type'] : 0 ;
-
-		$temp = array();
-
-		// Initialize content counts
-		$dataa['contentCounts']['all'] = 0;
-		$dataa['contentCounts']['user_edit'] = 0;
-
-		$dataa['contentCounts']['problem'] = 0;
-		$dataa['contentCounts']['finfo'] = 0;
-		$dataa['contentCounts']['idea'] = 0;
-
-		// Count amount of content user has published
-		// and check unpublished so only owner can see it.
-		$cntModel = new Default_Model_Content();
-		$contentList = array();
-		foreach ($user->getUserContent($data['id_usr'], array('order' => 'DESC')) as $k => $c) {
-			// If user not logged in and content not published,
-			// remove content from list
-			if (!$auth->hasIdentity() && $c['published_cnt'] == 0) {
-				//unset($contentList[$k]);
-				// Else if user logged in and not owner of unpublished content,
-				// remove content from list
-			} else if (isset($c['id_usr']) && $auth->hasIdentity() &&
-				$c['id_usr'] != $auth->getIdentity()->user_id &&
-				$c['published_cnt'] == 0) {
-				//unset($contentList[$k]);
-				// Else increase content counts and sort content by content type
-			} else {
-				if (isset($c['key_cty'])) {
-					// Set content to array by its content type
-					//$temp[$c['key_cty']][] = $c;
-					//$temp[] = $c;
-
-					// Increase total count
-					$dataa['contentCounts']['all']++;
-
-					// Set content type count to 0 if count is not set
-					if (!isset($dataa['contentCounts'][$c['key_cty']] )) {
-						$dataa['contentCounts'][$c['key_cty']] = 0;
-					}
-
-					// Increase content type count
-					$dataa['contentCounts'][$c['key_cty']]++;
-				}
-				if($c['published_cnt'] == 0) {
-					$dataa['contentCounts']['user_edit']++;
-				}
-				$c['hasCntLinks'] = $cntModel->hasCntLinks($c['id_cnt']);
-				$c['hasCmpLinks'] = $cntModel->hasCmpLinks($c['id_cnt']);
-				$contentList[] = $c;
-			}
-
-		} // end foreach
-
-		// If user is logged in, and viewing self; allow edit
-		if ($auth->hasIdentity()) {
-			$identity = $auth->getIdentity();
-
-			if ($data['id_usr'] == $identity->user_id) {
-				$userEdit = true;
-			}
-		}
-
-		$myFavourites = $this->getFavouriteRows($data['id_usr']);
-
-		//	My Posts box data
-		$box = new Oibs_Controller_Plugin_AccountViewBox();
-
-		$box->setHeader("My Posts")
-			->setClass("right")
-			->setName("my-posts")
-			->addTab("All", "all", "all selected", $dataa['contentCounts']['all']) //Header, type, calss, extra
-			->addTab("Challenges", "problem", "challenges", $dataa['contentCounts']['problem'])
-			->addTab("Ideas", "idea", "ideas", $dataa['contentCounts']['idea'])
-			->addTab("Visions", "finfo", "visions", $dataa['contentCounts']['finfo']);
-		//Zend_Debug::dump($dataa); die;
-		if ($dataa['contentCounts']['user_edit'] && $userEdit) {
-			$box->addTab("Saved", "user_edit", "saved", $dataa['contentCounts']['user_edit']);
-		}
-		$boxes[] = $box;
-
-		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box->setHeader("My Groups")
-			->setClass("left")
-			->setName("my_groups")
-			->addTab("All", "all", "all selected");
-		$boxes[] = $box;
-
-		$views = new Default_Model_ContentViews();
-		$myViews = $this->getViewRows($data['id_usr']);
-		$myViews = array_merge($myViews,$myFavourites['contents']);
-		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box	->setHeader("My Views & Favourites")
-			->setName("my-views")
-			->setClass("right")
-			->addTab("Views", "views", "views selected")
-			->addTab("Favourites","problem","fvr_problem fvr_idea fvr_finfo",$myFavourites['counts']['total'])
-		;
-
-		$boxes[] = $box;
-
-		$myReaders = $user->getUsersViewers($data['id_usr']);
-		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box->setHeader("My Readers")
-			->setClass("left")
-			->setName("my-reads")
-			->addTab("Readers", "readers", "all selected");
-
-		$boxes[] = $box;
-
-		/*Box for user profile custom layout settings*/
-		$box = new Oibs_Controller_Plugin_AccountViewBox();
-		$box->setHeader("Custom Layout")
-			->setClass("wide")
-			->setName("my-custom-layout")
-			->addTab("Customize", "fonts", "all selected") //Header, type, class, extra
-			/*->addTab("Colors", "colors", "colors")
-			->addTab("Background", "background", "background")*/;
-		//$boxes[] = $box;
-
-		$customLayoutForm = new Default_Form_AccountCustomLayoutSettingsForm();
-		// Set to view
-
-		// Comment module
-		$comments = new Oibs_Controller_Plugin_Comments("account", $id);
-		$this->view->jsmetabox->append('commentUrls', $comments->getUrls());
-		// enable comment form
-		if ($auth->hasIdentity()) $comments->allowComments(true);
-		$comments->loadComments();
-
-		$this->view->user_has_image = $user->userHasProfileImage($data['id_usr']);
-		$this->view->userprofile = $dataa;
-		$this->view->comments = $comments;
-		$this->view->authorContents = $contentList;/*$temp*/
-		$this->view->boxes = $boxes;
-		$this->view->myViews = $myViews;
-		$this->view->myReaders = $myReaders;
-		$this->view->user_edit = $userEdit;
-		$this->view->topList = $topList;
-		$this->view->type = $type;
-		$this->view->customLayoutSettingsForm = $customLayoutForm;
-
-		$group_model = new Default_Model_UserHasGroup();
-		$usergroups = $group_model->getGroupsByUserId($id);
-
-		$this->view->usergroups = $usergroups;
+		$this->view->user = $user;
+		$this->view->user_has_image = $user->userHasProfileImage($user['id_usr']);
+        $this->view->meta = $meta;
+        $this->view->attributes = $attributes;
+        $this->view->posts = $cntHasUsr;
+        $this->view->content = $contents;
 	}
+
+    public function groupAction() {
+        $id = $this->_getParam('id', $this->getIdentity()->user_id);
+        $usrHasGrp_model = new Default_Model_UserHasGroup();
+
+        $groups = $usrHasGrp_model->getGroupsByUserId($id);
+
+        $this->view->groups = $groups;
+    }
 
     public function registerAction()
     {

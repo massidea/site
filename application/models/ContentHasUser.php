@@ -70,6 +70,20 @@ class Default_Model_ContentHasUser extends Zend_Db_Table_Abstract
 
         return $result;
    }
+
+    public function getContentCountByUser($userId = 0)
+    {
+        if ($userId == 0)
+            return 0;
+
+        $select = $this->_db->select()
+                        ->from('cnt_has_usr', array('count' => 'count(id_usr)'))
+                        ->where('id_usr = ?', $userId);
+
+        $result = $this->_db->fetchAll($select);
+
+        return $result;
+    }
 	
 	/**
 	*	addUserToContent

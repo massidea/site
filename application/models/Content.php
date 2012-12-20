@@ -394,24 +394,19 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
 	 *
 	 *
 	 */
-	/*
-	 public function getByAuthor($author_id = 0)
+	 public function getByUser($userId = 0)
 	 {
-	 //$contentUser = new Default_Model_ContentHasUser();
-	 //$select = $this->select()->where('')
-	 //$this->findDependentRowset('Default_Model_ContentHasUser', );
+	    $cntHasUsr_model = new Default_Model_ContentHasUser();
 
-	 //$select = $this->_db->select()
-	 //    ->from('contents_cnt', array('*'))
-	 //    ->where('id_usr_cnt = ?', $author_id);
+	    $select = $this->_db->select()
+	        ->from('contents_cnt', array('*'))
+            ->join('cnt_has_usr', 'cnt_has_usr.id_cnt = contents_cnt.id_cnt', array())
+	        ->where('cnt_has_usr.id_usr = ?', $userId);
 
-	 //$stmt = $this->_db->query($select);
+	    $result = $this->_db->fetchAll($select);
 
-	 //$result = $stmt->fetchAll();
-
-	 //return $result;
+    	return $result;
 	 }
-	 */
 
 
 	/* getRelatedContents

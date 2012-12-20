@@ -132,12 +132,27 @@ class Default_Model_UserHasGroup extends Zend_Db_Table_Abstract
     public function getGroupsByUserId($id_usr)
     {
         $data = $this->_db->select()
-            ->from(array('uhg' => 'usr_has_grp'),
-                   array('id_grp'))
-            ->join(array('ugg' =>'usr_groups_grp'),
-                   'uhg.id_grp = ugg.id_grp',
-                   array('*'))
-            ->where('id_usr = ?', $id_usr);
+            ->from('usr_has_grp',
+                   array('usr_has_grp.id_grp'))
+            ->join('usr_groups_grp',
+            'usr_has_grp.id_grp = usr_groups_grp.id_grp',
+            array('*'))
+            ->join('meta',
+            'meta.id_meta = usr_groups_grp.id_meta',
+            array('*'))
+            ->join('categories_ctg',
+            'categories_ctg.id_ctg = meta.id_ctg',
+            array('title_ctg'))
+            ->joinLeft('cnt_has_grp',
+            'cnt_has_grp.id_grp = usr_groups_grp.id_grp',
+            array('cntCount' => 'Count(cnt_has_grp.id_grp)'))
+            ->joinLeft(array('uhg' =>'usr_has_grp'),
+            'uhg.id_grp = usr_has_grp.id_grp',
+            array('cntMembers' => 'Count(usr_has_grp.id_usr)'))
+
+            ->where('usr_has_grp.id_usr = ?', $id_usr)
+        ->group('usr_has_grp.id_grp')
+            ;
 
         $result = $this->_db->fetchAll($data);
 
