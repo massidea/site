@@ -80,6 +80,49 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         } // end if
     }
 
+    public function getMetaData($id_usr) {
+
+        $select = $this->_db->select()
+            ->from('users_usr', array('id_usr'))
+            ->where('id_usr = ?', $id_usr)
+            ->join('meta',
+                'meta.id_meta = users_usr.id_meta',
+                array('location' => 'location'))
+            ->join('jobs_job',
+                'meta.id_job = jobs_job.id_job',
+                array('job' => 'description_job'))
+            ->join('categories_ctg',
+                'meta.id_ctg = categories_ctg.id_ctg',
+                array('category' => 'title_ctg'))
+        ;
+        $select_atr = $this->_db->select()
+            ->from('users_usr', array('id_usr'))
+            ->where('id_usr = ?', $id_usr)
+            ->join('meta',
+                'meta.id_meta = users_usr.id_meta',
+                array())
+            ->join('meta_has_atr',
+                'meta.id_meta = meta_has_atr.id_meta',
+                array())
+            ->join('attributes_atr',
+                'meta_has_atr.id_atr = attributes_atr.id_atr',
+                array('attribute' => 'name_atr'))
+            ;
+
+        $result = $this->_db->fetchAll($select);
+        if ($result != null) {
+            $result_atr = $this->_db->fetchAll($select_atr);
+            $i = 0;
+            foreach ($result_atr as $atr) {
+                $result[0]['attributes'][$i] = $atr['attribute'];
+                $i++;
+            }
+            return $result[0];//->toArray();
+        }
+        else
+            return null;
+    }
+
     public function loginUser($data)
     {
 	    $username = $data['login_username'];
@@ -255,6 +298,9 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             return false;
         }
 
+        $meta_model = new Default_Model_Meta();
+        $meta_id = $meta_model->createMeta($formData['register_employment'],null,$formData['register_city'],null, null, array());
+
         // Create new empty user row
         $row = $this->createRow();
 
@@ -274,6 +320,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         $row->created_usr = new Zend_Db_Expr('NOW()');
         $row->modified_usr = new Zend_Db_Expr('NOW()');
+
+        $row->id_meta = $meta_id;
 
         // Save user data
         return $row->save();
