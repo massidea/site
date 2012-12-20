@@ -2,41 +2,71 @@
 
 
 var Search = new (function () {
-    /** @const */ var SEARCH_ACCORDION = '#search-accordion';
-    /** @const */ var MATCH_MAKING_ACCORDION = '#match-making-accordion'
-    /** @const */ var SEARCH_CONTENT = '#searchbar';
-    /** @const */ var URL_LOAD_SEARCH_RESULTS = '/search/get-results';
-    /** @const */ var ICON_SEARCH = '#search .icon';
+    /** @const */ var SEL_SEARCH       = '#search-accordion';
+    /** @const */ var SEL_MATCHMAKING  = '#match-making-accordion';
+    /** @const */ var SEL_SEARCHBAR    = '#searchbar';
+	/** @const */ var SEL_SEARCH_ICON  = '#search .icon';
+	/** @const */ var URL_LOAD_RESULTS = '/search/get-results';
 
+	var $search      = $(SEL_SEARCH);
+    var $searchInput = $(SEL_SEARCHBAR);
+	var $searchIcon  = $(SEL_SEARCH_ICON);
+    var $matchMaking = $(SEL_MATCHMAKING);
 
+	/** Initializes the search and binds all event handlers */
+	function init() {
+		$searchInput.keyup(onSearch);
+		$searchIcon.click(stopSearch);
+		showMatchMaking();
+	}
 
-    var $searchInput = $(SEARCH_CONTENT);
-    var $searchAccordion = $(SEARCH_ACCORDION);
-    var $matchMakingAccordion = $(MATCH_MAKING_ACCORDION);
-    var $searchIcon =  $(ICON_SEARCH);
+	/** Shows match making and hides the search */
+	function showMatchMaking() {
+		$matchMaking.show();
+		$search.hide();
+	}
 
-    $matchMakingAccordion.css('display', 'block');
-    $searchAccordion.css('display', 'none');
+	/** Shows the search results and hides match making */
+	function showSearch() {
+		$search.show();
+		$matchMaking.hide();
+	}
 
+	/**
+	 * Updates the search view and changes the search bar.
+	 * @param {Event} [e] An event which triggered this action.
+	 */
+	function onSearch(e) {
+		if (e.keyCode == 27) {
+			stopSearch(e);
+			return;
+		}
 
+		var input = $searchInput.val();
+		setSearchIcon(input.length > 0);
+		MassIdea.loadHTML(SEL_SEARCHBAR, URL_LOAD_RESULTS, showSearch);
+	}
 
+	/**
+	 * Stops the search and resets the sidebar.
+	 * @param {Event} [e] An event which triggered this action.
+	 */
+	function stopSearch(e) {
+		$searchInput.val('');
+		setSearchIcon(false);
+		showMatchMaking();
+	}
 
+	/**
+	 * Sets the style of the search icon and puts focus on the search input.
+	 * @param {Boolean} searching Specifies whether the search bar is active or not.
+	 */
+	function setSearchIcon(searching) {
+		$searchIcon
+			.toggleClass('search',     !searching)
+			.toggleClass('stop-search', searching);
+		$searchInput.focus();
+	}
 
-
-    $searchInput.keyup(function() {
-
-        if ($searchInput.val().length > 0) {
-            $searchIcon.removeClass("search");
-            $searchIcon.addClass("stop-search");
-        } else {
-
-            $searchIcon.removeClass("stop-search");
-            $searchIcon.addClass("search");
-        }
-
-        MassIdea.loadHTML(SEARCH_CONTENT, URL_LOAD_SEARCH_RESULTS, function () {
-            $matchMakingAccordion.css('display', 'none');
-            $searchAccordion.css('display', 'block');
-        });
-    });
+	this.init = init;
 })();
