@@ -16,7 +16,7 @@ var Search = new (function () {
 	/** Initializes the search and binds all event handlers */
 	function init() {
 		$searchInput.keyup(onSearch);
-		$searchIcon.click(stopSearch);
+		$searchIcon.click(showMatchMaking);
 		showMatchMaking();
 	}
 
@@ -24,12 +24,15 @@ var Search = new (function () {
 	function showMatchMaking() {
 		$matchMaking.show();
 		$search.hide();
+		setSearchIcon(false);
+		$searchInput.val('');
 	}
 
 	/** Shows the search results and hides match making */
 	function showSearch() {
 		$search.show();
 		$matchMaking.hide();
+		setSearchIcon(true);
 	}
 
 	/**
@@ -37,24 +40,14 @@ var Search = new (function () {
 	 * @param {Event} [e] An event which triggered this action.
 	 */
 	function onSearch(e) {
-		if (e.keyCode == 27) {
-			stopSearch(e);
-			return;
-		}
-
 		var input = $searchInput.val();
-		setSearchIcon(input.length > 0);
-		MassIdea.loadHTML(SEL_SEARCHBAR, URL_LOAD_RESULTS, showSearch);
-	}
 
-	/**
-	 * Stops the search and resets the sidebar.
-	 * @param {Event} [e] An event which triggered this action.
-	 */
-	function stopSearch(e) {
-		$searchInput.val('');
-		setSearchIcon(false);
-		showMatchMaking();
+		if (e.keyCode == 27 || input.length <= 0) {
+			showMatchMaking();
+		} else {
+			showSearch();
+			MassIdea.loadHTML(SEL_SEARCHBAR, URL_LOAD_RESULTS);
+		}
 	}
 
 	/**
