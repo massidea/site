@@ -1743,7 +1743,7 @@ class Default_Model_Content extends Zend_Db_Table_Abstract
                 FROM contents_cnt, meta, jobs_job, attributes_atr, meta_has_atr, categories_ctg
                 WHERE contents_cnt.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
                 AND meta_has_atr.id_atr = attributes_atr.id_atr AND contents_cnt.id_ctg = categories_ctg.id_ctg
-                AND (categories_ctg.title_ctg LIKE '%$pattern%' OR description_job LIKE '%$pattern%' OR name_atr LIKE '%$pattern%')';
+                AND (categories_ctg.title_ctg LIKE "%' . $pattern . '%" OR description_job LIKE "%' . $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
 
         $statement = $adapter->query($sql);
 

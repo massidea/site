@@ -237,7 +237,7 @@ class Default_Model_Groups extends Zend_Db_Table_Abstract
                 FROM usr_groups_grp, meta, jobs_job, attributes_atr, meta_has_atr, users_usr
                 WHERE usr_groups_grp.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
                 AND meta_has_atr.id_atr = attributes_atr.id_atr AND usr_groups_grp.id_usr = users_usr.id_usr
-                AND (description_grp LIKE '%$pattern%' OR description_job LIKE '%$pattern%' OR name_atr LIKE '%$pattern%' OR login_name_usr LIKE '%$pattern%');';
+                AND (description_grp LIKE "%' . $pattern . '%" OR description_job LIKE "%' . $pattern . '%" OR name_atr LIKE "%' . $pattern . '%" OR login_name_usr LIKE "%' . $pattern . '%");';
 
         $statement = $adapter->query($sql);
 

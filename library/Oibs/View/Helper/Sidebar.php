@@ -13,6 +13,8 @@ class Oibs_View_Helper_Sidebar extends Oibs_View_Helper_Viewable
     protected $_searchGroupResults;
     /** @var Array */
     protected $_searchContentResults;
+    /** @var Array */
+    protected $_matchingUsers;
 
 	/**
 	 * Renders the sidebar.
@@ -24,5 +26,22 @@ class Oibs_View_Helper_Sidebar extends Oibs_View_Helper_Viewable
 	{
 		return $this->renderView($script);
 	}
+
+    /**
+     * @return Array
+     */
+    public function getMatchingUsers()
+    {
+        return $this->_matchingUsers;
+    }
+
+    /**
+     * @param Array $matchingUsers
+     */
+    public function setMatchingUsers($matchingUsers)
+    {
+        $this->_matchingUsers = $matchingUsers;
+    }
+
 
 }

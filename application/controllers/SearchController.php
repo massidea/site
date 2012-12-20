@@ -310,4 +310,17 @@ class SearchController extends Oibs_Controller_CustomController
 
     }
 
+    // delivers 0-5 users which match best with the parameters
+    function matchingUsers() {
+        $params = $this->getRequest()->getParams();
+        $job = isset($params['job']) ? $params['job'] : "";
+        $location = isset($params['location']) ? $params['location'] : "";
+        $attribute = isset($params['attribute']) ? $params['attribute'] : "";
+
+        $userModel = new Default_Model_User();
+        $matchingUsers = $userModel->getMatchingUser($job, $location, $attribute);
+        $this->getSidebarHelper()->setMatchingUsers($matchingUsers);
+
+    }
+
 }

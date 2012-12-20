@@ -1913,10 +1913,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $sql = 'SELECT *
                 FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
                 WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
+                AND meta_has_atr.id_atr = attributes_atr.id_atrSELECT *
+                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
+                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
                 AND meta_has_atr.id_atr = attributes_atr.id_atr
-                AND (description_job LIKE '%$pattern%' OR location LIKE '%$pattern%' OR name_atr LIKE '%$pattern%')';
-
-
+                AND (description_job LIKE "%'. $pattern . '%" OR location LIKE "%'. $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
 
         $statement = $adapter->query($sql);
 
@@ -1924,4 +1925,88 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     }
 
+    public function getMatchingUser($job, $location, $attribute) {
+        $matchingUsersByJob = $this->getUserByJob($job);
+        var_dump($matchingUsersByJob);exit;
+        $matchingUsersByLocation = $this->getUserByLocation($location);
+        $matchingUsersByAttribute = $this->getUserByAttribute($attribute);
+
+        $allMatchingResults = array_merge($matchingUsersByJob, $matchingUsersByAttribute, $matchingUsersByLocation);
+        $countArray = Array();
+
+        foreach($allMatchingResults as $match) {
+            if(isset($countArray[$match["id_usr"]]))
+                $countArray[$match["id_usr"]]++;
+            else
+                $countArray[$match["id_usr"]] = 1;
+        }
+
+        var_dump($countArray);exit;
+
+        arsort($countArray);
+
+        $countArray = array_keys($countArray);
+        $result = Array();
+        $count = 0;
+        foreach($countArray as $item) {
+            if($count > 4)
+                break;
+            foreach($allMatchingResults as $match) {
+                if($match["id_usr"] == $item) {
+                    $result[] = $match;
+                    break;
+                }
+            }
+
+            $count++;
+        }
+
+
+        return $result;
+
+    }
+
+    private function getUserByJob($job) {
+        $adapter = $this->getAdapter();
+        $sql = 'SELECT *
+                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
+                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
+                AND meta_has_atr.id_atr = attributes_atr.id_atr
+                AND description_job LIKE "%' . $job . '%"';
+
+        $statement = $adapter->query($sql);
+
+
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    private function getUserByLocation($location) {
+        $adapter = $this->getAdapter();
+        $sql = 'SELECT *
+                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
+                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
+                AND meta_has_atr.id_atr = attributes_atr.id_atr
+                AND location LIKE "%' . $location . '%"';
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    private function getUserByAttribute($attribute) {
+        $adapter = $this->getAdapter();
+        $sql = 'SELECT *
+                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
+                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
+                AND meta_has_atr.id_atr = attributes_atr.id_atr
+                AND name_atr LIKE "%' . $attribute . '%"';
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
 } // end of class
