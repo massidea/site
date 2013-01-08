@@ -1,6 +1,6 @@
 <div class="accordion-group">
 	<div class="accordion-heading">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-One">Content (1)</a>
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-One">Content (<?php echo sizeof($this->contentResults)?>)</a>
 	</div>
 	<div id="search-collapse-One" class="accordion-body collapse in">
 		<?php foreach ($this->contentResults as $content) : ?>
@@ -17,7 +17,7 @@
 
 <div class="accordion-group">
 	<div class="accordion-heading">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-Two">User (2)</a>
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-Two">User (<?php echo sizeof($this->userResults)?>)</a>
 	</div>
 	<div id="search-collapse-Two" class="accordion-body collapse">
 		<?php foreach ($this->userResults as $user) : ?>
@@ -34,7 +34,7 @@
 
 <div class="accordion-group">
 	<div class="accordion-heading">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-Three">Groups (4)</a>
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-Three">Groups (<?php echo sizeof($this->groupResults)?>)</a>
 	</div>
 	<div id="search-collapse-Three" class="accordion-body collapse">
 		<?php foreach ($this->groupResults as $group) : ?>
