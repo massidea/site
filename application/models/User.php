@@ -1910,12 +1910,13 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         public function getUserByFilter($pattern) {
         $adapter = $this->getAdapter();
+        $pattern = mysql_real_escape_string($pattern);
         $sql = 'SELECT *
                 FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
                 JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
                 JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
                 JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
-                WHERE (description_job LIKE "%'. $pattern . '%" OR location LIKE "%'. $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
+                WHERE (description_job LIKE "%'. $pattern  . '%" OR location LIKE "%'. $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
 
         $statement = $adapter->query($sql);
 
@@ -1966,6 +1967,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     private function getUserByJob($job) {
         $adapter = $this->getAdapter();
+        $job = mysql_real_escape_string($job);
         $sql = 'SELECT *
                 FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
                 JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
@@ -1983,6 +1985,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     private function getUserByLocation($location) {
         $adapter = $this->getAdapter();
+        $location = mysql_real_escape_string($location);
         $sql = 'SELECT *
                 FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
                 JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
@@ -1998,6 +2001,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
     private function getUserByAttribute($attribute) {
         $adapter = $this->getAdapter();
+        $attribute = mysql_real_escape_string($attribute);
         $sql = 'SELECT *
                 FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
                 JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
