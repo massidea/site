@@ -80,6 +80,49 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         } // end if
     }
 
+    public function getMetaData($id_usr) {
+
+        $select = $this->_db->select()
+            ->from('users_usr', array('id_usr'))
+            ->where('id_usr = ?', $id_usr)
+            ->join('meta',
+                'meta.id_meta = users_usr.id_meta',
+                array('location' => 'location'))
+            ->join('jobs_job',
+                'meta.id_job = jobs_job.id_job',
+                array('job' => 'description_job'))
+            ->join('categories_ctg',
+                'meta.id_ctg = categories_ctg.id_ctg',
+                array('category' => 'title_ctg'))
+        ;
+        $select_atr = $this->_db->select()
+            ->from('users_usr', array('id_usr'))
+            ->where('id_usr = ?', $id_usr)
+            ->join('meta',
+                'meta.id_meta = users_usr.id_meta',
+                array())
+            ->join('meta_has_atr',
+                'meta.id_meta = meta_has_atr.id_meta',
+                array())
+            ->join('attributes_atr',
+                'meta_has_atr.id_atr = attributes_atr.id_atr',
+                array('attribute' => 'name_atr'))
+            ;
+
+        $result = $this->_db->fetchAll($select);
+        if ($result != null) {
+            $result_atr = $this->_db->fetchAll($select_atr);
+            $i = 0;
+            foreach ($result_atr as $atr) {
+                $result[0]['attributes'][$i] = $atr['attribute'];
+                $i++;
+            }
+            return $result[0];//->toArray();
+        }
+        else
+            return null;
+    }
+
     public function loginUser($data)
     {
 	    $username = $data['login_username'];
@@ -1908,15 +1951,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $topListClasses;
     }
 
-    public function getUserByFilter($pattern) {
+        public function getUserByFilter($pattern) {
         $adapter = $this->getAdapter();
+        $pattern = mysql_real_escape_string($pattern);
         $sql = 'SELECT *
-                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
-                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
-                AND meta_has_atr.id_atr = attributes_atr.id_atr
-                AND (description_job LIKE '%$pattern%' OR location LIKE '%$pattern%' OR name_atr LIKE '%$pattern%')';
-
-
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE (description_job LIKE "%'. $pattern  . '%" OR location LIKE "%'. $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
 
         $statement = $adapter->query($sql);
 
@@ -1924,4 +1967,94 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     }
 
+    public function getMatchingUser($job, $location, $attribute) {
+        $matchingUsersByJob = $this->getUserByJob($job);
+        var_dump($matchingUsersByJob);exit;
+        $matchingUsersByLocation = $this->getUserByLocation($location);
+        $matchingUsersByAttribute = $this->getUserByAttribute($attribute);
+
+        $allMatchingResults = array_merge($matchingUsersByJob, $matchingUsersByAttribute, $matchingUsersByLocation);
+        $countArray = Array();
+
+        foreach($allMatchingResults as $match) {
+            if(isset($countArray[$match["id_usr"]]))
+                $countArray[$match["id_usr"]]++;
+            else
+                $countArray[$match["id_usr"]] = 1;
+        }
+
+        var_dump($countArray);exit;
+
+        arsort($countArray);
+
+        $countArray = array_keys($countArray);
+        $result = Array();
+        $count = 0;
+        foreach($countArray as $item) {
+            if($count > 4)
+                break;
+            foreach($allMatchingResults as $match) {
+                if($match["id_usr"] == $item) {
+                    $result[] = $match;
+                    break;
+                }
+            }
+
+            $count++;
+        }
+
+
+        return $result;
+
+    }
+
+    private function getUserByJob($job) {
+        $adapter = $this->getAdapter();
+        $job = mysql_real_escape_string($job);
+        $sql = 'SELECT *
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE description_job LIKE "%' . $job . '%"';
+
+        $statement = $adapter->query($sql);
+
+
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    private function getUserByLocation($location) {
+        $adapter = $this->getAdapter();
+        $location = mysql_real_escape_string($location);
+        $sql = 'SELECT *
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE location LIKE "%' . $location . '%"';
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    private function getUserByAttribute($attribute) {
+        $adapter = $this->getAdapter();
+        $attribute = mysql_real_escape_string($attribute);
+        $sql = 'SELECT *
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                AND name_atr LIKE "%' . $attribute . '%"';
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
 } // end of class

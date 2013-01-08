@@ -1,59 +1,107 @@
 <aside id="page-sidebar">
-	<div class="matchMaking">
+
+    <div id="search">
         <div class="input-prepend input-append ">
             <input class="span2" id="searchbar" placeholder="Search..." type="text">
-            <span class="icon search "></span>
+            <span class="icon search"></span>
+	        <script type="text/javascript"> $(function () { Search.init(); });</script>
         </div>
 
-    <div>
-    <div class="accordion" id="accordion2">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                   Collapsible Group Item #1
-                </a>
-            </div>
-            <div id="collapseOne" class="accordion-body collapse in">
-                <a class="accordion-inner" href="#">
-                    <div class="right-arrow">
-                        <div class="image idea pull-left"></div>
-                        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl jdsklf jkdsjfkldsjfkjds f
-                            sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj  kdsfjksdfjjdsfjdslkf dslkjdsfsdj fl</div>
-                        <div class="clearfix"></div>
-                    </div>
+        <div class="accordion" id="search-accordion"></div>
+	</div>
 
-                </a>
-            </div>
+	<div id="match-making">
+        <div class="accordion" id="match-making-accordion">
+	        <div class="accordion-group">
+		        <div class="accordion-heading">
+			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
+					        href="#match-making-collapse-One">
+				        Content (1) cxxxx
+			        </a>
+		        </div>
+		        <div id="match-making-collapse-One" class="accordion-body collapse in">
+			        <a class="accordion-inner" href="#">
+				        <div class="right-arrow">
+					        <div class="image idea pull-left"></div>
+					        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl
+						        jdsklf
+						        jkdsjfkldsjfkjds f
+						        sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj kdsfjksdfjjdsfjdslkf dslkjdsfsdj
+						        fl
+					        </div>
+					        <div class="clearfix"></div>
+				        </div>
+			        </a>
+		        </div>
+	        </div>
+	        <div class="accordion-group">
+		        <div class="accordion-heading">
+			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
+					        href="#match-making-collapse-Two">
+				        User (2)
+			        </a>
+		        </div>
+		        <div id="match-making-collapse-Two" class="accordion-body collapse">
+			        <a class="accordion-inner" href="#">
+				        <div class="right-arrow">
+					        <img class="user" src="/img/user_avatar.png" width="32" height="32"/>
+
+					        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl
+						        jdsklf
+						        jkdsjfkldsjfkjds f
+						        sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj kdsfjksdfjjdsfjdslkf dslkjdsfsdj
+						        fl
+					        </div>
+					        <div class="clearfix"></div>
+				        </div>
+			        </a>
+		        </div>
+	        </div>
+	        <div class="accordion-group">
+		        <div class="accordion-heading">
+			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
+					        href="#match-making-collapse-Three">
+				        Groups (4)
+			        </a>
+		        </div>
+		        <div id="match-making-collapse-Three" class="accordion-body collapse">
+			        <a class="accordion-inner" href="#">
+				        <div class="right-arrow">
+					        <div class="image idea pull-left"></div>
+					        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl
+						        jdsklf
+						        jkdsjfkldsjfkjds f
+						        sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj kdsfjksdfjjdsfjdslkf dslkjdsfsdj
+						        fl
+					        </div>
+					        <div class="clearfix"></div>
+				        </div>
+			        </a>
+		        </div>
+	        </div>
+	        <div class="accordion-group">
+		        <div class="accordion-heading">
+			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
+					        href="#match-making-collapse-Four">
+				        Projects (2)
+			        </a>
+		        </div>
+		        <div id="match-making-collapse-Four" class="accordion-body collapse">
+			        <a class="accordion-inner" href="#">
+				        <div class="right-arrow">
+					        <div class="image idea pull-left"></div>
+					        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl
+						        jdsklf
+						        jkdsjfkldsjfkjds f
+						        sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj kdsfjksdfjjdsfjdslkf dslkjdsfsdj
+						        fl
+					        </div>
+					        <div class="clearfix"></div>
+				        </div>
+			        </a>
+		        </div>
+	        </div>
         </div>
-        <div class="accordion-group">
-            <div class="accordion-heading">
+	</div>
 
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                    Collapsible Group Item #2
-                </a>
-            </div>
-            <div id="collapseTwo" class="accordion-body collapse">
-                <a class="accordion-inner" href="#">
-                   <div class="right-arrow">
-                       <div class="image idea pull-left"></div>
-                        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl jdsklf jkdsjfkldsjfkjds f
-                         sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj  kdsfjksdfjjdsfjdslkf dslkjdsfsdj fl</div>
-                    <div class="clearfix"></div>
-                   </div>
-
-                </a>
-                <a class="accordion-inner" href="#">
-                <div class="right-arrow">
-                    <div class="image idea pull-left"></div>
-                    <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl jdsklf jkdsjfkldsjfkjds f
-                        sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj  kdsfjksdfjjdsfjdslkf dslkjdsfsdj fl</div>
-                    <div class="clearfix"></div>
-                </div>
-
-                </a>
-            </div>
-        </div>
-    </div>
-        </div>
-    </div>
 </aside>

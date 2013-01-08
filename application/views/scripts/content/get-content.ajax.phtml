@@ -1,6 +1,6 @@
 <?php foreach($this->contentData as $content) { ?>
     <div class="row singleContent <?php echo $content['key_cty']; ?>">
-        <div class="span2 push-left">
+        <div class="pull-left span2">
             <a class="thumbnail" href="<?php echo $this->url(array('controller' => 'view',
                     'actual_content_id' => $content['id_cnt'],
                     'language' => $this->language),
@@ -8,7 +8,7 @@
                 <img alt="<?php echo $content['title_cnt'] ?>" src="/img/fallbackContent/<?php echo $content['key_cty']; ?>.png">
             </a>
         </div>
-        <div class="span9 push-right">
+        <div class="contentContainer">
             <div class="headline"><a href="<?php echo $this->url(array('controller' => 'view',
                     'actual_content_id' => $content['id_cnt'],
                     'language' => $this->language),

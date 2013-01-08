@@ -1,190 +1,198 @@
 .popover {
-  min-width: 190px;
-  width: auto;
+	min-width: 190px;
+	width:     auto;
 }
 
 #page-navigation {
-  background-color: @colorNavigation;
-  height: 505px;
-  margin: -20px 0 -9px;
-  position: relative;
-  border-right: 1px solid @colorDarkGray;
-  padding: 30px 0;
+	background-color: @colorNavigation;
+	height:           505px;
+	margin:           -20px 0 -9px;
+	position:         relative;
+	border-right:     1px solid @colorDarkGray;
+	padding:          30px 0;
 
-  .box-shadow(1px 0 0 0, @colorNavigationShadow);
+	.box-shadow(1px 0 0 0, @colorNavigationShadow);
 
-  a {
-    text-align: center;
-    width: 100px;
-    display: block;
-    height: 32px;
-    margin: 0 auto 35px;
-    padding: 53px 0 0;
-    text-align: center;
-    color: @colorLightGray;
-    background-position: center top;
-    background-repeat: no-repeat;
+	a {
+		text-align:          center;
+		width:               100px;
+		display:             block;
+		height:              32px;
+		margin:              0 auto 35px;
+		padding:             53px 0 0;
+		text-align:          center;
+		color:               @colorLightGray;
+		background-position: center top;
+		background-repeat:   no-repeat;
 
-    &.active {
-      color: @colorDarkGray;
-    }
+		&.active {
+			color: @colorDarkGray;
+		}
 
-    &.mainnavigation-popover {
-      width: 100px;
-      cursor: pointer;
-    }
+		&.mainnavigation-popover {
+			width:  100px;
+			cursor: pointer;
+		}
 
-    &.overview {
-      background-image: url("/img/icons/mainnavigation/overview_inactive.png");
-      &.active {
-        background-image: url("/img/icons/mainnavigation/overview_active.png");
-      }
-    }
+		&.overview {
+			background-image: url("/img/icons/mainnavigation/overview_inactive.png");
+			&.active {
+				background-image: url("/img/icons/mainnavigation/overview_active.png");
+			}
+		}
 
-    &.mygroups {
-      background-image: url("/img/icons/mainnavigation/groups_inactive.png");
-      &.active {
-        background-image: url("/img/icons/mainnavigation/groups_active.png");
-      }
-    }
+		&.mygroups {
+			background-image: url("/img/icons/mainnavigation/groups_inactive.png");
+			&.active {
+				background-image: url("/img/icons/mainnavigation/groups_active.png");
+			}
+		}
 
-    &.myprojects {
-      background-image: url("/img/icons/mainnavigation/projects_inactive.png");
-      &.active {
-        background-image: url("/img/icons/mainnavigation/projects_active.png");
-      }
-    }
+		&.myprojects {
+			background-image: url("/img/icons/mainnavigation/projects_inactive.png");
+			&.active {
+				background-image: url("/img/icons/mainnavigation/projects_active.png");
+			}
+		}
 
-    &.categories {
-      background-image: url("/img/icons/mainnavigation/category_inactive.png");
-      &.active {
-        background-image: url("/img/icons/mainnavigation/category_active.png");
-      }
-    }
-  }
+		&.categories {
+			background-image: url("/img/icons/mainnavigation/category_inactive.png");
+			&.active {
+				background-image: url("/img/icons/mainnavigation/category_active.png");
+			}
+		}
+	}
 
-  .indicator {
-    width: 11px;
-    height: 21px;
-    background: url("/img/icons/mainnavigation/indicator.png") no-repeat;
-    position: absolute;
-    left: 130px;
-    display: none;
-    &.overview {
-      display: block;
-      top: 30px;
-    }
-    &.groups {
-      display: block;
-      top: 159px;
-    }
-    &.projects {
-      display: block;
-      top: 288px;
-    }
-    &.categories {
-      display: block;
-      top: 420px;
-    }
-  }
+	.indicator {
+		width:      11px;
+		height:     21px;
+		background: url("/img/icons/mainnavigation/indicator.png") no-repeat;
+		position:   absolute;
+		left:       130px;
+		display:    none;
+		&.overview {
+			display: block;
+			top:     30px;
+		}
+		&.groups {
+			display: block;
+			top:     159px;
+		}
+		&.projects {
+			display: block;
+			top:     288px;
+		}
+		&.categories {
+			display: block;
+			top:     420px;
+		}
+	}
 }
 
-.matchMaking {
-  background-color: @colorNavigation;
-  height: 535px;
-  margin: -20px 0 -9px;
-  position: relative;
-  border-left: 1px solid @colorDarkGray;
-  padding: 30px 0 0 5px;
-  .box-shadow(-1px 0 0 0, @colorNavigationShadow);
-  #searchbar {
-    width: 168px;
-    border-radius: 4px 0 0 4px;
-    border-right: 1px solid transparent;
+#page-sidebar {
+	background-color: @colorNavigation;
+	height:           535px;
+	margin:           -20px 0 -9px;
+	position:         relative;
+	border-left:      1px solid @colorDarkGray;
+	padding:          30px 0 0 5px;
 
-  }
+	.box-shadow(-1px 0 0 0, @colorNavigationShadow);
 
-  .icon {
-    border-radius: 0 4px 4px 0;
-    margin-left: -1px;
-    border: 1px solid #768FB4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    display: inline-block;
-    font-size: 12px;
-    font-weight: normal;
-    height: 16px;
-    line-height: 16px;
-    min-width: 16px;
-    padding: 4px 5px;
-    text-align: center;
-    text-shadow: 0 1px 0 #FFFFFF;
-    width: auto;
+	#searchbar {
+		width:         168px;
+		border-radius: 4px 0 0 4px;
+		border-right:  1px solid transparent;
 
-    &.search {
-      background: url("/img/icons/searchbar/search.png") no-repeat center white;
-    }
-    &.close {
-      background: url("/img/icons/searchbar/close.png") no-repeat center white;
-    }
-  }
+	}
 
-  .accordion-group {
-    border: 1px solid @colorStandardFirst;
-    border-radius: 3px;
-    margin-bottom: 2px;
-    margin-right: 5px;
-    background: #fafafa;
+	.icon {
+		border-radius: 0 4px 4px 0;
+		margin-left:   -1px;
+		border:        1px solid #768FB4;
+		box-shadow:    0 1px 1px rgba(0, 0, 0, 0.075) inset;
+		display:       inline-block;
+		font-size:     12px;
+		font-weight:   normal;
+		height:        16px;
+		line-height:   16px;
+		min-width:     16px;
+		padding:       4px 5px;
+		text-align:    center;
+		text-shadow:   0 1px 0 #FFFFFF;
+		width:         auto;
+		background:    no-repeat center white;
 
-    .accordion-heading {
+		&.search {
+			background-image: url("/img/icons/searchbar/search.png");
+		}
+		&.stop-search {
+			background-image: url("/img/icons/searchbar/close.png");
+			cursor: pointer;
+		}
+	}
 
-      a {
-        text-decoration: none;
-        margin-right: 10px;
-        color: black;
-        font-weight: bold;
-        padding-left: 5px;
-        outline: none;
+	.user {
+		border: 1px solid @colorGraySecond;
+	}
 
-      }
-      .accordion-toggle {
-        background: url("/img/icons/accordeon/arrow-down.png") no-repeat right;
-      }
+	.accordion-group {
+		border:        1px solid @colorStandardFirst;
+		border-radius: 3px;
+		margin-bottom: 2px;
+		margin-right:  5px;
+		background:    #fafafa;
 
-    }
-    .accordion-inner {
-      text-decoration: none;
-      display: block;
-      color: black;
-      padding-left: 5px;
-      outline: none;
-      &:hover .right-arrow {
-        background: url("/img/icons/accordeon/arrow-right.png") no-repeat right transparent;
-      }
+		.accordion-heading {
 
-      .image {
-        width: 32px;
-        height: 32px;
-        border: 1px solid @colorGraySecond;
-        &.vision {
-          background: url("/img/fallbackContent/vision.png");
-          background-size: 32px 32px;
-        }
-        &.challenge {
-          background: url("/img/fallbackContent/challenge.png");
-          background-size: 32px 32px;
-        }
-        &.idea {
-          background: url("/img/fallbackContent/idea.png");
-          background-size: 32px 32px;
-        }
-      }
+			a {
+				text-decoration: none;
+				margin-right:    10px;
+				color:           black;
+				font-weight:     bold;
+				padding-left:    5px;
+				outline:         none;
 
-      .content-search {
-        width: 150px;
-      }
+			}
+			.accordion-toggle {
+				background: url("/img/icons/accordeon/arrow-down.png") no-repeat right;
+			}
 
+		}
+		.accordion-inner {
+			text-decoration: none;
+			display:         block;
+			color:           black;
+			padding-left:    5px;
+			outline:         none;
+			&:hover .right-arrow {
+				background: url("/img/icons/accordeon/arrow-right.png") no-repeat right transparent;
+			}
 
-    }
-  }
+			.image {
+				width:  32px;
+				height: 32px;
+				border: 1px solid @colorGraySecond;
+				&.vision {
+					background:      url("/img/fallbackContent/vision.png");
+					background-size: 32px 32px;
+				}
+				&.challenge {
+					background:      url("/img/fallbackContent/challenge.png");
+					background-size: 32px 32px;
+				}
+				&.idea {
+					background:      url("/img/fallbackContent/idea.png");
+					background-size: 32px 32px;
+				}
+			}
+
+			.content-search {
+				width: 150px;
+                margin-left: 3px;
+			}
+
+		}
+	}
 
 }

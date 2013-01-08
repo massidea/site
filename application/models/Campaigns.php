@@ -165,8 +165,11 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
     *   @param string $name name of campaign that will be created
     *   @return array
     */
-    public function createCampaign($name, $ingress, $desc, $start, $end, $group)
+    public function createCampaign($name, $ingress, $desc, $start, $end, $group, $jobId, $ctgId, $location, $offerId, $needsId, $attributes)
     {
+        $meta_model = new Default_Model_Meta();
+        $id_meta = $meta_model->createMeta($jobId, $ctgId, $location, $offerId, $needsId, $attributes);
+
         // Create new empty row
         $row = $this->createRow();
         
@@ -174,24 +177,8 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         $row->name_cmp = $name;
         $row->ingress_cmp = $ingress;
         $row->description_cmp = $desc;
+        $row->id_meta = $id_meta;
 
-        // MM/DD/YYYY -> YYYY-MM-DD
-        // If start day is empty: set current day
-        /*
-        if (isset($start) && !empty($start)) {
-            $start = explode('/', $start);
-            $start = implode('-', array($start[2], $start[0], $start[1]));
-        } else {
-            $start = date("Y-m-d", time());
-        }
-        // If end day is empty: set 0000-00-00 day, this means campaign stays open always
-        if (isset($end) && !empty($end)) {
-            $end = explode('/', $end);
-            $end = implode('-', array($end[2], $end[0], $end[1]));
-        } else {
-            $end = "0000-00-00";
-        }
-        */
         if (!isset($start) || empty($start)) {
             $start = date("Y-m-d", time());
         }
@@ -213,8 +200,11 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
         return $row;
     } // end of createCampaign
 
-    public function editCampaign($id, $name, $ingress, $desc, $start, $end)
+    public function editCampaign($id, $name, $ingress, $desc, $start, $end, $metaId, $jobId, $ctgId, $location, $offerId, $needsId, $attributes)
     {
+        $meta_model = new Default_Model_Meta();
+        $meta_model->editMeta($metaId, $jobId, $ctgId, $location, $offerId, $needsId, $attributes);
+
         if (empty($start)) {
             $start = date("Y-m-d", time());
         }
@@ -572,6 +562,61 @@ class Default_Model_Campaigns extends Zend_Db_Table_Abstract
                 }
             }
         }
+    }
+
+    public function getMetaData($id_cmp)
+    {
+        $select = $this->_db->select()
+            ->from('campaigns_cmp', array('id_cmp', 'description_cmp', 'start_time_cmp', 'end_time_cmp', 'task'))
+            ->where('id_cmp = ?', $id_cmp)
+            ->join('meta',
+            'meta.id_meta = campaigns_cmp.id_meta',
+            array('location' => 'location'))
+            ->join('jobs_job',
+            'meta.id_job = jobs_job.id_job',
+            array('job' => 'description_job'))
+            ->join('categories_ctg',
+            'meta.id_ctg = categories_ctg.id_ctg',
+            array('category' => 'title_ctg'))
+            ->join('offer_needs',
+            'meta.id_offer = offer_needs.id_on',
+            array('offer' => 'title_on'))
+            ->join('offer_needs',
+            'meta.id_needs = offer_needs.id_on',
+            array('need' => 'title_on'))
+            ->joinLeft('usr_has_grp',
+            'usr_has_grp.id_grp = campaigns_cmp.id_grp_cmp',
+            array('NrOfMembers' => 'count(*)'))
+            ->join('users_usr',
+            'users_usr.id_usr = campaigns_cmp.id_usr',
+            array('login_name_usr'))
+        ;
+        $select_atr = $this->_db->select()
+            ->from('campaigns_cmp', array('id_cmp'))
+            ->where('id_cmp = ?', $id_cmp)
+            ->join('meta',
+            'meta.id_meta = campaigns_cmp.id_meta',
+            array())
+            ->join('meta_has_atr',
+            'meta.id_meta = meta_has_atr.id_meta',
+            array())
+            ->join('attributes_atr',
+            'meta_has_atr.id_atr = attributes_atr.id_atr',
+            array('attribute' => 'name_atr'))
+        ;
+
+        $result = $this->_db->fetchAll($select);
+        if ($result != null) {
+            $result_atr = $this->_db->fetchAll($select_atr);
+            $i = 0;
+            foreach ($result_atr as $atr) {
+                $result[0]['attributes'][$i] = $atr['attribute'];
+                $i++;
+            }
+            return $result[0];//->toArray();
+        }
+        else
+            return null;
     }
 
 } // end of class
