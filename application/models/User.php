@@ -1908,13 +1908,14 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $topListClasses;
     }
 
-    public function getUserByFilter($pattern) {
+        public function getUserByFilter($pattern) {
         $adapter = $this->getAdapter();
         $sql = 'SELECT *
-                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
-                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
-                AND meta_has_atr.id_atr = attributes_atr.id_atr
-                AND (description_job LIKE "%'. $pattern . '%" OR location LIKE "%'. $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE (description_job LIKE "%'. $pattern . '%" OR location LIKE "%'. $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
 
         $statement = $adapter->query($sql);
 
@@ -1966,10 +1967,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     private function getUserByJob($job) {
         $adapter = $this->getAdapter();
         $sql = 'SELECT *
-                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
-                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
-                AND meta_has_atr.id_atr = attributes_atr.id_atr
-                AND description_job LIKE "%' . $job . '%"';
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE description_job LIKE "%' . $job . '%"';
 
         $statement = $adapter->query($sql);
 
@@ -1982,10 +1984,11 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     private function getUserByLocation($location) {
         $adapter = $this->getAdapter();
         $sql = 'SELECT *
-                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
-                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
-                AND meta_has_atr.id_atr = attributes_atr.id_atr
-                AND location LIKE "%' . $location . '%"';
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE location LIKE "%' . $location . '%"';
 
         $statement = $adapter->query($sql);
 
@@ -1996,9 +1999,10 @@ class Default_Model_User extends Zend_Db_Table_Abstract
     private function getUserByAttribute($attribute) {
         $adapter = $this->getAdapter();
         $sql = 'SELECT *
-                FROM users_usr, meta, jobs_job, attributes_atr, meta_has_atr
-                WHERE users_usr.id_meta = meta.id_meta AND meta.id_job = jobs_job.id_job AND meta.id_meta = meta_has_atr.id_meta
-                AND meta_has_atr.id_atr = attributes_atr.id_atr
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
                 AND name_atr LIKE "%' . $attribute . '%"';
 
         $statement = $adapter->query($sql);
