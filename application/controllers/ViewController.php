@@ -32,7 +32,10 @@
     public function init()
     {
         parent::init();
-        Zend_Layout::getMvcInstance()->setLayout('layout_public');
+        if ($this->hasIdentity())
+            Zend_Layout::getMvcInstance()->setLayout('layout');
+        else
+            Zend_Layout::getMvcInstance()->setLayout('layout_public');
     }
 
     /**

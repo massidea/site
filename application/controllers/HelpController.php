@@ -30,7 +30,10 @@
  	public function init()
     {
         parent::init();
-        Zend_Layout::getMvcInstance()->setLayout('layout_public');
+        if ($this->hasIdentity())
+            Zend_Layout::getMvcInstance()->setLayout('layout');
+        else
+            Zend_Layout::getMvcInstance()->setLayout('layout_public');
         $this->view->title = 'account-title';
     } // end of init()
     

@@ -71,6 +71,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			$this->getNavigationHelper()
 				->setGroups($this->_getNavigationGroups())
 				->setCategories($this->_getNavigationCategories());
+
 		}
 	}
 

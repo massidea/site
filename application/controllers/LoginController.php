@@ -33,7 +33,10 @@ class LoginController extends Oibs_Controller_CustomController
 	public function init()
 	{
 		parent::init();
-        Zend_Layout::getMvcInstance()->setLayout('layout_public');
+        if ($this->hasIdentity())
+            Zend_Layout::getMvcInstance()->setLayout('layout');
+        else
+            Zend_Layout::getMvcInstance()->setLayout('layout_public');
 		$this->view->title = 'account-login-title';
 	}
 	
