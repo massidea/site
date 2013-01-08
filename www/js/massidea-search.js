@@ -20,6 +20,7 @@ var Search = new (function () {
 		$searchInput.keyup(onSearch);
 		$searchIcon.click(showMatchMaking);
 		showMatchMaking();
+
 	}
 
 	/** Shows match making and hides the search */
@@ -29,12 +30,12 @@ var Search = new (function () {
 		$search.hide();
 		setSearchIcon(false);
 		$searchInput.val('');
+
 	}
 
 	/** Shows the search results and hides match making */
 	function showSearch() {
 		if (searching) return;
-
 		searching = true;
 		$search.empty().show();
 		$matchMaking.hide();
