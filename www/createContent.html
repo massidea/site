@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
+    <title>index-home</title>
+
+    <link rel="stylesheet/less" type="text/css" href="/css/massidea.less" media="all" />
+    <script type="text/javascript"> var less = { env : 'development' }; </script>
+    <script type="text/javascript" src="/js/less-1.3.0.min.js"></script>
+
+    
+    <script type="text/javascript">
+        var LANGUAGE = "en";
+    </script>
+</head>
+<body>
+<div id="footerBackground">
+    <div class="container">
+        <div class="row header">
+            <div class="span8">
+                <a id="massidea-logo" href="/"><img src="/img/massideaLogo.png"/></a>
+                <img id="massidea-signet" src="/img/signet.png"/>
+            </div>
+          
+        </div>
+
+        
+        <section id="row content"> 
+			<div class="span12">
+				<div class="modal hide fade">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<! how to put the red signet here>
+					<h3>Create a new Challenge</h3>
+				  </div>
+				  <div class="modal-body">
+					<div class="title">
+						<div class="span1 offset2">
+							Title
+						</div>
+						<div class="span9">
+							<input class="span9" type="text" >
+						</div>
+					</div>
+					<div class="Category">
+						<div class="span2 offset1">
+							Category
+						</div>	
+						<div class="span6">	
+							<select class="span6">
+									  <option>Choose one</option>
+									  <option>1</option>
+									  <option>2</option>
+									  <option>3</option>
+									  <option>4</option>
+									</select>
+						</div>			
+					</div>				
+					<div class="tags">		
+						<div class="span1 offset2">
+							Tags
+						</div>
+						<div class="span9>
+							<input class="span9" type="text" placeholder="Innovation Tag2 Tag3">
+						</div>		
+					</div>
+					</div class="abstract">
+						<div class="span2 offset1">
+							Abstract 
+						</div>
+						<div class="span9">
+							<textarea class="span9" rows="3"></textarea>
+						</div>	
+					</div>
+					<div class ="subscription">
+						<div class="span2 offset1">
+							Subscription
+						</div>
+						<div class="span9">
+							<textarea class="span9" rows="5"></textarea>
+						</div>
+					</div>
+					<div class ="documents">
+						<div class="span2 offset1">
+							Documents
+						</div>
+						<div class="span9">
+							<p>Overview.pdf	Abstract.pdf</p>
+							<p>+ Add another document</p>
+						</div>
+					</div>
+					<div class ="references">
+						<div class="span2 offset1">
+							References
+						</div>
+						<div class="span9">
+							<p>Massidea.org	Google+</p>
+							<p>+ Add another reference</p>
+						</div>
+					</div>
+					<div class ="images">
+						<div class="span1 offset2">
+							Image 
+						</div>
+						<div class="span9">
+							<p><div class="uploadedImage">
+							  <img src="/img/spades.png/160x120" alt="">
+							</div>
+							<div class="uploadImage">
+							  <img src="/img/spades.png/160x120" alt="">
+							</div></p>
+							<label class="radio inline">
+							  <input type="radio" id="inlineRadio1" value="option1">
+							</label>
+							<label class="radio inline">
+							  <input type="radio" id="inlineRadio2" value="option2">
+							</label>
+						</div>
+				  </div>
+				  <div class="modal-footer">
+					<a href="#" class="btn">Close</a>
+					<a href="#" class="btn btn-danger">Create Challenge</a>
+				  </div>
+				</div>
+			</div>
+        </section>
+        <div class="row footer">
+            <div class="span4">
+                <ul>
+                    <li><a href="#">About MassIdea</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="/en/imprint/view">Imprint</a></li>
+                </ul>
+            </div>
+            <div class="span4">
+                <ul>
+                <li><a href="/en/account/login">
+                        Join our Community</a></li>
+                <li><a href="/en/account/register">
+                        Sign-up</a></li>
+                <li><a href="/en/content/add">
+                        Create a Post!</a></li>
+                </ul>
+            </div>
+            <div class="span4">
+                Select your Platform Language::
+                <select id="languageMenu">
+                    <option>Language</option>
+                                            <option value="en">English</option>
+                                            <option value="fi">Finnish</option>
+                                            <option value="de">German</option>
+                                    </select>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //<![CDATA[
+
+// Variables for ajax requests
+var url_checkrecentcontent = '/en/ajax/checkrecentcontent';
+var url_getrecentcontent = '/en/ajax/getrecentcontent/type/all';
+var url_ajaxloader = '/images/ajax-loader-black.gif';
+
+    //]]>
+</script>
+<script type="text/javascript" src="/js/recentcontent.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/massidea.js"></script>
+<script type="text/javascript" src="/js/massidea-livefeed.js"></script></body>
+</html>
