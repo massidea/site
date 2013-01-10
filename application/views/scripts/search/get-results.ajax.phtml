@@ -1,0 +1,50 @@
+<div class="accordion-group">
+	<div class="accordion-heading">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-One">Content (<?php echo sizeof($this->contentResults)?>)</a>
+	</div>
+	<div id="search-collapse-One" class="accordion-body collapse in">
+		<?php foreach ($this->contentResults as $content) : ?>
+			<a class="accordion-inner" href="#">
+				<div class="right-arrow">
+					<div class="image idea pull-left"></div>
+					<div class="content-search pull-left"><?php echo $content['title_cnt']; ?></div>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		<?php endforeach; ?>
+	</div>
+</div>
+
+<div class="accordion-group">
+	<div class="accordion-heading">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-Two">User (<?php echo sizeof($this->userResults)?>)</a>
+	</div>
+	<div id="search-collapse-Two" class="accordion-body collapse">
+		<?php foreach ($this->userResults as $user) : ?>
+			<a class="accordion-inner" href="#">
+				<div class="right-arrow">
+					<img class="user pull-left" src="/img/user_avatar.png" width="32" height="32"/>
+					<div class="content-search pull-left"><?php echo $user['first_name_usr'] . ' ' . $user['surname_usr']; ?></div>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		<?php endforeach; ?>
+	</div>
+</div>
+
+<div class="accordion-group">
+	<div class="accordion-heading">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#search-accordion" href="#search-collapse-Three">Groups (<?php echo sizeof($this->groupResults)?>)</a>
+	</div>
+	<div id="search-collapse-Three" class="accordion-body collapse">
+		<?php foreach ($this->groupResults as $group) : ?>
+			<a class="accordion-inner" href="#">
+				<div class="right-arrow">
+					<div class="image idea pull-left"></div>
+					<div class="content-search pull-left"><?php echo $group['group_name_grp']; ?></div>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		<?php endforeach; ?>
+	</div>
+</div>

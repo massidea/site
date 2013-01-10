@@ -29,7 +29,6 @@ class ErrorController extends Oibs_Controller_CustomController
 {
 	public function errorAction() 
     {
-        Zend_Layout::getMvcInstance()->setLayout('layout_public');
         // Ensure the default view suffix is used so we always return good 
         // content
         $this->_helper->viewRenderer->setViewSuffix('phtml');

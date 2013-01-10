@@ -30,7 +30,10 @@ class AccountController extends Oibs_Controller_CustomController
         $ajaxContext->addActionContext('login', 'html')->initContext();
 
         $this->view->title = 'account-title';
-        Zend_Layout::getMvcInstance()->setLayout('layout_public');
+        if ($this->hasIdentity())
+            Zend_Layout::getMvcInstance()->setLayout('layout');
+        else
+            Zend_Layout::getMvcInstance()->setLayout('layout_public');
     }
 
 	public function indexAction()
@@ -125,7 +128,7 @@ class AccountController extends Oibs_Controller_CustomController
 			// Get username from params
 			$username = $params['user'];
 		} else {
-			$redirector->gotoUrl($hometargeturl);
+            $redirector->gotoUrl($hometargeturl);
 		}
 
 		// Get content types
@@ -318,7 +321,7 @@ class AccountController extends Oibs_Controller_CustomController
     public function registerAction()
     {
 	    if ($this->hasIdentity()) {
-		    $this->_forward('view', 'account');
+		    $this->_redirect('/');
 	    }
 
         // Create new registration form

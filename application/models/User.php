@@ -298,9 +298,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
             return false;
         }
 
-        $meta_model = new Default_Model_Meta();
-        $meta_id = $meta_model->createMeta($formData['register_employment'],null,$formData['register_city'],null, null, array());
-
         // Create new empty user row
         $row = $this->createRow();
 
@@ -320,8 +317,6 @@ class Default_Model_User extends Zend_Db_Table_Abstract
 
         $row->created_usr = new Zend_Db_Expr('NOW()');
         $row->modified_usr = new Zend_Db_Expr('NOW()');
-
-        $row->id_meta = $meta_id;
 
         // Save user data
         return $row->save();
@@ -701,7 +696,7 @@ class Default_Model_User extends Zend_Db_Table_Abstract
      */
     public function getUserGroups($id_usr) {
         $adapter = $this->getAdapter();
-        $sql = "SELECT grp.group_name_grp, grp.id_grp FROM usr_groups_grp grp, usr_has_grp has_grp WHERE grp.id_grp = has_grp.id_grp AND has_grp.id_usr =" . $id_usr;
+        $sql = 'SELECT grp.group_name_grp, grp.id_grp FROM usr_groups_grp grp, usr_has_grp has_grp WHERE grp.id_grp = has_grp.id_grp AND has_grp.id_usr =' . $id_usr;
 
         $statement = $adapter->query($sql);
 
@@ -1956,4 +1951,108 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $topListClasses;
     }
 
+        public function getUserByFilter($pattern) {
+        $adapter = $this->getAdapter();
+        $pattern = mysql_real_escape_string($pattern);
+        $sql = 'SELECT *
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE (description_job LIKE "%'. $pattern  . '%" OR location LIKE "%'. $pattern . '%" OR name_atr LIKE "%' . $pattern . '%")';
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    public function getMatchingUsers($job, $location, $attribute, $id) {
+        $matchingUsersByJob = $this->getUserByJob($job);
+        $matchingUsersByLocation = $this->getUserByLocation($location);
+        $matchingUsersByAttribute = $this->getUserByAttribute($attribute);
+
+        $allMatchingResults = array_merge($matchingUsersByJob, $matchingUsersByAttribute, $matchingUsersByLocation);
+        $countArray = Array();
+
+        foreach($allMatchingResults as $match) {
+            if($match["id_usr"] != $id){
+                if(isset($countArray[$match["id_usr"]]))
+                    $countArray[$match["id_usr"]]++;
+                else
+                    $countArray[$match["id_usr"]] = 1;
+            }
+        }
+
+        arsort($countArray);
+        $countArray = array_keys($countArray);
+        $result = Array();
+        $count = 0;
+        foreach($countArray as $item) {
+            if($count > 4)
+                break;
+            foreach($allMatchingResults as $match) {
+                if($match["id_usr"] == $item) {
+                    $result[] = $match;
+                    break;
+                }
+            }
+
+            $count++;
+        }
+
+
+        return $result;
+
+    }
+
+    private function getUserByJob($job) {
+        $adapter = $this->getAdapter();
+        $job = mysql_real_escape_string($job);
+        $sql = 'SELECT *
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE description_job LIKE "%' . $job . '%"';
+
+        $statement = $adapter->query($sql);
+
+
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    private function getUserByLocation($location) {
+        $adapter = $this->getAdapter();
+        $location = mysql_real_escape_string($location);
+        $sql = 'SELECT *
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                WHERE location LIKE "%' . $location . '%"';
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
+
+    private function getUserByAttribute($attribute) {
+        $adapter = $this->getAdapter();
+        $attribute = mysql_real_escape_string($attribute);
+        $sql = 'SELECT *
+                FROM meta JOIN jobs_job ON (meta.id_job = jobs_job.id_job)
+                JOIN meta_has_atr ON(meta.id_meta = meta_has_atr.id_meta)
+                JOIN users_usr ON (users_usr.id_meta = meta.id_meta)
+                JOIN attributes_atr ON(meta_has_atr.id_atr = attributes_atr.id_atr)
+                AND name_atr LIKE "%' . $attribute . '%"';
+
+        $statement = $adapter->query($sql);
+
+        $result = $statement->fetchAll();
+        return $result;
+    }
 } // end of class

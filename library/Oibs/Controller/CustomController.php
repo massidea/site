@@ -71,6 +71,7 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 			$this->getNavigationHelper()
 				->setGroups($this->_getNavigationGroups())
 				->setCategories($this->_getNavigationCategories());
+
 		}
 	}
 
@@ -84,6 +85,10 @@ class Oibs_Controller_CustomController extends Zend_Controller_Action
 		$this->view->language        = $this->getSession()->language;
 		$this->view->activeLanguages = $this->_getTranslatedLanguages();
 		$this->view->baseUrl         = Zend_Controller_Front::getInstance()->getBaseUrl();
+
+		// set view helper variables
+		$this->getNavigationHelper()->setLanguage($this->getActiveLanguage());
+		$this->getSidebarHelper()->setLanguage($this->getActiveLanguage());
 
 		// inject plugins into the view
 		$this->view->BBCode = new Oibs_Controller_Plugin_BBCode();
