@@ -2,8 +2,8 @@
     <div class="span12">
         <div class="row margin-bottom">
             <div class="span12">
-                <h2>Contenttitle</h2>
-                <div class="meta-header">by Tobias Curth &sdot; Nov, 12 2012</div>
+                <h2><?php echo $this->content['title_cnt']; ?></h2>
+                <div class="meta-header">by <?php echo $this->content['login_name_usr']; ?> &sdot; <?php echo $this->content['created_cnt']; ?></div>
             </div>
         </div>
         <div class="row margin-bottom">
@@ -15,15 +15,11 @@
                 </div>
                 <div class="row">
                     <div class="span12 meta-information">
-                        <span class="meta-information-title">Documents (2)</span>
+                        <span class="meta-information-title">Documents (<?php echo count($this->files); ?>)</span>
                         <ul>
-                            <li><a href="#"><img src="/img/icons/pdf.png" alt=""> Introduction.pdf</a></li>
-                            <li><a href="#"><img src="/img/icons/pdf.png" alt=""> Abstract.pdf</a></li>
-                        </ul>
-
-                        <span class="meta-information-title">Referenzes (1)</span>
-                        <ul>
-                            <li><a href="#"><img src="/img/icons/link.png" alt=""> Massidea.org</a></li>
+                        <?php foreach($this->files as $file) { ?>
+                            <li><a href="#"><img src="/img/icons/pdf.png" alt=""><?php echo $file; ?></a></li>
+                        <?php } ?>
                         </ul>
 
                         <span class="meta-information-title">Category</span>
@@ -39,32 +35,33 @@
                 </div>
             </div>
             <div class="span10 content">
-                <div class="content-headline">Short description.</div>
-                Lorem ipsum dolor le content.
+                <div class="content-headline"><?php echo $this->content['lead_cnt']; ?></div>
+                <?php echo $this->content['body_cnt']; ?>
             </div>
         </div>
         <div class="row comments">
             <div class="span12">
                 <div class="row">
-                    <div class="span6 comment-header">Comments (1)</div>
+                    <div class="span6 comment-header">Comments (<?php echo count($this->comments); ?>)</div>
                     <div class="span6">
                         <button class="btn pull-right">Write a comment</button>
                     </div>
                 </div>
 
-                <div class="row comment">
-                    <div class="span2 meta">
-                        <img src="http://placehold.it/105x80" width="105" height="80" class="img-polaroid">
+                <?php foreach ($this->comments as $comment) { ?>
+                    <div class="row comment">
+                        <div class="span2 meta">
+                            <img src="http://placehold.it/105x80" width="105" height="80" class="img-polaroid">
 
-                        <div class="meta-box">
-                            <div class="name">Tobias Curth</div>
-                            <div class="date">Nov. 12, 2012</div>
+                            <div class="meta-box">
+                                <div class="name"><?php echo $comment['login_name_usr']; ?></div>
+                                <div class="date"><?php echo $comment['created_cmt']; ?></div>
+                            </div>
                         </div>
+                        <div class="span10 comment-content"><?php echo $comment['body_cmt']; ?></div>
                     </div>
-                    <div class="span10 comment-content">Comment lorem ipsum dolor.
+                <?php } ?>
 
-                    </div>
-                </div>
                 <div class="row reply">
                     <div class="span12">
                         <span><a href="">Reply</a></span>
