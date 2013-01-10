@@ -2,7 +2,8 @@
 <?php foreach($this->randomFeedContents as $content) :?>
     <li class="<?php  echo htmlentities($content['key_cty']) ?>">
         <div class="headline">
-            <a href="<?php echo $this->url(array('controller' => 'view',
+            <a href="<?php echo $this->url(array('controller' => 'content',
+                    'action' => 'view',
                     'actual_content_id' => $content['id_cnt'],
                 'language' => $this->language),
                 'lang_default', true); ?>">

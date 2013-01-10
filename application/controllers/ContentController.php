@@ -148,6 +148,27 @@ class ContentController extends Oibs_Controller_CustomController
         $this->view->page = $page;
     }
 
+	public function viewAction()
+	{
+		$id = $this->_getParam('actual_content_id', 0);
+
+		$contentModel = new Default_Model_Content();
+		$fileModel    = new Default_Model_Files();
+		$ptpModel     = new Default_Model_PageTypes();
+		$commentModel = new Default_Model_Comments();
+
+		$content = $contentModel->getDataAsSimpleArray($id);
+
+		$type_id   = $ptpModel->getId('content');
+		$filenames = $fileModel->getFilenames($id, $type_id);
+
+		$comments = $commentModel->getAllByContentId($id);
+
+		$this->view->content  = $content;
+		$this->view->files    = $filenames;
+		$this->view->comments = $comments;
+	}
+
     public function addAction()
 	{
 		if (!$this->hasIdentity()) {
