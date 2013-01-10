@@ -197,6 +197,25 @@ class ContentController extends Oibs_Controller_CustomController
 			
 	} // end of listAction()
 
+    public function viewAction()
+    {
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $id = isset($params['actual_content_id']) ? $params['actual_content_id'] : 0;
+
+
+        $contentModel = new Default_Model_Content();
+        $content = $contentModel->getDataAsSimpleArray($id);
+
+        $this->view->content = $content;
+        /*
+        $this->view->contentTitle = $content['title_cnt'];
+        $this->view->contentLead = $content['lead_cnt'];
+        $this->view->contentBody = $content['body_cnt'];
+        $this->view->contentCreated = $content['created_cnt'];
+        */
+    }
+
 	/**
 	 *   addAction
 	 *
