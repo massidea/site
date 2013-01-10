@@ -54,7 +54,22 @@ class ContentController extends Oibs_Controller_CustomController
 		$sections[] = array('id' => 2, 'title' => 'general-idea');
 		$sections[] = array('id' => 3, 'title' => 'general-challenge');
 
-		$this->view->categories = $categories;
+        $user = $this->getIdentity();
+        $userId = $user->user_id;
+
+        $model = new Default_Model_User();
+
+        $metaData = $model->getMetaData($userId);
+
+        $job = $metaData['job'];
+        $location = $metaData['location'];
+        $attributes = $metaData['attributes'][0];
+
+        $matchingUsers = $model->getMatchingUsers($job, $location, $attributes, $userId);
+
+        $this->getSidebarHelper()->setMatchingUsers($matchingUsers);
+
+        $this->view->categories = $categories;
 		$this->view->sections   = $sections;
 
 	}

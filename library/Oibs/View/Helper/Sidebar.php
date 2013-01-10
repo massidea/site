@@ -24,7 +24,9 @@ class Oibs_View_Helper_Sidebar extends Oibs_View_Helper_Viewable
 	 */
 	public function sidebar($script)
 	{
-		return $this->renderView($script);
+		return $this->renderView($script, array(
+			'matchingUsers'  => $this->getMatchingUsers()
+		));
 	}
 
 	/**

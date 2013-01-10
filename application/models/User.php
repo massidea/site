@@ -1967,9 +1967,8 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         return $result;
     }
 
-    public function getMatchingUser($job, $location, $attribute) {
+    public function getMatchingUsers($job, $location, $attribute, $id) {
         $matchingUsersByJob = $this->getUserByJob($job);
-        var_dump($matchingUsersByJob);exit;
         $matchingUsersByLocation = $this->getUserByLocation($location);
         $matchingUsersByAttribute = $this->getUserByAttribute($attribute);
 
@@ -1977,16 +1976,15 @@ class Default_Model_User extends Zend_Db_Table_Abstract
         $countArray = Array();
 
         foreach($allMatchingResults as $match) {
-            if(isset($countArray[$match["id_usr"]]))
-                $countArray[$match["id_usr"]]++;
-            else
-                $countArray[$match["id_usr"]] = 1;
+            if($match["id_usr"] != $id){
+                if(isset($countArray[$match["id_usr"]]))
+                    $countArray[$match["id_usr"]]++;
+                else
+                    $countArray[$match["id_usr"]] = 1;
+            }
         }
 
-        var_dump($countArray);exit;
-
         arsort($countArray);
-
         $countArray = array_keys($countArray);
         $result = Array();
         $count = 0;
