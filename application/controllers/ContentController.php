@@ -199,15 +199,25 @@ class ContentController extends Oibs_Controller_CustomController
 
     public function viewAction()
     {
+        $contentModel = new Default_Model_Content();
+        $fileModel = new Default_Model_Files();
+        $ptpModel = new Default_Model_PageTypes();
+        $commentModel = new Default_Model_Comments();
+
         $request = $this->getRequest();
         $params = $request->getParams();
         $id = isset($params['actual_content_id']) ? $params['actual_content_id'] : 0;
 
-
-        $contentModel = new Default_Model_Content();
         $content = $contentModel->getDataAsSimpleArray($id);
 
+        $type_id = $ptpModel->getId('content');
+        $filenames = $fileModel->getFilenames($id, $type_id);
+
+        $comments = $commentModel->getAllByContentId($id);
+
         $this->view->content = $content;
+        $this->view->files = $filenames;
+        $this->view->comments = $comments;
         /*
         $this->view->contentTitle = $content['title_cnt'];
         $this->view->contentLead = $content['lead_cnt'];
