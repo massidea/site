@@ -124,6 +124,7 @@ account-fetchpassword-captcha;Captcha
 account-fetchpassword-error-nosuchkey;Passwort zurücksetzen Link ist ungültig.
 account-fetchpassword-password;Passwort
 account-fetchpassword-confirm;Passwort bestätigen
+account-fetchpassword-error-nosuchemail;Die E-Mail ist nicht im System registriert.
 account-view-user-profile;Profil
 account-view-user-settings;Einstellungen
 account-view-user-logout;Abmelden

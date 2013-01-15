@@ -124,6 +124,8 @@ account-fetchpassword-captcha;Captcha
 account-fetchpassword-error-nosuchkey;Password reset link is invalid
 account-fetchpassword-password;Password
 account-fetchpassword-confirm;Confirm password
+account-fetchpassword-error-nosuchemail;The email is not registered.
+account-view-user-profile;Profile
 account-view-user-settings;Settings
 account-view-user-logout;Logout
 

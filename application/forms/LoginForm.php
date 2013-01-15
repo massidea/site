@@ -41,7 +41,9 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 	 */
 	public function init()
 	{
-		$base_url = Zend_Controller_Front::getInstance()->getBaseUrl();
+		/** @var $translate Zend_Translate_Adapter */
+		$translate = Zend_Registry::get('Zend_Translate');
+		$base_url  = Zend_Controller_Front::getInstance()->getBaseUrl();
 		$actionUrl = $base_url.'/'.$this->getLanguage().'/account/login';
 
 		$this->setName('login_form')
@@ -54,7 +56,7 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 
 		$this->addElement('text', 'login_username', array(
 			'label'       => 'account-login-username',
-			'placeholder' => 'account-login-username',
+			'placeholder' => $translate->_('account-login-username'),
 			'required'    => true,
 			'filters'     => array('StringtoLower'),
 			'validators'  => array(
@@ -63,7 +65,7 @@ class Default_Form_LoginForm extends Twitter_Bootstrap_Form_Vertical
 
 		$this->addElement('password', 'login_password', array(
 			'label'       => 'account-login-password',
-			'placeholder' => 'account-login-password',
+			'placeholder' => $translate->_('account-login-password'),
 			'required'    => true,
 			'validators'  => array(
 				array('NotEmpty', true, array('messages' => array('isEmpty' => 'error-field-empty'))),
