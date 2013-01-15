@@ -116,6 +116,7 @@ account-register-legend-core;Core Data
 account-register-legend-general;General
 account-register-forgot-password;<strong>Forgot your password?</strong> <a href="%s">Reset your password</a> now!
 forgotPassword;Forgot Password
+account-fetchpassword-verification-email-sent-message;An email has been sent to the given address.
 account-fetchpassword-request;Request Password
 account-fetchpassword-submit;Ok
 account-fetchpassword-email;Your Email

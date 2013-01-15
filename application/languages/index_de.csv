@@ -116,6 +116,7 @@ account-register-legend-login;Logindaten
 account-register-legend-core;Stammdaten
 account-register-legend-general;Allgemein
 account-register-forgot-password;<strong>Passwort vergessen?</strong> Setzen Sie ihr <a href="%s">Passwort jetzt zurück</a>!
+account-fetchpassword-verification-email-sent-message;Eine E-Mail zum Zurücksetzen der E-Mail wurde versendet.
 account-fetchpassword-request;Passwort anfordern
 account-fetchpassword-submit;Ok
 account-fetchpassword-email;Deine Email
