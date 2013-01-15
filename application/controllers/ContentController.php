@@ -54,24 +54,23 @@ class ContentController extends Oibs_Controller_CustomController
 		$sections[] = array('id' => 2, 'title' => 'general-idea');
 		$sections[] = array('id' => 3, 'title' => 'general-challenge');
 
-        $user = $this->getIdentity();
-        $userId = $user->user_id;
+        if ($this->hasIdentity()) {
+            $user = $this->getIdentity();
+            $userId = $user->user_id;
 
-        $model = new Default_Model_User();
+            $model = new Default_Model_User();
+            $metaData = $model->getMetaData($userId);
 
-        $metaData = $model->getMetaData($userId);
+            $job = $metaData['job'];
+            $location = $metaData['location'];
+            $attributes = $metaData['attributes'][0];
 
-        $job = $metaData['job'];
-        $location = $metaData['location'];
-        $attributes = $metaData['attributes'][0];
-
-        $matchingUsers = $model->getMatchingUsers($job, $location, $attributes, $userId);
-
-        $this->getSidebarHelper()->setMatchingUsers($matchingUsers);
+            $matchingUsers = $model->getMatchingUsers($job, $location, $attributes, $userId);
+            $this->getSidebarHelper()->setMatchingUsers($matchingUsers);
+        }
 
         $this->view->categories = $categories;
 		$this->view->sections   = $sections;
-
 	}
 
     public function listVisionsAction()
