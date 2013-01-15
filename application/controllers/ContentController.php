@@ -54,7 +54,22 @@ class ContentController extends Oibs_Controller_CustomController
 		$sections[] = array('id' => 2, 'title' => 'general-idea');
 		$sections[] = array('id' => 3, 'title' => 'general-challenge');
 
-		$this->view->categories = $categories;
+        $user = $this->getIdentity();
+        $userId = $user->user_id;
+
+        $model = new Default_Model_User();
+
+        $metaData = $model->getMetaData($userId);
+
+        $job = $metaData['job'];
+        $location = $metaData['location'];
+        $attributes = $metaData['attributes'][0];
+
+        $matchingUsers = $model->getMatchingUsers($job, $location, $attributes, $userId);
+
+        $this->getSidebarHelper()->setMatchingUsers($matchingUsers);
+
+        $this->view->categories = $categories;
 		$this->view->sections   = $sections;
 
 	}
@@ -132,6 +147,27 @@ class ContentController extends Oibs_Controller_CustomController
         $this->view->contentData = $data;
         $this->view->page = $page;
     }
+
+	public function viewAction()
+	{
+		$id = $this->_getParam('actual_content_id', 0);
+
+		$contentModel = new Default_Model_Content();
+		$fileModel    = new Default_Model_Files();
+		$ptpModel     = new Default_Model_PageTypes();
+		$commentModel = new Default_Model_Comments();
+
+		$content = $contentModel->getDataAsSimpleArray($id);
+
+		$type_id   = $ptpModel->getId('content');
+		$filenames = $fileModel->getFilenames($id, $type_id);
+
+		$comments = $commentModel->getAllByContentId($id);
+
+		$this->view->content  = $content;
+		$this->view->files    = $filenames;
+		$this->view->comments = $comments;
+	}
 
     public function addAction()
 	{

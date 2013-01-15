@@ -9,6 +9,8 @@ abstract class Oibs_View_Helper_Viewable extends Zend_View_Helper_Abstract
 {
 	/** @var \Zend_View_Interface */
 	private $_helperView;
+	/** @var string */
+	private $_language = null;
 
 	/**
 	 * Initialize View object
@@ -58,6 +60,7 @@ abstract class Oibs_View_Helper_Viewable extends Zend_View_Helper_Abstract
 	 */
 	protected function renderView($script, array $options = array()) {
 		$view = $this->getHelperView();
+		$view->assign('language', $this->getLanguage());
 
 		foreach ($options as $key => $value) {
 			$view->assign($key, $value);
@@ -65,4 +68,23 @@ abstract class Oibs_View_Helper_Viewable extends Zend_View_Helper_Abstract
 
 		return $this->getHelperView()->render($script);
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage()
+	{
+		return $this->_language;
+	}
+
+	/**
+	 * @param string $language
+	 * @return Oibs_View_Helper_Navi
+	 */
+	public function setLanguage($language)
+	{
+		$this->_language = $language;
+		return $this;
+	}
+
 }

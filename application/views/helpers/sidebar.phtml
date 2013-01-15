@@ -16,55 +16,55 @@
 		        <div class="accordion-heading">
 			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
 					        href="#match-making-collapse-One">
-				        Content (1) cxxxx
+				        Content (0)
 			        </a>
 		        </div>
 		        <div id="match-making-collapse-One" class="accordion-body collapse in">
-			        <a class="accordion-inner" href="#">
-				        <div class="right-arrow">
-					        <div class="image idea pull-left"></div>
-					        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl
-						        jdsklf
-						        jkdsjfkldsjfkjds f
-						        sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj kdsfjksdfjjdsfjdslkf dslkjdsfsdj
-						        fl
-					        </div>
-					        <div class="clearfix"></div>
-				        </div>
+                    <!--
+                    <a class="accordion-inner" href="#">
+
+                        <div class="right-arrow">
+                            <div class="image idea pull-left"></div>
+                            <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl
+                                jdsklf
+                                jkdsjfkldsjfkjds f
+                                sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj kdsfjksdfjjdsfjdslkf dslkjdsfsdj
+                                fl
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
 			        </a>
+			        -->
 		        </div>
 	        </div>
 	        <div class="accordion-group">
 		        <div class="accordion-heading">
 			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
 					        href="#match-making-collapse-Two">
-				        User (2)
+				        User (<?php echo sizeof($this->matchingUsers)?>)
 			        </a>
 		        </div>
 		        <div id="match-making-collapse-Two" class="accordion-body collapse">
-			        <a class="accordion-inner" href="#">
-				        <div class="right-arrow">
-					        <img class="user" src="/img/user_avatar.png" width="32" height="32"/>
-
-					        <div class="content-search pull-right">fjldskjflkdsjfksdklfjsdl kjf kdsjfksdjkl
-						        jdsklf
-						        jkdsjfkldsjfkjds f
-						        sfkldsj flskdjflkjdsflkjds kdsjdsfjkdsjfj kdsfjksdfjjdsfjdslkf dslkjdsfsdj
-						        fl
-					        </div>
-					        <div class="clearfix"></div>
-				        </div>
-			        </a>
+                    <?php foreach ($this->matchingUsers as $user) : ?>
+                    <a class="accordion-inner" href="#">
+                        <div class="right-arrow">
+                            <img class="user pull-left" src="/img/user_avatar.png" width="32" height="32"/>
+                            <div class="content-search pull-left"><?php echo $user['first_name_usr'] . ' ' . $user['surname_usr']; ?></div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                    <?php endforeach; ?>
 		        </div>
 	        </div>
 	        <div class="accordion-group">
 		        <div class="accordion-heading">
 			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
 					        href="#match-making-collapse-Three">
-				        Groups (4)
+				        Groups (0)
 			        </a>
 		        </div>
 		        <div id="match-making-collapse-Three" class="accordion-body collapse">
+                    <!--
 			        <a class="accordion-inner" href="#">
 				        <div class="right-arrow">
 					        <div class="image idea pull-left"></div>
@@ -77,16 +77,18 @@
 					        <div class="clearfix"></div>
 				        </div>
 			        </a>
+			        -->
 		        </div>
 	        </div>
 	        <div class="accordion-group">
 		        <div class="accordion-heading">
 			        <a class="accordion-toggle" data-toggle="collapse" data-parent="#match-making-accordion"
 					        href="#match-making-collapse-Four">
-				        Projects (2)
+				        Projects (0)
 			        </a>
 		        </div>
 		        <div id="match-making-collapse-Four" class="accordion-body collapse">
+                    <!--
 			        <a class="accordion-inner" href="#">
 				        <div class="right-arrow">
 					        <div class="image idea pull-left"></div>
@@ -99,6 +101,7 @@
 					        <div class="clearfix"></div>
 				        </div>
 			        </a>
+			        -->
 		        </div>
 	        </div>
         </div>

@@ -58,7 +58,7 @@ CREATE TABLE `attributes_atr` (
   `id_atr` int(11) NOT NULL AUTO_INCREMENT,
   `name_atr` varchar(255) NOT NULL,
   PRIMARY KEY (`id_atr`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `meta_has_atr`;
