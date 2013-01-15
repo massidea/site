@@ -71,11 +71,12 @@
 		}
 	}
 	.startPageFeed {
-		min-height: 462px;
-		width:      320px;
-		border:     1px solid @colorLiveFeed;
-		position:   relative;
-		z-index:    1;
+		min-height:     462px;
+		width:          320px;
+		border:         1px solid @colorLiveFeed;
+		position:       relative;
+		padding-bottom: 20px;
+		z-index:        1;
 
 		.feedControl {
 			background:  @colorLiveFeed;
@@ -116,6 +117,9 @@
 			.headline {
 				font-size:   18px;
 				font-weight: bold;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.author {
@@ -123,7 +127,7 @@
 			}
 
 			li {
-				height:             80px;
+				min-height:         80px;
 				display:            block;
 				padding:            15px;
 				border-bottom:      1px solid @colorLiveFeed;
