@@ -1,9 +1,0 @@
-<h2><?php echo $this->translate('account-apikey-title'); ?></h2>
-<p>
-<?php if($this->hasApiKey): ?>
-	<?php echo $this->translate('account-apikey-your-key') . ": " . $this->apikey; ?>
-<?php else: ?>
-	<?php $generateLink = $this->url(array('generate' => 1));?>
-	<a href="<?php echo $generateLink; ?>"><?php echo $this->translate('account-apikey-generate-link'); ?></a>
-<?php endif;?>
-</p>

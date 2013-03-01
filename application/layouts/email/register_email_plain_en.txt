@@ -1,9 +1,0 @@
-OIBS registration confirmation
-Thank you for registering with OIBS
-
-Your account has been created with following username and password.
-
-Username: "<username>"
-Password: "<password>"
-
-If you have any questions please contact help@oibs.jossain.fi for assistance.

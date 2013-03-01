@@ -1,8 +1,0 @@
-Massidea.org: You have a new private message
-You have received a new private message at <a href="http://www.massidea.org">Massidea.org</a>
-							
-<a href="%URL%/account/view/user/%SENDER-NAME%">%SENDER-NAME%</a> sent you a private message
-							
-%MESSAGE-TITLE%: 
-
-%MESSAGE-BODY%

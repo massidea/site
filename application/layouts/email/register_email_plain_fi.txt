@@ -1,9 +1,0 @@
-OIBS rekisteröitymääääis vahvistus
-Kiitos rekisteröitymisestäsi.
-
-Tilisi on luotu seuraavilla käyttäjätunnuksella ja salasanalla.
-
-Käyttäjänimi: 	"<username>"
-Salasana: 	"<password>"
-
-Jos teillä on kysyttävää, ottakaa yhteyttä osoitteeseen tuki@oibs.jossain.com.
