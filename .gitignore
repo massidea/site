@@ -1,2 +1,4 @@
 www/img/captcha/*.png
 .idea
+
+.DS_Store
